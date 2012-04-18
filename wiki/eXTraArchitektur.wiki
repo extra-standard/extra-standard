@@ -46,9 +46,11 @@ Einschränkung bzw. Anpassung des eXTra-Basisschemas auf die Anforderungen des j
 Verfahrensspezifische Funktionen, die sich für eine Standardisierung eignen, weil sie potenziell von anderen Verfahren genutzt und in einer allgemeinen Form definiert und implementiert werden können. Diese Funktionen erweitern den Kernbereich um standardisierte Funktionen. Sie sind nicht Bestandteil des unprofilierten eXTra Schemas, ihre Nutzung muss daher profiliert werden. Diese Funktionen und die sie abbildenden XML-Strukturen werden in der eXTra Terminologie als Plug-Ins bezeichnet. Ein Plug-In standardisiert eine Funktion, ein Datenmodell und eine XMLStruktur, und seine Nutzung ist für jede Ebene separat profilierbar. Beispiele von Plugins:
 
  * Plugin "Certificates"
- * Plugin "[DataSource]"
- * Plugin "[DataTransform]"
+ * Plugin "!DataSource"
+ * Plugin "!DataTransform"
  * Plugin "Contacts"
 
 
 = eXTra-Lifecycle =
+
+Noch zu definieren.
