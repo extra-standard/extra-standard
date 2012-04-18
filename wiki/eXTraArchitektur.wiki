@@ -35,4 +35,19 @@ Auf jeder dieser Kommunikationsebenen kommunizieren ein Sender und ein Empfänge
  * Logistikverfahren, Paketebene
  * Transport-Verfahren, Transportebene
 
-Mehr hierzu siehe [http://www.extra-standard.de/upload/pdf/eXTra_Kompendium_1.3.0.pdf Kompedium eXTra-Standard].
+*Mehr hierzu siehe* [http://www.extra-standard.de/upload/pdf/eXTra_Kompendium_1.3.0.pdf Kompedium eXTra-Standard].
+
+
+= Profilierung =
+Einschränkung bzw. Anpassung des eXTra-Basisschemas auf die Anforderungen des jeweiligen Fachverfahrens.
+
+= Plugins =
+Verfahrensspezifische Funktionen, die sich für eine Standardisierung eignen, weil sie potenziell von anderen Verfahren genutzt und in einer allgemeinen Form definiert und implementiert werden können. Diese Funktionen erweitern den Kernbereich um standardisierte Funktionen. Sie sind nicht Bestandteil des unprofilierten eXTra Schemas, ihre Nutzung muss daher profiliert werden. Diese Funktionen und die sie abbildenden XML-Strukturen werden in der eXTra Terminologie als Plug-Ins bezeichnet. Ein Plug-In standardisiert eine Funktion, ein Datenmodell und eine XMLStruktur, und seine Nutzung ist für jede Ebene separat profilierbar. Beispiele von Plugins:
+
+ * Plugin "Certificates"
+ * Plugin "DataSource"
+ * Plugin "DataTransform"
+ * Plugin "Contacts"
+
+
+= eXTra-Lifecycle =
