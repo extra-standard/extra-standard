@@ -1,5 +1,5 @@
 #summary Beschreibung der eXTra-Architektur.
-#labels Featured,Phase-Design
+#labels Featured
 
 = eXTra-Architektur =
 
