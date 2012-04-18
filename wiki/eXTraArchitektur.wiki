@@ -8,3 +8,30 @@
 = Analogie zu Briefumschlag und Brief =
 
 eXTra (*Briefumschlag*) schreibt die Struktur der zu transportierenden Daten (*Brief*) _*nicht*_ vor! Der Briefumschlag wird per *Client- und Server-Kommunikation* übertragen. Das Protokoll für die Client- und Server-Kommunikation ist ebenfalls offen und kann frei ausgewählt werden.
+
+
+= Client- und Server-Kommunikation =
+
+eXTra basiert auf einer Client- und Server-Architektur.
+
+
+= Ebenen, Kommunikation und Rollen =
+
+== Ebenen ==
+ * Transportebene (*Transport*) – enthält Informationen zum physikalischen Transport der Datenpakete
+ * Paketebene (*Package*) – enthält Informationen zum logischen Transport der Datenpakete
+ * Datenebene (*Message*) – enthält Informationen zu den einzelnen Daten 
+
+== Kommunikation ==
+Auf jeder dieser Kommunikationsebenen kommunizieren ein Sender und ein Empfänger miteinander, und zwar unabhängig von den anderen Kommunikationsebenen. Es stehen folgende Kommunikationsszenarien zur Verfügung:
+
+ * Keine Response (*fire-and-forget*)
+ * Response mit Empfangsbestätigung (*request-with-acknowledgement*)
+ * Response mit fachlicher Antwort (*request-with-response*).
+
+== Rollen ==
+ * Fachverfahren, Nutzdatenebene
+ * Logistikverfahren, Paketebene
+ * Transport-Verfahren, Transportebene
+
+Mehr hierzu siehe [http://www.extra-standard.de/upload/pdf/eXTra_Kompendium_1.3.0.pdf Kompedium eXTra-Standard].
