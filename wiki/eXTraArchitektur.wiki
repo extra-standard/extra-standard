@@ -3,6 +3,8 @@
 
 = eXTra-Architektur =
 
+*Inhaltsverzeichnis*
+<wiki:toc max_depth="1" />
 
 
 = Analogie zum Briefumschlag und Brief =
