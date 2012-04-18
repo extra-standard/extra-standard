@@ -5,7 +5,7 @@
 
 
 
-= Analogie zu Briefumschlag und Brief =
+= Analogie zum Briefumschlag und Brief =
 
 eXTra (*Briefumschlag*) schreibt die Struktur der zu transportierenden Daten (*Brief*) _*nicht*_ vor! Der Briefumschlag wird per *Client- und Server-Kommunikation* übertragen. Das Protokoll für die Client- und Server-Kommunikation ist ebenfalls offen und kann frei ausgewählt werden.
 
