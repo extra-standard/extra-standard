@@ -45,12 +45,14 @@ Auf jeder dieser Kommunikationsebenen kommunizieren ein Sender und ein Empfänge
 Einschränkung bzw. Anpassung des *eXTra-Basisschemas* auf die Anforderungen des jeweiligen Fachverfahrens.
 
 = Plugins =
-Verfahrensspezifische Funktionen, die sich für eine Standardisierung eignen, weil sie potenziell von anderen Verfahren genutzt und in einer allgemeinen Form definiert und implementiert werden können. *Diese Funktionen erweitern den Kernbereich um standardisierte Funktionen*. Sie sind nicht Bestandteil des unprofilierten eXTra Schemas, *ihre Nutzung muss daher profiliert werden*. Diese Funktionen und die sie abbildenden XML-Strukturen werden in der eXTra Terminologie als Plug-Ins bezeichnet. Ein Plug-In standardisiert eine Funktion, ein Datenmodell und eine XMLStruktur, und seine Nutzung ist für jede Ebene separat profilierbar. Beispiele von Plugins:
+Verfahrensspezifische Funktionen, die sich für eine Standardisierung eignen, weil sie potenziell von anderen Verfahren genutzt und in einer allgemeinen Form definiert und implementiert werden können. *Diese Funktionen erweitern den Kernbereich um standardisierte Funktionen*. Sie sind nicht Bestandteil des unprofilierten eXTra Schemas, *ihre Nutzung muss daher profiliert werden*. Diese Funktionen und die sie abbildenden XML-Strukturen werden in der eXTra Terminologie als Plug-Ins bezeichnet. Ein Plug-In standardisiert eine Funktion, ein Datenmodell und eine XMLStruktur, und seine Nutzung ist für jede Ebene separat profilierbar. 
 
- * Plugin *Certificates*
- * Plugin *!DataSource*
- * Plugin *!DataTransform*
- * Plugin *Contacts*
+Beispiele von Plugins:
+
+ * Plugin _*Certificates*_
+ * Plugin _*!DataSource*_
+ * Plugin _*!DataTransform*_
+ * Plugin _*Contacts*_
 
 
 = eXTra-Lifecycle =
