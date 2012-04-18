@@ -1,3 +1,9 @@
 #summary Einführung in eXTra
 
+= Was ist eXTra? =
+
 [http://www.extra-standard.de eXTra] ist ein offener, frei verfügbarer Standard für den Datenaustausch, der unter Federführung der AWV von Wirtschaft und Verwaltung gemeinsam auf der Basis bestehender Verfahren entwickelt wurde.
+
+= Weitere Informationen =
+
+Siehe http://www.extra-standard.de
