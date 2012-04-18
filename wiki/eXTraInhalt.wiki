@@ -1,1 +1,3 @@
+#summary Inhaltsverzeichnis für SideBar
+
 * [eXTraArchitektur eXTra-Architektur]
