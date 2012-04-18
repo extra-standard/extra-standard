@@ -1,5 +1,6 @@
 #summary Beschreibung der eXTra-Architektur
 #labels Featured
+#sidebar eXTraInhalt
 
 = eXTra-Architektur =
 
