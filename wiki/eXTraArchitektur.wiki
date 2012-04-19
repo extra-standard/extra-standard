@@ -9,7 +9,7 @@
 
 = Analogie zum Briefumschlag und Brief =
 
-eXTra (*Briefumschlag*) schreibt die Struktur der zu transportierenden Daten (*Brief*) _*nicht*_ vor! Der Briefumschlag wird per Client- und Server-Kommunikation (*Zusteller*) übertragen. Das Protokoll für die Client- und Server-Kommunikation (FTP, HTTP, SMTP, ...) ist ebenfalls offen und kann frei ausgewählt werden.
+eXTra (*Briefumschlag*) schreibt die Struktur der zu transportierenden Daten (*Brief*) _*nicht*_ vor! Der Briefumschlag wird per Client- und Server-Kommunikation übertragen. Das Protokoll (*Zusteller*) für die Client- und Server-Kommunikation (FTP, HTTP, SMTP, ...) ist ebenfalls offen und kann frei ausgewählt werden.
 
 http://extra-standard.googlecode.com/svn/wiki/images/extra-arc-briefumschlag.jpg
 
