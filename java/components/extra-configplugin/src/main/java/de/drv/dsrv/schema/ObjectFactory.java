@@ -23,7 +23,6 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2010.06.21 at 10:47:04 AM CEST 
 //
-
 package de.drv.dsrv.schema;
 
 import javax.xml.bind.JAXBElement;
