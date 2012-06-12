@@ -1,4 +1,4 @@
-#summary Entwicklungsprozess, -umgebung und Coding-Regeln.
+#summary Entwicklungsprozess, -umgebung und Coding-Regeln
 
 = Entwicklungsprozess =
 
