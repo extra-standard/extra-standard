@@ -2,4 +2,4 @@
 
   * [eXTraEinfuehrung Einführung]
   * [eXTraArchitektur eXTra-Architektur]
-  * [eXTraEntwProzess eXTra-Entwicklungsprozess]
+  * [eXTraEntwProzess Entwicklungsprozess]
