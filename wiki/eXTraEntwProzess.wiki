@@ -2,7 +2,7 @@
 
 = Entwicklungsprozess =
 
-Hier wird der Entwicklungsprozess, Entwicklungsumgebung und Coding-Regeln definiert.
+Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regeln definiert.
 
 = Entwicklungsumgebung =
   * Java 6
