@@ -1,13 +1,13 @@
 #summary One-sentence summary of this page.
 
-= Introduction =
+= Entwicklungsprozess =
 
-Add your content here.
+Hier wird der Entwicklungsprozess definiert.
 
+= Entwicklungsumgebung =
+  * Java6
+  * Maven3
+  * Eclipse 3.7 mit Maven Plugin m2e
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= Coding-Regeln =
+  * Code-Formatter: Eclipse [built-in] unverändert!
