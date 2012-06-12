@@ -2,11 +2,11 @@
 
 = Entwicklungsprozess =
 
-Hier wird der Entwicklungsprozess definiert.
+Hier wird der Entwicklungsprozess, Entwicklungsumgebung und Coding-Regeln definiert.
 
 = Entwicklungsumgebung =
-  * Java6
-  * Maven3
+  * Java 6
+  * Maven 3
   * Eclipse 3.7 mit Maven Plugin m2e
 
 = Coding-Regeln =
