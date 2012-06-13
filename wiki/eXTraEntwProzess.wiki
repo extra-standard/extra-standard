@@ -8,6 +8,7 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
   * Java 6
   * Maven 3
   * Eclipse 3.7 mit Maven Plugin m2e
+  * Encoding UTF-8
 
 = Coding-Regeln =
   * Code-Formatter: Eclipse [built-in] unverändert!
