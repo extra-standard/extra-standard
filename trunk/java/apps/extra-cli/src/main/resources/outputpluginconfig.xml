@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+          "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="httpBean" class="de.extra.client.plugins.outputPlugin.HttpSender">
+		<constructor-arg index="0" value="${serverSettingLoc}" />
+		<constructor-arg index="1" value="${senderSettungLoc}" />
+		<constructor-arg index="2" ref="fileSystemHelper" />
+	</bean>
+
+	<bean id="fileSystemHelper"
+		class="de.extra.client.plugins.outputPlugin.filesystem.FileSystemHelper">
+		<constructor-arg index="0" value="${eingangOrdner}" />
+		<constructor-arg index="1" value="${reportOrdner}" />
+	</bean>
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:extraClient.properties</value>
+		</property>
+	</bean>
+</beans>

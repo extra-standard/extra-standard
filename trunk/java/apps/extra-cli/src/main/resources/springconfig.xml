@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+          "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:eXTraClient.properties">
+		</property>
+	</bean>
+
+	<import resource="classpath:de/extra/client/core/client-core.xml" />
+
+	<bean id="configPlugin" class="de.extra.client.plugins.configPlugin.ConfigPlugin">
+	</bean>
+	<!-- <bean id="dataPlugin" class="de.extra.client.plugins.dataPlugin.DataPlugin"> 
+		</bean> -->
+	<bean id="dataPlugin" class="de.extra.client.plugins.dataPlugin.QueryPlugin">
+	</bean>
+
+	<bean id="outputPlugin" class="de.extra.client.plugins.outputPlugin.OutputPlugin">
+	</bean>
+</beans>

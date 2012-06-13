@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+          "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:extraClient.properties</value>
+		</property>
+	</bean>
+
+	<bean id="configController"
+		class="de.extra.client.plugins.configPlugin.controller.ConfigPluginController">
+		<constructor-arg index="0" value="${profilOrdner}" />
+		<constructor-arg index="1" ref="profilHelper" />
+
+	</bean>
+
+	<bean id="profilHelper"
+		class="de.extra.client.plugins.configPlugin.helper.ProfilHelper">
+		<constructor-arg index="0">
+			<props>
+				<prop key="testIndicator">${testIndicator}</prop>
+				<prop key="absenderClass">${absenderClass}</prop>
+				<prop key="absenderBbnr">${absenderBbnr}</prop>
+				<prop key="absenderName">${absenderName}</prop>
+				<prop key="empfaengerClass">${empfaengerClass}</prop>
+				<prop key="empfaengerBbnr">${empfaengerBbnr}</prop>
+				<prop key="empfaengerName">${empfaengerName}</prop>
+				<prop key="productName">${productName}</prop>
+				<prop key="productManuf">${productManuf}</prop>
+				<prop key="procedure">${procedure}</prop>
+				<prop key="dataType">${dataType}</prop>
+				<prop key="scenario">${scenario}</prop>
+			</props>
+		</constructor-arg>
+	</bean>
+</beans>
