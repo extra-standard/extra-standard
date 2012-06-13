@@ -37,7 +37,7 @@ public class DataPluginController implements IDataPluginController {
 	}
 
 	/**
-	 * Verarbeitungs-Controller f�r das DataPlugin
+	 * Verarbeitungs-Controller fuer das DataPlugin
 	 */
 	@Override
 	public List<VersanddatenBean> processData() {
