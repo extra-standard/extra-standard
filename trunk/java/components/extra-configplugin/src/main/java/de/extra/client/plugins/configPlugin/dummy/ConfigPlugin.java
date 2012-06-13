@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.plugins.configPlugin.dummy;
+package de.extra.client.plugins.configplugin.dummy;
 
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.plugin.IConfigPlugin;

@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.plugins.configPlugin;
+package de.extra.client.plugins.configplugin;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -26,7 +26,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import de.extra.client.core.ExtraClient;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.plugin.IConfigPlugin;
-import de.extra.client.plugins.configPlugin.controller.ConfigPluginController;
+import de.extra.client.plugins.configplugin.controller.ConfigPluginController;
 
 public class ConfigPlugin implements IConfigPlugin {
 

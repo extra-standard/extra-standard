@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.plugins.configPlugin.helper;
+package de.extra.client.plugins.configplugin.helper;
 
 import java.util.Iterator;
 import java.util.List;
@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
 
 import de.drv.dsrv.schema.ElementType;
 import de.extra.client.core.model.ConfigFileBean;
-import de.extra.client.plugins.configPlugin.ConfigConstants;
+import de.extra.client.plugins.configplugin.ConfigConstants;
 
 public class ProfilHelper {
 
@@ -95,7 +95,6 @@ public class ProfilHelper {
 	 */
 	public ConfigFileBean fuelleVersandInfo(ConfigFileBean cfb) {
 		// Setzen des Testindikators
-
 		if (versandMap.get("testIndicator") == null
 				|| versandMap.get("testIndicator") == "") {
 			if (logger.isDebugEnabled()) {

@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.plugins.configPlugin.controller;
+package de.extra.client.plugins.configplugin.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,8 +31,8 @@ import org.apache.log4j.Logger;
 
 import de.drv.dsrv.schema.ProfilkonfigurationType;
 import de.extra.client.core.model.ConfigFileBean;
-import de.extra.client.plugins.configPlugin.ConfigConstants;
-import de.extra.client.plugins.configPlugin.helper.ProfilHelper;
+import de.extra.client.plugins.configplugin.ConfigConstants;
+import de.extra.client.plugins.configplugin.helper.ProfilHelper;
 
 public class ConfigPluginController {
 
