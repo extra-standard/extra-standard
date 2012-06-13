@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+          "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:extraClient.properties</value>
+		</property>
+	</bean>
+
+	<bean id="dataPluginController"
+		class="de.extra.client.plugins.dataPlugin.controller.DataPluginController">
+		<constructor-arg index="0" ref="dataPluginHelper" />
+
+	</bean>
+
+	<bean id="dataPluginHelper"
+		class="de.extra.client.plugins.dataPlugin.helper.DataPluginHelper">
+		<constructor-arg index="0" value="${inputVerzeichnis}" />
+	</bean>
+</beans>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+          "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:extraClient.properties</value>
+		</property>
+	</bean>
+
+	<bean id="queryController"
+		class="de.extra.client.plugins.dataPlugin.controller.QueryPluginController">
+		<constructor-arg index="0" ref="queryHelper" />
+		<constructor-arg index="1" value="${startId}" />
+		<constructor-arg index="2" value="${packageLimit}" />
+	</bean>
+
+	<bean id="queryHelper" class="de.extra.client.plugins.dataPlugin.helper.QueryHelper" />
+</beans>
