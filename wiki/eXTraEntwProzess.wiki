@@ -12,3 +12,8 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
 
 = Coding-Regeln =
   * Code-Formatter: Eclipse [built-in] unverändert!
+
+= Bauen von Quellcode mit Hilfe von Maven =
+  * Ausschecken von SVN unter: trunk/java
+  * Im Ordner *java* befindet sich eine Maven-Datei pom.xml. In dieser Datei werden sämtliche Module von eXTra mit der richtigen Reihenfolge beschrieben.
+  * Im Ordner *java* Maven-Befehl wie beispielsweise =clean package= starten. Damit werden sämtliche Module in der richtigen Reihenfolge gebaut.
