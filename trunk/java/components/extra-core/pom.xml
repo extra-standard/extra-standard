@@ -89,10 +89,6 @@
 									<bindingFile>src/main/xjb/binding-plugin.xjb</bindingFile>
 								</xsdOption>
 								<xsdOption>
-									<xsd>src/main/xsd/eXTra-request-1.xsd</xsd>
-									<bindingFile>src/main/xjb/binding-dataRequest.xjb</bindingFile>
-								</xsdOption>
-								<xsdOption>
 									<xsd>src/main/xsd/eXTra-response-1.xsd</xsd>
 									<bindingFile>src/main/xjb/binding-response.xjb</bindingFile>
 								</xsdOption>
