@@ -116,9 +116,9 @@ public class ClientCore {
 
 			if (!configFile.isPackageLayer()) {
 
-				for (Iterator iter = versandDatenListe.iterator(); iter
-						.hasNext();) {
-					versanddatenBean = (VersanddatenBean) iter.next();
+				for (Iterator<VersanddatenBean> iter = versandDatenListe
+						.iterator(); iter.hasNext();) {
+					versanddatenBean = iter.next();
 
 					request = requestHelper.baueRequest(versanddatenBean,
 							configFile);

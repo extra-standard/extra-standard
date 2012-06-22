@@ -28,13 +28,11 @@ public class ExtraClient {
 	/**
 	 * Pfad und Dateiname in der die SpringConfig.xml liegt
 	 */
-
 	private static String SPRING_XML_FILE_PATH = "SpringConfig.xml";
 
 	/**
 	 * Dateipfad der log4jProperties
 	 */
-
 	private static final String LOG_4_J_FILE = "log4j.properties";
 
 	private static Logger logger = Logger.getLogger(ExtraClient.class);
@@ -45,9 +43,7 @@ public class ExtraClient {
 	 * 
 	 * @return Statuscode
 	 */
-
 	public int execute() throws Exception {
-
 		PropertyConfigurator.configureAndWatch(LOG_4_J_FILE);
 		logger.info("Start der Anwendung");
 
@@ -64,7 +60,6 @@ public class ExtraClient {
 		}
 
 		// Steuerung an Controller �bergeben
-
 		logger.info("Beginn der Verarbeitung");
 
 		ClientCore clientCore = (ClientCore) applicationContext
