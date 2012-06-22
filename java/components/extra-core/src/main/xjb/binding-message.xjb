@@ -5,12 +5,20 @@
         </jxb:schemaBindings>
     </jxb:bindings>
     
+    <jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='AbstractMessageType']">
+    	<jxb:class name="AbstractMessage"/>
+	</jxb:bindings> 
+	
 	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ConfirmationOfReceiptType']">
     	<jxb:class name="ConfirmationOfReceipt"/>
 	</jxb:bindings> 
 	
 	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='DataRequestType']">
     	<jxb:class name="DataRequest"/>
+	</jxb:bindings> 
+	
+	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='QueryType']">
+    	<jxb:class name="Query"/>
 	</jxb:bindings> 
 	
 	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='AbstractArgumentType']">
@@ -37,11 +45,13 @@
     	<jxb:class name="Value"/>
 	</jxb:bindings>
 
+	<!-- 
+	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='AttributeType']">
+    	<jxb:class name="Attribute"/>
+	</jxb:bindings>
+	 -->
+
 	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ControlType']">
     	<jxb:class name="Control"/>
-	</jxb:bindings>
-	
-	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='DataRequestQueryType']">
-    	<jxb:class name="Query"/>
 	</jxb:bindings>
 </jxb:bindings> 

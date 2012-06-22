@@ -4,24 +4,24 @@
     
     @file    eXTra-response-1.xsd
     @author  Michael Schäfer, Statistisches Bundesamt
-    @version 1.1.0
-    @state   FINAL
-    @date    2009-09-09
+    @version 1.1.0.1
+    @state   DRAFT
+    @date    2009-05-05
     
-    @changed 2009-05-05 MS + Added support for TransformedData
-    @changed 2009-07-17 MS - Removed XHTML namespace
+    @changed 2009-05-05 + Added support for TransformedData
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xcpt="http://www.extra-standard.de/namespace/components/1"
     xmlns:xres="http://www.extra-standard.de/namespace/response/1"
     xmlns:xlog="http://www.extra-standard.de/namespace/logging/1"
     xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"
     xmlns="http://www.extra-standard.de/namespace/response/1"
     targetNamespace="http://www.extra-standard.de/namespace/response/1"
     attributeFormDefault="unqualified"
     elementFormDefault="qualified"
-    version="1.1.0"
+    version="1.0.0"
     >
     
     <!-- Import shared element declarations and type declarations -->

@@ -1,14 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Schema module describing demo elements for notational purposes
-    
-    @file    eXTra-vorlage-graphik.xsd
-    @author  Michael Schäfer, Statistisches Bundesamt
-    @version -
-    @state   FINAL
-    @date    2009-09-09
-    
--->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     
     <xs:element name="Sequenz">
@@ -21,7 +11,7 @@
         </xs:complexType>
     </xs:element>
     
-    <xs:element name="MehrfachSequenz">
+    <xs:element name="MehrfacheSequenz">
         <xs:complexType>
             <xs:sequence maxOccurs="3">
                 <xs:element name="ErforderlichesElement" type="xs:string"/>
@@ -34,15 +24,6 @@
     <xs:element name="Auswahl">
         <xs:complexType>
             <xs:choice>
-                <xs:element name="AlternativesElement1" type="xs:string"/>
-                <xs:element name="AlternativesElement2" type="xs:string"/>
-            </xs:choice>
-        </xs:complexType>
-    </xs:element>
-    
-    <xs:element name="OptionaleAuswahl">
-        <xs:complexType>
-            <xs:choice minOccurs="0">
                 <xs:element name="AlternativesElement1" type="xs:string"/>
                 <xs:element name="AlternativesElement2" type="xs:string"/>
             </xs:choice>

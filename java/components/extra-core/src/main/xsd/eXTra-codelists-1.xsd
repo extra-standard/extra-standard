@@ -6,22 +6,17 @@
     @author  Michael Schäfer, Statistisches Bundesamt
     @version 1.1.0
     @state   FINAL
-    @date    2009-09-09
-    
-    @changed 2009-07-17 MS - Removed XHTML namespace
+    @date    2009-06-15
 -->
 <xs:schema
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns="http://www.extra-standard.de/namespace/codelists/1"
     targetNamespace="http://www.extra-standard.de/namespace/codelists/1"
     attributeFormDefault="unqualified"
     elementFormDefault="qualified"
     version="1.1.0">
     
-    <!--
-        @changed 2009-07-17 MS / Changed base type to xs:anyURI
-        @changed 2009-07-17 MS + Added fallback pattern
-    -->
     <xs:simpleType name="ScenarioCodeType">
         <xs:annotation>
             <xs:documentation>
@@ -32,9 +27,8 @@
                 - http://www.extra-standard.de/scenario/request-with-acknowledgement
             </xs:documentation>
         </xs:annotation>
-        <xs:restriction base="xs:anyURI">
+        <xs:restriction base="xs:string">
             <xs:pattern value="http://www.extra-standard.de/scenario/(fire-and-forget|request-with-response|request-with-acknowledgement)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
-            <xs:pattern value=".+"/>
         </xs:restriction>
     </xs:simpleType>
     
@@ -73,22 +67,19 @@
         </xs:restriction>
     </xs:simpleType>
     
-    <!--
-        @changed 2009-07-15 MS / Replaced 'encryption' with 'signature' in comment and pattern
-    -->
     <xs:simpleType name="SignatureAlgorithmCodeType">
         <xs:annotation>
             <xs:documentation>
                 A list of extensible codes denoting a signature algorithm. In  addition,
                 any URI outside the www.extra-standard.de domain may be used.
                 Base values:
-                - http://www.extra-standard.de/transforms/signature/NONE
-                - http://www.extra-standard.de/transforms/signature/PKCS7
-                - http://www.extra-standard.de/transforms/signature/PEM
+                - http://www.extra-standard.de/transforms/encryption/NONE
+                - http://www.extra-standard.de/transforms/encryption/PKCS7
+                - http://www.extra-standard.de/transforms/encryption/PEM
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:anyURI">
-            <xs:pattern value="http://www.extra-standard.de/transforms/signature/(NONE|PKCS7|PEM)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
+            <xs:pattern value="http://www.extra-standard.de/transforms/encryption/(NONE|PKCS7|PEM)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
             <xs:pattern value=".+"/>
         </xs:restriction>
     </xs:simpleType>
@@ -109,9 +100,6 @@
         </xs:restriction>
     </xs:simpleType>
     
-    <!--
-        @changed 2009-07-15 MS + Added enum value 'ACCEPT' 
-    -->
     <xs:simpleType name="TestIndicatorCodeType">
         <xs:annotation>
             <xs:documentation>
@@ -120,11 +108,10 @@
                 - http://www.extra-standard.de/test/NONE
                 - http://www.extra-standard.de/test/RECEIVE
                 - http://www.extra-standard.de/test/PROCESS
-                - http://www.extra-standard.de/test/ACCEPT
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:anyURI">
-            <xs:pattern value="http://www.extra-standard.de/test/(NONE|RECEIVE|PROCESS|ACCEPT)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
+            <xs:pattern value="http://www.extra-standard.de/test/(NONE|RECEIVE|PROCESS)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
         </xs:restriction>
     </xs:simpleType>
     
