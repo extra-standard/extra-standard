@@ -20,14 +20,18 @@ package de.extra.client.plugins.queryplugin.helper;
 
 import java.math.BigInteger;
 
-import javax.management.Query;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
+
+import de.drv.dsrv.extrastandard.namespace.messages.Control;
+import de.drv.dsrv.extrastandard.namespace.messages.DataRequest;
+import de.drv.dsrv.extrastandard.namespace.messages.DataRequestArgument;
+import de.drv.dsrv.extrastandard.namespace.messages.Operand;
+import de.drv.dsrv.extrastandard.namespace.messages.Query;
 
 public class QueryHelper {
 
 	/**
-	 * 
 	 * Hilfsklasse zum Aufbau des DataRequests
 	 * 
 	 * @param startId
@@ -37,7 +41,6 @@ public class QueryHelper {
 	 * @return DataRequest mit der Query
 	 */
 	public DataRequest createQuery(String startId, String packageLimit) {
-
 		DataRequest dataRequest = new DataRequest();
 
 		Control controlElement = new Control();
@@ -47,7 +50,6 @@ public class QueryHelper {
 		operand.setValue(startId);
 
 		// Setzen des Tags
-
 		QName qname = new QName("xs:string");
 		JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(new QName(
 				"http://www.extra-standard.de/namespace/message/1", "GE"),
@@ -55,7 +57,6 @@ public class QueryHelper {
 		jaxbOperand.setValue(operand);
 
 		// Setzen der Property
-
 		dataRequestArgument
 				.setProperty("http://www.extra-standard.de/property/ResponseID");
 		dataRequestArgument.setType(qname);
@@ -63,8 +64,7 @@ public class QueryHelper {
 
 		query.getArgument().add(dataRequestArgument);
 
-		// Bef�llen des Control-Arguments
-
+		// Befüllen des Control-Arguments
 		controlElement.setMaximumPackages(new BigInteger(packageLimit));
 
 		dataRequest.setQuery(query);
