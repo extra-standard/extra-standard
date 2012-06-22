@@ -20,6 +20,9 @@ package de.extra.client.plugins.outputplugin.utils;
 
 import java.util.List;
 
+import de.drv.dsrv.extrastandard.namespace.response.Message;
+import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
+
 public class OutputPluginHelper {
 
 	public static boolean isBodyEmpty(TransportBody transportBody) {
@@ -36,13 +39,9 @@ public class OutputPluginHelper {
 				.getPackage();
 		List<Message> messageList = transportBody.getMessage();
 		if (messageList.size() == 0 && packageList.size() == 0 && isEmpty) {
-
 			isEmpty = true;
-
 		} else {
-
 			isEmpty = false;
-
 		}
 
 		return isEmpty;
