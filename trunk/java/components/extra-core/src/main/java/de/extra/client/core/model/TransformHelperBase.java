@@ -18,6 +18,8 @@
  */
 package de.extra.client.core.model;
 
+import de.drv.dsrv.extrastandard.namespace.plugins.AbstractTransformType;
+
 public abstract class TransformHelperBase {
 
 	public abstract AbstractTransformType getTransformElement(

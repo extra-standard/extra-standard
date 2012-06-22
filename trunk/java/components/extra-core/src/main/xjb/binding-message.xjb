@@ -1,50 +1,47 @@
 <jxb:bindings xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0">
-
-    <jxb:bindings schemaLocation="./eXTra-messages-1.xsd" node="/xs:schema">
+    <jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.messages"/>
         </jxb:schemaBindings>
     </jxb:bindings>
     
-	<jxb:bindings schemaLocation="./eXTra-messages-1.xsd" node="//xs:complexType[@name='ConfirmationOfReceiptType']">
+	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ConfirmationOfReceiptType']">
     	<jxb:class name="ConfirmationOfReceipt"/>
 	</jxb:bindings> 
 	
-	<jxb:bindings schemaLocation="./eXTra-messages-1.xsd" node="//xs:complexType[@name='DataRequestType']">
+	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='DataRequestType']">
     	<jxb:class name="DataRequest"/>
 	</jxb:bindings> 
 	
-	
-	<jxb:bindings schemaLocation="./eXTra-messages-1.xsd" node="//xs:complexType[@name='AbstractArgumentType']">
+	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='AbstractArgumentType']">
     	<jxb:class name="AbstractArgument"/>
 	</jxb:bindings> 
 	
-	<jxb:bindings schemaLocation="./eXTra-messages-1.xsd" node="//xs:complexType[@name='DataRequestArgumentType']">
+	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='DataRequestArgumentType']">
     	<jxb:class name="DataRequestArgument"/>
 	</jxb:bindings>
 	
-	<jxb:bindings schemaLocation="./eXTra-messages-1.xsd" node="//xs:complexType[@name='OperandType']">
+	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='OperandType']">
     	<jxb:class name="Operand"/>
 	</jxb:bindings> 
 	
-	<jxb:bindings schemaLocation="./eXTra-messages-1.xsd" node="//xs:complexType[@name='PropertyType']">
+	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='PropertyType']">
     	<jxb:class name="Property"/>
 	</jxb:bindings> 
 	
-	<jxb:bindings schemaLocation="./eXTra-messages-1.xsd" node="//xs:complexType[@name='PropertySetType']">
+	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='PropertySetType']">
     	<jxb:class name="PropertySet"/>
 	</jxb:bindings>
 	
-	<jxb:bindings schemaLocation="./eXTra-messages-1.xsd" node="//xs:complexType[@name='ValueType']">
+	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ValueType']">
     	<jxb:class name="Value"/>
 	</jxb:bindings>
 
-	<jxb:bindings schemaLocation="./eXTra-messages-1.xsd" node="//xs:complexType[@name='ControlType']">
+	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ControlType']">
     	<jxb:class name="Control"/>
 	</jxb:bindings>
-	<jxb:bindings schemaLocation="./eXTra-messages-1.xsd" node="//xs:complexType[@name='DataRequestQueryType']">
+	
+	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='DataRequestQueryType']">
     	<jxb:class name="Query"/>
 	</jxb:bindings>
-	
-	
 </jxb:bindings> 

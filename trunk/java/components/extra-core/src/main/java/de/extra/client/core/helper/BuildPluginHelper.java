@@ -21,6 +21,11 @@ package de.extra.client.core.helper;
 import java.util.Iterator;
 import java.util.List;
 
+import de.drv.dsrv.extrastandard.namespace.components.AnyPlugInContainerType;
+import de.drv.dsrv.extrastandard.namespace.plugins.CompressionType;
+import de.drv.dsrv.extrastandard.namespace.plugins.DataTransforms;
+import de.drv.dsrv.extrastandard.namespace.plugins.EncryptionType;
+import de.drv.dsrv.extrastandard.namespace.plugins.SignatureType;
 import de.extra.client.core.model.CompressionPluginBean;
 import de.extra.client.core.model.CompressionPluginHelper;
 import de.extra.client.core.model.DataSourcePluginBean;
@@ -34,7 +39,6 @@ import de.extra.client.core.model.SignaturePluginHelper;
 public class BuildPluginHelper {
 
 	/**
-	 * 
 	 * Funktion zum Aufbau der Plugin-Informationen
 	 * 
 	 * @param pluginListe
@@ -55,7 +59,6 @@ public class BuildPluginHelper {
 			// Pruefe ob gewaehlte Bean eine CompressionPluginBean ist und
 			// befuelle
 			// mit Informationen
-
 			if (pluginBean instanceof CompressionPluginBean) {
 				CompressionPluginHelper compPluginHelper = new CompressionPluginHelper();
 

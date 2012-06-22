@@ -18,6 +18,8 @@
  */
 package de.extra.client.core.model;
 
+import de.drv.dsrv.extrastandard.namespace.plugins.AbstractTransformType;
+
 /**
  * Helper erstellt aus Bean Objekt vom Typ AbstractPlugInType zum Einbau in den
  * Request
