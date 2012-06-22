@@ -25,6 +25,9 @@ import javax.xml.bind.JAXBElement;
 
 import org.apache.log4j.Logger;
 
+import de.drv.dsrv.extrastandard.namespace.components.FlagCodeType;
+import de.drv.dsrv.extrastandard.namespace.components.FlagType;
+import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.plugins.outputplugin.config.ExtraConnectData;
 import de.extra.client.plugins.outputplugin.config.ExtraPropertiesHelper;
 import de.extra.client.plugins.outputplugin.config.ExtraSenderData;
@@ -58,7 +61,6 @@ public class HttpSender {
 	}
 
 	/**
-	 * 
 	 * Verarbeiten des Requests
 	 * 
 	 * @param request
@@ -66,7 +68,6 @@ public class HttpSender {
 	 * @return
 	 */
 	public boolean processOutput(String request) {
-
 		// Erzeuge Serverkonfiguration
 		ExtraConnectData ecd = new ExtraConnectData();
 		ExtraSenderData senderData = new ExtraSenderData();
@@ -81,7 +82,6 @@ public class HttpSender {
 			ecd.setSenderData(senderData);
 
 			try {
-
 				// Initialisiere Transport-Client
 				client = ExtraTransportFactory.loadTransportImpl(ecd);
 				client.initTransport(ecd);

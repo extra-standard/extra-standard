@@ -1,25 +1,6 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 package de.extra.client.plugins.outputplugin.filesystem;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
@@ -31,6 +12,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import de.drv.dsrv.extrastandard.namespace.components.DataType;
+import de.drv.dsrv.extrastandard.namespace.components.FlagType;
+import de.drv.dsrv.extrastandard.namespace.components.ReportType;
+import de.drv.dsrv.extrastandard.namespace.response.Package;
+import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.plugins.outputplugin.utils.IResponseSaver;
 import de.extra.client.plugins.outputplugin.utils.OutputPluginHelper;
 
@@ -47,13 +33,11 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 		this.reportOrdner = reportOrdner;
 	}
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1607616003288362662L;
 
 	private static Logger logger = Logger.getLogger(FileSystemHelper.class);
 
+	@Override
 	public boolean processResponse(XMLTransport extraResponse) {
 
 		pruefeVerzeichnis();
@@ -79,9 +63,9 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 				}
 
 			} else {
-
-				for (Iterator iter = packageList.iterator(); iter.hasNext();) {
-					Package extraPackage = (Package) iter.next();
+				for (Iterator<Package> iter = packageList.iterator(); iter
+						.hasNext();) {
+					Package extraPackage = iter.next();
 
 					String responseId = extraPackage.getPackageHeader()
 							.getResponseDetails().getResponseID().getValue();
@@ -105,13 +89,13 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 					if (packageBody != null) {
 						if (saveBodyToFilesystem(responseId, packageBody)) {
 							if (logger.isDebugEnabled()) {
-								logger.debug("Speichern f�r RespId "
+								logger.debug("Speichern für RespId "
 										+ responseId + " erfolgreich");
 							}
 						}
 					} else {
 
-						logger.error("PackageBody nicht gef�llt");
+						logger.error("PackageBody nicht gefüllt");
 
 					}
 				}
@@ -130,14 +114,12 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 			saveReportToFilesystem(report, responseId, requestId);
 
 			logger.info("Body leer");
-
 		}
 
 		return false;
 	}
 
 	private boolean saveBodyToFilesystem(String responseId, byte[] responseBody) {
-
 		boolean erfolgreichGespeichert = false;
 
 		StringBuffer dateiName = new StringBuffer();
@@ -149,24 +131,15 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 
 		File responseFile = new File(dateiName.toString());
 
-		FileOutputStream fos = null;
+		FileWriter fw = null;
 
 		try {
+			fw = new FileWriter(responseFile);
 
-			fos = new FileOutputStream(dateiName.toString());
-
-			fos.write(responseBody);
+			fw.write(new String(responseBody));
 
 		} catch (IOException e) {
 			logger.error("Fehler beim schreiben der Antwort", e);
-		} finally {
-
-			try {
-				fos.close();
-			} catch (IOException e) {
-				logger.error("Fehler beim schliessen des FileOutputStreams");
-			}
-
 		}
 
 		if (logger.isTraceEnabled()) {
@@ -225,7 +198,7 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 				fw.close();
 
 			} catch (IOException e) {
-				logger.error("Fehler beim schlie�en das FileWriters");
+				logger.error("Fehler beim schließen das FileWriters");
 			}
 
 		}
@@ -238,7 +211,6 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 	}
 
 	private String baueDateiname() {
-
 		Date now = Calendar.getInstance().getTime();
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HHmm");
@@ -249,7 +221,6 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 	}
 
 	private void pruefeVerzeichnis() {
-
 		File eingangsOrdner = new File(eingangOrdner);
 		File reportsOrdner = new File(reportOrdner);
 
@@ -265,7 +236,5 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 
 			reportsOrdner.mkdir();
 		}
-
 	}
-
 }

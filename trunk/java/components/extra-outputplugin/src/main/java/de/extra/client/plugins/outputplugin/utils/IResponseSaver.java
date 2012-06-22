@@ -18,6 +18,8 @@
  */
 package de.extra.client.plugins.outputplugin.utils;
 
+import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
+
 public interface IResponseSaver {
 
 	public boolean processResponse(XMLTransport extraResponse);
