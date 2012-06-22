@@ -20,16 +20,21 @@ package de.extra.client.core.model;
 
 import java.math.BigInteger;
 
+import de.drv.dsrv.extrastandard.namespace.plugins.AbstractTransformType;
+import de.drv.dsrv.extrastandard.namespace.plugins.CompressionAlgorithmType;
+import de.drv.dsrv.extrastandard.namespace.plugins.CompressionType;
+import de.drv.dsrv.extrastandard.namespace.plugins.DataType;
+
 /**
  * Helper erstellt aus Bean Objekt vom Typ AbstractPlugInType zum Einbau in den
  * Request
  */
 public class CompressionPluginHelper extends TransformHelperBase {
 
-	@Override
 	/**
 	 * Aufbau des Plugins
 	 */
+	@Override
 	public AbstractTransformType getTransformElement(
 			PlugindatenBean pluginDatenBean) {
 

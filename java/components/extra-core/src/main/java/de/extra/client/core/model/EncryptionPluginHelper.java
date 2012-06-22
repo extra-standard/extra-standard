@@ -20,6 +20,12 @@ package de.extra.client.core.model;
 
 import java.math.BigInteger;
 
+import de.drv.dsrv.extrastandard.namespace.plugins.AbstractTransformType;
+import de.drv.dsrv.extrastandard.namespace.plugins.DataType;
+import de.drv.dsrv.extrastandard.namespace.plugins.EncryptionAlgorithmType;
+import de.drv.dsrv.extrastandard.namespace.plugins.EncryptionType;
+import de.drv.dsrv.extrastandard.namespace.plugins.SpecificationType;
+
 /**
  * Helper erstellt aus Bean Objekt vom Typ AbstractPlugInType zum Einbau in den
  * Request

@@ -31,6 +31,7 @@ import org.apache.log4j.Logger;
 
 import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 
+import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.core.helper.RequestHelper;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.VersanddatenBean;

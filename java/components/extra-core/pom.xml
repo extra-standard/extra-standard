@@ -82,37 +82,19 @@
 							<goal>xsdtojava</goal>
 						</goals>
 						<configuration>
-							<sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
+							<sourceRoot>${basedir}/target/generated-sources/java</sourceRoot>
 							<xsdOptions>
 								<xsdOption>
-									<xsd>classpath:/schemas/wsdl/http.xsd</xsd>
-									<bindingFile>classpath:/schemas/wsdl/http.xjb</bindingFile>
-									<catalog>${basedir}/src/main/build-resources/catalog.cat</catalog>
+									<xsd>src/main/xsd/eXTra-plugins-1.xsd</xsd>
+									<bindingFile>src/main/xjb/binding-plugin.xjb</bindingFile>
 								</xsdOption>
 								<xsdOption>
-									<xsd>classpath:/schemas/wsdl/ws-addr.xsd</xsd>
-									<packagename>org.apache.cxf.ws.addressing</packagename>
+									<xsd>src/main/xsd/eXTra-request-1.xsd</xsd>
+									<bindingFile>src/main/xjb/binding-dataRequest.xjb</bindingFile>
 								</xsdOption>
 								<xsdOption>
-									<xsd>classpath:/schemas/wsdl/addressing.xsd</xsd>
-									<bindingFile>classpath:/schemas/wsdl/addressing.xjb</bindingFile>
-								</xsdOption>
-								<xsdOption>
-									<xsd>classpath:/schemas/configuration/security.xsd</xsd>
-									<bindingFile>classpath:/schemas/configuration/security.xjb</bindingFile>
-									<catalog>${basedir}/src/main/build-resources/catalog.cat</catalog>
-									<extensionArgs>
-										<extensionArg>-Xdv</extensionArg>
-									</extensionArgs>
-								</xsdOption>
-								<xsdOption>
-									<xsd>classpath:/schemas/wsdl/ws-addr-wsdl.xsd</xsd>
-									<bindingFile>classpath:/schemas/wsdl/ws-addr-wsdl.xjb</bindingFile>
-									<extension>true</extension>
-								</xsdOption>
-								<xsdOption>
-									<xsd>classpath:/schemas/wsdl/addressing200403.xsd</xsd>
-									<bindingFile>classpath:/schemas/wsdl/addressing200403.xjb</bindingFile>
+									<xsd>src/main/xsd/eXTra-response-1.xsd</xsd>
+									<bindingFile>src/main/xjb/binding-response.xjb</bindingFile>
 								</xsdOption>
 							</xsdOptions>
 						</configuration>
@@ -120,5 +102,41 @@
 				</executions>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.cxf
+										</groupId>
+										<artifactId>
+											cxf-xjc-plugin
+										</artifactId>
+										<versionRange>
+											[2.3.0,)
+										</versionRange>
+										<goals>
+											<goal>xsdtojava</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>
