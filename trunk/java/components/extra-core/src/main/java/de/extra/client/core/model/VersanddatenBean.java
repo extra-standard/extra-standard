@@ -20,6 +20,8 @@ package de.extra.client.core.model;
 
 import java.util.List;
 
+import de.drv.dsrv.extrastandard.namespace.messages.DataRequest;
+
 public class VersanddatenBean {
 
 	/**

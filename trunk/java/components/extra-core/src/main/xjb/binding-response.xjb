@@ -7,12 +7,10 @@
 
   	<jxb:bindings schemaLocation="../xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='TransportResponseType']">
     	<jxb:class name="XMLTransport"/>
-	</jxb:bindings>
-	 
+	</jxb:bindings> 
   	<jxb:bindings schemaLocation="../xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='TransportResponseHeaderType']">
     	<jxb:class name="TransportHeader"/>
 	</jxb:bindings> 
-	
   	<jxb:bindings schemaLocation="../xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='TransportResponseBodyType']">
     	<jxb:class name="TransportBody"/>
 	</jxb:bindings> 
@@ -20,11 +18,9 @@
   	<jxb:bindings schemaLocation="../xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='PackageResponseType']">
     	<jxb:class name="Package"/>
 	</jxb:bindings> 
-	
   	<jxb:bindings schemaLocation="../xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='PackageResponseHeaderType']">
     	<jxb:class name="PackageHeader"/>
 	</jxb:bindings> 	
-	
   	<jxb:bindings schemaLocation="../xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='PackageResponseBodyType']">
     	<jxb:class name="PackageBody"/>
 	</jxb:bindings>     
@@ -32,11 +28,9 @@
   	<jxb:bindings schemaLocation="../xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='MessageResponseType']">
     	<jxb:class name="Message"/>
 	</jxb:bindings> 
-	
   	<jxb:bindings schemaLocation="../xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='MessageResponseHeaderType']">
     	<jxb:class name="MessageHeader"/>
 	</jxb:bindings> 	
-	
   	<jxb:bindings schemaLocation="../xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='MessageResponseBodyType']">
     	<jxb:class name="MessageBody"/>
 	</jxb:bindings>
@@ -44,23 +38,25 @@
 	<jxb:bindings schemaLocation="../xsd/eXTra-plugins-1.xsd" node="//xs:complexType[@name='DataTransformsType']">
     	<jxb:class name="DataTransforms"/>
 	</jxb:bindings> 
-	
   	<jxb:bindings schemaLocation="../xsd/eXTra-plugins-1.xsd" node="//xs:complexType[@name='DataSourceType']">
     	<jxb:class name="DataSource"/>
 	</jxb:bindings> 
-
+  	<jxb:bindings schemaLocation="../xsd/eXTra-plugins-1.xsd" node="//xs:complexType[@name='CommunicationType']">
+    	<jxb:class name="Communication"/>
+	</jxb:bindings>
+        
     <jxb:bindings schemaLocation="../xsd/eXTra-components-1.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.components"/>
         </jxb:schemaBindings>
     </jxb:bindings>
-
-    <jxb:bindings schemaLocation="../xsd/eXTra-codelists-1.xsd" node="/xs:schema">
+    
+        <jxb:bindings schemaLocation="../xsd/eXTra-codelists-1.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.codelists"/>
         </jxb:schemaBindings>
     </jxb:bindings>
-        
+    
     <jxb:bindings schemaLocation="../xsd/eXTra-logging-1.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.logging"/>
@@ -83,5 +79,5 @@
         <jxb:schemaBindings>
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.xmldsig"/>
         </jxb:schemaBindings>
-    </jxb:bindings>
+    </jxb:bindings>   
 </jxb:bindings>

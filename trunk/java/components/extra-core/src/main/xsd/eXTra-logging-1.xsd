@@ -6,18 +6,17 @@
     @author  Michael Schäfer, Statistisches Bundesamt
     @version 1.1.0
     @state   FINAL
-    @date    2009-09-09
-    
-    @changed 2009-07-17 MS - Removed XHTML namespace
+    @date    2009-06-15
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:xcpt="http://www.extra-standard.de/namespace/components/1"
     xmlns:xcode="http://www.extra-standard.de/namespace/codelists/1"
     xmlns="http://www.extra-standard.de/namespace/logging/1"
     targetNamespace="http://www.extra-standard.de/namespace/logging/1"
     attributeFormDefault="unqualified"
     elementFormDefault="qualified"
-    version="1.1.0">
+    version="1.0.0">
 
     <!-- Import eXTra code lists -->
     
@@ -162,18 +161,20 @@
             <xs:element ref="LogSequence" minOccurs="1" maxOccurs="1"/>
             <xs:element ref="LogStream" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
-        <!-- @changed 2007-07-17 MS / Added type attribute  -->
-        <xs:attribute name="version" type="LoggingVersionType" use="required"/>
+        <xs:attribute name="version" use="required"/>
     </xs:complexType>
+
+    <!-- Model and attribute groups -->
     
     <!--
-        @added 2007-07-17 MS
+    <xs:group name="StateContentModel">
+        <xs:choice>
+            <xs:element ref="xcpt:NamedValue" minOccurs="1" maxOccurs="1" />
+            <xs:element ref="xcpt:XMLFragment" minOccurs="1" maxOccurs="1" />
+        </xs:choice>
+    </xs:group>
     -->
-    <xs:simpleType name="LoggingVersionType">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="1.0"/>
-        </xs:restriction>
-    </xs:simpleType>
+    
 
     <!-- Element declarations -->
     

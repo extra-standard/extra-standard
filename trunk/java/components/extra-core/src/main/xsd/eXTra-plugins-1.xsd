@@ -5,11 +5,12 @@
     @file    eXTra-plugins-1.xsd
     @author  Michael Schäfer, Statistisches Bundesamt
     @version 1.1.0
-    @state   FINAL
-    @date    2009-09-09
+    @state   DRAFT
+    @date    2009-06-15
 -->
 <xs:schema
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:xcode="http://www.extra-standard.de/namespace/codelists/1"
     xmlns="http://www.extra-standard.de/namespace/plugins/1"
     targetNamespace="http://www.extra-standard.de/namespace/plugins/1"
@@ -40,23 +41,17 @@
     </xs:complexType>
     
     <!-- AbstractTransformType
-        An abstract base type for defining types describing some sort of transform.
+        An abstract base type for defining types decribing some sort of transform.
         Attribute 'order' is taken over unchanged from version 1.0, but has slightly
-        changed its semantics when used together with element 'TransformedData'.
-        The content of the order attribute is then interpreted as the transform's id.
-        Transform ids are placed inside the attribute TransformedData/@transfroms'
-        in the order in which the transforms were applied to the data. Conversely,
-        the order of transforms can be derived from the order of ids placed in the
-        'transforms' atribute.
-        
-        When used without 'TransformedData', the semantics of attribute 'order' are the
+        changed its semantics if used together with element 'TransformedData'. Instead
+        of indicating the order of transforms it then serves as a transform id, and
+        the order of transforms is specified the 'transfroms' attribute of element
+        'TransformedData'. However, without 'TransformedData', the behaviour is the
         same as in version 1.0. 
         
         @created 2009-05-04 MS
-        
-        @changed 2009-07-17 MS / Made type abstract
     -->
-    <xs:complexType name="AbstractTransformType" abstract="true">
+    <xs:complexType name="AbstractTransformType">
         <xs:attribute name="order" type="xs:positiveInteger" use="required"/>
     </xs:complexType>
 
@@ -153,9 +148,9 @@
     <!-- TransformIDType
         Defines a data type for transform ids. Currently, a transform id must be an integer value
         for compatibility with the use of the ref:AbstractTransformType/@order attribute established
-        in version 1.0. This will remain so for all versions 1.x. In a future version beginning with
+        in version 1.0. This will remain so for all version 1.x. In a future version beginning with
         2.0, the ref:AbstractTransformType/@order may be replaced with ref:AbstractTransformType/@id,
-        and the type may be extended to accommodate a wider range of values.
+        and the data type may be extended to accommodate a wider range of values.
         
         @created 2009-05-04 MS
     -->

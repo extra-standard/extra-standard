@@ -51,6 +51,11 @@
 			<artifactId>spring-beans</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -85,8 +90,16 @@
 							<sourceRoot>${basedir}/target/generated-sources/java</sourceRoot>
 							<xsdOptions>
 								<xsdOption>
+									<xsd>src/main/xsd/eXTra-messages-1.xsd</xsd>
+									<bindingFile>src/main/xjb/binding-message.xjb</bindingFile>
+								</xsdOption>
+								<xsdOption>
 									<xsd>src/main/xsd/eXTra-plugins-1.xsd</xsd>
 									<bindingFile>src/main/xjb/binding-plugin.xjb</bindingFile>
+								</xsdOption>
+								<xsdOption>
+									<xsd>src/main/xsd/eXTra-request-1.xsd</xsd>
+									<bindingFile>src/main/xjb/binding-request.xjb</bindingFile>
 								</xsdOption>
 								<xsdOption>
 									<xsd>src/main/xsd/eXTra-response-1.xsd</xsd>
