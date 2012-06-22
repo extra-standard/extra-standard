@@ -16,4 +16,4 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
 = Bauen von Quellcode mit Hilfe von Maven =
   * Ausschecken von SVN unter: trunk/java
   * Im Ordner _java_ befindet sich eine Maven-Datei namens _pom.xml_. In dieser Datei werden sämtliche Module von eXTra mit der richtigen Reihenfolge beschrieben.
-  * Danach kann in diesem Ordner _java_ Maven-Befehl wie beispielsweise _clean package_ ausgeführt werden. Damit werden sämtliche Module in der richtigen Reihenfolge gebaut.
+  * Danach kann in diesem Ordner _java_ der Maven-Befehl wie beispielsweise _clean package_ ausgeführt werden. Damit werden sämtliche Module in der richtigen Reihenfolge gebaut.
