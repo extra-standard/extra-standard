@@ -23,4 +23,4 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
   * Im Prinzip können die Maven-Projekte, die vorher aus SVN ausgescheckt wurden, in Eclipse einfach als Maven-Projekt importiert werden. Zu beachten, dass das Plugin m2e vorher installiert werden muss.
 
 = Continuous Intergration (CI) Jenkins für eXTra-Projekt =
-  * Unter: https://codecrowd.ci.cloudbees.com/job/extra-modules steht eine !CloudBees-CI mit Jenkins für das Projekt eXTra zur Verfügung. Hier kann der Build-Status und Unit-Test-Status von eXTra beobachtet werden. *Der Zugriff auf die CI setzt derzeit vorraus, dass man sich vorher bei !CloudBees angemeldet hat*.
+  * Unter: https://codecrowd.ci.cloudbees.com/job/extra-modules steht eine !CloudBees-CI mit Jenkins für das Projekt eXTra zur Verfügung. Hier kann der Build-Status und Unit-Test-Status von eXTra beobachtet werden. *Der Zugriff auf die Jenkins-CI setzt derzeit vorraus, dass man sich vorher bei !CloudBees angemeldet hat*.
