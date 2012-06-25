@@ -20,19 +20,14 @@
 		</dependency>
 
 		<dependency>
-			<groupId>sun-jaxb</groupId>
+			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>2.2</version>
+			<version>2.2.5</version>
 		</dependency>
 		<dependency>
-			<groupId>sun-jaxb</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>sun-jaxb</groupId>
+			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-xjc</artifactId>
-			<version>2.2</version>
+			<version>2.2.5</version>
 		</dependency>
 
 		<dependency>
