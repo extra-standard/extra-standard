@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	<description>Contains the configuration for the NamespacePrefixMapper
+	</description>
+
+	<bean id="namespacePrefixMapper" class="de.drv.dsrv.extra.marshaller.NamespacePrefixMapper">
+		<property name="mappings">
+			<props>
+				<prop key="http://www.extra-standard.de/namespace/response/1">xres</prop>
+				<prop key="http://www.extra-standard.de/namespace/components/1">xcpt</prop>
+				<prop key="http://www.w3.org/2001/04/xmlenc#">xenc</prop>
+				<prop key="http://www.w3.org/2000/09/xmldsig#">ds</prop>
+				<prop key="http://www.extra-standard.de/namespace/logging/1">xlog</prop>
+				<prop key="http://www.extra-standard.de/namespace/plugins/1">xplg</prop>
+				<prop key="http://www.extra-standard.de/namespace/message/1">xmsg</prop>
+				<prop key="http://www.extra-standard.de/namespace/service/1">xsrv</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="jaxbMarshallerExtra" class="de.drv.dsrv.extra.marshaller.ExtraJaxb2Marshaller">
+		<property name="contextPath"
+			value="de.drv.dsrv.extrastandard.namespace.response:de.drv.dsrv.extrastandard.namespace.plugins:de.drv.dsrv.extrastandard.namespace.messages:de.drv.dsrv.extrastandard.namespace.error" />
+		<property name="namespacePrefixMapper" ref="namespacePrefixMapper" />
+		<property name="marshallerProperties">
+			<map>
+				<entry key="jaxb.encoding">
+					<value>UTF-8</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="jaxbUnMarshallerExtra" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="contextPath"
+			value="de.drv.dsrv.extrastandard.namespace.request:de.drv.dsrv.extrastandard.namespace.plugins:de.drv.dsrv.extrastandard.namespace.messages:de.drv.dsrv.extrastandard.namespace.error" />
+		<property name="marshallerProperties">
+			<map>
+				<entry key="jaxb.encoding">
+					<value>UTF-8</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>
