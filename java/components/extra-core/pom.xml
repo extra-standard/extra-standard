@@ -8,48 +8,13 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.springframework.version>3.1.1.RELEASE</org.springframework.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-impl</artifactId>
-			<version>2.2.5</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-xjc</artifactId>
-			<version>2.2.5</version>
-		</dependency>
-
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${org.springframework.version}</version>
+			<groupId>de.extra</groupId>
+			<artifactId>extra-schema</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
@@ -65,82 +30,6 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-xjc-plugin</artifactId>
-				<version>2.3.0</version>
-				<configuration>
-					<extensions>
-						<extension>org.apache.cxf.xjcplugins:cxf-xjc-dv:2.3.0</extension>
-					</extensions>
-				</configuration>
-				<executions>
-					<execution>
-						<id>generate-sources</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>xsdtojava</goal>
-						</goals>
-						<configuration>
-							<sourceRoot>${basedir}/target/generated-sources/java</sourceRoot>
-							<xsdOptions>
-								<xsdOption>
-									<xsd>src/main/xsd/eXTra-messages-1.xsd</xsd>
-									<bindingFile>src/main/xjb/binding-message.xjb</bindingFile>
-								</xsdOption>
-								<xsdOption>
-									<xsd>src/main/xsd/eXTra-plugins-1.xsd</xsd>
-									<bindingFile>src/main/xjb/binding-plugin.xjb</bindingFile>
-								</xsdOption>
-								<xsdOption>
-									<xsd>src/main/xsd/eXTra-request-1.xsd</xsd>
-									<bindingFile>src/main/xjb/binding-request.xjb</bindingFile>
-								</xsdOption>
-								<xsdOption>
-									<xsd>src/main/xsd/eXTra-response-1.xsd</xsd>
-									<bindingFile>src/main/xjb/binding-response.xjb</bindingFile>
-								</xsdOption>
-							</xsdOptions>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.apache.cxf
-										</groupId>
-										<artifactId>
-											cxf-xjc-plugin
-										</artifactId>
-										<versionRange>
-											[2.3.0,)
-										</versionRange>
-										<goals>
-											<goal>xsdtojava</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 </project>
