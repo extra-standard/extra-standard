@@ -8,7 +8,7 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
 = Entwicklungsumgebung =
   * Java 6
   * Maven 3
-  * Eclipse 3.7 mit Maven Plugin m2e
+  * Eclipse 3.7.2 mit Maven Plugin m2e oder SpringSource Tool Suite 2.9.2.RELEASE
   * Encoding UTF-8
 
 = Coding-Regeln =
@@ -24,3 +24,7 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
 
 = Continuous Intergration (CI) Jenkins für eXTra-Projekt =
   * Unter: https://codecrowd.ci.cloudbees.com/job/extra-modules steht eine !CloudBees-CI mit Jenkins für das Projekt eXTra zur Verfügung. Hier kann der Build-Status und Unit-Test-Status von eXTra beobachtet werden. *Der Zugriff auf die Jenkins-CI setzt derzeit vorraus, dass man sich vorher bei [http://www.cloudbees.com CloudBees] (kostenlos) angemeldet hat*. Anschließend bitte eine E-Mail an die [http://groups.google.com/group/extra-standard Mailingliste] schreiben, um freigeschaltet zu werden.
+  
+  * So sehen die Maven-Module in Jenkins CloudBees aus: 
+   
+http://extra-standard.googlecode.com/svn/wiki/images/jenkins-extra-cloudbees-modules.jpg
