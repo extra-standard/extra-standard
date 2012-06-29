@@ -54,7 +54,6 @@ public class ClientCore {
 	private static Logger logger = Logger.getLogger(ClientCore.class);
 
 	/**
-	 * 
 	 * Konstruktor
 	 * 
 	 * @param dataPlugin
@@ -81,7 +80,6 @@ public class ClientCore {
 	}
 
 	/**
-	 * 
 	 * Funktion in der der Request aufgebaut wird
 	 * 
 	 * @return StatusCode nach der Verarbeitung
@@ -94,10 +92,8 @@ public class ClientCore {
 		XMLTransport request = new XMLTransport();
 
 		try {
-
 			// Transformation XML zu String
-
-			// Laden der Parameter f�r JaxB
+			// Laden der Parameter für JaxB
 			JAXBContext context = JAXBContext
 					.newInstance("de.drv.dsrv.extrastandard.namespace.request:de.drv.dsrv.extrastandard.namespace.plugins:de.drv.dsrv.extrastandard.namespace.messages");
 
@@ -112,10 +108,8 @@ public class ClientCore {
 
 			VersanddatenBean versanddatenBean = null;
 
-			// �berpr�fen ob ein PackageLayer ben�tigt wird
-
+			// Überprüfen ob ein PackageLayer benötigt wird
 			if (!configFile.isPackageLayer()) {
-
 				for (Iterator<VersanddatenBean> iter = versandDatenListe
 						.iterator(); iter.hasNext();) {
 					versanddatenBean = iter.next();
@@ -124,28 +118,20 @@ public class ClientCore {
 							configFile);
 
 					Writer writer = new StringWriter();
-
 					marshaller.marshal(request, writer);
 
 					logger.trace("Ausgabe: " + writer.toString());
-					logger.debug("�bergabe an OutputPlugin");
+					logger.debug("Übergabe an OutputPlugin");
 
 					if (outputPlugin.outputData(writer.toString())) {
-
 						statusCode = 0;
-
 					} else {
-
 						logger.error("Fehler beim Versand des Requests");
-
 						statusCode = 9;
-
 					}
-
 				}
 
 			} else {
-
 				// TODO Aufbau der Logik zum Versand von mehreren Nachrichten
 				// als Package oder Message
 
