@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -53,8 +54,19 @@ public class ConfigPluginController {
 	public ConfigPluginController(final String profilDatei,
 			final ProfilHelper profilHelper) {
 		super();
-		this.profilDatei = profilDatei;
+		this.profilDatei = getAbsoluteFilename(profilDatei);
 		this.profilHelper = profilHelper;
+	}
+
+	public String getAbsoluteFilename(String profileFile) {
+		if (profileFile.startsWith("classpath:")) {
+			String filename = profileFile.replaceFirst("classpath:", "");
+			URL url = this.getClass().getClassLoader().getResource(filename);
+			String absolutePath = url.getPath();
+			return absolutePath;
+		} else {
+			return profileFile;
+		}
 	}
 
 	/**
