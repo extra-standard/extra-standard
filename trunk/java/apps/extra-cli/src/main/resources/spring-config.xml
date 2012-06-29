@@ -8,7 +8,7 @@
 		</property>
 	</bean>
 
-	<import resource="classpath:client.xml" />
+	<import resource="classpath:spring-client.xml" />
 	
 	<bean id="clientCore" class="de.extra.client.core.ClientCore">
 		<constructor-arg index="0" ref="dataPlugin" />

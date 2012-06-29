@@ -35,7 +35,7 @@ public class DataPlugin implements IDataPlugin {
 	/**
 	 * Pfad und Dateiname in der die SpringConfig.xml liegt
 	 */
-	private static String SPRING_XML_FILE_PATH = "configdataplugin.xml";
+	private static String SPRING_XML_FILE_PATH = "spring-configdataplugin.xml";
 
 	/**
 	 * Dateipfad der log4jProperties

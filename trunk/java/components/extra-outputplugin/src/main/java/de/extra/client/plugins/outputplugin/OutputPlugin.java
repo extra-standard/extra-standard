@@ -30,7 +30,7 @@ public class OutputPlugin implements IOutputPlugin {
 	/**
 	 * Pfad und Dateiname in der die SpringConfig.xml liegt
 	 */
-	private static String SPRING_XML_FILE_PATH = "outputpluginconfig.xml";
+	private static String SPRING_XML_FILE_PATH = "spring-outputpluginconfig.xml";
 
 	/**
 	 * Dateipfad der log4jProperties

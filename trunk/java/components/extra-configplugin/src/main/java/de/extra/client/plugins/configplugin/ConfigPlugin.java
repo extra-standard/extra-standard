@@ -32,7 +32,7 @@ public class ConfigPlugin implements IConfigPlugin {
 	/**
 	 * Pfad und Dateiname in der die SpringConfig.xml liegt
 	 */
-	private static String SPRING_XML_FILE_PATH = "configpluginconfig.xml";
+	private static String SPRING_XML_FILE_PATH = "spring-configpluginconfig.xml";
 
 	/**
 	 * Dateipfad der log4jProperties
