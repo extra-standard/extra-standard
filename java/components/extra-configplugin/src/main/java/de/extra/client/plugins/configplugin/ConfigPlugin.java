@@ -23,7 +23,6 @@ import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import de.extra.client.core.ExtraClient;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.plugin.IConfigPlugin;
 import de.extra.client.plugins.configplugin.controller.ConfigPluginController;
@@ -40,7 +39,7 @@ public class ConfigPlugin implements IConfigPlugin {
 	 */
 	private static final String LOG_4_J_FILE = "log4j.properties";
 
-	private static Logger logger = Logger.getLogger(ExtraClient.class);
+	private static Logger logger = Logger.getLogger(ConfigPlugin.class);
 
 	/**
 	 * Basismethode mit der die Verarbeitung der Konfigurationsdatei aufgerufen

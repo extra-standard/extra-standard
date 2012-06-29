@@ -16,17 +16,19 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.core;
+package de.extra.client.starter;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import de.extra.client.core.ClientCore;
+
 public class ExtraClient {
 
 	/**
-	 * Pfad und Dateiname in der die SpringConfig.xml liegt
+	 * Pfad und Dateiname in der die SpringConfig.xml liegt.
 	 */
 	private static String SPRING_XML_FILE_PATH = "SpringConfig.xml";
 
@@ -38,8 +40,7 @@ public class ExtraClient {
 	private static Logger logger = Logger.getLogger(ExtraClient.class);
 
 	/**
-	 * 
-	 * Startmethode zum Aufruf aus dem startenden Programm
+	 * Startmethode zum Aufruf aus dem startenden Programm.
 	 * 
 	 * @return Statuscode
 	 */
@@ -59,7 +60,7 @@ public class ExtraClient {
 			logger.error("Laden der Beans fehlgeschlagen", e);
 		}
 
-		// Steuerung an Controller �bergeben
+		// Steuerung an Controller übergeben
 		logger.info("Beginn der Verarbeitung");
 
 		ClientCore clientCore = (ClientCore) applicationContext

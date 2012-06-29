@@ -20,8 +20,6 @@ package de.extra.client.starter;
 
 import org.apache.log4j.Logger;
 
-import de.extra.client.core.ExtraClient;
-
 public class ClientStarter {
 
 	/**

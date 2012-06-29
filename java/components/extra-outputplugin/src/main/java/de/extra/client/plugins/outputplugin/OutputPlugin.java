@@ -23,7 +23,6 @@ import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import de.extra.client.core.ExtraClient;
 import de.extra.client.core.plugin.IOutputPlugin;
 
 public class OutputPlugin implements IOutputPlugin {
@@ -31,16 +30,14 @@ public class OutputPlugin implements IOutputPlugin {
 	/**
 	 * Pfad und Dateiname in der die SpringConfig.xml liegt
 	 */
-
 	private static String SPRING_XML_FILE_PATH = "outputPluginConfig.xml";
 
 	/**
 	 * Dateipfad der log4jProperties
 	 */
-
 	private static final String LOG_4_J_FILE = "log4j.properties";
 
-	private static Logger logger = Logger.getLogger(ExtraClient.class);
+	private static Logger logger = Logger.getLogger(OutputPlugin.class);
 
 	@Override
 	public boolean outputData(String request) {
@@ -58,5 +55,4 @@ public class OutputPlugin implements IOutputPlugin {
 
 		return sender.processOutput(request);
 	}
-
 }

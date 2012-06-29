@@ -16,6 +16,26 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.extra</groupId>
+			<artifactId>extra-configplugin</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.extra</groupId>
+			<artifactId>extra-dataplugin</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.extra</groupId>
+			<artifactId>extra-outputplugin</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.extra</groupId>
+			<artifactId>extra-queryplugin</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.extra</groupId>
 			<artifactId>extra-core</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>

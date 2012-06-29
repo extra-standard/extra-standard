@@ -25,7 +25,6 @@ import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import de.extra.client.core.ExtraClient;
 import de.extra.client.core.model.VersanddatenBean;
 import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
@@ -42,7 +41,7 @@ public class QueryPlugin implements IDataPlugin {
 	 */
 	private static final String LOG_4_J_FILE = "log4j.properties";
 
-	private static Logger logger = Logger.getLogger(ExtraClient.class);
+	private static Logger logger = Logger.getLogger(QueryPlugin.class);
 
 	@Override
 	public List<VersanddatenBean> getVersandDaten() {
@@ -55,14 +54,11 @@ public class QueryPlugin implements IDataPlugin {
 				SPRING_XML_FILE_PATH);
 
 		// Laden des Controlers
-
 		IQueryPluginController controller = (IQueryPluginController) applicationContext
 				.getBean("queryController");
 
 		if (logger.isDebugEnabled()) {
-
 			logger.debug("Erstelle Query");
-
 		}
 
 		return controller.processQuery();
