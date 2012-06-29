@@ -8,15 +8,23 @@
 		</property>
 	</bean>
 
-	<import resource="classpath:de/extra/client/core/client-core.xml" />
+	<import resource="classpath:client.xml" />
+	
+	<bean id="clientCore" class="de.extra.client.core.ClientCore">
+		<constructor-arg index="0" ref="dataPlugin" />
+		<constructor-arg index="1" ref="configPlugin" />
+		<constructor-arg index="2" ref="outputPlugin" />
+		<constructor-arg index="3" ref="namespacePrefixMapper" />
+		<constructor-arg index="4" ref="requestHelper" />
+	</bean>	
 
-	<bean id="configPlugin" class="de.extra.client.plugins.configPlugin.ConfigPlugin">
+	<bean id="configPlugin" class="de.extra.client.plugins.configplugin.ConfigPlugin">
 	</bean>
 	<!-- <bean id="dataPlugin" class="de.extra.client.plugins.dataPlugin.DataPlugin"> 
 		</bean> -->
-	<bean id="dataPlugin" class="de.extra.client.plugins.dataPlugin.QueryPlugin">
+	<bean id="dataPlugin" class="de.extra.client.plugins.queryplugin.QueryPlugin">
 	</bean>
 
-	<bean id="outputPlugin" class="de.extra.client.plugins.outputPlugin.OutputPlugin">
+	<bean id="outputPlugin" class="de.extra.client.plugins.outputplugin.OutputPlugin">
 	</bean>
 </beans>
