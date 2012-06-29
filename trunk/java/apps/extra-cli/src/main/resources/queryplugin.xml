@@ -10,11 +10,11 @@
 	</bean>
 
 	<bean id="queryController"
-		class="de.extra.client.plugins.dataPlugin.controller.QueryPluginController">
+		class="de.extra.client.plugins.queryplugin.controller.QueryPluginController">
 		<constructor-arg index="0" ref="queryHelper" />
 		<constructor-arg index="1" value="${startId}" />
 		<constructor-arg index="2" value="${packageLimit}" />
 	</bean>
 
-	<bean id="queryHelper" class="de.extra.client.plugins.dataPlugin.helper.QueryHelper" />
+	<bean id="queryHelper" class="de.extra.client.plugins.queryplugin.helper.QueryHelper" />
 </beans>

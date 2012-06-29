@@ -2,14 +2,14 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
           "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
-	<bean id="httpBean" class="de.extra.client.plugins.outputPlugin.HttpSender">
+	<bean id="httpBean" class="de.extra.client.plugins.outputplugin.HttpSender">
 		<constructor-arg index="0" value="${serverSettingLoc}" />
 		<constructor-arg index="1" value="${senderSettungLoc}" />
 		<constructor-arg index="2" ref="fileSystemHelper" />
 	</bean>
 
 	<bean id="fileSystemHelper"
-		class="de.extra.client.plugins.outputPlugin.filesystem.FileSystemHelper">
+		class="de.extra.client.plugins.outputplugin.filesystem.FileSystemHelper">
 		<constructor-arg index="0" value="${eingangOrdner}" />
 		<constructor-arg index="1" value="${reportOrdner}" />
 	</bean>

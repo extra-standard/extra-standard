@@ -10,14 +10,14 @@
 	</bean>
 
 	<bean id="configController"
-		class="de.extra.client.plugins.configPlugin.controller.ConfigPluginController">
+		class="de.extra.client.plugins.configplugin.controller.ConfigPluginController">
 		<constructor-arg index="0" value="${profilOrdner}" />
 		<constructor-arg index="1" ref="profilHelper" />
 
 	</bean>
 
 	<bean id="profilHelper"
-		class="de.extra.client.plugins.configPlugin.helper.ProfilHelper">
+		class="de.extra.client.plugins.configplugin.helper.ProfilHelper">
 		<constructor-arg index="0">
 			<props>
 				<prop key="testIndicator">${testIndicator}</prop>
