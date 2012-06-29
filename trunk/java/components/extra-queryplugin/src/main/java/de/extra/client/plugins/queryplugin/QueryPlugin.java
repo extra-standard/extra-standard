@@ -34,7 +34,7 @@ public class QueryPlugin implements IDataPlugin {
 	/**
 	 * Pfad und Dateiname in der die SpringConfig.xml liegt
 	 */
-	private static String SPRING_XML_FILE_PATH = "QueryPlugin.xml";
+	private static String SPRING_XML_FILE_PATH = "queryplugin.xml";
 
 	/**
 	 * Dateipfad der log4jProperties
