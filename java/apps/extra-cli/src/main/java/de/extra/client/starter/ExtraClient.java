@@ -28,9 +28,9 @@ import de.extra.client.core.ClientCore;
 public class ExtraClient {
 
 	/**
-	 * Pfad und Dateiname in der die SpringConfig.xml liegt.
+	 * Pfad und Dateiname in der die springconfig.xml liegt.
 	 */
-	private static String SPRING_XML_FILE_PATH = "SpringConfig.xml";
+	private static String SPRING_XML_FILE_PATH = "springconfig.xml";
 
 	/**
 	 * Dateipfad der log4jProperties

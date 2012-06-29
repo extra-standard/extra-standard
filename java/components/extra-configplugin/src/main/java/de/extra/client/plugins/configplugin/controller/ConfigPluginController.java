@@ -74,6 +74,7 @@ public class ConfigPluginController {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Unmarshaling der Profildatei");
 			}
+
 			// Unmarshalling der Profildatei
 			ProfilkonfigurationType profilConfig = unmarshalConfig(profilDatei);
 			cfb = profilHelper.configFileBeanLoader(profilConfig.getElement());
@@ -96,7 +97,7 @@ public class ConfigPluginController {
 
 		// Erzeugen der RequestId
 		/*
-		 * Auskommentiert, da RequestId �ber den Auftragssatz der Nutzdatei
+		 * Auskommentiert, da RequestId über den Auftragssatz der Nutzdatei
 		 * mitgeliefert wird
 		 * 
 		 * String requestId = profilHelper.generateReqId();
