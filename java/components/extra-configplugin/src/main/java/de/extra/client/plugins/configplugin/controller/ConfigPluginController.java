@@ -72,21 +72,11 @@ public class ConfigPluginController {
 			in = new FileInputStream(profilDatei);
 
 			if (logger.isDebugEnabled()) {
-
 				logger.debug("Unmarshaling der Profildatei");
 			}
-			if (in != null) {
-
-				// Unmarshalling der Profildatei
-				ProfilkonfigurationType profilConfig = unmarshalConfig(profilDatei);
-
-				cfb = profilHelper.configFileBeanLoader(profilConfig
-						.getElement());
-
-			} else {
-				logger.error("InputStream null");
-			}
-
+			// Unmarshalling der Profildatei
+			ProfilkonfigurationType profilConfig = unmarshalConfig(profilDatei);
+			cfb = profilHelper.configFileBeanLoader(profilConfig.getElement());
 		} catch (FileNotFoundException e) {
 			logger.error("ProfilDatei konnte nicht gefunden werden", e);
 		} finally {
@@ -120,7 +110,6 @@ public class ConfigPluginController {
 	}
 
 	/**
-	 * 
 	 * Unmarshalling der Profildatei
 	 * 
 	 * @param dateiName
@@ -129,7 +118,6 @@ public class ConfigPluginController {
 	 */
 	private ProfilkonfigurationType unmarshalConfig(String dateiName) {
 		ProfilkonfigurationType pkt = null;
-
 		JAXBContext jc;
 		try {
 			// Initialisieren des JaxB-Contextes

@@ -18,29 +18,30 @@
  */
 package de.extra.client.starter;
 
-import org.apache.log4j.Logger;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-public class ClientStarter {
+import org.junit.Before;
+import org.junit.Test;
 
-	private static Logger logger = Logger.getLogger(ClientStarter.class);
+import de.extra.client.core.ClientCore;
 
-	public static void main(String[] args) {
-		ExtraClient extraClient = new ExtraClient();
-		int returnCode = 0;
-		try {
-			returnCode = extraClient.execute();
-			if (returnCode != 0) {
-				logger.error("Fehler bei der Verarbeitung: " + returnCode);
+public class ExtraClientTest {
 
-			} else {
-				logger.info("Verarbeitung erfolgreich");
-			}
+	private ExtraClient extraClient;
 
-		} catch (Exception e) {
-			logger.error("Fehler bei der Verarbeitung", e);
-			returnCode = 9;
+	@Before
+	public void setUp() throws Exception {
+		extraClient = new ExtraClient();
+	}
+
+	@Test
+	public void testExecute() throws Exception {
+		int returnCode = extraClient.execute();
+		if (returnCode == ClientCore.STATUS_CODE_OK) {
+			assertTrue(true);
+		} else {
+			fail("Fehler bei der Verarbeitung!");
 		}
-
-		System.exit(returnCode);
 	}
 }

@@ -41,6 +41,10 @@ import de.extra.client.core.plugin.IOutputPlugin;
 
 public class ClientCore {
 
+	public static final int STATUS_CODE_OK = 0;
+
+	public static final int STATUS_CODE_ERROR = 9;
+
 	private final IDataPlugin dataPlugin;
 
 	private final IConfigPlugin configPlugin;
@@ -88,7 +92,7 @@ public class ClientCore {
 		List<VersanddatenBean> versandDatenListe = dataPlugin.getVersandDaten();
 		ConfigFileBean configFile = configPlugin.getConfigFile();
 
-		int statusCode = 9;
+		int statusCode = STATUS_CODE_ERROR;
 		XMLTransport request = new XMLTransport();
 
 		try {
@@ -124,10 +128,10 @@ public class ClientCore {
 					logger.debug("Übergabe an OutputPlugin");
 
 					if (outputPlugin.outputData(writer.toString())) {
-						statusCode = 0;
+						statusCode = STATUS_CODE_OK;
 					} else {
 						logger.error("Fehler beim Versand des Requests");
-						statusCode = 9;
+						statusCode = STATUS_CODE_ERROR;
 					}
 				}
 
