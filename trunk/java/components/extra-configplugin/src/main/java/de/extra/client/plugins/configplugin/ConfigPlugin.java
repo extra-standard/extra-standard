@@ -47,7 +47,6 @@ public class ConfigPlugin implements IConfigPlugin {
 	 */
 	@Override
 	public ConfigFileBean getConfigFile() {
-
 		// Laden des Log4Files
 		PropertyConfigurator.configureAndWatch(LOG_4_J_FILE);
 		logger.info("Start des Auslesens der Config-Datei");
