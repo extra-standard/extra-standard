@@ -17,7 +17,7 @@ import de.extra.client.core.model.VersanddatenBean;
  */
 package de.extra.client.core.helper;
 
-import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
+import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.VersanddatenBean;
 

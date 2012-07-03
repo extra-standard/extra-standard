@@ -30,7 +30,7 @@ import de.drv.dsrv.extrastandard.namespace.components.ReceiverType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.SenderType;
 import de.drv.dsrv.extrastandard.namespace.components.TextType;
-import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
+import de.drv.dsrv.extrastandard.namespace.request.TransportHeader;
 import de.extra.client.core.model.ConfigFileBean;
 
 public class BuildHeaderHelper {

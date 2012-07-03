@@ -31,7 +31,7 @@ import org.apache.log4j.Logger;
 
 import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 
-import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
+import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
 import de.extra.client.core.helper.RequestHelper;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.VersanddatenBean;
@@ -124,7 +124,7 @@ public class ClientCore {
 					Writer writer = new StringWriter();
 					marshaller.marshal(request, writer);
 
-					logger.trace("Ausgabe: " + writer.toString());
+					logger.debug("Ausgabe: " + writer.toString());
 					logger.debug("Übergabe an OutputPlugin");
 
 					if (outputPlugin.outputData(writer.toString())) {
