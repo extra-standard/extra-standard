@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.drv.dsrv.extrastandard.namespace.components.ElementSequenceType;
-import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
+import de.drv.dsrv.extrastandard.namespace.request.TransportBody;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.VersanddatenBean;
 
