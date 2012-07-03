@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="GrammatikProfil.xsd">
-  <Name>Name</Name>
-  <Elternelement>Elternelement</Elternelement>
-</element>
