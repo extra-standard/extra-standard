@@ -18,12 +18,17 @@
  */
 package de.extra.client.plugins.outputplugin.dummy;
 
+import org.apache.log4j.Logger;
+
 import de.extra.client.core.plugin.IOutputPlugin;
 
 public class OutputPlugin implements IOutputPlugin {
+	
+	private static final Logger logger = Logger.getLogger(OutputPlugin.class);
 
 	@Override
 	public boolean outputData(String request) {
+		logger.info(request);
 		return true;
 	}
 }
