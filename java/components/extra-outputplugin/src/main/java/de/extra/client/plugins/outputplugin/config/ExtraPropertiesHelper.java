@@ -34,6 +34,7 @@ import de.extra.client.plugins.outputplugin.utils.PropertiesHelperException;
 public class ExtraPropertiesHelper {
 
 	/**
+	 * Get the property.
 	 * 
 	 * @param fileName
 	 * @param propertyName
@@ -61,6 +62,7 @@ public class ExtraPropertiesHelper {
 	}
 
 	/**
+	 * Process the property file.
 	 * 
 	 * @param storageObject
 	 * @param fileName

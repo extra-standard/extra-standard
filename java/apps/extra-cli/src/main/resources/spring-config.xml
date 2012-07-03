@@ -25,6 +25,6 @@
 	<bean id="dataPlugin" class="de.extra.client.plugins.queryplugin.QueryPlugin">
 	</bean>
 
-	<bean id="outputPlugin" class="de.extra.client.plugins.outputplugin.OutputPlugin">
+	<bean id="outputPlugin" class="de.extra.client.plugins.outputplugin.dummy.OutputPlugin">
 	</bean>
 </beans>
