@@ -71,46 +71,54 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-xjc-plugin</artifactId>
-				<version>2.3.0</version>
-				<configuration>
-					<extensions>
-						<extension>org.apache.cxf.xjcplugins:cxf-xjc-dv:2.3.0</extension>
-					</extensions>
-				</configuration>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>0.8.1</version>
 				<executions>
 					<execution>
-						<id>generate-sources</id>
-						<phase>generate-sources</phase>
+						<id>generate-extra</id>
 						<goals>
-							<goal>xsdtojava</goal>
+							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<sourceRoot>${basedir}/target/generated-sources/java</sourceRoot>
-							<xsdOptions>
-								<xsdOption>
-									<xsd>src/main/xsd/eXTra-messages-1.xsd</xsd>
-									<bindingFile>src/main/xjb/binding-message.xjb</bindingFile>
-								</xsdOption>
-								<xsdOption>
-									<xsd>src/main/xsd/eXTra-plugins-1.xsd</xsd>
-									<bindingFile>src/main/xjb/binding-plugin.xjb</bindingFile>
-								</xsdOption>
-								<xsdOption>
-									<xsd>src/main/xsd/eXTra-request-1.xsd</xsd>
-									<bindingFile>src/main/xjb/binding-request.xjb</bindingFile>
-								</xsdOption>
-								<xsdOption>
-									<xsd>src/main/xsd/eXTra-response-1.xsd</xsd>
-									<bindingFile>src/main/xjb/binding-response.xjb</bindingFile>
-								</xsdOption>
-							</xsdOptions>
+							<strict>false</strict>
+							<schemaDirectory>src/main/xsd</schemaDirectory>
+							<schemaIncludes>
+								<value>eXTra-messages-1.xsd</value>
+								<value>eXTra-plugins-1.xsd</value>
+								<value>eXTra-request-1.xsd</value>
+								<value>eXTra-response-1.xsd</value>
+							</schemaIncludes>
+							<bindingDirectory>src/main/xjb</bindingDirectory>
+							<bindingIncludes>
+								<include>binding-message.xjb</include>
+								<include>binding-plugin.xjb</include>
+								<include>binding-request.xjb</include>
+								<include>binding-response.xjb</include>
+							</bindingIncludes>
+							<extension>true</extension>
+							<generateDirectory>${basedir}/target/generated-sources/jaxb</generateDirectory>
+							<args>
+								<arg>-Xannotate</arg>
+							</args>
+							<plugins>
+								<plugin>
+									<groupId>org.jvnet.jaxb2_commons</groupId>
+									<artifactId>jaxb2-basics</artifactId>
+									<version>0.6.0</version>
+								</plugin>
+								<plugin>
+									<groupId>org.jvnet.jaxb2_commons</groupId>
+									<artifactId>jaxb2-basics-annotate</artifactId>
+									<version>0.6.0</version>
+								</plugin>
+							</plugins>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
+
 		<pluginManagement>
 			<plugins>
 				<!--This plugin's configuration is used to store Eclipse m2e settings 
@@ -125,16 +133,16 @@
 								<pluginExecution>
 									<pluginExecutionFilter>
 										<groupId>
-											org.apache.cxf
+											org.jvnet.jaxb2.maven2
 										</groupId>
 										<artifactId>
-											cxf-xjc-plugin
+											maven-jaxb2-plugin
 										</artifactId>
 										<versionRange>
-											[2.3.0,)
+											[0.7.4,)
 										</versionRange>
 										<goals>
-											<goal>xsdtojava</goal>
+											<goal>generate</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
