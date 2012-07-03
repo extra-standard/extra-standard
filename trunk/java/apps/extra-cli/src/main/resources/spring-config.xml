@@ -4,7 +4,7 @@
 <beans>
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:eXTraClient.properties">
+		<property name="location" value="classpath:extraclient.properties">
 		</property>
 	</bean>
 
