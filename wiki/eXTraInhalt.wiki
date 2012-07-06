@@ -1,5 +1,6 @@
 #summary Inhaltsverzeichnis für SideBar
 
   * [eXTraEinfuehrung Einführung]
-  * [eXTraArchitektur eXTra-Architektur]
+  * [eXTraArchitektur Architektur]
+  * [eXTraArchitekturAnwendung Anwendungsarchitektur]
   * [eXTraEntwProzess Entwicklungsprozess]
