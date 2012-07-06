@@ -1,13 +1,18 @@
-eXTra apps
+ï»¿eXTra apps
 
-Hier befinden sich sämtliche Anwendungen von eXTra.
+Hier befinden sich sï¿½mtliche Anwendungen von eXTra.
 
 extra-cli
 ----------------------------------
-eXTra CLI (Command Line Interface) ist eine Batch-Anwendung für eXTra, sowohl für
+eXTra CLI (Command Line Interface) ist eine Batch-Anwendung fÃ¼r eXTra, sowohl fÃ¼r
 Client als auch Server.
+
+extra-profiling
+----------------------------------
+eXTra Profiling Tool ist eine Anwendung (derzeit eine Swing-Anwendung) fÃ¼r 
+die Generierung der eXTra-Profile.
 
 extra-webapp
 ----------------------------------
-eXTra Webapp (Webanwendung) stellt eine Webanwendung sowohl für Client als auch Server 
-für eXTra zur Verfügung.
+eXTra Webapp (Webanwendung) stellt eine Webanwendung sowohl fÃ¼r Client als auch Server 
+fÃ¼r eXTra zur Verfï¿½gung.

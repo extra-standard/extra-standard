@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xreq:XMLTransport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xreq="http://www.extra-standard.de/namespace/request/1"
+    xmlns:xcpt="http://www.extra-standard.de/namespace/components/1"
+    xmlns:xlog="http://www.extra-standard.de/namespace/logging/1"
+    version="1.1"
+    profile="http://www.extra-standard.de/profile/TESTPROFILE/1">
+    <xreq:TransportHeader>
+        <xcpt:TestIndicator>http://www.extra-standard.de/test/NONE</xcpt:TestIndicator>
+        <xcpt:Sender>
+            <xcpt:SenderID></xcpt:SenderID>
+        </xcpt:Sender>
+       <xcpt:Receiver>
+           <xcpt:ReceiverID></xcpt:ReceiverID>
+       </xcpt:Receiver>
+        <xcpt:RequestDetails>
+            <xcpt:RequestID>1111111</xcpt:RequestID>
+        </xcpt:RequestDetails>
+    </xreq:TransportHeader>
+    <xreq:TransportBody>
+        <xcpt:Data>
+            <xcpt:AnyXML></xcpt:AnyXML>
+        </xcpt:Data>
+    </xreq:TransportBody>
+    <xlog:Logging version="1.0">
+        <xlog:LogSequence>
+            <xcpt:TimeStamp>2007-06-06T00:00:00</xcpt:TimeStamp>
+            <xcpt:ComponentID>CORE.KONVERT 1.5</xcpt:ComponentID>
+            <xlog:Event id="http://www.extra-standard.de/event/RECEIVE" name="Dateneingang">
+                <xcpt:TimeStamp>2007-06-06T00:00:01</xcpt:TimeStamp>
+                <xcpt:ComponentID>CORE.SERVER</xcpt:ComponentID>
+            </xlog:Event>
+            <xlog:Operation completionCode="0" successful="true" id="http://www.extra-standard.de/operation/VALIDATE_XML" description="Validierung Transferobjekt">
+                <xlog:Parameter class="http://www.extra.standard.de/class/SCHEMA" usage="http://www.extra-standard.de/usage/IN" description="XSD Schema" >file://...</xlog:Parameter>
+            </xlog:Operation>
+            <xlog:Operation completionCode="0" successful="true" id="http://www.extra-standard.de/operation/DECRYPT" description="Entschluesselung">
+                <xlog:Object class="http://www.extra.standard.de/class/XML_CONTENT" location="XMLTransport/TransferBody"/>
+            </xlog:Operation>
+            <xlog:Operation completionCode="12" successful="false" id="http://www.destatis.de/operation/VALIDATE" name="Pruefung der Rohdaten">
+                <xcpt:ComponentID>CORE.INSPECTOR 1.5</xcpt:ComponentID>
+                <xlog:Exception>
+                    <xcpt:TimeStamp>2007-06-06T00:00:01</xcpt:TimeStamp>
+                    <xlog:Message>
+                        <xcpt:TimeStamp>2007-06-06T00:00:01</xcpt:TimeStamp>
+                        <xcpt:Text>Invalid data</xcpt:Text>
+                    </xlog:Message>
+                </xlog:Exception>
+            </xlog:Operation>
+        </xlog:LogSequence>
+    </xlog:Logging>
+</xreq:XMLTransport>

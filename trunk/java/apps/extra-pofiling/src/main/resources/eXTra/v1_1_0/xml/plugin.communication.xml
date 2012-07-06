@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xplg:Communication xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" version="1.0">
+    <xplg:X509ReplyCertificate>
+        <xplg:Value>MIIDzTCCArUAXFw=</xplg:Value>
+    </xplg:X509ReplyCertificate>
+</xplg:Communication>

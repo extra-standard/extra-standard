@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xres:XMLTransport version="1.1" profile="http://www.extra-standard.de/profile/ELENA/1.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.extra-standard.de/namespace/response/1 ../prof/xsd/eXTra-response-elena-abholen-erfolg.xsd"
+    xmlns:xres="http://www.extra-standard.de/namespace/response/1"
+    xmlns:xcpt="http://www.extra-standard.de/namespace/components/1"
+    xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1">
+<!--			
+    Auslieferung von Rueckmeldungen des Fachverfahrens durch die ZSS (DeliveryServer)
+-->
+    <xres:TransportHeader>
+        <xcpt:TestIndicator>http://www.extra-standard.de/test/NONE</xcpt:TestIndicator>
+        <xcpt:Sender>
+            <xcpt:SenderID class="Betriebsnummer">77770000</xcpt:SenderID>
+            <xcpt:Name>Softwarehaus</xcpt:Name>
+        </xcpt:Sender>
+        <xcpt:Receiver>
+            <xcpt:ReceiverID class="Betriebsnummer">77772222</xcpt:ReceiverID>
+            <xcpt:Name>ELENA-ZSS</xcpt:Name>
+        </xcpt:Receiver>
+        <xcpt:RequestDetails>
+            <xcpt:RequestID class="0">20081218102636097574</xcpt:RequestID>
+            <xcpt:TimeStamp>2008-12-18T10:26:36</xcpt:TimeStamp>
+            <xcpt:Application>
+                <xcpt:Product>EDI-Server V1.25</xcpt:Product>
+                <xcpt:Manufacturer>Softwarehaus</xcpt:Manufacturer>
+            </xcpt:Application>
+
+<!--  Procedure beim Verfahren: elena_mvds        -->
+			<xcpt:Procedure>http://www.extra-standard.de/procedures/elena_mvds</xcpt:Procedure>
+
+<!--  Procedure beim Verfahren: elena_dsvv
+			<xcpt:Procedure>http://www.extra-standard.de/procedures/elena_dsvv</xcpt:Procedure>
+-->
+
+            <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
+            <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
+        </xcpt:RequestDetails>
+        <xcpt:ResponseDetails>
+            <xcpt:ResponseID>7260</xcpt:ResponseID>
+            <xcpt:TimeStamp>2008-12-18T10:26:39</xcpt:TimeStamp>
+            <xcpt:Report highestWeight="http://www.extra-standard.de/weight/INFO">
+                <xcpt:Flag weight="http://www.extra-standard.de/weight/INFO">
+                    <xcpt:Code>T010</xcpt:Code>
+                    <xcpt:Text>TransportEbene: Antwort ok</xcpt:Text>
+                </xcpt:Flag>
+            </xcpt:Report>
+        </xcpt:ResponseDetails>
+    </xres:TransportHeader>
+    <xres:TransportBody>
+<!-- 
+   Rueckmeldung mit 2 Packages mit jeweils gleicher RequestID (die RequestID im PackageHeader entspricht 
+   der RequestID des TransportHeaders, weil alles auf diesen einen Request zurueckgeht) und 
+   unterschiedlichen ResponseDetails, sowie unterschiedlichen ResponseIDs, Timestamps 
+
+   Package 1
+-->
+        <xres:Package>
+            <xres:PackageHeader>
+                <xcpt:Sender>
+                    <xcpt:SenderID class="Betriebsnummer">77770000</xcpt:SenderID>
+                    <xcpt:Name>Softwarehaus</xcpt:Name>
+                </xcpt:Sender>
+                <xcpt:Receiver>
+                    <xcpt:ReceiverID class="Betriebsnummer">77772222</xcpt:ReceiverID>
+                    <xcpt:Name>ELENA-ZSS</xcpt:Name>
+                </xcpt:Receiver>
+                <xcpt:RequestDetails>
+                    <xcpt:RequestID class="0">20081218102636097574</xcpt:RequestID>
+                    <xcpt:TimeStamp>2008-12-18T10:26:36</xcpt:TimeStamp>
+                    <xcpt:Application>
+                        <xcpt:Product>EDI-Server V1.25</xcpt:Product>
+                        <xcpt:Manufacturer>Softwarehaus</xcpt:Manufacturer>
+                    </xcpt:Application>
+
+<!--  Procedure beim Verfahren: elena_mvds        -->
+                    <xcpt:Procedure>http://www.extra-standard.de/procedures/elena_mvds</xcpt:Procedure>
+
+<!--  Procedure beim Verfahren: elena_dsvv
+		    <xcpt:Procedure>http://www.extra-standard.de/procedures/elena_dsvv</xcpt:Procedure>
+-->
+
+                    <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
+                    <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
+                </xcpt:RequestDetails>
+                <xcpt:ResponseDetails>
+                    <xcpt:ResponseID>7261</xcpt:ResponseID>
+                    <xcpt:TimeStamp>2008-12-18T10:26:36</xcpt:TimeStamp>
+                    <xcpt:Report highestWeight="http://www.extra-standard.de/weight/INFO">
+                        <xcpt:Flag weight="http://www.extra-standard.de/weight/INFO">
+                            <xcpt:Code>D000</xcpt:Code>
+                            <xcpt:Text>Erfolgreicher Endestatus</xcpt:Text>
+                        </xcpt:Flag>
+                    </xcpt:Report>
+                </xcpt:ResponseDetails>
+            </xres:PackageHeader>
+
+            <xres:PackagePlugIns>
+                <xplg:DataTransforms version="1.1">
+                    <xplg:Compression order="1">
+                        <xplg:Algorithm
+                            id="http://www.extra-standard.de/transforms/compression/ZIP"/>
+                        <xplg:InputData bytes="1494" />
+                        <xplg:OutputData bytes="1094" />
+                    </xplg:Compression>
+                    <xplg:Encryption order="2">
+                        <xplg:Algorithm
+                            id="http://www.extra-standard.de/transforms/encryption/PKCS7">
+                            <xplg:Specification url="http://www.datenaustausch.de"
+                                name="Security-Schnittstelle fuer den Datenaustausch im Gesundheitswesen"
+                                version="1.5.1" />
+                        </xplg:Algorithm>
+                        <xplg:InputData bytes="1094" />
+                        <xplg:OutputData bytes="1408" />
+                    </xplg:Encryption>
+                </xplg:DataTransforms>
+
+                <xplg:DataSource version="1.0">
+                    <xplg:DataContainer created="2008-12-16T13:47:34.0+01:00" encoding="I8"
+                        name="EENA0000078" type="http://www.extra-standard.de/container/FILE" />
+                </xplg:DataSource>
+            </xres:PackagePlugIns>
+            <xres:PackageBody>
+		<xcpt:Data>
+			<xcpt:Base64CharSequence> 
+<!--
+			Konvention: die fachlichen Daten werden gemaess PlugIn DataTransforms komprimiert und verschluesselt
+                	Hier: Verschluesselte, komprimierte und Base64 codierte fachliche Daten 
+				bei elena_mvds: Verarbeitungsquittung,
+				bei elena_dsvv: vergebene Verfahrensnummern  
+-->
+			</xcpt:Base64CharSequence>
+		</xcpt:Data>
+            </xres:PackageBody>
+        </xres:Package>
+<!-- 
+   Package 2
+-->
+        <xres:Package>
+            <xres:PackageHeader>
+                <xcpt:Sender>
+                    <xcpt:SenderID class="Betriebsnummer">77770000</xcpt:SenderID>
+                    <xcpt:Name>Softwarehaus</xcpt:Name>
+                </xcpt:Sender>
+                <xcpt:Receiver>
+                    <xcpt:ReceiverID class="Betriebsnummer">77772222</xcpt:ReceiverID>
+                    <xcpt:Name>ELENA-ZSS</xcpt:Name>
+                </xcpt:Receiver>
+                <xcpt:RequestDetails>
+                    <xcpt:RequestID class="0">20081218102636097574</xcpt:RequestID>
+                    <xcpt:TimeStamp>2008-12-18T10:26:36</xcpt:TimeStamp>
+                    <xcpt:Application>
+                        <xcpt:Product>EDI-Server V1.25</xcpt:Product>
+                        <xcpt:Manufacturer>Softwarehaus</xcpt:Manufacturer>
+                    </xcpt:Application>
+
+<!--  Procedure beim Verfahren: elena_mvds        -->
+                    <xcpt:Procedure>http://www.extra-standard.de/procedures/elena_mvds</xcpt:Procedure>
+
+<!--  Procedure beim Verfahren: elena_dsvv
+		    <xcpt:Procedure>http://www.extra-standard.de/procedures/elena_dsvv</xcpt:Procedure>
+-->
+
+                    <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
+                    <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
+                </xcpt:RequestDetails>
+                <xcpt:ResponseDetails>
+                    <xcpt:ResponseID>7262</xcpt:ResponseID>
+                    <xcpt:TimeStamp>2008-12-18T10:26:38</xcpt:TimeStamp>
+                    <xcpt:Report highestWeight="http://www.extra-standard.de/weight/INFO">
+                        <xcpt:Flag weight="http://www.extra-standard.de/weight/INFO">
+                            <xcpt:Code>D000</xcpt:Code>
+                            <xcpt:Text>Erfolgreicher Endestatus</xcpt:Text>
+                        </xcpt:Flag>
+                    </xcpt:Report>
+                </xcpt:ResponseDetails>
+            </xres:PackageHeader>
+            <xres:PackagePlugIns>
+                <xplg:DataTransforms version="1.1">
+                     <xplg:Compression order="1">
+                        <xplg:Algorithm
+                            id="http://www.extra-standard.de/transforms/compression/ZIP"/>
+                        <xplg:InputData bytes="1294" />
+                        <xplg:OutputData bytes="894" />
+                    </xplg:Compression>
+                    <xplg:Encryption order="2">
+                        <xplg:Algorithm
+                            id="http://www.extra-standard.de/transforms/encryption/PKCS7">
+                            <xplg:Specification url="http://www.datenaustausch.de"
+                                name="Security-Schnittstelle fuer den Datenaustausch im Gesundheitswesen"
+                                version="1.5.1" />
+                        </xplg:Algorithm>
+                        <xplg:InputData bytes="894" />
+                        <xplg:OutputData bytes="1204" />
+                    </xplg:Encryption>
+                </xplg:DataTransforms>
+                <xplg:DataSource version="1.0">
+                    <xplg:DataContainer created="2008-12-16T13:47:38.0+01:00" encoding="I8"
+                        name="EENA0000079" type="http://www.extra-standard.de/container/FILE" />
+                </xplg:DataSource>
+            </xres:PackagePlugIns>
+            <xres:PackageBody>
+		<xcpt:Data>
+			<xcpt:Base64CharSequence> 
+<!--
+			Konvention: die fachlichen Daten werden gemaess PlugIn DataTransforms komprimiert und verschluesselt
+                	Hier: Verschluesselte, komprimierte und Base64 codierte fachliche Daten 
+				bei elena_mvds: Verarbeitungsquittung,
+				bei elena_dsvv: vergebene Verfahrensnummern  
+-->
+			</xcpt:Base64CharSequence>
+		</xcpt:Data> 
+            </xres:PackageBody>
+        </xres:Package>
+
+    </xres:TransportBody>
+</xres:XMLTransport>

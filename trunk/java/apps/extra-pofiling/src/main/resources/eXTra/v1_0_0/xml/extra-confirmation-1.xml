@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmsg:ConfirmationOfReceipt
+ xmlns:xmsg="http://www.extra-standard.de/namespace/message/1"
+ xmlns:xs="http://www.w3.org/2001/XMLSchema"
+ version="1.0"
+ >
+    <xmsg:Property name="http://www.extra-standard.de/property/SenderID" type="xs:string">
+        <xmsg:Value>77700000</xmsg:Value>
+    </xmsg:Property>
+    
+    <xmsg:Property name="http://www.extra-standard.de/property/ReceiverID" type="xs:string">
+        <xmsg:Value>55550000</xmsg:Value>
+    </xmsg:Property>
+    
+    <xmsg:Property name="http://www.extra-standard.de/property/Procedure" type="xs:anyURI">
+        <xmsg:Value>http://www.extra-standard.de/procedures/DEUEV</xmsg:Value>
+    </xmsg:Property>
+    
+    <xmsg:Property name="http://www.extra-standard.de/property/DataType" type="xs:anyURI">
+        <xmsg:Value>http://www.extra-standard.de/datatypes/RSVNr</xmsg:Value>
+    </xmsg:Property>
+    
+    <xmsg:Property name="http://www.extra-standard.de/property/ResponseCreationTimeStamp" type="xs:dateTime">
+        <xmsg:Value>2006-05-04T18:13:51.0Z</xmsg:Value>
+    </xmsg:Property>
+    
+    <xmsg:Property name="http://www.extra-standard.de/property/ResponseID" type="xs:string">
+        <xmsg:Value>res20090223152540-00008060</xmsg:Value>
+    </xmsg:Property>
+    
+</xmsg:ConfirmationOfReceipt>
