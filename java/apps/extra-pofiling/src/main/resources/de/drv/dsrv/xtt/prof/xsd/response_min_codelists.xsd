@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.extra-standard.de/namespace/codelists/1" version="1.1.0" xmlns="http://www.extra-standard.de/namespace/codelists/1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="WeightCodeType">
+        <xs:restriction base="xs:anyURI">
+            <xs:pattern value="http://www.extra-standard.de/weight/(OK|INFO|WARNING|ERROR)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

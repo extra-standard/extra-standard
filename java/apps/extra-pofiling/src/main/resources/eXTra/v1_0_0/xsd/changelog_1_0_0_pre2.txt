@@ -1,0 +1,35 @@
+eXTraXML - Change Log Version 1_0_0_pre2
+----------------------------------------
+
+Autor : Michael Schäfer, StBA
+Datum : 17.07.2009
+
+
+Änderungen
+----------
+
+  Allgemein
+  ---------
+  - Basiert auf 0.1.0 mit folgenden Anpassungen:
+
+  eXTra-messages-1.xsd:
+  ----------------------
+  - Changed:
+    - DataRequest: neuer generischer Ansatz mit 'Query'
+    - AcknowledgementOfReceipt
+      - unbenannt in 'ConfirmationOfReceipt'
+      - neuer generischer Ansatz mit 'Property'
+  - Attribut xs:schema/@version: Wert auf '1.0.0' gesetzt
+        
+  - Added:
+    - 'PropertySet'
+    - ControlType
+      - Element 'MaximumSize' hinzugefügt
+    - SpaceSizeType  
+      - Typ hinzugefügt
+        
+  Beispieldokumente:
+  ------------------
+  - Angepaßt an neues Schema
+  
+  
