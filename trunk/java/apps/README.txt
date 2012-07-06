@@ -1,6 +1,6 @@
 ﻿eXTra apps
 
-Hier befinden sich s�mtliche Anwendungen von eXTra.
+Hier befinden sich sämtliche Anwendungen von eXTra.
 
 extra-cli
 ----------------------------------
@@ -15,4 +15,4 @@ die Generierung der eXTra-Profile.
 extra-webapp
 ----------------------------------
 eXTra Webapp (Webanwendung) stellt eine Webanwendung sowohl für Client als auch Server 
-für eXTra zur Verf�gung.
+für eXTra zur Verfügung.
