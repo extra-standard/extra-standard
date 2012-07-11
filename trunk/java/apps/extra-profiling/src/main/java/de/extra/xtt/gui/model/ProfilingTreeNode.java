@@ -1,3 +1,21 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package de.extra.xtt.gui.model;
 
 import java.util.Enumeration;
@@ -10,11 +28,11 @@ import de.extra.xtt.util.schema.SchemaElement;
 import de.extra.xtt.util.tools.Configurator;
 
 /**
- * TreeNode zur Verwendung im ProfilingTreeModel; das Knoten-Objekt repräsentiert ein Schema-Element und besitzt
- * Eigenschaften wie minOccurs, maxOccurs usw.
+ * TreeNode zur Verwendung im ProfilingTreeModel; das Knoten-Objekt
+ * reprÃ¤sentiert ein Schema-Element und besitzt Eigenschaften wie minOccurs,
+ * maxOccurs usw.
  * 
  * @author Beier
- * 
  */
 public class ProfilingTreeNode implements TreeNode {
 
@@ -26,7 +44,7 @@ public class ProfilingTreeNode implements TreeNode {
 	private final boolean isLocalElement;
 	private final int minOccursDefault;
 	private final int maxOccursDefault;
-	
+
 	private ProfilingTreeNode parent;
 	private Vector<ProfilingTreeNode> children;
 	private boolean isChecked;
@@ -34,10 +52,11 @@ public class ProfilingTreeNode implements TreeNode {
 	private int maxOccursUser;
 
 	/**
-	 * Konstruktor mit allen relevanten Eigenschaften des anzulegenden Knoten-Objekts.
+	 * Konstruktor mit allen relevanten Eigenschaften des anzulegenden
+	 * Knoten-Objekts.
 	 * 
 	 * @param schemaElement
-	 *            SchemaElement, für das das Knoten-Objekt erzeugt wird
+	 *            SchemaElement, fï¿½r das das Knoten-Objekt erzeugt wird
 	 * @param minOccurs
 	 *            minOccurs-Angabe aus dem Schema
 	 * @param maxOccurs
@@ -49,17 +68,20 @@ public class ProfilingTreeNode implements TreeNode {
 	 * @param belongsToWildcard
 	 *            Gibt an, ob der Knoten Element einer wildcard ist
 	 * @param checkAll
-	 *            Gibt an, ob die Knoten standardmäßig selektiert sind
+	 *            Gibt an, ob die Knoten standardmï¿½ï¿½ig selektiert sind
 	 * @param hasRefrenzExtern
-	 *            Gibt an, ob der Knoten eine Referenz auf einen Knoten aus einem anderen TreeModel besitzt
+	 *            Gibt an, ob der Knoten eine Referenz auf einen Knoten aus
+	 *            einem anderen TreeModel besitzt
 	 * @param isLocalElement
 	 *            Gibt an, ob das Element im Schema lokal definiert ist
 	 * @param parent
 	 *            Vaterknoten des zu erstellenden Knotens
 	 */
-	public ProfilingTreeNode(SchemaElement schemaElement, int minOccurs, int maxOccurs, boolean belongsToChoice,
-			boolean belongsToSequqence, boolean belongsToWildcard, boolean checkAll, boolean hasRefrenzExtern,
-			boolean isLocalElement, ProfilingTreeNode parent) {
+	public ProfilingTreeNode(SchemaElement schemaElement, int minOccurs,
+			int maxOccurs, boolean belongsToChoice, boolean belongsToSequqence,
+			boolean belongsToWildcard, boolean checkAll,
+			boolean hasRefrenzExtern, boolean isLocalElement,
+			ProfilingTreeNode parent) {
 		this.schemaElement = schemaElement;
 		this.minOccursDefault = minOccurs;
 		this.maxOccursDefault = maxOccurs;
@@ -80,15 +102,17 @@ public class ProfilingTreeNode implements TreeNode {
 	}
 
 	/**
-	 * Prüft, ob die Kind-Knoten des aktuellen Knotens dem übergebenenen Schema-Element entsprechen und gibt ggf. diesen
-	 * Knd-Knoten zurück.
+	 * Prï¿½ft, ob die Kind-Knoten des aktuellen Knotens dem ï¿½bergebenenen
+	 * Schema-Element entsprechen und gibt ggf. diesen Knd-Knoten zurï¿½ck.
 	 * 
 	 * @param schemaElement
-	 *            SchemaElement, auf das die Kind-Knoten geprüft werden
+	 *            SchemaElement, auf das die Kind-Knoten geprï¿½ft werden
 	 * @return TreeNode, der dem SchemaElement entpricht
 	 */
-	public ProfilingTreeNode getChildWithSameSchemaElement(SchemaElement schemaElement) {
-		for (Enumeration<ProfilingTreeNode> e = this.children(); e.hasMoreElements();) {
+	public ProfilingTreeNode getChildWithSameSchemaElement(
+			SchemaElement schemaElement) {
+		for (Enumeration<ProfilingTreeNode> e = this.children(); e
+				.hasMoreElements();) {
 			ProfilingTreeNode currNode = e.nextElement();
 			if (schemaElement.equals(currNode.getSchemaElement())) {
 				return currNode;
@@ -104,10 +128,12 @@ public class ProfilingTreeNode implements TreeNode {
 	public Enumeration<ProfilingTreeNode> children() {
 		if (children == null) {
 			Enumeration<ProfilingTreeNode> childs = new Enumeration<ProfilingTreeNode>() {
+				@Override
 				public boolean hasMoreElements() {
 					return false;
 				}
 
+				@Override
 				public ProfilingTreeNode nextElement() {
 					throw new NoSuchElementException("Keine Elemente vorhanden");
 				}
@@ -119,7 +145,7 @@ public class ProfilingTreeNode implements TreeNode {
 	}
 
 	/**
-	 * Fügt eine Liste von TreeNodes als Kind-Elemente diesem Knoten hinzu
+	 * Fï¿½gt eine Liste von TreeNodes als Kind-Elemente diesem Knoten hinzu
 	 * 
 	 * @param children
 	 */
@@ -143,7 +169,7 @@ public class ProfilingTreeNode implements TreeNode {
 		if (children == null) {
 			throw new ArrayIndexOutOfBoundsException("Knoten hat keine Kinder");
 		}
-		return (ProfilingTreeNode) children.elementAt(childIndex);
+		return children.elementAt(childIndex);
 	}
 
 	/**
@@ -182,16 +208,19 @@ public class ProfilingTreeNode implements TreeNode {
 	}
 
 	/**
-	 * Gibt die minOccurs-Eigenschaft zurück, die im Schema für dieses Element spezifiziert ist
+	 * Gibt die minOccurs-Eigenschaft zurï¿½ck, die im Schema fï¿½r dieses Element
+	 * spezifiziert ist
 	 * 
-	 * @return minOccurs-Eigenschaft, die im Schema für dieses Element spezifiziert ist
+	 * @return minOccurs-Eigenschaft, die im Schema fï¿½r dieses Element
+	 *         spezifiziert ist
 	 */
 	public int getMinOccursDefault() {
 		return minOccursDefault;
 	}
 
 	/**
-	 * Gibt die minOccurs-Eigenschaft zurück, die vom Benutzer angepasst werden kann
+	 * Gibt die minOccurs-Eigenschaft zurï¿½ck, die vom Benutzer angepasst werden
+	 * kann
 	 * 
 	 * @return minOccurs-Eigenschaft, die vom Benutzer angepasst werden kann
 	 */
@@ -200,16 +229,19 @@ public class ProfilingTreeNode implements TreeNode {
 	}
 
 	/**
-	 * Gibt die maxOccurs-Eigenschaft zurück, die im Schema für dieses Element spezifiziert ist
+	 * Gibt die maxOccurs-Eigenschaft zurï¿½ck, die im Schema fï¿½r dieses Element
+	 * spezifiziert ist
 	 * 
-	 * @return maxOccurs-Eigenschaft, die im Schema für dieses Element spezifiziert ist
+	 * @return maxOccurs-Eigenschaft, die im Schema fï¿½r dieses Element
+	 *         spezifiziert ist
 	 */
 	public int getMaxOccursDefault() {
 		return maxOccursDefault;
 	}
 
 	/**
-	 * Gibt die maxOccurs-Eigenschaft zurück, die vom Benutzer angepasst werden kann
+	 * Gibt die maxOccurs-Eigenschaft zurï¿½ck, die vom Benutzer angepasst werden
+	 * kann
 	 * 
 	 * @return maxOccurs-Eigenschaft, die vom Benutzer angepasst werden kann
 	 */
@@ -218,7 +250,8 @@ public class ProfilingTreeNode implements TreeNode {
 	}
 
 	/**
-	 * Setzt die parent-Eigenschaft des aktuellen Knotens auf das übergebene Knoten-Objekt
+	 * Setzt die parent-Eigenschaft des aktuellen Knotens auf das ï¿½bergebene
+	 * Knoten-Objekt
 	 * 
 	 * @param parent
 	 *            Knoten-Objekt
@@ -242,7 +275,7 @@ public class ProfilingTreeNode implements TreeNode {
 	}
 
 	/**
-	 * Liefert die SchemaElement-Eigenschaft dieses Knotens zurück
+	 * Liefert die SchemaElement-Eigenschaft dieses Knotens zurï¿½ck
 	 * 
 	 * @return SchemaElement-Eigenschaft des Knotens
 	 */
@@ -259,21 +292,25 @@ public class ProfilingTreeNode implements TreeNode {
 	}
 
 	/**
-	 * Gibt an, ob es sich bei dem Knoten um das Wurzelelement der referenzierten Elemente handelt
+	 * Gibt an, ob es sich bei dem Knoten um das Wurzelelement der
+	 * referenzierten Elemente handelt
 	 * 
 	 * @param configurator
-	 *            Konfiguratorobjekt mit Zugriff auf Properties und Einstellungen
+	 *            Konfiguratorobjekt mit Zugriff auf Properties und
+	 *            Einstellungen
 	 * 
 	 * @return true, falls Wurzelelement der referenzierten Elemente
 	 */
 	public boolean isRootReferencedElements(Configurator configurator) {
-		return schemaElement.getNameWithPrefix().equals(
-				configurator.getResString("XSDCREATORCTRL_TEXT_MEHRFACH_REF_ELEMENTE"));
+		return schemaElement
+				.getNameWithPrefix()
+				.equals(configurator
+						.getResString("XSDCREATORCTRL_TEXT_MEHRFACH_REF_ELEMENTE"));
 	}
 
 	/**
-	 * Erzeugt einen Info-String für den aktuellen Knoten mit Angaben zur Gruppenzugehörigkeit (sequence / choice),
-	 * minOccurs und maxOccurs
+	 * Erzeugt einen Info-String fï¿½r den aktuellen Knoten mit Angaben zur
+	 * Gruppenzugehï¿½rigkeit (sequence / choice), minOccurs und maxOccurs
 	 * 
 	 * @return Info-Text
 	 */
@@ -303,7 +340,8 @@ public class ProfilingTreeNode implements TreeNode {
 	/**
 	 * Gibt an, ab der aktuelle Knoten laut Schemadefinition optional ist.
 	 * 
-	 * @return <code>true</code>, falls der Knoten optional ist, sonst <code>false</code>
+	 * @return <code>true</code>, falls der Knoten optional ist, sonst
+	 *         <code>false</code>
 	 */
 	public boolean isOptional() {
 		return (!belongsToWildcard && ((minOccursDefault == 0) || belongsToChoice));
@@ -312,25 +350,28 @@ public class ProfilingTreeNode implements TreeNode {
 	/**
 	 * Gibt an, ob der aktuelle Knoten Teil einer Wildcard ('any') ist
 	 * 
-	 * @return <code>true</code>, falls Knoten Unterelement von 'any', sonst <code>false</code>
+	 * @return <code>true</code>, falls Knoten Unterelement von 'any', sonst
+	 *         <code>false</code>
 	 */
 	public boolean belongsToWildcard() {
 		return belongsToWildcard;
 	}
 
 	/**
-	 * Gibt an, ob der Wert für minOccurs geändert werden darf
+	 * Gibt an, ob der Wert fï¿½r minOccurs geï¿½ndert werden darf
 	 * 
-	 * @return <code>true</code>, falls Änderung möglich, sonst <code>false</code>
+	 * @return <code>true</code>, falls ï¿½nderung mï¿½glich, sonst
+	 *         <code>false</code>
 	 */
 	public boolean isMinOccursChangeable() {
 		return (!belongsToWildcard && (belongsToChoice || belongsToSequence));
 	}
 
 	/**
-	 * Gibt an, ob der Wert für maxOccurs geändert werden darf
+	 * Gibt an, ob der Wert fï¿½r maxOccurs geï¿½ndert werden darf
 	 * 
-	 * @return <code>true</code>, falls Änderung möglich, sonst <code>false</code>
+	 * @return <code>true</code>, falls ï¿½nderung mï¿½glich, sonst
+	 *         <code>false</code>
 	 */
 	public boolean isMaxOccursChangeable() {
 		return (!belongsToWildcard && (belongsToChoice || belongsToSequence));
@@ -356,29 +397,35 @@ public class ProfilingTreeNode implements TreeNode {
 	}
 
 	/**
-	 * Setzt den Wert für die minOccurs-Eigenschaft, die der Bneutzer ändern darf
+	 * Setzt den Wert fï¿½r die minOccurs-Eigenschaft, die der Bneutzer ï¿½ndern
+	 * darf
 	 * 
 	 * @param value
-	 *            neuer Wert für die minOccurs-Eigenschaft, die vom Benutzer änderbar ist
+	 *            neuer Wert fï¿½r die minOccurs-Eigenschaft, die vom Benutzer
+	 *            ï¿½nderbar ist
 	 */
 	public void setMinOccurUser(int value) {
 		this.minOccursUser = value;
 	}
 
 	/**
-	 * Setzt den Wert für die maxOccurs-Eigenschaft, die der Bneutzer ändern darf
+	 * Setzt den Wert fï¿½r die maxOccurs-Eigenschaft, die der Bneutzer ï¿½ndern
+	 * darf
 	 * 
 	 * @param value
-	 *            neuer Wert für die maxOccurs-Eigenschaft, die vom Benutzer änderbar ist
+	 *            neuer Wert fï¿½r die maxOccurs-Eigenschaft, die vom Benutzer
+	 *            ï¿½nderbar ist
 	 */
 	public void setMaxOccurUser(int value) {
 		this.maxOccursUser = value;
 	}
 
 	/**
-	 * Gibt an, ob der Knoten eine Refrenz auf einen Knoten außerhalb dieses TreeModels besitzt.
+	 * Gibt an, ob der Knoten eine Refrenz auf einen Knoten auï¿½erhalb dieses
+	 * TreeModels besitzt.
 	 * 
-	 * @return <code>true</code>, falls extrene Referenz vorhanden ist, sonst <code>false</code>
+	 * @return <code>true</code>, falls extrene Referenz vorhanden ist, sonst
+	 *         <code>false</code>
 	 */
 	public boolean hasReferenzExtern() {
 		return hasReferenzExtern;
@@ -387,7 +434,8 @@ public class ProfilingTreeNode implements TreeNode {
 	/**
 	 * Gibt an, ob das Element dieses Knotens im Schema lokal definiert wird
 	 * 
-	 * @return <code>true</code>: Element wird lokal definiert; <code>false</code>: Referenz
+	 * @return <code>true</code>: Element wird lokal definiert;
+	 *         <code>false</code>: Referenz
 	 */
 	public boolean isLocalElement() {
 		return isLocalElement;
@@ -402,12 +450,13 @@ public class ProfilingTreeNode implements TreeNode {
 	}
 
 	/**
-	 * Gibt an, ob der übergebene Knoten ein Kind-Objekt des aktuellen Knotens ist
+	 * Gibt an, ob der ï¿½bergebene Knoten ein Kind-Objekt des aktuellen Knotens
+	 * ist
 	 * 
 	 * @param aNode
 	 *            Knotenobjekt, das mit den Kindknoten verglichen wird
-	 * @return <code>true</code>, falls das angegebene Knoten-Objekt Kindknoten vom aktuellen Knoten ist; sonst
-	 *         <code>false</code>
+	 * @return <code>true</code>, falls das angegebene Knoten-Objekt Kindknoten
+	 *         vom aktuellen Knoten ist; sonst <code>false</code>
 	 */
 	private boolean isNodeChild(TreeNode aNode) {
 		boolean retval;

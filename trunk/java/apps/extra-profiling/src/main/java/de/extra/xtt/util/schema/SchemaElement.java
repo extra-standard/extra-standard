@@ -1,10 +1,28 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package de.extra.xtt.util.schema;
 
 /**
- * Objekt zum Bündeln der Informationen zu einem Schema-Element: Name des Elements, Namespace-Präfix und Namespace-URL
+ * Objekt zum BÃ¼ndeln der Informationen zu einem Schema-Element: Name des
+ * Elements, Namespace-PrÃ¤fix und Namespace-URL.
  * 
  * @author Beier
- * 
  */
 public class SchemaElement implements Comparable<SchemaElement> {
 
@@ -16,11 +34,11 @@ public class SchemaElement implements Comparable<SchemaElement> {
 	 * Konstruktor mit Initialisierungsparametern
 	 * 
 	 * @param name
-	 *            Name des Schema-Elements ohne Namespace-Präfix
+	 *            Name des Schema-Elements ohne Namespace-Prï¿½fix
 	 * @param nsUrl
 	 *            Namespace-URL des Schema-Elements
 	 * @param nsPrefix
-	 *            Namespace-Präfix des Schema-Elements
+	 *            Namespace-Prï¿½fix des Schema-Elements
 	 */
 	public SchemaElement(String name, String nsUrl, String nsPrefix) {
 		super();
@@ -30,7 +48,7 @@ public class SchemaElement implements Comparable<SchemaElement> {
 	}
 
 	/**
-	 * Gibt den Namen des Schema-Elements zurück (ohne Namespace-Präfix)
+	 * Gibt den Namen des Schema-Elements zurï¿½ck (ohne Namespace-Prï¿½fix)
 	 * 
 	 * @return Name des Schema-Elements
 	 */
@@ -39,7 +57,7 @@ public class SchemaElement implements Comparable<SchemaElement> {
 	}
 
 	/**
-	 * Gibt die Namespace-URL des Schema-Elements zurück
+	 * Gibt die Namespace-URL des Schema-Elements zurï¿½ck
 	 * 
 	 * @return Namespace-URL
 	 */
@@ -48,18 +66,19 @@ public class SchemaElement implements Comparable<SchemaElement> {
 	}
 
 	/**
-	 * Gibt den Namespace-Präfix des Schema-Elements zurück
+	 * Gibt den Namespace-Prï¿½fix des Schema-Elements zurï¿½ck
 	 * 
-	 * @return Namespace-Präfix
+	 * @return Namespace-Prï¿½fix
 	 */
 	public String getNsPrefix() {
 		return nsPrefix;
 	}
 
 	/**
-	 * Gibt den Namen des Schema-Elements zusammen mit dem Namespace-Präfix zurück
+	 * Gibt den Namen des Schema-Elements zusammen mit dem Namespace-Prï¿½fix
+	 * zurï¿½ck
 	 * 
-	 * @return Name inkl. Namspace-Präfix
+	 * @return Name inkl. Namspace-Prï¿½fix
 	 */
 	public String getNameWithPrefix() {
 		String nameWithPrefix = name;
@@ -82,7 +101,8 @@ public class SchemaElement implements Comparable<SchemaElement> {
 					|| this.name.equals(seToProof.getName());
 			boolean urlEqual = ((this.nsUrl == null) && (seToProof.getNsUrl() == null))
 					|| this.nsUrl.equals(seToProof.getNsUrl());
-			boolean prefixEqual = ((this.nsPrefix == null) && (seToProof.getNsPrefix() == null))
+			boolean prefixEqual = ((this.nsPrefix == null) && (seToProof
+					.getNsPrefix() == null))
 					|| this.nsPrefix.equals(seToProof.getNsPrefix());
 			return (nameEqual && urlEqual && prefixEqual);
 		}

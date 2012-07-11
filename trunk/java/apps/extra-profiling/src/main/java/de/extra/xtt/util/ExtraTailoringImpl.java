@@ -1,3 +1,21 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package de.extra.xtt.util;
 
 import java.io.ByteArrayInputStream;
@@ -34,10 +52,9 @@ import de.extra.xtt.util.tools.Configurator;
 import de.extra.xtt.util.tools.XsdXmlHelper;
 
 /**
- * Implementierung für die Erzeugung eines spezifischen eXTra-Schemas.
+ * Implementierung fÃ¼r die Erzeugung eines spezifischen eXTra-Schemas.
  * 
  * @author Beier
- * 
  */
 public class ExtraTailoringImpl implements ExtraTailoring {
 
@@ -57,82 +74,113 @@ public class ExtraTailoringImpl implements ExtraTailoring {
 	 * {@inheritdoc}
 	 */
 	@Override
-	public Map<String, Document> erzeugeProfiliertesExtraSchema(XSSchemaSet ssQuellSchema, Document profilXml,
+	public Map<String, Document> erzeugeProfiliertesExtraSchema(
+			XSSchemaSet ssQuellSchema, Document profilXml,
 			String bezeichnungKurzVerfahren) throws ExtraTailoringException {
-		if ((ssQuellSchema != null) && (profilXml != null) && (bezeichnungKurzVerfahren != null)) {
+		if ((ssQuellSchema != null) && (profilXml != null)
+				&& (bezeichnungKurzVerfahren != null)) {
 			try {
-				MySchemaWriter schemaWriter = new MySchemaWriter("xs", "http://www.w3.org/2001/XMLSchema",
-						configurator, 1);
-				
+				MySchemaWriter schemaWriter = new MySchemaWriter("xs",
+						"http://www.w3.org/2001/XMLSchema", configurator, 1);
+
 				// Element-Knoten aus der Profilierungsdatei abarbeiten
 				List<XSElementDecl> xsElementsToInsert = new LinkedList<XSElementDecl>();
 				List<XSElementDecl> xsElementsInserted = new LinkedList<XSElementDecl>();
-				NodeList xmlNodesElementProf = XsdXmlHelper.xpathSuche("//element", profilXml);
+				NodeList xmlNodesElementProf = XsdXmlHelper.xpathSuche(
+						"//element", profilXml);
 				if (xmlNodesElementProf.getLength() > 0) {
 					for (int i = 0; i < xmlNodesElementProf.getLength(); i++) {
-						erzeugeSchemaTypUndElementFuerProfElement(xmlNodesElementProf.item(i), ssQuellSchema,
-								xsElementsToInsert, xsElementsInserted, schemaWriter);
+						erzeugeSchemaTypUndElementFuerProfElement(
+								xmlNodesElementProf.item(i), ssQuellSchema,
+								xsElementsToInsert, xsElementsInserted,
+								schemaWriter);
 					}
 				} else {
-					throw new ExtraTailoringException("Profilkonfiguration enthält keine Elemente.");
+					throw new ExtraTailoringException(
+							"Profilkonfiguration enthï¿½lt keine Elemente.");
 				}
 
-				// Zusätzlich referenzierte Elemente behandeln, die nicht bereits in der Liste der noch zu hinzufügenden Elementen stehen
-				printRefElements(schemaWriter, ssQuellSchema, xsElementsToInsert, xsElementsInserted);
+				// Zusï¿½tzlich referenzierte Elemente behandeln, die nicht
+				// bereits in der Liste der noch zu hinzufï¿½genden Elementen
+				// stehen
+				printRefElements(schemaWriter, ssQuellSchema,
+						xsElementsToInsert, xsElementsInserted);
 
 				// Verwendete Typen schreiben
 				schemaWriter.printReferencedTypes(profilXml);
 
 				// Am Ende Elemente schreiben
 				for (XSElementDecl currElement : xsElementsToInsert) {
-					// entsprechenden Knoten in Profilkonfiguration suchen (für evtl. Anmerkungen)
-					String strNameCurrElement = configurator.getPropertyNamespace(currElement.getTargetNamespace()) + ":" + currElement.getName();
-					Node currElementNode = XsdXmlHelper.xpathSuche("//element[name/text()='" + strNameCurrElement + "']", profilXml).item(0);
-					schemaWriter.elementDecl(currElement, "", null, currElementNode, "");
+					// entsprechenden Knoten in Profilkonfiguration suchen (fï¿½r
+					// evtl. Anmerkungen)
+					String strNameCurrElement = configurator
+							.getPropertyNamespace(currElement
+									.getTargetNamespace())
+							+ ":" + currElement.getName();
+					Node currElementNode = XsdXmlHelper.xpathSuche(
+							"//element[name/text()='" + strNameCurrElement
+									+ "']", profilXml).item(0);
+					schemaWriter.elementDecl(currElement, "", null,
+							currElementNode, "");
 				}
 
 				// Schemadateien schreiben
 				Map<String, Document> xsdDocs = new HashMap<String, Document>();
-				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilderFactory docFactory = DocumentBuilderFactory
+						.newInstance();
 				docFactory.setNamespaceAware(true);
 				DocumentBuilder parser = docFactory.newDocumentBuilder();
 				Map<String, Writer> nsWriter = schemaWriter.getNsWriter();
-				Map<String, ByteArrayOutputStream> nsOutputStream = schemaWriter.getNsOutputStream();
+				Map<String, ByteArrayOutputStream> nsOutputStream = schemaWriter
+						.getNsOutputStream();
 
 				// Einzelne Namespace-Witer abarbeiten
 				for (Map.Entry<String, Writer> currEntry : nsWriter.entrySet()) {
 					String currNsPrefix = currEntry.getKey();
-					String currNsUrl = configurator.getPropertyNamespace(currNsPrefix);
-					List<String> usedNamespaces = schemaWriter.getNsUsedNamespaces().get(currNsPrefix);
+					String currNsUrl = configurator
+							.getPropertyNamespace(currNsPrefix);
+					List<String> usedNamespaces = schemaWriter
+							.getNsUsedNamespaces().get(currNsPrefix);
 
 					// Schema-Header schreiben
 					ByteArrayOutputStream outStreamCurrDocXsd = new ByteArrayOutputStream();
 					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-					
-					OutputStreamWriter swHeader = new OutputStreamWriter(outStream, "UTF8");
-					
+
+					OutputStreamWriter swHeader = new OutputStreamWriter(
+							outStream, "UTF8");
+
 					swHeader.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
-					swHeader.write("<xs:schema targetNamespace=\"" + currNsUrl + "\"\r\n");
+					swHeader.write("<xs:schema targetNamespace=\"" + currNsUrl
+							+ "\"\r\n");
 					swHeader.write("  xmlns=\"" + currNsUrl + "\"\r\n");
 
 					// Verwendete Namespaces im Header angeben
 					for (String strNsPrefixUsed : usedNamespaces) {
 						if (!strNsPrefixUsed.equals("xs")) {
-							String currNsUrlUsed = configurator.getPropertyNamespace(strNsPrefixUsed);
-							swHeader.write("  xmlns:" + strNsPrefixUsed + "=\"" + currNsUrlUsed + "\"\r\n");
+							String currNsUrlUsed = configurator
+									.getPropertyNamespace(strNsPrefixUsed);
+							swHeader.write("  xmlns:" + strNsPrefixUsed + "=\""
+									+ currNsUrlUsed + "\"\r\n");
 						}
 					}
 
-					// Attribute attributeFormDefault, elementFormDefault und version (falls vorhanden) werden übernommen
-					Locator loc = ssQuellSchema.getSchema(currNsUrl).getLocator();
-					String fileNameSchema = loc.getSystemId().substring(loc.getSystemId().indexOf("file:/") + 6)
+					// Attribute attributeFormDefault, elementFormDefault und
+					// version (falls vorhanden) werden ï¿½bernommen
+					Locator loc = ssQuellSchema.getSchema(currNsUrl)
+							.getLocator();
+					String fileNameSchema = loc.getSystemId()
+							.substring(loc.getSystemId().indexOf("file:/") + 6)
 							.replaceAll("%20", " ");
-					Document docCurrSchema = XsdXmlHelper.leseXsdXml(fileNameSchema);
-					NodeList listNodes = XsdXmlHelper.xpathSuche("/*/attribute::*", docCurrSchema);
+					Document docCurrSchema = XsdXmlHelper
+							.leseXsdXml(fileNameSchema);
+					NodeList listNodes = XsdXmlHelper.xpathSuche(
+							"/*/attribute::*", docCurrSchema);
 					for (int i = 0; i < listNodes.getLength(); i++) {
 						Node currAttrNode = listNodes.item(i);
-						if (!currAttrNode.getNodeName().equals("targetNamespace")) {
-							swHeader.write("  " + currAttrNode.getNodeName() + "=\"" + currAttrNode.getNodeValue()
+						if (!currAttrNode.getNodeName().equals(
+								"targetNamespace")) {
+							swHeader.write("  " + currAttrNode.getNodeName()
+									+ "=\"" + currAttrNode.getNodeValue()
 									+ "\"\r\n");
 						}
 					}
@@ -142,10 +190,14 @@ public class ExtraTailoringImpl implements ExtraTailoring {
 					// Import-Anweisungen erzeugen
 					for (String strNsPrefixUsed : usedNamespaces) {
 						if (!strNsPrefixUsed.equals("xs")) {
-							String currNsUrlUsed = configurator.getPropertyNamespace(strNsPrefixUsed);
-							String currDateinameImport = configurator.getDateinameFuerSchema(bezeichnungKurzVerfahren,
-									strNsPrefixUsed);
-							swHeader.write("  <xs:import namespace=\"" + currNsUrlUsed + "\" schemaLocation=\""
+							String currNsUrlUsed = configurator
+									.getPropertyNamespace(strNsPrefixUsed);
+							String currDateinameImport = configurator
+									.getDateinameFuerSchema(
+											bezeichnungKurzVerfahren,
+											strNsPrefixUsed);
+							swHeader.write("  <xs:import namespace=\""
+									+ currNsUrlUsed + "\" schemaLocation=\""
 									+ currDateinameImport + "\"/>\r\n");
 						}
 					}
@@ -155,7 +207,8 @@ public class ExtraTailoringImpl implements ExtraTailoring {
 					// Header schreiben
 					outStream.writeTo(outStreamCurrDocXsd);
 					// Hauptdaten schreiben
-					nsOutputStream.get(currEntry.getKey()).writeTo(outStreamCurrDocXsd);
+					nsOutputStream.get(currEntry.getKey()).writeTo(
+							outStreamCurrDocXsd);
 					// Ende schreiben
 					outStream.reset();
 					swHeader.write("</xs:schema>");
@@ -163,17 +216,19 @@ public class ExtraTailoringImpl implements ExtraTailoring {
 					outStream.writeTo(outStreamCurrDocXsd);
 
 					// XSD-Dokument aus Stream erzeugen
-					Document currDocSchemaProf = parser.parse(new ByteArrayInputStream(outStreamCurrDocXsd
-							.toByteArray()));
+					Document currDocSchemaProf = parser
+							.parse(new ByteArrayInputStream(outStreamCurrDocXsd
+									.toByteArray()));
 					xsdDocs.put(currNsPrefix, currDocSchemaProf);
 				}
 				return xsdDocs;
 			} catch (Exception e) {
-				throw new ExtraTailoringException("Fehler beim Erzeugen des profilierten Schemas.", e);
+				throw new ExtraTailoringException(
+						"Fehler beim Erzeugen des profilierten Schemas.", e);
 			}
 		} else {
 			throw new ExtraTailoringException(
-					"Übergebenes Quell-Schema, Profildokument oder Bezeichnung ungültig (NULL).");
+					"ï¿½bergebenes Quell-Schema, Profildokument oder Bezeichnung ungï¿½ltig (NULL).");
 		}
 	}
 
@@ -181,8 +236,10 @@ public class ExtraTailoringImpl implements ExtraTailoring {
 	 * {@inheritdoc}
 	 */
 	@Override
-	public Document erzeugeProfilkonfiguration(Configurator.SchemaType schemaType, ProfilingTreeNode rootNodeMain,
-			ProfilingTreeNode rootNodeRef, String targetNamespace, String bezVerfahrenKurz, String bezVerfahren)
+	public Document erzeugeProfilkonfiguration(
+			Configurator.SchemaType schemaType, ProfilingTreeNode rootNodeMain,
+			ProfilingTreeNode rootNodeRef, String targetNamespace,
+			String bezVerfahrenKurz, String bezVerfahren)
 			throws ExtraTailoringException {
 		if (configurator != null) {
 			try {
@@ -196,13 +253,16 @@ public class ExtraTailoringImpl implements ExtraTailoring {
 				root.setAttribute("bezKurzVerfahren", bezVerfahrenKurz);
 				root.setAttribute("bezVerfahren", bezVerfahren);
 
-				// Baum durchlaufen und für jedes Element mit Kindknoten element-Knoten erzeugen
+				// Baum durchlaufen und fï¿½r jedes Element mit Kindknoten
+				// element-Knoten erzeugen
 				List<String> elementsAdded = new LinkedList<String>();
-				insertNodeProfXml(rootNodeMain, rootNodeRef, docXml, elementsAdded);
+				insertNodeProfXml(rootNodeMain, rootNodeRef, docXml,
+						elementsAdded);
 
 				return docXml;
 			} catch (Exception e) {
-				throw new ExtraTailoringException("Fehler beim Erzeugen des Profildokuments.", e);
+				throw new ExtraTailoringException(
+						"Fehler beim Erzeugen des Profildokuments.", e);
 			}
 		} else {
 			throw new ExtraTailoringException("Configurator nicht vorhanden.");
@@ -210,22 +270,26 @@ public class ExtraTailoringImpl implements ExtraTailoring {
 	}
 
 	/**
-	 * Erzeugt ein zum übergebenen ProfilingTreeNode-Objekt passendes element-XML-Element mit den entsprechenden Kind-Elementen und hängt es dan das übergebene XML-Dokument an.
+	 * Erzeugt ein zum ï¿½bergebenen ProfilingTreeNode-Objekt passendes
+	 * element-XML-Element mit den entsprechenden Kind-Elementen und hï¿½ngt es
+	 * dan das ï¿½bergebene XML-Dokument an.
 	 * 
 	 * @param currNode
 	 *            Zu bearbeitender ProfilingTreeNode
 	 * @param rootNodeRef
 	 *            Wruzelelemet des Bausm mit allen referenzierten Elementen
 	 * @param docXml
-	 *            Profilkonfiguration, in die das neue Element eingefügt wird
+	 *            Profilkonfiguration, in die das neue Element eingefï¿½gt wird
 	 * @param elementsAdded
-	 *            Liste aller bereits hinzugefügter Elemente
+	 *            Liste aller bereits hinzugefï¿½gter Elemente
 	 */
-	private void insertNodeProfXml(ProfilingTreeNode currNode, ProfilingTreeNode rootNodeRef, Document docXml,
+	private void insertNodeProfXml(ProfilingTreeNode currNode,
+			ProfilingTreeNode rootNodeRef, Document docXml,
 			List<String> elementsAdded) {
 		SchemaElement currSchemaElement = currNode.getSchemaElement();
-		String bezeichnungWithNamespacePrefix = currSchemaElement.getNameWithPrefix();
-		// Falls schon hinzugefügt, dann nicht erneut Knoten erzeugen
+		String bezeichnungWithNamespacePrefix = currSchemaElement
+				.getNameWithPrefix();
+		// Falls schon hinzugefï¿½gt, dann nicht erneut Knoten erzeugen
 		if (!elementsAdded.contains(bezeichnungWithNamespacePrefix)) {
 			// 'element'
 			Node nodeElement = docXml.createElement("element");
@@ -234,18 +298,19 @@ public class ExtraTailoringImpl implements ExtraTailoring {
 			Node nodeName = docXml.createElement("name");
 			nodeName.setTextContent(bezeichnungWithNamespacePrefix);
 			nodeElement.appendChild(nodeName);
-			// zur Liste der bereits hinzugefügten Elemente hinzufügen
+			// zur Liste der bereits hinzugefï¿½gten Elemente hinzufï¿½gen
 			elementsAdded.add(bezeichnungWithNamespacePrefix);
-			
+
 			// Kind 'anmerkung'
-			String anmerkungAllgText = configurator.getAnmerkungAllgemein(currNode);
+			String anmerkungAllgText = configurator
+					.getAnmerkungAllgemein(currNode);
 			if (anmerkungAllgText.length() > 0) {
 				Node nodeAnmerkung = docXml.createElement("anmerkung");
 				nodeAnmerkung.setTextContent(anmerkungAllgText);
 				nodeElement.appendChild(nodeAnmerkung);
 			}
 
-			// element hinzufügen
+			// element hinzufï¿½gen
 			docXml.getFirstChild().appendChild(nodeElement);
 
 			// Kinder 'kind'
@@ -254,8 +319,10 @@ public class ExtraTailoringImpl implements ExtraTailoring {
 				// eigene Kinder behandeln
 				enumChilds = currNode.children();
 			} else if (rootNodeRef != null) {
-				// Prüfen, ob in den referenzierten Knoten Elemente für dieses aktuelle Element vorhanden sind
-				ProfilingTreeNode nodeRef = rootNodeRef.getChildWithSameSchemaElement(currSchemaElement);
+				// Prï¿½fen, ob in den referenzierten Knoten Elemente fï¿½r dieses
+				// aktuelle Element vorhanden sind
+				ProfilingTreeNode nodeRef = rootNodeRef
+						.getChildWithSameSchemaElement(currSchemaElement);
 				if ((nodeRef != null) && (nodeRef.getChildCount() > 0)) {
 					// Kindern vom referenzierten Knoten behandeln
 					enumChilds = nodeRef.children();
@@ -263,29 +330,40 @@ public class ExtraTailoringImpl implements ExtraTailoring {
 			}
 			// Kind-Elemente erzeugen
 			if (enumChilds != null) {
-				for (Enumeration<ProfilingTreeNode> e = enumChilds; e.hasMoreElements();) {
+				for (Enumeration<ProfilingTreeNode> e = enumChilds; e
+						.hasMoreElements();) {
 					ProfilingTreeNode currNodeChild = e.nextElement();
 					if (currNodeChild.isChecked()) {
 						Element nodeKind = docXml.createElement("kind");
-						
+
 						// min- und maxOccurs
-						if (currNodeChild.isMinOccursChangeable() && (currNodeChild.getMinOccursUser() != currNodeChild.getMinOccursDefault())) {
-							nodeKind.setAttribute("minOccurs", "" + currNodeChild.getMinOccursUser());
+						if (currNodeChild.isMinOccursChangeable()
+								&& (currNodeChild.getMinOccursUser() != currNodeChild
+										.getMinOccursDefault())) {
+							nodeKind.setAttribute("minOccurs", ""
+									+ currNodeChild.getMinOccursUser());
 						}
-						if (currNodeChild.isMaxOccursChangeable() && (currNodeChild.getMaxOccursUser() != currNodeChild.getMaxOccursDefault())) {
-							nodeKind.setAttribute("maxOccurs", "" + currNodeChild.getMaxOccursUser());
+						if (currNodeChild.isMaxOccursChangeable()
+								&& (currNodeChild.getMaxOccursUser() != currNodeChild
+										.getMaxOccursDefault())) {
+							nodeKind.setAttribute("maxOccurs", ""
+									+ currNodeChild.getMaxOccursUser());
 						}
-						
+
 						// Anmerkung zur Verwendnug
-						String anmerkungVerwendung = configurator.getAnmerkungVerwendung(currNodeChild);
+						String anmerkungVerwendung = configurator
+								.getAnmerkungVerwendung(currNodeChild);
 						if (anmerkungVerwendung.length() > 0) {
-							nodeKind.setAttribute("anmerkung", anmerkungVerwendung);
+							nodeKind.setAttribute("anmerkung",
+									anmerkungVerwendung);
 						}
-						
-						nodeKind.setTextContent(currNodeChild.getSchemaElement().getNameWithPrefix());
+
+						nodeKind.setTextContent(currNodeChild
+								.getSchemaElement().getNameWithPrefix());
 						nodeElement.appendChild(nodeKind);
 						// rekursiver Aufruf
-						insertNodeProfXml(currNodeChild, rootNodeRef, docXml, elementsAdded);
+						insertNodeProfXml(currNodeChild, rootNodeRef, docXml,
+								elementsAdded);
 					}
 				}
 			}
@@ -293,72 +371,93 @@ public class ExtraTailoringImpl implements ExtraTailoring {
 	}
 
 	/**
-	 * Für den angebenen XML-Knoten aus der Profilkonfiguration wird ein SchemaElement erzeugt und im Quellschema das passende Element gesucht. Für dieses Element aus dem Quellschema wird dann der
-	 * Abschnitt für das profilierte Schema mittels SchemaWriter erzeugt.
+	 * Fï¿½r den angebenen XML-Knoten aus der Profilkonfiguration wird ein
+	 * SchemaElement erzeugt und im Quellschema das passende Element gesucht.
+	 * Fï¿½r dieses Element aus dem Quellschema wird dann der Abschnitt fï¿½r das
+	 * profilierte Schema mittels SchemaWriter erzeugt.
 	 * 
 	 * @param xmlNodeElement
 	 *            Aktueller XMl-Knoten aus der Profilkonfiguration
 	 * @param ssQuellSchema
 	 *            Quellschema mit allen Elementen und Typen
 	 * @param xsElementsToInsert
-	 *            Liste aller Elemente, die im aktuellen Profil verwendet werden; diese werden erst gesammelt und nach den Typen geschrieben.
+	 *            Liste aller Elemente, die im aktuellen Profil verwendet
+	 *            werden; diese werden erst gesammelt und nach den Typen
+	 *            geschrieben.
 	 * @param xsElementsInserted
-	 *            Liste aller Elemente, die bereits hinzugefügt wurden
+	 *            Liste aller Elemente, die bereits hinzugefï¿½gt wurden
 	 * @param schemaWriter
-	 *            Objekt zum Erzeugen des XML-Textes für die zu erzeugende Schemadatei
+	 *            Objekt zum Erzeugen des XML-Textes fï¿½r die zu erzeugende
+	 *            Schemadatei
 	 * @throws XPathExpressionException
 	 */
-	private void erzeugeSchemaTypUndElementFuerProfElement(Node xmlNodeElement, XSSchemaSet ssQuellSchema,
-			List<XSElementDecl> xsElementsToInsert, List<XSElementDecl> xsElementsInserted, MySchemaWriter schemaWriter)
+	private void erzeugeSchemaTypUndElementFuerProfElement(Node xmlNodeElement,
+			XSSchemaSet ssQuellSchema, List<XSElementDecl> xsElementsToInsert,
+			List<XSElementDecl> xsElementsInserted, MySchemaWriter schemaWriter)
 			throws XPathExpressionException {
 		// Name des XML-Knotens in der Profilkonfiguration
-		String strXmlElementName = XsdXmlHelper.xpathSuche("./name/text()", xmlNodeElement).item(0).getNodeValue();
+		String strXmlElementName = XsdXmlHelper
+				.xpathSuche("./name/text()", xmlNodeElement).item(0)
+				.getNodeValue();
 		// Passendes SchemaElement erzeugen
-		SchemaElement currSchemaElement = configurator.getSchemaElement(strXmlElementName);
+		SchemaElement currSchemaElement = configurator
+				.getSchemaElement(strXmlElementName);
 		// passendes Element im Schema suchen
-		XSElementDecl currXsElement = ssQuellSchema.getElementDecl(currSchemaElement.getNsUrl(), currSchemaElement
-				.getName());
+		XSElementDecl currXsElement = ssQuellSchema.getElementDecl(
+				currSchemaElement.getNsUrl(), currSchemaElement.getName());
 		if (currXsElement != null) {
-			erzeugeSchemaTypUndElement(currXsElement, xmlNodeElement, ssQuellSchema, xsElementsToInsert,
-					xsElementsInserted, schemaWriter);
+			erzeugeSchemaTypUndElement(currXsElement, xmlNodeElement,
+					ssQuellSchema, xsElementsToInsert, xsElementsInserted,
+					schemaWriter);
 		}
 	}
 
 	/**
-	 * Für das angegebene Schema-Element wird unter Berücksichtigung der Profilkonfiguration der entsprechende Eintrag für das profilierte Schema erzeugt.
+	 * Fï¿½r das angegebene Schema-Element wird unter Berï¿½cksichtigung der
+	 * Profilkonfiguration der entsprechende Eintrag fï¿½r das profilierte Schema
+	 * erzeugt.
 	 * 
 	 * @param currXsElement
-	 *            Zu bearbeitendes Schema-Element, das in der profilierte Schema übernommen werden soll
+	 *            Zu bearbeitendes Schema-Element, das in der profilierte Schema
+	 *            ï¿½bernommen werden soll
 	 * @param xmlNodeElement
-	 *            XML-Knoten aus der Konfiguration für dieses Element
+	 *            XML-Knoten aus der Konfiguration fï¿½r dieses Element
 	 * @param ssQuellSchema
 	 *            Quellschema mit allen Elementen und Typen
 	 * @param xsElementsToInsert
-	 *            Liste aller Elemente, die im aktuellen Profil verwendet werden; diese werden erst gesammelt und nach den Typen geschrieben.
+	 *            Liste aller Elemente, die im aktuellen Profil verwendet
+	 *            werden; diese werden erst gesammelt und nach den Typen
+	 *            geschrieben.
 	 * @param xsElementsInserted
-	 *            Liste aller Elemente, die bereits hinzugefügt wurden
+	 *            Liste aller Elemente, die bereits hinzugefï¿½gt wurden
 	 * @param schemaWriter
-	 *            Objekt zum Erzeugen des XML-Textes für die zu erzeugende Schemadatei
+	 *            Objekt zum Erzeugen des XML-Textes fï¿½r die zu erzeugende
+	 *            Schemadatei
 	 */
-	private void erzeugeSchemaTypUndElement(XSElementDecl currXsElement, Node xmlNodeElement,
-			XSSchemaSet ssQuellSchema, List<XSElementDecl> xsElementsToInsert, List<XSElementDecl> xsElementsInserted,
-			MySchemaWriter schemaWriter) {
+	private void erzeugeSchemaTypUndElement(XSElementDecl currXsElement,
+			Node xmlNodeElement, XSSchemaSet ssQuellSchema,
+			List<XSElementDecl> xsElementsToInsert,
+			List<XSElementDecl> xsElementsInserted, MySchemaWriter schemaWriter) {
 		if (!xsElementsInserted.contains(currXsElement)) {
 			// angegebenen Typ bestimmen
 			XSType currXsType = currXsElement.getType();
 			if ((currXsType != null) && (currXsType.getName() == null)) {
-				// Typ hat keine Bezeichnung und muss mit dem Element sofort geschrieben werden
-				schemaWriter.elementDecl(currXsElement, "", null, xmlNodeElement, "");
+				// Typ hat keine Bezeichnung und muss mit dem Element sofort
+				// geschrieben werden
+				schemaWriter.elementDecl(currXsElement, "", null,
+						xmlNodeElement, "");
 				xsElementsInserted.add(currXsElement);
 			} else {
-				// XSD-Element im Zielschema einfügen
+				// XSD-Element im Zielschema einfï¿½gen
 				xsElementsToInsert.add(currXsElement);
 				if (currXsType != null) {
 					// XSD-Typ schreiben
 					if (currXsType instanceof XSComplexType) {
-						schemaWriter.complexType(currXsType.asComplexType(), null, xmlNodeElement);
+						schemaWriter.complexType(currXsType.asComplexType(),
+								null, xmlNodeElement);
 					} else if (currXsType instanceof XSSimpleType) {
-						schemaWriter.simpleType(currXsType.asSimpleType(), null, xmlNodeElement);
+						schemaWriter.simpleType(currXsType.asSimpleType(),
+								null, xmlNodeElement);
 					}
 				}
 			}
@@ -366,18 +465,24 @@ public class ExtraTailoringImpl implements ExtraTailoring {
 	}
 
 	/**
-	 * Im SchemaWriter sind alle referenzierten Typen aufgesammelt worden; diese werden mit dieser Methode geschrieben. Dabei wird berücksichtigt, dass hierbei wieder Typen referenziert sein können.
+	 * Im SchemaWriter sind alle referenzierten Typen aufgesammelt worden; diese
+	 * werden mit dieser Methode geschrieben. Dabei wird berï¿½cksichtigt, dass
+	 * hierbei wieder Typen referenziert sein kï¿½nnen.
 	 * 
 	 * @param sw
-	 *            Objekt zum Erzeugen des XML-Textes für die zu erzeugende Schemadatei
+	 *            Objekt zum Erzeugen des XML-Textes fï¿½r die zu erzeugende
+	 *            Schemadatei
 	 * @param ssQuellSchema
 	 *            Quellschema mit allen Elementen und Typen
 	 * @param xsElementsToInsert
-	 *            Liste aller Elemente, die im aktuellen Profil verwendet werden; diese werden erst gesammelt und nach den Typen geschrieben.
+	 *            Liste aller Elemente, die im aktuellen Profil verwendet
+	 *            werden; diese werden erst gesammelt und nach den Typen
+	 *            geschrieben.
 	 * @param xsElementsInserted
 	 *            Liste aller Elemente, die bereits geschrieben wurden
 	 */
-	private void printRefElements(MySchemaWriter sw, XSSchemaSet ssQuellSchema, List<XSElementDecl> xsElementsToInsert,
+	private void printRefElements(MySchemaWriter sw, XSSchemaSet ssQuellSchema,
+			List<XSElementDecl> xsElementsToInsert,
 			List<XSElementDecl> xsElementsInserted) {
 		// Liste kopieren
 		List<XSElementDecl> listElementsRef = new LinkedList<XSElementDecl>();
@@ -385,24 +490,28 @@ public class ExtraTailoringImpl implements ExtraTailoring {
 			listElementsRef.add(currElement);
 		}
 
-		// interne Liste SchemaWriter zurücksetzen
+		// interne Liste SchemaWriter zurï¿½cksetzen
 		sw.setXsElementsReferenced(new LinkedList<XSElementDecl>());
 
 		// Elemente behandeln
 		for (XSElementDecl currElement : listElementsRef) {
-			if (!xsElementsInserted.contains(currElement) && !xsElementsToInsert.contains(currElement)) {
-				erzeugeSchemaTypUndElement(currElement, null, ssQuellSchema, xsElementsToInsert, xsElementsInserted, sw);
+			if (!xsElementsInserted.contains(currElement)
+					&& !xsElementsToInsert.contains(currElement)) {
+				erzeugeSchemaTypUndElement(currElement, null, ssQuellSchema,
+						xsElementsToInsert, xsElementsInserted, sw);
 			}
 		}
 
 		// Falls wieder neue Elemente vorhanden sind, rekursiver Aufruf
 		if (sw.getXsElementsReferenced().size() > 0) {
-			printRefElements(sw, ssQuellSchema, xsElementsToInsert, xsElementsInserted);
+			printRefElements(sw, ssQuellSchema, xsElementsToInsert,
+					xsElementsInserted);
 		}
 	}
 
 	/**
-	 * Mit dieser Methode wird ein leeres DOM-Dokument mit dem Wurzelelement erzeugt.
+	 * Mit dieser Methode wird ein leeres DOM-Dokument mit dem Wurzelelement
+	 * erzeugt.
 	 * 
 	 * @param strRootElement
 	 *            Bezeichnung des Wurzelelements
@@ -411,14 +520,15 @@ public class ExtraTailoringImpl implements ExtraTailoring {
 	 */
 	private Document erzeugeLeeresDokument(String strRootElement)
 			throws ParserConfigurationException {
-		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory
+				.newInstance();
 		docFactory.setNamespaceAware(true);
 		DocumentBuilder parser = docFactory.newDocumentBuilder();
 		// Leeres DOM Dokument erstellen
 		Document doc = parser.newDocument();
 		// root-Element erstellen
 		Element root = doc.createElement(strRootElement);
-		// root-Element dem Dokument hinzufügen
+		// root-Element dem Dokument hinzufï¿½gen
 		doc.appendChild(root);
 		return doc;
 	}

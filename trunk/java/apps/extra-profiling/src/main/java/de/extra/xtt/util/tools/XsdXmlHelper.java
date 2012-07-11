@@ -1,3 +1,21 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package de.extra.xtt.util.tools;
 
 import java.io.File;
@@ -40,12 +58,12 @@ import org.xml.sax.SAXException;
 
 import com.sun.xml.xsom.XSElementDecl;
 import com.sun.xml.xsom.XSModelGroup;
+import com.sun.xml.xsom.XSModelGroup.Compositor;
 import com.sun.xml.xsom.XSParticle;
 import com.sun.xml.xsom.XSSchema;
 import com.sun.xml.xsom.XSSchemaSet;
 import com.sun.xml.xsom.XSType;
 import com.sun.xml.xsom.XSWildcard;
-import com.sun.xml.xsom.XSModelGroup.Compositor;
 import com.sun.xml.xsom.impl.ElementDecl;
 import com.sun.xml.xsom.parser.XSOMParser;
 
@@ -56,39 +74,42 @@ import de.extra.xtt.util.schema.MySchemaWriter;
 import de.extra.xtt.util.schema.SchemaElement;
 
 /**
- * Diese Klasse stellt Hilfsfunktionen für die Verarbeitung von XML- und XSD-Dateien zur Verfügung.
+ * Diese Klasse stellt Hilfsfunktionen fÃ¼r die Verarbeitung von XML- und
+ * XSD-Dateien zur VerfÃ¼gung.
  * 
  * @author Beier
- * 
  */
 public class XsdXmlHelper {
 
 	private static Logger logger = Logger.getLogger(XsdXmlHelper.class);
 
 	/**
-	 * Lest und erstellt ein DOM-Dokument aus dem übergebenen Dateinamen.
+	 * Lest und erstellt ein DOM-Dokument aus dem ï¿½bergebenen Dateinamen.
 	 * 
 	 * @param fileName
-	 *            Dateiname für die XML-Datei
+	 *            Dateiname fï¿½r die XML-Datei
 	 * @return XML-Datei als DOM-Dokument
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
 	 * @throws IOException
 	 */
-	public static Document leseXsdXml(String fileName) throws ParserConfigurationException, SAXException, IOException {
-		// Datei einlesen und als DOM-Baum zurück geben
-		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+	public static Document leseXsdXml(String fileName)
+			throws ParserConfigurationException, SAXException, IOException {
+		// Datei einlesen und als DOM-Baum zurï¿½ck geben
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory
+				.newInstance();
 		docFactory.setNamespaceAware(true);
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-		// Wichtig, hier das Fileobjekt zu verwenden, da damit der WindowsXP-Bug umgangen wird (kann keine Leerzeichen
+		// Wichtig, hier das Fileobjekt zu verwenden, da damit der WindowsXP-Bug
+		// umgangen wird (kann keine Leerzeichen
 		// im Pfad verarbeiten)
 		Document doc = docBuilder.parse(new File(fileName));
 		return doc;
 	}
 
 	/**
-	 * Liest und erstellt ein XSD-SchemaSet aus der angegebenen Datei. Dabei werden auch verknüpfte Schemadateien
-	 * eingelesen.
+	 * Liest und erstellt ein XSD-SchemaSet aus der angegebenen Datei. Dabei
+	 * werden auch verknï¿½pfte Schemadateien eingelesen.
 	 * 
 	 * @param fileName
 	 *            Dateiname der einzulesenden Schemadatei
@@ -96,7 +117,8 @@ public class XsdXmlHelper {
 	 * @throws SAXException
 	 * @throws IOException
 	 */
-	public static XSSchemaSet leseXsd(String fileName) throws SAXException, IOException {
+	public static XSSchemaSet leseXsd(String fileName) throws SAXException,
+			IOException {
 		XSOMParser parser = new XSOMParser();
 		parser.setAnnotationParser(new AnnotationFactory());
 		parser.parse(new File(fileName));
@@ -104,85 +126,100 @@ public class XsdXmlHelper {
 	}
 
 	/**
-	 * Das übergabene XMl-Dokument wird asl Textdatei unter Verwendung des angegebenen Dateinamens gespeichert.
+	 * Das ï¿½bergabene XMl-Dokument wird asl Textdatei unter Verwendung des
+	 * angegebenen Dateinamens gespeichert.
 	 * 
 	 * @param fileName
-	 *            Dateiname für die neue Textdatei
+	 *            Dateiname fï¿½r die neue Textdatei
 	 * @param document
 	 *            Zu speicherndes XML-Dokument
 	 * @throws TransformerFactoryConfigurationError
 	 * @throws TransformerException
 	 */
-	public static void schreibeXsdXml(String fileName, Document document) throws TransformerFactoryConfigurationError,
-			TransformerException {
-		// überflüssige Leerzeichen entfernen
+	public static void schreibeXsdXml(String fileName, Document document)
+			throws TransformerFactoryConfigurationError, TransformerException {
+		// ï¿½berflï¿½ssige Leerzeichen entfernen
 		Node firstElement = document.getFirstChild();
 		while (!(firstElement instanceof Element)) {
 			firstElement = firstElement.getNextSibling();
 		}
 		entferneLeerzeichenRekursiv((Element) firstElement);
-		// übergebenen DOM-Baum in die Datei speichern.
+		// ï¿½bergebenen DOM-Baum in die Datei speichern.
 		Transformer tFormer = TransformerFactory.newInstance().newTransformer();
 		tFormer.setOutputProperty(OutputKeys.METHOD, "xml");
 		// Einzug mit 4 Zeichen
 		tFormer.setOutputProperty(OutputKeys.INDENT, "yes");
-		tFormer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+		tFormer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount",
+				"4");
 		Source source = new DOMSource(document);
 		Result result = new StreamResult(new File(fileName));
 		tFormer.transform(source, result);
 	}
 
 	/**
-	 * Die übergebene Profilkonfiguration in Form eines XML-Dokuments wird gegen das angegebene Schema validiert.
-	 * Außerdem erfolgt eine semantische Prüfung der Profilkonfiguration, bei der geprüft wird, ob alle angegebenen
-	 * Kind-Knoten wieder als eigene Elemente aufgeführt sind.
+	 * Die ï¿½bergebene Profilkonfiguration in Form eines XML-Dokuments wird gegen
+	 * das angegebene Schema validiert. Auï¿½erdem erfolgt eine semantische
+	 * Prï¿½fung der Profilkonfiguration, bei der geprï¿½ft wird, ob alle
+	 * angegebenen Kind-Knoten wieder als eigene Elemente aufgefï¿½hrt sind.
 	 * 
 	 * @param docProfilXml
 	 *            Zu validierende Profilkonfiguration
 	 * @param dateiNameSchema
-	 *            Dateiname des Schemas für die Profilkonfiguration
+	 *            Dateiname des Schemas fï¿½r die Profilkonfiguration
 	 * @throws ValidationException
-	 *             Ausnahme wird erzeugt, falls die profilkonfiguration semantisch inkorrekt ist
+	 *             Ausnahme wird erzeugt, falls die profilkonfiguration
+	 *             semantisch inkorrekt ist
 	 * @throws SAXException
 	 * @throws IOException
 	 * @throws XPathExpressionException
 	 */
-	public static void validiereProfilXml(Document docProfilXml, String dateiNameSchema) throws ValidationException,
-			SAXException, IOException, XPathExpressionException {
+	public static void validiereProfilXml(Document docProfilXml,
+			String dateiNameSchema) throws ValidationException, SAXException,
+			IOException, XPathExpressionException {
 		// 1. Schema-Validierung
 		// SchemaFactory und ein Schema-Objekt erstellen
-		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		InputStream is = XsdXmlHelper.class.getResourceAsStream(dateiNameSchema);
+		SchemaFactory schemaFactory = SchemaFactory
+				.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		InputStream is = XsdXmlHelper.class
+				.getResourceAsStream(dateiNameSchema);
 		Schema schema = schemaFactory.newSchema(new StreamSource(is));
 		is.close();
 		// Validatorobjekt erstellen und XML-Dokument validieren
 		Validator validator = schema.newValidator();
 		validator.validate(new DOMSource(docProfilXml));
-		// 2. Semantische Prüfung
-		// Alle Kindknoten müssen wieder als eigenes Element aufgeführt sein
+		// 2. Semantische Prï¿½fung
+		// Alle Kindknoten mï¿½ssen wieder als eigenes Element aufgefï¿½hrt sein
 		// Sammle alle Kind-Knoten
 		NodeList nodesKindElemente = xpathSuche("//kind/text()", docProfilXml);
 		for (int i = 0; i < nodesKindElemente.getLength(); i++) {
 			String strCurrNodeValue = nodesKindElemente.item(i).getNodeValue();
-			NodeList nodesMainElement = xpathSuche("//element/name[text()='" + strCurrNodeValue + "']", docProfilXml);
-			// Für den Kindknoten muss ein entsprechendes Haupt-Element definiert sein
+			NodeList nodesMainElement = xpathSuche("//element/name[text()='"
+					+ strCurrNodeValue + "']", docProfilXml);
+			// Fï¿½r den Kindknoten muss ein entsprechendes Haupt-Element
+			// definiert sein
 			if (nodesMainElement.getLength() == 0) {
-				throw new ValidationException(String.format(
-						"Für das Kind-Element '%s' ist kein eigenes Element definiert.", strCurrNodeValue));
+				throw new ValidationException(
+						String.format(
+								"Fï¿½r das Kind-Element '%s' ist kein eigenes Element definiert.",
+								strCurrNodeValue));
 			}
 		}
 	}
 
 	/**
-	 * Für das übergebene XSD-SchemaSet werden alle mehrfach referenzierten Elemente bestimmt.
+	 * Fï¿½r das ï¿½bergebene XSD-SchemaSet werden alle mehrfach referenzierten
+	 * Elemente bestimmt.
 	 * 
 	 * @param sset
-	 *            SchemaSet, in dem nach mehrfach referenzierten Elementen gesucht wird
+	 *            SchemaSet, in dem nach mehrfach referenzierten Elementen
+	 *            gesucht wird
 	 * @param configurator
-	 *            Configurator-Objekt mit dem Zugriff auf Properties und sonstige Einstellungen
+	 *            Configurator-Objekt mit dem Zugriff auf Properties und
+	 *            sonstige Einstellungen
 	 * @return Liste mit allen mehrfach referenzierten Elementen
 	 */
-	public static LinkedList<SchemaElement> getMultipleReferencedElements(XSSchemaSet sset, Configurator configurator) {
+	public static LinkedList<SchemaElement> getMultipleReferencedElements(
+			XSSchemaSet sset, Configurator configurator) {
 		if (sset != null) {
 			LinkedList<String> listRefElements = new LinkedList<String>();
 			LinkedList<SchemaElement> listMultipleElements = new LinkedList<SchemaElement>();
@@ -195,13 +232,18 @@ public class XsdXmlHelper {
 				if (currType.isComplexType()) {
 					XSParticle currParticle = null;
 					if (currType.asComplexType().getExplicitContent() != null) {
-						currParticle = currType.asComplexType().getExplicitContent().asParticle();
+						currParticle = currType.asComplexType()
+								.getExplicitContent().asParticle();
 					} else if (currType.asComplexType().getContentType() != null) {
-						currParticle = currType.asComplexType().getContentType().asParticle();
+						currParticle = currType.asComplexType()
+								.getContentType().asParticle();
 					}
-					if ((currParticle != null) && (currParticle.getTerm() instanceof XSModelGroup)) {
-						XSModelGroup currModelGroup = currParticle.getTerm().asModelGroup();
-						getMultipleReferencedElementsForModelGroup(sset, configurator, listRefElements,
+					if ((currParticle != null)
+							&& (currParticle.getTerm() instanceof XSModelGroup)) {
+						XSModelGroup currModelGroup = currParticle.getTerm()
+								.asModelGroup();
+						getMultipleReferencedElementsForModelGroup(sset,
+								configurator, listRefElements,
 								listMultipleElements, currModelGroup);
 					}
 				}
@@ -213,46 +255,65 @@ public class XsdXmlHelper {
 	}
 
 	/**
-	 * Für eine ModelGroup (sequence oder choice) werden mehrfach referenzierte Elemente unter Berücksichtung der
-	 * bereits gefundenen Referenzen bestimmt.
+	 * Fï¿½r eine ModelGroup (sequence oder choice) werden mehrfach referenzierte
+	 * Elemente unter Berï¿½cksichtung der bereits gefundenen Referenzen bestimmt.
 	 * 
 	 * @param sset
-	 *            SchemaSet, das alle relevanten Elemente und Typen enthält
+	 *            SchemaSet, das alle relevanten Elemente und Typen enthï¿½lt
 	 * @param configurator
-	 *            Configurator-Objekt mit dem Zugriff auf Properties und sonstige Einstellungen
+	 *            Configurator-Objekt mit dem Zugriff auf Properties und
+	 *            sonstige Einstellungen
 	 * @param listRefElements
-	 *            Liste, das alle bisher gefundenen referenzierten Elemente enthält (mindestens eine Referenz)
+	 *            Liste, das alle bisher gefundenen referenzierten Elemente
+	 *            enthï¿½lt (mindestens eine Referenz)
 	 * @param listMultipleElements
 	 *            Liste mit bisher gefundenen mehrfach referenzierten Elementen
 	 * @param modelGroup
 	 *            ModelGroup, in der aktuell gesucht werden soll
 	 */
-	private static void getMultipleReferencedElementsForModelGroup(XSSchemaSet sset, Configurator configurator,
-			LinkedList<String> listRefElements, LinkedList<SchemaElement> listMultipleElements, XSModelGroup modelGroup) {
+	private static void getMultipleReferencedElementsForModelGroup(
+			XSSchemaSet sset, Configurator configurator,
+			LinkedList<String> listRefElements,
+			LinkedList<SchemaElement> listMultipleElements,
+			XSModelGroup modelGroup) {
 		// Kinder durchlaufen
 		for (XSParticle currChild : modelGroup.getChildren()) {
 			if (currChild.getTerm() instanceof ElementDecl) {
-				XSElementDecl currChildElement = currChild.getTerm().asElementDecl();
-				getMultipleReferencedElementsForElement(sset, configurator, listRefElements, listMultipleElements,
-						currChildElement);
+				XSElementDecl currChildElement = currChild.getTerm()
+						.asElementDecl();
+				getMultipleReferencedElementsForElement(sset, configurator,
+						listRefElements, listMultipleElements, currChildElement);
 			} else if (currChild.getTerm() instanceof XSModelGroup) {
-				XSModelGroup currModelGroup = currChild.getTerm().asModelGroup();
-				getMultipleReferencedElementsForModelGroup(sset, configurator, listRefElements, listMultipleElements,
-						currModelGroup);
+				XSModelGroup currModelGroup = currChild.getTerm()
+						.asModelGroup();
+				getMultipleReferencedElementsForModelGroup(sset, configurator,
+						listRefElements, listMultipleElements, currModelGroup);
 			} else if (currChild.getTerm() instanceof XSWildcard) {
-				// Element von sequence/choice kann ein Wildcard-Objekt sein, z.B. 'xs:any'
+				// Element von sequence/choice kann ein Wildcard-Objekt sein,
+				// z.B. 'xs:any'
 				XSWildcard wildCard = currChild.getTerm().asWildcard();
-				String currNamespaceStr = wildCard.apply(MySchemaWriter.WILDCARD_NS);
-				if ((currNamespaceStr != null) && (currNamespaceStr.length() > 0) && !(currNamespaceStr.contains("##"))) {
-					// Alle Elemente merken, die per Wildcard hier verwendet werden dürfen
-					// Dazu alle Schemata durchlaufen und prüfen, ob der Targetnamespace von Wildcard akzeptiert wird
+				String currNamespaceStr = wildCard
+						.apply(MySchemaWriter.WILDCARD_NS);
+				if ((currNamespaceStr != null)
+						&& (currNamespaceStr.length() > 0)
+						&& !(currNamespaceStr.contains("##"))) {
+					// Alle Elemente merken, die per Wildcard hier verwendet
+					// werden dï¿½rfen
+					// Dazu alle Schemata durchlaufen und prï¿½fen, ob der
+					// Targetnamespace von Wildcard akzeptiert wird
 					for (XSSchema currSchema : sset.getSchemas()) {
-						if (wildCard.acceptsNamespace(currSchema.getTargetNamespace())) {
-							// Alle Elemente dieses Namespaces durchgehen und behandeln
-							Map<String, XSElementDecl> elementDecls = currSchema.getElementDecls();
-							for (Map.Entry<String, XSElementDecl> currEntry : elementDecls.entrySet()) {
-								XSElementDecl currElement = currEntry.getValue();
-								getMultipleReferencedElementsForElement(sset, configurator, listRefElements,
+						if (wildCard.acceptsNamespace(currSchema
+								.getTargetNamespace())) {
+							// Alle Elemente dieses Namespaces durchgehen und
+							// behandeln
+							Map<String, XSElementDecl> elementDecls = currSchema
+									.getElementDecls();
+							for (Map.Entry<String, XSElementDecl> currEntry : elementDecls
+									.entrySet()) {
+								XSElementDecl currElement = currEntry
+										.getValue();
+								getMultipleReferencedElementsForElement(sset,
+										configurator, listRefElements,
 										listMultipleElements, currElement);
 							}
 						}
@@ -264,44 +325,56 @@ public class XsdXmlHelper {
 	}
 
 	/**
-	 * Für ein Schema-Element werden mehrfach referenzierte Elemente unter Berücksichtung der bereits gefundenen
-	 * Referenzen bestimmt.
+	 * Fï¿½r ein Schema-Element werden mehrfach referenzierte Elemente unter
+	 * Berï¿½cksichtung der bereits gefundenen Referenzen bestimmt.
 	 * 
 	 * @param sset
-	 *            SchemaSet, das alle relevanten Elemente und Typen enthält
+	 *            SchemaSet, das alle relevanten Elemente und Typen enthï¿½lt
 	 * @param configurator
-	 *            Configurator-Objekt mit dem Zugriff auf Properties und sonstige Einstellungen
+	 *            Configurator-Objekt mit dem Zugriff auf Properties und
+	 *            sonstige Einstellungen
 	 * @param listRefElements
-	 *            Liste, das alle bisher gefundenen referenzierten Elemente enthält (mindestens eine Referenz)
+	 *            Liste, das alle bisher gefundenen referenzierten Elemente
+	 *            enthï¿½lt (mindestens eine Referenz)
 	 * @param listMultipleElements
 	 *            Liste mit bisher gefundenen mehrfach referenzierten Elementen
 	 * @param currChildElement
 	 *            Element, in dem aktuell gesucht werden soll
 	 */
-	private static void getMultipleReferencedElementsForElement(XSSchemaSet sset, Configurator configurator,
-			LinkedList<String> listRefElements, LinkedList<SchemaElement> listMultipleElements,
+	private static void getMultipleReferencedElementsForElement(
+			XSSchemaSet sset, Configurator configurator,
+			LinkedList<String> listRefElements,
+			LinkedList<SchemaElement> listMultipleElements,
 			XSElementDecl currChildElement) {
-		// Prüfen, ob dieses Element selbst Kinder hat (nur dann in die Liste aufnehmen)
-		if (schemaElementHasChilds(sset, currChildElement.getName(), currChildElement.getTargetNamespace())) {
-			String strBezeichnung = currChildElement.getName() + "_" + currChildElement.getTargetNamespace();
+		// Prï¿½fen, ob dieses Element selbst Kinder hat (nur dann in die Liste
+		// aufnehmen)
+		if (schemaElementHasChilds(sset, currChildElement.getName(),
+				currChildElement.getTargetNamespace())) {
+			String strBezeichnung = currChildElement.getName() + "_"
+					+ currChildElement.getTargetNamespace();
 			if (listRefElements.contains(strBezeichnung)) {
-				// Falls schon mal referenziert, dann in die Liste mit den mehrfach referenzierten Elementen einfügen
+				// Falls schon mal referenziert, dann in die Liste mit den
+				// mehrfach referenzierten Elementen einfï¿½gen
 				// (falls dort noch nicht eingetragen)
-				SchemaElement newSchemaElement = new SchemaElement(currChildElement.getName(), currChildElement
-						.getTargetNamespace(), configurator.getPropertyNamespace(currChildElement.getTargetNamespace()));
+				SchemaElement newSchemaElement = new SchemaElement(
+						currChildElement.getName(),
+						currChildElement.getTargetNamespace(),
+						configurator.getPropertyNamespace(currChildElement
+								.getTargetNamespace()));
 				if (!listMultipleElements.contains(newSchemaElement)) {
 					listMultipleElements.add(newSchemaElement);
 				}
 			} else {
-				// Falls erstes Auftreten, dann in die Liste der referenzierten Elemente einfügen
+				// Falls erstes Auftreten, dann in die Liste der referenzierten
+				// Elemente einfï¿½gen
 				listRefElements.add(strBezeichnung);
 			}
 		}
 	}
 
 	/**
-	 * Ausgehend vom angegebenen Knoten-Element (kann auch ein DOM-Dokument sein) wird eine XPath-Suche mit dem
-	 * übergebenen Ausdruck durchgeführt.
+	 * Ausgehend vom angegebenen Knoten-Element (kann auch ein DOM-Dokument
+	 * sein) wird eine XPath-Suche mit dem ï¿½bergebenen Ausdruck durchgefï¿½hrt.
 	 * 
 	 * @param strXpathExpr
 	 *            XPath-Ausdruck
@@ -310,23 +383,27 @@ public class XsdXmlHelper {
 	 * @return Liste der gefundenen Knoten
 	 * @throws XPathExpressionException
 	 */
-	public static NodeList xpathSuche(String strXpathExpr, Node nodeToEvaluate) throws XPathExpressionException {
+	public static NodeList xpathSuche(String strXpathExpr, Node nodeToEvaluate)
+			throws XPathExpressionException {
 		XPath xpath = XPathFactory.newInstance().newXPath();
-		// Quelldokument suchen (für Namespace-Resolver)
+		// Quelldokument suchen (fï¿½r Namespace-Resolver)
 		Document docToEvaluate = nodeToEvaluate.getOwnerDocument();
 		if (nodeToEvaluate instanceof Document) {
 			docToEvaluate = (Document) nodeToEvaluate;
 		}
-		// Für die Suche nach Namespace-Elementen ist der Namespace-Resolver notwendig
+		// Fï¿½r die Suche nach Namespace-Elementen ist der Namespace-Resolver
+		// notwendig
 		xpath.setNamespaceContext(new UniversalNamespaceResolver(docToEvaluate));
 		NodeList nodes = null;
 		try {
-			nodes = (NodeList) xpath.evaluate(strXpathExpr, nodeToEvaluate, XPathConstants.NODESET);
+			nodes = (NodeList) xpath.evaluate(strXpathExpr, nodeToEvaluate,
+					XPathConstants.NODESET);
 		} catch (XPathExpressionException ex) {
-			// Evtl. kann Namespace-Prefix nicht aufgelöst werden
+			// Evtl. kann Namespace-Prefix nicht aufgelï¿½st werden
 			if (strXpathExpr.contains("xs:")) {
 				strXpathExpr = strXpathExpr.replace("xs:", "");
-				nodes = (NodeList) xpath.evaluate(strXpathExpr, nodeToEvaluate, XPathConstants.NODESET);
+				nodes = (NodeList) xpath.evaluate(strXpathExpr, nodeToEvaluate,
+						XPathConstants.NODESET);
 			} else {
 				throw ex;
 			}
@@ -335,14 +412,17 @@ public class XsdXmlHelper {
 	}
 
 	/**
-	 * Für ein Element des Schemas wird ein entsprechendes TreeNode-Objekt mit Kind-Elementen (falls vorhanden) erzeugt.
-	 * Dabei wird bestimmt, ob der Knoten eine Referenz auf einen mehrfach referenzierten Knoten besitzt. Bei der
-	 * Erstellung der Kind-Elemente wird diese Methode wieder rekursiv aufgerufen.
+	 * Fï¿½r ein Element des Schemas wird ein entsprechendes TreeNode-Objekt mit
+	 * Kind-Elementen (falls vorhanden) erzeugt. Dabei wird bestimmt, ob der
+	 * Knoten eine Referenz auf einen mehrfach referenzierten Knoten besitzt.
+	 * Bei der Erstellung der Kind-Elemente wird diese Methode wieder rekursiv
+	 * aufgerufen.
 	 * 
 	 * @param schemaSet
 	 *            Aktuell verwendetes SchemaSet
 	 * @param element
-	 *            Element aus dem Schema, für das der TreeNode erzeugt werden soll
+	 *            Element aus dem Schema, fï¿½r das der TreeNode erzeugt werden
+	 *            soll
 	 * @param schemaElementRoot
 	 *            SchemaElement, unter dem das aktuelle Element verwendet wird
 	 * @param minOccurs
@@ -350,58 +430,77 @@ public class XsdXmlHelper {
 	 * @param maxOccurs
 	 *            maxOccurs-Wert des aktuellen Elements
 	 * @param belongsToChoice
-	 *            Gibt an, ob das aktuelle Element zu einer choice gehört
+	 *            Gibt an, ob das aktuelle Element zu einer choice gehï¿½rt
 	 * @param belongsToSequence
-	 *            Gibt an, ob das aktuelle Element zu einer sequence gehört
+	 *            Gibt an, ob das aktuelle Element zu einer sequence gehï¿½rt
 	 * @param belongsToWildcard
-	 *            Gibt an, ob das aktuelle Element über ein wildcard-Element referenziert wird
+	 *            Gibt an, ob das aktuelle Element ï¿½ber ein wildcard-Element
+	 *            referenziert wird
 	 * @param checkAll
-	 *            Gibt an, ob alle Knoten standardmäßig selektiert sein sollen
+	 *            Gibt an, ob alle Knoten standardmï¿½ï¿½ig selektiert sein sollen
 	 * @param parent
-	 *            Vater-TreeNode, zu dem dieser neu zu erzeugende Knoten als Kindknoten eingefügt werden soll
+	 *            Vater-TreeNode, zu dem dieser neu zu erzeugende Knoten als
+	 *            Kindknoten eingefï¿½gt werden soll
 	 * @param listMultipleElements
 	 *            Liste der mehrfach referenzierten Elemente
 	 * @param configurator
-	 *            Configurator-Objekt mit dem Zugriff auf Properties und sonstige Einstellungen
+	 *            Configurator-Objekt mit dem Zugriff auf Properties und
+	 *            sonstige Einstellungen
 	 * @param rekursiv
 	 *            Gibt an, ob diese Methode rekursiv aufgerufen wurde
 	 * @return TreeNode-Ojekt zum angegebenen Schema-Element inkl. Kind-Knoten
 	 * @throws XPathExpressionException
 	 */
-	public static ProfilingTreeNode generateNodeForElementWithChildren(XSSchemaSet schemaSet, XSElementDecl element,
-			SchemaElement schemaElementRoot, int minOccurs, int maxOccurs, boolean belongsToChoice,
-			boolean belongsToSequence, boolean belongsToWildcard, boolean checkAll, ProfilingTreeNode parent,
-			LinkedList<SchemaElement> listMultipleElements, Configurator configurator, boolean rekursiv)
+	public static ProfilingTreeNode generateNodeForElementWithChildren(
+			XSSchemaSet schemaSet, XSElementDecl element,
+			SchemaElement schemaElementRoot, int minOccurs, int maxOccurs,
+			boolean belongsToChoice, boolean belongsToSequence,
+			boolean belongsToWildcard, boolean checkAll,
+			ProfilingTreeNode parent,
+			LinkedList<SchemaElement> listMultipleElements,
+			Configurator configurator, boolean rekursiv)
 			throws XPathExpressionException {
 		if (element != null) {
 			// Schema-Element erstellen
-			SchemaElement schemaElement = new SchemaElement(element.getName(), element.getTargetNamespace(),
-					configurator.getPropertyNamespace(element.getTargetNamespace()));
-			boolean hasReferenzExtern = listMultipleElements.contains(schemaElement)
-					|| (rekursiv && (schemaElementRoot != null) && schemaElementRoot.equals(schemaElement));
+			SchemaElement schemaElement = new SchemaElement(element.getName(),
+					element.getTargetNamespace(),
+					configurator.getPropertyNamespace(element
+							.getTargetNamespace()));
+			boolean hasReferenzExtern = listMultipleElements
+					.contains(schemaElement)
+					|| (rekursiv && (schemaElementRoot != null) && schemaElementRoot
+							.equals(schemaElement));
 			boolean isLocalElement = element.isLocal();
-			// Neues Knotenobjekt für Element erstellen
-			ProfilingTreeNode newNode = new ProfilingTreeNode(schemaElement, minOccurs, maxOccurs, belongsToChoice,
-					belongsToSequence, belongsToWildcard, checkAll, hasReferenzExtern, isLocalElement, parent);
-			// Kind-Elemente für Knoten mit externer Referenz nicht erzeugen
+			// Neues Knotenobjekt fï¿½r Element erstellen
+			ProfilingTreeNode newNode = new ProfilingTreeNode(schemaElement,
+					minOccurs, maxOccurs, belongsToChoice, belongsToSequence,
+					belongsToWildcard, checkAll, hasReferenzExtern,
+					isLocalElement, parent);
+			// Kind-Elemente fï¿½r Knoten mit externer Referenz nicht erzeugen
 			if (!hasReferenzExtern) {
 				// Suche das aktuelle Element im SchemaSat
 				if (element != null) {
-					// Typdefinition für Element suchen und ggf. Kindobjekte erzeugen
+					// Typdefinition fï¿½r Element suchen und ggf. Kindobjekte
+					// erzeugen
 					XSType currType = element.getType();
 					if (currType.isComplexType()) {
 						XSParticle currParticle = null;
 						if (currType.asComplexType().getExplicitContent() != null) {
-							currParticle = currType.asComplexType().getExplicitContent().asParticle();
+							currParticle = currType.asComplexType()
+									.getExplicitContent().asParticle();
 						} else if (currType.asComplexType().getContentType() != null) {
-							currParticle = currType.asComplexType().getContentType().asParticle();
+							currParticle = currType.asComplexType()
+									.getContentType().asParticle();
 						}
 						if (currParticle != null) {
-							XSModelGroup modelGroup = currParticle.getTerm().asModelGroup();
+							XSModelGroup modelGroup = currParticle.getTerm()
+									.asModelGroup();
 							Vector<ProfilingTreeNode> children = new Vector<ProfilingTreeNode>();
-							// Knoten-Objekte für aktuelle ModelGroup generieren
-							generateChildrenForModelGroup(schemaSet, configurator, checkAll, listMultipleElements,
-									newNode, children, modelGroup, schemaElementRoot);
+							// Knoten-Objekte fï¿½r aktuelle ModelGroup generieren
+							generateChildrenForModelGroup(schemaSet,
+									configurator, checkAll,
+									listMultipleElements, newNode, children,
+									modelGroup, schemaElementRoot);
 							if (!children.isEmpty()) {
 								newNode.addChildren(children);
 							}
@@ -416,83 +515,113 @@ public class XsdXmlHelper {
 	}
 
 	/**
-	 * Für die Kind-Elemente einer Modelgroup (sequence / choice) des Schemas werden entsprechende TreeNode-Objekte mit
-	 * Kind-Elementen (falls vorhanden) erzeugt. Dabei wird bestimmt, ob die Knoten eine Referenz auf einen mehrfach
-	 * referenzierten Knoten besitzt.
+	 * Fï¿½r die Kind-Elemente einer Modelgroup (sequence / choice) des Schemas
+	 * werden entsprechende TreeNode-Objekte mit Kind-Elementen (falls
+	 * vorhanden) erzeugt. Dabei wird bestimmt, ob die Knoten eine Referenz auf
+	 * einen mehrfach referenzierten Knoten besitzt.
 	 * 
 	 * @param schemaSet
 	 *            Aktuell verwendetes SchemaSet
 	 * @param configurator
-	 *            Configurator-Objekt mit dem Zugriff auf Properties und sonstige Einstellungen
+	 *            Configurator-Objekt mit dem Zugriff auf Properties und
+	 *            sonstige Einstellungen
 	 * @param checkAll
-	 *            Gibt an, ob alle Knoten standardmäßig selektiert sein sollen
+	 *            Gibt an, ob alle Knoten standardmï¿½ï¿½ig selektiert sein sollen
 	 * @param listMultipleElements
 	 *            Liste der mehrfach referenzierten Elemente
 	 * @param newNode
-	 *            Knoten-Objekt, in das die zu erstellenden Knoten als Kind-Elemente hinzugefügt werden
+	 *            Knoten-Objekt, in das die zu erstellenden Knoten als
+	 *            Kind-Elemente hinzugefï¿½gt werden
 	 * @param children
 	 *            Liste, in der alle neuen Kind-Elementen gesammelt werden
 	 * @param modelGroup
-	 *            ModelGroup-Objekt, für das Elemente erstellt werden sollen
+	 *            ModelGroup-Objekt, fï¿½r das Elemente erstellt werden sollen
 	 * @param schemaElementRoot
 	 *            SchemaElement, unter dem das aktuelle Element verwendet wird
 	 * @throws XPathExpressionException
 	 */
-	private static void generateChildrenForModelGroup(XSSchemaSet schemaSet, Configurator configurator,
-			boolean checkAll, LinkedList<SchemaElement> listMultipleElements, ProfilingTreeNode newNode,
-			Vector<ProfilingTreeNode> children, XSModelGroup modelGroup, SchemaElement schemaElementRoot)
+	private static void generateChildrenForModelGroup(XSSchemaSet schemaSet,
+			Configurator configurator, boolean checkAll,
+			LinkedList<SchemaElement> listMultipleElements,
+			ProfilingTreeNode newNode, Vector<ProfilingTreeNode> children,
+			XSModelGroup modelGroup, SchemaElement schemaElementRoot)
 			throws XPathExpressionException {
 		// Choice oder Sequence
 		Compositor compositor = modelGroup.getCompositor();
-		boolean belongsToSequenceChilds = compositor.equals(com.sun.xml.xsom.XSModelGroup.Compositor.SEQUENCE);
-		boolean belongsToChoiceChilds = compositor.equals(com.sun.xml.xsom.XSModelGroup.Compositor.CHOICE);
+		boolean belongsToSequenceChilds = compositor
+				.equals(com.sun.xml.xsom.XSModelGroup.Compositor.SEQUENCE);
+		boolean belongsToChoiceChilds = compositor
+				.equals(com.sun.xml.xsom.XSModelGroup.Compositor.CHOICE);
 		XSParticle[] childs = modelGroup.getChildren();
 		for (XSParticle currChild : childs) {
 			if (currChild.getTerm() instanceof ElementDecl) {
 				// Elemente von sequence bzw. choice abarbeiten
 				XSElementDecl currElement = currChild.getTerm().asElementDecl();
-				int minOccursChild = currChild.getMinOccurs();
-				int maxOccursChild = currChild.getMaxOccurs();
+				int minOccursChild = currChild.getMinOccurs().intValue();
+				int maxOccursChild = currChild.getMaxOccurs().intValue();
 				if (maxOccursChild == XSParticle.UNBOUNDED) {
 					maxOccursChild = Integer.MAX_VALUE;
 				}
-				// TreeNode-Objekt für Kind rekursiv erzeugen
-				// Falls im Typ des gerade angelegten Elements wieder auf das Element verwiesen wird, dafür keine Kinder
+				// TreeNode-Objekt fï¿½r Kind rekursiv erzeugen
+				// Falls im Typ des gerade angelegten Elements wieder auf das
+				// Element verwiesen wird, dafï¿½r keine Kinder
 				// mehr generieren
-				ProfilingTreeNode treeNodeChild = generateNodeForElementWithChildren(schemaSet, currElement,
-						schemaElementRoot, minOccursChild, maxOccursChild, belongsToChoiceChilds,
-						belongsToSequenceChilds, false, checkAll, newNode, listMultipleElements, configurator, true);
+				ProfilingTreeNode treeNodeChild = generateNodeForElementWithChildren(
+						schemaSet, currElement, schemaElementRoot,
+						minOccursChild, maxOccursChild, belongsToChoiceChilds,
+						belongsToSequenceChilds, false, checkAll, newNode,
+						listMultipleElements, configurator, true);
 				children.add(treeNodeChild);
 			} else if (currChild.getTerm() instanceof XSModelGroup) {
-				// Element von sequence/choice kann wieder eine ModelGroup (sequence/choice) sein
+				// Element von sequence/choice kann wieder eine ModelGroup
+				// (sequence/choice) sein
 				XSModelGroup mg = currChild.getTerm().asModelGroup();
-				generateChildrenForModelGroup(schemaSet, configurator, checkAll, listMultipleElements, newNode,
-						children, mg, schemaElementRoot);
+				generateChildrenForModelGroup(schemaSet, configurator,
+						checkAll, listMultipleElements, newNode, children, mg,
+						schemaElementRoot);
 			} else if (currChild.getTerm() instanceof XSWildcard) {
-				// Element von sequence/choice kann ein Wildcard-Objekt sein, z.B. 'xs:any'
+				// Element von sequence/choice kann ein Wildcard-Objekt sein,
+				// z.B. 'xs:any'
 				XSWildcard wildCard = currChild.getTerm().asWildcard();
-				String currNamespaceStr = wildCard.apply(MySchemaWriter.WILDCARD_NS);
-				if ((currNamespaceStr != null) && (currNamespaceStr.length() > 0) && !(currNamespaceStr.contains("##"))) {
-					// Alle Elemente merken, die per Wildcard hier verwendet werden dürfen
-					// Dazu alle Schemata durchlaufen und prüfen, ob der Targetnamespace von Wildcard akzeptiert wird
+				String currNamespaceStr = wildCard
+						.apply(MySchemaWriter.WILDCARD_NS);
+				if ((currNamespaceStr != null)
+						&& (currNamespaceStr.length() > 0)
+						&& !(currNamespaceStr.contains("##"))) {
+					// Alle Elemente merken, die per Wildcard hier verwendet
+					// werden dï¿½rfen
+					// Dazu alle Schemata durchlaufen und prï¿½fen, ob der
+					// Targetnamespace von Wildcard akzeptiert wird
 					for (XSSchema currSchema : schemaSet.getSchemas()) {
-						if (wildCard.acceptsNamespace(currSchema.getTargetNamespace())) {
-							// Alle Elemente dieses Namespaces durchgehen und entsprechende Knotenobjekte erzeugen
-							Map<String, XSElementDecl> elementDecls = currSchema.getElementDecls();
-							for (Map.Entry<String, XSElementDecl> currEntry : elementDecls.entrySet()) {
-								XSElementDecl currElement = currEntry.getValue();
-								// TreeNode-Objekt für Kind rekursiv erzeugen
-								// Falls im Typ des gerade angelegten Elements wieder auf das Element verwiesen wird,
-								// dafür keine Kinder mehr generieren
-								int minOccursChild = currChild.getMinOccurs();
-								int maxOccursChild = currChild.getMaxOccurs();
+						if (wildCard.acceptsNamespace(currSchema
+								.getTargetNamespace())) {
+							// Alle Elemente dieses Namespaces durchgehen und
+							// entsprechende Knotenobjekte erzeugen
+							Map<String, XSElementDecl> elementDecls = currSchema
+									.getElementDecls();
+							for (Map.Entry<String, XSElementDecl> currEntry : elementDecls
+									.entrySet()) {
+								XSElementDecl currElement = currEntry
+										.getValue();
+								// TreeNode-Objekt fï¿½r Kind rekursiv erzeugen
+								// Falls im Typ des gerade angelegten Elements
+								// wieder auf das Element verwiesen wird,
+								// dafï¿½r keine Kinder mehr generieren
+								int minOccursChild = currChild.getMinOccurs()
+										.intValue();
+								int maxOccursChild = currChild.getMaxOccurs()
+										.intValue();
 								if (maxOccursChild == XSParticle.UNBOUNDED) {
 									maxOccursChild = Integer.MAX_VALUE;
 								}
-								ProfilingTreeNode treeNodeChild = generateNodeForElementWithChildren(schemaSet,
-										currElement, schemaElementRoot, minOccursChild, maxOccursChild,
-										belongsToChoiceChilds, belongsToSequenceChilds, true, checkAll, newNode,
-										listMultipleElements, configurator, true);
+								ProfilingTreeNode treeNodeChild = generateNodeForElementWithChildren(
+										schemaSet, currElement,
+										schemaElementRoot, minOccursChild,
+										maxOccursChild, belongsToChoiceChilds,
+										belongsToSequenceChilds, true,
+										checkAll, newNode,
+										listMultipleElements, configurator,
+										true);
 								children.add(treeNodeChild);
 							}
 						}
@@ -511,9 +640,11 @@ public class XsdXmlHelper {
 	 * @throws DOMException
 	 * @throws XPathExpressionException
 	 */
-	public static String getTargetNamespaceFromXmlProf(Document docXml) throws DOMException, XPathExpressionException {
+	public static String getTargetNamespaceFromXmlProf(Document docXml)
+			throws DOMException, XPathExpressionException {
 		if (docXml != null) {
-			NodeList listNodes = xpathSuche("//profil-konfiguration/attribute::tnsUrl", docXml);
+			NodeList listNodes = xpathSuche(
+					"//profil-konfiguration/attribute::tnsUrl", docXml);
 			if (listNodes.getLength() > 0) {
 				return listNodes.item(0).getNodeValue();
 			} else {
@@ -533,10 +664,12 @@ public class XsdXmlHelper {
 	 * @throws DOMException
 	 * @throws XPathExpressionException
 	 */
-	public static String getBezeichnungKurzVerfahrenFromXmlProf(Document docXml) throws DOMException,
-			XPathExpressionException {
+	public static String getBezeichnungKurzVerfahrenFromXmlProf(Document docXml)
+			throws DOMException, XPathExpressionException {
 		if (docXml != null) {
-			NodeList listNodes = xpathSuche("//profil-konfiguration/attribute::bezKurzVerfahren", docXml);
+			NodeList listNodes = xpathSuche(
+					"//profil-konfiguration/attribute::bezKurzVerfahren",
+					docXml);
 			if (listNodes.getLength() > 0) {
 				return listNodes.item(0).getNodeValue();
 			} else {
@@ -556,10 +689,11 @@ public class XsdXmlHelper {
 	 * @throws DOMException
 	 * @throws XPathExpressionException
 	 */
-	public static String getBezeichnungVerfahrenFromXmlProf(Document docXml) throws DOMException,
-			XPathExpressionException {
+	public static String getBezeichnungVerfahrenFromXmlProf(Document docXml)
+			throws DOMException, XPathExpressionException {
 		if (docXml != null) {
-			NodeList listNodes = xpathSuche("//profil-konfiguration/attribute::bezVerfahren", docXml);
+			NodeList listNodes = xpathSuche(
+					"//profil-konfiguration/attribute::bezVerfahren", docXml);
 			if (listNodes.getLength() > 0) {
 				return listNodes.item(0).getNodeValue();
 			} else {
@@ -571,31 +705,38 @@ public class XsdXmlHelper {
 	}
 
 	/**
-	 * Prüft, ob das angegebene Schema-Element (falls vorhanden) Kindelemente besitzt.
+	 * Prï¿½ft, ob das angegebene Schema-Element (falls vorhanden) Kindelemente
+	 * besitzt.
 	 * 
 	 * @param sset
 	 *            SchemaSet
 	 * @param elementName
 	 *            Name des Elements
 	 * @param elementNamespace
-	 *            Namespace-Präfix des Elements
-	 * @return <code>true</code>, falls Element Kindelemente besitzt, sonst <code>false</code>
+	 *            Namespace-Prï¿½fix des Elements
+	 * @return <code>true</code>, falls Element Kindelemente besitzt, sonst
+	 *         <code>false</code>
 	 */
-	private static boolean schemaElementHasChilds(XSSchemaSet sset, String elementName, String elementNamespace) {
-		XSElementDecl currElement = sset.getElementDecl(elementNamespace, elementName);
+	private static boolean schemaElementHasChilds(XSSchemaSet sset,
+			String elementName, String elementNamespace) {
+		XSElementDecl currElement = sset.getElementDecl(elementNamespace,
+				elementName);
 		if (currElement != null) {
 			XSType currType = currElement.getType();
 			// Nur complexTypes betrachten
 			if (currType.isComplexType()) {
 				XSParticle currParticle = null;
 				if (currType.asComplexType().getExplicitContent() != null) {
-					currParticle = currType.asComplexType().getExplicitContent().asParticle();
+					currParticle = currType.asComplexType()
+							.getExplicitContent().asParticle();
 				} else if (currType.asComplexType().getContentType() != null) {
-					currParticle = currType.asComplexType().getContentType().asParticle();
+					currParticle = currType.asComplexType().getContentType()
+							.asParticle();
 				}
 				if (currParticle != null) {
 					// Kinder durchlaufen
-					XSParticle[] childs = currParticle.getTerm().asModelGroup().getChildren();
+					XSParticle[] childs = currParticle.getTerm().asModelGroup()
+							.getChildren();
 					if (childs.length > 0) {
 						return true;
 					}
@@ -606,7 +747,7 @@ public class XsdXmlHelper {
 	}
 
 	/**
-	 * Aus dem übergbenen DOM-Element werden alle Knoten ohne Text entfernt
+	 * Aus dem ï¿½bergbenen DOM-Element werden alle Knoten ohne Text entfernt
 	 * 
 	 * @param elem
 	 *            DOM-Element
@@ -632,7 +773,7 @@ public class XsdXmlHelper {
 	}
 
 	/**
-	 * Loggt die übergebene Knotenliste im Debug-Modus
+	 * Loggt die ï¿½bergebene Knotenliste im Debug-Modus
 	 * 
 	 * @param listNodes
 	 *            Liste von Knoten
@@ -652,8 +793,9 @@ public class XsdXmlHelper {
 	 */
 	private static void printNode(Node node) {
 		if (logger.isDebugEnabled()) {
-			logger.debug(String.format("Element: %s:%s (Wert: %s) (Typ: %s)", node.getPrefix(), node.getNodeName(),
-					node.getNodeValue(), node.getNodeType()));
+			logger.debug(String.format("Element: %s:%s (Wert: %s) (Typ: %s)",
+					node.getPrefix(), node.getNodeName(), node.getNodeValue(),
+					node.getNodeType()));
 		}
 	}
 

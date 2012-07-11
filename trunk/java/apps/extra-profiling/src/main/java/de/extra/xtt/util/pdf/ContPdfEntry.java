@@ -1,11 +1,28 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package de.extra.xtt.util.pdf;
 
 /**
- * Diese Klasse ist ein Container für einen Eintrag im PDF-Dokument, der im Inhaltsverzeichnis inkl. Seitennummer und
- * Referenz erscheinen soll.
+ * Diese Klasse ist ein Container fÃ¼r einen Eintrag im PDF-Dokument, der im
+ * Inhaltsverzeichnis inkl. Seitennummer und Referenz erscheinen soll.
  * 
  * @author Beier
- * 
  */
 public class ContPdfEntry {
 
@@ -18,7 +35,7 @@ public class ContPdfEntry {
 	 * Konstruktor zu Initialisierung des Dateninhalts.
 	 * 
 	 * @param parentEntry
-	 *            Übergeordneter Eintrag (optional)
+	 *            ï¿½bergeordneter Eintrag (optional)
 	 * @param bezeichnung
 	 *            Bezeichnung des Eintrags
 	 * @param destination
@@ -26,7 +43,8 @@ public class ContPdfEntry {
 	 * @param pageNumber
 	 *            Seitennummer des Eintrags
 	 */
-	public ContPdfEntry(ContPdfEntry parentEntry, String bezeichnung, String destination, int pageNumber) {
+	public ContPdfEntry(ContPdfEntry parentEntry, String bezeichnung,
+			String destination, int pageNumber) {
 		this.parentEntry = parentEntry;
 		this.bezeichnung = bezeichnung;
 		this.destination = destination;
@@ -34,16 +52,16 @@ public class ContPdfEntry {
 	}
 
 	/**
-	 * Gibt den übergeordneten Eintrag des aktuellen Eintrags zurück
+	 * Gibt den ï¿½bergeordneten Eintrag des aktuellen Eintrags zurï¿½ck
 	 * 
-	 * @return übergeordneter Eintrag, falls vorhanden; sonst <code>null</code>
+	 * @return ï¿½bergeordneter Eintrag, falls vorhanden; sonst <code>null</code>
 	 */
 	public ContPdfEntry getParentEntry() {
 		return parentEntry;
 	}
 
 	/**
-	 * Gibt die Bezeichnung des Eintrags zurück
+	 * Gibt die Bezeichnung des Eintrags zurï¿½ck
 	 * 
 	 * @return Bezeichnung
 	 */
@@ -52,7 +70,7 @@ public class ContPdfEntry {
 	}
 
 	/**
-	 * Gibt diie Referenz des Eintrags zurück
+	 * Gibt diie Referenz des Eintrags zurï¿½ck
 	 * 
 	 * @return Referenz im PDF-Dokument
 	 */
@@ -61,7 +79,7 @@ public class ContPdfEntry {
 	}
 
 	/**
-	 * Setzt die Seitenzahl für den Eintrag
+	 * Setzt die Seitenzahl fï¿½r den Eintrag
 	 * 
 	 * @param pageNumber
 	 *            Seitenzahl des Eintrags im PDF-Dokument
@@ -71,7 +89,7 @@ public class ContPdfEntry {
 	}
 
 	/**
-	 * Gitb die Seitenzahl des Eintrags zurück
+	 * Gitb die Seitenzahl des Eintrags zurï¿½ck
 	 * 
 	 * @return Seitenzahl im PDF-Dokument
 	 */

@@ -1,3 +1,21 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package de.extra.xtt.util;
 
 import java.io.File;
@@ -8,61 +26,72 @@ import org.w3c.dom.Document;
 import de.extra.xtt.gui.model.ProfilingTreeModel;
 
 /**
- * Controller-Klasse für die Anwendung XSD-Creator. Stellt alle notwendigen Funktionen für die Oberfläche breit.
+ * Controller-Klasse fÃ¼r die Anwendung XSD-Creator. Stellt alle notwendigen
+ * Funktionen fÃ¼r die Oberflï¿½che breit.
  * 
  * @author Beier
- * 
  */
 public interface XsdCreatorCtrl {
 
 	/**
-	 * Erzeugt das TreeModel für das Request-Schema
+	 * Erzeugt das TreeModel fï¿½r das Request-Schema
 	 * 
 	 * @return TreeModel mit allen Elementen des Request-Schemas
 	 * @throws XsdCreatorCtrlException
-	 *             Ausnahme wird erzeugt, falls beim Ausführen der Methode ein beliebiger Fehler auftritt
+	 *             Ausnahme wird erzeugt, falls beim Ausfï¿½hren der Methode ein
+	 *             beliebiger Fehler auftritt
 	 */
-	public abstract ProfilingTreeModel createTreeModelForRequest() throws XsdCreatorCtrlException;
+	public abstract ProfilingTreeModel createTreeModelForRequest()
+			throws XsdCreatorCtrlException;
 
 	/**
-	 * Erzeugt das TreeModel für das Response-Schema
+	 * Erzeugt das TreeModel fï¿½r das Response-Schema
 	 * 
 	 * @return TreeModel mit alle Elementen des Response-Schemas
 	 * @throws XsdCreatorCtrlException
-	 *             Ausnahme wird erzeugt, falls beim Ausführen der Methode ein beliebiger Fehler auftritt
+	 *             Ausnahme wird erzeugt, falls beim Ausfï¿½hren der Methode ein
+	 *             beliebiger Fehler auftritt
 	 */
-	public abstract ProfilingTreeModel createTreeModelForResponse() throws XsdCreatorCtrlException;
+	public abstract ProfilingTreeModel createTreeModelForResponse()
+			throws XsdCreatorCtrlException;
 
 	/**
-	 * Erzeugt das TreeModel für die aktuell geladene Konfiguration
+	 * Erzeugt das TreeModel fï¿½r die aktuell geladene Konfiguration
 	 * 
-	 * @return TreeModel für das aktuell geladene Schema
+	 * @return TreeModel fï¿½r das aktuell geladene Schema
 	 * @throws XsdCreatorCtrlException
-	 *             Ausnahme wird erzeugt, falls beim Ausführen der Methode ein beliebiger Fehler auftritt
+	 *             Ausnahme wird erzeugt, falls beim Ausfï¿½hren der Methode ein
+	 *             beliebiger Fehler auftritt
 	 */
-	public abstract ProfilingTreeModel createTreeModelForCurrentConfig() throws XsdCreatorCtrlException;
+	public abstract ProfilingTreeModel createTreeModelForCurrentConfig()
+			throws XsdCreatorCtrlException;
 
 	/**
-	 * Lädt die Profilkonfiguration aus der übergebenen Datei inkl. passendem Schema
+	 * Lï¿½dt die Profilkonfiguration aus der ï¿½bergebenen Datei inkl. passendem
+	 * Schema
 	 * 
 	 * @param fileConfig
 	 *            Datei mit einer XML-Profilkonfiguration
 	 * @throws XsdCreatorCtrlException
-	 *             Ausnahme wird erzeugt, falls beim Ausführen der Methode ein beliebiger Fehler auftritt
+	 *             Ausnahme wird erzeugt, falls beim Ausfï¿½hren der Methode ein
+	 *             beliebiger Fehler auftritt
 	 */
-	public abstract void setXmlFileConfig(File fileConfig) throws XsdCreatorCtrlException;
+	public abstract void setXmlFileConfig(File fileConfig)
+			throws XsdCreatorCtrlException;
 
 	/**
-	 * Erzeugt eine PDF-Dokumentation für das aktuelle profilierte Schema
+	 * Erzeugt eine PDF-Dokumentation fï¿½r das aktuelle profilierte Schema
 	 * 
 	 * @param pathFile
-	 *            Pfad für die zu erstellende PDF-Datei
+	 *            Pfad fï¿½r die zu erstellende PDF-Datei
 	 * @param filePathSchema
 	 *            Pfad der Schemadatei
 	 * @throws XsdCreatorCtrlException
-	 *             Ausnahme wird erzeugt, falls beim Ausführen der Methode ein beliebiger Fehler auftritt
+	 *             Ausnahme wird erzeugt, falls beim Ausfï¿½hren der Methode ein
+	 *             beliebiger Fehler auftritt
 	 */
-	public abstract void createPdfDoku(String pathFile, String filePathSchema) throws XsdCreatorCtrlException;
+	public abstract void createPdfDoku(String pathFile, String filePathSchema)
+			throws XsdCreatorCtrlException;
 
 	/**
 	 * Liefert den aktuellen TargetNamespace aus der Profilkonfiguration
@@ -74,42 +103,51 @@ public interface XsdCreatorCtrl {
 	/**
 	 * Gibt an, ob aktuell eine Profilkonfiguration geladen ist
 	 * 
-	 * @return <code>true</code>, wenn Profilkonfiguration geladen; sonst <code>false</code>
+	 * @return <code>true</code>, wenn Profilkonfiguration geladen; sonst
+	 *         <code>false</code>
 	 */
 	public abstract boolean isDocXmlLoaded();
 
 	/**
-	 * Für die übergebenen TreeModels wird eine Profilkonfiguration inkl. TargetNamespace und und Kurzbezeichnung für
-	 * das Verfahren erzeugt.
+	 * Fï¿½r die ï¿½bergebenen TreeModels wird eine Profilkonfiguration inkl.
+	 * TargetNamespace und und Kurzbezeichnung fï¿½r das Verfahren erzeugt.
 	 * 
 	 * @param treeModelMain
 	 *            TreeModel mit den Hauptelementen
 	 * @param treeModelAdd
 	 *            TreeModel mit dne referenzierten Elementen
 	 * @param targetNamespace
-	 *            TargetNamespace für das profilierte Schema
+	 *            TargetNamespace fï¿½r das profilierte Schema
 	 * @param bezVerfahrenKurz
-	 *            Kurzbezeichnung des Verfahrens; wird für die Dateinamen verwendet
+	 *            Kurzbezeichnung des Verfahrens; wird fï¿½r die Dateinamen
+	 *            verwendet
 	 * @param bezVerfahren
 	 *            Bbezeichnung des Verfahrens
 	 * @throws XsdCreatorCtrlException
-	 *             Ausnahme wird erzeugt, falls beim Ausführen der Methode ein beliebiger Fehler auftritt
+	 *             Ausnahme wird erzeugt, falls beim Ausfï¿½hren der Methode ein
+	 *             beliebiger Fehler auftritt
 	 */
-	public abstract void createXmlProf(ProfilingTreeModel treeModelMain, ProfilingTreeModel treeModelAdd,
-			String targetNamespace, String bezVerfahrenKurz, String bezVerfahren) throws XsdCreatorCtrlException;
+	public abstract void createXmlProf(ProfilingTreeModel treeModelMain,
+			ProfilingTreeModel treeModelAdd, String targetNamespace,
+			String bezVerfahrenKurz, String bezVerfahren)
+			throws XsdCreatorCtrlException;
 
 	/**
-	 * Erzeugt das profilierte Schema für die aktuelle Profilkonfiguration; Ergebnis können ein oder mehrere
-	 * Schemadateien sein.
+	 * Erzeugt das profilierte Schema fï¿½r die aktuelle Profilkonfiguration;
+	 * Ergebnis kï¿½nnen ein oder mehrere Schemadateien sein.
 	 * 
-	 * @return Map mit dem Namespace-Präfix als Key und dem dazugehörigen Schemadokument als Value
+	 * @return Map mit dem Namespace-Prï¿½fix als Key und dem dazugehï¿½rigen
+	 *         Schemadokument als Value
 	 * @throws XsdCreatorCtrlException
-	 *             Ausnahme wird erzeugt, falls beim Ausführen der Methode ein beliebiger Fehler auftritt
+	 *             Ausnahme wird erzeugt, falls beim Ausfï¿½hren der Methode ein
+	 *             beliebiger Fehler auftritt
 	 */
-	public abstract Map<String, Document> createSchemaProf() throws XsdCreatorCtrlException;
+	public abstract Map<String, Document> createSchemaProf()
+			throws XsdCreatorCtrlException;
 
 	/**
-	 * Liefert den Pfad zur Datei des Quellschemas für die aktuelle Konfiguration.
+	 * Liefert den Pfad zur Datei des Quellschemas fï¿½r die aktuelle
+	 * Konfiguration.
 	 * 
 	 * @return Dateipfad vom Quellschema
 	 */
@@ -126,46 +164,57 @@ public interface XsdCreatorCtrl {
 	 * Speichert die aktuelle Profilkonfiguration.
 	 * 
 	 * @param path
-	 *            Pfad und Name für die neue Datei
+	 *            Pfad und Name fï¿½r die neue Datei
 	 * @throws XsdCreatorCtrlException
-	 *             Ausnahme wird erzeugt, falls beim Ausführen der Methode ein beliebiger Fehler auftritt
+	 *             Ausnahme wird erzeugt, falls beim Ausfï¿½hren der Methode ein
+	 *             beliebiger Fehler auftritt
 	 */
-	public abstract void saveXmlConfig(String path) throws XsdCreatorCtrlException;
+	public abstract void saveXmlConfig(String path)
+			throws XsdCreatorCtrlException;
 
 	/**
-	 * Speichert die übergebenen Schema-Dateien im angegebenen Verzeichnis. Die Dateinamen werden automatisch aus dem
-	 * Namespace-Präfix und der Kurzbezeichnung des Verfahrens aus der Konfiguration gebildet.
+	 * Speichert die ï¿½bergebenen Schema-Dateien im angegebenen Verzeichnis. Die
+	 * Dateinamen werden automatisch aus dem Namespace-Prï¿½fix und der
+	 * Kurzbezeichnung des Verfahrens aus der Konfiguration gebildet.
 	 * 
 	 * @param path
 	 *            Verzeichnis, in dem die Schemadateien gespeichert werden
 	 * @param docXsd
-	 *            Map mit dem Namespace-Präfix als Key und dem dazugehörigen Schemadokument als Value
+	 *            Map mit dem Namespace-Prï¿½fix als Key und dem dazugehï¿½rigen
+	 *            Schemadokument als Value
 	 * @throws XsdCreatorCtrlException
-	 *             Ausnahme wird erzeugt, falls beim Ausführen der Methode ein beliebiger Fehler auftritt
+	 *             Ausnahme wird erzeugt, falls beim Ausfï¿½hren der Methode ein
+	 *             beliebiger Fehler auftritt
 	 */
-	public abstract void saveXsdSchema(String path, Map<String, Document> docXsd) throws XsdCreatorCtrlException;
+	public abstract void saveXsdSchema(String path, Map<String, Document> docXsd)
+			throws XsdCreatorCtrlException;
 
 	/**
-	 * Liefert die Kurzbezeichnung des Verfahrens aus der aktuellen Profilkonfiguration.
+	 * Liefert die Kurzbezeichnung des Verfahrens aus der aktuellen
+	 * Profilkonfiguration.
 	 * 
 	 * @return Kurzbezeichnung des Verfahrens
 	 */
 	public abstract String getBezeichnungKurzVerfahren();
 
 	/**
-	 * Liefert die Bezeichnung des Verfahrens aus der aktuellen Profilkonfiguration.
+	 * Liefert die Bezeichnung des Verfahrens aus der aktuellen
+	 * Profilkonfiguration.
 	 * 
 	 * @return Bezeichnung des Verfahrens
 	 */
 	public abstract String getBezeichnungVerfahren();
 
 	/**
-	 * Prüft den übergebenen String, ob es ein gültiger Dateiname ist (nur Buchstaben, Ziffern und '_')
+	 * Prï¿½ft den ï¿½bergebenen String, ob es ein gï¿½ltiger Dateiname ist (nur
+	 * Buchstaben, Ziffern und '_')
 	 * 
 	 * @param bezKurzVerfahren
-	 *            Zu prüfender String
-	 * @return <code>true</code>, falls Bezeichnung gültig ist, sonst <code>false</code>
+	 *            Zu prï¿½fender String
+	 * @return <code>true</code>, falls Bezeichnung gï¿½ltig ist, sonst
+	 *         <code>false</code>
 	 */
-	public abstract boolean validateBezeichnungKurzVerfahren(String bezKurzVerfahren);
+	public abstract boolean validateBezeichnungKurzVerfahren(
+			String bezKurzVerfahren);
 
 }
