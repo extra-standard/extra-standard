@@ -1,10 +1,8 @@
 #summary Beschreibung der technischen eXTra-Anwendungsarchitektur
 #labels Featured
 
-= eXTra-Anwendungsarchitektur =
-
 *Inhaltsverzeichnis*
 <wiki:toc max_depth="1" />
 
-  * [eXTraArchitekturAnwendungCli Command Line Interface (CLI) Anwendungsarchitektur]
-  * [eXTraArchitekturAnwendungProfiling Profiling Anwendungsarchitektur]
+  * [eXTraArchitekturAnwendungCli eXTra Command Line Interface (CLI)]
+  * [eXTraArchitekturAnwendungProfiling eXTra Profiling]
