@@ -3,12 +3,11 @@
 
 = Entwicklungsprozess =
 
+Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regeln definiert.
+
 *Inhaltsverzeichnis*
 <wiki:toc max_depth="1" />
 
-
-= Entwicklungsprozess =
-Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regeln definiert.
 
 = Entwicklungsumgebung =
   * Java 6
