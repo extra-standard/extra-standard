@@ -36,25 +36,25 @@ Folgende Szenarien wären denkbar
   * Einbinden der Plugins in eine neue oder bestehende Anwendung
 
 
-== CoreLibrary ==
-Die CoreLibrary bildet das Herzstück des eXTraClients. Sie wird durch den Starter aufgerufen und in ihr werden aus den durch die anderen Plugins gelieferten Informationen eXTra-Requests generiert, welche dann zur weiteren Verarbeitung an das OutputPlugin übergeben wird.
+== Core-Library ==
+Die Core-Library bildet das Herzstück des eXTraClients. Sie wird durch den Starter aufgerufen und in ihr werden aus den durch die anderen Plugins gelieferten Informationen eXTra-Requests generiert, welche dann zur weiteren Verarbeitung an das OutputPlugin übergeben wird.
 
 
-== ConfigPlugin ==
+== Config-Plugin ==
 Im Config-Plugin werden generelle Informationen hinterlegt, welche sendungsunabhängig und –übergreifend gültig sind. Dazu zählen z.B. die Absender- und Empfängerinformationen und welche Verfahren angesprochen werden.
 Außerdem werden vom ConfigPlugin wichtige Informationen zum Aufbau des Request an die CoreLibrary übergeben.
 Um hierzu nicht das ganze Schema verwenden zu müssen, könnte an dieser Stelle auch die aus dem XSDCreator gewonnene Profildatei ausgewertet werden.
 
 
-== DataPlugin == 
-Das DataPlugin versorgt die CoreLibrary mit den entsprechenden Nutzdaten, die transportiert werden sollen. Neben den reinen Nutzdaten werden hier auch die Zusatzinformationen zu den Nutzdaten abgelegt, wie u. a. Daten mit denen die Plugins im Request befüllt werden, z.B. die RequestID zum Datensatz. Eine Abwandlung des DataPlugins ist das QueryPlugin.
+== Data-Plugin == 
+Das Data-Plugin versorgt die Core-Library mit den entsprechenden Nutzdaten, die transportiert werden sollen. Neben den reinen Nutzdaten werden hier auch die Zusatzinformationen zu den Nutzdaten abgelegt, wie u. a. Daten mit denen die Plugins im Request befüllt werden, z.B. die RequestID zum Datensatz. Eine Abwandlung des DataPlugins ist das QueryPlugin.
 
 
-== QueryPlugin == 
+== Query-Plugin == 
 Beim Abruf der Daten werden vom DataPlugin keine Nutzdaten im Sinne von Datensätzen übergeben, sondern lediglich die fertig zusammengestellte Query zum Abruf der Daten.
 Diese werden nicht als fertig geparstes XML übergeben, sondern als JaxB-Element, welches direkt in den Request eingefügt werden kann.
 
-== OutputPlugin == 
+== Output-Plugin == 
 Das OutputPlugin übernimmt von der CoreLibrary den Request und kümmert sich um dessen Verarbeitung.
 Ein Weg, was mit dem Request geschieht, ist nicht vorgeschrieben.
 So sind zum Beispiel die folgenden Szenarien denkbar:
@@ -98,7 +98,7 @@ Bei der Core-Library wurde bereits in der ersten Version versucht ein möglichst
 Hierfür wurden innerhalb des Projekts die Schnittstellen zu den Plugins definiert. Ebenfalls in der CoreLibrary hinterlegt sind die Java-Beans die zur Datenübergabe und –haltung vorgesehen sind, sowie die erforderlichen Zugriffs-Klassen hinterlegt.
 
 === Config-Plugin === 
-Im ConfigPlugin werden die Sendungsübergreifenden Informationen eingelesen und an die Core-Library übergeben.
+Im Config-Plugin werden die Sendungsübergreifenden Informationen eingelesen und an die Core-Library übergeben.
 Die Informationen hierzu werden aus zwei Quellen ermittelt.
 Der Aufbau und die Inhaltsart des Body wird aus der Profildatei, welche vom XSD-Creator erstellt wird, bezogen.
 Die anderen Informationen wie z.B. Absender und Empfängerinformationen werden aus der klassischen Property-Datei geladen, welche im Starter referenziert wird.
