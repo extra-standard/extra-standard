@@ -131,15 +131,15 @@ Die Konfiguration des eXTra-Clients ist auf verschiedene Dateien aufgeteilt.
 Zum einen werden mehrere XML-Dateien vom Spring-Framework verwendet. Zum anderen wird zur Befüllung von Werten eine Property-Datei verwendet.
 
 == Spring-Konfiguration ==
-Zentrale Konfigurations-Datei des Clients ist die Datei SpringConfig.xml, in welcher die Property-Datei referenziert wird, die Konfigurations-Datei der Core-Library importiert wird und die einzelnen PlugIns definiert werden.
-Da es sich bei den PlugIns um eigenständige Projekte handelt, besitzen diese jeweils noch mal eine eigenständige Konfigurations-Datei, welche beim Aufruf des Plugins geladen wird.
-Somit sind die einzelnen Teile des Clients, abgesehen von der Referenz in der SpringConfig.xml innerhalb des Starter-Projekts vollkommen unabhängig voneinander und können mit einer kleinen Änderung an der Konfiguration anders belegt werden.
+Zentrale Konfigurations-Datei des Clients ist die Datei !SpringConfig.xml, in welcher die Property-Datei referenziert wird, die Konfigurations-Datei der Core-Library importiert wird und die einzelnen Plugins definiert werden.
+Da es sich bei den Plugins um eigenständige Projekte handelt, besitzen diese jeweils noch mal eine eigenständige Konfigurations-Datei, welche beim Aufruf des Plugins geladen wird.
+Somit sind die einzelnen Teile des Clients, abgesehen von der Referenz in der !SpringConfig.xml innerhalb des Starter-Projekts vollkommen unabhängig voneinander und können mit einer kleinen Änderung an der Konfiguration anders belegt werden.
 
 == Property-Datei ==
 Bei der Property-Datei handelt es sich um eine klassische Liste von Schlüsselbegriffen, welche Werte zugewiesen bekommen, die im Laufe der Verarbeitung gelesen und verwendet werden.
 
 So sind in der Property-Datei in der gegenwärtigen Implementierung die Informationen für das Config-Plugin hinterlegt, die Ablage- und Lese-Orte für die Dateien sowie die Steuerinformationen für den Abruf der Daten.
-Innerhalb des SpringFrameworks können diese Werte mit Hilfe des !PropertyPlaceholderConfigurers recht einfach an die Logik übergeben und dort verwendet werden.
+Innerhalb des Spring-Frameworks können diese Werte mit Hilfe des !PropertyPlaceholderConfigurers recht einfach an die Logik übergeben und dort verwendet werden.
 
 
 = Referenzen =
