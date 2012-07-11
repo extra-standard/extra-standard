@@ -73,7 +73,7 @@ Zur Vereinfachung der Implementierung wurde auf verschiedene bestehenden Bibliot
 
 === Spring-Framework ===
 Das Spring-Framework bildet bei der vorliegenden Implementierung die Grundlage des Clients.
-Dadurch lassen sich die einzelnen Plugins einfach über eine Konfigurations-Datei austauschen. Vereinfacht wird dadurch auch die Handhabung mit klassischen Property-Dateien über den PropertyFileHelper.
+Dadurch lassen sich die einzelnen Plugins einfach über eine Konfigurations-Datei austauschen. Vereinfacht wird dadurch auch die Handhabung mit klassischen Property-Dateien über den !PropertyFileHelper.
 
 === JaxB-Framework ===
 Durch Einsatz des JaxB-Frameworks wird auf ein manuelles aufbauen und parsen der XML-Strukturen verzichtet.
