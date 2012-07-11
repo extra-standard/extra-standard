@@ -4,7 +4,6 @@
 = eXTra-Anwendungsarchitektur =
 
 *Inhaltsverzeichnis*
-<wiki:toc max_depth="1" />
 
   * [eXTraArchitekturAnwendungCli eXTra Command Line Interface (CLI)]
   * [eXTraArchitekturAnwendungProfiling eXTra Profiling]
