@@ -1,14 +1,30 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package de.extra.xtt.util.schema;
 
 import com.sun.xml.xsom.XSType;
 
 /**
- * 
- * Diese Klasse ist ein Container für einen Schema-Typ und den dazugehörigen Namen des Schema-Elements, von dem dieser
- * Typ verwendet wird.
+ * Diese Klasse ist ein Container fÃ¼r einen Schema-Typ und den dazugehÃ¶rigen
+ * Namen des Schema-Elements, von dem dieser Typ verwendet wird.
  * 
  * @author Beier
- * 
  */
 public class ContXsType {
 
@@ -21,7 +37,7 @@ public class ContXsType {
 	 * @param type
 	 *            XML-Schematyp
 	 * @param elementNameWithPrefix
-	 *            Name inkl. Präfix des Elements, das diesen Typ verwendet
+	 *            Name inkl. Prï¿½fix des Elements, das diesen Typ verwendet
 	 */
 	public ContXsType(XSType type, String elementNameWithPrefix) {
 		this.type = type;
@@ -29,7 +45,7 @@ public class ContXsType {
 	}
 
 	/**
-	 * Gibt den Schematyp zurück
+	 * Gibt den Schematyp zurï¿½ck
 	 * 
 	 * @return XML-Schematyp
 	 */
@@ -38,9 +54,9 @@ public class ContXsType {
 	}
 
 	/**
-	 * Gibt den Namen des Elements inkl. Präfix zurück
+	 * Gibt den Namen des Elements inkl. Prï¿½fix zurï¿½ck
 	 * 
-	 * @return Name des Elements inkl. Präfix
+	 * @return Name des Elements inkl. Prï¿½fix
 	 */
 	public String getElementNameWithPrefix() {
 		return elementNameWithPrefix;
@@ -62,7 +78,5 @@ public class ContXsType {
 	public int hashCode() {
 		return type.hashCode();
 	}
-	
-	
 
 }

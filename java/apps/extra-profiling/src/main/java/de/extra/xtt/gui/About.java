@@ -1,3 +1,21 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package de.extra.xtt.gui;
 
 import java.awt.Font;
@@ -24,7 +42,7 @@ public class About extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	private JPanel jContentPane = null;
-	private Configurator configurator;
+	private final Configurator configurator;
 
 	/**
 	 * Konstruktor zur Initialisierung des About-Dialogs
@@ -32,7 +50,8 @@ public class About extends JDialog {
 	 * @param owner
 	 *            Frame, das Besitzer dieses Dialogs ist
 	 * @param configurator
-	 *            Configurator-Objekt mit dem Zugriff auf die Versionsinformationen
+	 *            Configurator-Objekt mit dem Zugriff auf die
+	 *            Versionsinformationen
 	 */
 	public About(Frame owner, Configurator configurator) {
 		super(owner);
@@ -62,7 +81,9 @@ public class About extends JDialog {
 			jContentPane.setLayout(null);
 
 			JLabel label = new JLabel("");
-			label.setIcon(new ImageIcon(About.class.getResource("/resource/de/drv/dsrv/xtt/gui/img/awv_extra.png")));
+			label.setIcon(new ImageIcon(
+					About.class
+							.getResource("/resource/de/drv/dsrv/xtt/gui/img/awv_extra.png")));
 			label.setBounds(10, 11, 449, 150);
 			jContentPane.add(label);
 
@@ -74,6 +95,7 @@ public class About extends JDialog {
 
 			JButton btnOk = new JButton("OK");
 			btnOk.addActionListener(new ActionListener() {
+				@Override
 				public void actionPerformed(ActionEvent e) {
 					setVisible(false);
 				}

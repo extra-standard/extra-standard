@@ -1,3 +1,21 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package de.extra.xtt.util;
 
 import java.io.File;
@@ -24,20 +42,20 @@ import de.extra.xtt.util.pdf.PdfCreator;
 import de.extra.xtt.util.pdf.PdfCreatorImpl;
 import de.extra.xtt.util.schema.SchemaElement;
 import de.extra.xtt.util.tools.Configurator;
-import de.extra.xtt.util.tools.XsdXmlHelper;
 import de.extra.xtt.util.tools.Configurator.SchemaType;
+import de.extra.xtt.util.tools.XsdXmlHelper;
 
 /**
- * Controller für die Anwendung; kapselt alle notwendigen Funktionen für die Oberfläche
+ * Controller fÃ¼r die Anwendung; kapselt alle notwendigen Funktionen fÃ¼r die
+ * OberflÃ¤che.
  * 
  * @author Beier
- * 
  */
 public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 
 	private static Logger logger = Logger.getLogger(XsdCreatorCtrlImpl.class);
 	private final Configurator configurator;
-	
+
 	private Document docProfilXml;
 	private Configurator.SchemaType schemaType;
 	private XSSchemaSet ssQuellSchema;
@@ -51,7 +69,8 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 	 * Initialisiert das Konfiguratorobjekt
 	 * 
 	 * @param configurator
-	 *            Konfiguratorobjekt mit Zugriff auf Properties und Einstellungen
+	 *            Konfiguratorobjekt mit Zugriff auf Properties und
+	 *            Einstellungen
 	 */
 	public XsdCreatorCtrlImpl(Configurator configurator) {
 		this.configurator = configurator;
@@ -60,62 +79,81 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 	/**
 	 * {@inheritdoc}
 	 */
-	public ProfilingTreeModel createTreeModelForRequest() throws XsdCreatorCtrlException {
+	@Override
+	public ProfilingTreeModel createTreeModelForRequest()
+			throws XsdCreatorCtrlException {
 		try {
 			schemaType = SchemaType.REQUEST;
 			pathCurrentQuellSchema = configurator
 					.getPropertyUser(Configurator.PropBezeichnungUser.VERZEICHNIS_BASIS_SCHEMATA)
-					+ configurator.getPropertyUser(Configurator.PropBezeichnungUser.DATEINAME_XSD_REQUEST);
+					+ configurator
+							.getPropertyUser(Configurator.PropBezeichnungUser.DATEINAME_XSD_REQUEST);
 			ssQuellSchema = XsdXmlHelper.leseXsd(pathCurrentQuellSchema);
-			targetNamespace = configurator.getSchemaTypeNsUrl(SchemaType.REQUEST);
+			targetNamespace = configurator
+					.getSchemaTypeNsUrl(SchemaType.REQUEST);
 			return createTreeModel(ssQuellSchema, true);
 		} catch (Exception e) {
-			throw new XsdCreatorCtrlException("Fehler beim Erstellen des TreeModels für das Request-Schema.", e);
+			throw new XsdCreatorCtrlException(
+					"Fehler beim Erstellen des TreeModels fï¿½r das Request-Schema.",
+					e);
 		}
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public ProfilingTreeModel createTreeModelForResponse() throws XsdCreatorCtrlException {
+	@Override
+	public ProfilingTreeModel createTreeModelForResponse()
+			throws XsdCreatorCtrlException {
 		try {
 			schemaType = SchemaType.RESPONSE;
 			pathCurrentQuellSchema = configurator
 					.getPropertyUser(Configurator.PropBezeichnungUser.VERZEICHNIS_BASIS_SCHEMATA)
-					+ configurator.getPropertyUser(Configurator.PropBezeichnungUser.DATEINAME_XSD_RESPONSE);
+					+ configurator
+							.getPropertyUser(Configurator.PropBezeichnungUser.DATEINAME_XSD_RESPONSE);
 			ssQuellSchema = XsdXmlHelper.leseXsd(pathCurrentQuellSchema);
-			targetNamespace = configurator.getSchemaTypeNsUrl(SchemaType.RESPONSE);
+			targetNamespace = configurator
+					.getSchemaTypeNsUrl(SchemaType.RESPONSE);
 			return createTreeModel(ssQuellSchema, true);
 		} catch (Exception e) {
-			throw new XsdCreatorCtrlException("Fehler beim Erstellen des TreeModels für das Response-Schema.", e);
+			throw new XsdCreatorCtrlException(
+					"Fehler beim Erstellen des TreeModels fï¿½r das Response-Schema.",
+					e);
 		}
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public ProfilingTreeModel createTreeModelForCurrentConfig() throws XsdCreatorCtrlException {
+	@Override
+	public ProfilingTreeModel createTreeModelForCurrentConfig()
+			throws XsdCreatorCtrlException {
 		if (docProfilXml != null) {
 			try {
-				// TreeModel für Ausgangsschema erzeugen
-				ProfilingTreeModel treeModel = createTreeModel(ssQuellSchema, false);
-				// Knoten müssen nach der Konfiguration selektiert werden
+				// TreeModel fï¿½r Ausgangsschema erzeugen
+				ProfilingTreeModel treeModel = createTreeModel(ssQuellSchema,
+						false);
+				// Knoten mï¿½ssen nach der Konfiguration selektiert werden
 				treeModel.applyXmlConfig(docProfilXml);
 				return treeModel;
 			} catch (Exception e) {
-				throw new XsdCreatorCtrlException("Fehler beim Erstellen des TreeModels.", e);
+				throw new XsdCreatorCtrlException(
+						"Fehler beim Erstellen des TreeModels.", e);
 			}
 		} else {
-			throw new XsdCreatorCtrlException("Aktuelle Profilkonfiguration ungültig (NULL).");
+			throw new XsdCreatorCtrlException(
+					"Aktuelle Profilkonfiguration ungï¿½ltig (NULL).");
 		}
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public void setXmlFileConfig(File fileConfig) throws XsdCreatorCtrlException {
+	@Override
+	public void setXmlFileConfig(File fileConfig)
+			throws XsdCreatorCtrlException {
 		try {
-			// Anmerkungen zurücksetzen
+			// Anmerkungen zurï¿½cksetzen
 			configurator.reloadPropertiesAnmerkungen();
 
 			if (fileConfig == null) {
@@ -129,13 +167,15 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 				loadXmlProfil(pathCurrentXmlConfig);
 			}
 		} catch (Exception e) {
-			throw new XsdCreatorCtrlException("Fehler beim Laden der Profilkonfiguration.", e);
+			throw new XsdCreatorCtrlException(
+					"Fehler beim Laden der Profilkonfiguration.", e);
 		}
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public boolean validateBezeichnungKurzVerfahren(String bezKurzVerfahren) {
 		if ((bezKurzVerfahren == null) || (bezKurzVerfahren.equals(""))) {
 			return false;
@@ -150,6 +190,7 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public String getTargetNamespace() {
 		return targetNamespace;
 	}
@@ -157,6 +198,7 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public boolean isDocXmlLoaded() {
 		return (docProfilXml != null);
 	}
@@ -164,6 +206,7 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public String getBezeichnungKurzVerfahren() {
 		return bezeichnungKurzVerfahren;
 	}
@@ -171,6 +214,7 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public String getBezeichnungVerfahren() {
 		return bezeichnungVerfahren;
 	}
@@ -178,8 +222,11 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 	/**
 	 * {@inheritdoc}
 	 */
-	public void createXmlProf(ProfilingTreeModel treeModelMain, ProfilingTreeModel treeModelAdd,
-			String targetNamespace, String bezVerfahrenKurz, String bezVerfahren) throws XsdCreatorCtrlException {
+	@Override
+	public void createXmlProf(ProfilingTreeModel treeModelMain,
+			ProfilingTreeModel treeModelAdd, String targetNamespace,
+			String bezVerfahrenKurz, String bezVerfahren)
+			throws XsdCreatorCtrlException {
 		if (treeModelMain != null) {
 			ProfilingTreeNode rootNodeRef = null;
 			if (treeModelAdd != null) {
@@ -188,44 +235,55 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 			this.targetNamespace = targetNamespace;
 			this.bezeichnungKurzVerfahren = bezVerfahrenKurz;
 			this.bezeichnungVerfahren = bezVerfahren;
-			// Falls ein TreeModel mit referenzierten Elementen vorhanden ist, dann zuerst beide Models zusammenführen
+			// Falls ein TreeModel mit referenzierten Elementen vorhanden ist,
+			// dann zuerst beide Models zusammenfï¿½hren
 			ExtraTailoring tailoring = new ExtraTailoringImpl(configurator);
 			try {
-				docProfilXml = tailoring.erzeugeProfilkonfiguration(schemaType, (ProfilingTreeNode) treeModelMain
-						.getRoot(), rootNodeRef, targetNamespace, bezVerfahrenKurz, bezVerfahren);
+				docProfilXml = tailoring.erzeugeProfilkonfiguration(schemaType,
+						(ProfilingTreeNode) treeModelMain.getRoot(),
+						rootNodeRef, targetNamespace, bezVerfahrenKurz,
+						bezVerfahren);
 			} catch (ExtraTailoringException e) {
 				throw new XsdCreatorCtrlException(
-						"Fehler beim Erzeugen des XML-Dokuments für die Profilkonfiguration.", e);
+						"Fehler beim Erzeugen des XML-Dokuments fï¿½r die Profilkonfiguration.",
+						e);
 			}
 		} else {
-			throw new XsdCreatorCtrlException("Ungültiges TreeModel.");
+			throw new XsdCreatorCtrlException("Ungï¿½ltiges TreeModel.");
 		}
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public Map<String, Document> createSchemaProf() throws XsdCreatorCtrlException {
+	@Override
+	public Map<String, Document> createSchemaProf()
+			throws XsdCreatorCtrlException {
 		try {
 			// Schema profilieren ...
 			if (logger.isInfoEnabled()) {
 				logger.info("Generiere profiliertes Schema ...");
 			}
 			ExtraTailoring tailoring = new ExtraTailoringImpl(configurator);
-			Map<String, Document> docZielSchema = tailoring.erzeugeProfiliertesExtraSchema(ssQuellSchema, docProfilXml,
-					bezeichnungKurzVerfahren);
+			Map<String, Document> docZielSchema = tailoring
+					.erzeugeProfiliertesExtraSchema(ssQuellSchema,
+							docProfilXml, bezeichnungKurzVerfahren);
 			return docZielSchema;
 		} catch (ExtraTailoringException e) {
-			throw new XsdCreatorCtrlException("Fehler beim Erzeugen des profilierten Schemas.", e);
+			throw new XsdCreatorCtrlException(
+					"Fehler beim Erzeugen des profilierten Schemas.", e);
 		}
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public void createPdfDoku(String pathFileDoku, String filePathSchema) throws XsdCreatorCtrlException {
+	@Override
+	public void createPdfDoku(String pathFileDoku, String filePathSchema)
+			throws XsdCreatorCtrlException {
 		if ((pathFileDoku == null) || (filePathSchema == null)) {
-			throw new XsdCreatorCtrlException("Ungültiger Pfad für Doku- bzw. Schemadatei.");
+			throw new XsdCreatorCtrlException(
+					"Ungï¿½ltiger Pfad fï¿½r Doku- bzw. Schemadatei.");
 		} else {
 			try {
 				// Doku erzeugen profilieren ...
@@ -234,9 +292,11 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 				}
 				XSSchemaSet schema = XsdXmlHelper.leseXsd(filePathSchema);
 				PdfCreator pdfCreator = new PdfCreatorImpl(configurator);
-				pdfCreator.erzeugePdfDoku(pathFileDoku, schema, bezeichnungVerfahren);
+				pdfCreator.erzeugePdfDoku(pathFileDoku, schema,
+						bezeichnungVerfahren);
 			} catch (Exception e) {
-				throw new XsdCreatorCtrlException("Fehler beim Erzeugen der PDF-Dokumentation.", e);
+				throw new XsdCreatorCtrlException(
+						"Fehler beim Erzeugen der PDF-Dokumentation.", e);
 			}
 		}
 	}
@@ -244,6 +304,7 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public String getPathQuellSchema() {
 		return pathCurrentQuellSchema;
 	}
@@ -251,6 +312,7 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public String getPathXmlConfig() {
 		return pathCurrentXmlConfig;
 	}
@@ -258,62 +320,77 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void saveXmlConfig(String path) throws XsdCreatorCtrlException {
 		try {
 			pathCurrentXmlConfig = path;
 			XsdXmlHelper.schreibeXsdXml(path, docProfilXml);
 		} catch (Exception e) {
-			throw new XsdCreatorCtrlException("Fehler beim Speichern der XML-Datei.", e);
+			throw new XsdCreatorCtrlException(
+					"Fehler beim Speichern der XML-Datei.", e);
 		}
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public void saveXsdSchema(String path, Map<String, Document> docXsd) throws XsdCreatorCtrlException {
+	@Override
+	public void saveXsdSchema(String path, Map<String, Document> docXsd)
+			throws XsdCreatorCtrlException {
 		try {
 			for (Map.Entry<String, Document> currEntry : docXsd.entrySet()) {
-				String dateiname = path + "\\"
-						+ configurator.getDateinameFuerSchema(bezeichnungKurzVerfahren, currEntry.getKey());
+				String dateiname = path
+						+ "\\"
+						+ configurator.getDateinameFuerSchema(
+								bezeichnungKurzVerfahren, currEntry.getKey());
 				XsdXmlHelper.schreibeXsdXml(dateiname, currEntry.getValue());
-				logger.info("Schemadatei '" + dateiname + "' erfolgreich gespeichert.");
+				logger.info("Schemadatei '" + dateiname
+						+ "' erfolgreich gespeichert.");
 			}
 		} catch (Exception e) {
-			throw new XsdCreatorCtrlException("Fehler beim Speichern des XSD-Schemas.", e);
+			throw new XsdCreatorCtrlException(
+					"Fehler beim Speichern des XSD-Schemas.", e);
 		}
 	}
 
 	/**
-	 * Lädt die Profilkonfiguration aus der übergebenen Datei; anschließend wird das XML-Dokument validiert und das
-	 * entsprechende Schema geladen.
+	 * Lï¿½dt die Profilkonfiguration aus der ï¿½bergebenen Datei; anschlieï¿½end wird
+	 * das XML-Dokument validiert und das entsprechende Schema geladen.
 	 * 
 	 * @param fileNameProfilXml
 	 *            Dateiname der zu ladenden Profilkonfiguration
 	 * @throws XsdCreatorCtrlException
 	 */
-	private void loadXmlProfil(String fileNameProfilXml) throws XsdCreatorCtrlException {
+	private void loadXmlProfil(String fileNameProfilXml)
+			throws XsdCreatorCtrlException {
 		try {
 
 			// Profilkonfiguration einlesen
 			if (logger.isInfoEnabled()) {
-				logger.info(String.format("Lese Profilkonfiguration ('%s') ...", fileNameProfilXml));
+				logger.info(String.format(
+						"Lese Profilkonfiguration ('%s') ...",
+						fileNameProfilXml));
 			}
 			docProfilXml = XsdXmlHelper.leseXsdXml(fileNameProfilXml);
 
-			// Profilkonfiguration validieren (Schema und semantische Prüfung)
+			// Profilkonfiguration validieren (Schema und semantische Prï¿½fung)
 			if (logger.isInfoEnabled()) {
 				logger.info("Validieren Profilkonfiguration ...");
 			}
-			XsdXmlHelper.validiereProfilXml(docProfilXml, configurator.getPathTailoringSchema());
+			XsdXmlHelper.validiereProfilXml(docProfilXml,
+					configurator.getPathTailoringSchema());
 
 			// Core-Schema (entweder Request oder Response) einlesen
 			setPathAndTypeCoreSchema(docProfilXml);
 			// TargetNamespace auslesen
-			targetNamespace = XsdXmlHelper.getTargetNamespaceFromXmlProf(docProfilXml);
-			// Kurzbezeichnung für Verfahren auslesen
-			bezeichnungKurzVerfahren = XsdXmlHelper.getBezeichnungKurzVerfahrenFromXmlProf(docProfilXml);
-			// Bezeichnung für Verfahren auslesen
-			bezeichnungVerfahren = XsdXmlHelper.getBezeichnungVerfahrenFromXmlProf(docProfilXml);
+			targetNamespace = XsdXmlHelper
+					.getTargetNamespaceFromXmlProf(docProfilXml);
+			// Kurzbezeichnung fï¿½r Verfahren auslesen
+			bezeichnungKurzVerfahren = XsdXmlHelper
+					.getBezeichnungKurzVerfahrenFromXmlProf(docProfilXml);
+			// Bezeichnung fï¿½r Verfahren auslesen
+			bezeichnungVerfahren = XsdXmlHelper
+					.getBezeichnungVerfahrenFromXmlProf(docProfilXml);
 
 			// Anmerkungen einlesen und Properties aktualisieren
 			// 1. allg. Anmerkungen
@@ -321,10 +398,13 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 			NodeList nl = XsdXmlHelper.xpathSuche(xPathStr, docProfilXml);
 			for (int i = 0; i < nl.getLength(); i++) {
 				Node currElementNode = nl.item(i);
-				String nodeName = XsdXmlHelper.xpathSuche("./name/text()", currElementNode).item(0).getNodeValue();
-				SchemaElement currSE = configurator.getSchemaElement(nodeName);
-				String nodeAnmerkungText = XsdXmlHelper.xpathSuche("./anmerkung/text()", currElementNode).item(0)
+				String nodeName = XsdXmlHelper
+						.xpathSuche("./name/text()", currElementNode).item(0)
 						.getNodeValue();
+				SchemaElement currSE = configurator.getSchemaElement(nodeName);
+				String nodeAnmerkungText = XsdXmlHelper
+						.xpathSuche("./anmerkung/text()", currElementNode)
+						.item(0).getNodeValue();
 				configurator.setAnmerkungAllgemein(currSE, nodeAnmerkungText);
 			}
 			// 2. Anmerkungen zur Verwendung
@@ -332,49 +412,64 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 			nl = XsdXmlHelper.xpathSuche(xPathStr, docProfilXml);
 			for (int i = 0; i < nl.getLength(); i++) {
 				Node currKindNode = nl.item(i);
-				String nodeKindName = XsdXmlHelper.xpathSuche("./text()", currKindNode).item(0).getNodeValue();
-				String nodeParentName = XsdXmlHelper.xpathSuche("./name/text()", currKindNode.getParentNode()).item(0)
+				String nodeKindName = XsdXmlHelper
+						.xpathSuche("./text()", currKindNode).item(0)
 						.getNodeValue();
-				SchemaElement currKindSE = configurator.getSchemaElement(nodeKindName);
-				SchemaElement currParentSE = configurator.getSchemaElement(nodeParentName);
-				String nodeAnmerkungText = XsdXmlHelper.xpathSuche("./attribute::anmerkung", currKindNode).item(0)
+				String nodeParentName = XsdXmlHelper
+						.xpathSuche("./name/text()",
+								currKindNode.getParentNode()).item(0)
 						.getNodeValue();
-				configurator.setAnmerkungVerwendung(currKindSE, currParentSE, nodeAnmerkungText);
+				SchemaElement currKindSE = configurator
+						.getSchemaElement(nodeKindName);
+				SchemaElement currParentSE = configurator
+						.getSchemaElement(nodeParentName);
+				String nodeAnmerkungText = XsdXmlHelper
+						.xpathSuche("./attribute::anmerkung", currKindNode)
+						.item(0).getNodeValue();
+				configurator.setAnmerkungVerwendung(currKindSE, currParentSE,
+						nodeAnmerkungText);
 			}
 
 			if (logger.isInfoEnabled()) {
-				logger.info(String.format("Lese Core-Schema ('%s') ...", pathCurrentQuellSchema));
+				logger.info(String.format("Lese Core-Schema ('%s') ...",
+						pathCurrentQuellSchema));
 			}
 			ssQuellSchema = XsdXmlHelper.leseXsd(pathCurrentQuellSchema);
 		} catch (Exception e) {
-			throw new XsdCreatorCtrlException("Fehler beim Laden der Profilkonfiguration.", e);
+			throw new XsdCreatorCtrlException(
+					"Fehler beim Laden der Profilkonfiguration.", e);
 		}
 	}
 
 	/**
-	 * Aus der übergebenen Profilkonfiguration wird der Typ und der Pfad des passenden Schemas (Request oder Response)
-	 * bestimmt und gespeichert.
+	 * Aus der ï¿½bergebenen Profilkonfiguration wird der Typ und der Pfad des
+	 * passenden Schemas (Request oder Response) bestimmt und gespeichert.
 	 * 
 	 * @param docProfilXml
-	 *            Profilkonfiguration, für die das Schema bestimmt werden soll
+	 *            Profilkonfiguration, fï¿½r die das Schema bestimmt werden soll
 	 * @throws XPathExpressionException
 	 */
-	private void setPathAndTypeCoreSchema(Document docProfilXml) throws XPathExpressionException {
-		// Je nach Namespace-Definition im Root-Element (XMLTransport) entweder Request- oder Response-Schema wählen
+	private void setPathAndTypeCoreSchema(Document docProfilXml)
+			throws XPathExpressionException {
+		// Je nach Namespace-Definition im Root-Element (XMLTransport) entweder
+		// Request- oder Response-Schema wï¿½hlen
 		try {
 			String strWurzelElement = configurator
 					.getPropertySystem(Configurator.PropBezeichnungSystem.SCHEMA_ROOT_ELEMENT);
-			NodeList list = XsdXmlHelper.xpathSuche("//element/name[text()='xres:" + strWurzelElement + "']",
+			NodeList list = XsdXmlHelper.xpathSuche(
+					"//element/name[text()='xres:" + strWurzelElement + "']",
 					docProfilXml);
 			if ((list != null) && (list.getLength() > 0)) {
 				pathCurrentQuellSchema = configurator
 						.getPropertyUser(Configurator.PropBezeichnungUser.VERZEICHNIS_BASIS_SCHEMATA)
-						+ configurator.getPropertyUser(Configurator.PropBezeichnungUser.DATEINAME_XSD_RESPONSE);
+						+ configurator
+								.getPropertyUser(Configurator.PropBezeichnungUser.DATEINAME_XSD_RESPONSE);
 				schemaType = SchemaType.RESPONSE;
 			} else {
 				pathCurrentQuellSchema = configurator
 						.getPropertyUser(Configurator.PropBezeichnungUser.VERZEICHNIS_BASIS_SCHEMATA)
-						+ configurator.getPropertyUser(Configurator.PropBezeichnungUser.DATEINAME_XSD_REQUEST);
+						+ configurator
+								.getPropertyUser(Configurator.PropBezeichnungUser.DATEINAME_XSD_REQUEST);
 				schemaType = SchemaType.REQUEST;
 			}
 		} catch (XPathExpressionException e) {
@@ -384,38 +479,47 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 	}
 
 	/**
-	 * Für das angegebene SchemaSet wird ein TreeModel erzeugt, das alle Haupt-Elemente und alle referenzierten Elemente
-	 * in einem eigenen TreeModel enthält.
+	 * Fï¿½r das angegebene SchemaSet wird ein TreeModel erzeugt, das alle
+	 * Haupt-Elemente und alle referenzierten Elemente in einem eigenen
+	 * TreeModel enthï¿½lt.
 	 * 
 	 * @param schemaSet
-	 *            SchemaSet, das die Elemente für das TreeModel enthält
+	 *            SchemaSet, das die Elemente fï¿½r das TreeModel enthï¿½lt
 	 * @param allCheck
-	 *            Gibt an, ob standardmäßig alle Knoten des TreeModels selektiert sein sollen
+	 *            Gibt an, ob standardmï¿½ï¿½ig alle Knoten des TreeModels
+	 *            selektiert sein sollen
 	 * @return TreeModel mit den Haupt- und referenzierten Elementen
 	 * @throws XsdCreatorCtrlException
 	 */
-	private ProfilingTreeModel createTreeModel(XSSchemaSet schemaSet, boolean allCheck) throws XsdCreatorCtrlException {
+	private ProfilingTreeModel createTreeModel(XSSchemaSet schemaSet,
+			boolean allCheck) throws XsdCreatorCtrlException {
 		try {
 			// Liste mit doppelt referenzierten Elementen erstellen
-			LinkedList<SchemaElement> listMultipleElements = XsdXmlHelper.getMultipleReferencedElements(schemaSet,
-					configurator);
+			LinkedList<SchemaElement> listMultipleElements = XsdXmlHelper
+					.getMultipleReferencedElements(schemaSet, configurator);
 
-			// Für den "Hauptbaum" werden die mehrfach referenzierten Elemente ohne Kinder erzeugt
+			// Fï¿½r den "Hauptbaum" werden die mehrfach referenzierten Elemente
+			// ohne Kinder erzeugt
 			String nsUrl = configurator.getSchemaTypeNsUrl(schemaType);
 			String strWurzelElement = configurator
 					.getPropertySystem(Configurator.PropBezeichnungSystem.SCHEMA_ROOT_ELEMENT);
-			SchemaElement seWurzel = new SchemaElement(strWurzelElement, nsUrl, configurator
-					.getPropertyNamespace(nsUrl));
-			XSElementDecl currElement = schemaSet.getElementDecl(seWurzel.getNsUrl(), seWurzel.getName());
-			ProfilingTreeNode treeNodeMain = XsdXmlHelper.generateNodeForElementWithChildren(schemaSet, currElement,
-					seWurzel, -1, -1, false, false, false, allCheck, null, listMultipleElements, configurator, false);
+			SchemaElement seWurzel = new SchemaElement(strWurzelElement, nsUrl,
+					configurator.getPropertyNamespace(nsUrl));
+			XSElementDecl currElement = schemaSet.getElementDecl(
+					seWurzel.getNsUrl(), seWurzel.getName());
+			ProfilingTreeNode treeNodeMain = XsdXmlHelper
+					.generateNodeForElementWithChildren(schemaSet, currElement,
+							seWurzel, -1, -1, false, false, false, allCheck,
+							null, listMultipleElements, configurator, false);
 			ProfilingTreeModel profModelRefElements = null;
 			if (listMultipleElements.size() > 0) {
-				// Mehrfach referenzierte Elemente in eigenes TreeModel einfügen
-				String strTextRoot = configurator.getResString("XSDCREATORCTRL_TEXT_MEHRFACH_REF_ELEMENTE");
+				// Mehrfach referenzierte Elemente in eigenes TreeModel einfï¿½gen
+				String strTextRoot = configurator
+						.getResString("XSDCREATORCTRL_TEXT_MEHRFACH_REF_ELEMENTE");
 				SchemaElement seRootRef = new SchemaElement(strTextRoot, "", "");
-				ProfilingTreeNode rootNode = new ProfilingTreeNode(seRootRef, -1, -1, false, false, false, allCheck,
-						false, false, null);
+				ProfilingTreeNode rootNode = new ProfilingTreeNode(seRootRef,
+						-1, -1, false, false, false, allCheck, false, false,
+						null);
 				// Liste zuerst sortieren
 				Collections.sort(listMultipleElements);
 				Vector<ProfilingTreeNode> vecChildren = new Vector<ProfilingTreeNode>();
@@ -424,20 +528,27 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 					LinkedList<SchemaElement> listMultipleWithoutCurrent = (LinkedList<SchemaElement>) listMultipleElements
 							.clone();
 					listMultipleWithoutCurrent.remove(currSchemaElement);
-					currElement = schemaSet.getElementDecl(currSchemaElement.getNsUrl(), currSchemaElement.getName());
-					ProfilingTreeNode currTreeNode = XsdXmlHelper.generateNodeForElementWithChildren(schemaSet,
-							currElement, currSchemaElement, -1, -1, false, false, false, allCheck, rootNode,
-							listMultipleWithoutCurrent, configurator, false);
+					currElement = schemaSet.getElementDecl(
+							currSchemaElement.getNsUrl(),
+							currSchemaElement.getName());
+					ProfilingTreeNode currTreeNode = XsdXmlHelper
+							.generateNodeForElementWithChildren(schemaSet,
+									currElement, currSchemaElement, -1, -1,
+									false, false, false, allCheck, rootNode,
+									listMultipleWithoutCurrent, configurator,
+									false);
 					vecChildren.add(currTreeNode);
 				}
 				rootNode.addChildren(vecChildren);
 				profModelRefElements = new ProfilingTreeModel(rootNode, null);
 			}
 
-			ProfilingTreeModel profModelMain = new ProfilingTreeModel(treeNodeMain, profModelRefElements);
+			ProfilingTreeModel profModelMain = new ProfilingTreeModel(
+					treeNodeMain, profModelRefElements);
 			return profModelMain;
 		} catch (XPathExpressionException e) {
-			throw new XsdCreatorCtrlException("Fehler beim Erzeugen des TreeModels.", e);
+			throw new XsdCreatorCtrlException(
+					"Fehler beim Erzeugen des TreeModels.", e);
 		}
 	}
 }

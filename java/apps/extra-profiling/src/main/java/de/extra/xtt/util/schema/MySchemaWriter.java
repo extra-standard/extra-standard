@@ -93,10 +93,10 @@ import com.sun.xml.xsom.XSSimpleType;
 import com.sun.xml.xsom.XSType;
 import com.sun.xml.xsom.XSUnionSimpleType;
 import com.sun.xml.xsom.XSWildcard;
-import com.sun.xml.xsom.XSXPath;
 import com.sun.xml.xsom.XSWildcard.Any;
 import com.sun.xml.xsom.XSWildcard.Other;
 import com.sun.xml.xsom.XSWildcard.Union;
+import com.sun.xml.xsom.XSXPath;
 import com.sun.xml.xsom.impl.Const;
 import com.sun.xml.xsom.visitor.XSSimpleTypeVisitor;
 import com.sun.xml.xsom.visitor.XSTermVisitor;
@@ -107,21 +107,20 @@ import de.extra.xtt.util.tools.Configurator;
 import de.extra.xtt.util.tools.XsdXmlHelper;
 
 /**
- * Generates approximated XML Schema representation from a schema component. This is not intended to be a fully-fledged round-trippable schema writer.
+ * Generates approximated XML Schema representation from a schema component.
+ * This is not intended to be a fully-fledged round-trippable schema writer.
  * 
  * <h2>Usage of this class</h2>
  * <ol>
- * <li>Create a new instance with whatever Writer you'd like to send the output to.
- * <li>Call one of the overloaded dump methods. You can repeat this process as many times as you want.
+ * <li>Create a new instance with whatever Writer you'd like to send the output
+ * to.
+ * <li>Call one of the overloaded dump methods. You can repeat this process as
+ * many times as you want.
  * </ol>
  * 
  * @author Kohsuke Kawaguchi (kohsuke.kawaguchi@sun.com)
  * @author Kirill Grouchnikov (kirillcool@yahoo.com)
  * @author Beier (Anpassungen)
- */
-/**
- * @author Beier
- * 
  */
 public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 
@@ -130,38 +129,40 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	private final String nsUrlBasisSchema;
 	private final int basisIndent;
 
-	// Writer-Objekt für jeden Namespace
-	private Map<String, Writer> nsWriter;
-	private Map<String, ByteArrayOutputStream> nsOutputStream;
+	// Writer-Objekt fÃ¼r jeden Namespace
+	private final Map<String, Writer> nsWriter;
+	private final Map<String, ByteArrayOutputStream> nsOutputStream;
 
 	// Liste mit den verwendeten Namespaces
-	private Map<String, List<String>> nsUsedNamespaces;
-	private Map<String, Integer> nsIndent;
+	private final Map<String, List<String>> nsUsedNamespaces;
+	private final Map<String, Integer> nsIndent;
 	private int currIndentChange;
 	private String currNsPrefixMain;
 	private String currAnmerkung;
 
 	private Node currNodeProfElement;
 
-	private List<ContXsType> xsTypesInserted;
+	private final List<ContXsType> xsTypesInserted;
 	private List<ContXsType> xsTypesToInsert;
 
 	private List<XSElementDecl> xsElementsReferenced = new LinkedList<XSElementDecl>();
-	
+
 	/**
 	 * Konstruktor mit Initialisierungsparametern
 	 * 
 	 * @param nsPrefixBasisSchema
-	 *            Namespace-Präfix vom Basisschema, meistens "xs"
+	 *            Namespace-Prï¿½fix vom Basisschema, meistens "xs"
 	 * @param nsUrlBasisSchema
-	 *            Namespace-URL vom Basisschema, meistens "http://www.w3.org/2001/XMLSchema"
+	 *            Namespace-URL vom Basisschema, meistens
+	 *            "http://www.w3.org/2001/XMLSchema"
 	 * @param configurator
-	 *            Configurator mit Zugriff auf Properties und andere Eigenschaften
+	 *            Configurator mit Zugriff auf Properties und andere
+	 *            Eigenschaften
 	 * @param basisIndent
 	 *            Einzug
 	 */
-	public MySchemaWriter(String nsPrefixBasisSchema, String nsUrlBasisSchema, Configurator configurator,
-			int basisIndent) {
+	public MySchemaWriter(String nsPrefixBasisSchema, String nsUrlBasisSchema,
+			Configurator configurator, int basisIndent) {
 		this.nsPrefixBasisSchema = nsPrefixBasisSchema;
 		this.nsUrlBasisSchema = nsUrlBasisSchema;
 		this.configurator = configurator;
@@ -198,7 +199,8 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	/**
 	 * Liefert alle Writer-Objekte zu den einzelnen Namespaces
 	 * 
-	 * @return Liste aller Writer-Objekte, Key ist der jeweilige Namespace-Präfix
+	 * @return Liste aller Writer-Objekte, Key ist der jeweilige
+	 *         Namespace-Prï¿½fix
 	 */
 	public Map<String, Writer> getNsWriter() {
 		return nsWriter;
@@ -207,7 +209,8 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	/**
 	 * Liefert die Liste aller OutputStream-Objekte zu den einzelnen Namespaces
 	 * 
-	 * @return Liste aller OutputStream-Objekte, Key ist der jeweilige Namespace-Präfix
+	 * @return Liste aller OutputStream-Objekte, Key ist der jeweilige
+	 *         Namespace-Prï¿½fix
 	 */
 	public Map<String, ByteArrayOutputStream> getNsOutputStream() {
 		return nsOutputStream;
@@ -216,7 +219,7 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	/**
 	 * Liefert die Liste aller benutzter Namespaces
 	 * 
-	 * @return Liste aller benutzter Namespaces, Key ist Namespace-Präfix
+	 * @return Liste aller benutzter Namespaces, Key ist Namespace-Prï¿½fix
 	 */
 	public Map<String, List<String>> getNsUsedNamespaces() {
 		return nsUsedNamespaces;
@@ -224,16 +227,20 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 
 	private void println(String strToWrite, String targetNamespacePrefix) {
 		try {
-			// Prüfen, ob es für diesen Namespace schon die entsprechenden Objekte gibt
+			// Prï¿½fen, ob es fï¿½r diesen Namespace schon die entsprechenden
+			// Objekte gibt
 			if (!nsWriter.containsKey(targetNamespacePrefix)) {
-				nsOutputStream.put(targetNamespacePrefix, new ByteArrayOutputStream());
-				nsWriter.put(targetNamespacePrefix, new OutputStreamWriter(nsOutputStream.get(targetNamespacePrefix),
-						"UTF8"));
-				nsUsedNamespaces.put(targetNamespacePrefix, new LinkedList<String>());
+				nsOutputStream.put(targetNamespacePrefix,
+						new ByteArrayOutputStream());
+				nsWriter.put(targetNamespacePrefix, new OutputStreamWriter(
+						nsOutputStream.get(targetNamespacePrefix), "UTF8"));
+				nsUsedNamespaces.put(targetNamespacePrefix,
+						new LinkedList<String>());
 				nsIndent.put(targetNamespacePrefix, basisIndent);
 			}
 			// Anpassung Einzug
-			nsIndent.put(targetNamespacePrefix, nsIndent.get(targetNamespacePrefix) + currIndentChange);
+			nsIndent.put(targetNamespacePrefix,
+					nsIndent.get(targetNamespacePrefix) + currIndentChange);
 
 			// evtl. Einzug schreiben
 			for (int i = 0; i < nsIndent.get(targetNamespacePrefix); i++) {
@@ -245,7 +252,7 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 			nsWriter.get(targetNamespacePrefix).write('\n');
 			// flush stream to make the output appear immediately
 			nsWriter.get(targetNamespacePrefix).flush();
-			// Einzug zurücksetzen
+			// Einzug zurï¿½cksetzen
 			currIndentChange = 0;
 		} catch (IOException e) {
 			// ignore IOException.
@@ -260,11 +267,12 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 		}
 	}
 
-	private String getCurrNsPrefix(String currTargetNamespaceUrl, String nsPrefixMain) {
+	private String getCurrNsPrefix(String currTargetNamespaceUrl,
+			String nsPrefixMain) {
 		String nsPrefix = "";
 		if (!nsPrefixMain.equals(getNsPref(currTargetNamespaceUrl))) {
 			nsPrefix = getNsPref(currTargetNamespaceUrl);
-			// evtl. zu den used-Namespaces hinzufügen
+			// evtl. zu den used-Namespaces hinzufï¿½gen
 			if (!nsUsedNamespaces.containsKey(nsPrefixMain)) {
 				nsUsedNamespaces.put(nsPrefixMain, new LinkedList<String>());
 			}
@@ -296,6 +304,7 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void schema(XSSchema s) {
 
 		// QUICK HACK: don't print the built-in components
@@ -304,7 +313,8 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 
 		currIndentChange = 0;
 
-		println(MessageFormat.format("<" + getMainNs() + "schema targetNamespace=\"{0}\">", s.getTargetNamespace()),
+		println(MessageFormat.format("<" + getMainNs()
+				+ "schema targetNamespace=\"{0}\">", s.getTargetNamespace()),
 				getNsPref(s.getTargetNamespace()));
 		currIndentChange++;
 
@@ -333,26 +343,31 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 			simpleType(itr6.next());
 
 		currIndentChange--;
-		println("</" + getMainNs() + "schema>", getNsPref(s.getTargetNamespace()));
+		println("</" + getMainNs() + "schema>",
+				getNsPref(s.getTargetNamespace()));
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void attGroupDecl(XSAttGroupDecl decl) {
 
 		String nsPrefix = getNsPref(decl.getTargetNamespace());
 
-		println(MessageFormat.format("<" + getMainNs() + "attGroup name=\"{0}\">", decl.getName()), nsPrefix);
+		println(MessageFormat.format("<" + getMainNs()
+				+ "attGroup name=\"{0}\">", decl.getName()), nsPrefix);
 		currIndentChange++;
 
 		@SuppressWarnings("unchecked")
-		Iterator<XSAttGroupDecl> itr1 = (Iterator<XSAttGroupDecl>) decl.iterateAttGroups();
+		Iterator<XSAttGroupDecl> itr1 = (Iterator<XSAttGroupDecl>) decl
+				.iterateAttGroups();
 		while (itr1.hasNext())
 			dumpRef(itr1.next(), nsPrefix);
 
 		@SuppressWarnings("unchecked")
-		Iterator<XSAttributeUse> itr2 = (Iterator<XSAttributeUse>) decl.iterateDeclaredAttributeUses();
+		Iterator<XSAttributeUse> itr2 = (Iterator<XSAttributeUse>) decl
+				.iterateDeclaredAttributeUses();
 		while (itr2.hasNext())
 			attributeUse(itr2.next());
 
@@ -361,33 +376,40 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	}
 
 	/**
-	 * Schreibt die übergebene AttributGruppe als XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt die ï¿½bergebene AttributGruppe als XML mit Hilfe des
+	 * entsprechenden Writer-Objekts.
 	 * 
 	 * @param decl
-	 *            AttributGruppe, für die XML erzeugt werden soll
+	 *            AttributGruppe, fï¿½r die XML erzeugt werden soll
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 */
 	public void dumpRef(XSAttGroupDecl decl, String nsPrefixMain) {
-		String nsPrefix = getCurrNsPrefix(decl.getTargetNamespace(), nsPrefixMain);
-		println(MessageFormat.format("<" + getMainNs() + "attGroup ref=\"{0}{1}\"/>", nsPrefix, decl.getName()),
+		String nsPrefix = getCurrNsPrefix(decl.getTargetNamespace(),
+				nsPrefixMain);
+		println(MessageFormat.format("<" + getMainNs()
+				+ "attGroup ref=\"{0}{1}\"/>", nsPrefix, decl.getName()),
 				nsPrefixMain);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void attributeUse(XSAttributeUse use) {
 		attributeUse(use, currNsPrefixMain);
 	}
 
 	/**
-	 * Schreibt das übergebene Attribut als XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt das ï¿½bergebene Attribut als XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param use
-	 *            Attribut, für das XML erzeugt werden soll
+	 *            Attribut, fï¿½r das XML erzeugt werden soll
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 */
 	public void attributeUse(XSAttributeUse use, String nsPrefixMain) {
 		XSAttributeDecl decl = use.getDecl();
@@ -396,9 +418,11 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 
 		if (use.isRequired())
 			additionalAtts += " use=\"required\"";
-		if (use.getFixedValue() != null && use.getDecl().getFixedValue() == null)
+		if (use.getFixedValue() != null
+				&& use.getDecl().getFixedValue() == null)
 			additionalAtts += " fixed=\"" + use.getFixedValue() + '\"';
-		if (use.getDefaultValue() != null && use.getDecl().getDefaultValue() == null)
+		if (use.getDefaultValue() != null
+				&& use.getDecl().getDefaultValue() == null)
 			additionalAtts += " default=\"" + use.getDefaultValue() + '\"';
 
 		if (decl.isLocal()) {
@@ -406,50 +430,65 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 			dump(decl, additionalAtts, nsPrefixMain);
 		} else {
 			// reference to a global one
-			String nsPrefix = getCurrNsPrefix(decl.getTargetNamespace(), nsPrefixMain);
-			println(MessageFormat.format("<" + getMainNs() + "attribute ref=\"{0}{1}{2}\"/>", nsPrefix, decl.getName(),
-					additionalAtts), nsPrefixMain);
+			String nsPrefix = getCurrNsPrefix(decl.getTargetNamespace(),
+					nsPrefixMain);
+			println(MessageFormat.format("<" + getMainNs()
+					+ "attribute ref=\"{0}{1}{2}\"/>", nsPrefix,
+					decl.getName(), additionalAtts), nsPrefixMain);
 		}
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void attributeDecl(XSAttributeDecl decl) {
 		attributeDecl(decl, currNsPrefixMain);
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param decl
-	 *            Schema-Element, für das XML erzeugt werden soll
+	 *            Schema-Element, fï¿½r das XML erzeugt werden soll
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 */
 	public void attributeDecl(XSAttributeDecl decl, String nsPrefixMain) {
 		dump(decl, "", nsPrefixMain);
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param decl
-	 *            Schema-Element, für das XML erzeugt werden soll
+	 *            Schema-Element, fï¿½r das XML erzeugt werden soll
 	 * @param additionalAtts
 	 *            Zusatz-Attribute
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 */
-	private void dump(XSAttributeDecl decl, String additionalAtts, String nsPrefixMain) {
+	private void dump(XSAttributeDecl decl, String additionalAtts,
+			String nsPrefixMain) {
 		XSSimpleType type = decl.getType();
 
-		String nsPrefix = getCurrNsPrefix(type.getTargetNamespace(), nsPrefixMain);
-		println(MessageFormat.format("<" + getMainNs() + "attribute name=\"{0}\"{1}{2}{3}{4}{5}>", decl.getName(),
-				additionalAtts, type.isLocal() ? "" : MessageFormat
-						.format(" type=\"{0}{1}\"", nsPrefix, type.getName()), decl.getFixedValue() == null ? ""
-						: " fixed=\"" + decl.getFixedValue() + '\"', decl.getDefaultValue() == null ? ""
-						: " default=\"" + decl.getDefaultValue() + '\"', type.isLocal() ? "" : " /"), nsPrefixMain);
+		String nsPrefix = getCurrNsPrefix(type.getTargetNamespace(),
+				nsPrefixMain);
+		println(MessageFormat.format(
+				"<" + getMainNs() + "attribute name=\"{0}\"{1}{2}{3}{4}{5}>",
+				decl.getName(),
+				additionalAtts,
+				type.isLocal() ? "" : MessageFormat.format(" type=\"{0}{1}\"",
+						nsPrefix, type.getName()),
+				decl.getFixedValue() == null ? "" : " fixed=\""
+						+ decl.getFixedValue() + '\"',
+				decl.getDefaultValue() == null ? "" : " default=\""
+						+ decl.getDefaultValue() + '\"', type.isLocal() ? ""
+						: " /"), nsPrefixMain);
 
 		if (type.isLocal()) {
 			currIndentChange++;
@@ -457,7 +496,8 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 			currIndentChange--;
 			println("</" + getMainNs() + "attribute>", nsPrefixMain);
 		} else {
-			ContXsType currType = new ContXsType(type, getNsPref(decl.getTargetNamespace()) + ":" + decl.getName());
+			ContXsType currType = new ContXsType(type,
+					getNsPref(decl.getTargetNamespace()) + ":" + decl.getName());
 			if (!xsTypesToInsert.contains(currType)) {
 				// Typ vormerken, um am Ende ausgegeben zu werden
 				xsTypesToInsert.add(currType);
@@ -466,7 +506,7 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	}
 
 	/**
-	 * Schreibt XML für alle gemerkten, referenzierten Typen
+	 * Schreibt XML fï¿½r alle gemerkten, referenzierten Typen
 	 * 
 	 * @param profilXml
 	 *            XMl-Dokument mit der Konfiguration der einzelnen Elemente
@@ -478,19 +518,22 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 			listToInsert.add(currType);
 		}
 
-		// ursprüngliche Liste leeren
+		// ursprï¿½ngliche Liste leeren
 		xsTypesToInsert = new LinkedList<ContXsType>();
 
-		// aktuelle Liste abarbeiten; dabei können wieder Typen in die ursprüngliche Liste eingetragen werden
+		// aktuelle Liste abarbeiten; dabei kï¿½nnen wieder Typen in die
+		// ursprï¿½ngliche Liste eingetragen werden
 		for (ContXsType currType : listToInsert) {
 			if (!xsTypesInserted.contains(currType)) {
 
 				Node xmlNodeElement = null;
 				String currElementName = currType.getElementNameWithPrefix();
 				try {
-					if ((currElementName != null) && (currElementName.length() > 0)) {
-						NodeList nl = XsdXmlHelper.xpathSuche("//element[name/text()='" + currElementName + "']",
-								profilXml);
+					if ((currElementName != null)
+							&& (currElementName.length() > 0)) {
+						NodeList nl = XsdXmlHelper.xpathSuche(
+								"//element[name/text()='" + currElementName
+										+ "']", profilXml);
 						if (nl.getLength() > 0) {
 							xmlNodeElement = nl.item(0);
 						}
@@ -499,9 +542,11 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 				}
 
 				if (currType.getType() instanceof XSComplexType) {
-					complexType(currType.getType().asComplexType(), null, xmlNodeElement);
+					complexType(currType.getType().asComplexType(), null,
+							xmlNodeElement);
 				} else if (currType.getType() instanceof XSSimpleType) {
-					simpleType(currType.getType().asSimpleType(), null, xmlNodeElement);
+					simpleType(currType.getType().asSimpleType(), null,
+							xmlNodeElement);
 				}
 				xsTypesInserted.add(currType);
 			}
@@ -516,23 +561,29 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.sun.xml.xsom.visitor.XSContentTypeVisitor#simpleType(com.sun.xml.xsom.XSSimpleType)
+	 * @see
+	 * com.sun.xml.xsom.visitor.XSContentTypeVisitor#simpleType(com.sun.xml.
+	 * xsom.XSSimpleType)
 	 */
+	@Override
 	public void simpleType(XSSimpleType type) {
 		simpleType(type, currNsPrefixMain, null);
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param type
-	 *            Objekt, für das XML erzeugt werden soll
+	 *            Objekt, fï¿½r das XML erzeugt werden soll
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 * @param xmlNodeElement
-	 *            Knoten-Objekt, das die Konfiguration für diesen Typ enthält
+	 *            Knoten-Objekt, das die Konfiguration fï¿½r diesen Typ enthï¿½lt
 	 */
-	public void simpleType(XSSimpleType type, String nsPrefixMain, Node xmlNodeElement) {
+	public void simpleType(XSSimpleType type, String nsPrefixMain,
+			Node xmlNodeElement) {
 		if (nsPrefixMain == null) {
 			// Selbst Hauptelement
 			nsPrefixMain = getNsPref(type.getTargetNamespace());
@@ -541,15 +592,19 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 
 		String strElement = "";
 		try {
-			strElement = XsdXmlHelper.xpathSuche("./name/text()", xmlNodeElement).item(0).getNodeValue();
+			strElement = XsdXmlHelper
+					.xpathSuche("./name/text()", xmlNodeElement).item(0)
+					.getNodeValue();
 		} catch (Exception e) {
 		}
 		ContXsType currType = new ContXsType(type, strElement);
 
-		if (!type.getTargetNamespace().equals(nsUrlBasisSchema) && !xsTypesInserted.contains(currType)) {
+		if (!type.getTargetNamespace().equals(nsUrlBasisSchema)
+				&& !xsTypesInserted.contains(currType)) {
 
-			println(MessageFormat.format("<" + getMainNs() + "simpleType{0}>", type.isLocal() ? "" : " name=\""
-					+ type.getName() + '\"'), nsPrefixMain);
+			println(MessageFormat.format("<" + getMainNs() + "simpleType{0}>",
+					type.isLocal() ? "" : " name=\"" + type.getName() + '\"'),
+					nsPrefixMain);
 			currIndentChange++;
 
 			this.currNsPrefixMain = nsPrefixMain;
@@ -577,17 +632,20 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void listSimpleType(XSListSimpleType type) {
 		listSimpleType(type, currNsPrefixMain);
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param type
-	 *            Objekt, für das XML erzeugt werden soll
+	 *            Objekt, fï¿½r das XML erzeugt werden soll
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 */
 	public void listSimpleType(XSListSimpleType type, String nsPrefixMain) {
 		XSSimpleType itemType = type.getItemType();
@@ -600,9 +658,11 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 			println("</" + getMainNs() + "list>", nsPrefixMain);
 		} else {
 			// global type
-			String nsPrefix = getCurrNsPrefix(itemType.getTargetNamespace(), nsPrefixMain);
-			println(MessageFormat.format("<" + getMainNs() + "list itemType=\"{0}{1}\" />", nsPrefix, itemType
-					.getName()), nsPrefixMain);
+			String nsPrefix = getCurrNsPrefix(itemType.getTargetNamespace(),
+					nsPrefixMain);
+			println(MessageFormat.format("<" + getMainNs()
+					+ "list itemType=\"{0}{1}\" />", nsPrefix,
+					itemType.getName()), nsPrefixMain);
 
 			ContXsType currType = new ContXsType(itemType, "");
 			if (!xsTypesToInsert.contains(currType)) {
@@ -615,17 +675,20 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void unionSimpleType(XSUnionSimpleType type) {
 		unionSimpleType(type, currNsPrefixMain);
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param type
-	 *            Objekt, für das XML erzeugt werden soll
+	 *            Objekt, fï¿½r das XML erzeugt werden soll
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 */
 	public void unionSimpleType(XSUnionSimpleType type, String nsPrefixMain) {
 		final int len = type.getMemberSize();
@@ -633,16 +696,19 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 
 		for (int i = 0; i < len; i++) {
 			XSSimpleType member = type.getMember(i);
-			String nsPrefix = getCurrNsPrefix(member.getTargetNamespace(), nsPrefixMain);
+			String nsPrefix = getCurrNsPrefix(member.getTargetNamespace(),
+					nsPrefixMain);
 
 			if (member.isGlobal())
-				ref.append(MessageFormat.format(" {0}{1}", nsPrefix, member.getName()));
+				ref.append(MessageFormat.format(" {0}{1}", nsPrefix,
+						member.getName()));
 		}
 
 		if (ref.length() == 0)
 			println("<" + getMainNs() + "union>", nsPrefixMain);
 		else
-			println("<" + getMainNs() + "union memberTypes=\"" + ref + "\">", nsPrefixMain);
+			println("<" + getMainNs() + "union memberTypes=\"" + ref + "\">",
+					nsPrefixMain);
 		currIndentChange++;
 
 		for (int i = 0; i < len; i++) {
@@ -657,19 +723,23 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void restrictionSimpleType(XSRestrictionSimpleType type) {
 		restrictionSimpleType(type, currNsPrefixMain);
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param type
-	 *            Objekt, für das XML erzeugt werden soll
+	 *            Objekt, fï¿½r das XML erzeugt werden soll
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 */
-	public void restrictionSimpleType(XSRestrictionSimpleType type, String nsPrefixMain) {
+	public void restrictionSimpleType(XSRestrictionSimpleType type,
+			String nsPrefixMain) {
 
 		if (type.getBaseType() == null) {
 			// don't print anySimpleType
@@ -682,10 +752,13 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 
 		XSSimpleType baseType = type.getSimpleBaseType();
 
-		String nsPrefix = getCurrNsPrefix(baseType.getTargetNamespace(), nsPrefixMain);
+		String nsPrefix = getCurrNsPrefix(baseType.getTargetNamespace(),
+				nsPrefixMain);
 
-		println(MessageFormat.format("<" + getMainNs() + "restriction{0}>", baseType.isLocal() ? "" : " base=\""
-				+ nsPrefix + baseType.getName() + '\"'), nsPrefixMain);
+		println(MessageFormat.format(
+				"<" + getMainNs() + "restriction{0}>",
+				baseType.isLocal() ? "" : " base=\"" + nsPrefix
+						+ baseType.getName() + '\"'), nsPrefixMain);
 		currIndentChange++;
 
 		if (baseType.isLocal())
@@ -702,41 +775,49 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void facet(XSFacet facet) {
 		facet(facet, currNsPrefixMain);
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param facet
-	 *            Objekt, für das XML erzeugt werden soll
+	 *            Objekt, fï¿½r das XML erzeugt werden soll
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 */
 	public void facet(XSFacet facet, String nsPrefixMain) {
-		println(MessageFormat.format("<{0} value=\"{1}\"/>", getMainNs() + facet.getName(), facet.getValue()),
-				nsPrefixMain);
+		println(MessageFormat.format("<{0} value=\"{1}\"/>", getMainNs()
+				+ facet.getName(), facet.getValue()), nsPrefixMain);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void notation(XSNotation notation) {
 		notation(notation, currNsPrefixMain);
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param notation
-	 *            Objekt, für das XML erzeugt werden soll
+	 *            Objekt, fï¿½r das XML erzeugt werden soll
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 */
 	public void notation(XSNotation notation, String nsPrefixMain) {
-		println(MessageFormat.format("<" + getMainNs() + "notation name='\"0}\" public =\"{1}\" system=\"{2}\" />",
-				notation.getName(), notation.getPublicId(), notation.getSystemId()), nsPrefixMain);
+		println(MessageFormat.format("<" + getMainNs()
+				+ "notation name='\"0}\" public =\"{1}\" system=\"{2}\" />",
+				notation.getName(), notation.getPublicId(),
+				notation.getSystemId()), nsPrefixMain);
 	}
 
 	/**
@@ -748,31 +829,40 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param type
-	 *            Objekt, für das XML erzeugt werden soll
+	 *            Objekt, fï¿½r das XML erzeugt werden soll
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 * @param xmlNodeElement
-	 *            Knoten-Objekt, das die Konfiguration für diesen Typ enthält
+	 *            Knoten-Objekt, das die Konfiguration fï¿½r diesen Typ enthï¿½lt
 	 */
-	public void complexType(XSComplexType type, String nsPrefixMain, Node xmlNodeElement) {
+	public void complexType(XSComplexType type, String nsPrefixMain,
+			Node xmlNodeElement) {
 		String strElement = "";
 		try {
-			strElement = XsdXmlHelper.xpathSuche("./name/text()", xmlNodeElement).item(0).getNodeValue();
+			strElement = XsdXmlHelper
+					.xpathSuche("./name/text()", xmlNodeElement).item(0)
+					.getNodeValue();
 		} catch (Exception e) {
 		}
 		ContXsType currType = new ContXsType(type, strElement);
-		if (!type.getTargetNamespace().equals(nsUrlBasisSchema) && !xsTypesInserted.contains(currType)) {
+		if (!type.getTargetNamespace().equals(nsUrlBasisSchema)
+				&& !xsTypesInserted.contains(currType)) {
 
 			this.currNodeProfElement = xmlNodeElement;
 			if (nsPrefixMain == null) {
 				nsPrefixMain = getNsPref(type.getTargetNamespace());
 			}
 
-			println(MessageFormat.format("<" + getMainNs() + "complexType{0}{1}>", type.isLocal() ? "" : " name=\""
-					+ type.getName() + '\"', type.isAbstract() ? " abstract=\"true\"" : ""), nsPrefixMain);
+			println(MessageFormat.format("<" + getMainNs()
+					+ "complexType{0}{1}>", type.isLocal() ? "" : " name=\""
+					+ type.getName() + '\"',
+					type.isAbstract() ? " abstract=\"true\"" : ""),
+					nsPrefixMain);
 			currIndentChange++;
 
 			if (type.getContentType().asSimpleType() != null) {
@@ -781,12 +871,14 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 				currIndentChange++;
 
 				XSType baseType = type.getBaseType();
-				String nsPrefix = getCurrNsPrefix(baseType.getTargetNamespace(), nsPrefixMain);
+				String nsPrefix = getCurrNsPrefix(
+						baseType.getTargetNamespace(), nsPrefixMain);
 
 				if (type.getDerivationMethod() == XSType.RESTRICTION) {
 					// restriction
-					println(MessageFormat.format("<" + getMainNs() + "restriction base=\"{0}{1}\">", nsPrefix, baseType
-							.getName()), nsPrefixMain);
+					println(MessageFormat.format("<" + getMainNs()
+							+ "restriction base=\"{0}{1}\">", nsPrefix,
+							baseType.getName()), nsPrefixMain);
 					currIndentChange++;
 
 					dumpComplexTypeAttribute(type, nsPrefixMain);
@@ -795,11 +887,14 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 					println("</" + getMainNs() + "restriction>", nsPrefixMain);
 				} else {
 					// extension
-					println(MessageFormat.format("<" + getMainNs() + "extension base=\"{0}{1}\">", nsPrefix, baseType
-							.getName()), nsPrefixMain);
+					println(MessageFormat.format("<" + getMainNs()
+							+ "extension base=\"{0}{1}\">", nsPrefix,
+							baseType.getName()), nsPrefixMain);
 
 					// check if have redefine tag - Kirill
-					if (type.isGlobal() && type.getTargetNamespace().equals(baseType.getTargetNamespace())
+					if (type.isGlobal()
+							&& type.getTargetNamespace().equals(
+									baseType.getTargetNamespace())
 							&& type.getName().equals(baseType.getName())) {
 						currIndentChange++;
 						println("<" + getMainNs() + "redefine>", nsPrefixMain);
@@ -826,12 +921,14 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 				currIndentChange++;
 
 				XSComplexType baseType = type.getBaseType().asComplexType();
-				String nsPrefix = getCurrNsPrefix(baseType.getTargetNamespace(), nsPrefixMain);
+				String nsPrefix = getCurrNsPrefix(
+						baseType.getTargetNamespace(), nsPrefixMain);
 
 				if (type.getDerivationMethod() == XSType.RESTRICTION) {
 					// restriction
-					println(MessageFormat.format("<" + getMainNs() + "restriction base=\"{0}{1}\">", nsPrefix, baseType
-							.getName()), nsPrefixMain);
+					println(MessageFormat.format("<" + getMainNs()
+							+ "restriction base=\"{0}{1}\">", nsPrefix,
+							baseType.getName()), nsPrefixMain);
 					currIndentChange++;
 
 					this.currNsPrefixMain = nsPrefixMain;
@@ -842,11 +939,14 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 					println("</" + getMainNs() + "restriction>", nsPrefixMain);
 				} else {
 					// extension
-					println(MessageFormat.format("<" + getMainNs() + "extension base=\"{0}{1}\">", nsPrefix, baseType
-							.getName()), nsPrefixMain);
+					println(MessageFormat.format("<" + getMainNs()
+							+ "extension base=\"{0}{1}\">", nsPrefix,
+							baseType.getName()), nsPrefixMain);
 
 					// check if have redefine - Kirill
-					if (type.isGlobal() && type.getTargetNamespace().equals(baseType.getTargetNamespace())
+					if (type.isGlobal()
+							&& type.getTargetNamespace().equals(
+									baseType.getTargetNamespace())
 							&& type.getName().equals(baseType.getName())) {
 						currIndentChange++;
 						println("<" + getMainNs() + "redefine>", nsPrefixMain);
@@ -889,22 +989,27 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param type
-	 *            Objekt, für das XML erzeugt werden soll
+	 *            Objekt, fï¿½r das XML erzeugt werden soll
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 */
-	private void dumpComplexTypeAttribute(XSComplexType type, String nsPrefixMain) {
+	private void dumpComplexTypeAttribute(XSComplexType type,
+			String nsPrefixMain) {
 
 		@SuppressWarnings("unchecked")
-		Iterator<XSAttGroupDecl> itr1 = (Iterator<XSAttGroupDecl>) type.iterateAttGroups();
+		Iterator<XSAttGroupDecl> itr1 = (Iterator<XSAttGroupDecl>) type
+				.iterateAttGroups();
 		while (itr1.hasNext())
 			dumpRef(itr1.next(), nsPrefixMain);
 
 		@SuppressWarnings("unchecked")
-		Iterator<XSAttributeUse> itr2 = (Iterator<XSAttributeUse>) type.iterateDeclaredAttributeUses();
+		Iterator<XSAttributeUse> itr2 = (Iterator<XSAttributeUse>) type
+				.iterateDeclaredAttributeUses();
 		while (itr2.hasNext())
 			attributeUse(itr2.next(), nsPrefixMain);
 
@@ -916,26 +1021,30 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void elementDecl(XSElementDecl decl) {
 		elementDecl(decl, "", currNsPrefixMain, currNodeProfElement, "");
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param decl
-	 *            Objekt, für das XML erzeugt werden soll
+	 *            Objekt, fï¿½r das XML erzeugt werden soll
 	 * @param extraAtts
 	 *            Zusatzangaben zum Objekt
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 * @param nodeProfilElement
 	 *            element-Node aus der Profilkonfiguration
 	 * @param anmerkungVerwendung
-	 *            Anmerkungstext zur Verwendung dieses Elements (wird bei der Ausgabe von lokalen Elementen in Typen
-	 *            verwendet)
+	 *            Anmerkungstext zur Verwendung dieses Elements (wird bei der
+	 *            Ausgabe von lokalen Elementen in Typen verwendet)
 	 */
-	public void elementDecl(XSElementDecl decl, String extraAtts, String nsPrefixMain, Node nodeProfilElement,
+	public void elementDecl(XSElementDecl decl, String extraAtts,
+			String nsPrefixMain, Node nodeProfilElement,
 			String anmerkungVerwendung) {
 		if (nsPrefixMain == null) {
 			nsPrefixMain = getNsPref(decl.getTargetNamespace());
@@ -949,12 +1058,14 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 		String currAnmVerwendung = "";
 		// allg. Anmerkung
 		try {
-			NodeList listNodes = XsdXmlHelper.xpathSuche("./anmerkung/text()", nodeProfilElement);
+			NodeList listNodes = XsdXmlHelper.xpathSuche("./anmerkung/text()",
+					nodeProfilElement);
 			if (listNodes.getLength() > 0) {
 				String currElementAnmerkung = listNodes.item(0).getNodeValue();
 				// Anmerkungsstring zusammenbauen
 				if (currElementAnmerkung.length() > 0) {
-					currAnmAllg = "<" + getMainNs() + "documentation>" + currElementAnmerkung + "</" + getMainNs()
+					currAnmAllg = "<" + getMainNs() + "documentation>"
+							+ currElementAnmerkung + "</" + getMainNs()
 							+ "documentation>";
 				}
 			}
@@ -963,19 +1074,23 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 
 		// Anmerkung Verwendung
 		if ((anmerkungVerwendung != null) && (anmerkungVerwendung.length() > 0)) {
-			currAnmVerwendung = "<" + getMainNs() + "documentation>" + anmerkungVerwendung + "</" + getMainNs()
+			currAnmVerwendung = "<" + getMainNs() + "documentation>"
+					+ anmerkungVerwendung + "</" + getMainNs()
 					+ "documentation>";
 		}
 
 		if ((currAnmAllg.length() > 0) || (currAnmVerwendung.length() > 0)) {
-			anmerkungGes = "<" + getMainNs() + "annotation>" + currAnmAllg + currAnmVerwendung + "</" + getMainNs()
-					+ "annotation>";
+			anmerkungGes = "<" + getMainNs() + "annotation>" + currAnmAllg
+					+ currAnmVerwendung + "</" + getMainNs() + "annotation>";
 		}
 
-		String nsPrefix = getCurrNsPrefix(type.getTargetNamespace(), nsPrefixMain);
-		println(MessageFormat.format("<" + getMainNs() + "element name=\"{0}\"{1}{2}>{3}{4}", decl.getName(), type
-				.isLocal() ? "" : " type=\"" + nsPrefix + type.getName() + '\"', extraAtts, anmerkungGes, type
-				.isLocal() ? "" : "</" + getMainNs() + "element>"), nsPrefixMain);
+		String nsPrefix = getCurrNsPrefix(type.getTargetNamespace(),
+				nsPrefixMain);
+		println(MessageFormat.format("<" + getMainNs()
+				+ "element name=\"{0}\"{1}{2}>{3}{4}", decl.getName(),
+				type.isLocal() ? "" : " type=\"" + nsPrefix + type.getName()
+						+ '\"', extraAtts, anmerkungGes, type.isLocal() ? ""
+						: "</" + getMainNs() + "element>"), nsPrefixMain);
 
 		if (type.isLocal()) {
 			currIndentChange++;
@@ -986,7 +1101,8 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 			currIndentChange--;
 			println("</" + getMainNs() + "element>", nsPrefixMain);
 		} else {
-			ContXsType currType = new ContXsType(type, getNsPref(decl.getTargetNamespace()) + ":" + decl.getName());
+			ContXsType currType = new ContXsType(type,
+					getNsPref(decl.getTargetNamespace()) + ":" + decl.getName());
 			if (!xsTypesToInsert.contains(currType)) {
 				// Typ vormerken, um am Ende ausgegeben zu werden
 				xsTypesToInsert.add(currType);
@@ -998,20 +1114,24 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void modelGroupDecl(XSModelGroupDecl decl) {
 		modelGroupDecl(decl, currNsPrefixMain);
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param decl
-	 *            Objekt, für das XML erzeugt werden soll
+	 *            Objekt, fï¿½r das XML erzeugt werden soll
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 */
 	public void modelGroupDecl(XSModelGroupDecl decl, String nsPrefixMain) {
-		println(MessageFormat.format("<" + getMainNs() + "group name=\"{0}\">", decl.getName()), nsPrefixMain);
+		println(MessageFormat.format("<" + getMainNs() + "group name=\"{0}\">",
+				decl.getName()), nsPrefixMain);
 		currIndentChange++;
 
 		modelGroup(decl.getModelGroup(), "", nsPrefixMain);
@@ -1023,29 +1143,35 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void modelGroup(XSModelGroup group) {
 		modelGroup(group, "", currNsPrefixMain);
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param group
-	 *            Objekt, für das XML erzeugt werden soll
+	 *            Objekt, fï¿½r das XML erzeugt werden soll
 	 * @param extraAtts
 	 *            Zusatzangaben zum Objekt
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 */
-	private void modelGroup(XSModelGroup group, String extraAtts, String nsPrefixMain) {
-		println(MessageFormat.format("<" + getMainNs() + "{0}{1}>", group.getCompositor(), extraAtts), nsPrefixMain);
+	private void modelGroup(XSModelGroup group, String extraAtts,
+			String nsPrefixMain) {
+		println(MessageFormat.format("<" + getMainNs() + "{0}{1}>",
+				group.getCompositor(), extraAtts), nsPrefixMain);
 		currIndentChange++;
 
 		final int len = group.getSize();
 		for (int i = 0; i < len; i++) {
 			XSParticle currParticle = group.getChild(i);
-			XSElementDecl currPartElement = currParticle.getTerm().asElementDecl();
-			// Prüfen, ob dieses Element in der Konfiguration vorkommt
+			XSElementDecl currPartElement = currParticle.getTerm()
+					.asElementDecl();
+			// Prï¿½fen, ob dieses Element in der Konfiguration vorkommt
 			boolean isToPrint = true;
 			Integer minOccUser = null;
 			Integer maxOccUser = null;
@@ -1055,30 +1181,42 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 
 				NodeList nodesKindXml;
 				try {
-					nodesKindXml = XsdXmlHelper.xpathSuche("./kind/text()", currNodeProfElement);
+					nodesKindXml = XsdXmlHelper.xpathSuche("./kind/text()",
+							currNodeProfElement);
 					for (int j = 0; j < nodesKindXml.getLength(); j++) {
 						// Name des XML-Knotens in der Profilkonfiguration
-						String strXmlElementName = nodesKindXml.item(j).getNodeValue();
+						String strXmlElementName = nodesKindXml.item(j)
+								.getNodeValue();
 						// Passendes SchemaElement erzeugen
-						SchemaElement currSchemaElement = configurator.getSchemaElement(strXmlElementName);
-						if (currPartElement.getTargetNamespace().equals(currSchemaElement.getNsUrl())
-								&& currPartElement.getName().equals(currSchemaElement.getName())) {
+						SchemaElement currSchemaElement = configurator
+								.getSchemaElement(strXmlElementName);
+						if (currPartElement.getTargetNamespace().equals(
+								currSchemaElement.getNsUrl())
+								&& currPartElement.getName().equals(
+										currSchemaElement.getName())) {
 							isToPrint = true;
-							// Prüfen, ob für minOccurs Benutzerangaben vorhanden sind
-							NodeList listNodes = XsdXmlHelper.xpathSuche("attribute::minOccurs", nodesKindXml.item(j)
-									.getParentNode());
+							// Prï¿½fen, ob fï¿½r minOccurs Benutzerangaben
+							// vorhanden sind
+							NodeList listNodes = XsdXmlHelper.xpathSuche(
+									"attribute::minOccurs", nodesKindXml
+											.item(j).getParentNode());
 							if (listNodes.getLength() > 0) {
-								minOccUser = Integer.parseInt(listNodes.item(0).getNodeValue());
+								minOccUser = Integer.parseInt(listNodes.item(0)
+										.getNodeValue());
 							}
-							// Prüfen, ob für maxOccurs Benutzerangaben vorhanden sind
-							listNodes = XsdXmlHelper.xpathSuche("attribute::maxOccurs", nodesKindXml.item(j)
-									.getParentNode());
+							// Prï¿½fen, ob fï¿½r maxOccurs Benutzerangaben
+							// vorhanden sind
+							listNodes = XsdXmlHelper.xpathSuche(
+									"attribute::maxOccurs", nodesKindXml
+											.item(j).getParentNode());
 							if (listNodes.getLength() > 0) {
-								maxOccUser = Integer.parseInt(listNodes.item(0).getNodeValue());
+								maxOccUser = Integer.parseInt(listNodes.item(0)
+										.getNodeValue());
 							}
-							// Prüfen, ob Anmerkung vorhanden ist
-							listNodes = XsdXmlHelper.xpathSuche("attribute::anmerkung", nodesKindXml.item(j)
-									.getParentNode());
+							// Prï¿½fen, ob Anmerkung vorhanden ist
+							listNodes = XsdXmlHelper.xpathSuche(
+									"attribute::anmerkung", nodesKindXml
+											.item(j).getParentNode());
 							if (listNodes.getLength() > 0) {
 								anmerkung = listNodes.item(0).getNodeValue();
 							}
@@ -1090,28 +1228,33 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 				}
 			}
 			if (isToPrint) {
-				particle(currParticle, nsPrefixMain, minOccUser, maxOccUser, anmerkung);
+				particle(currParticle, nsPrefixMain, minOccUser, maxOccUser,
+						anmerkung);
 			}
 		}
 
 		currIndentChange--;
-		println(MessageFormat.format("</" + getMainNs() + "{0}>", group.getCompositor()), nsPrefixMain);
+		println(MessageFormat.format("</" + getMainNs() + "{0}>",
+				group.getCompositor()), nsPrefixMain);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void particle(XSParticle part) {
 		particle(part, currNsPrefixMain, null, null, null);
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param part
-	 *            Objekt, für das XML erzeugt werden soll
+	 *            Objekt, fï¿½r das XML erzeugt werden soll
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 * @param minOccUser
 	 *            minOccurs-Benutzerangabe, optional
 	 * @param maxOccUser
@@ -1119,19 +1262,19 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	 * @param anmVerwendung
 	 *            Anmerkungstext zur Verwendung dieses Elements
 	 */
-	public void particle(XSParticle part, String nsPrefixMain, Integer minOccUser, Integer maxOccUser,
-			String anmVerwendung) {
+	public void particle(XSParticle part, String nsPrefixMain,
+			Integer minOccUser, Integer maxOccUser, String anmVerwendung) {
 		int i;
 
 		StringBuffer buf = new StringBuffer();
 
-		i = part.getMinOccurs();
+		i = part.getMinOccurs().intValue();
 		if (minOccUser != null) {
 			i = minOccUser;
 		}
 		buf.append(" minOccurs=\"").append(i).append('\"');
 
-		i = part.getMaxOccurs();
+		i = part.getMaxOccurs().intValue();
 		if (maxOccUser != null) {
 			i = maxOccUser;
 		}
@@ -1148,56 +1291,77 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 		this.currAnmerkung = anmVerwendung;
 		part.getTerm().visit(new XSTermVisitor() {
 
+			@Override
 			public void elementDecl(XSElementDecl decl) {
 				if (decl.isLocal()) {
-					// Passenden Element-Knoten aus der Profilkonfiguration holen
+					// Passenden Element-Knoten aus der Profilkonfiguration
+					// holen
 					Node currElementNode = null;
-					String strNameCurrElement = getNsPref(decl.getTargetNamespace()) + ":" + decl.getName();
+					String strNameCurrElement = getNsPref(decl
+							.getTargetNamespace()) + ":" + decl.getName();
 					try {
 						if (MySchemaWriter.this.currNodeProfElement != null) {
 							currElementNode = XsdXmlHelper.xpathSuche(
-									"//element[name/text()='" + strNameCurrElement + "']",
-									MySchemaWriter.this.currNodeProfElement).item(0);
+									"//element[name/text()='"
+											+ strNameCurrElement + "']",
+									MySchemaWriter.this.currNodeProfElement)
+									.item(0);
 						}
 					} catch (XPathExpressionException e) {
 					}
-					MySchemaWriter.this.elementDecl(decl, extraAtts, MySchemaWriter.this.currNsPrefixMain,
+					MySchemaWriter.this.elementDecl(decl, extraAtts,
+							MySchemaWriter.this.currNsPrefixMain,
 							currElementNode, MySchemaWriter.this.currAnmerkung);
 				} else {
 					// Anmerkungsstring zusammenbauen
 					String strAnmerkung = "";
-					if ((MySchemaWriter.this.currAnmerkung != null) && (MySchemaWriter.this.currAnmerkung.length() > 0)) {
-						strAnmerkung = "<" + getMainNs() + "annotation><" + getMainNs() + "documentation>";
+					if ((MySchemaWriter.this.currAnmerkung != null)
+							&& (MySchemaWriter.this.currAnmerkung.length() > 0)) {
+						strAnmerkung = "<" + getMainNs() + "annotation><"
+								+ getMainNs() + "documentation>";
 						strAnmerkung += MySchemaWriter.this.currAnmerkung;
-						strAnmerkung += "</" + getMainNs() + "documentation></" + getMainNs() + "annotation>";
+						strAnmerkung += "</" + getMainNs() + "documentation></"
+								+ getMainNs() + "annotation>";
 					}
 
 					// reference
-					String nsPrefix = getCurrNsPrefix(decl.getTargetNamespace(), MySchemaWriter.this.currNsPrefixMain);
-					println(MessageFormat.format("<" + getMainNs() + "element ref=\"{0}{1}\"{2}>{3}</" + getMainNs()
-							+ "element>", nsPrefix, decl.getName(), extraAtts, strAnmerkung),
+					String nsPrefix = getCurrNsPrefix(
+							decl.getTargetNamespace(),
 							MySchemaWriter.this.currNsPrefixMain);
+					println(MessageFormat.format("<" + getMainNs()
+							+ "element ref=\"{0}{1}\"{2}>{3}</" + getMainNs()
+							+ "element>", nsPrefix, decl.getName(), extraAtts,
+							strAnmerkung), MySchemaWriter.this.currNsPrefixMain);
 
-					// Referenziertes Element der Liste hinzufügen
-					if (!decl.getTargetNamespace().equals(nsUrlBasisSchema) && !xsElementsReferenced.contains(decl)) {
+					// Referenziertes Element der Liste hinzufï¿½gen
+					if (!decl.getTargetNamespace().equals(nsUrlBasisSchema)
+							&& !xsElementsReferenced.contains(decl)) {
 						xsElementsReferenced.add(decl);
 					}
 				}
 			}
 
+			@Override
 			public void modelGroupDecl(XSModelGroupDecl decl) {
 				// reference
-				String nsPrefix = getCurrNsPrefix(decl.getTargetNamespace(), MySchemaWriter.this.currNsPrefixMain);
-				println(MessageFormat.format("<" + getMainNs() + "group ref=\"{0}{1}\"{2}/>", nsPrefix, decl.getName(),
-						extraAtts), MySchemaWriter.this.currNsPrefixMain);
+				String nsPrefix = getCurrNsPrefix(decl.getTargetNamespace(),
+						MySchemaWriter.this.currNsPrefixMain);
+				println(MessageFormat.format("<" + getMainNs()
+						+ "group ref=\"{0}{1}\"{2}/>", nsPrefix,
+						decl.getName(), extraAtts),
+						MySchemaWriter.this.currNsPrefixMain);
 			}
 
+			@Override
 			public void modelGroup(XSModelGroup group) {
-				MySchemaWriter.this.modelGroup(group, extraAtts, MySchemaWriter.this.currNsPrefixMain);
+				MySchemaWriter.this.modelGroup(group, extraAtts,
+						MySchemaWriter.this.currNsPrefixMain);
 			}
 
+			@Override
 			public void wildcard(XSWildcard wc) {
-				MySchemaWriter.this.wildcard(getMainNs() + "any", wc, extraAtts, MySchemaWriter.this.currNsPrefixMain);
+				MySchemaWriter.this.wildcard(getMainNs() + "any", wc,
+						extraAtts, MySchemaWriter.this.currNsPrefixMain);
 			}
 		});
 	}
@@ -1205,23 +1369,27 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void wildcard(XSWildcard wc) {
 		wildcard(wc, currNsPrefixMain);
 	}
 
 	/**
-	 * Schreibt für das übergebene Element XML mit Hilfe des entsprechenden Writer-Objekts.
+	 * Schreibt fï¿½r das ï¿½bergebene Element XML mit Hilfe des entsprechenden
+	 * Writer-Objekts.
 	 * 
 	 * @param wc
-	 *            Objekt, für das XML erzeugt werden soll
+	 *            Objekt, fï¿½r das XML erzeugt werden soll
 	 * @param nsPrefixMain
-	 *            Namespace-Präfix, mit Hilfe dessen das entsprechende Writer-Objekt bestimmt wird
+	 *            Namespace-Prï¿½fix, mit Hilfe dessen das entsprechende
+	 *            Writer-Objekt bestimmt wird
 	 */
 	public void wildcard(XSWildcard wc, String nsPrefixMain) {
 		wildcard(getMainNs() + "any", wc, "", nsPrefixMain);
 	}
 
-	private void wildcard(String tagName, XSWildcard wc, String extraAtts, String nsPrefixMain) {
+	private void wildcard(String tagName, XSWildcard wc, String extraAtts,
+			String nsPrefixMain) {
 		final String proessContents;
 		switch (wc.getMode()) {
 		case XSWildcard.LAX:
@@ -1237,18 +1405,23 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 			throw new AssertionError();
 		}
 
-		println(MessageFormat.format("<{0}{1}{2}{3}/>", tagName, proessContents, wc.apply(WILDCARD_NS), extraAtts),
-				nsPrefixMain);
+		println(MessageFormat.format("<{0}{1}{2}{3}/>", tagName,
+				proessContents, wc.apply(WILDCARD_NS), extraAtts), nsPrefixMain);
 
 		String currNamespaceStr = wc.apply(WILDCARD_NS);
 		if ((currNamespaceStr != null) && (currNamespaceStr.length() > 0)) {
-			// Alle Elemente merken, die per Wildcard hier verwendet werden dürfen
-			// Dazu alle Schemata durchlaufen und prüfen, ob der Targetnamespace von Wildcard akzeptiert wird
+			// Alle Elemente merken, die per Wildcard hier verwendet werden
+			// dï¿½rfen
+			// Dazu alle Schemata durchlaufen und prï¿½fen, ob der Targetnamespace
+			// von Wildcard akzeptiert wird
 			for (XSSchema currSchema : wc.getRoot().getSchemas()) {
 				if (wc.acceptsNamespace(currSchema.getTargetNamespace())) {
-					Map<String, XSElementDecl> elementDecls = currSchema.getElementDecls();
-					for (Map.Entry<String, XSElementDecl> currEntry : elementDecls.entrySet()) {
-						if (!xsElementsReferenced.contains(currEntry.getValue())) {
+					Map<String, XSElementDecl> elementDecls = currSchema
+							.getElementDecls();
+					for (Map.Entry<String, XSElementDecl> currEntry : elementDecls
+							.entrySet()) {
+						if (!xsElementsReferenced
+								.contains(currEntry.getValue())) {
 							xsElementsReferenced.add(currEntry.getValue());
 						}
 					}
@@ -1258,17 +1431,20 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	}
 
 	/**
-	 * Funktion, die den Namespace-String eines any-Elements zurückgibt
+	 * Funktion, die den Namespace-String eines any-Elements zurï¿½ckgibt
 	 */
 	public static final XSWildcardFunction<String> WILDCARD_NS = new XSWildcardFunction<String>() {
+		@Override
 		public String any(Any wc) {
 			return ""; // default
 		}
 
+		@Override
 		public String other(Other wc) {
 			return " namespace='##other'";
 		}
 
+		@Override
 		public String union(Union wc) {
 			StringBuffer buf = new StringBuffer(" namespace='");
 			boolean first = true;
@@ -1286,24 +1462,28 @@ public class MySchemaWriter implements XSVisitor, XSSimpleTypeVisitor {
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void annotation(XSAnnotation ann) {
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void identityConstraint(XSIdentityConstraint decl) {
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void xpath(XSXPath xp) {
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
+	@Override
 	public void empty(XSContentType t) {
 	}
 }

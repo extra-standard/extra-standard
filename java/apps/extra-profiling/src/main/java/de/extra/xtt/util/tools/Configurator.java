@@ -1,3 +1,21 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package de.extra.xtt.util.tools;
 
 import java.io.BufferedInputStream;
@@ -18,10 +36,10 @@ import de.extra.xtt.gui.model.ProfilingTreeNode;
 import de.extra.xtt.util.schema.SchemaElement;
 
 /**
- * Klasse mit verschiedenen Einstellungen, Laden und Zugriff auf die Properties und das ResourceBundle
+ * Klasse mit verschiedenen Einstellungen, Laden und Zugriff auf die Properties
+ * und das ResourceBundle.
  * 
  * @author Beier
- * 
  */
 public class Configurator {
 
@@ -48,22 +66,22 @@ public class Configurator {
 	 */
 	public static final String PATH_PROPERTIES_VERSION = "/de/extra/xtt/version.properties";
 	/**
-	 * Name der Resource-Datei mit den Strings für die Oberfläche
+	 * Name der Resource-Datei mit den Strings fï¿½r die Oberflï¿½che
 	 */
 	public static final String NAME_RESBUNDLE_STRINGS = "strings";
 	/**
-	 * Dateiname des Schemas für die Profilkonfiguration
+	 * Dateiname des Schemas fï¿½r die Profilkonfiguration
 	 */
 	public static final String PATH_TAILORING_SCHEMA = "/resource/TailoringSchema.xsd";
 
-	private ResourceBundle resStrings;
-	private Properties propertiesUser;
-	private Properties propertiesSystem;
-	private Properties propertiesNamespace;
-	private Properties propertiesVersion;
+	private final ResourceBundle resStrings;
+	private final Properties propertiesUser;
+	private final Properties propertiesSystem;
+	private final Properties propertiesNamespace;
+	private final Properties propertiesVersion;
 	private Properties propertiesAnmerkungen;
 	private Properties propertiesAnmerkungenDefault;
-	private String pathTailoringSchemaCurrent;
+	private final String pathTailoringSchemaCurrent;
 
 	/**
 	 * 
@@ -97,19 +115,21 @@ public class Configurator {
 	}
 
 	// Zuordnung von Schematyp zu Namespace-URL
-	private Map<SchemaType, String> schemaNamespaceUrl = new HashMap<SchemaType, String>() {
+	private final Map<SchemaType, String> schemaNamespaceUrl = new HashMap<SchemaType, String>() {
 		private static final long serialVersionUID = 1L;
 		{
-			put(SchemaType.REQUEST, "http://www.extra-standard.de/namespace/request/1");
-			put(SchemaType.RESPONSE, "http://www.extra-standard.de/namespace/response/1");
+			put(SchemaType.REQUEST,
+					"http://www.extra-standard.de/namespace/request/1");
+			put(SchemaType.RESPONSE,
+					"http://www.extra-standard.de/namespace/response/1");
 		}
 	};
 
-	private List<String> schemaPrefixSorted = Arrays.asList("xreq", "xres", "xlog", "xcpt", "xplg", "xenc", "ds",
-			"xcode");
+	private final List<String> schemaPrefixSorted = Arrays.asList("xreq",
+			"xres", "xlog", "xcpt", "xplg", "xenc", "ds", "xcode");
 
-	// Zuorndung von Namespace-Präfix zu Dateiname des Schemadatei
-	private Map<String, String> schemaNsBezeichnungDatei = new HashMap<String, String>() {
+	// Zuorndung von Namespace-Prï¿½fix zu Dateiname des Schemadatei
+	private final Map<String, String> schemaNsBezeichnungDatei = new HashMap<String, String>() {
 		private static final long serialVersionUID = 1L;
 		{
 			put("xreq", "request");
@@ -131,18 +151,19 @@ public class Configurator {
 	 * @param propertiesSystem
 	 *            System-Properties
 	 * @param propertiesNamespace
-	 *            Zuordnungen von Namespace-Präfix zu -URL und umgekehrt
+	 *            Zuordnungen von Namespace-Prï¿½fix zu -URL und umgekehrt
 	 * @param propertiesVersion
 	 *            Angaben zur Version
 	 * @param propertiesAnmerkungen
 	 *            Properties mit den Anmerkungen zu den Elementen
 	 * @param resBundleStrings
-	 *            Oberflächentexte
+	 *            Oberflï¿½chentexte
 	 * @param pathTailroingSchema
-	 *            Pfad zum Schema für die Profilkonfiguration
+	 *            Pfad zum Schema fï¿½r die Profilkonfiguration
 	 */
-	public Configurator(Properties propertiesUser, Properties propertiesSystem, Properties propertiesNamespace,
-			Properties propertiesVersion, Properties propertiesAnmerkungen, ResourceBundle resBundleStrings,
+	public Configurator(Properties propertiesUser, Properties propertiesSystem,
+			Properties propertiesNamespace, Properties propertiesVersion,
+			Properties propertiesAnmerkungen, ResourceBundle resBundleStrings,
 			String pathTailroingSchema) {
 		super();
 		this.propertiesUser = propertiesUser;
@@ -153,31 +174,37 @@ public class Configurator {
 		this.resStrings = resBundleStrings;
 		this.pathTailoringSchemaCurrent = pathTailroingSchema;
 		if (propertiesAnmerkungen != null) {
-			this.propertiesAnmerkungenDefault = (Properties) propertiesAnmerkungen.clone();
+			this.propertiesAnmerkungenDefault = (Properties) propertiesAnmerkungen
+					.clone();
 		} else {
 			this.propertiesAnmerkungenDefault = null;
 		}
 	}
 
 	/**
-	 * Statische Methode zum Laden einer Properties-Datei über das File-System
+	 * Statische Methode zum Laden einer Properties-Datei ï¿½ber das File-System
 	 * 
 	 * @param pathProperties
 	 *            Pfad zur Properties-Datei
 	 * @return Properties-Objekt mit den Werten aus der angegebenen Datei
 	 * @throws ConfiguratorException
-	 *             Falls beim Laden der Properties-Datei ein Fehler auftritt, wird diese Ausnahme erzeugt
+	 *             Falls beim Laden der Properties-Datei ein Fehler auftritt,
+	 *             wird diese Ausnahme erzeugt
 	 */
-	public static Properties loadPropertiesFromFile(String pathProperties) throws ConfiguratorException {
+	public static Properties loadPropertiesFromFile(String pathProperties)
+			throws ConfiguratorException {
 		try {
 			// File-Properties laden
-			BufferedInputStream stream = new BufferedInputStream(new FileInputStream(pathProperties));
+			BufferedInputStream stream = new BufferedInputStream(
+					new FileInputStream(pathProperties));
 			Properties propertiesFile = new Properties();
 			propertiesFile.load(stream);
 			stream.close();
 			return propertiesFile;
 		} catch (Exception e) {
-			throw new ConfiguratorException("Fehler beim Laden der Property-Datei '" + pathProperties + "'.", e);
+			throw new ConfiguratorException(
+					"Fehler beim Laden der Property-Datei '" + pathProperties
+							+ "'.", e);
 		}
 	}
 
@@ -188,18 +215,23 @@ public class Configurator {
 	 *            Pfad zur Properties-Resource-Datei
 	 * @return Properties-Objekt mit den Werten aus der angegebenen Datei
 	 * @throws ConfiguratorException
-	 *             Falls beim Laden der Properties-Datei ein Fehler auftritt, wird diese Ausnahme erzeugt
+	 *             Falls beim Laden der Properties-Datei ein Fehler auftritt,
+	 *             wird diese Ausnahme erzeugt
 	 */
-	public static Properties loadPropertiesFromResource(String pathProperties) throws ConfiguratorException {
+	public static Properties loadPropertiesFromResource(String pathProperties)
+			throws ConfiguratorException {
 		try {
 			// Resource-Properties laden
-			InputStream is = Configurator.class.getResourceAsStream(pathProperties);
+			InputStream is = Configurator.class
+					.getResourceAsStream(pathProperties);
 			Properties propertiesFile = new Properties();
 			propertiesFile.load(is);
 			is.close();
 			return propertiesFile;
 		} catch (Exception e) {
-			throw new ConfiguratorException("Fehler beim Laden der Property-Datei '" + pathProperties + "'.", e);
+			throw new ConfiguratorException(
+					"Fehler beim Laden der Property-Datei '" + pathProperties
+							+ "'.", e);
 		}
 	}
 
@@ -210,37 +242,46 @@ public class Configurator {
 	 *            Bezeichnung des ResourceBundles
 	 * @return ResourceBundle-Objekt
 	 * @throws ConfiguratorException
-	 *             Falls beim Laden des ResourceBundles ein Fehler auftritt, wird diese Ausnahme erzeugt
+	 *             Falls beim Laden des ResourceBundles ein Fehler auftritt,
+	 *             wird diese Ausnahme erzeugt
 	 */
-	public static ResourceBundle loadResourceBundle(String nameResBundle) throws ConfiguratorException {
+	public static ResourceBundle loadResourceBundle(String nameResBundle)
+			throws ConfiguratorException {
 		if (nameResBundle != null) {
 			try {
-				ResourceBundle resBundle = ResourceBundle.getBundle(nameResBundle, Locale.getDefault());
+				ResourceBundle resBundle = ResourceBundle.getBundle(
+						nameResBundle, Locale.getDefault());
 				return resBundle;
 			} catch (MissingResourceException e) {
-				throw new ConfiguratorException("Fehler beim Laden des ResourceBundles '" + nameResBundle + "'.", e);
+				throw new ConfiguratorException(
+						"Fehler beim Laden des ResourceBundles '"
+								+ nameResBundle + "'.", e);
 			}
 		} else {
-			throw new ConfiguratorException("Ungültiger Wert für ResourceBundle.");
+			throw new ConfiguratorException(
+					"Ungï¿½ltiger Wert fï¿½r ResourceBundle.");
 		}
 
 	}
 
 	/**
-	 * Lädt die Anmerkungen-Properties.
+	 * Lï¿½dt die Anmerkungen-Properties.
 	 * 
 	 * @throws ConfiguratorException
 	 */
 	public void reloadPropertiesAnmerkungen() throws ConfiguratorException {
-		this.propertiesAnmerkungen = (Properties) propertiesAnmerkungenDefault.clone();
+		this.propertiesAnmerkungen = (Properties) propertiesAnmerkungenDefault
+				.clone();
 	}
 
 	/**
-	 * Erzeugt ein SchemaElement-Objekt aus einer Element-Bezeichnung (kann Namespace-Präfix enthalten)
+	 * Erzeugt ein SchemaElement-Objekt aus einer Element-Bezeichnung (kann
+	 * Namespace-Prï¿½fix enthalten)
 	 * 
 	 * @param elementBezeichnungMitNsPrefix
 	 *            Element-Bezeichnung aus XML-Datei
-	 * @return SchemaElement-Objekt mit dem Namen des Elements, dem Namespace-Präfix und der -URL
+	 * @return SchemaElement-Objekt mit dem Namen des Elements, dem
+	 *         Namespace-Prï¿½fix und der -URL
 	 */
 	public SchemaElement getSchemaElement(String elementBezeichnungMitNsPrefix) {
 		if (elementBezeichnungMitNsPrefix == null) {
@@ -250,35 +291,40 @@ public class Configurator {
 			String elementName = elementBezeichnungMitNsPrefix;
 			int indexTrenner = elementBezeichnungMitNsPrefix.indexOf(":");
 			if (indexTrenner > 0) {
-				nsPrefix = elementBezeichnungMitNsPrefix.substring(0, indexTrenner);
-				elementName = elementBezeichnungMitNsPrefix.substring(indexTrenner + 1);
-				return new SchemaElement(elementName, getPropertyNamespace(nsPrefix), nsPrefix);
+				nsPrefix = elementBezeichnungMitNsPrefix.substring(0,
+						indexTrenner);
+				elementName = elementBezeichnungMitNsPrefix
+						.substring(indexTrenner + 1);
+				return new SchemaElement(elementName,
+						getPropertyNamespace(nsPrefix), nsPrefix);
 			} else {
-				// kein Präfix für Namespace angegeben
+				// kein Prï¿½fix fï¿½r Namespace angegeben
 				return new SchemaElement(elementName, "", "");
 			}
 		}
 	}
 
 	/**
-	 * Liefert die Liste aller Schema-Präfixe in sortierter Reihenfolge zurück
+	 * Liefert die Liste aller Schema-Prï¿½fixe in sortierter Reihenfolge zurï¿½ck
 	 * 
-	 * @return Liste mit Schema-Präfixen
+	 * @return Liste mit Schema-Prï¿½fixen
 	 */
 	public List<String> getSchemaPrefixSorted() {
 		return schemaPrefixSorted;
 	}
 
 	/**
-	 * Erzeugt einen Dateinamen für das angegebene Verfahren und den Namespace-Präfix einer Schemadatei.
+	 * Erzeugt einen Dateinamen fï¿½r das angegebene Verfahren und den
+	 * Namespace-Prï¿½fix einer Schemadatei.
 	 * 
 	 * @param bezeichnungVerfahren
 	 *            Bezeichnung des zu profilierenden Verfahrens
 	 * @param nsPrefix
-	 *            Namespace-Präfix
-	 * @return Dateiname für eine Schemadatei (*.xsd)
+	 *            Namespace-Prï¿½fix
+	 * @return Dateiname fï¿½r eine Schemadatei (*.xsd)
 	 */
-	public String getDateinameFuerSchema(String bezeichnungVerfahren, String nsPrefix) {
+	public String getDateinameFuerSchema(String bezeichnungVerfahren,
+			String nsPrefix) {
 		String dateiname = bezeichnungVerfahren + "_";
 		if (schemaNsBezeichnungDatei.containsKey(nsPrefix)) {
 			dateiname += schemaNsBezeichnungDatei.get(nsPrefix);
@@ -290,11 +336,12 @@ public class Configurator {
 	}
 
 	/**
-	 * Erzeugt einen Dateinamen für das angegebene Verfahren einer PDF-Dokumentation.
+	 * Erzeugt einen Dateinamen fï¿½r das angegebene Verfahren einer
+	 * PDF-Dokumentation.
 	 * 
 	 * @param bezeichnungVerfahren
 	 *            Bezeichnung des zu profilierenden Verfahrens
-	 * @return Dateiname für eine PDF-Doku (*.pdf)
+	 * @return Dateiname fï¿½r eine PDF-Doku (*.pdf)
 	 */
 	public String getDateinameFuerDoku(String bezeichnungVerfahren) {
 		String dateiname = "Spezifikation_" + bezeichnungVerfahren + ".pdf";
@@ -303,24 +350,26 @@ public class Configurator {
 
 	/**
 	 * 
-	 * Liefert einen Oberflächentext für den angegebenen Key zurück; falls nicht vorhanden, wird der Key selbst zurück
-	 * gegeben.
+	 * Liefert einen Oberflï¿½chentext fï¿½r den angegebenen Key zurï¿½ck; falls nicht
+	 * vorhanden, wird der Key selbst zurï¿½ck gegeben.
 	 * 
 	 * @param key
-	 *            Key für den Text
+	 *            Key fï¿½r den Text
 	 * @return der zum Key passende Text
 	 */
 	public String getResString(String key) {
 		try {
 			return resStrings.getString(key);
 		} catch (Exception e) {
-			logger.error("Fehler beim Zugriff auf den Resource-String '" + key + "':", e);
+			logger.error("Fehler beim Zugriff auf den Resource-String '" + key
+					+ "':", e);
 			return key;
 		}
 	}
 
 	/**
-	 * Gibt den Pfad für das Schema für die Profilkonfiguration zur Validierung zurück.
+	 * Gibt den Pfad fï¿½r das Schema fï¿½r die Profilkonfiguration zur Validierung
+	 * zurï¿½ck.
 	 * 
 	 * @return Pfad zum Scheme
 	 */
@@ -329,10 +378,11 @@ public class Configurator {
 	}
 
 	/**
-	 * Liefert den Wert aus der User-Properties-Datei zum angegebenen Schlüssel zurück.
+	 * Liefert den Wert aus der User-Properties-Datei zum angegebenen Schlï¿½ssel
+	 * zurï¿½ck.
 	 * 
 	 * @param bez
-	 *            Schlüsselbezeichnung
+	 *            Schlï¿½sselbezeichnung
 	 * @return Wert aus der Properties-Datei
 	 */
 	public String getPropertyUser(PropBezeichnungUser bez) {
@@ -340,10 +390,11 @@ public class Configurator {
 	}
 
 	/**
-	 * Liefert den Wert aus der System-Properties-Datei zum angegebenen Schlüssel zurück.
+	 * Liefert den Wert aus der System-Properties-Datei zum angegebenen
+	 * Schlï¿½ssel zurï¿½ck.
 	 * 
 	 * @param bez
-	 *            Schlüsselbezeichnung
+	 *            Schlï¿½sselbezeichnung
 	 * @return Wert aus der Properties-Datei
 	 */
 	public String getPropertySystem(PropBezeichnungSystem bez) {
@@ -351,11 +402,12 @@ public class Configurator {
 	}
 
 	/**
-	 * Liefert den Wert aus der Namespace-Properties-Datei zum angegebenen Schlüssel zurück. Zu einer URL wird das
-	 * passende Präfix, zu einem Präfix die passende URL zurückgegeben.
+	 * Liefert den Wert aus der Namespace-Properties-Datei zum angegebenen
+	 * Schlï¿½ssel zurï¿½ck. Zu einer URL wird das passende Prï¿½fix, zu einem Prï¿½fix
+	 * die passende URL zurï¿½ckgegeben.
 	 * 
 	 * @param bez
-	 *            Schlüsselbezeichnung
+	 *            Schlï¿½sselbezeichnung
 	 * @return Wert aus der Properties-Datei
 	 */
 	public String getPropertyNamespace(String bez) {
@@ -363,18 +415,20 @@ public class Configurator {
 	}
 
 	/**
-	 * Gibt den Anmerkungstext für die Verwendung des angegebenen Knoten zurück.
+	 * Gibt den Anmerkungstext fï¿½r die Verwendung des angegebenen Knoten zurï¿½ck.
 	 * 
 	 * @param node
-	 *            Knoten, für den der Anmerkungstext bestimmt werden soll
+	 *            Knoten, fï¿½r den der Anmerkungstext bestimmt werden soll
 	 * @return Anmerkungstext zur Verwendung
 	 */
 	public String getAnmerkungVerwendung(ProfilingTreeNode node) {
 		String anmerkung = "";
-		if ((node != null) && (node.getParent() != null) && (propertiesAnmerkungen != null)) {
+		if ((node != null) && (node.getParent() != null)
+				&& (propertiesAnmerkungen != null)) {
 			SchemaElement seParent = node.getParent().getSchemaElement();
 			SchemaElement seCurrNode = node.getSchemaElement();
-			String key = seParent.getNsPrefix() + "_" + seParent.getName() + "_" + seCurrNode.getNsPrefix() + "_"
+			String key = seParent.getNsPrefix() + "_" + seParent.getName()
+					+ "_" + seCurrNode.getNsPrefix() + "_"
 					+ seCurrNode.getName();
 			anmerkung = propertiesAnmerkungen.getProperty(key, "");
 		}
@@ -382,56 +436,64 @@ public class Configurator {
 	}
 
 	/**
-	 * Setzt einen neuen Anmerkungstext zur Verwendung des angegegebenen SchemaElements.
+	 * Setzt einen neuen Anmerkungstext zur Verwendung des angegegebenen
+	 * SchemaElements.
 	 * 
 	 * @param schemaElement
-	 *            SchemaElement, für das der Anmerkungstext gesetzt werden soll
+	 *            SchemaElement, fï¿½r das der Anmerkungstext gesetzt werden soll
 	 * @param schemaElementParent
-	 *            SchemaElement vom Vaterknoten, in dem das aktuelle Element verwendet wird
+	 *            SchemaElement vom Vaterknoten, in dem das aktuelle Element
+	 *            verwendet wird
 	 * @param text
 	 *            Neuer Anmerkungstext
 	 */
-	public void setAnmerkungVerwendung(SchemaElement schemaElement, SchemaElement schemaElementParent, String text) {
+	public void setAnmerkungVerwendung(SchemaElement schemaElement,
+			SchemaElement schemaElementParent, String text) {
 		if ((schemaElement != null) && (propertiesAnmerkungen != null)) {
-			String key = schemaElementParent.getNsPrefix() + "_" + schemaElementParent.getName() + "_"
-					+ schemaElement.getNsPrefix() + "_" + schemaElement.getName();
+			String key = schemaElementParent.getNsPrefix() + "_"
+					+ schemaElementParent.getName() + "_"
+					+ schemaElement.getNsPrefix() + "_"
+					+ schemaElement.getName();
 			propertiesAnmerkungen.setProperty(key, text);
 		}
 	}
 
 	/**
-	 * Gibt den allgemeinen Anmerkungstext für den angegebenen Knoten zurück.
+	 * Gibt den allgemeinen Anmerkungstext fï¿½r den angegebenen Knoten zurï¿½ck.
 	 * 
 	 * @param node
-	 *            Knoten, für den der Anmerkungstext bestimmt werden soll
+	 *            Knoten, fï¿½r den der Anmerkungstext bestimmt werden soll
 	 * @return Allg. Anmerkungstext
 	 */
 	public String getAnmerkungAllgemein(ProfilingTreeNode node) {
 		String anmerkung = "";
 		if ((node != null) && (propertiesAnmerkungen != null)) {
-			String key = node.getSchemaElement().getNsPrefix() + "_" + node.getSchemaElement().getName();
+			String key = node.getSchemaElement().getNsPrefix() + "_"
+					+ node.getSchemaElement().getName();
 			anmerkung = propertiesAnmerkungen.getProperty(key, "");
 		}
 		return anmerkung;
 	}
 
 	/**
-	 * Setzt einen neuen allgemeinen Anmerkungstext für das angegegebene SchemaElement.
+	 * Setzt einen neuen allgemeinen Anmerkungstext fï¿½r das angegegebene
+	 * SchemaElement.
 	 * 
 	 * @param schemaElement
-	 *            SchemaElement, für das der Anmerkungstext gesetzt werden soll
+	 *            SchemaElement, fï¿½r das der Anmerkungstext gesetzt werden soll
 	 * @param text
 	 *            Neuer Anmerkungstext
 	 */
 	public void setAnmerkungAllgemein(SchemaElement schemaElement, String text) {
 		if ((schemaElement != null) && (propertiesAnmerkungen != null)) {
-			String key = schemaElement.getNsPrefix() + "_" + schemaElement.getName();
+			String key = schemaElement.getNsPrefix() + "_"
+					+ schemaElement.getName();
 			propertiesAnmerkungen.setProperty(key, text);
 		}
 	}
 
 	/**
-	 * Liefert den Versions-String zurück ([Major].[Minor] ([BuildDate]))
+	 * Liefert den Versions-String zurï¿½ck ([Major].[Minor] ([BuildDate]))
 	 * 
 	 * @return Versions-String
 	 */
@@ -442,7 +504,7 @@ public class Configurator {
 	}
 
 	/**
-	 * Liefert die Namespace-URL zum angegebenen Schema zurück.
+	 * Liefert die Namespace-URL zum angegebenen Schema zurï¿½ck.
 	 * 
 	 * @param schema
 	 *            Schematyp
