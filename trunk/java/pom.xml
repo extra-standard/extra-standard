@@ -18,5 +18,6 @@
 		<module>components/extra-outputplugin</module>
 		<module>components/extra-queryplugin</module>
 		<module>apps/extra-cli</module>
+		<module>apps/extra-profiling</module>
 	</modules>
 </project>
