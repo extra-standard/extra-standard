@@ -1,5 +1,4 @@
 #summary Beschreibung der technischen eXTra-Profiling-Anwendungsarchitektur
-#labels Featured
 
 = eXTra-Profiling-Anwendungsarchitektur =
 
