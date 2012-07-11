@@ -1,0 +1,10 @@
+#summary Beschreibung der technischen eXTra-Profiling-Anwendungsarchitektur
+#labels Featured
+
+= eXTra-Profiling-Anwendungsarchitektur =
+
+*Inhaltsverzeichnis*
+<wiki:toc max_depth="1" />
+
+
+  

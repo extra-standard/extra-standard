@@ -1,0 +1,149 @@
+#summary Beschreibung der technischen eXTra-CLI-Anwendungsarchitektur
+#labels Featured
+
+= eXTra-CLI-Anwendungsarchitektur (Command Line Interface) =
+
+*Inhaltsverzeichnis*
+<wiki:toc max_depth="1" />
+
+
+= Philosophie des eXTra-Clients =
+Bisherige Versuche Außenstehenden einen Beispiel-eXTra-Client zur Verfügung zu stellen, scheiterten bisher meist daran, dass der verwendete Client sehr starr auf ein Verfahren und die vorhandene Infrastruktur vor Ort zugeschnitten war.
+Anpassungen in einem der beiden Punkte, führten zwangsläufig immer zu programmatischen Änderungen, die in die Grundstrukturen des Clients eingreifen mussten.
+Und selbst nach diesen Änderungen war es teilweise nicht möglich die Wünsche der Kundenseite zur vollsten Zufriedenheit abdecken zu können.
+So wurden, mit zunehmender Anzahl der Verfahren, welche ihre Daten über eXTra austauschen, der Wunsch nach einem Hilfsmittel zum Versenden und Testen der verschiedenen Verfahren immer lauter.
+Um den verschiedenen Ansprüchen gerecht zu werden, wurden für die Entwicklung des neuen eXTra-Clients folgende Eckpfeiler festgelegt:
+
+  * Anwendung unabhängig von der bestehenden Systemumgebung
+  * Leicht anpassbar
+  * Verfahrensunabhängige Programmierung
+  
+= Plugin-Mechanismus =
+Um diese Ziele zu erreichen, wurde zugunsten eines Plugin-Systems auf eine starre Programmierung verzichtet.
+So lässt sich der Client individuell auf die Bedürfnisse des jeweiligen Verfahrens und der Systemumgebung, in der er verwendet werden soll, anpassen.
+Die Plugins haben dazu fest definierte Schnittstellen nach außen, über welche sie untereinander kommunizieren.
+
+
+Abb. 1 Aufbau eXTra-Client
+
+
+== Starter ==
+Im Starter wird der Aufruf des Clients realisiert.
+Hierbei gibt es außer der aufzurufenden Funktion zum Starten des Clients und den Returncodes durch die Anwendung keinerlei Einschränkungen,
+Folgende Szenarien wären denkbar
+  * Konsolenbasierter Aufruf z.B. innerhalb eines Scripts
+  * Aufruf aus einer grafischen Oberfläche
+  * Einbinden der Plugins in eine neue oder bestehende Anwendung
+
+
+== CoreLibrary ==
+Die CoreLibrary bildet das Herzstück des eXTraClients. Sie wird durch den Starter aufgerufen und in ihr werden aus den durch die anderen Plugins gelieferten Informationen eXTra-Requests generiert, welche dann zur weiteren Verarbeitung an das OutputPlugin übergeben wird.
+
+
+== ConfigPlugin ==
+Im Config-Plugin werden generelle Informationen hinterlegt, welche sendungsunabhängig und –übergreifend gültig sind. Dazu zählen z.B. die Absender- und Empfängerinformationen und welche Verfahren angesprochen werden.
+Außerdem werden vom ConfigPlugin wichtige Informationen zum Aufbau des Request an die CoreLibrary übergeben.
+Um hierzu nicht das ganze Schema verwenden zu müssen, könnte an dieser Stelle auch die aus dem XSDCreator gewonnene Profildatei ausgewertet werden.
+
+
+== DataPlugin == 
+Das DataPlugin versorgt die CoreLibrary mit den entsprechenden Nutzdaten, die transportiert werden sollen. Neben den reinen Nutzdaten werden hier auch die Zusatzinformationen zu den Nutzdaten abgelegt, wie u. a. Daten mit denen die Plugins im Request befüllt werden, z.B. die RequestID zum Datensatz. Eine Abwandlung des DataPlugins ist das QueryPlugin.
+
+
+== QueryPlugin == 
+Beim Abruf der Daten werden vom DataPlugin keine Nutzdaten im Sinne von Datensätzen übergeben, sondern lediglich die fertig zusammengestellte Query zum Abruf der Daten.
+Diese werden nicht als fertig geparstes XML übergeben, sondern als JaxB-Element, welches direkt in den Request eingefügt werden kann.
+
+== OutputPlugin == 
+Das OutputPlugin übernimmt von der CoreLibrary den Request und kümmert sich um dessen Verarbeitung.
+Ein Weg, was mit dem Request geschieht, ist nicht vorgeschrieben.
+So sind zum Beispiel die folgenden Szenarien denkbar:
+
+  * Der Request wird für die Qualitätssicherung oder als Beispiel-Request auf einem Laufwerk abgelegt oder zur Anzeige gebracht.
+  * Der Request wird asynchron per FTP, E-Mail oder per MQ verschickt
+  * Der Request wird einer synchronen Verarbeitung per http(s) oder Webservice zugeführt
+
+Bei Verfahren in denen eine Antwort in Form einer eXTra-Response erwartet wird, muss die Verarbeitung der Response und Auswertung der darin enthaltenen Informationen auch durch das OutputPlugin geschehen.
+
+= Implementierung =
+Die Implementierung des eXTraClients wird am Beispiel für Sofortmeldungen über https nach dem DSRV-Schema vorgestellt.
+
+== Verwendete Bibliotheken und Frameworks ==
+Zur Vereinfachung der Implementierung wurde auf verschiedene bestehenden Bibliotheken und Frameworks zurückgegriffen. Diese werden nachfolgend kurz erläutert und ggf. zusammengefasst.
+
+=== Spring-Framework ===
+Das Spring-Framework bildet bei der vorliegenden Implementierung die Grundlage des Clients.
+Dadurch lassen sich die einzelnen Plugins einfach über eine Konfigurations-Datei austauschen. Vereinfacht wird dadurch auch die Handhabung mit klassischen Property-Dateien über den PropertyFileHelper.
+
+=== JaxB-Framework ===
+Durch Einsatz des JaxB-Frameworks wird auf ein manuelles aufbauen und parsen der XML-Strukturen verzichtet.
+Dieses Framework stellt eine API zum Marshalling und Unmarshalling von XML-Strukturen zur Verfügung.
+Voraussetzung dafür ist ein vorhandenes Schema, welches in Java-Klassen umgesetzt werden kann.
+Dadurch, dass die XML-Struktur in eine Java-Bean überführt wird, lässt sich diese innerhalb der Programmstruktur komfortabler befüllen und auslesen.
+
+=== Log4j ===
+Als Logging-Framework wird innerhalb der Anwendung das Log4j-Framework verwendet.
+
+=== eXTra_1_1_messages.jar ===
+Diese Bibliothek beinhaltet bereits die fertig konfigurierten JaxB-Klassen für eXTra 1.1 inklusive der Annotationen für den Einsatz der Messages, wie zum Beispiel für den Aufbau der Query.
+
+=== Starter ===
+Im Starter-Projekt befindet sich die main-Methode zum Aufruf des Clients. Aus ihr heraus wird eine neue Instanz des Clients erzeugt.
+Im Starter werden auch sämtliche Bibliotheken referenziert, die zur Ausführung des Clients notwendig sind.
+Gegenwärtig liegen dort auch die Konfigurationsdateien für den Gesamt-Client und die einzelnen Plugins in einem Properties-Ordner.
+
+=== Core-Library === 
+Bei der Core-Library wurde bereits in der ersten Version versucht ein möglichst breites Spektrum des eXTra-Standards 1.1 generisch abzudecken. 
+
+Hierfür wurden innerhalb des Projekts die Schnittstellen zu den Plugins definiert. Ebenfalls in der CoreLibrary hinterlegt sind die Java-Beans die zur Datenübergabe und –haltung vorgesehen sind, sowie die erforderlichen Zugriffs-Klassen hinterlegt.
+
+=== Config-Plugin === 
+Im ConfigPlugin werden die Sendungsübergreifenden Informationen eingelesen und an die Core-Library übergeben.
+Die Informationen hierzu werden aus zwei Quellen ermittelt.
+Der Aufbau und die Inhaltsart des Body wird aus der Profildatei, welche vom XSD-Creator erstellt wird, bezogen.
+Die anderen Informationen wie z.B. Absender und Empfängerinformationen werden aus der klassischen Property-Datei geladen, welche im Starter referenziert wird.
+
+=== Data-Plugin === 
+Das DataPlugin liest die Nutzdaten aus einem vorher in den Properties festgelegtem Ordner aus. Zu jeder Nutzdaten-Datei muss noch ein Auftragssatz vorhanden sein. Für diesen wurde während der Entwicklung ein eigenes XML-Schema entwickelt. Dadurch lässt sich der Autragssatz wieder mit Hilfe von JaxB einfacher innerhalb der Anwendung verarbeiten und auswerten.
+Ebenfalls aus dem Auftragssatz werden die Informationen für die ggf. vorhandenen Plugins befüllt. Die Java-Beans mit den Plugin-Informationen werden dazu von einer generischen Bean abgeleitet.
+
+=== Query-Plugin ===
+Das Query-Plugin ist eine spezielle Form des DataPlugins. Hier werden nicht die Nutzdaten befüllt, sondern nur die Query zum Abrufen der Verarbeitungsergebnisse. Diese werden wieder als JaxB-Element aufgebaut und an die Core-Library übergeben.
+Gegenwärtig wird im Query-Plugin fest nur der Operand Greater-Equals unterstützt. Die weiteren Informationen wie die maximale Anzahl der Pakete und der Startwert, der bei der Abfrage mit an den Server geschickt wird, werden in der Property-Datei statisch hinterlegt.
+
+
+=== Output-Plugin === 
+Das OutputPlugin übernimmt den von der CoreLibrary erstellten Request und verarbeitet diesen. Im implementierten Beispiel für Sofortmeldungen heißt dies, dass der Request per https mit Client-Zertifikat an die Ziel-URL übermittelt wird.
+Die Response von der Server-Anwendung wird ausgewertet und auf dem Dateisystem abgelegt.
+Beim Abruf der Verarbeitungsergebnisse wird neben dem Report auch jedes Paket einzeln als Antwort auf dem Dateisystem abgelegt. Als Dateiname dient die eindeutige ResponseID.
+
+
+= Anpassen an die Systemumgebung =
+Durch den modularen Aufbau lässt sich der eXTraClient an die jeweilige Einsatzumgebung anpassen.
+Dies beginnt schon beim Aufruf des Clients, der wahlweise über die Konsole, aus einem Programm heraus oder über eine grafische Oberfläche ausgeführt werden kann. So kann das Programm individuell an die Bedürfnisse des Nutzers angepasst werden.
+Auch die Zulieferung der Nutz- und Versanddaten zur CoreLibrary kann an das jeweilige Zielsystem angepasst werden. Im vorliegenden Beispiel für Sofortmeldungen geschieht dies über Zugriffe auf die Property-Datei und auslesen der Daten vom Dateisystem. Denkbar hierbei ist, neben fest kodierten Programmstrukturen, wie sie im Dummy vorhanden sind, auch dass die Daten z.B. direkt aus einer Datenbank geholt werden und zuvor eine erweiterte Programmlogik durchlaufen. Ein Anwendungsfall hierfür wäre beispielsweise der Abgleich, welche Datensätze bereits wieder empfangen wurden und welche in einer Datenbank noch offen sind.
+
+Neben dem Bezug der Daten kann natürlich auch der Umgang mit dem Request den jeweiligen technischen und fachlichen Vorgaben angepasst werden. Durch die Modifikation des OutputPlugins ist es auch denkbar, dass die Daten direkt auf das Dateisystem abgelegt werden um z. B. als Beispiel-Requests für die Registrierung eines neuen Verfahrens zu dienen. Auch andere Versandarten als nur der Versand per https sind denkbar, indem man das Plugin entsprechend umschreibt.
+
+
+= Konfigurations- und Property-Dateien =
+Die Konfiguration des eXTra-Clients ist auf verschiedene Dateien aufgeteilt.
+Zum einen werden mehrere XML-Dateien vom Spring-Framework verwendet. Zum anderen wird zur Befüllung von Werten eine Property-Datei verwendet.
+
+== Spring-Konfiguration ==
+Zentrale Konfigurations-Datei des Clients ist die Datei SpringConfig.xml, in welcher die Property-Datei referenziert wird, die Konfigurations-Datei der Core-Library importiert wird und die einzelnen PlugIns definiert werden.
+Da es sich bei den PlugIns um eigenständige Projekte handelt, besitzen diese jeweils noch mal eine eigenständige Konfigurations-Datei, welche beim Aufruf des Plugins geladen wird.
+Somit sind die einzelnen Teile des Clients, abgesehen von der Referenz in der SpringConfig.xml innerhalb des Starter-Projekts vollkommen unabhängig voneinander und können mit einer kleinen Änderung an der Konfiguration anders belegt werden.
+
+== Property-Datei ==
+Bei der Property-Datei handelt es sich um eine klassische Liste von Schlüsselbegriffen, welche Werte zugewiesen bekommen, die im Laufe der Verarbeitung gelesen und verwendet werden.
+
+So sind in der Property-Datei in der gegenwärtigen Implementierung die Informationen für das ConfigPlugin hinterlegt, die Ablage- und Lese-Orte für die Dateien sowie die Steuerinformationen für den Abruf der Daten.
+Innerhalb des SpringFrameworks können diese Werte mit Hilfe des PropertyPlaceholderConfigurers recht einfach an die Logik übergeben und dort verwendet werden.
+
+
+= Referenzen =
+  * Spring Framework: http://www.springsource.org
+  * JaxB: http://www.oracle.com/technetwork/articles/javase/index-140168.html
+  * eXTra: http://www.extra-standard.de
+  
