@@ -1,5 +1,4 @@
 #summary Beschreibung der technischen eXTra-CLI-Anwendungsarchitektur
-#labels Featured
 
 = eXTra-CLI-Anwendungsarchitektur (Command Line Interface) =
 
