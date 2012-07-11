@@ -2,5 +2,7 @@
 
   * [eXTraEinfuehrung Einführung]
   * [eXTraArchitektur Architektur]
+    * [eXTraArchitekturAnwendungCli Command Line Interface]
+    * [eXTraArchitekturAnwendungProfiling Profiling]
   * [eXTraArchitekturAnwendung Anwendungsarchitektur]
   * [eXTraEntwProzess Entwicklungsprozess]
