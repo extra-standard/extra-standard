@@ -37,25 +37,25 @@ Folgende Szenarien wären denkbar
 
 
 == Core-Library ==
-Die Core-Library bildet das Herzstück des eXTraClients. Sie wird durch den Starter aufgerufen und in ihr werden aus den durch die anderen Plugins gelieferten Informationen eXTra-Requests generiert, welche dann zur weiteren Verarbeitung an das OutputPlugin übergeben wird.
+Die Core-Library bildet das Herzstück des eXTraClients. Sie wird durch den Starter aufgerufen und in ihr werden aus den durch die anderen Plugins gelieferten Informationen eXTra-Requests generiert, welche dann zur weiteren Verarbeitung an das Output-Plugin übergeben wird.
 
 
 == Config-Plugin ==
 Im Config-Plugin werden generelle Informationen hinterlegt, welche sendungsunabhängig und –übergreifend gültig sind. Dazu zählen z.B. die Absender- und Empfängerinformationen und welche Verfahren angesprochen werden.
-Außerdem werden vom ConfigPlugin wichtige Informationen zum Aufbau des Request an die CoreLibrary übergeben.
+Außerdem werden vom Config-Plugin wichtige Informationen zum Aufbau des Request an die CoreLibrary übergeben.
 Um hierzu nicht das ganze Schema verwenden zu müssen, könnte an dieser Stelle auch die aus dem XSDCreator gewonnene Profildatei ausgewertet werden.
 
 
 == Data-Plugin == 
-Das Data-Plugin versorgt die Core-Library mit den entsprechenden Nutzdaten, die transportiert werden sollen. Neben den reinen Nutzdaten werden hier auch die Zusatzinformationen zu den Nutzdaten abgelegt, wie u. a. Daten mit denen die Plugins im Request befüllt werden, z.B. die RequestID zum Datensatz. Eine Abwandlung des DataPlugins ist das QueryPlugin.
+Das Data-Plugin versorgt die Core-Library mit den entsprechenden Nutzdaten, die transportiert werden sollen. Neben den reinen Nutzdaten werden hier auch die Zusatzinformationen zu den Nutzdaten abgelegt, wie u. a. Daten mit denen die Plugins im Request befüllt werden, z.B. die RequestID zum Datensatz. Eine Abwandlung des Data-Plugins ist das Query-Plugin.
 
 
 == Query-Plugin == 
-Beim Abruf der Daten werden vom DataPlugin keine Nutzdaten im Sinne von Datensätzen übergeben, sondern lediglich die fertig zusammengestellte Query zum Abruf der Daten.
+Beim Abruf der Daten werden vom Data-Plugin keine Nutzdaten im Sinne von Datensätzen übergeben, sondern lediglich die fertig zusammengestellte Query zum Abruf der Daten.
 Diese werden nicht als fertig geparstes XML übergeben, sondern als JaxB-Element, welches direkt in den Request eingefügt werden kann.
 
 == Output-Plugin == 
-Das OutputPlugin übernimmt von der CoreLibrary den Request und kümmert sich um dessen Verarbeitung.
+Das Output-Plugin übernimmt von der CoreLibrary den Request und kümmert sich um dessen Verarbeitung.
 Ein Weg, was mit dem Request geschieht, ist nicht vorgeschrieben.
 So sind zum Beispiel die folgenden Szenarien denkbar:
 
@@ -63,7 +63,7 @@ So sind zum Beispiel die folgenden Szenarien denkbar:
   * Der Request wird asynchron per FTP, E-Mail oder per MQ verschickt
   * Der Request wird einer synchronen Verarbeitung per http(s) oder Webservice zugeführt
 
-Bei Verfahren in denen eine Antwort in Form einer eXTra-Response erwartet wird, muss die Verarbeitung der Response und Auswertung der darin enthaltenen Informationen auch durch das OutputPlugin geschehen.
+Bei Verfahren in denen eine Antwort in Form einer eXTra-Response erwartet wird, muss die Verarbeitung der Response und Auswertung der darin enthaltenen Informationen auch durch das Output-Plugin geschehen.
 
 = Implementierung =
 Die Implementierung des eXTraClients wird am Beispiel für Sofortmeldungen über https nach dem DSRV-Schema vorgestellt.
@@ -104,16 +104,16 @@ Der Aufbau und die Inhaltsart des Body wird aus der Profildatei, welche vom XSD-
 Die anderen Informationen wie z.B. Absender und Empfängerinformationen werden aus der klassischen Property-Datei geladen, welche im Starter referenziert wird.
 
 === Data-Plugin === 
-Das DataPlugin liest die Nutzdaten aus einem vorher in den Properties festgelegtem Ordner aus. Zu jeder Nutzdaten-Datei muss noch ein Auftragssatz vorhanden sein. Für diesen wurde während der Entwicklung ein eigenes XML-Schema entwickelt. Dadurch lässt sich der Autragssatz wieder mit Hilfe von JaxB einfacher innerhalb der Anwendung verarbeiten und auswerten.
+Das Data-Plugin liest die Nutzdaten aus einem vorher in den Properties festgelegtem Ordner aus. Zu jeder Nutzdaten-Datei muss noch ein Auftragssatz vorhanden sein. Für diesen wurde während der Entwicklung ein eigenes XML-Schema entwickelt. Dadurch lässt sich der Autragssatz wieder mit Hilfe von JaxB einfacher innerhalb der Anwendung verarbeiten und auswerten.
 Ebenfalls aus dem Auftragssatz werden die Informationen für die ggf. vorhandenen Plugins befüllt. Die Java-Beans mit den Plugin-Informationen werden dazu von einer generischen Bean abgeleitet.
 
 === Query-Plugin ===
-Das Query-Plugin ist eine spezielle Form des DataPlugins. Hier werden nicht die Nutzdaten befüllt, sondern nur die Query zum Abrufen der Verarbeitungsergebnisse. Diese werden wieder als JaxB-Element aufgebaut und an die Core-Library übergeben.
+Das Query-Plugin ist eine spezielle Form des Data-Plugins. Hier werden nicht die Nutzdaten befüllt, sondern nur die Query zum Abrufen der Verarbeitungsergebnisse. Diese werden wieder als JaxB-Element aufgebaut und an die Core-Library übergeben.
 Gegenwärtig wird im Query-Plugin fest nur der Operand Greater-Equals unterstützt. Die weiteren Informationen wie die maximale Anzahl der Pakete und der Startwert, der bei der Abfrage mit an den Server geschickt wird, werden in der Property-Datei statisch hinterlegt.
 
 
 === Output-Plugin === 
-Das OutputPlugin übernimmt den von der CoreLibrary erstellten Request und verarbeitet diesen. Im implementierten Beispiel für Sofortmeldungen heißt dies, dass der Request per https mit Client-Zertifikat an die Ziel-URL übermittelt wird.
+Das Output-Plugin übernimmt den von der CoreLibrary erstellten Request und verarbeitet diesen. Im implementierten Beispiel für Sofortmeldungen heißt dies, dass der Request per https mit Client-Zertifikat an die Ziel-URL übermittelt wird.
 Die Response von der Server-Anwendung wird ausgewertet und auf dem Dateisystem abgelegt.
 Beim Abruf der Verarbeitungsergebnisse wird neben dem Report auch jedes Paket einzeln als Antwort auf dem Dateisystem abgelegt. Als Dateiname dient die eindeutige ResponseID.
 
@@ -123,7 +123,7 @@ Durch den modularen Aufbau lässt sich der eXTraClient an die jeweilige Einsatzu
 Dies beginnt schon beim Aufruf des Clients, der wahlweise über die Konsole, aus einem Programm heraus oder über eine grafische Oberfläche ausgeführt werden kann. So kann das Programm individuell an die Bedürfnisse des Nutzers angepasst werden.
 Auch die Zulieferung der Nutz- und Versanddaten zur CoreLibrary kann an das jeweilige Zielsystem angepasst werden. Im vorliegenden Beispiel für Sofortmeldungen geschieht dies über Zugriffe auf die Property-Datei und auslesen der Daten vom Dateisystem. Denkbar hierbei ist, neben fest kodierten Programmstrukturen, wie sie im Dummy vorhanden sind, auch dass die Daten z.B. direkt aus einer Datenbank geholt werden und zuvor eine erweiterte Programmlogik durchlaufen. Ein Anwendungsfall hierfür wäre beispielsweise der Abgleich, welche Datensätze bereits wieder empfangen wurden und welche in einer Datenbank noch offen sind.
 
-Neben dem Bezug der Daten kann natürlich auch der Umgang mit dem Request den jeweiligen technischen und fachlichen Vorgaben angepasst werden. Durch die Modifikation des OutputPlugins ist es auch denkbar, dass die Daten direkt auf das Dateisystem abgelegt werden um z. B. als Beispiel-Requests für die Registrierung eines neuen Verfahrens zu dienen. Auch andere Versandarten als nur der Versand per https sind denkbar, indem man das Plugin entsprechend umschreibt.
+Neben dem Bezug der Daten kann natürlich auch der Umgang mit dem Request den jeweiligen technischen und fachlichen Vorgaben angepasst werden. Durch die Modifikation des Output-Plugins ist es auch denkbar, dass die Daten direkt auf das Dateisystem abgelegt werden um z. B. als Beispiel-Requests für die Registrierung eines neuen Verfahrens zu dienen. Auch andere Versandarten als nur der Versand per https sind denkbar, indem man das Plugin entsprechend umschreibt.
 
 
 = Konfigurations- und Property-Dateien =
@@ -138,7 +138,7 @@ Somit sind die einzelnen Teile des Clients, abgesehen von der Referenz in der Sp
 == Property-Datei ==
 Bei der Property-Datei handelt es sich um eine klassische Liste von Schlüsselbegriffen, welche Werte zugewiesen bekommen, die im Laufe der Verarbeitung gelesen und verwendet werden.
 
-So sind in der Property-Datei in der gegenwärtigen Implementierung die Informationen für das ConfigPlugin hinterlegt, die Ablage- und Lese-Orte für die Dateien sowie die Steuerinformationen für den Abruf der Daten.
+So sind in der Property-Datei in der gegenwärtigen Implementierung die Informationen für das Config-Plugin hinterlegt, die Ablage- und Lese-Orte für die Dateien sowie die Steuerinformationen für den Abruf der Daten.
 Innerhalb des SpringFrameworks können diese Werte mit Hilfe des PropertyPlaceholderConfigurers recht einfach an die Logik übergeben und dort verwendet werden.
 
 
