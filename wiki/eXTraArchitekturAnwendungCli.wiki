@@ -42,7 +42,7 @@ Die Core-Library bildet das Herzstück des eXTraClients. Sie wird durch den Star
 
 == Config-Plugin ==
 Im Config-Plugin werden generelle Informationen hinterlegt, welche sendungsunabhängig und –übergreifend gültig sind. Dazu zählen z.B. die Absender- und Empfängerinformationen und welche Verfahren angesprochen werden.
-Außerdem werden vom Config-Plugin wichtige Informationen zum Aufbau des Request an die CoreLibrary übergeben.
+Außerdem werden vom Config-Plugin wichtige Informationen zum Aufbau des Request an die Core-Library übergeben.
 Um hierzu nicht das ganze Schema verwenden zu müssen, könnte an dieser Stelle auch die aus dem XSDCreator gewonnene Profildatei ausgewertet werden.
 
 
@@ -55,7 +55,7 @@ Beim Abruf der Daten werden vom Data-Plugin keine Nutzdaten im Sinne von Datens�
 Diese werden nicht als fertig geparstes XML übergeben, sondern als JaxB-Element, welches direkt in den Request eingefügt werden kann.
 
 == Output-Plugin == 
-Das Output-Plugin übernimmt von der CoreLibrary den Request und kümmert sich um dessen Verarbeitung.
+Das Output-Plugin übernimmt von der Core-Library den Request und kümmert sich um dessen Verarbeitung.
 Ein Weg, was mit dem Request geschieht, ist nicht vorgeschrieben.
 So sind zum Beispiel die folgenden Szenarien denkbar:
 
@@ -95,7 +95,7 @@ Gegenwärtig liegen dort auch die Konfigurationsdateien für den Gesamt-Client u
 === Core-Library === 
 Bei der Core-Library wurde bereits in der ersten Version versucht ein möglichst breites Spektrum des eXTra-Standards 1.1 generisch abzudecken. 
 
-Hierfür wurden innerhalb des Projekts die Schnittstellen zu den Plugins definiert. Ebenfalls in der CoreLibrary hinterlegt sind die Java-Beans die zur Datenübergabe und –haltung vorgesehen sind, sowie die erforderlichen Zugriffs-Klassen hinterlegt.
+Hierfür wurden innerhalb des Projekts die Schnittstellen zu den Plugins definiert. Ebenfalls in der Core-Library hinterlegt sind die Java-Beans die zur Datenübergabe und –haltung vorgesehen sind, sowie die erforderlichen Zugriffs-Klassen hinterlegt.
 
 === Config-Plugin === 
 Im Config-Plugin werden die Sendungsübergreifenden Informationen eingelesen und an die Core-Library übergeben.
@@ -113,7 +113,7 @@ Gegenwärtig wird im Query-Plugin fest nur der Operand Greater-Equals unterstüt
 
 
 === Output-Plugin === 
-Das Output-Plugin übernimmt den von der CoreLibrary erstellten Request und verarbeitet diesen. Im implementierten Beispiel für Sofortmeldungen heißt dies, dass der Request per https mit Client-Zertifikat an die Ziel-URL übermittelt wird.
+Das Output-Plugin übernimmt den von der Core-Library erstellten Request und verarbeitet diesen. Im implementierten Beispiel für Sofortmeldungen heißt dies, dass der Request per https mit Client-Zertifikat an die Ziel-URL übermittelt wird.
 Die Response von der Server-Anwendung wird ausgewertet und auf dem Dateisystem abgelegt.
 Beim Abruf der Verarbeitungsergebnisse wird neben dem Report auch jedes Paket einzeln als Antwort auf dem Dateisystem abgelegt. Als Dateiname dient die eindeutige ResponseID.
 
@@ -121,7 +121,7 @@ Beim Abruf der Verarbeitungsergebnisse wird neben dem Report auch jedes Paket ei
 = Anpassen an die Systemumgebung =
 Durch den modularen Aufbau lässt sich der eXTraClient an die jeweilige Einsatzumgebung anpassen.
 Dies beginnt schon beim Aufruf des Clients, der wahlweise über die Konsole, aus einem Programm heraus oder über eine grafische Oberfläche ausgeführt werden kann. So kann das Programm individuell an die Bedürfnisse des Nutzers angepasst werden.
-Auch die Zulieferung der Nutz- und Versanddaten zur CoreLibrary kann an das jeweilige Zielsystem angepasst werden. Im vorliegenden Beispiel für Sofortmeldungen geschieht dies über Zugriffe auf die Property-Datei und auslesen der Daten vom Dateisystem. Denkbar hierbei ist, neben fest kodierten Programmstrukturen, wie sie im Dummy vorhanden sind, auch dass die Daten z.B. direkt aus einer Datenbank geholt werden und zuvor eine erweiterte Programmlogik durchlaufen. Ein Anwendungsfall hierfür wäre beispielsweise der Abgleich, welche Datensätze bereits wieder empfangen wurden und welche in einer Datenbank noch offen sind.
+Auch die Zulieferung der Nutz- und Versanddaten zur Core-Library kann an das jeweilige Zielsystem angepasst werden. Im vorliegenden Beispiel für Sofortmeldungen geschieht dies über Zugriffe auf die Property-Datei und auslesen der Daten vom Dateisystem. Denkbar hierbei ist, neben fest kodierten Programmstrukturen, wie sie im Dummy vorhanden sind, auch dass die Daten z.B. direkt aus einer Datenbank geholt werden und zuvor eine erweiterte Programmlogik durchlaufen. Ein Anwendungsfall hierfür wäre beispielsweise der Abgleich, welche Datensätze bereits wieder empfangen wurden und welche in einer Datenbank noch offen sind.
 
 Neben dem Bezug der Daten kann natürlich auch der Umgang mit dem Request den jeweiligen technischen und fachlichen Vorgaben angepasst werden. Durch die Modifikation des Output-Plugins ist es auch denkbar, dass die Daten direkt auf das Dateisystem abgelegt werden um z. B. als Beispiel-Requests für die Registrierung eines neuen Verfahrens zu dienen. Auch andere Versandarten als nur der Versand per https sind denkbar, indem man das Plugin entsprechend umschreibt.
 
@@ -139,7 +139,7 @@ Somit sind die einzelnen Teile des Clients, abgesehen von der Referenz in der Sp
 Bei der Property-Datei handelt es sich um eine klassische Liste von Schlüsselbegriffen, welche Werte zugewiesen bekommen, die im Laufe der Verarbeitung gelesen und verwendet werden.
 
 So sind in der Property-Datei in der gegenwärtigen Implementierung die Informationen für das Config-Plugin hinterlegt, die Ablage- und Lese-Orte für die Dateien sowie die Steuerinformationen für den Abruf der Daten.
-Innerhalb des SpringFrameworks können diese Werte mit Hilfe des PropertyPlaceholderConfigurers recht einfach an die Logik übergeben und dort verwendet werden.
+Innerhalb des SpringFrameworks können diese Werte mit Hilfe des !PropertyPlaceholderConfigurers recht einfach an die Logik übergeben und dort verwendet werden.
 
 
 = Referenzen =
