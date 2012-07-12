@@ -87,7 +87,7 @@ Dieses Package enthält alle Klassen zum Parsen und Erzeugen von XML-Schemadatei
 
 ===	de.drv.dsrv.xtt.gui.util.tools ===
 
-Die Klasse Configurator ist für den Zugriff auf die Einstellungen, die in den !*.properties-Dateien gespeichert sind, verantwortlich und enthält einige Package übergreifende Hilfsfunktionen.
+Die Klasse Configurator ist für den Zugriff auf die Einstellungen, die in den properties-Dateien gespeichert sind, verantwortlich und enthält einige Package übergreifende Hilfsfunktionen.
 Für das Lesen, Schreiben und Validieren von XML-Dateien enthält die Klasse XsdXmlHelper alle notwendigen Funktionen.
 
 
