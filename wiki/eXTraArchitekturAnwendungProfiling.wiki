@@ -23,7 +23,7 @@ Das XSD Profiling Tool ist eine Java-Applikation für die Durchführung einer so
 Das Ergebnis dieser Profilierung wird in einer sogenannten Profilkonfiguration (XML) gespeichert und kann später weiter bearbeitet werden.
 Aus einer Profilkonfiguration kann das fachspezifische eXTra Schema generiert werden. Optional erzeugt das XSD Profiling Tool eine PDF-Dokumentation mit den verwendeten Elementen und ggf. im Zuge der Profilierung hinterlegten Anmerkungen.
  
-Abbildung 1: Oberfläche XSD Profiling Tool
+http://extra-standard.googlecode.com/svn/wiki/images/extra-profiling-swing-ui.jpg
 
 
 = Implementierung =
