@@ -10,7 +10,7 @@
 == eXTra Standard ==
 eXTra, das Einheitliche XML-basierte Transportverfahren, ist ein offener Standard für die Datenübermittlung. Sämtliche öffentlichen Informationen über eXTra sind im Internet unter der Adresse http://www.extra-standard.de abrufbar.
 Das Verfahren eXTra definiert ein allgemein gültiges Format einer Beschreibungsstruktur zum Zwecke des Austauschs von Fachnachrichten zwischen zwei Kommunikationspartnern und deren Prozessbeteiligten.
-Das sogenannte eXTra Basis-Verfahren entspricht zugleich einer Zusammenfassung wie auch Verallgemeinerung der bestehenden Verfahren. Es obliegt dem jeweiligen Datenübermittlungsverbund, bzw. Fachverfahren, ausgehend vom eXTra Basis-Verfahren, eine auf dessen Belange zugeschnittene Ausprägung – sein spezifi-sches eXTra-Verfahren - zu definieren. Dieser Vorgang des Zuschnitts heißt Profilierung des eXTra Basis-Standards, das Ergebnis einer Profilierung ist ein verbund- bzw. fachspezifischer eXTra Standard.
+Das sogenannte eXTra Basis-Verfahren entspricht zugleich einer Zusammenfassung wie auch Verallgemeinerung der bestehenden Verfahren. Es obliegt dem jeweiligen Datenübermittlungsverbund, bzw. Fachverfahren, ausgehend vom eXTra Basis-Verfahren, eine auf dessen Belange zugeschnittene Ausprägung – sein spezifisches eXTra-Verfahren - zu definieren. Dieser Vorgang des Zuschnitts heißt Profilierung des eXTra Basis-Standards, das Ergebnis einer Profilierung ist ein verbund- bzw. fachspezifischer eXTra Standard.
 
  
 == Profilierung ==
@@ -87,7 +87,7 @@ Dieses Package enthält alle Klassen zum Parsen und Erzeugen von XML-Schemadatei
 
 ===	de.drv.dsrv.xtt.gui.util.tools ===
 
-Die Klasse Configurator ist für den Zugriff auf die Einstellungen, die in den *.properties-Dateien gespeichert sind, verantwortlich und enthält einige Package übergreifende Hilfsfunktionen.
+Die Klasse Configurator ist für den Zugriff auf die Einstellungen, die in den !*.properties-Dateien gespeichert sind, verantwortlich und enthält einige Package übergreifende Hilfsfunktionen.
 Für das Lesen, Schreiben und Validieren von XML-Dateien enthält die Klasse XsdXmlHelper alle notwendigen Funktionen.
 
 
