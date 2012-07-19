@@ -27,7 +27,7 @@ import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.drv.dsrv.extrastandard.namespace.components.ElementSequenceType;
 import de.drv.dsrv.extrastandard.namespace.request.TransportBody;
 import de.extra.client.core.model.ConfigFileBean;
-import de.extra.client.core.model.VersanddatenBean;
+import de.extra.client.core.model.SenderDataBean;
 
 @Named("bodyHelper")
 public class BuildBodyHelper {
@@ -44,13 +44,11 @@ public class BuildBodyHelper {
 	 * @return
 	 */
 	public TransportBody buildTransportBody(ConfigFileBean configBean,
-			VersanddatenBean versanddatenBean) {
+			SenderDataBean versanddatenBean) {
 		logger.debug("TransportBody aufbauen");
 
 		TransportBody transportBody = new TransportBody();
-
 		logger.debug("Baue TransportBody auf");
-
 		if (configBean.getContentType().equalsIgnoreCase(
 				"xcpt:Base64CharSequence")) {
 			DataType data = new DataType();

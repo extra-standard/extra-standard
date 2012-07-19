@@ -36,7 +36,7 @@ import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
 import de.extra.client.core.helper.RequestHelper;
 import de.extra.client.core.model.ConfigFileBean;
-import de.extra.client.core.model.VersanddatenBean;
+import de.extra.client.core.model.SenderDataBean;
 import de.extra.client.core.plugin.IConfigPlugin;
 import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.core.plugin.IOutputPlugin;
@@ -76,7 +76,7 @@ public class ClientCore {
 	 * @return StatusCode nach der Verarbeitung
 	 */
 	public int buildRequest() {
-		List<VersanddatenBean> versandDatenListe = dataPlugin.getVersandDaten();
+		List<SenderDataBean> versandDatenListe = dataPlugin.getSenderData();
 		ConfigFileBean configFile = configPlugin.getConfigFile();
 
 		int statusCode = STATUS_CODE_ERROR;
@@ -97,11 +97,11 @@ public class ClientCore {
 			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
 			marshaller.setProperty(Marshaller.JAXB_ENCODING, "ISO-8859-1");
 
-			VersanddatenBean versanddatenBean = null;
+			SenderDataBean versanddatenBean = null;
 
 			// Überprüfen ob ein PackageLayer benötigt wird
 			if (!configFile.isPackageLayer()) {
-				for (Iterator<VersanddatenBean> iter = versandDatenListe
+				for (Iterator<SenderDataBean> iter = versandDatenListe
 						.iterator(); iter.hasNext();) {
 					versanddatenBean = iter.next();
 

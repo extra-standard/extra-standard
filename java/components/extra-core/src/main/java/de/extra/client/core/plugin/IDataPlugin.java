@@ -20,10 +20,10 @@ package de.extra.client.core.plugin;
 
 import java.util.List;
 
-import de.extra.client.core.model.VersanddatenBean;
+import de.extra.client.core.model.SenderDataBean;
 
 public interface IDataPlugin {
 
-	public List<VersanddatenBean> getVersandDaten();
+	public List<SenderDataBean> getSenderData();
 
 }

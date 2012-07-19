@@ -27,14 +27,14 @@ import de.extra.client.core.model.CompressionPluginBean;
 import de.extra.client.core.model.DataSourcePluginBean;
 import de.extra.client.core.model.EncryptionPluginBean;
 import de.extra.client.core.model.PlugindatenBean;
-import de.extra.client.core.model.VersanddatenBean;
+import de.extra.client.core.model.SenderDataBean;
 import de.extra.client.core.plugin.IDataPlugin;
 
 public class DataPlugin implements IDataPlugin {
 
 	@Override
-	public List<VersanddatenBean> getVersandDaten() {
-		List<VersanddatenBean> versanddatenList = new ArrayList<VersanddatenBean>();
+	public List<SenderDataBean> getSenderData() {
+		List<SenderDataBean> versanddatenList = new ArrayList<SenderDataBean>();
 		versanddatenList.add(loadVersanddaten());
 		return versanddatenList;
 	}
@@ -44,9 +44,9 @@ public class DataPlugin implements IDataPlugin {
 	 * 
 	 * @return Versanddatenbean
 	 */
-	private VersanddatenBean loadVersanddaten() {
+	private SenderDataBean loadVersanddaten() {
 
-		VersanddatenBean vb = new VersanddatenBean();
+		SenderDataBean vb = new SenderDataBean();
 		CompressionPluginBean compressionPlugin = new CompressionPluginBean();
 		EncryptionPluginBean encryptionPlugin = new EncryptionPluginBean();
 		DataSourcePluginBean dataSourcePlugin = new DataSourcePluginBean();

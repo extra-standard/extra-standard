@@ -20,10 +20,10 @@ package de.extra.client.plugins.dataplugin.interfaces;
 
 import java.util.List;
 
-import de.extra.client.core.model.VersanddatenBean;
+import de.extra.client.core.model.SenderDataBean;
 
 public interface IDataPluginController {
 
-	public List<VersanddatenBean> processData();
+	public List<SenderDataBean> processData();
 
 }
