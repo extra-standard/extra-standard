@@ -20,10 +20,10 @@ package de.extra.client.plugins.queryplugin.interfaces;
 
 import java.util.List;
 
-import de.extra.client.core.model.VersanddatenBean;
+import de.extra.client.core.model.SenderDataBean;
 
 public interface IQueryPluginController {
 
-	public List<VersanddatenBean> processQuery();
+	public List<SenderDataBean> processQuery();
 
 }

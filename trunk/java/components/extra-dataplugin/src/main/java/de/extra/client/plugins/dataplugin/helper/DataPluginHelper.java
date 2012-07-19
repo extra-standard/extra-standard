@@ -38,7 +38,7 @@ import de.extra.client.core.model.CompressionPluginBean;
 import de.extra.client.core.model.DataSourcePluginBean;
 import de.extra.client.core.model.EncryptionPluginBean;
 import de.extra.client.core.model.PlugindatenBean;
-import de.extra.client.core.model.VersanddatenBean;
+import de.extra.client.core.model.SenderDataBean;
 import de.extra.client.plugins.dataplugin.auftragssatz.AuftragssatzType;
 import de.extra.client.plugins.dataplugin.auftragssatz.CompressionInfoType;
 import de.extra.client.plugins.dataplugin.auftragssatz.DataSourceInfoType;
@@ -167,7 +167,7 @@ public class DataPluginHelper {
 	 *            Auftragssatz
 	 * @return VersanddatenBean
 	 */
-	public VersanddatenBean fuelleVersandatenBean(VersanddatenBean vdb,
+	public SenderDataBean fuelleVersandatenBean(SenderDataBean vdb,
 			AuftragssatzType auftragssatz) {
 		CompressionPluginBean compressionPlugin = new CompressionPluginBean();
 		EncryptionPluginBean encryptionPlugin = new EncryptionPluginBean();

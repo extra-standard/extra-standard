@@ -22,11 +22,11 @@ import java.util.List;
 
 import de.drv.dsrv.extrastandard.namespace.messages.DataRequest;
 
-public class VersanddatenBean {
+/**
+ * Bean für die Nutzdaten.
+ */
+public class SenderDataBean {
 
-	/**
-	 * Bean fuer die Nutzdaten
-	 */
 	private String requestId;
 
 	private byte[] nutzdaten;

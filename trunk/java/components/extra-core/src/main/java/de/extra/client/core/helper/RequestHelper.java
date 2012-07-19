@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
 import de.extra.client.core.model.ConfigFileBean;
-import de.extra.client.core.model.VersanddatenBean;
+import de.extra.client.core.model.SenderDataBean;
 
 @Named("requestHelper")
 public class RequestHelper {
@@ -53,7 +53,7 @@ public class RequestHelper {
 	 *            Enthält alle Informationen zum den Versandinformationen
 	 * @return JaxB-Objekt XMLTransport
 	 */
-	public XMLTransport buildRequest(VersanddatenBean versanddatenBean,
+	public XMLTransport buildRequest(SenderDataBean versanddatenBean,
 			ConfigFileBean configBean) {
 
 		XMLTransport request = new XMLTransport();

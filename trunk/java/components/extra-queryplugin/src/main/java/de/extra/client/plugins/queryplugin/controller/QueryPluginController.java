@@ -26,7 +26,7 @@ import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import de.extra.client.core.model.VersanddatenBean;
+import de.extra.client.core.model.SenderDataBean;
 import de.extra.client.plugins.queryplugin.helper.QueryHelper;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 
@@ -47,9 +47,9 @@ public class QueryPluginController implements IQueryPluginController {
 	 * Controller-Klasse zum Aufbau der Query.
 	 */
 	@Override
-	public List<VersanddatenBean> processQuery() {
-		List<VersanddatenBean> versanddatenBeanList = new ArrayList<VersanddatenBean>();
-		VersanddatenBean versanddatenBean = new VersanddatenBean();
+	public List<SenderDataBean> processQuery() {
+		List<SenderDataBean> versanddatenBeanList = new ArrayList<SenderDataBean>();
+		SenderDataBean versanddatenBean = new SenderDataBean();
 
 		// Erzeugen der Query
 		versanddatenBean.setDataRequest(queryHelper.createQuery(startId,

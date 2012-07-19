@@ -27,7 +27,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import de.extra.client.core.model.VersanddatenBean;
+import de.extra.client.core.model.SenderDataBean;
 import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 
@@ -47,7 +47,7 @@ public class QueryPlugin implements IDataPlugin {
 	private static Logger logger = Logger.getLogger(QueryPlugin.class);
 
 	@Override
-	public List<VersanddatenBean> getVersandDaten() {
+	public List<SenderDataBean> getSenderData() {
 
 		PropertyConfigurator.configureAndWatch(LOG_4_J_FILE);
 		logger.info("Start des Versands");

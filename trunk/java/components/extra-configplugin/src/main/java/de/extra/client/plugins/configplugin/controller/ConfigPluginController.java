@@ -97,7 +97,7 @@ public class ConfigPluginController {
 		}
 
 		if (logger.isDebugEnabled()) {
-			logger.debug("Fuellen der Versandinformationen");
+			logger.debug("Füllen der Versandinformationen");
 
 		}
 
