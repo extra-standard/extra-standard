@@ -111,7 +111,7 @@ public class ProfilHelper {
 			// Absendername
 			cfb.setAbsName(versandMap.get("absenderName"));
 
-			logger.debug("Setzen der Empf�ngerinformationen");
+			logger.debug("Setzen der Empfängerinformationen");
 
 			// Typ der Empf�ngerinformationen
 			cfb.setEmpfClass(versandMap.get("empfaengerClass"));

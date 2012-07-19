@@ -42,7 +42,7 @@ public class ConfigPlugin implements IConfigPlugin {
 	 */
 	@Override
 	public ConfigFileBean getConfigFile() {
-		logger.info("Aufruf der Verarbeitung...");
+		logger.info("Aufruf der Verarbeitung");
 		return configPluginController.processConfigFile();
 	}
 }
