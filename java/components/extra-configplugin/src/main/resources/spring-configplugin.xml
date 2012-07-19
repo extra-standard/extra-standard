@@ -11,23 +11,6 @@
 
 	<context:component-scan base-package="de.extra.client.plugins.configplugin" />
 
-	<!-- This does not work, don't know why...
-	<util:map id="versandMap" map-class="java.util.HashMap<String, String>">
-		<entry key="testIndicator" value="${testIndicator}" />
-		<entry key="absenderClass" value="${absenderClass}" />
-		<entry key="absenderBbnr" value="${absenderBbnr}" />
-		<entry key="absenderName" value="${absenderName}" />
-		<entry key="empfaengerClass" value="${empfaengerClass}" />
-		<entry key="empfaengerBbnr" value="${empfaengerBbnr}" />
-		<entry key="empfaengerName" value="${empfaengerName}" />
-		<entry key="productName" value="${productName}" />
-		<entry key="productManuf" value="${productManuf}" />
-		<entry key="procedure" value="${procedure}" />
-		<entry key="dataType" value="${dataType}" />
-		<entry key="scenario" value="${scenario}" />
-	</util:map>
-    -->
-
 	<bean id="versandMap" class="org.springframework.beans.factory.config.MapFactoryBean"
 		p:targetMapClass="java.util.HashMap">
 		<property name="sourceMap">
