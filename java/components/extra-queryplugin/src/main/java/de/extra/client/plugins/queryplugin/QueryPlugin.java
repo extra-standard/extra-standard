@@ -20,6 +20,8 @@ package de.extra.client.plugins.queryplugin;
 
 import java.util.List;
 
+import javax.inject.Named;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.ApplicationContext;
@@ -29,6 +31,7 @@ import de.extra.client.core.model.VersanddatenBean;
 import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 
+@Named("queryPlugin")
 public class QueryPlugin implements IDataPlugin {
 
 	/**

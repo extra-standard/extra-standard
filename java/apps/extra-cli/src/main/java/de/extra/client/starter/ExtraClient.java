@@ -63,8 +63,8 @@ public class ExtraClient {
 		// Steuerung an Controller übergeben
 		logger.info("Beginn der Verarbeitung");
 
-		ClientCore clientCore = (ClientCore) applicationContext
-				.getBean("clientCore");
+		ClientCore clientCore = applicationContext.getBean("clientCore",
+				ClientCore.class);
 
 		return clientCore.buildRequest();
 	}

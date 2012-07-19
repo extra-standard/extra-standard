@@ -21,6 +21,8 @@ package de.extra.client.core.helper;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.inject.Named;
+
 import de.drv.dsrv.extrastandard.namespace.components.AnyPlugInContainerType;
 import de.drv.dsrv.extrastandard.namespace.plugins.CompressionType;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataTransforms;
@@ -36,10 +38,11 @@ import de.extra.client.core.model.PlugindatenBean;
 import de.extra.client.core.model.SignaturePluginBean;
 import de.extra.client.core.model.SignaturePluginHelper;
 
+@Named("pluginHelper")
 public class BuildPluginHelper {
 
 	/**
-	 * Funktion zum Aufbau der Plugin-Informationen
+	 * Funktion zum Aufbau der Plugin-Informationen.
 	 * 
 	 * @param pluginListe
 	 *            Liste mit den PluginBeans
@@ -47,18 +50,15 @@ public class BuildPluginHelper {
 	 */
 	public AnyPlugInContainerType buildPluginContainer(
 			List<PlugindatenBean> pluginListe) {
-
 		AnyPlugInContainerType pluginContainer = new AnyPlugInContainerType();
 		DataTransforms dataTransforms = new DataTransforms();
 
-		// Durchlaufen der Liste und bef�llen des Plugin-Bereichs
-
-		for (Iterator i = pluginListe.iterator(); i.hasNext();) {
-			PlugindatenBean pluginBean = (PlugindatenBean) i.next();
+		// Durchlaufen der Liste und befüllen des Plugin-Bereichs
+		for (Iterator<PlugindatenBean> i = pluginListe.iterator(); i.hasNext();) {
+			PlugindatenBean pluginBean = i.next();
 
 			// Pruefe ob gewaehlte Bean eine CompressionPluginBean ist und
-			// befuelle
-			// mit Informationen
+			// befuelle mit Informationen
 			if (pluginBean instanceof CompressionPluginBean) {
 				CompressionPluginHelper compPluginHelper = new CompressionPluginHelper();
 
@@ -69,11 +69,8 @@ public class BuildPluginHelper {
 			}
 
 			// Pruefe ob gewaehlte Bean eine EncryptionPluginBean ist und
-			// befuelle
-			// mit Informationen
-
+			// befuelle mit Informationen
 			if (pluginBean instanceof EncryptionPluginBean) {
-
 				EncryptionPluginHelper encPluginHelper = new EncryptionPluginHelper();
 
 				dataTransforms.getEncryption().add(
@@ -84,31 +81,23 @@ public class BuildPluginHelper {
 
 			// Pruefe ob gewaehlte Bean eine SignaturePluginBean ist und
 			// befuelle mit Informationen
-
 			if (pluginBean instanceof SignaturePluginBean) {
-
 				SignaturePluginHelper sigPluginHelper = new SignaturePluginHelper();
 
 				dataTransforms.getSignature().add(
 						(SignatureType) sigPluginHelper
 								.getTransformElement(pluginBean));
-
 			}
 
 			// Pruefe ob gewaehlte Bean eine DataSourcePluginBean ist und
-			// befuelle
-			// mit Informationen
-
+			// befuelle mit Informationen
 			if (pluginBean instanceof DataSourcePluginBean) {
-
 				DataSourcePluginHelper dataSourcePluginHelper = new DataSourcePluginHelper();
 
 				pluginContainer.getAny().add(
 						dataSourcePluginHelper.getPluginElement(pluginBean));
-
 			}
 		}
-
 		pluginContainer.getAny().add(dataTransforms);
 
 		return pluginContainer;

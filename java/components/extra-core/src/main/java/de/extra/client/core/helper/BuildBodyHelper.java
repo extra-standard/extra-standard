@@ -18,6 +18,8 @@
  */
 package de.extra.client.core.helper;
 
+import javax.inject.Named;
+
 import org.apache.log4j.Logger;
 
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
@@ -27,13 +29,13 @@ import de.drv.dsrv.extrastandard.namespace.request.TransportBody;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.VersanddatenBean;
 
+@Named("bodyHelper")
 public class BuildBodyHelper {
 
 	private static Logger logger = Logger.getLogger(BuildBodyHelper.class);
 
 	/**
-	 * 
-	 * Funktion zum Aufbau des Transportbodys
+	 * Funktion zum Aufbau des Transportbodys.
 	 * 
 	 * @param configBean
 	 *            ConfigFileBean mit den Informationen aus der Profildatei
@@ -43,7 +45,6 @@ public class BuildBodyHelper {
 	 */
 	public TransportBody buildTransportBody(ConfigFileBean configBean,
 			VersanddatenBean versanddatenBean) {
-
 		logger.debug("TransportBody aufbauen");
 
 		TransportBody transportBody = new TransportBody();
@@ -52,7 +53,6 @@ public class BuildBodyHelper {
 
 		if (configBean.getContentType().equalsIgnoreCase(
 				"xcpt:Base64CharSequence")) {
-
 			DataType data = new DataType();
 			Base64CharSequenceType base64CharSequence = new Base64CharSequenceType();
 
@@ -64,23 +64,19 @@ public class BuildBodyHelper {
 			data.setBase64CharSequence(base64CharSequence);
 
 			transportBody.setData(data);
-
 		}
+
 		if (configBean.getContentType()
 				.equalsIgnoreCase("xcpt:ElementSequence")) {
-
 			DataType data = new DataType();
 			ElementSequenceType elementSequence = new ElementSequenceType();
 
 			elementSequence.getAny().add(versanddatenBean.getDataRequest());
-
 			data.setElementSequence(elementSequence);
-
 			transportBody.setData(data);
-
 		}
 
-		// TODO implementieren weiterer M�glichkeiten nach dem aktuellen
+		// TODO implementieren weiterer Möglichkeiten nach dem aktuellen
 		// eXTraSchema
 
 		return transportBody;

@@ -20,9 +20,12 @@ package de.extra.client.core.helper;
 
 import java.util.Calendar;
 
+import javax.inject.Named;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.apache.log4j.Logger;
 
 import de.drv.dsrv.extrastandard.namespace.components.ApplicationType;
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
@@ -33,11 +36,13 @@ import de.drv.dsrv.extrastandard.namespace.components.TextType;
 import de.drv.dsrv.extrastandard.namespace.request.TransportHeader;
 import de.extra.client.core.model.ConfigFileBean;
 
+@Named("headerHelper")
 public class BuildHeaderHelper {
 
+	private static Logger logger = Logger.getLogger(BuildHeaderHelper.class);
+
 	/**
-	 * 
-	 * Funktion zum aufbau des Headers
+	 * Funktion zum aufbau des Headers.
 	 * 
 	 * @param configFile
 	 *            ConfigFileBean mit den Informationen aus der ProfilDatei
@@ -47,25 +52,20 @@ public class BuildHeaderHelper {
 	 */
 	public TransportHeader baueHeader(ConfigFileBean configFile,
 			String requestID) {
-
 		TransportHeader header = new TransportHeader();
-
 		String testindicator = "";
 
-		// Objects f�r Senderinformation
-
+		// Objects für Senderinformation
 		SenderType sender = new SenderType();
 		ClassifiableIDType senderId = new ClassifiableIDType();
 		TextType senderName = new TextType();
 
-		// Objects f�r Receiverinformation
-
+		// Objects für Receiverinformation
 		ReceiverType receiver = new ReceiverType();
 		ClassifiableIDType receiverId = new ClassifiableIDType();
 		TextType receiverName = new TextType();
 
-		// Objects f�r RequestDetails
-
+		// Objects für RequestDetails
 		RequestDetailsType requestDetails = new RequestDetailsType();
 		ClassifiableIDType requestId = new ClassifiableIDType();
 		ApplicationType application = new ApplicationType();
@@ -73,66 +73,49 @@ public class BuildHeaderHelper {
 		ClassifiableIDType registrationId = new ClassifiableIDType();
 
 		// Setting Testindicator
-
 		if (configFile.isTestIndicator()) {
 			// if testindicator is set value is set to "NONE". Message will not
-			// be
-			// processed in livesystem
+			// be processed in livesystem
 			testindicator = "http://extra-standard.de/test/NONE";
-
 		} else {
 			testindicator = "http://extra-standard.de/test/PROCESS";
-
 		}
 
 		header.setTestIndicator(testindicator);
 
 		// Setting Senderinformation
-
 		senderId.setClazz("Betriebsnummer");
 		senderId.setValue(configFile.getAbsBbnr());
-
 		senderName.setValue(configFile.getAbsName());
-
 		sender.setSenderID(senderId);
 		sender.setName(senderName);
 
 		// Setting Receiverinformation
-
 		receiverId.setClazz("Betriebsnummer");
 		receiverId.setValue(configFile.getEmpfBbnr());
-
 		receiverName.setValue(configFile.getEmpfName());
-
 		receiver.setReceiverID(receiverId);
 		receiver.setName(receiverName);
 
 		// Setting RequestDetails
-
 		requestId.setClazz("0");
 		requestId.setValue(requestID);
-
 		requestDetails.setRequestID(requestId);
 		requestDetails.setTimeStamp(CreateCurrentTimestamp());
 
 		// Applicationinformation
-
 		product.setValue(configFile.getProductName());
-
 		application.setManufacturer(configFile.getProductManuf());
 		application.setProduct(product);
 		application.setRegistrationID(registrationId);
-
 		requestDetails.setApplication(application);
 
 		// Controllerinformation
-
 		requestDetails.setProcedure(configFile.getProcedure());
 		requestDetails.setDataType(configFile.getDataType());
 		requestDetails.setScenario(configFile.getScenario());
 
 		// Assembling Header
-
 		header.setSender(sender);
 		header.setReceiver(receiver);
 		header.setRequestDetails(requestDetails);
@@ -142,7 +125,7 @@ public class BuildHeaderHelper {
 
 	/**
 	 * 
-	 * Erstellen des aktuellen Timestamps
+	 * Erstellen des aktuellen Timestamps.
 	 * 
 	 * @return XMLGregorianCalendar mit aktuellem Datum
 	 */
@@ -152,7 +135,7 @@ public class BuildHeaderHelper {
 		try {
 			timestamp = DatatypeFactory.newInstance().newXMLGregorianCalendar();
 		} catch (DatatypeConfigurationException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		Calendar now = Calendar.getInstance();

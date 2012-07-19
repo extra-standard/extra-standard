@@ -18,6 +18,8 @@
  */
 package de.extra.client.plugins.configplugin;
 
+import javax.inject.Named;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.ApplicationContext;
@@ -27,6 +29,7 @@ import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.plugin.IConfigPlugin;
 import de.extra.client.plugins.configplugin.controller.ConfigPluginController;
 
+@Named("configPlugin")
 public class ConfigPlugin implements IConfigPlugin {
 
 	/**
