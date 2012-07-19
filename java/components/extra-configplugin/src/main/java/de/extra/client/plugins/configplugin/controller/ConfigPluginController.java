@@ -24,38 +24,34 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.schema.ProfilkonfigurationType;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.plugins.configplugin.ConfigConstants;
 import de.extra.client.plugins.configplugin.helper.ProfilHelper;
 
+@Named("configController")
 public class ConfigPluginController {
-
-	private final String profilDatei;
-
-	private final ProfilHelper profilHelper;
 
 	Logger logger = Logger.getLogger(ConfigPluginController.class);
 
-	/**
-	 * Konstruktor fuer das laden der Informationen aus der Spring-Config
-	 * 
-	 * @param profilDatei
-	 *            Pfad zur Profildatei
-	 * @param profilHelper
-	 *            Objekt vom Typ ProfilHelper
-	 */
-	public ConfigPluginController(final String profilDatei,
-			final ProfilHelper profilHelper) {
-		super();
-		this.profilDatei = getAbsoluteFilename(profilDatei);
-		this.profilHelper = profilHelper;
+	private String profileFile;
+
+	@Inject
+	@Named("profilHelper")
+	private ProfilHelper profilHelper;
+
+	@Value("${profilOrdner}")
+	public void setProfileFile(String profileFile) {
+		this.profileFile = getAbsoluteFilename(profileFile);
 	}
 
 	public String getAbsoluteFilename(String profileFile) {
@@ -70,25 +66,25 @@ public class ConfigPluginController {
 	}
 
 	/**
-	 * Verarbeitung der Konfigurations-Files
+	 * Verarbeitung der Konfigurations-Files.
 	 * 
 	 * @return ConfigFileBean
 	 */
 	public ConfigFileBean processConfigFile() {
-		File profilFile = new File(profilDatei);
+		File profilFile = new File(profileFile);
 		FileInputStream in = null;
 		ConfigFileBean cfb = null;
 
 		// Laden der Profildatei
 		try {
-			in = new FileInputStream(profilDatei);
+			in = new FileInputStream(profileFile);
 
 			if (logger.isDebugEnabled()) {
 				logger.debug("Unmarshaling der Profildatei");
 			}
 
 			// Unmarshalling der Profildatei
-			ProfilkonfigurationType profilConfig = unmarshalConfig(profilDatei);
+			ProfilkonfigurationType profilConfig = unmarshalConfig(profileFile);
 			cfb = profilHelper.configFileBeanLoader(profilConfig.getElement());
 		} catch (FileNotFoundException e) {
 			logger.error("ProfilDatei konnte nicht gefunden werden", e);
@@ -123,7 +119,7 @@ public class ConfigPluginController {
 	}
 
 	/**
-	 * Unmarshalling der Profildatei
+	 * Unmarshalling der Profildatei.
 	 * 
 	 * @param dateiName
 	 *            Vollstaendiger Pfad der Profildatei

@@ -18,12 +18,10 @@
  */
 package de.extra.client.plugins.configplugin;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.plugin.IConfigPlugin;
@@ -32,15 +30,9 @@ import de.extra.client.plugins.configplugin.controller.ConfigPluginController;
 @Named("configPlugin")
 public class ConfigPlugin implements IConfigPlugin {
 
-	/**
-	 * Pfad und Dateiname in der die SpringConfig.xml liegt
-	 */
-	private static String SPRING_XML_FILE_PATH = "spring-configpluginconfig.xml";
-
-	/**
-	 * Dateipfad der log4jProperties
-	 */
-	private static final String LOG_4_J_FILE = "log4j.properties";
+	@Inject
+	@Named("configController")
+	private ConfigPluginController configPluginController;
 
 	private static Logger logger = Logger.getLogger(ConfigPlugin.class);
 
@@ -50,19 +42,7 @@ public class ConfigPlugin implements IConfigPlugin {
 	 */
 	@Override
 	public ConfigFileBean getConfigFile() {
-		// Laden des Log4Files
-		PropertyConfigurator.configureAndWatch(LOG_4_J_FILE);
-		logger.info("Start des Auslesens der Config-Datei");
-
-		// Spring Beans laden.
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-				SPRING_XML_FILE_PATH);
-
-		// Instanziieren der Bean
-		ConfigPluginController controller = (ConfigPluginController) applicationContext
-				.getBean("configController");
-
-		// Aufruf der Verarbeitung
-		return controller.processConfigFile();
+		logger.info("Aufruf der Verarbeitung...");
+		return configPluginController.processConfigFile();
 	}
 }

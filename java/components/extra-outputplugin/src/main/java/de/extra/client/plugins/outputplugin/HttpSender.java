@@ -21,9 +21,12 @@ package de.extra.client.plugins.outputplugin;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.xml.bind.JAXBElement;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.components.FlagCodeType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
@@ -37,31 +40,27 @@ import de.extra.client.plugins.outputplugin.transport.IExtraTransport;
 import de.extra.client.plugins.outputplugin.utils.IResponseSaver;
 import de.extra.client.plugins.outputplugin.utils.PropertiesHelperException;
 
+@Named("httpBean")
 public class HttpSender {
+
+	private static Logger logger = Logger.getLogger(HttpSender.class);
 
 	private IExtraTransport client;
 
 	XMLTransport extraResponse = null;
 
-	private final String serverSettingsLocation;
+	@Value("${serverSettingLoc}")
+	private String serverSettingsLocation;
 
-	private final String senderSettingsLocation;
+	@Value("${senderSettingLoc}")
+	private String senderSettingsLocation;
 
-	private final IResponseSaver fileSystemHelper;
-
-	private static Logger logger = Logger.getLogger(HttpSender.class);
-
-	public HttpSender(final String serverSettingsLocation,
-			final String senderSettingsLocation,
-			final IResponseSaver fileSystemHelper) {
-		super();
-		this.serverSettingsLocation = serverSettingsLocation;
-		this.senderSettingsLocation = senderSettingsLocation;
-		this.fileSystemHelper = fileSystemHelper;
-	}
+	@Inject
+	@Named("fileSystemHelper")
+	private IResponseSaver fileSystemHelper;
 
 	/**
-	 * Verarbeiten des Requests
+	 * Verarbeiten des Requests.
 	 * 
 	 * @param request
 	 *            eXTra-Request aus der CoreLib
@@ -89,10 +88,8 @@ public class HttpSender {
 				logger.error("Fehler beim initialisieren des Transports", e);
 			}
 
-			JAXBElement element = client.senden(request);
-
+			JAXBElement<?> element = client.senden(request);
 			extraResponse = (XMLTransport) element.getValue();
-
 		} catch (PropertiesHelperException e) {
 			logger.error("Fehler beim Verarbeiten der Properties", e);
 			returnCode = false;
@@ -100,7 +97,6 @@ public class HttpSender {
 		} catch (ExtraTransportException e) {
 			logger.error("Fehler beim Versand der eXTra-Nachricht", e);
 			returnCode = false;
-
 		}
 
 		if (returnCode) {
@@ -128,7 +124,6 @@ public class HttpSender {
 				logger.debug("Verarbeitung nicht erfolgreich");
 
 				returnCode = false;
-
 			}
 		}
 

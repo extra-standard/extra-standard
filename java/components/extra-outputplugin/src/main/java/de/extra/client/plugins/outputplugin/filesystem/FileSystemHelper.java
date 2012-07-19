@@ -10,7 +10,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.inject.Named;
+
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
@@ -20,48 +23,36 @@ import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.plugins.outputplugin.utils.IResponseSaver;
 import de.extra.client.plugins.outputplugin.utils.OutputPluginHelper;
 
+@Named("fileSystemHelper")
 public class FileSystemHelper implements IResponseSaver, Serializable {
-
-	private final String eingangOrdner;
-
-	private final String reportOrdner;
-
-	public FileSystemHelper(final String eingangOrdner,
-			final String reportOrdner) {
-		super();
-		this.eingangOrdner = eingangOrdner;
-		this.reportOrdner = reportOrdner;
-	}
 
 	private static final long serialVersionUID = 1607616003288362662L;
 
 	private static Logger logger = Logger.getLogger(FileSystemHelper.class);
 
+	@Value("${eingangOrdner}")
+	private String eingangOrdner;
+
+	@Value("${reportOrdner}")
+	private String reportOrdner;
+
 	@Override
 	public boolean processResponse(XMLTransport extraResponse) {
-
 		pruefeVerzeichnis();
 
 		List<Package> packageList = extraResponse.getTransportBody()
 				.getPackage();
-
 		if (!OutputPluginHelper.isBodyEmpty(extraResponse.getTransportBody())) {
-
 			if (packageList == null || packageList.size() == 0) {
 				String responseId = extraResponse.getTransportHeader()
 						.getResponseDetails().getResponseID().getValue();
-
 				logger.debug("Keine Pakete vorhanden");
-
 				byte[] responseBody = extraResponse.getTransportBody()
 						.getData().getBase64CharSequence().getValue();
 
 				if (saveBodyToFilesystem(responseId, responseBody)) {
-
 					logger.debug("Speicheren des Body auf Filesystem erfolgreich");
-
 				}
-
 			} else {
 				for (Iterator<Package> iter = packageList.iterator(); iter
 						.hasNext();) {
@@ -70,19 +61,16 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 					String responseId = extraPackage.getPackageHeader()
 							.getResponseDetails().getResponseID().getValue();
 					DataType data = new DataType();
-
 					data = extraPackage.getPackageBody().getData();
 					byte[] packageBody = null;
-					if (data.getBase64CharSequence() != null) {
 
+					if (data.getBase64CharSequence() != null) {
 						packageBody = data.getBase64CharSequence().getValue();
 
 					} else {
 						if (data.getCharSequence() != null) {
-
 							packageBody = data.getCharSequence().getValue()
 									.getBytes();
-
 						}
 					}
 
@@ -94,12 +82,10 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 							}
 						}
 					} else {
-
 						logger.error("PackageBody nicht gefüllt");
 
 					}
 				}
-
 			}
 		} else {
 
@@ -145,6 +131,7 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 		if (logger.isTraceEnabled()) {
 			logger.trace("Dateiname: '" + dateiName + "'");
 		}
+
 		return erfolgreichGespeichert;
 	}
 
@@ -164,7 +151,6 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 		FlagType flagItem = null;
 
 		if (flagList.size() >= 1) {
-
 			flagItem = flagList.get(0);
 		}
 
@@ -172,7 +158,6 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 		StringBuffer sb;
 
 		try {
-
 			fw = new FileWriter(reportFile);
 
 			sb = new StringBuffer();
@@ -189,18 +174,14 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 			sb.append(flagItem.getText().getValue());
 
 			fw.write(sb.toString());
-
 		} catch (IOException e) {
 			logger.error("Fehler beim Schreiben des Reports", e);
 		} finally {
-
 			try {
 				fw.close();
-
 			} catch (IOException e) {
 				logger.error("Fehler beim schließen das FileWriters");
 			}
-
 		}
 
 		if (logger.isTraceEnabled()) {
@@ -212,9 +193,7 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 
 	private String baueDateiname() {
 		Date now = Calendar.getInstance().getTime();
-
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HHmm");
-
 		sdf.format(now);
 
 		return sdf.format(now);
@@ -225,13 +204,11 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 		File reportsOrdner = new File(reportOrdner);
 
 		if (!eingangsOrdner.exists()) {
-
 			logger.debug("Eingangsordner anlegen");
 
 			eingangsOrdner.mkdir();
 		}
 		if (!reportsOrdner.exists()) {
-
 			logger.debug("Reportordner anlegen");
 
 			reportsOrdner.mkdir();

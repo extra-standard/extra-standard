@@ -21,43 +21,40 @@ package de.extra.client.plugins.queryplugin.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.springframework.beans.factory.annotation.Value;
+
 import de.extra.client.core.model.VersanddatenBean;
 import de.extra.client.plugins.queryplugin.helper.QueryHelper;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 
+@Named("queryController")
 public class QueryPluginController implements IQueryPluginController {
 
-	private final QueryHelper queryHelper;
+	@Inject
+	@Named("queryHelper")
+	private QueryHelper queryHelper;
 
-	private final String startId;
+	@Value("${startId}")
+	private String startId;
 
-	private final String packageLimit;
-
-	public QueryPluginController(final QueryHelper queryHelper,
-			final String startId, final String packageLimit) {
-		super();
-		this.queryHelper = queryHelper;
-		this.startId = startId;
-		this.packageLimit = packageLimit;
-	}
+	@Value("${packageLimit}")
+	private String packageLimit;
 
 	/**
-	 * Controller-Klasse zum Aufbau der Query
+	 * Controller-Klasse zum Aufbau der Query.
 	 */
 	@Override
 	public List<VersanddatenBean> processQuery() {
-
 		List<VersanddatenBean> versanddatenBeanList = new ArrayList<VersanddatenBean>();
-
 		VersanddatenBean versanddatenBean = new VersanddatenBean();
 
 		// Erzeugen der Query
-
 		versanddatenBean.setDataRequest(queryHelper.createQuery(startId,
 				packageLimit));
-
-		// Hinzuf�gen der Bean mit der Query
-
+		// Hinzufügen der Bean mit der Query
 		versanddatenBeanList.add(versanddatenBean);
 
 		return versanddatenBeanList;

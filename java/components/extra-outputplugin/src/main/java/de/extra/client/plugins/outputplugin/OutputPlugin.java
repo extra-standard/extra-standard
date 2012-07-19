@@ -18,41 +18,25 @@
  */
 package de.extra.client.plugins.outputplugin;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import de.extra.client.core.plugin.IOutputPlugin;
 
 public class OutputPlugin implements IOutputPlugin {
 
-	/**
-	 * Pfad und Dateiname in der die SpringConfig.xml liegt
-	 */
-	private static String SPRING_XML_FILE_PATH = "spring-outputpluginconfig.xml";
-
-	/**
-	 * Dateipfad der log4jProperties
-	 */
-	private static final String LOG_4_J_FILE = "log4j.properties";
-
 	private static Logger logger = Logger.getLogger(OutputPlugin.class);
+
+	@Inject
+	@Named("httpBean")
+	private HttpSender httpSender;
 
 	@Override
 	public boolean outputData(String request) {
-
-		PropertyConfigurator.configureAndWatch(LOG_4_J_FILE);
-		logger.info("Start des Versands");
-
-		// Spring Beans laden.
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-				SPRING_XML_FILE_PATH);
-
-		HttpSender sender = (HttpSender) applicationContext.getBean("httpBean");
-
+		logger.info("Start des Versands...");
 		request = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + request;
-
-		return sender.processOutput(request);
+		return httpSender.processOutput(request);
 	}
 }

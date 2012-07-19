@@ -31,7 +31,7 @@ import de.extra.client.core.model.VersanddatenBean;
 import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 
-@Named("queryPlugin")
+@Named("dataPlugin")
 public class QueryPlugin implements IDataPlugin {
 
 	/**

@@ -22,32 +22,25 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+import javax.inject.Named;
+
 import org.apache.log4j.Logger;
 
 import de.drv.dsrv.schema.ElementType;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.plugins.configplugin.ConfigConstants;
 
+@Named("profilHelper")
 public class ProfilHelper {
-
-	private final Map<String, String> versandMap;
 
 	private final Logger logger = Logger.getLogger(ProfilHelper.class);
 
-	/**
-	 * 
-	 * Helper-Klasse fuer die Verarbeitung der Profildatei
-	 * 
-	 * @param versandMap
-	 *            Map mit den festen Parametern aus der Properties-Datei
-	 */
-	public ProfilHelper(final Map<String, String> versandMap) {
-		super();
-		this.versandMap = versandMap;
-	}
+	@Resource(name = "versandMap")
+	private Map<String, String> versandMap;
 
 	/**
-	 * Funktion zum befuellen der ConfigFileBean
+	 * Funktion zum befüllen der ConfigFileBean.
 	 * 
 	 * @param profilListe
 	 *            JaxB-Element der Profildatei
@@ -56,8 +49,9 @@ public class ProfilHelper {
 	public ConfigFileBean configFileBeanLoader(List<ElementType> profilListe) {
 		ConfigFileBean cfb = new ConfigFileBean();
 
-		for (Iterator iter = profilListe.iterator(); iter.hasNext();) {
-			ElementType element = (ElementType) iter.next();
+		for (Iterator<ElementType> iter = profilListe.iterator(); iter
+				.hasNext();) {
+			ElementType element = iter.next();
 
 			// Ermitteln der Content-Art
 			if (element.getElternelement() != null && element.getName() != null) {
@@ -87,7 +81,7 @@ public class ProfilHelper {
 	}
 
 	/**
-	 * Fuellen der Versandinformationen in die ConfigFileBean
+	 * Fuellen der Versandinformationen in die ConfigFileBean.
 	 * 
 	 * @param cfb
 	 *            Vorgefuellte ConfigFileBean
@@ -142,14 +136,14 @@ public class ProfilHelper {
 			// Scenario
 			cfb.setScenario(versandMap.get("scenario"));
 		} catch (Exception e) {
-			logger.error("Fehler beim Bef�llen der Versandinformationen", e);
+			logger.error("Fehler beim Befüllen der Versandinformationen", e);
 		}
 
 		return cfb;
 	}
 
 	/**
-	 * Generiert zur Zeit aus dem TimeStamp die RequestId
+	 * Generiert zur Zeit aus dem TimeStamp die RequestId.
 	 * 
 	 * @return requestId
 	 */

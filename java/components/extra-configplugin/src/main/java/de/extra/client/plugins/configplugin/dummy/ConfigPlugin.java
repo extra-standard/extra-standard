@@ -24,7 +24,7 @@ import de.extra.client.core.plugin.IConfigPlugin;
 public class ConfigPlugin implements IConfigPlugin {
 
 	/**
-	 * Dummy zum Testen der Anwendung
+	 * Dummy zum Testen der Anwendung.
 	 */
 	@Override
 	public ConfigFileBean getConfigFile() {

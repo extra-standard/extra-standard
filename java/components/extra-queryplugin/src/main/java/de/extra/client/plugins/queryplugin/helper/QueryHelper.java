@@ -20,6 +20,7 @@ package de.extra.client.plugins.queryplugin.helper;
 
 import java.math.BigInteger;
 
+import javax.inject.Named;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
@@ -29,10 +30,11 @@ import de.drv.dsrv.extrastandard.namespace.messages.DataRequestArgument;
 import de.drv.dsrv.extrastandard.namespace.messages.Operand;
 import de.drv.dsrv.extrastandard.namespace.messages.Query;
 
+@Named("queryHelper")
 public class QueryHelper {
 
 	/**
-	 * Hilfsklasse zum Aufbau des DataRequests
+	 * Hilfsklasse zum Aufbau des DataRequests.
 	 * 
 	 * @param startId
 	 *            StartID aus der Property-Datei

@@ -29,7 +29,7 @@ public class ConfigPluginControllerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		configPluginController = new ConfigPluginController("", null);
+		configPluginController = new ConfigPluginController();
 	}
 
 	@Test

@@ -25,12 +25,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Named;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 
 import de.extra.client.core.model.CompressionPluginBean;
 import de.extra.client.core.model.DataSourcePluginBean;
@@ -42,57 +44,43 @@ import de.extra.client.plugins.dataplugin.auftragssatz.CompressionInfoType;
 import de.extra.client.plugins.dataplugin.auftragssatz.DataSourceInfoType;
 import de.extra.client.plugins.dataplugin.auftragssatz.EncryptionInfoType;
 
+@Named("dataPluginHelper")
 public class DataPluginHelper {
 
-	private final String inputVerzeichnis;
+	@Value("${inputVerzeichnis}")
+	private String inputDirectory;
 
 	private final Logger logger = Logger.getLogger(DataPluginHelper.class);
 
-	public DataPluginHelper(final String inputVerzeichnis) {
-		super();
-		this.inputVerzeichnis = inputVerzeichnis;
-	}
-
 	/**
-	 * 
-	 * Laedt die Nutzdatenfiles aus dem Input-Verzeichnis
+	 * Laedt die Nutzdatenfiles aus dem Input-Verzeichnis.
 	 * 
 	 * @return Liste mit den Pfaden der Nutzdateien
 	 */
 	public List<String> getNutzfiles() {
 		List<String> worklist = new ArrayList<String>();
-		File[] files = new File(inputVerzeichnis).listFiles();
+		File[] files = new File(inputDirectory).listFiles();
 
-		// Pruefe auf gueltige Dateien
+		// Prüfe auf gueltige Dateien
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].isFile()) {
 
-				// nur Nutzdaten hinzuf�gen
-
+				// Nur Nutzdaten hinzufügen
 				if (!files[i].getName().endsWith(".auf")) {
-
 					if (logger.isDebugEnabled()) {
-
 						logger.debug("Nutzdatensatz gefunden");
 					}
 
 					worklist.add(files[i].getAbsolutePath());
-
 				} else {
-
 					if (logger.isDebugEnabled()) {
-
 						logger.debug("Auftragssatz gefunden");
-
 					}
-
 				}
 				if (logger.isDebugEnabled()) {
-
 					logger.debug("Datei " + files[i].getAbsolutePath() + " ("
 							+ files[i].length()
 							+ "Bytes) zur Arbeitsliste hinzugef�gt.");
-
 				}
 			}
 		}
@@ -102,11 +90,10 @@ public class DataPluginHelper {
 	}
 
 	/**
-	 * 
-	 * Wandelt die Nutzdatei in ein Byte-Array f�r den Aufbau des Requests um
+	 * Wandelt die Nutzdatei in ein Byte-Array für den Aufbau des Requests um.
 	 * 
 	 * @param filename
-	 *            - Name der Datei
+	 *            Name der Datei
 	 * @return Byte-Array mit den Nutzdaten
 	 */
 	public byte[] getNutzdaten(String filename) {
@@ -116,49 +103,36 @@ public class DataPluginHelper {
 		FileInputStream fis = null;
 
 		if (nutzdatei.exists() && !nutzdatei.isDirectory()) {
-
 			try {
-
 				logger.debug("Einlesen der Nutzdaten");
 
 				fis = new FileInputStream(nutzdatei);
-
 				nutzdaten = new byte[(int) nutzdatei.length()];
-
 				fis.read(nutzdaten);
 
 				if (logger.isTraceEnabled()) {
-
 					logger.trace("Nutzdaten: " + new String(nutzdaten));
-
 				}
-
 			} catch (FileNotFoundException e) {
 				logger.error("Datei konnte nicht gefunden werden", e);
 			} catch (IOException e) {
 				logger.error("Fehler beim Lesen der Datei", e);
 			} finally {
-
 				try {
 					fis.close();
 				} catch (IOException e) {
 					logger.error("Fehler beim Schlie�en des Streams", e);
 				}
-
 			}
-
 		} else {
-
 			logger.info("Datei nicht vorhanden oder Verzeichnis");
-
 		}
 
 		return nutzdaten;
 	}
 
 	/**
-	 * 
-	 * Hilfsklasse zum unmarshalling des Auftragssatzes
+	 * Hilfsklasse zum unmarshalling des Auftragssatzes.
 	 * 
 	 * @param auftragssatzName
 	 * @return JaxB-Element vom Typ AuftragssatzType
@@ -167,18 +141,14 @@ public class DataPluginHelper {
 		JAXBContext jc;
 		JAXBElement<?> element = null;
 		try {
-
 			// Initialisieren des JaxB-Contextes
 			jc = JAXBContext
 					.newInstance("de.extra.client.plugins.dataPlugin.auftragssatz");
 
 			// Aufruf des Unmarshallers
-
 			Unmarshaller u = jc.createUnmarshaller();
 			File auftragsFile = new File(auftragssatzName);
-
 			element = (JAXBElement<?>) u.unmarshal(auftragsFile);
-
 		} catch (JAXBException e) {
 			logger.error("Fehler beim Verarbeiten des XML", e);
 		} catch (Exception e) {
@@ -189,8 +159,7 @@ public class DataPluginHelper {
 	}
 
 	/**
-	 * 
-	 * Fuellt die Liste der VersanddatenBean
+	 * Fuellt die Liste der VersanddatenBean.
 	 * 
 	 * @param vdb
 	 *            VersanddatenBean
@@ -200,70 +169,53 @@ public class DataPluginHelper {
 	 */
 	public VersanddatenBean fuelleVersandatenBean(VersanddatenBean vdb,
 			AuftragssatzType auftragssatz) {
-
 		CompressionPluginBean compressionPlugin = new CompressionPluginBean();
 		EncryptionPluginBean encryptionPlugin = new EncryptionPluginBean();
 		DataSourcePluginBean dataSourcePlugin = new DataSourcePluginBean();
 
 		List<PlugindatenBean> pluginListe = new ArrayList<PlugindatenBean>();
-
 		if (auftragssatz.getCompressionInfo() != null) {
 
 			compressionPlugin = fuelleCompression(auftragssatz
 					.getCompressionInfo());
 			pluginListe.add(compressionPlugin);
 		} else {
-
 			if (logger.isDebugEnabled()) {
-
 				logger.debug("Keine Informationen zur Kompression gefunden");
-
 			}
 		}
 
 		if (auftragssatz.getEncryptionInfo() != null) {
-
 			encryptionPlugin = fuelleEncryption(auftragssatz
 					.getEncryptionInfo());
-
 			pluginListe.add(encryptionPlugin);
 		} else {
-
 			if (logger.isDebugEnabled()) {
-
 				logger.debug("Keine Informationen zur Verschluesselung gefunden");
-
 			}
 		}
 		if (auftragssatz.getDataSourceInfo() != null) {
-
 			dataSourcePlugin = fuelleDataSource(auftragssatz
 					.getDataSourceInfo());
 			pluginListe.add(dataSourcePlugin);
 		} else {
-
 			if (logger.isDebugEnabled()) {
-
 				logger.debug("Keine Informationen zur DataSource gefunden");
-
 			}
 		}
 
 		vdb.setPlugins(pluginListe);
-
 		return vdb;
 	}
 
 	/**
-	 * 
-	 * Hilfsklasse zum Befuellen der CompressionPluginBean
+	 * Hilfsklasse zum Befüllen der CompressionPluginBean.
 	 * 
 	 * @param compressionInfo
 	 * @return CompressionPluginBean
 	 */
 	private static CompressionPluginBean fuelleCompression(
 			CompressionInfoType compressionInfo) {
-
 		CompressionPluginBean compressionPlugin = new CompressionPluginBean();
 
 		compressionPlugin.setOrder(compressionInfo.getOrder().intValue());
@@ -282,15 +234,13 @@ public class DataPluginHelper {
 	}
 
 	/**
-	 * 
-	 * Hilfsklasse zum Befuellen der EncryprionPluginBean
+	 * Hilfsklasse zum Befüllen der EncryprionPluginBean.
 	 * 
 	 * @param encryptionInfo
 	 * @return EncryptionPluginBean
 	 */
 	private static EncryptionPluginBean fuelleEncryption(
 			EncryptionInfoType encryptionInfo) {
-
 		EncryptionPluginBean encryptionPlugin = new EncryptionPluginBean();
 
 		encryptionPlugin.setOrder(encryptionInfo.getOrder().intValue());
@@ -308,15 +258,13 @@ public class DataPluginHelper {
 	}
 
 	/**
-	 * 
-	 * Hilfsklasse zum Bef�llen der DataSourcePlugin
+	 * Hilfsklasse zum Befüllen der DataSourcePlugin.
 	 * 
 	 * @param dataSource
 	 * @return
 	 */
 	private static DataSourcePluginBean fuelleDataSource(
 			DataSourceInfoType dataSource) {
-
 		DataSourcePluginBean dataSourcePlugin = new DataSourcePluginBean();
 
 		dataSourcePlugin.setDsType(dataSource.getDsType());
