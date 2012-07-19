@@ -4,17 +4,10 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
 		p:location="classpath:extraclient.properties" />
 
-	<bean id="dataPluginController"
-		class="de.extra.client.plugins.dataPlugin.controller.DataPluginController">
-		<constructor-arg index="0" ref="dataPluginHelper" />
-	</bean>
-
-	<bean id="dataPluginHelper"
-		class="de.extra.client.plugins.dataPlugin.helper.DataPluginHelper">
-		<constructor-arg index="0" value="${inputVerzeichnis}" />
-	</bean>
+	<context:component-scan base-package="de.extra.client.plugins.queryplugin" />
 </beans>

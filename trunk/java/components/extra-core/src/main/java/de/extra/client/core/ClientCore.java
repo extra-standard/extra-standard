@@ -48,9 +48,8 @@ public class ClientCore {
 
 	public static final int STATUS_CODE_ERROR = 9;
 
-	// Wir können zwischen queryPlugin und dataPlugin auswählen
 	@Inject
-	@Named("queryPlugin")
+	@Named("dataPlugin")
 	private IDataPlugin dataPlugin;
 
 	@Inject

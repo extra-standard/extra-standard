@@ -24,9 +24,6 @@ import java.util.List;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import de.extra.client.core.model.VersanddatenBean;
 import de.extra.client.core.plugin.IDataPlugin;
@@ -35,36 +32,17 @@ import de.extra.client.plugins.dataplugin.interfaces.IDataPluginController;
 @Named("dataPlugin")
 public class DataPlugin implements IDataPlugin {
 
-	/**
-	 * Pfad und Dateiname in der die SpringConfig.xml liegt
-	 */
-	private static String SPRING_XML_FILE_PATH = "spring-configdataplugin.xml";
-
-	/**
-	 * Dateipfad der log4jProperties
-	 */
-	private static final String LOG_4_J_FILE = "log4j.properties";
-
 	private static Logger logger = Logger.getLogger(DataPlugin.class);
+
+	@Named("dataPluginController")
+	private IDataPluginController dataPluginController;
 
 	@Override
 	public List<VersanddatenBean> getVersandDaten() {
-		PropertyConfigurator.configureAndWatch(LOG_4_J_FILE);
-		logger.info("Start des Versands");
-
-		// Spring Beans laden.
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-				SPRING_XML_FILE_PATH);
-
-		IDataPluginController controller = (IDataPluginController) applicationContext
-				.getBean("dataPluginController");
-
 		List<VersanddatenBean> versanddatenListe = new ArrayList<VersanddatenBean>();
-
-		versanddatenListe = controller.processData();
+		versanddatenListe = dataPluginController.processData();
 
 		logger.info("Verarbeitung der Versanddaten abgeschlossen");
-
 		return versanddatenListe;
 	}
 }

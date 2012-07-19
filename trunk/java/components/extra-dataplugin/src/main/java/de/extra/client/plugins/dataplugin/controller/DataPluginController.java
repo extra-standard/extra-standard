@@ -22,54 +22,47 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import de.extra.client.core.model.VersanddatenBean;
 import de.extra.client.plugins.dataplugin.auftragssatz.AuftragssatzType;
 import de.extra.client.plugins.dataplugin.helper.DataPluginHelper;
 import de.extra.client.plugins.dataplugin.interfaces.IDataPluginController;
 
+@Named("dataPluginController")
 public class DataPluginController implements IDataPluginController {
 
-	private final DataPluginHelper dataPluginHelper;
-
-	public DataPluginController(final DataPluginHelper dataPluginHelper) {
-		super();
-		this.dataPluginHelper = dataPluginHelper;
-	}
+	@Inject
+	@Named("dataPluginHelper")
+	private DataPluginHelper dataPluginHelper;
 
 	/**
-	 * Verarbeitungs-Controller fuer das DataPlugin
+	 * Verarbeitungs-Controller fuer das DataPlugin.
 	 */
 	@Override
 	public List<VersanddatenBean> processData() {
 		List<VersanddatenBean> versanddatenBeanList = new ArrayList<VersanddatenBean>();
-
 		List<String> nutzfileList = new ArrayList<String>();
 
 		// Ermitteln der Nutzdaten
 		nutzfileList = dataPluginHelper.getNutzfiles();
 
-		// Befuellen der Versanddaten-Liste
+		// Befüllen der Versanddaten-Liste
 		for (Iterator<String> iter = nutzfileList.iterator(); iter.hasNext();) {
 			String filename = iter.next();
-
 			VersanddatenBean versanddatenBean = new VersanddatenBean();
-
 			versanddatenBean.setNutzdaten(dataPluginHelper
 					.getNutzdaten(filename));
-
 			AuftragssatzType auftragssatz = new AuftragssatzType();
-
 			String auftragssatzName = filename + ".auf";
-
 			auftragssatz = dataPluginHelper
 					.unmarshalAuftragssatz(auftragssatzName);
 
 			// Setzen der RequestId
 			versanddatenBean.setRequestId(auftragssatz.getRequestId());
-
 			versanddatenBean = dataPluginHelper.fuelleVersandatenBean(
 					versanddatenBean, auftragssatz);
-
 			versanddatenBeanList.add(versanddatenBean);
 		}
 

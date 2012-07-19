@@ -19,7 +19,8 @@
 package de.extra.client.plugins.dataplugin.dummy;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import de.extra.client.core.model.CompressionPluginBean;
@@ -33,16 +34,13 @@ public class DataPlugin implements IDataPlugin {
 
 	@Override
 	public List<VersanddatenBean> getVersandDaten() {
-
 		List<VersanddatenBean> versanddatenList = new ArrayList<VersanddatenBean>();
-
 		versanddatenList.add(loadVersanddaten());
-
 		return versanddatenList;
 	}
 
 	/**
-	 * Dummy-Klasse mit statischen Werten
+	 * Dummy-Klasse mit statischen Werten.
 	 * 
 	 * @return Versanddatenbean
 	 */
@@ -56,11 +54,9 @@ public class DataPlugin implements IDataPlugin {
 		String nutzdaten = "Testdaten";
 
 		// Nutzdaten setzen
-
 		vb.setNutzdaten(nutzdaten.getBytes());
 
 		// Compression-Infos setzen
-
 		compressionPlugin.setOrder(1);
 		compressionPlugin
 				.setCompAlgoId("http://www.extra-standard.de/transforms/compression/NONE");
@@ -75,7 +71,6 @@ public class DataPlugin implements IDataPlugin {
 		compressionPlugin.setCompOutput(100);
 
 		// Encryption-Infos setzen
-
 		encryptionPlugin.setOrder(2);
 		encryptionPlugin
 				.setEncAlgoId("http://www.extra-standard.de/transforms/encryption/PKCS7");
@@ -90,15 +85,14 @@ public class DataPlugin implements IDataPlugin {
 		encryptionPlugin.setEncOutput(200);
 
 		// DataSource-Infos setzen
-
 		dataSourcePlugin.setDsType("http://extra-standard.de/container/FILE");
 		dataSourcePlugin.setDsName("EDUA0000003");
 
-		Date datum = new Date();
-		datum.setMonth(0);
-		datum.setDate(12);
-		datum.setYear(110);
-		dataSourcePlugin.setDsCreated(datum);
+		Calendar cal = new GregorianCalendar();
+		cal.set(Calendar.YEAR, 2012);
+		cal.set(Calendar.MONTH, 12);
+		cal.set(Calendar.DATE, 01);
+		dataSourcePlugin.setDsCreated(cal.getTime());
 		dataSourcePlugin.setDsEncoding("I8");
 
 		List<PlugindatenBean> pluginList = new ArrayList<PlugindatenBean>();

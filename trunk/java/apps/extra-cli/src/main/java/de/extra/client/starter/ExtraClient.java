@@ -30,10 +30,10 @@ public class ExtraClient {
 	/**
 	 * Pfad und Dateiname in der die springconfig.xml liegt.
 	 */
-	private static String SPRING_XML_FILE_PATH = "spring-config.xml";
+	private static String SPRING_XML_FILE_PATH = "spring-cli.xml";
 
 	/**
-	 * Dateipfad der log4jProperties
+	 * Dateipfad der log4jProperties.
 	 */
 	private static final String LOG_4_J_FILE = "log4j.properties";
 
