@@ -1,30 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
-          "http://www.springframework.org/dtd/spring-beans.dtd">
-<beans>
-	<bean id="clientCore" class="de.extra.client.core.ClientCore">
-		<constructor-arg index="0" ref="dataPlugin" />
-		<constructor-arg index="1" ref="configPlugin" />
-		<constructor-arg index="2" ref="outputPlugin" />
-		<constructor-arg index="3" ref="namespacePrefixMapper" />
-		<constructor-arg index="4" ref="requestHelper" />
-	</bean>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-	<bean id="requestHelper" class="de.extra.client.core.helper.RequestHelper">
-		<constructor-arg index="0" ref="pluginHelper" />
-		<constructor-arg index="1" ref="headerHelper" />
-		<constructor-arg index="2" ref="bodyHelper" />
-		<constructor-arg index="3" value="${extraProfile}" />
-	</bean>
-
-	<bean id="pluginHelper" class="de.extra.client.core.helper.BuildPluginHelper">
-	</bean>
-
-	<bean id="headerHelper" class="de.extra.client.core.helper.BuildHeaderHelper">
-	</bean>
-
-	<bean id="bodyHelper" class="de.extra.client.core.helper.BuildBodyHelper">
-	</bean>
+	<context:component-scan base-package="de.extra.client.core, de.drv.dsrv.extra" />
 
 	<bean id="namespacePrefixMapper" class="de.drv.dsrv.extra.marshaller.NamespacePrefixMapper">
 		<property name="mappings">

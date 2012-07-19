@@ -23,6 +23,8 @@ import java.io.Writer;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -39,52 +41,38 @@ import de.extra.client.core.plugin.IConfigPlugin;
 import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.core.plugin.IOutputPlugin;
 
+@Named("clientCore")
 public class ClientCore {
 
 	public static final int STATUS_CODE_OK = 0;
 
 	public static final int STATUS_CODE_ERROR = 9;
 
-	private final IDataPlugin dataPlugin;
+	// Wir können zwischen queryPlugin und dataPlugin auswählen
+	@Inject
+	@Named("queryPlugin")
+	private IDataPlugin dataPlugin;
 
-	private final IConfigPlugin configPlugin;
+	@Inject
+	@Named("configPlugin")
+	private IConfigPlugin configPlugin;
 
-	private final IOutputPlugin outputPlugin;
+	@Inject
+	@Named("outputPlugin")
+	private IOutputPlugin outputPlugin;
 
-	private final NamespacePrefixMapper namespacePrefixMapper;
+	@Inject
+	@Named("namespacePrefixMapper")
+	private NamespacePrefixMapper namespacePrefixMapper;
 
-	private final RequestHelper requestHelper;
+	@Inject
+	@Named("requestHelper")
+	private RequestHelper requestHelper;
 
 	private static Logger logger = Logger.getLogger(ClientCore.class);
 
 	/**
-	 * Konstruktor
-	 * 
-	 * @param dataPlugin
-	 *            DataPlugin aus SpringConfig
-	 * @param configPlugin
-	 *            ConfigPlugin aus SpringConfig
-	 * @param outputPlugin
-	 *            OutputPlugin aus SpringConfig
-	 * @param namespacePrefixMapper
-	 *            Mapper um die Standardnamespace zu �berschreiben
-	 * @param requestHelper
-	 *            Helper zum Aufbau des Requests
-	 */
-	public ClientCore(final IDataPlugin dataPlugin,
-			final IConfigPlugin configPlugin, final IOutputPlugin outputPlugin,
-			final NamespacePrefixMapper namespacePrefixMapper,
-			RequestHelper requestHelper) {
-		super();
-		this.dataPlugin = dataPlugin;
-		this.configPlugin = configPlugin;
-		this.outputPlugin = outputPlugin;
-		this.namespacePrefixMapper = namespacePrefixMapper;
-		this.requestHelper = requestHelper;
-	}
-
-	/**
-	 * Funktion in der der Request aufgebaut wird
+	 * Funktion in der der Request aufgebaut wird.
 	 * 
 	 * @return StatusCode nach der Verarbeitung
 	 */
@@ -118,7 +106,7 @@ public class ClientCore {
 						.iterator(); iter.hasNext();) {
 					versanddatenBean = iter.next();
 
-					request = requestHelper.baueRequest(versanddatenBean,
+					request = requestHelper.buildRequest(versanddatenBean,
 							configFile);
 
 					Writer writer = new StringWriter();

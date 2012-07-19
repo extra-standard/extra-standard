@@ -28,7 +28,6 @@ public class NamespacePrefixMapper extends
 	@Override
 	public String getPreferredPrefix(String namespaceUri, String suggestion,
 			boolean requirePrefix) {
-
 		if (mappings.containsKey(namespaceUri)) {
 			return mappings.get(namespaceUri);
 		} else {

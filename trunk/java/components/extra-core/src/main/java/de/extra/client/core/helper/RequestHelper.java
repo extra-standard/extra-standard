@@ -17,51 +17,43 @@ import de.extra.client.core.model.VersanddatenBean;
  */
 package de.extra.client.core.helper;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.springframework.beans.factory.annotation.Value;
+
 import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.VersanddatenBean;
 
+@Named("requestHelper")
 public class RequestHelper {
 
-	private final BuildPluginHelper pluginHelper;
+	@Inject
+	@Named("pluginHelper")
+	private BuildPluginHelper pluginHelper;
 
-	private final BuildHeaderHelper headerHelper;
+	@Inject
+	@Named("headerHelper")
+	private BuildHeaderHelper headerHelper;
 
-	private final BuildBodyHelper bodyHelper;
-	private final String extraProfile;
+	@Inject
+	@Named("bodyHelper")
+	private BuildBodyHelper bodyHelper;
 
-	/**
-	 * Konstruktor fuer den Requesthelper zum Befuellen der Werte aus der
-	 * SpringConfig
-	 * 
-	 * @param pluginHelper
-	 *            Bean des PluginHelpers
-	 * @param headerHelper
-	 *            Bean des HeaderHelpers
-	 * @param bodyHelper
-	 *            Bean des BodyHelpers
-	 */
-	public RequestHelper(final BuildPluginHelper pluginHelper,
-			final BuildHeaderHelper headerHelper,
-			final BuildBodyHelper bodyHelper, final String extraProfile) {
-		super();
-		this.pluginHelper = pluginHelper;
-		this.headerHelper = headerHelper;
-		this.bodyHelper = bodyHelper;
-		this.extraProfile = extraProfile;
-	}
+	@Value("${extraProfile}")
+	private String extraProfile;
 
 	/**
-	 * 
-	 * Funktion zum Aufbau des XML-Requests
+	 * Funktion zum Aufbau des XML-Requests.
 	 * 
 	 * @param versanddatenBean
-	 *            Enth�tlt alles Informtionen zu den Nutzdaten
+	 *            Enthält alles Informtionen zu den Nutzdaten
 	 * @param configBean
-	 *            Enth�lt alle Informationen zum den Versandinformtionen
+	 *            Enthält alle Informationen zum den Versandinformationen
 	 * @return JaxB-Objekt XMLTransport
 	 */
-	public XMLTransport baueRequest(VersanddatenBean versanddatenBean,
+	public XMLTransport buildRequest(VersanddatenBean versanddatenBean,
 			ConfigFileBean configBean) {
 
 		XMLTransport request = new XMLTransport();
@@ -69,7 +61,6 @@ public class RequestHelper {
 		request.setProfile(extraProfile);
 
 		// Aufbau des Headers
-
 		request.setTransportHeader(headerHelper.baueHeader(configBean,
 				versanddatenBean.getRequestId()));
 

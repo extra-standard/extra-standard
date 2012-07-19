@@ -21,6 +21,8 @@ package de.extra.client.plugins.dataplugin;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Named;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.ApplicationContext;
@@ -30,6 +32,7 @@ import de.extra.client.core.model.VersanddatenBean;
 import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.plugins.dataplugin.interfaces.IDataPluginController;
 
+@Named("dataPlugin")
 public class DataPlugin implements IDataPlugin {
 
 	/**
