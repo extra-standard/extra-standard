@@ -55,13 +55,12 @@ public class RequestHelper {
 	 */
 	public XMLTransport buildRequest(SenderDataBean versanddatenBean,
 			ConfigFileBean configBean) {
-
 		XMLTransport request = new XMLTransport();
 
 		request.setProfile(extraProfile);
 
 		// Aufbau des Headers
-		request.setTransportHeader(headerHelper.baueHeader(configBean,
+		request.setTransportHeader(headerHelper.createHeader(configBean,
 				versanddatenBean.getRequestId()));
 
 		// Aufbau der TransportPlugins
@@ -69,8 +68,8 @@ public class RequestHelper {
 			request.setTransportPlugIns(pluginHelper
 					.buildPluginContainer(versanddatenBean.getPlugins()));
 		}
-		// Aufbau des TransportBodys
 
+		// Aufbau des TransportBodys
 		request.setTransportBody(bodyHelper.buildTransportBody(configBean,
 				versanddatenBean));
 
