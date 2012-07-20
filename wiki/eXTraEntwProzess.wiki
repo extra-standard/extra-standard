@@ -20,8 +20,8 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
   
 = Modellierungsumgebung =
   * UML 2.x
-  * MagicDraw 17.x. Die MagicDraw-Modelldateien besitzen .mdzip Namenerweiterung.
-  * Zum Lesen der Modelldateien reicht ein kostenloses MagicDraw-Reader aus. MagicDraw-Reader kann unter folgender Adresse [http://www.nomagic.com/products/magicdraw/magicdraw-reader.html] heruntergeladen werden.
+  * MagicDraw 17.x. Die MagicDraw-Modelldateien besitzen die Namenserweiterung von *.mdzip*.
+  * Zum Lesen der Modelldateien reicht einen kostenlosen MagicDraw-Reader aus. Das Programm MagicDraw-Reader kann unter folgender Adresse [http://www.nomagic.com/products/magicdraw/magicdraw-reader.html] heruntergeladen werden.
    
 = Bauen von Quellcode mit Hilfe von Maven =
   * Ausschecken von SVN unter: *trunk/java*
