@@ -7,7 +7,7 @@
 
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-		p:location="classpath:extraclient.properties" />
+		p:location="classpath:extra-cli.properties" />
 
 	<import resource="classpath:spring-schema.xml" />
 	<import resource="classpath:spring-configplugin.xml" />
