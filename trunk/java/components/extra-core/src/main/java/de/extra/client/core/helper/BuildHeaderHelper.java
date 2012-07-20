@@ -42,7 +42,7 @@ public class BuildHeaderHelper {
 	private static Logger logger = Logger.getLogger(BuildHeaderHelper.class);
 
 	/**
-	 * Funktion zum aufbau des Headers.
+	 * Funktion zum Aufbau des Headers.
 	 * 
 	 * @param configFile
 	 *            ConfigFileBean mit den Informationen aus der ProfilDatei
@@ -50,7 +50,7 @@ public class BuildHeaderHelper {
 	 *            RequestID der Sendung
 	 * @return TransportHeader
 	 */
-	public TransportHeader baueHeader(ConfigFileBean configFile,
+	public TransportHeader createHeader(ConfigFileBean configFile,
 			String requestID) {
 		TransportHeader header = new TransportHeader();
 		String testindicator = "";
