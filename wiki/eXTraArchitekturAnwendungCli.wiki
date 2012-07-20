@@ -98,6 +98,9 @@ Im CLI-Projekt befindet sich die main-Methode zum Aufruf des Clients. Aus ihr he
 Im Starter werden auch sämtliche Bibliotheken referenziert, die zur Ausführung des Clients notwendig sind.
 Gegenwärtig liegen dort auch die Konfigurationsdateien für den Gesamt-Client und die einzelnen Plugins in einem Properties-Ordner.
 
+=== Schema-Library ===
+XSD-Dateien und Generierung mit JaxB finden hier statt.
+
 === Core-Library === 
 Bei der Core-Library wurde bereits in der ersten Version versucht ein möglichst breites Spektrum des eXTra-Standards 1.1 generisch abzudecken. 
 
