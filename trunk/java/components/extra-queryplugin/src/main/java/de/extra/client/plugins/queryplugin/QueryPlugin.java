@@ -20,12 +20,10 @@ package de.extra.client.plugins.queryplugin;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import de.extra.client.core.model.SenderDataBean;
 import de.extra.client.core.plugin.IDataPlugin;
@@ -34,36 +32,19 @@ import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 @Named("dataPlugin")
 public class QueryPlugin implements IDataPlugin {
 
-	/**
-	 * Pfad und Dateiname in der die SpringConfig.xml liegt
-	 */
-	private static String SPRING_XML_FILE_PATH = "spring-queryplugin.xml";
-
-	/**
-	 * Dateipfad der log4jProperties
-	 */
-	private static final String LOG_4_J_FILE = "log4j.properties";
-
 	private static Logger logger = Logger.getLogger(QueryPlugin.class);
+
+	@Inject
+	@Named("queryController")
+	private IQueryPluginController queryController;
 
 	@Override
 	public List<SenderDataBean> getSenderData() {
-
-		PropertyConfigurator.configureAndWatch(LOG_4_J_FILE);
 		logger.info("Start des Versands");
-
-		// Spring Beans laden.
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-				SPRING_XML_FILE_PATH);
-
-		// Laden des Controlers
-		IQueryPluginController controller = (IQueryPluginController) applicationContext
-				.getBean("queryController");
-
 		if (logger.isDebugEnabled()) {
 			logger.debug("Erstelle Query");
 		}
 
-		return controller.processQuery();
+		return queryController.processQuery();
 	}
 }
