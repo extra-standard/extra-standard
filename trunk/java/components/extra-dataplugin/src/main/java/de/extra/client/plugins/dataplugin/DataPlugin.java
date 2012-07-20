@@ -21,6 +21,7 @@ package de.extra.client.plugins.dataplugin;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
@@ -34,6 +35,7 @@ public class DataPlugin implements IDataPlugin {
 
 	private static Logger logger = Logger.getLogger(DataPlugin.class);
 
+	@Inject
 	@Named("dataPluginController")
 	private IDataPluginController dataPluginController;
 
