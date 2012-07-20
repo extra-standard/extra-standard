@@ -17,6 +17,13 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
 
 = Coding-Regeln =
   * Code-Formatter: Eclipse [built-in] unverändert!
+  
+= Modellierungsumgebung =
+  * UML 2.x
+  * MagicDraw 17.x. Die MagicDraw-Modelldateien besitzen .mdzip Namenerweiterung.
+  * Zum Lesen der Modelldateien reicht ein kostenloses MagicDraw-Reader aus. MagicDraw-Reader kann [[http://www.nomagic.com/products/magicdraw/magicdraw-reader.html][hier]] heruntergeladen werden.
+  
+  
 
 = Bauen von Quellcode mit Hilfe von Maven =
   * Ausschecken von SVN unter: *trunk/java*
