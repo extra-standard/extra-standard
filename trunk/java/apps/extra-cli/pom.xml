@@ -118,7 +118,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<tasks>
+							<target>
 								<copy
 									file="${project.basedir}/src/main/resources/extra-cli.properties_example"
 									tofile="${project.basedir}/src/main/resources/extra-cli.properties" />
@@ -134,7 +134,7 @@
 								<copy
 									file="${project.basedir}/src/test/resources/serverconfig.properties_example"
 									tofile="${project.basedir}/src/test/resources/serverconfig.properties" />
-							</tasks>
+							</target>
 						</configuration>
 					</execution>
 				</executions>
