@@ -22,9 +22,7 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
   * UML 2.x
   * MagicDraw 17.x. Die MagicDraw-Modelldateien besitzen .mdzip Namenerweiterung.
   * Zum Lesen der Modelldateien reicht ein kostenloses MagicDraw-Reader aus. MagicDraw-Reader kann unter folgender Adresse [http://www.nomagic.com/products/magicdraw/magicdraw-reader.html] heruntergeladen werden.
-  
-  
-
+   
 = Bauen von Quellcode mit Hilfe von Maven =
   * Ausschecken von SVN unter: *trunk/java*
   * Im Ordner _java_ befindet sich eine Maven-Datei namens _pom.xml_. In dieser Datei werden sämtliche Module von eXTra mit der richtigen Reihenfolge beschrieben.
