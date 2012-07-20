@@ -12,10 +12,8 @@
 	<import resource="classpath:spring-schema.xml" />
 	<import resource="classpath:spring-configplugin.xml" />
 	<import resource="classpath:spring-outputplugin.xml" />
+	<import resource="classpath:spring-dataplugin.xml" />
 	<import resource="classpath:spring-queryplugin.xml" />
-
-	<!-- We use query-plugin but we can exchange with data-plugin -->
-	<!-- <import resource="classpath:spring-dataplugin.xml" /> -->
 
 	<context:component-scan base-package="de.extra.client.core, de.drv.dsrv.extra" />
 </beans>

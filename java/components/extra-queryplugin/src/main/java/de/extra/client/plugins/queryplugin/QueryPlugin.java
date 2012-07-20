@@ -29,7 +29,7 @@ import de.extra.client.core.model.SenderDataBean;
 import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 
-@Named("dataPlugin")
+@Named("queryPlugin")
 public class QueryPlugin implements IDataPlugin {
 
 	private static Logger logger = Logger.getLogger(QueryPlugin.class);
