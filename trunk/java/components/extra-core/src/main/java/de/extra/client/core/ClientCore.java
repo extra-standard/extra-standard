@@ -121,13 +121,11 @@ public class ClientCore {
 						statusCode = STATUS_CODE_ERROR;
 					}
 				}
-
 			} else {
 				// TODO Aufbau der Logik zum Versand von mehreren Nachrichten
 				// als Package oder Message
 
 			}
-
 		} catch (JAXBException e) {
 			logger.error("Fehler beim Erstellen des Requests", e);
 		}
