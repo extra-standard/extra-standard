@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
-	<description>Contains the configuration for the NamespacePrefixMapper
-	</description>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<bean id="namespacePrefixMapper" class="de.drv.dsrv.extra.marshaller.NamespacePrefixMapper">
 		<property name="mappings">
@@ -20,6 +21,7 @@
 		</property>
 	</bean>
 
+	<!-- 
 	<bean id="jaxbMarshallerExtra" class="de.drv.dsrv.extra.marshaller.ExtraJaxb2Marshaller">
 		<property name="contextPath"
 			value="de.drv.dsrv.extrastandard.namespace.response:de.drv.dsrv.extrastandard.namespace.plugins:de.drv.dsrv.extrastandard.namespace.messages:de.drv.dsrv.extrastandard.namespace.error" />
@@ -32,7 +34,9 @@
 			</map>
 		</property>
 	</bean>
+	-->
 
+	<!-- 
 	<bean id="jaxbUnMarshallerExtra" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
 		<property name="contextPath"
 			value="de.drv.dsrv.extrastandard.namespace.request:de.drv.dsrv.extrastandard.namespace.plugins:de.drv.dsrv.extrastandard.namespace.messages:de.drv.dsrv.extrastandard.namespace.error" />
@@ -44,4 +48,5 @@
 			</map>
 		</property>
 	</bean>
+    -->
 </beans>

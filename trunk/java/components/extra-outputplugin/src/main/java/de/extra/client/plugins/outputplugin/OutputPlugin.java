@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 
 import de.extra.client.core.plugin.IOutputPlugin;
 
+@Named("outputPlugin")
 public class OutputPlugin implements IOutputPlugin {
 
 	private static Logger logger = Logger.getLogger(OutputPlugin.class);

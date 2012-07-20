@@ -48,15 +48,15 @@ public class QueryPluginController implements IQueryPluginController {
 	 */
 	@Override
 	public List<SenderDataBean> processQuery() {
-		List<SenderDataBean> versanddatenBeanList = new ArrayList<SenderDataBean>();
-		SenderDataBean versanddatenBean = new SenderDataBean();
+		List<SenderDataBean> senderDataBeanList = new ArrayList<SenderDataBean>();
+		SenderDataBean senderDataBean = new SenderDataBean();
 
 		// Erzeugen der Query
-		versanddatenBean.setDataRequest(queryHelper.createQuery(startId,
+		senderDataBean.setDataRequest(queryHelper.createQuery(startId,
 				packageLimit));
 		// Hinzufügen der Bean mit der Query
-		versanddatenBeanList.add(versanddatenBean);
+		senderDataBeanList.add(senderDataBean);
 
-		return versanddatenBeanList;
+		return senderDataBeanList;
 	}
 }
