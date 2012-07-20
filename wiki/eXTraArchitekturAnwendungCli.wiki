@@ -23,10 +23,10 @@ So lässt sich der Client individuell auf die Bedürfnisse des jeweiligen Verfah
 Die Plugins haben dazu fest definierte Schnittstellen nach außen, über welche sie untereinander kommunizieren.
 
 
-Abb. 1 Aufbau eXTra-Client
+http://extra-standard.googlecode.com/svn/wiki/images/extra-cli-app-architecture.jpg
 
 
-== Command Line Interface (CLI - extra-cli) ==
+== Command Line Interface - CLI (extra-cli) ==
 Im CLI wird der Aufruf des Clients realisiert.
 Hierbei gibt es außer der aufzurufenden Funktion zum Starten des Clients und den Returncodes durch die Anwendung keinerlei Einschränkungen,
 Folgende Szenarien wären denkbar
