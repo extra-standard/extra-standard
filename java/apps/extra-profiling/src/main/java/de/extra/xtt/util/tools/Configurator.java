@@ -66,11 +66,11 @@ public class Configurator {
 	 */
 	public static final String PATH_PROPERTIES_VERSION = "/de/extra/xtt/version.properties";
 	/**
-	 * Name der Resource-Datei mit den Strings f�r die Oberfl�che
+	 * Name der Resource-Datei mit den Strings f�r die Oberfläche
 	 */
 	public static final String NAME_RESBUNDLE_STRINGS = "strings";
 	/**
-	 * Dateiname des Schemas f�r die Profilkonfiguration
+	 * Dateiname des Schemas für die Profilkonfiguration
 	 */
 	public static final String PATH_TAILORING_SCHEMA = "/resource/TailoringSchema.xsd";
 
