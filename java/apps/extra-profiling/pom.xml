@@ -171,6 +171,9 @@
 								<copy
 									file="${project.basedir}/src/main/resources/xtt_system.properties_example"
 									tofile="${project.basedir}/src/main/resources/xtt_system.properties" />
+								<copy
+									file="${project.basedir}/src/main/resources/xtt_anmerkungen.properties_example"
+									tofile="${project.basedir}/src/main/resources/xtt_anmerkungen.properties" />
 							</target>
 						</configuration>
 					</execution>

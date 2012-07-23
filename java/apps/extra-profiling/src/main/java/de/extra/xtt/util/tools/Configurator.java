@@ -48,11 +48,11 @@ public class Configurator {
 	/**
 	 * Dateiname der Propertiesdatei mit den Benutzereinstellungen
 	 */
-	public static final String PATH_PROPERTIES_USER = "xtt_user.properties";
+	public static final String PATH_PROPERTIES_USER = "/xtt_user.properties";
 	/**
 	 * Dateiname der Propertiesdatei mit den Anmerkungen
 	 */
-	public static final String PATH_PROPERTIES_ANMERKUNGEN = "xtt_anmerkungen.properties";
+	public static final String PATH_PROPERTIES_ANMERKUNGEN = "/xtt_anmerkungen.properties";
 	/**
 	 * Dateiname der Propertiesdatei mit den Systemeinstellungen
 	 */
