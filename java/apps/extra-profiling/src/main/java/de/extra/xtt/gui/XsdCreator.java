@@ -858,7 +858,8 @@ public class XsdCreator extends JFrame implements TreeSelectionListener {
 			thisClass.setVisible(true);
 
 		} catch (ConfiguratorException configEx) {
-			logger.error(configEx);
+			configEx.printStackTrace();
+			throw new IOException(configEx);
 		}
 	}
 

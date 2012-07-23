@@ -1,0 +1,14 @@
+# Verzeichnis, in dem die eXTra-Basisschemadateien liegen
+VERZEICHNIS_BASIS_SCHEMATA = resource/eXTra/v1_1_0/xsd/
+
+# Dateiname des Request-Schemas
+DATEINAME_XSD_REQUEST = eXTra-request-1.xsd
+
+# Dateiname des Response-Schemas
+DATEINAME_XSD_RESPONSE = eXTra-response-1.xsd
+
+# Gibt an, ob der Baum mit den Hauptelementen standardm‰ﬂig expandiert sein soll (ja: 'true'; nein: 'false')
+BAUM_HAUPTELEMENTE_EXPANDIERT = true
+
+# Gibt an, ob der Baum mit den referenzierten Elementen standardm‰ﬂig expandiert sein soll (ja: 'true'; nein: 'false')
+BAUM_REFRENZIERTE_ELEMENTE_EXPANDIERT = false

@@ -182,7 +182,7 @@ public class Configurator {
 	}
 
 	/**
-	 * Statische Methode zum Laden einer Properties-Datei �ber das File-System
+	 * Statische Methode zum Laden einer Properties-Datei über das File-System
 	 * 
 	 * @param pathProperties
 	 *            Pfad zur Properties-Datei
