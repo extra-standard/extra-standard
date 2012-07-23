@@ -816,7 +816,7 @@ public class XsdCreator extends JFrame implements TreeSelectionListener {
 
 	private static Configurator initConfigurator() throws ConfiguratorException {
 		Properties propUser = Configurator
-				.loadPropertiesFromFile(Configurator.PATH_PROPERTIES_USER);
+				.loadPropertiesFromResource(Configurator.PATH_PROPERTIES_USER);
 		Properties propSystem = Configurator
 				.loadPropertiesFromResource(Configurator.PATH_PROPERTIES_SYSTEM);
 		Properties propNamespace = Configurator
@@ -824,7 +824,7 @@ public class XsdCreator extends JFrame implements TreeSelectionListener {
 		Properties propVersion = Configurator
 				.loadPropertiesFromResource(Configurator.PATH_PROPERTIES_VERSION);
 		Properties propAnmerkungen = Configurator
-				.loadPropertiesFromFile(Configurator.PATH_PROPERTIES_ANMERKUNGEN);
+				.loadPropertiesFromResource(Configurator.PATH_PROPERTIES_ANMERKUNGEN);
 		ResourceBundle resStrings = Configurator
 				.loadResourceBundle(Configurator.NAME_RESBUNDLE_STRINGS);
 		Configurator config = new Configurator(propUser, propSystem,
