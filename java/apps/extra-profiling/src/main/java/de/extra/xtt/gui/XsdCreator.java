@@ -856,7 +856,6 @@ public class XsdCreator extends JFrame implements TreeSelectionListener {
 			thisClass.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			thisClass.setLocationRelativeTo(null);
 			thisClass.setVisible(true);
-
 		} catch (ConfiguratorException configEx) {
 			configEx.printStackTrace();
 			throw new IOException(configEx);
