@@ -1,2 +1,2 @@
 @echo off
-java -cp "../lib/*" de.extra.client.starter.ClientStarter
+java -cp "../conf;../lib/*" de.extra.client.starter.ClientStarter
