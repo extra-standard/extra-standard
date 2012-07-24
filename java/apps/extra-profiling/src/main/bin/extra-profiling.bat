@@ -1,2 +1,2 @@
 @echo off
-java -cp "../lib/*;../conf" de.extra.xtt.gui.XsdCreator
+java -cp "../conf;../lib/*" de.extra.xtt.gui.XsdCreator
