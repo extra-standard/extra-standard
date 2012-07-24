@@ -22,8 +22,15 @@ Um diese Ziele zu erreichen, wurde zugunsten eines Plugin-Systems auf eine starr
 So lässt sich der Client individuell auf die Bedürfnisse des jeweiligen Verfahrens und der Systemumgebung, in der er verwendet werden soll, anpassen.
 Die Plugins haben dazu fest definierte Schnittstellen nach außen, über welche sie untereinander kommunizieren.
 
-
 http://extra-standard.googlecode.com/svn/wiki/images/extra-cli-app-architecture.jpg
+
+Folgende Interfaces stehen als zentrale Schnittstelle in eXTra-Verarbeitung zur Verfügung:
+
+http://extra-standard.googlecode.com/svn/wiki/images/extra-core-interfaces.jpg
+
+In Core-Library (extra-core) in der Methode _buildRequest_ werden die Aufrufe der Plugins gesteuert. Mit Hilfe des folgenden Sequenzdiagramms wird der Sachverhalt grafisch dargestellt: 
+
+http://extra-standard.googlecode.com/svn/wiki/images/extra-core-messages.jpg
 
 
 == Command Line Interface - CLI (extra-cli) ==
