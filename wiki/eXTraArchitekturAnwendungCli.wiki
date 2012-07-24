@@ -28,7 +28,7 @@ Folgende Interfaces stehen als zentrale Schnittstellen in der eXTra-Verarbeitung
 
 http://extra-standard.googlecode.com/svn/wiki/images/extra-core-interfaces.jpg
 
-In Core-Library (extra-core) der Klasse _ClientCore_ in der Methode _buildRequest_ werden die einzelnen Aufrufe der Plugins gesteuert. Mit Hilfe des folgenden Sequenzdiagramms wird der Sachverhalt grafisch dargestellt: 
+In Core-Library (extra-core) der Klasse _!ClientCore_ in der Methode _buildRequest_ werden die einzelnen Aufrufe der Plugins gesteuert. Mit Hilfe des folgenden Sequenzdiagramms wird der Sachverhalt grafisch dargestellt: 
 
 http://extra-standard.googlecode.com/svn/wiki/images/extra-core-messages.jpg
 
