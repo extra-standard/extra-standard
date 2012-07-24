@@ -64,16 +64,15 @@ public class ProfilHelper {
 				// Ueberpruefen ob Package-Element angegeben wurde
 				if (element.getName().equalsIgnoreCase(
 						ConfigConstants.PROFIL_PACKAGE)) {
-					// Setzen ob PackageLayer ben�tigt
+					// Setzen ob PackageLayer benötigt
 					cfb.setPackageLayer(true);
 				}
 
 				// Ueberpruefen ob Message-Element angegeben wurde
 				if (element.getName().equalsIgnoreCase(
 						ConfigConstants.PROFIL_MESSAGE)) {
-					// Setzen ob MessageLayer ben�tigt
+					// Setzen ob MessageLayer benötigt
 					cfb.setMessageLayer(true);
-
 				}
 			}
 		}
