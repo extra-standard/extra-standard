@@ -33,11 +33,11 @@ public class ConfigFileBean {
 	// Absendername
 	private String absName;
 
-	// Art der Empf�ngeradresse
+	// Art der Empfängeradresse
 	private String empfClass;
-	// Empf�ngeradresse
+	// Empfängeradresse
 	private String empfBbnr;
-	// Empf�ngername
+	// Empfängername
 	private String empfName;
 
 	// Produktname

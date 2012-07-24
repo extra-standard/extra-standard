@@ -100,7 +100,6 @@ public class ClientCore {
 		ConfigFileBean configFile = configPlugin.getConfigFile();
 
 		int statusCode = STATUS_CODE_ERROR;
-		XMLTransport request = new XMLTransport();
 
 		try {
 			// Transformation XML zu String
@@ -125,8 +124,8 @@ public class ClientCore {
 						.iterator(); iter.hasNext();) {
 					versanddatenBean = iter.next();
 
-					request = requestHelper.buildRequest(versanddatenBean,
-							configFile);
+					XMLTransport request = requestHelper.buildRequest(
+							versanddatenBean, configFile);
 
 					Writer writer = new StringWriter();
 					marshaller.marshal(request, writer);
