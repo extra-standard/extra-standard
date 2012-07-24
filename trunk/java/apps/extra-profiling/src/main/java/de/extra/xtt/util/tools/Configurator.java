@@ -66,7 +66,7 @@ public class Configurator {
 	 */
 	public static final String PATH_PROPERTIES_VERSION = "/de/extra/xtt/version.properties";
 	/**
-	 * Name der Resource-Datei mit den Strings f�r die Oberfläche
+	 * Name der Resource-Datei mit den Strings für die Oberfläche
 	 */
 	public static final String NAME_RESBUNDLE_STRINGS = "strings";
 	/**
