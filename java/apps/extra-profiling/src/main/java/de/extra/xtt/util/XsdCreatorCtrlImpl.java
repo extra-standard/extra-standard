@@ -94,7 +94,7 @@ public class XsdCreatorCtrlImpl implements XsdCreatorCtrl {
 			return createTreeModel(ssQuellSchema, true);
 		} catch (Exception e) {
 			throw new XsdCreatorCtrlException(
-					"Fehler beim Erstellen des TreeModels f�r das Request-Schema.",
+					"Fehler beim Erstellen des TreeModels für das Request-Schema.",
 					e);
 		}
 	}
