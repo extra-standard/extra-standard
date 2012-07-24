@@ -382,7 +382,7 @@ public class Configurator {
 	 * zur�ck.
 	 * 
 	 * @param bez
-	 *            Schl�sselbezeichnung
+	 *            Schlüsselbezeichnung
 	 * @return Wert aus der Properties-Datei
 	 */
 	public String getPropertyUser(PropBezeichnungUser bez) {
@@ -394,7 +394,7 @@ public class Configurator {
 	 * Schl�ssel zur�ck.
 	 * 
 	 * @param bez
-	 *            Schl�sselbezeichnung
+	 *            Schlüsselbezeichnung
 	 * @return Wert aus der Properties-Datei
 	 */
 	public String getPropertySystem(PropBezeichnungSystem bez) {
@@ -403,11 +403,11 @@ public class Configurator {
 
 	/**
 	 * Liefert den Wert aus der Namespace-Properties-Datei zum angegebenen
-	 * Schl�ssel zur�ck. Zu einer URL wird das passende Pr�fix, zu einem Pr�fix
-	 * die passende URL zur�ckgegeben.
+	 * Schl�ssel zurück. Zu einer URL wird das passende Präfix, zu einem Präfix
+	 * die passende URL zurückgegeben.
 	 * 
 	 * @param bez
-	 *            Schl�sselbezeichnung
+	 *            Schlüsselbezeichnung
 	 * @return Wert aus der Properties-Datei
 	 */
 	public String getPropertyNamespace(String bez) {
