@@ -1,0 +1,8 @@
+#summary Beschreibung des eXTra-Nachrichtenaufbaus
+
+= eXTra-Nachrichtenaufbau =
+
+*Inhaltsverzeichnis*
+<wiki:toc max_depth="1" />
+
+= Einführung =

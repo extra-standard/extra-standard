@@ -6,4 +6,5 @@
 *Inhaltsverzeichnis*
 
   * [eXTraArchitekturAnwendungCli eXTra Command Line Interface (CLI)]
+  * [eXTraArchitekturNachrichtenAufbau eXTra Nachrichtenaufbau]
   * [eXTraArchitekturAnwendungProfiling eXTra Profiling]
