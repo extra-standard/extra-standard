@@ -1,9 +1,17 @@
 #summary Sterbedatenaustausch mit eXTra
 
-= Sterbedatenaustausch zwischen DSRV und Deutsche Post Renten Service mit eXTra =
+= Sterbedatenaustausch zwischen DSRV und DPRS mit eXTra =
 
 *Inhaltsverzeichnis*
 <wiki:toc max_depth="1" />
+
+= Abkürzungen =
+  * DSRV: Datenstelle der Rentenversicherung
+  * DPRS: Deutsche Post Renten Service  
+
+= Kommunikationspartner =
+  * eXTra-Client: DPRS
+  * eXTra-Server: DSRV
 
 = Kommunikationsszenario =
 
