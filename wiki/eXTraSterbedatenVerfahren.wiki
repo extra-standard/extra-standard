@@ -18,6 +18,10 @@
   # Abrufen Verarbeitungsergebnisse Fachverfahren Sterbedatenabgleich (Request - Response)
   # Bestätigung Verarbeitungsergebnisse Fachverfahren Sterbedatenabgleich (Request - Response)
   
-= Profilierung des eXTra-Schemas =
+= XSD: Profilierung des eXTra-Schemas =
+
   
+= XML: Beispieldateien =
+
+
 
