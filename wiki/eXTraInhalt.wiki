@@ -4,6 +4,7 @@
   * [eXTraArchitektur Architektur]
   * [eXTraArchitekturAnwendung Anwendungsarchitektur]
       * [eXTraArchitekturAnwendungCli Command Line Interface]
+      * [eXTraArchitekturNachrichtenAufbau eXTra Nachrichtenaufbau]
       * [eXTraArchitekturAnwendungProfiling Profiling]
   * [eXTraVerfahren Fachverfahren]    
       * [eXTraSterbedatenVerfahren Sterbedatenabgleich]
