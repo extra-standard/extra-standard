@@ -1,3 +1,8 @@
 #summary Fachverfahren mit eXTra
 
 = Fachverfahren mit eXTra =
+
+Als Best-Practice hat sich folgende Kommunikation zwischen eXTra-Client und -Server bewährt:
+1. Senden Fachverfahren X (Request - Response)
+2. Abrufen Verarbeitungsergebnisse Fachverfahren X (Request - Response)
+3. Bestätigung Verarbeitungsergebnisse Fachverfahren X (Request - Response)
