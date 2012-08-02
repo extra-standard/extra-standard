@@ -3,6 +3,6 @@
 = Fachverfahren mit eXTra =
 
 Als Best-Practice hat sich folgende Kommunikation zwischen eXTra-Client und -Server bewährt:
-# Senden Fachverfahren X (Request - Response)
-# Abrufen Verarbeitungsergebnisse Fachverfahren X (Request - Response)
-# Bestätigung Verarbeitungsergebnisse Fachverfahren X (Request - Response)
+   # Senden Fachverfahren X (Request - Response)
+   # Abrufen Verarbeitungsergebnisse Fachverfahren X (Request - Response)
+   # Bestätigung Verarbeitungsergebnisse Fachverfahren X (Request - Response)
