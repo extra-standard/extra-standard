@@ -12,9 +12,6 @@ Als Best-Practice hat sich folgende Kommunikation zwischen eXTra-Client und -Ser
   # Abrufen Verarbeitungsergebnisse Fachverfahren X (Request - Response)
   # Bestätigung Verarbeitungsergebnisse Fachverfahren X (Request - Response)
    
-Um ein konkretes Beispiel zeigen zu können, wird das Fachverfahren _Sterbedatenabgleich_ zwischen 
-DSRV und Deutsche Post Renten Service dargestellt. Der Lebenszyklus (Analyse, Design, 
-Implementierung, Test und Ausführung) dieses Fachverfahrens wird in dieser Seite detailliert 
-dokumentiert. Zusätzliche Infos siehe [http://code.google.com/p/extra-standard/issues/detail?id=9 Issue 9].
+Um ein konkretes Beispiel zeigen zu können, wird das Fachverfahren _Sterbedatenabgleich_ zwischen DSRV und Deutsche Post Renten Service dargestellt. Der Lebenszyklus (Analyse, Design, Implementierung, Test und Ausführung) dieses Fachverfahrens wird in dieser Seite detailliert dokumentiert. Zusätzliche Infos siehe [http://code.google.com/p/extra-standard/issues/detail?id=9 Issue 9].
 
   * [eXTraSterbedatenVerfahren Sterbedatenabgleich]  
