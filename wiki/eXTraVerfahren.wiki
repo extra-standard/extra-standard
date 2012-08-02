@@ -15,8 +15,6 @@ Als Best-Practice hat sich folgende Kommunikation zwischen eXTra-Client und -Ser
 Um ein konkretes Beispiel zeigen zu können, wird das Fachverfahren _Sterbedatenabgleich_ zwischen 
 DSRV und Deutsche Post Renten Service dargestellt. Der Lebenszyklus (Analyse, Design, 
 Implementierung, Test und Ausführung) dieses Fachverfahrens wird in dieser Seite detailliert 
-dokumentiert.
- 
-Zusätzlich siehe Issue: http://code.google.com/p/extra-standard/issues/detail?id=9
+dokumentiert. Zusätzliche Infos siehe [http://code.google.com/p/extra-standard/issues/detail?id=9 Issue 9].
 
   * [eXTraSterbedatenVerfahren Sterbedatenabgleich]  
