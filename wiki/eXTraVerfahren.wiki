@@ -2,10 +2,15 @@
 
 = Fachverfahren mit eXTra =
 
+*Inhaltsverzeichnis*
+<wiki:toc max_depth="1" />
+
+= Best-Practice =
+
 Als Best-Practice hat sich folgende Kommunikation zwischen eXTra-Client und -Server bewährt:
-   # Senden Fachverfahren X (Request - Response)
-   # Abrufen Verarbeitungsergebnisse Fachverfahren X (Request - Response)
-   # Bestätigung Verarbeitungsergebnisse Fachverfahren X (Request - Response)
+  # Senden Fachverfahren X (Request - Response)
+  # Abrufen Verarbeitungsergebnisse Fachverfahren X (Request - Response)
+  # Bestätigung Verarbeitungsergebnisse Fachverfahren X (Request - Response)
    
 Um ein konkretes Beispiel zeigen zu können, wird das Fachverfahren _Sterbedatenabgleich_ zwischen 
 DSRV und Deutsche Post Renten Service dargestellt. Der Lebenszyklus (Analyse, Design, 
@@ -14,4 +19,4 @@ dokumentiert.
  
 Zusätzlich siehe Issue: http://code.google.com/p/extra-standard/issues/detail?id=9
 
-   * [eXTraSterbedatenVerfahren Sterbedatenabgleich]  
+  * [eXTraSterbedatenVerfahren Sterbedatenabgleich]  
