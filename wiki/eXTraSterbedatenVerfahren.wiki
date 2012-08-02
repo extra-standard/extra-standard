@@ -14,7 +14,6 @@
   * eXTra-Server: DSRV
 
 = Kommunikationsszenario =
-
   # Senden Fachverfahren Sterbedatenabgleich (Request - Response)
   # Abrufen Verarbeitungsergebnisse Fachverfahren Sterbedatenabgleich (Request - Response)
   # Bestätigung Verarbeitungsergebnisse Fachverfahren Sterbedatenabgleich (Request - Response)
