@@ -2,3 +2,15 @@
 
 = Sterbedatenaustausch zwischen DSRV und Deutsche Post Renten Service mit eXTra =
 
+*Inhaltsverzeichnis*
+<wiki:toc max_depth="1" />
+
+= Kommunikationsszenario =
+
+  # Senden Fachverfahren Sterbedatenabgleich (Request - Response)
+  # Abrufen Verarbeitungsergebnisse Fachverfahren Sterbedatenabgleich (Request - Response)
+  # Bestätigung Verarbeitungsergebnisse Fachverfahren Sterbedatenabgleich (Request - Response)
+  
+= Profilierung des eXTra-Schemas =
+  
+
