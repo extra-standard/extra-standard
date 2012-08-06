@@ -100,6 +100,7 @@
 								<value>eXTra-plugins-1.xsd</value>
 								<value>eXTra-request-1.xsd</value>
 								<value>eXTra-response-1.xsd</value>
+								<value>eXTra-error-1.xsd</value>
 							</schemaIncludes>
 							<bindingDirectory>src/main/xjb</bindingDirectory>
 							<bindingIncludes>
@@ -107,6 +108,7 @@
 								<include>binding-plugin.xjb</include>
 								<include>binding-request.xjb</include>
 								<include>binding-response.xjb</include>
+								<include>binding-error.xjb</include>
 							</bindingIncludes>
 							<extension>true</extension>
 							<generateDirectory>${basedir}/target/generated-sources/jaxb</generateDirectory>

@@ -10,6 +10,7 @@
 		<property name="mappings">
 			<props>
 				<prop key="http://www.extra-standard.de/namespace/response/1">xres</prop>
+				<prop key="http://www.extra-standard.de/namespace/error/1">xerr</prop>
 				<prop key="http://www.extra-standard.de/namespace/components/1">xcpt</prop>
 				<prop key="http://www.w3.org/2001/04/xmlenc#">xenc</prop>
 				<prop key="http://www.w3.org/2000/09/xmldsig#">ds</prop>

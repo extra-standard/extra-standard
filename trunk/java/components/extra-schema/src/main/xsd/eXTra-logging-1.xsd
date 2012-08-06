@@ -4,19 +4,23 @@
     
     @file    eXTra-logging-1.xsd
     @author  Michael Schäfer, Statistisches Bundesamt
-    @version 1.1.0
-    @state   FINAL
-    @date    2009-06-15
+    @version 1.3.0
+    @state   RELEASE
+    @date    2011-09-12
+    
+    @changed 2009-07-17 1.1 MS - Removed XHTML namespace
+    @changed 2009-07-17 1.2 MS / Updated version identifier
+    @changed 2011-09-12 1.3 MS / Set schema version to 1.3
+    
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
-    xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:xcpt="http://www.extra-standard.de/namespace/components/1"
     xmlns:xcode="http://www.extra-standard.de/namespace/codelists/1"
     xmlns="http://www.extra-standard.de/namespace/logging/1"
     targetNamespace="http://www.extra-standard.de/namespace/logging/1"
     attributeFormDefault="unqualified"
     elementFormDefault="qualified"
-    version="1.0.0">
+    version="1.3.0">
 
     <!-- Import eXTra code lists -->
     
@@ -161,20 +165,19 @@
             <xs:element ref="LogSequence" minOccurs="1" maxOccurs="1"/>
             <xs:element ref="LogStream" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
-        <xs:attribute name="version" use="required"/>
+        <!-- @changed 2007-07-17 1.1 MS / Added type attribute  -->
+        <xs:attribute name="version" type="LoggingVersionType" use="required"/>
     </xs:complexType>
-
-    <!-- Model and attribute groups -->
     
     <!--
-    <xs:group name="StateContentModel">
-        <xs:choice>
-            <xs:element ref="xcpt:NamedValue" minOccurs="1" maxOccurs="1" />
-            <xs:element ref="xcpt:XMLFragment" minOccurs="1" maxOccurs="1" />
-        </xs:choice>
-    </xs:group>
+        @created 2007-07-17 1.1 MS
+        @changed 2010-07-04 1.2 MS / Now derived from @{link xcpt:AbstractVersionType}
     -->
-    
+    <xs:simpleType name="LoggingVersionType">
+        <xs:restriction base="xcpt:AbstractVersionType">
+            <xs:enumeration value="1.0"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <!-- Element declarations -->
     
