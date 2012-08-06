@@ -3,111 +3,214 @@
     Schema module describing eXTra standard messages
     
     @file    eXTra-messages-1.xsd
-    @author  Michael Schäfer, Statistisches Bundesamt
-    @version 1.1.0
-    @state   FINAL
-    @date    2009-10-30
+    @author  [MS] Michael Schäfer, Statistisches Bundesamt
+    @version 1.3.0
+    @state   RELEASE
+    @date    2011-10-18
     
-    @changed 2009-10-30 1.1 MS + Added Attribute 'event' to AbstractArgumentType,
+    @changed 2009-10-30 1.1 MS + Added aribute 'event' to AbstractArgumentType,
                                + Added version identifier '1.1'
+    @changed 2009-11-02 1.1 MS + Added attribute 'event' to PropertyType,
+                               / Set attribute 'abstract' on AbstractArgumentType 
+                               + Added version identifier '1.2' 
+    @changed 2010-05-20 1.2 MS + Added type 'ListOfConfirmationOfReceiptType',
+                               + Added element 'ListOfConfirmationOfReceipt',
+                               + Added group 'ConfirmationOfReceiptModel',
+                               + Added Type 'ListOfDataRequestType',
+                               + Added element 'ListOfDataRequest',
+                               + Added group 'DataRequestModel'
+    @changed 2010-05-20 1.2 MS + Added type 'ListOfConfirmationOfReceiptType',
+                               - Removed 'AbstractMessageType'
+    @changed 2011-05-08 1.3 MS + Added type 'StatusRequestType',
+                               + Added type 'StatusRequestArgumentType',
+                               + Added type 'StatusRequestQueryType',
+                               + Added type 'StatusResponseType',
+                               + Added type 'ListOfStatusResponseType',
+                               / Added Request* values to PropertyNamesType
+                               / Renamed 'QueryType' to 'DataRequestQueryType'
+                               / Set schema version to '1.3.0'
+    @changed 2011-06-17 1.3 MS / Added Layer value to PropertyNamesType
+    @changed 2011-08-04 1.3 MS + Added Layer value to DataRequestPropertyNamesType 
+                               + Added Layer value to StatusRequestPropertyNamesType                               
+                               / DataRequestType: Changed version identifier to '1.2'
+    @changed 2011-10-18 1.3 MS / ListOfStatusResponseType: Corrected name of child element
+                                 to be 'StatusResponse'
+                               / DataRequestArgumentType: Element 'Argument' is optional
+                               / StatusRequestArgumentType: Element 'Argument' is optional
+                               / Extended version attributes to allow older versions.
+                                 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xmsg="http://www.extra-standard.de/namespace/message/1"
     xmlns="http://www.extra-standard.de/namespace/message/1"
     targetNamespace="http://www.extra-standard.de/namespace/message/1"
-    attributeFormDefault="unqualified" elementFormDefault="qualified"
-    version="1.1.0"
+    attributeFormDefault="unqualified"
+    elementFormDefault="qualified"
+    version="1.3.0"
     >
 
     <!-- Abstract base types -->
-    
+
     <!-- AbstractMessageType
         The abstract base type of any type that represents a message
         
         @changed 2009-10-30 1.1 MS + Added version identifier '1.1'
+        @changed 2010-02-21 1.2 MS + Added version identifier '1.2'
+        @deleted 2010-07-04 1.2 MS -
+            @{code %
+            <xs:complexType name="AbstractMessageType" abstract="true">
+                <xs:attribute name="version" use="required">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="1.0"/>
+                            <xs:enumeration value="1.1"/>
+                            <xs:enumeration value="1.2"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:complexType>
+            %}
     -->
-    <xs:complexType name="AbstractMessageType" abstract="true">
+
+    <!-- ListOfConfirmationOfReceiptType
+        Represents a list of messages for confirming that data has been received succesfully
+        @created 2010-05-20 1.0 MS
+        @changed 2011-10-05 1.1 MS Set version identifier to '1.1'
+    -->
+    <xs:complexType name="ListOfConfirmationOfReceiptType">
+        <xs:sequence>
+            <xs:element name="ConfirmationOfReceipt" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:group ref="ConfirmationOfReceiptModel" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
         <xs:attribute name="version" use="required">
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:enumeration value="1.0"/>
-                    <xs:enumeration value="1.1"/>
+                    <xs:enumeration value="1.0" />
+                    <xs:enumeration value="1.1" />
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
     </xs:complexType>
 
+    <!-- ==============================
+         Message: ConfirmationOfReceipt
+         ==============================
+    -->
+
     <!-- ConfirmationOfReceiptType
         Represents a message for confirming that data has been received succesfully
         @changed 2009-05-05 1.0 MS + Added element 'PropertySet'
+        @changed 2011-10-05 1.1 MS Set version identifier to '1.3'
+        
     -->
-
     <xs:complexType name="ConfirmationOfReceiptType">
-        <xs:complexContent>
-            <xs:extension base="AbstractMessageType">
-                <xs:sequence>
-                    <xs:element name="Property" type="PropertyType" maxOccurs="unbounded"/>
-                    <xs:element name="PropertySet" type="PropertySetType" minOccurs="0"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
+        <xs:sequence>
+            <xs:group ref="ConfirmationOfReceiptModel" />
+        </xs:sequence>
+        <xs:attribute name="version" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="1.0" />
+                    <xs:enumeration value="1.1" />
+                    <xs:enumeration value="1.2" />
+                    <xs:enumeration value="1.3" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
     </xs:complexType>
 
+    <!-- @created 2010-05-20 1.2 MS
+         @changed 2010-07-01 1.2 MS / Cardinality of Property changed to optional
+    -->
+    <xs:group name="ConfirmationOfReceiptModel">
+        <xs:sequence>
+            <xs:element name="Property" type="PropertyType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="PropertySet" type="PropertySetType" minOccurs="0" />
+        </xs:sequence>
+    </xs:group>
+
+    <!-- ==========================
+         Message: ListOfDataRequest
+         ==========================
+    -->
+
+    <!-- ListOfDataRequestType
+        Represents a list of data request messages
+        @since 2010-05-20 1.0 MS
+        @changed 2011-08-04 1.1 MS / Changed version identifier to '1.1'
+        
+    -->
+    <xs:complexType name="ListOfDataRequestType">
+        <xs:sequence>
+            <xs:element name="DataRequest" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:group ref="DataRequestModel" />
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="version" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="1.0" />
+                    <xs:enumeration value="1.1" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- ====================
+         Message: DataRequest
+         ====================
+    -->
     <!-- DataRequestType
          Represents a message for requesting the result of some business
          process that was triggered by a previous message
+         
+         @changed 2011-08-05 1.1 MS / Set version identifier to '1.2'
+         
     -->
-
     <xs:complexType name="DataRequestType">
-        <xs:complexContent>
-            <xs:extension base="AbstractMessageType">
-                <xs:sequence>
-                    <xs:element name="Query" type="QueryType"/>
-                    <xs:element name="Control" type="ControlType" minOccurs="0"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    
-    <!-- QueryType
-         Represents a query that selects requested objects by certain
-         criteria specified by argument elements.
-    -->
-    <xs:complexType name="QueryType">
         <xs:sequence>
-            <xs:element name="Argument" type="DataRequestArgumentType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:group ref="DataRequestModel" />
+        </xs:sequence>
+        <xs:attribute name="version" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="1.0" />
+                    <xs:enumeration value="1.1" />
+                    <xs:enumeration value="1.2" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- @created 2010-05-20 1.2 MS -->
+    <xs:group name="DataRequestModel">
+        <xs:sequence>
+            <xs:element name="Query" type="DataRequestQueryType" />
+            <xs:element name="Control" type="ControlType" minOccurs="0" />
+        </xs:sequence>
+    </xs:group>
+
+    <!-- DataRequestQueryType
+        Represents a data request query that selects requested objects by certain
+        criteria specified by argument elements.
+        
+        @changed 2011-10-18 1.3 MS / Element Argument is optional
+    -->
+    <xs:complexType name="DataRequestQueryType">
+        <xs:sequence>
+            <xs:element name="Argument" type="DataRequestArgumentType"
+                minOccurs="0" maxOccurs="unbounded"
+            />
         </xs:sequence>
     </xs:complexType>
-    
-    <!-- AbstractArgumentType
-        Defines an abstract base type for defining arguments of a query. An argument
-        is bound to a named property by a property attribute which must be supplied
-        by concrete types through extension. The name of the property takes the form
-        of a URI. The property's type can be specified through a type attribute whose
-        value references one of the XML Schema atomic types and defaults to xs:string.
-        
-        @changed 2009-10-30 1.1 MS + Added attribute 'event'
-    -->
-    <xs:complexType name="AbstractArgumentType">
-        <xs:choice>
-            <xs:element name="EQ" type="OperandType"/>
-            <xs:element name="LE" type="OperandType"/>
-            <xs:element name="LT" type="OperandType"/>
-            <xs:sequence>
-                <xs:choice>
-                    <xs:element name="GE" type="OperandType"/>
-                    <xs:element name="GT" type="OperandType"/>
-                </xs:choice>
-                <xs:choice minOccurs="0">
-                    <xs:element name="LE" type="OperandType"/>
-                    <xs:element name="LT" type="OperandType"/>
-                </xs:choice>
-            </xs:sequence>
-        </xs:choice>
-        <xs:attribute name="type" type="XSDPrefixedTypeCodes" default="xs:string"/>
-        <xs:attribute name="event" type="EventNamesType" default="http://www.extra-standard.de/event/Default"/>
-    </xs:complexType>
-    
+
     <!-- DataRequestArgumentType
         Defines a concrete type for arguments of a data request query, restricting
         argument names to those enumerated in  xs:string
@@ -115,82 +218,395 @@
     <xs:complexType name="DataRequestArgumentType">
         <xs:complexContent>
             <xs:extension base="AbstractArgumentType">
-                <xs:attribute name="property" type="DataRequestPropertyNamesType" use="required"/>
+                <xs:attribute name="property" type="DataRequestPropertyNamesType" use="required" />
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    
+
     <!-- DataRequestPropertyNamesType
         The names of the properties that may appear in a data request query.
         The names must consitute a subset (in XSD terms: a restriction) of the
         names defined in the type PropertyNamesType.
+        
+        @changed 2011-08-04 1.3 MS / Added Layer value to DataRequestPropertyNamesType
+        
     -->
     <xs:simpleType name="DataRequestPropertyNamesType">
         <xs:restriction base="PropertyNamesType">
-            <xs:enumeration value="http://www.extra-standard.de/property/SenderID"/>
-            <xs:enumeration value="http://www.extra-standard.de/property/ReceiverID"/>
-            <xs:enumeration value="http://www.extra-standard.de/property/Procedure"/>
-            <xs:enumeration value="http://www.extra-standard.de/property/DataType"/>
-            <xs:enumeration value="http://www.extra-standard.de/property/ResponseID"/>
-            <xs:enumeration value="http://www.extra-standard.de/property/ResponseCreationTimeStamp"/>
-            <xs:enumeration value="http://www.extra-standard.de/property/ResponseFileName"/>
+            <xs:pattern value="http://www.extra-standard.de/property/(SenderID|ReceiverID|Procedure|DataType|ResponseID|ResponseCreationTimeStamp|ResponseFileName|Layer)"/>
+            <xs:pattern value=".+"/>
+            <!--
+            @deleted 2010-07-04 1.2 MS -
+            @{code %
+            <xs:enumeration value="http://www.extra-standard.de/property/SenderID" />
+            <xs:enumeration value="http://www.extra-standard.de/property/ReceiverID" />
+            <xs:enumeration value="http://www.extra-standard.de/property/Procedure" />
+            <xs:enumeration value="http://www.extra-standard.de/property/DataType" />
+            <xs:enumeration value="http://www.extra-standard.de/property/ResponseID" />
+            <xs:enumeration value="http://www.extra-standard.de/property/ResponseCreationTimeStamp" />
+            <xs:enumeration value="http://www.extra-standard.de/property/ResponseFileName" />
+            <xs:enumeration value="http://www.extra-standard.de/property/Layer"/>
+            -->
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- ======================
+         Message: StatusRequest
+         ======================
+    -->
+
+    <!-- @created 2011-05-08 1.3 MS -->
+    <xs:complexType name="StatusRequestType">
+        <xs:sequence>
+            <xs:element name="Query" type="StatusRequestQueryType" />
+            <xs:element name="Control" type="ControlType" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute name="version" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="1.0" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- 
+        Represents a status request query that selects requested objects by certain
+        criteria specified by argument elements.
+        @created 2011-10-18 1.3 MS
+    -->
+    <xs:complexType name="StatusRequestQueryType">
+        <xs:sequence>
+            <xs:element name="Argument" type="StatusRequestArgumentType"
+                minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--
+        Defines a concrete type for arguments of a data request query, restricting
+        argument names to those enumerated in  xs:string
+        @created 2011-05-08 1.3 MS
+    -->
+    <xs:complexType name="StatusRequestArgumentType">
+        <xs:complexContent>
+            <xs:extension base="AbstractArgumentType">
+                <xs:attribute name="property" type="StatusRequestPropertyNamesType" use="required"
+                 />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- @created 2011-05-08 1.3 MS
+        The names of the properties that may appear in a data request query.
+        The names must consitute a subset (in XSD terms: a restriction) of the
+        names defined in the type PropertyNamesType.
+        
+        @changed 2011-078-22 1.3.0 MS Allowed specification of abritrary URIs
+    -->
+    <xs:simpleType name="StatusRequestPropertyNamesType">
+        <xs:restriction base="PropertyNamesType">
+            <xs:pattern value="http://www.extra-standard.de/property/(SenderID|ReceiverID|Procedure|DataType|RequestID|RequestCreationTimeStamp|RequestFileName|ResponseID|ResponseCreationTimeStamp|ResponseFileName|Layer)"/>
+            <xs:pattern value=".+"/>
+            <!--
+            @deleted 2010-07-04 1.2 MS -
+            @{code %
+            <xs:enumeration value="http://www.extra-standard.de/property/SenderID" />
+            <xs:enumeration value="http://www.extra-standard.de/property/ReceiverID" />
+            <xs:enumeration value="http://www.extra-standard.de/property/Procedure" />
+            <xs:enumeration value="http://www.extra-standard.de/property/DataType" />
+            <xs:enumeration value="http://www.extra-standard.de/property/RequestID" />
+            <xs:enumeration value="http://www.extra-standard.de/property/RequestCreationTimeStamp" />
+            <xs:enumeration value="http://www.extra-standard.de/property/RequestFileName" />
+            <xs:enumeration value="http://www.extra-standard.de/property/ResponseID" />
+            <xs:enumeration value="http://www.extra-standard.de/property/ResponseCreationTimeStamp" />
+            <xs:enumeration value="http://www.extra-standard.de/property/ResponseFileName" />
+            <xs:enumeration value="http://www.extra-standard.de/property/Layer"/>
+            %}
+            -->
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- =======================
+         Message: StatusResponse
+         =======================
+    -->
+
+    <!-- @created 2011-05-08 1.3 MS -->
+    <xs:complexType name="StatusResponseType">
+        <xs:sequence>
+            <xs:element name="Property" type="StatusResponsePropertyType" maxOccurs="unbounded" />
+            <xs:element name="Trace" type="TraceType" />
+        </xs:sequence>
+        <xs:attribute name="version" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="1.0" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- @created 2011-05-08 1.3 MS -->
+    <xs:complexType name="StatusResponsePropertyType">
+        <xs:sequence>
+            <xs:element name="Value" type="ValueType" />
+        </xs:sequence>
+        <xs:attribute name="name" type="StatusRequestPropertyNamesType" use="required" />
+        <xs:attribute name="type" type="XSDPrefixedTypeCodes" default="xs:string" />
+        <xs:attribute name="event" type="EventNamesType"
+            default="http://www.extra-standard.de/event/Default" />
+    </xs:complexType>
+
+    <!--
+        @changed 2011-08-25 1.3.0 MS Removed element Result
+    -->
+    <xs:complexType name="TraceType">
+        <xs:sequence>
+            <xs:element name="Checkpoint" type="CheckpointType" maxOccurs="unbounded"/>
+            <!-- @code { %
+            <xs:element name="Result" type="ResultType"/>
+            % } -->
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- @created 2011-05-08 1.3 MS
+        @changed 2011-08-22 1.3.0 MS Replaced attributes with elements
+    -->
+    <xs:complexType name="CheckpointType">
+        <xs:sequence>
+            <xs:element name="Layer" type="ExtraLayerNamesType"/>
+            <xs:element name="Status" type="StatusNamesType"/>
+            <xs:element name="Timestamp" type="xs:dateTime"/>
+            <xs:element name="Report" type="ReportType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- @created 2011-08-22 1.3.0 MS
+         @deleted 2011-08-25 1.3.0 MS
+        <xs:complexType name="ResultType">
+            <xs:sequence>
+                <xs:element name="Flag" type="FlagType"/>
+            </xs:sequence>
+        </xs:complexType>
+    -->
+    
+    <!-- @created 2011-05-08 1.3 MS -->
+    <xs:simpleType name="ExtraLayerNamesType">
+        <xs:restriction base="xs:anyURI">
+            <xs:enumeration value="http://www.extra-standard.de/layer/Transport" />
+            <xs:enumeration value="http://www.extra-standard.de/layer/Package" />
+            <xs:enumeration value="http://www.extra-standard.de/layer/Message" />
+            <xs:enumeration value="http://www.extra-standard.de/layer/Application" />
+            <xs:enumeration value="http://www.extra-standard.de/layer/Delivery" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- @created 2011-05-08 1.3 MS
+        @changed 2011-08-25 1.3.0 MS Changed FINISHED to COMPLETED
+    -->
+    <xs:simpleType name="StatusNamesType">
+        <xs:restriction base="xs:anyURI">
+            <xs:enumeration value="http://www.extra-standard.de/status/ACCEPTED" />
+            <xs:enumeration value="http://www.extra-standard.de/status/PROCESSING" />
+            <xs:enumeration value="http://www.extra-standard.de/status/COMPLETED" />
+            <xs:enumeration value="http://www.extra-standard.de/status/CONFIRMED" />
+            <xs:enumeration value="http://www.extra-standard.de/status/FAILED" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- @created 2011-08-25 1.3.0 MS
+    -->
+    <xs:complexType name="ReportType">
+        <xs:sequence>
+            <xs:element name="Flag" type="FlagType" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="highestWeight" type="WeightCodeType" use="required"/>
+    </xs:complexType>
+    
+    <xs:complexType name="FlagType">
+        <xs:sequence>
+            <xs:element name="Code" type="FlagCodeType" minOccurs="1" maxOccurs="1" />
+            <xs:element name="Text" type="TextType" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="weight" type="WeightCodeType" use="required"/>
+    </xs:complexType>
+    
+    <xs:complexType name="FlagCodeType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string" />
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <xs:complexType name="TextType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string" />
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <xs:simpleType name="WeightCodeType">
+        <xs:annotation>
+            <xs:documentation>
+                A list of extensible codes denoting the weight of a flag in a response' processing report.
+                Base values:
+                - http://www.extra-standard.de/weight/OK
+                - http://www.extra-standard.de/weight/INFO
+                - http://www.extra-standard.de/weight/WARNING
+                - http://www.extra-standard.de/weight/ERROR
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:anyURI">
+            <xs:pattern value="http://www.extra-standard.de/weight/(OK|INFO|WARNING|ERROR)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
         </xs:restriction>
     </xs:simpleType>
     
+    <!-- ============================
+        Message: ListOfStatusResponse
+        =============================
+    -->
+
+    <!-- @created 2011-05-08 1.3 MS -->
+    <xs:complexType name="ListOfStatusResponseType">
+        <xs:sequence>
+            <xs:element name="StatusResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Property" type="StatusResponsePropertyType" />
+                        <xs:element name="Trace" type="TraceType" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="version" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="1.0" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- ============
+         Common types
+         ============
+    -->
+    <!-- AbstractArgumentType
+        Defines an abstract base type for defining arguments of a query. An argument
+        is bound to a named property by a property attribute which must be supplied
+        by concrete types through extension. The name of the property takes the form
+        of a URI. The property's type can be specified through a type attribute whose
+        value references one of the XML Schema atomic types and defaults to xs:string.
+         
+        @changed 2009-10-30 1.1 MS + Added attribute 'event'
+        @changed 2009-11-02 1.1 MS + Set attribute 'abstract' to 'true'
+        @changed 2011-06-21 1.3 MS + Added element 'IN'
+    -->
+    <xs:complexType name="AbstractArgumentType" abstract="true">
+        <xs:choice>
+            <xs:element name="EQ" type="OperandType" />
+            <xs:element name="LE" type="OperandType" />
+            <xs:element name="LT" type="OperandType" />
+            <xs:sequence>
+                <xs:choice>
+                    <xs:element name="GE" type="OperandType" />
+                    <xs:element name="GT" type="OperandType" />
+                </xs:choice>
+                <xs:choice minOccurs="0">
+                    <xs:element name="LE" type="OperandType" />
+                    <xs:element name="LT" type="OperandType" />
+                </xs:choice>
+            </xs:sequence>
+            <xs:element name="IN" type="OperandSetType"/>
+        </xs:choice>
+        <xs:attribute name="type" type="XSDPrefixedTypeCodes" default="xs:string" />
+        <xs:attribute name="event" type="EventNamesType"
+            default="http://www.extra-standard.de/event/Default" />
+    </xs:complexType>
+
+    <!-- OperandSetType
+        
+        @created 2011-06-21 1.3 MS
+    -->
+    <xs:complexType name="OperandSetType">
+        <xs:sequence>
+            <xs:element name="EQ" type="OperandType" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="OperandType">
         <xs:simpleContent>
-            <xs:extension base="xs:string"/>
+            <xs:extension base="xs:string" />
         </xs:simpleContent>
     </xs:complexType>
 
+    <!-- PropertyType
+        @changed 2009-11-02 1.1 MS + Added attribute 'event'
+    -->
     <xs:complexType name="PropertyType">
         <xs:sequence>
-            <xs:element name="Value" type="ValueType"/>
+            <xs:element name="Value" type="ValueType" />
         </xs:sequence>
-        <xs:attribute name="name" type="PropertyNamesType" use="required"/>
-        <xs:attribute name="type" type="XSDPrefixedTypeCodes" default="xs:string"/>
+        <xs:attribute name="name" type="PropertyNamesType" use="required" />
+        <xs:attribute name="type" type="XSDPrefixedTypeCodes" default="xs:string" />
+        <xs:attribute name="event" type="EventNamesType"
+            default="http://www.extra-standard.de/event/Default" />
     </xs:complexType>
-    
+
     <!--
-        @added 2009-05-05 1.0 MS 
+        @created 2009-05-05 1.0 MS 
+        @changed 2010-05-20 1.2 MS + Addrd attribute 'event'
     -->
     <xs:complexType name="PropertySetType">
         <xs:sequence>
-            <xs:element name="Value" type="ValueType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="Value" type="ValueType" minOccurs="1" maxOccurs="unbounded" />
         </xs:sequence>
-        <xs:attribute name="name" type="PropertyNamesType" use="required"/>
-        <xs:attribute name="type" type="XSDPrefixedTypeCodes" default="xs:string"/>
+        <xs:attribute name="name" type="PropertyNamesType" use="required" />
+        <xs:attribute name="type" type="XSDPrefixedTypeCodes" default="xs:string" />
+        <xs:attribute name="event" type="EventNamesType" />
     </xs:complexType>
-    
+
+
+    <!--
+        @changed 2011-06-17 1.2 MS + Added value 'Layer'
+    -->
     <xs:simpleType name="PropertyNamesType">
         <xs:restriction base="xs:anyURI">
-            <xs:enumeration value="http://www.extra-standard.de/property/SenderID"/>
-            <xs:enumeration value="http://www.extra-standard.de/property/ReceiverID"/>
-            <xs:enumeration value="http://www.extra-standard.de/property/Procedure"/>
-            <xs:enumeration value="http://www.extra-standard.de/property/DataType"/>
-            <xs:enumeration value="http://www.extra-standard.de/property/ResponseID"/>
-            <xs:enumeration value="http://www.extra-standard.de/property/ResponseCreationTimeStamp"/>
-            <xs:enumeration value="http://www.extra-standard.de/property/ResponseFileName"/>
+            <xs:pattern value="http://www.extra-standard.de/property/(SenderID|ReceiverID|Procedure|DataType|RequestID|RequestCreationTimeStamp|RequestFileName|ResponseID|ResponseCreationTimeStamp|ResponseFileName|Layer)"/>
+            <xs:pattern value=".+"/>
+            <!--
+            @deleted 2010-07-04 1.2 MS -
+            @{code %
+            <xs:enumeration value="http://www.extra-standard.de/property/SenderID" />
+            <xs:enumeration value="http://www.extra-standard.de/property/ReceiverID" />
+            <xs:enumeration value="http://www.extra-standard.de/property/Procedure" />
+            <xs:enumeration value="http://www.extra-standard.de/property/DataType" />
+            <xs:enumeration value="http://www.extra-standard.de/property/RequestID" />
+            <xs:enumeration value="http://www.extra-standard.de/property/RequestCreationTimeStamp" />
+            <xs:enumeration value="http://www.extra-standard.de/property/RequestFileName" />
+            <xs:enumeration value="http://www.extra-standard.de/property/ResponseID" />
+            <xs:enumeration value="http://www.extra-standard.de/property/ResponseCreationTimeStamp" />
+            <xs:enumeration value="http://www.extra-standard.de/property/ResponseFileName" />
+            <xs:enumeration value="http://www.extra-standard.de/property/Layer" />
+            -->
         </xs:restriction>
     </xs:simpleType>
 
     <!--
-        @added 2009-10-30 1.1 MS The set of predefined event names 
+        @created 2009-10-30 1.1 MS The set of predefined event names 
     -->
     <xs:simpleType name="EventNamesType">
         <xs:restriction base="xs:anyURI">
-            <xs:enumeration value="http://www.extra-standard.de/event/Default"/>
-            <xs:enumeration value="http://www.extra-standard.de/event/SendData"/>
-            <xs:enumeration value="http://www.extra-standard.de/event/RequestData"/>
+            <xs:enumeration value="http://www.extra-standard.de/event/Default" />
+            <xs:enumeration value="http://www.extra-standard.de/event/SendData" />
+            <xs:enumeration value="http://www.extra-standard.de/event/RequestData" />
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:complexType name="ValueType">
         <xs:simpleContent>
-            <xs:extension base="xs:string"/> 
+            <xs:extension base="xs:string" />
         </xs:simpleContent>
     </xs:complexType>
-    
+
     <!-- 
          @removed 2009-07-17 MS Unused
 
@@ -209,105 +625,121 @@
     -->
     <xs:complexType name="ControlType">
         <xs:sequence>
-            <xs:element name="MaximumPackages" type="xs:positiveInteger" minOccurs="0"/>
-            <xs:element name="MaximumMessages" type="xs:positiveInteger" minOccurs="0"/>
-            <xs:element name="MaximumSize" type="SpaceSizeType" minOccurs="0"/>
+            <xs:element name="MaximumPackages" type="xs:positiveInteger" minOccurs="0" />
+            <xs:element name="MaximumMessages" type="xs:positiveInteger" minOccurs="0" />
+            <xs:element name="MaximumResults" type="xs:positiveInteger" minOccurs="0" />
+            <xs:element name="MaximumSize" type="SpaceSizeType" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
-    
+
     <!--
         Defines a type for specifiying (disk or memory) space size. A size specification
         consists of an integer part immediately followed by a unit identifier. The integer
         part MUST evaluate to an value > 0. The unit is identified by one of the following
-        letters: B (bytes), K (kilobytes), M (megabytes) and G (gigabytes).
+        upper-case letters: B (bytes), K (kilobytes), M (megabytes) and G (gigabytes).
         
         Examples: 4096B, 512K, 16M, 2G.
         
-        @added 2009-07-15 MS 
+        @created 2009-07-15 MS 
     -->
     <xs:simpleType name="SpaceSizeType">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[0-9]*[1-9][0-9]*[BKMG]"/>
+            <xs:pattern value="[0-9]*[1-9][0-9]*[BKMG]" />
         </xs:restriction>
     </xs:simpleType>
 
     <xs:simpleType name="XSDPrefixedTypeCodes">
         <xs:annotation>
-            <xs:documentation>
-                A list of prefixed XSD atomic type names
-            </xs:documentation>
+            <xs:documentation> A list of prefixed XSD atomic type names </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:QName">
 
             <!-- Strings and names -->
 
-            <xs:enumeration value="xs:string"/>
-            <xs:enumeration value="xs:normalizedString"/>
-            <xs:enumeration value="xs:token"/>
-            <xs:enumeration value="xs:Name"/>
-            <xs:enumeration value="xs:NCName"/>
-            <xs:enumeration value="xs:QName"/>
-            <xs:enumeration value="xs:language"/>
+            <xs:enumeration value="xs:string" />
+            <xs:enumeration value="xs:normalizedString" />
+            <xs:enumeration value="xs:token" />
+            <xs:enumeration value="xs:Name" />
+            <xs:enumeration value="xs:NCName" />
+            <xs:enumeration value="xs:QName" />
+            <xs:enumeration value="xs:language" />
 
             <!-- Numeric -->
 
-            <xs:enumeration value="xs:float"/>
-            <xs:enumeration value="xs:double"/>
-            <xs:enumeration value="xs:decimal"/>
-            <xs:enumeration value="xs:integer"/>
-            <xs:enumeration value="xs:long"/>
-            <xs:enumeration value="xs:int"/>
-            <xs:enumeration value="xs:short"/>
-            <xs:enumeration value="xs:byte"/>
-            <xs:enumeration value="xs:positiveInteger"/>
-            <xs:enumeration value="xs:nonPositiveInteger"/>
-            <xs:enumeration value="xs:negativeInteger"/>
-            <xs:enumeration value="xs:nonNegativeInteger"/>
-            <xs:enumeration value="xs:unsignedLong"/>
-            <xs:enumeration value="xs:unsignedInt"/>
-            <xs:enumeration value="xs:unsignedShort"/>
-            <xs:enumeration value="xs:unsignedByte"/>
+            <xs:enumeration value="xs:float" />
+            <xs:enumeration value="xs:double" />
+            <xs:enumeration value="xs:decimal" />
+            <xs:enumeration value="xs:integer" />
+            <xs:enumeration value="xs:long" />
+            <xs:enumeration value="xs:int" />
+            <xs:enumeration value="xs:short" />
+            <xs:enumeration value="xs:byte" />
+            <xs:enumeration value="xs:positiveInteger" />
+            <xs:enumeration value="xs:nonPositiveInteger" />
+            <xs:enumeration value="xs:negativeInteger" />
+            <xs:enumeration value="xs:nonNegativeInteger" />
+            <xs:enumeration value="xs:unsignedLong" />
+            <xs:enumeration value="xs:unsignedInt" />
+            <xs:enumeration value="xs:unsignedShort" />
+            <xs:enumeration value="xs:unsignedByte" />
 
             <!-- Date and time -->
 
-            <xs:enumeration value="xs:duration"/>
-            <xs:enumeration value="xs:dateTime"/>
-            <xs:enumeration value="xs:date"/>
-            <xs:enumeration value="xs:time"/>
-            <xs:enumeration value="xs:gYear"/>
-            <xs:enumeration value="xs:gMonth"/>
-            <xs:enumeration value="xs:gYearMonth"/>
-            <xs:enumeration value="xs:gMonthDay"/>
-            <xs:enumeration value="xs:gDay"/>
+            <xs:enumeration value="xs:duration" />
+            <xs:enumeration value="xs:dateTime" />
+            <xs:enumeration value="xs:date" />
+            <xs:enumeration value="xs:time" />
+            <xs:enumeration value="xs:gYear" />
+            <xs:enumeration value="xs:gMonth" />
+            <xs:enumeration value="xs:gYearMonth" />
+            <xs:enumeration value="xs:gMonthDay" />
+            <xs:enumeration value="xs:gDay" />
 
             <!-- legacy types -->
 
-            <xs:enumeration value="xs:ID"/>
-            <xs:enumeration value="xs:IDREF"/>
-            <xs:enumeration value="xs:IDREFS"/>
-            <xs:enumeration value="xs:ENTITY"/>
-            <xs:enumeration value="xs:ENITIES"/>
-            <xs:enumeration value="xs:NMTOKEN"/>
-            <xs:enumeration value="xs:NMTOKENS"/>
-            <xs:enumeration value="xs:NOTATION"/>
+            <xs:enumeration value="xs:ID" />
+            <xs:enumeration value="xs:IDREF" />
+            <xs:enumeration value="xs:IDREFS" />
+            <xs:enumeration value="xs:ENTITY" />
+            <xs:enumeration value="xs:ENITIES" />
+            <xs:enumeration value="xs:NMTOKEN" />
+            <xs:enumeration value="xs:NMTOKENS" />
+            <xs:enumeration value="xs:NOTATION" />
 
             <!-- Other -->
 
-            <xs:enumeration value="xs:boolean"/>
-            <xs:enumeration value="xs:hexBinary"/>
-            <xs:enumeration value="xs:base64Binary"/>
-            <xs:enumeration value="xs:anyURI"/>
+            <xs:enumeration value="xs:boolean" />
+            <xs:enumeration value="xs:hexBinary" />
+            <xs:enumeration value="xs:base64Binary" />
+            <xs:enumeration value="xs:anyURI" />
 
             <!-- Undefined -->
 
-            <xs:enumeration value="xmsg:UNDEFINED"/>
+            <xs:enumeration value="xmsg:UNDEFINED" />
 
         </xs:restriction>
     </xs:simpleType>
 
     <!-- Messages -->
 
-    <xs:element name="ConfirmationOfReceipt" type="ConfirmationOfReceiptType"/>
-    <xs:element name="DataRequest" type="DataRequestType"/>
+    <xs:element name="ConfirmationOfReceipt" type="ConfirmationOfReceiptType" />
+
+    <!-- @created 2010-05-20 1.2 MS -->
+    <xs:element name="ListOfConfirmationOfReceipt" type="ListOfConfirmationOfReceiptType" />
+
+    <xs:element name="DataRequest" type="DataRequestType" />
+
+    <!-- @created 2010-05-20 1.2 MS -->
+    <xs:element name="ListOfDataRequest" type="ListOfDataRequestType" />
+
+    <!-- @created 2011-05-08 1.3 MS -->
+    <xs:element name="StatusRequest" type="StatusRequestType" />
+
+    <!-- @created 2011-05-08 1.3 MS -->
+    <xs:element name="StatusResponse" type="StatusResponseType" />
+
+    <!-- @created 2011-05-08 1.3 MS -->
+    <xs:element name="ListOfStatusResponse" type="ListOfStatusResponseType" />
+
 
 </xs:schema>

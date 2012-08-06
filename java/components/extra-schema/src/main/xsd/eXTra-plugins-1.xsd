@@ -3,27 +3,37 @@
     Schema module describing eXTra plugins and associated components
     
     @file    eXTra-plugins-1.xsd
-    @author  Michael Schäfer, Statistisches Bundesamt
-    @version 1.1.0
-    @state   DRAFT
-    @date    2009-06-15
+    @author  [MS] Michael Schäfer, Statistisches Bundesamt
+    @version 1.2.0
+    @state   RELEASE
+    @date    2011-09-12
+    
+    @changed 2011-09-12 1.3 MS / Set @state to RELEASE
+    
 -->
 <xs:schema
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:xcode="http://www.extra-standard.de/namespace/codelists/1"
+    xmlns:xcpt="http://www.extra-standard.de/namespace/components/1"
     xmlns="http://www.extra-standard.de/namespace/plugins/1"
     targetNamespace="http://www.extra-standard.de/namespace/plugins/1"
     attributeFormDefault="unqualified"
     elementFormDefault="qualified"
-    version="1.1.0">
+    version="1.2.0">
 
     <!-- Import of code list declarations -->
-
+    
     <xs:import namespace="http://www.extra-standard.de/namespace/codelists/1"
         schemaLocation="eXTra-codelists-1.xsd"/>
-
-    <!-- DataTransforms -->
+    
+    <!-- Import of code list declarations -->
+    
+    <xs:import namespace="http://www.extra-standard.de/namespace/components/1"
+        schemaLocation="eXTra-components-1.xsd"/>
+    
+    <!-- DataTransforms
+        @changed 2010-07-04 1.2 MS + Added attribute @{link version} with value '1.2'
+    -->
 
     <xs:complexType name="DataTransformsType">
         <xs:complexContent>
@@ -36,25 +46,114 @@
                     <xs:element name="Signature" type="SignatureType" minOccurs="0"
                         maxOccurs="unbounded"/>
                 </xs:sequence>
+                <xs:attribute name="version">
+                    <xs:simpleType>
+                        <xs:restriction base="xcpt:AbstractVersionType">
+                            <xs:enumeration value="1.2"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
     
     <!-- AbstractTransformType
-        An abstract base type for defining types decribing some sort of transform.
-        Attribute 'order' is taken over unchanged from version 1.0, but has slightly
-        changed its semantics if used together with element 'TransformedData'. Instead
-        of indicating the order of transforms it then serves as a transform id, and
-        the order of transforms is specified the 'transfroms' attribute of element
-        'TransformedData'. However, without 'TransformedData', the behaviour is the
-        same as in version 1.0. 
+        An abstract base type for defining types describing some sort of transform.
+        Attribute 'order' remains syntactically unchanged in version 1.1, but its
+        semantics differ when used in conjunction with element 'TransformedData'.
+        The content of attribute 'order' is then interpreted as an identifier of a
+        transform rather than an index into a sequence of transforms, meaning that
+        it does no longer specify the order in which transforms were performed on
+        the data.
+        Transform ids are placed inside the attribute TransformedData/@transfroms'
+        in the order in which the transforms were applied to the data. Conversely,
+        the order of transforms can be derived from the order of ids placed in the
+        'transforms' attribute.
         
-        @created 2009-05-04 MS
+        When not used together with 'TransformedData', the semantics of attribute
+        'order' are the same as in version 1.0. 
+        
+        @created 2009-05-04 1.1 MS
+        @changed 2009-07-17 1.1 MS / Made type abstract
     -->
-    <xs:complexType name="AbstractTransformType">
+    <xs:complexType name="AbstractTransformType" abstract="true">
         <xs:attribute name="order" type="xs:positiveInteger" use="required"/>
     </xs:complexType>
-
+    
+    <!-- Certificates
+        @changed 2010-07-04 1.2 MS + Added attribute @{link version} with value '1.0'
+    -->
+    <xs:complexType name="CertificatesType">
+        <xs:complexContent>
+            <xs:extension base="AbstractPlugInType">
+                <xs:sequence>
+                    <xs:element name="X509EncCertificate" type="X509CertificateType"
+                        minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+                <xs:attribute name="version">
+                    <xs:simpleType>
+                        <xs:restriction base="xcpt:AbstractVersionType">
+                            <xs:enumeration value="1.0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    
+    <!-- ContactsType
+        @created 2010-06-29 1.2 MS
+        @changed 2010-07-04 1.2 MS + Added attribute @{link version} with value '1.0'
+    -->
+    <xs:complexType name="ContactsType">
+        <xs:complexContent>
+            <xs:extension base="AbstractPlugInType">
+                <xs:sequence>
+                    <xs:element name="SenderContact" type="ContactType"
+                        minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+                <xs:attribute name="version">
+                    <xs:simpleType>
+                        <xs:restriction base="xcpt:AbstractVersionType">
+                            <xs:enumeration value="1.0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <!-- ContactType
+        @created 2010-06-29 MS
+    -->
+    <xs:complexType name="ContactType">
+        <xs:sequence>
+            <xs:element name="Endpoint" type="EndpointType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="usageHint" type="UsageHintType"/>
+    </xs:complexType>
+    
+    <!-- EndpointType
+        @created 2010-06-29 MS
+    -->
+    <xs:complexType name="EndpointType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="type" type="EndpointTypeType" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <!-- EndpointTypeType
+        @created 2010-05-20 MS
+    -->
+    <xs:simpleType name="EndpointTypeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SMTP"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
     <!-- CompressionType
         @changed 2009-05-04 MS / Now derived from ref:AbstractTransformType
                                  Moved attribute 'order' to ref:AbstractTransformType
@@ -90,12 +189,15 @@
     <!-- SignatureType
         @changed 2009-05-04 MS / Now derived from ref:AbstractTransformType
                                  Moved attribute 'order' to ref:AbstractTransformType
+        @changed 2009-06-29 MS + Added element @{link X509Certificate}
     -->
     <xs:complexType name="SignatureType">
         <xs:complexContent>
             <xs:extension base="AbstractTransformType">
                 <xs:sequence>
                     <xs:element name="Algorithm" type="SignatureAlgorithmType"/>
+                    <xs:element name="X509Certificate" type="X509CertificateType"
+                        minOccurs="0"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -126,10 +228,10 @@
     </xs:complexType>
     
     <!-- TransformedDataType
-        Represents transformed as a base64 string. The 'id' attributes carries a list
-        of ids that point to transforms described in a DataTransforms plugin that resides
-        in the same document, package or message object. The ids must appear in the
-        order in which the transforms were applied to the data.
+        Represents transformed data as a base64 string. The 'transforms' attributes holds a
+        list of ids that point to transforms described in a DataTransforms plugin that resides
+        in the same document, package or message object. The ids must appear in the order in
+        which the transforms were applied to the data.
         
         @created 2009-05-04 MS
     -->
@@ -147,10 +249,10 @@
     
     <!-- TransformIDType
         Defines a data type for transform ids. Currently, a transform id must be an integer value
-        for compatibility with the use of the ref:AbstractTransformType/@order attribute established
-        in version 1.0. This will remain so for all version 1.x. In a future version beginning with
-        2.0, the ref:AbstractTransformType/@order may be replaced with ref:AbstractTransformType/@id,
-        and the data type may be extended to accommodate a wider range of values.
+        for compatibility with the use of the @{link AbstractTransformType/@order} attribute
+        established in version 1.0. This will remain so for all versions 1.x. From version
+        2.0 on, this attribute will be replaced with @{link AbstractTransformType/@id}, and
+        the type will be extended to accommodate a wider range of values.
         
         @created 2009-05-04 MS
     -->
@@ -158,7 +260,9 @@
         <xs:restriction base="xs:integer"/>
     </xs:simpleType>
     
-    <!-- DataSource -->
+    <!-- DataSource
+        @changed 2010-07-04 MS + Added attribute @{link version} with value '1.0'
+    -->
 
     <xs:complexType name="DataSourceType">
         <xs:complexContent>
@@ -166,6 +270,13 @@
                 <xs:sequence>
                     <xs:element name="DataContainer" type="DataContainerType"/>
                 </xs:sequence>
+                <xs:attribute name="version">
+                    <xs:simpleType>
+                        <xs:restriction base="xcpt:AbstractVersionType">
+                            <xs:enumeration value="1.0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -186,34 +297,42 @@
         <xs:attribute name="lastModified" type="xs:dateTime" use="optional"/>
     </xs:complexType>
 
-    <!-- Certificates -->
-
-    <xs:complexType name="CertificatesType">
-        <xs:complexContent>
-            <xs:extension base="AbstractPlugInType">
-                <xs:sequence>
-                    <xs:element name="X509EncCertificate" type="X509CertificateType"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="X509CertificateType">
+    <!--
+        @created 2010-05-20 MS
+    -->
+    <xs:complexType name="AbstractX509CertificateType" abstract="true">
         <xs:sequence>
             <xs:element name="Value" type="xs:base64Binary"/>
         </xs:sequence>
     </xs:complexType>
     
+    <!--
+        @changed 2010-05-20 MS / Now derived from @{link AbstractX509CertificateType}
+    -->
+    <xs:complexType name="X509CertificateType">
+        <xs:complexContent>
+            <xs:extension base="AbstractX509CertificateType"/>
+        </xs:complexContent>
+    </xs:complexType>
+    
     <!-- Miscellaneous -->
+    
+    <!--  AbstractPlugInType
+        @changed 2010-07-04 1.2 MS - Removed attribute version for allowing plug-in specific values
+    -->
 
     <xs:complexType name="AbstractPlugInType" abstract="true">
-        <xs:attribute name="version" use="required">
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:pattern value="[1-9][0-9]*.[0-9]+"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
+        <!-- @deleted 2010-07-04 1.2 MS
+             @{code %
+            <xs:attribute name="version" use="required">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[1-9][0-9]*.[0-9]+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            %}
+        -->
     </xs:complexType>
 
     <xs:complexType name="AbstractAlgorithmType" abstract="true">
@@ -233,6 +352,13 @@
     <xs:complexType name="DataType">
         <xs:attribute name="bytes" type="xs:nonNegativeInteger" use="required"/>
     </xs:complexType>
+    
+    <!--
+        @created 2010-05-20 MS
+    -->
+    <xs:simpleType name="UsageHintType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
 
     <!-- PlugIn root elements -->
     
@@ -245,35 +371,49 @@
     <!-- Certificates -->
     <xs:element name="Certificates" type="CertificatesType"/>
     
+    <!-- Contacts
+        @created 2010-06-29 MS
+    -->
+    <xs:element name="Contacts" type="ContactsType"/>
+    
     <!-- ===================== -->
     <!-- Deprecated components --> 
     <!-- ===================== -->
     
     <!-- CommunicationType
-        @state DEPRECATED 1.1
+        @deprecated 1.1 MS
+        @deleted 1.2 MS
+        @{code %
+        <xs:complexType name="CommunicationType">
+            <xs:complexContent>
+                <xs:extension base="AbstractPlugInType">
+                    <xs:sequence>
+                        <xs:element name="X509ReplyCertificate" type="X509ReplyCertificateType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    %}
     -->
-    <xs:complexType name="CommunicationType">
-        <xs:complexContent>
-            <xs:extension base="AbstractPlugInType">
-                <xs:sequence>
-                    <xs:element name="X509ReplyCertificate" type="X509ReplyCertificateType"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
     
     <!-- X509ReplyCertificateType
-        @state DEPRECATED 1.1
+        @deprecated 1.1 MS
+        @deleted 1.2 MS
+        @{code %
+        <xs:complexType name="X509ReplyCertificateType">
+            <xs:sequence>
+                <xs:element name="Value" type="xs:base64Binary"/>
+            </xs:sequence>
+        </xs:complexType>
+    %}
     -->
-    <xs:complexType name="X509ReplyCertificateType">
-        <xs:sequence>
-            <xs:element name="Value" type="xs:base64Binary"/>
-        </xs:sequence>
-    </xs:complexType>
     
-    <!-- CommunicationType
-        @state DEPRECATED 1.1
+    <!-- Communication
+        @deprecated 1.1 MS
+        @deleted 1.2 MS
+        @{code %
+        <xs:element name="Communication" type="CommunicationType"/>
+    %}
     -->
-    <xs:element name="Communication" type="CommunicationType"/>
     
 </xs:schema>

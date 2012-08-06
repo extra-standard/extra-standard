@@ -13,10 +13,6 @@
     	<jxb:class name="DataSource"/>
 	</jxb:bindings> 
 
-  	<jxb:bindings schemaLocation="../xsd/eXTra-plugins-1.xsd" node="//xs:complexType[@name='CommunicationType']">
-    	<jxb:class name="Communication"/>
-	</jxb:bindings>     
-    
     <jxb:bindings schemaLocation="../xsd/eXTra-codelists-1.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.codelists"/>

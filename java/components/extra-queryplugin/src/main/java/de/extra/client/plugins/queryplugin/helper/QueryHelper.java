@@ -28,7 +28,7 @@ import de.drv.dsrv.extrastandard.namespace.messages.Control;
 import de.drv.dsrv.extrastandard.namespace.messages.DataRequest;
 import de.drv.dsrv.extrastandard.namespace.messages.DataRequestArgument;
 import de.drv.dsrv.extrastandard.namespace.messages.Operand;
-import de.drv.dsrv.extrastandard.namespace.messages.Query;
+import de.drv.dsrv.extrastandard.namespace.messages.DataRequestQuery;
 
 @Named("queryHelper")
 public class QueryHelper {
@@ -46,7 +46,7 @@ public class QueryHelper {
 		DataRequest dataRequest = new DataRequest();
 
 		Control controlElement = new Control();
-		Query query = new Query();
+		DataRequestQuery query = new DataRequestQuery();
 		DataRequestArgument dataRequestArgument = new DataRequestArgument();
 		Operand operand = new Operand();
 		operand.setValue(startId);
