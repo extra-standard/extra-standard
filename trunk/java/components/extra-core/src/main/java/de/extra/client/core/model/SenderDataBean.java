@@ -18,6 +18,7 @@
  */
 package de.extra.client.core.model;
 
+import java.util.Arrays;
 import java.util.List;
 
 import de.drv.dsrv.extrastandard.namespace.messages.DataRequest;
@@ -66,4 +67,23 @@ public class SenderDataBean {
 	public void setDataRequest(DataRequest dataRequest) {
 		this.dataRequest = dataRequest;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SenderDataBean [");
+		if (requestId != null)
+			builder.append("requestId=").append(requestId).append(", ");
+		if (nutzdaten != null)
+			builder.append("nutzdaten=").append(Arrays.toString(nutzdaten))
+					.append(", ");
+		if (plugins != null)
+			builder.append("plugins=").append(plugins).append(", ");
+		if (dataRequest != null)
+			builder.append("dataRequest=").append(dataRequest);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
 }

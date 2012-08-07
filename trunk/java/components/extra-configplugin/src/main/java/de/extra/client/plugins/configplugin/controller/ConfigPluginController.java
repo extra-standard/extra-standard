@@ -71,7 +71,6 @@ public class ConfigPluginController {
 	 * @return ConfigFileBean
 	 */
 	public ConfigFileBean processConfigFile() {
-		File profilFile = new File(profileFile);
 		FileInputStream in = null;
 		ConfigFileBean cfb = null;
 
@@ -100,8 +99,6 @@ public class ConfigPluginController {
 			logger.debug("Füllen der Versandinformationen");
 
 		}
-
-		cfb = profilHelper.fuelleVersandInfo(cfb);
 
 		// Erzeugen der RequestId
 		/*

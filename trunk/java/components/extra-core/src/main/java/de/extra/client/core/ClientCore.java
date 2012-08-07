@@ -30,12 +30,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 
 import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 
 import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
 import de.extra.client.core.helper.RequestHelper;
+import de.extra.client.core.locator.PlugInsLocatorManager;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.SenderDataBean;
 import de.extra.client.core.plugin.IConfigPlugin;
@@ -51,16 +51,11 @@ public class ClientCore {
 
 	public static final int STATUS_CODE_ERROR = 9;
 
-	@Value("${queryPluginActivated}")
-	private boolean isQueryPluginActivated;
 
+	
 	@Inject
-	@Named("dataPlugin")
-	private IDataPlugin dataPlugin;
-
-	@Inject
-	@Named("queryPlugin")
-	private IDataPlugin queryPlugin;
+	@Named("plugInsLocatorManager")
+	private PlugInsLocatorManager plugInsLocatorManager;
 
 	@Inject
 	@Named("configPlugin")
@@ -84,18 +79,9 @@ public class ClientCore {
 	 * @return StatusCode nach der Verarbeitung
 	 */
 	public int buildRequest() {
-		List<SenderDataBean> versandDatenListe = null;
-		if (isQueryPluginActivated) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("Query-Plugin wurde aktiviert");
-			}
-			versandDatenListe = queryPlugin.getSenderData();
-		} else {
-			if (logger.isDebugEnabled()) {
-				logger.debug("Data-Plugin wurde aktiviert");
-			}
-			versandDatenListe = dataPlugin.getSenderData();
-		}
+		IDataPlugin dataPlugin = plugInsLocatorManager.getConfiguratedDataPlugIn();
+		
+		List<SenderDataBean> versandDatenListe = dataPlugin.getSenderData();
 
 		ConfigFileBean configFile = configPlugin.getConfigFile();
 

@@ -26,6 +26,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.components.ApplicationType;
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
@@ -37,9 +38,37 @@ import de.drv.dsrv.extrastandard.namespace.request.TransportHeader;
 import de.extra.client.core.model.ConfigFileBean;
 
 @Named("headerHelper")
-public class BuildHeaderHelper {
-
-	private static Logger logger = Logger.getLogger(BuildHeaderHelper.class);
+public class MessageHeaderBuilder {
+	
+	private static Logger logger = Logger.getLogger(MessageHeaderBuilder.class);
+	
+	private static final String PRODUCT_NAME = "eXTra Klient OpenSource";
+	
+	private static final String MANUFACTURE = "OpenSource";
+	
+	@Value("${message.builder.header.testIndicator}")
+	private String testIndicator;
+	
+	@Value("${message.builder.header.senderId.class}")
+	private String senderIdClass;
+	@Value("${message.builder.header.senderId.value}")
+	private String senderIdValue;
+	@Value("${message.builder.header.senderNameValue}")
+	private String senderNameValue;
+	
+	@Value("${message.builder.header.receiverId.class}")
+	private String receiverIdClass;
+	@Value("${message.builder.header.receiverId.value}")
+	private String receiverIdValue;
+	@Value("${message.builder.header.receiverNameValue}")
+	private String receiverNameValue;
+	
+	@Value("${message.builder.header.requestDetail.procedure}")
+	private String requestDetailProcedure;
+	@Value("${message.builder.header.requestDetail.dataType}")
+	private String requestDetailDataType;
+	@Value("${message.builder.header.requestDetail.scenario}")
+	private String requestDetailScenario;
 
 	/**
 	 * Funktion zum Aufbau des Headers.
@@ -53,7 +82,6 @@ public class BuildHeaderHelper {
 	public TransportHeader createHeader(ConfigFileBean configFile,
 			String requestID) {
 		TransportHeader header = new TransportHeader();
-		String testindicator = "";
 
 		// Objects für Senderinformation
 		SenderType sender = new SenderType();
@@ -72,28 +100,19 @@ public class BuildHeaderHelper {
 		TextType product = new TextType();
 		ClassifiableIDType registrationId = new ClassifiableIDType();
 
-		// Setting Testindicator
-		if (configFile.isTestIndicator()) {
-			// if testindicator is set value is set to "NONE". Message will not
-			// be processed in livesystem
-			testindicator = "http://extra-standard.de/test/NONE";
-		} else {
-			testindicator = "http://extra-standard.de/test/PROCESS";
-		}
-
-		header.setTestIndicator(testindicator);
+		header.setTestIndicator(testIndicator);
 
 		// Setting Senderinformation
-		senderId.setClazz("Betriebsnummer");
-		senderId.setValue(configFile.getAbsBbnr());
-		senderName.setValue(configFile.getAbsName());
+		senderId.setClazz(senderIdClass);
+		senderId.setValue(senderIdValue);
+		senderName.setValue(senderNameValue);
 		sender.setSenderID(senderId);
 		sender.setName(senderName);
 
 		// Setting Receiverinformation
-		receiverId.setClazz("Betriebsnummer");
-		receiverId.setValue(configFile.getEmpfBbnr());
-		receiverName.setValue(configFile.getEmpfName());
+		receiverId.setClazz(receiverIdClass);
+		receiverId.setValue(receiverIdValue);
+		receiverName.setValue(receiverNameValue);
 		receiver.setReceiverID(receiverId);
 		receiver.setName(receiverName);
 
@@ -104,16 +123,16 @@ public class BuildHeaderHelper {
 		requestDetails.setTimeStamp(CreateCurrentTimestamp());
 
 		// Applicationinformation
-		product.setValue(configFile.getProductName());
-		application.setManufacturer(configFile.getProductManuf());
+		product.setValue(PRODUCT_NAME);
+		application.setManufacturer(MANUFACTURE);
 		application.setProduct(product);
 		application.setRegistrationID(registrationId);
 		requestDetails.setApplication(application);
 
 		// Controllerinformation
-		requestDetails.setProcedure(configFile.getProcedure());
-		requestDetails.setDataType(configFile.getDataType());
-		requestDetails.setScenario(configFile.getScenario());
+		requestDetails.setProcedure(requestDetailProcedure);
+		requestDetails.setDataType(requestDetailDataType);
+		requestDetails.setScenario(requestDetailScenario);
 
 		// Assembling Header
 		header.setSender(sender);

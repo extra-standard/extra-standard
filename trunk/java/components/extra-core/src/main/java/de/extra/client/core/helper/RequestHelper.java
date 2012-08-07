@@ -35,7 +35,7 @@ public class RequestHelper {
 
 	@Inject
 	@Named("headerHelper")
-	private BuildHeaderHelper headerHelper;
+	private MessageHeaderBuilder headerHelper;
 
 	@Inject
 	@Named("bodyHelper")
