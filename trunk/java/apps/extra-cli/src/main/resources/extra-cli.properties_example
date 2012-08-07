@@ -1,8 +1,36 @@
-# Was sollte aktiviert werden?
-# "Senden von Nutzdaten" oder "Abholen von Nutzdaten"?
-queryPluginActivated=true 
+#Plugins Bereich
+#plugins.dataplugin=dataPlugin
+plugins.dataplugin=queryPlugin
 
-# Speicherorte für die Config-Dateien für die Server- und Sender-Settings
+plugins.configplugin=configPlugin
+
+
+plugins.outputPlugIn=outputPlugin
+
+#Value for MessageHeaderBuilder
+message.builder.header.testIndicator=http://extra-standard.de/test/NONE
+#message.builder.header.testIndicator=http://extra-standard.de/test/PROCESS
+
+message.builder.header.senderId.class=Betriebsnummer
+message.builder.header.senderId.value=12345678
+message.builder.header.senderNameValue=Softwarehaus
+
+message.builder.header.receiverId.class=Betriebsnummer
+message.builder.header.receiverId.value=12345678
+message.builder.header.receiverNameValue=Softwarehaus
+
+#message.builder.header.requestDetail.procedure=http://www.extra-standard.de/procedure/DUSKO
+#message.builder.header.requestDetail.dataType=http://www.extra-standard.de/datatypes/Datensendung
+#message.builder.header.requestDetail.scenario=http://www.extra-standard.de/scenario/request-with-acknowledgement
+
+message.builder.header.requestDetail.procedure=DeliveryServer
+message.builder.header.requestDetail.dataType=http://www.extra-standard.de/datatypes/DataRequest
+message.builder.header.requestDetail.scenario=http://www.extra-standard.de/scenario/request-with-response
+
+
+
+
+# Speicherorte fÃ¼r die Config-Dateien fÃ¼r die Server- und Sender-Settings
 serverSettingLoc=d:/temp/extraClient/config/serverconfig.properties
 senderSettingLoc=d:/temp/extraClient/config/senderconfig.properties
 
@@ -11,36 +39,23 @@ eingangOrdner=d:/temp/extraClient/Eingang/
 reportOrdner=d:/temp/extraClient/Eingang/Reports/
 inputVerzeichnis=d:/temp/extraClient/Ausgang/
 
-# Speicherort für Profilierungs-Datei
-#profilOrdner=d:/temp/extraClient/config/request-Abholen-DEUEV.xml
+# Speicherort fÃ¼r Profilierungs-Datei
 #profilOrdner=d:/temp/extraClient/config/sendenProfil.xml
+#profilOrdner=d:/temp/extraClient/config/request-Abholen-DEUEV.xml
 #profilOrdner=classpath:testprofile/request-Abholen-DEUEV.xml
-#profilOrdner=classpath:testprofile/senden-profil-konfiguration.xml
-profilOrdner=../conf/senden-profil-konfiguration.xml
+profilOrdner=classpath:testprofile/senden-profil-konfiguration.xml
 
-# Config-Informationen für den Versand
+# Config-Informationen fÃ¼r den Versand
 extraProfile=http://www.extra-standard.de/profile/DUSKO/1.0
 
-testIndicator=true
 
-absenderClass=Betriebsnummer
-absenderBbnr=12345678
-absenderName=Softwarehaus
 
-empfaengerClass=Betriebsnummer
-empfaengerBbnr=66667777
-empfaengerName=DRV Bund Wuerzburg
 
-productName=eXTraClient
-productManuf=DRV Bund
 
-#procedure=http://www.extra-standard.de/procedure/DUSKO
-#dataType=http://www.extra-standard.de/datatypes/Datensendung
-#scenario=http://www.extra-standard.de/scenario/request-with-acknowledgement
 
-procedure=DeliveryServer
-dataType=http://www.extra-standard.de/datatypes/DataRequest
-scenario=http://www.extra-standard.de/scenario/request-with-response
+
+
+
 
 # Informationen zum Query-Aufbau
 startId=1
