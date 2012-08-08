@@ -178,12 +178,6 @@
 								<copy
 									file="${project.basedir}/src/test/resources/extra-cli.properties_example"
 									tofile="${project.basedir}/src/test/resources/extra-cli.properties" />
-								<copy
-									file="${project.basedir}/src/test/resources/senderconfig.properties_example"
-									tofile="${project.basedir}/src/test/resources/senderconfig.properties" />
-								<copy
-									file="${project.basedir}/src/test/resources/serverconfig.properties_example"
-									tofile="${project.basedir}/src/test/resources/serverconfig.properties" />
 							</target>
 						</configuration>
 					</execution>

@@ -92,7 +92,7 @@ plugins.outputplugin.httpOutputPlugIn.directorySeparation=false
 # Ablage-Ordner
 plugins.responseplugin.fileSaverResponsePlugin.eingangOrdner=d:/temp/extraClient/Response/
 plugins.responseplugin.fileSaverResponsePlugin.reportOrdner=d:/temp/extraClient/Reports/
-plugins.dataplugin.fileDataPlugin.inputVerzeichnis=d:/temp/extraClient/Eingang/
+plugins.dataplugin.fileDataPlugin.inputVerzeichnis=classpath:testinputfiles
 
 # Speicherort fÃ¼r Profilierungs-Datei
 #profilOrdner=d:/temp/extraClient/config/sendenProfil.xml
