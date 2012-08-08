@@ -1,6 +1,6 @@
 #Plugins Bereich
-plugins.dataplugin=fileDataPlugin
-#plugins.dataplugin=queryDataPlugin
+#plugins.dataplugin=fileDataPlugin
+plugins.dataplugin=queryDataPlugin
 plugins.configplugin=defaultConfigPlugin
 #plugins.outputplugIn=httpOutputPlugIn
 plugins.outputplugIn=dummyOutputPlugin
@@ -35,7 +35,7 @@ plugins.dataplugin.queryDataPlugin.startId=1
 plugins.dataplugin.queryDataPlugin.packageLimit=10
 
 
-# Speicherorte fÃ¼r die Config-Dateien fÃ¼r die Server- und Sender-Settings
+# Speicherorte für die Config-Dateien für die Server- und Sender-Settings
 plugins.outputPlugIn.httpOutputPlugIn.serverSettingLoc=d:/temp/extraClient/config/serverconfig.properties
 plugins.outputPlugIn.httpOutputPlugIn.senderSettingLoc=d:/temp/extraClient/config/senderconfig.properties
 
@@ -63,16 +63,16 @@ plugins.outputplugin.httpOutputPlugIn.proxyAuth=false
 plugins.outputplugin.httpOutputPlugIn.proxyUser=
 plugins.outputplugin.httpOutputPlugIn.proxyPwd=
 
-# Sender Properties fÃ¼r lokale RAD-Testumgebung
+# Sender Properties für lokale RAD-Testumgebung
 plugins.outputplugin.httpOutputPlugIn.senderID=66668886
 plugins.outputplugin.httpOutputPlugIn.senderClassification=Betriebsnummer
 plugins.outputplugin.httpOutputPlugIn.senderName=Testfirma GmbH
-# Benutzerkennung und Passwort fÃ¼r Verbidungsaufbau
+# Benutzerkennung und Passwort für Verbidungsaufbau
 plugins.outputplugin.httpOutputPlugIn.serverJ2EESecurity=false
 plugins.outputplugin.httpOutputPlugIn.serverJ2EEUser=
 plugins.outputplugin.httpOutputPlugIn.serverJ2EEPwd=
 plugins.outputplugin.httpOutputPlugIn.serverJ2EERealm=
-# Zertifikat und Passwort fÃ¼r Authentifizierung  keyStoreType={JKS|PKCS12}
+# Zertifikat und Passwort für Authentifizierung  keyStoreType={JKS|PKCS12}
 plugins.outputplugin.httpOutputPlugIn.certificateAuthentication=true
 plugins.outputplugin.httpOutputPlugIn.privateKeyStoreType=JKS
 plugins.outputplugin.httpOutputPlugIn.privateKeyType=
@@ -80,7 +80,7 @@ plugins.outputplugin.httpOutputPlugIn.signatureAlgorithm=
 plugins.outputplugin.httpOutputPlugIn.messageDigestAlgorithm=
 plugins.outputplugin.httpOutputPlugIn.privateKeyStoreLocation=P:\\cert\\66668886.jks
 plugins.outputplugin.httpOutputPlugIn.privateKeyPassword=
-# Datenquelle fÃ¼r Versand\Empfang\Logging. Standard relativ zum Basisverzeichnis ("false")
+# Datenquelle für Versand\Empfang\Logging. Standard relativ zum Basisverzeichnis ("false")
 plugins.outputplugin.httpOutputPlugIn.directoryOverwrite=false
 plugins.outputplugin.httpOutputPlugIn.directoryPath=C:\\sofo\\eXTraClientFolders\\cert_lokal_rad
 # Unterteilung der Verzeichnisse mittels Timestamp Standard ist "true"
@@ -94,20 +94,6 @@ plugins.responseplugin.fileSaverResponsePlugin.eingangOrdner=d:/temp/extraClient
 plugins.responseplugin.fileSaverResponsePlugin.reportOrdner=d:/temp/extraClient/Reports/
 plugins.dataplugin.fileDataPlugin.inputVerzeichnis=classpath:testinputfiles
 
-# Speicherort fÃ¼r Profilierungs-Datei
-#profilOrdner=d:/temp/extraClient/config/sendenProfil.xml
-#profilOrdner=d:/temp/extraClient/config/request-Abholen-DEUEV.xml
-#profilOrdner=classpath:testprofile/request-Abholen-DEUEV.xml
-plugins.configplugin.defaultConfigPlugin.profilOrdner=classpath:testprofile/senden-profil-konfiguration.xml
-
-
-
-
-
-
-
-
-
-
-
-
+# Speicherort für Profilierungs-Datei
+#plugins.configplugin.defaultConfigPlugin.profilOrdner=classpath:testprofile/senden-profil-konfiguration.xml
+plugins.configplugin.defaultConfigPlugin.profilOrdner=classpath:testprofile/request-abholen-DEUEV-profil-konfiguration.xml
