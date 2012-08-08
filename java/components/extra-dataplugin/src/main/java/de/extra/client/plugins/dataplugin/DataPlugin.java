@@ -30,7 +30,7 @@ import de.extra.client.core.model.SenderDataBean;
 import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.plugins.dataplugin.interfaces.IDataPluginController;
 
-@Named("dataPlugin")
+@Named("fileDataPlugin")
 public class DataPlugin implements IDataPlugin {
 
 	private static Logger logger = Logger.getLogger(DataPlugin.class);

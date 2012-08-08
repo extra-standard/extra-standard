@@ -43,27 +43,28 @@ public class ConfigPluginController {
 
 	Logger logger = Logger.getLogger(ConfigPluginController.class);
 
-	private String profileFile;
+	private File profileFile;
 
 	@Inject
 	@Named("profilHelper")
 	private ProfilHelper profilHelper;
 
-	@Value("${profilOrdner}")
-	public void setProfileFile(String profileFile) {
-		this.profileFile = getAbsoluteFilename(profileFile);
+	@Value("${plugins.configplugin.defaultConfigPlugin.profilOrdner}")
+	public void setProfileFile(File profileFile) {
+		this.profileFile = profileFile;
+		// this.profileFile = getAbsoluteFilename(profileFile);
 	}
 
-	public String getAbsoluteFilename(String profileFile) {
-		if (profileFile.startsWith("classpath:")) {
-			String filename = profileFile.replaceFirst("classpath:", "");
-			URL url = this.getClass().getClassLoader().getResource(filename);
-			String absolutePath = url.getPath();
-			return absolutePath;
-		} else {
-			return profileFile;
-		}
-	}
+	// public String getAbsoluteFilename(String profileFile) {
+	// if (profileFile.startsWith("classpath:")) {
+	// String filename = profileFile.replaceFirst("classpath:", "");
+	// URL url = this.getClass().getClassLoader().getResource(filename);
+	// String absolutePath = url.getPath();
+	// return absolutePath;
+	// } else {
+	// return profileFile;
+	// }
+	// }
 
 	/**
 	 * Verarbeitung der Konfigurations-Files.
@@ -71,29 +72,16 @@ public class ConfigPluginController {
 	 * @return ConfigFileBean
 	 */
 	public ConfigFileBean processConfigFile() {
-		FileInputStream in = null;
 		ConfigFileBean cfb = null;
 
 		// Laden der Profildatei
-		try {
-			in = new FileInputStream(profileFile);
-
-			if (logger.isDebugEnabled()) {
-				logger.debug("Unmarshaling der Profildatei");
-			}
-
-			// Unmarshalling der Profildatei
-			ProfilkonfigurationType profilConfig = unmarshalConfig(profileFile);
-			cfb = profilHelper.configFileBeanLoader(profilConfig.getElement());
-		} catch (FileNotFoundException e) {
-			logger.error("ProfilDatei konnte nicht gefunden werden", e);
-		} finally {
-			try {
-				in.close();
-			} catch (IOException e) {
-				logger.error("Fehler beim Schliessen des InputStreams", e);
-			}
+		if (logger.isDebugEnabled()) {
+			logger.debug("Unmarshaling der Profildatei");
 		}
+
+		// Unmarshalling der Profildatei
+		ProfilkonfigurationType profilConfig = unmarshalConfig(profileFile);
+		cfb = profilHelper.configFileBeanLoader(profilConfig.getElement());
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("Füllen der Versandinformationen");
@@ -122,7 +110,7 @@ public class ConfigPluginController {
 	 *            Vollstaendiger Pfad der Profildatei
 	 * @return JaxB-Element
 	 */
-	private ProfilkonfigurationType unmarshalConfig(String dateiName) {
+	private ProfilkonfigurationType unmarshalConfig(File profileFile) {
 		ProfilkonfigurationType pkt = null;
 		JAXBContext jc;
 		try {
@@ -131,7 +119,7 @@ public class ConfigPluginController {
 
 			// Aufruf des Unmarshallers
 			Unmarshaller u = jc.createUnmarshaller();
-			pkt = (ProfilkonfigurationType) u.unmarshal(new File(dateiName));
+			pkt = (ProfilkonfigurationType) u.unmarshal(profileFile);
 		} catch (JAXBException e) {
 			logger.error("Fehler beim Verarbeiten des XML", e);
 		} catch (Exception e) {

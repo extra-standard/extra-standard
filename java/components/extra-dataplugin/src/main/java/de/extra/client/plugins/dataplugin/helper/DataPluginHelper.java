@@ -47,7 +47,7 @@ import de.extra.client.plugins.dataplugin.auftragssatz.EncryptionInfoType;
 @Named("dataPluginHelper")
 public class DataPluginHelper {
 
-	@Value("${inputVerzeichnis}")
+	@Value("${plugins.dataplugin.fileDataPlugin.inputVerzeichnis}")
 	private String inputDirectory;
 
 	private final Logger logger = Logger.getLogger(DataPluginHelper.class);

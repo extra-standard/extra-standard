@@ -60,4 +60,15 @@ public class ConfigFileBean {
 	public void setPackageLayer(boolean packageLayer) {
 		this.packageLayer = packageLayer;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ConfigFileBean [packageLayer=").append(packageLayer)
+				.append(", messageLayer=").append(messageLayer).append(", ");
+		if (contentType != null)
+			builder.append("contentType=").append(contentType);
+		builder.append("]");
+		return builder.toString();
+	}
 }
