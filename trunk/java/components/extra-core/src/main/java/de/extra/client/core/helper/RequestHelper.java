@@ -41,7 +41,7 @@ public class RequestHelper {
 	@Named("bodyHelper")
 	private BuildBodyHelper bodyHelper;
 
-	@Value("${extraProfile}")
+	@Value("${message.builder.transport.attributes.extraProfile}")
 	private String extraProfile;
 
 	/**

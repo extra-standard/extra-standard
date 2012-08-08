@@ -30,10 +30,10 @@ public class FileSystemHelper implements IResponseSaver, Serializable {
 
 	private static Logger logger = Logger.getLogger(FileSystemHelper.class);
 
-	@Value("${eingangOrdner}")
+	@Value("${plugins.responseplugin.fileSaverResponsePlugin.eingangOrdner}")
 	private String eingangOrdner;
 
-	@Value("${reportOrdner}")
+	@Value("${plugins.responseplugin.fileSaverResponsePlugin.reportOrdner}")
 	private String reportOrdner;
 
 	@Override

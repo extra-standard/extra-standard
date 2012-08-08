@@ -55,9 +55,9 @@ public class DataPluginController implements IDataPluginController {
 			versanddatenBean.setNutzdaten(dataPluginHelper
 					.getNutzdaten(filename));
 			AuftragssatzType auftragssatz = new AuftragssatzType();
-			String auftragssatzName = filename + ".auf";
-			auftragssatz = dataPluginHelper
-					.unmarshalAuftragssatz(auftragssatzName);
+//			String auftragssatzName = filename + ".auf";
+//			auftragssatz = dataPluginHelper
+//					.unmarshalAuftragssatz(auftragssatzName);
 
 			// Setzen der RequestId
 			versanddatenBean.setRequestId(auftragssatz.getRequestId());

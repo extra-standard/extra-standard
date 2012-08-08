@@ -45,7 +45,7 @@ import de.extra.client.core.plugin.IOutputPlugin;
 @Named("clientCore")
 public class ClientCore {
 
-	private static Logger logger = Logger.getLogger(ClientCore.class);
+	private static final Logger LOG = Logger.getLogger(ClientCore.class);
 
 	public static final int STATUS_CODE_OK = 0;
 
@@ -72,15 +72,25 @@ public class ClientCore {
 	 * @return StatusCode nach der Verarbeitung
 	 */
 	public int buildRequest() {
+		int statusCode = STATUS_CODE_ERROR;
+		
 		IDataPlugin dataPlugin = plugInsLocatorManager.getConfiguratedDataPlugIn();
 		
 		List<SenderDataBean> versandDatenListe = dataPlugin.getSenderData();
+		
+		if(versandDatenListe == null || versandDatenListe.isEmpty()){
+			// Nothing  TODO Klient refactorn 
+			statusCode = STATUS_CODE_OK;
+			LOG.info("Keine Nachrichten gefunden. Warte auf Nachrichten.");
+			return statusCode;
+		}
+		
 		
 		IConfigPlugin configPlugin = plugInsLocatorManager.getConfiguratedConfigPlugIn();
 
 		ConfigFileBean configFile = configPlugin.getConfigFile();
 
-		int statusCode = STATUS_CODE_ERROR;
+		
 
 		try {
 			// Transformation XML zu String
@@ -111,15 +121,15 @@ public class ClientCore {
 					Writer writer = new StringWriter();
 					marshaller.marshal(request, writer);
 
-					logger.debug("Ausgabe: " + writer.toString());
-					logger.debug("Übergabe an OutputPlugin");
+					LOG.debug("Ausgabe: " + writer.toString());
+					LOG.debug("Übergabe an OutputPlugin");
 
 					IOutputPlugin outputPlugin = plugInsLocatorManager.getConfiguratedOutputPlugin();
 					
 					if (outputPlugin.outputData(writer.toString())) {
 						statusCode = STATUS_CODE_OK;
 					} else {
-						logger.error("Fehler beim Versand des Requests");
+						LOG.error("Fehler beim Versand des Requests");
 						statusCode = STATUS_CODE_ERROR;
 					}
 				}
@@ -129,7 +139,7 @@ public class ClientCore {
 
 			}
 		} catch (JAXBException e) {
-			logger.error("Fehler beim Erstellen des Requests", e);
+			LOG.error("Fehler beim Erstellen des Requests", e);
 		}
 
 		return statusCode;
