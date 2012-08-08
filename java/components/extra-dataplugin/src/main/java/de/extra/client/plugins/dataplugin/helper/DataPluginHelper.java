@@ -48,7 +48,7 @@ import de.extra.client.plugins.dataplugin.auftragssatz.EncryptionInfoType;
 public class DataPluginHelper {
 
 	@Value("${plugins.dataplugin.fileDataPlugin.inputVerzeichnis}")
-	private String inputDirectory;
+	private File inputDirectory;
 
 	private final Logger logger = Logger.getLogger(DataPluginHelper.class);
 
@@ -59,7 +59,7 @@ public class DataPluginHelper {
 	 */
 	public List<String> getNutzfiles() {
 		List<String> worklist = new ArrayList<String>();
-		File[] files = new File(inputDirectory).listFiles();
+		File[] files = inputDirectory.listFiles();
 
 		// Prüfe auf gueltige Dateien
 		for (int i = 0; i < files.length; i++) {
