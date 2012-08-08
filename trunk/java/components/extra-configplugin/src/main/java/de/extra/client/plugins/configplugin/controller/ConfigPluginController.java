@@ -19,10 +19,6 @@
 package de.extra.client.plugins.configplugin.controller;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -52,19 +48,8 @@ public class ConfigPluginController {
 	@Value("${plugins.configplugin.defaultConfigPlugin.profilOrdner}")
 	public void setProfileFile(File profileFile) {
 		this.profileFile = profileFile;
-		// this.profileFile = getAbsoluteFilename(profileFile);
 	}
 
-	// public String getAbsoluteFilename(String profileFile) {
-	// if (profileFile.startsWith("classpath:")) {
-	// String filename = profileFile.replaceFirst("classpath:", "");
-	// URL url = this.getClass().getClassLoader().getResource(filename);
-	// String absolutePath = url.getPath();
-	// return absolutePath;
-	// } else {
-	// return profileFile;
-	// }
-	// }
 
 	/**
 	 * Verarbeitung der Konfigurations-Files.
