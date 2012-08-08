@@ -18,40 +18,66 @@
  */
 package de.extra.client.plugins.outputplugin.config;
 
-public class ExtraSenderData {
+import javax.inject.Named;
 
+import de.extra.client.core.annotation.PlugInConfigType;
+import de.extra.client.core.annotation.PlugInConfigutation;
+import de.extra.client.core.annotation.PlugInValue;
+
+
+@Named("httpOutputPluginSenderDataConfiguration")
+@PlugInConfigutation(plugInBeanName="httpOutputPlugIn", plugInType = PlugInConfigType.OutputPlugIns)
+public class HttpOutputPluginSenderDataConfiguration {
+
+	@PlugInValue(key="senderID")
 	private String senderID = "";
 
+	@PlugInValue(key="senderClassification")
 	private String senderClassification = null;
 
+	@PlugInValue(key="senderName")
 	private String senderName = null;
 
+	@PlugInValue(key="serverJ2EESecurity")
 	private boolean serverJ2EESecurity = true;
 
+	@PlugInValue(key="serverJ2EEUser")
 	private String serverJ2EEUser = "";
 
+	@PlugInValue(key="serverJ2EEPwd")
 	private String serverJ2EEPwd = "";
 
+	@PlugInValue(key="serverJ2EERealm")
 	private String serverJ2EERealm = "";
 
+	@PlugInValue(key="certificateAuthentication")
 	private boolean certificateAuthentication = false;
 
+	@PlugInValue(key="privateKeyPassword")
 	private String privateKeyPassword = "";
 
+	@PlugInValue(key="privateKeyStoreLocation")
 	private String privateKeyStoreLocation = "";
 
+	@PlugInValue(key="privateKeyStoreType")
 	private String privateKeyStoreType = "";
 
+	@PlugInValue(key="privateKeyType")
 	private String privateKeyType = "";
 
+	@PlugInValue(key="signatureAlgorithm")
 	private String signatureAlgorithm = "";
 
+	@PlugInValue(key="messageDigestAlgorithm")
 	private String messageDigestAlgorithm = "";
 
+	@PlugInValue(key="directoryOverwrite")
 	private boolean directoryOverwrite = false;
 
+	@PlugInValue(key="directoryPath")
 	private String directoryPath = "";
 
+	@PlugInValue(key="directorySeparation")
 	private boolean directorySeparation = true;
 
 	public String getPrivateKeyStoreLocation() {

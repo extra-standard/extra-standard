@@ -16,22 +16,28 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.plugins.outputplugin.dummy;
+package de.extra.client.plugins.outputplugin;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
 import de.extra.client.core.plugin.IOutputPlugin;
 
-@Named("outputPlugin")
-public class OutputPlugin implements IOutputPlugin {
+@Named("httpOutputPlugIn")
+public class HttpOutputPlugin implements IOutputPlugin {
 
-	private static final Logger logger = Logger.getLogger(OutputPlugin.class);
+	private static Logger logger = Logger.getLogger(HttpOutputPlugin.class);
+
+	@Inject
+	@Named("httpOutputPlugInSender")
+	private HttpOutputPlugInSender httpSender;
 
 	@Override
 	public boolean outputData(String request) {
-		logger.info(request);
-		return true;
+		logger.info("Start des Versands...");
+		request = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + request;
+		return httpSender.processOutput(request);
 	}
 }

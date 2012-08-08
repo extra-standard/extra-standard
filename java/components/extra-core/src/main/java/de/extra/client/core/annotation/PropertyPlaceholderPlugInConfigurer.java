@@ -14,6 +14,7 @@ import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.util.ReflectionUtils;
 
 
 public class PropertyPlaceholderPlugInConfigurer extends PropertyPlaceholderConfigurer{
@@ -35,11 +36,12 @@ public class PropertyPlaceholderPlugInConfigurer extends PropertyPlaceholderConf
 	            if(clazz != null && clazz.isAnnotationPresent(PlugInConfigutation.class)) {
 	            	PlugInConfigutation annotationConfigutation = clazz.getAnnotation(PlugInConfigutation.class);
 		            MutablePropertyValues mutablePropertyValues = beanFactory.getBeanDefinition(name).getPropertyValues();	
+
 	                for (PropertyDescriptor property : BeanUtils.getPropertyDescriptors(clazz)) {
 	                    Method setter = property.getWriteMethod();
-	                    Value valueAnnotation = null;
-	                    if(setter != null && setter.isAnnotationPresent(Value.class)) {
-	                    	valueAnnotation = setter.getAnnotation(Value.class);
+	                    PlugInValue valueAnnotation = null;
+	                    if(setter != null && setter.isAnnotationPresent(PlugInValue.class)) {
+	                    	valueAnnotation = setter.getAnnotation(PlugInValue.class);
 	                    }
 	                    if(valueAnnotation != null) {
 	                    	String key = extractKey (annotationConfigutation, valueAnnotation);
@@ -58,11 +60,11 @@ public class PropertyPlaceholderPlugInConfigurer extends PropertyPlaceholderConf
 	                    if(LOG.isDebugEnabled()) {
 	                    	LOG.debug("examining field=["+clazz.getName()+"."+field.getName()+"]");
 	                    }
-	                    if(field.isAnnotationPresent(Value.class)) {
-	                    	Value valueAnnotation = field.getAnnotation(Value.class);
+	                    if(field.isAnnotationPresent(PlugInValue.class)) {
+	                    	PlugInValue valueAnnotation = field.getAnnotation(PlugInValue.class);
 	                        PropertyDescriptor property = BeanUtils.getPropertyDescriptor(clazz, field.getName());
 
-	                        if(property.getWriteMethod() == null) {
+	                        if(property == null || property.getWriteMethod() == null) {
 	                            throw new BeanCreationException(name,"setter for property=["+clazz.getName()+"."+field.getName()+"] not available.");
 	                        }
 	                        String key = extractKey (annotationConfigutation, valueAnnotation);
@@ -74,6 +76,12 @@ public class PropertyPlaceholderPlugInConfigurer extends PropertyPlaceholderConf
 	                        	LOG.debug("setting property=["+clazz.getName()+"."+field.getName()+"] value=["+key+"="+value+"]");
 	                        }
 	                        mutablePropertyValues.addPropertyValue(property.getName(), value);
+	                        if(LOG.isDebugEnabled()){
+	                        	LOG.debug("setting property=["+clazz.getName()+"."+field.getName()+"] value=["+key+"="+value+"]");
+	                        }
+	                        
+
+	                        mutablePropertyValues.addPropertyValue(field.getName(), value);
 	                    }
 	                }
 	            }
@@ -86,8 +94,8 @@ public class PropertyPlaceholderPlugInConfigurer extends PropertyPlaceholderConf
 		 * @param annotation
 		 * @return
 		 */
-		private String extractKey(PlugInConfigutation annotation, Value value) {
-			String initialKey = value.value();
+		private String extractKey(PlugInConfigutation annotation, PlugInValue value) {
+			String initialKey = value.key();
 			String plugInBeanName = annotation.plugInBeanName();
 			String configPrefix = annotation.plugInType().getConfigPrefix();
 			StringBuilder key = new StringBuilder();

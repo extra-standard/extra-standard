@@ -53,8 +53,8 @@ import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 import org.apache.log4j.Logger;
 
 import de.extra.client.plugins.outputplugin.ExtraConstants;
-import de.extra.client.plugins.outputplugin.config.ExtraConnectData;
-import de.extra.client.plugins.outputplugin.config.ExtraSenderData;
+import de.extra.client.plugins.outputplugin.config.HttpOutputPluginConnectConfiguration;
+import de.extra.client.plugins.outputplugin.config.HttpOutputPluginSenderDataConfiguration;
 import de.extra.client.plugins.outputplugin.crypto.ExtraCryptoUtil;
 
 /**
@@ -137,7 +137,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @return void
 	 */
 	@Override
-	public void initTransport(ExtraConnectData extraConnectData)
+	public void initTransport(HttpOutputPluginConnectConfiguration extraConnectData)
 			throws ExtraTransportException {
 
 		// Create new client instance
@@ -161,10 +161,10 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @param requestURL
 	 * @return
 	 */
-	private String buildLogString(ExtraConnectData extraConnectData,
+	private String buildLogString(HttpOutputPluginConnectConfiguration extraConnectData,
 			String requestURL) {
 
-		ExtraSenderData senderData = extraConnectData.getSenderData();
+		HttpOutputPluginSenderDataConfiguration senderData = extraConnectData.getSenderData();
 
 		StringBuffer logString = new StringBuffer("HttpClient initialisiert;");
 		logString.append("\n- RequestURL = ");
@@ -215,7 +215,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @param extraConnectData
 	 * @param client
 	 */
-	private void setupHttpClient(ExtraConnectData extraConnectData,
+	private void setupHttpClient(HttpOutputPluginConnectConfiguration extraConnectData,
 			HttpClient client) {
 
 		// Setup user agent and charset
@@ -232,9 +232,9 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @param client
 	 * @throws ExtraTransportException
 	 */
-	private void setupAuthentification(ExtraConnectData extraConnectData,
+	private void setupAuthentification(HttpOutputPluginConnectConfiguration extraConnectData,
 			HttpClient client) throws ExtraTransportException {
-		ExtraSenderData senderData = extraConnectData.getSenderData();
+		HttpOutputPluginSenderDataConfiguration senderData = extraConnectData.getSenderData();
 
 		// Check if J2EE security is requested (default)
 		if (senderData.isServerJ2EESecurity()) {
@@ -314,9 +314,9 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @param extraConnectData
 	 * @param client
 	 */
-	private void setupProxy(ExtraConnectData extraConnectData, HttpClient client) {
+	private void setupProxy(HttpOutputPluginConnectConfiguration extraConnectData, HttpClient client) {
 
-		ExtraSenderData senderData = extraConnectData.getSenderData();
+		HttpOutputPluginSenderDataConfiguration senderData = extraConnectData.getSenderData();
 
 		// Check if proxy communication is required
 		if (extraConnectData.isProxySet()) {
@@ -362,7 +362,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @param extraConnectData
 	 * @param urlString
 	 */
-	private String buildUrlString(ExtraConnectData extraConnectData) {
+	private String buildUrlString(HttpOutputPluginConnectConfiguration extraConnectData) {
 
 		StringBuffer urlString = new StringBuffer();
 
@@ -400,7 +400,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @param extraConnectData
 	 * @return
 	 */
-	private void setupTruststore(ExtraConnectData extraConnectData)
+	private void setupTruststore(HttpOutputPluginConnectConfiguration extraConnectData)
 			throws ExtraTransportException {
 
 		// Load TrustStoreLocation from properties

@@ -40,7 +40,7 @@ public class PlugInsLocatorManager {
 	@Inject
 	Map<String, IOutputPlugin> outputPlugInMap;
 	
-	@Value("${plugins.outputPlugIn}")
+	@Value("${plugins.outputplugIn}")
 	String outputPlugInBeanName;
 	
 	

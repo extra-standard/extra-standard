@@ -26,22 +26,43 @@ import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Value;
 
+import de.extra.client.core.annotation.PlugInConfigType;
+import de.extra.client.core.annotation.PlugInConfigutation;
+import de.extra.client.core.annotation.PlugInValue;
 import de.extra.client.core.model.SenderDataBean;
 import de.extra.client.plugins.queryplugin.helper.QueryHelper;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 
-@Named("queryController")
+@Named("queryPluginController")
+@PlugInConfigutation(plugInBeanName="queryDataPlugin", plugInType = PlugInConfigType.DataPlugIns)
 public class QueryPluginController implements IQueryPluginController {
 
 	@Inject
 	@Named("queryHelper")
 	private QueryHelper queryHelper;
 
-	@Value("${startId}")
+	@PlugInValue(key="startId")
 	private String startId;
 
-	@Value("${packageLimit}")
+
+	@PlugInValue(key="packageLimit")
 	private String packageLimit;
+	
+	/**
+	 * @param startId
+	 */
+	public void setStartId(String startId) {
+		this.startId = startId;
+	}
+
+
+	/**
+	 * @param packageLimit
+	 */
+	public void setPackageLimit(String packageLimit) {
+		this.packageLimit = packageLimit;
+	}
+
 
 	/**
 	 * Controller-Klasse zum Aufbau der Query.

@@ -20,11 +20,11 @@ package de.extra.client.plugins.outputplugin.transport;
 
 import javax.xml.bind.JAXBElement;
 
-import de.extra.client.plugins.outputplugin.config.ExtraConnectData;
+import de.extra.client.plugins.outputplugin.config.HttpOutputPluginConnectConfiguration;
 
 public interface IExtraTransport {
 
-	public void initTransport(ExtraConnectData extraConnectData)
+	public void initTransport(HttpOutputPluginConnectConfiguration extraConnectData)
 			throws ExtraTransportException;
 
 	public JAXBElement senden(String extraRequest)
