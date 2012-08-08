@@ -29,13 +29,13 @@ import de.extra.client.core.model.SenderDataBean;
 import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 
-@Named("queryPlugin")
-public class QueryPlugin implements IDataPlugin {
+@Named("queryDataPlugin")
+public class QueryDataPlugin implements IDataPlugin {
 
-	private static Logger logger = Logger.getLogger(QueryPlugin.class);
+	private static Logger logger = Logger.getLogger(QueryDataPlugin.class);
 
 	@Inject
-	@Named("queryController")
+	@Named("queryPluginController")
 	private IQueryPluginController queryController;
 
 	@Override

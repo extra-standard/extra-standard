@@ -57,13 +57,6 @@ public class ClientCore {
 	@Named("plugInsLocatorManager")
 	private PlugInsLocatorManager plugInsLocatorManager;
 
-	@Inject
-	@Named("configPlugin")
-	private IConfigPlugin configPlugin;
-
-	@Inject
-	@Named("outputPlugin")
-	private IOutputPlugin outputPlugin;
 
 	@Inject
 	@Named("namespacePrefixMapper")
@@ -82,6 +75,8 @@ public class ClientCore {
 		IDataPlugin dataPlugin = plugInsLocatorManager.getConfiguratedDataPlugIn();
 		
 		List<SenderDataBean> versandDatenListe = dataPlugin.getSenderData();
+		
+		IConfigPlugin configPlugin = plugInsLocatorManager.getConfiguratedConfigPlugIn();
 
 		ConfigFileBean configFile = configPlugin.getConfigFile();
 
@@ -119,6 +114,8 @@ public class ClientCore {
 					logger.debug("Ausgabe: " + writer.toString());
 					logger.debug("Übergabe an OutputPlugin");
 
+					IOutputPlugin outputPlugin = plugInsLocatorManager.getConfiguratedOutputPlugin();
+					
 					if (outputPlugin.outputData(writer.toString())) {
 						statusCode = STATUS_CODE_OK;
 					} else {

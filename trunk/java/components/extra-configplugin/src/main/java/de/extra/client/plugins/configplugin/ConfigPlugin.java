@@ -27,7 +27,7 @@ import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.plugin.IConfigPlugin;
 import de.extra.client.plugins.configplugin.controller.ConfigPluginController;
 
-@Named("configPlugin")
+@Named("defaultConfigPlugin")
 public class ConfigPlugin implements IConfigPlugin {
 
 	@Inject

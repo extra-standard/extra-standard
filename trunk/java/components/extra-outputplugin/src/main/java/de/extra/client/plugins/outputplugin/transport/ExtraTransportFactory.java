@@ -18,22 +18,35 @@
  */
 package de.extra.client.plugins.outputplugin.transport;
 
-import de.extra.client.plugins.outputplugin.config.ExtraConnectData;
+import javax.inject.Named;
 
+import de.extra.client.core.annotation.PlugInConfigType;
+import de.extra.client.core.annotation.PlugInConfigutation;
+import de.extra.client.core.annotation.PlugInValue;
+import de.extra.client.plugins.outputplugin.config.HttpOutputPluginConnectConfiguration;
+
+@Named("extraTransportFactory")
+@PlugInConfigutation(plugInBeanName="httpOutputPlugIn", plugInType = PlugInConfigType.OutputPlugIns)
 public class ExtraTransportFactory {
+	
+	@PlugInValue(key="implClassName")
+	private String implClassName;
+
+	public void setImplClassName(String implClassName) {
+		this.implClassName = implClassName;
+	}
 
 	/**
 	 * 
 	 * @param ecd
 	 * @return an instance implementing the interface IExtraTransport
 	 */
-	public static IExtraTransport loadTransportImpl(ExtraConnectData ecd) {
+	public IExtraTransport loadTransportImpl() {
 		IExtraTransport implClass = null;
 		try {
 
-			String httpTransportClassName = ecd.getImplClassName();
 
-			implClass = (IExtraTransport) Class.forName(httpTransportClassName)
+			implClass = (IExtraTransport) Class.forName(implClassName)
 					.newInstance();
 		} catch (Throwable e) {
 			e.printStackTrace();

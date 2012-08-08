@@ -26,39 +26,38 @@ import javax.inject.Named;
 import javax.xml.bind.JAXBElement;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.components.FlagCodeType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
-import de.extra.client.plugins.outputplugin.config.ExtraConnectData;
-import de.extra.client.plugins.outputplugin.config.ExtraPropertiesHelper;
-import de.extra.client.plugins.outputplugin.config.ExtraSenderData;
+import de.extra.client.plugins.outputplugin.config.HttpOutputPluginConnectConfiguration;
+import de.extra.client.plugins.outputplugin.config.HttpOutputPluginSenderDataConfiguration;
 import de.extra.client.plugins.outputplugin.transport.ExtraTransportException;
 import de.extra.client.plugins.outputplugin.transport.ExtraTransportFactory;
 import de.extra.client.plugins.outputplugin.transport.IExtraTransport;
 import de.extra.client.plugins.outputplugin.utils.IResponseSaver;
-import de.extra.client.plugins.outputplugin.utils.PropertiesHelperException;
 
-@Named("httpBean")
-public class HttpSender {
+@Named("httpOutputPlugInSender")
+public class HttpOutputPlugInSender {
 
-	private static Logger logger = Logger.getLogger(HttpSender.class);
+	private static Logger logger = Logger.getLogger(HttpOutputPlugInSender.class);
 
 	private IExtraTransport client;
 
 	XMLTransport extraResponse = null;
-
-	@Value("${serverSettingLoc}")
-	private String serverSettingsLocation;
-
-	@Value("${senderSettingLoc}")
-	private String senderSettingsLocation;
-
+	
+	@Inject
+	ExtraTransportFactory extraTransportFactory;
+	
 	@Inject
 	@Named("fileSystemHelper")
 	private IResponseSaver fileSystemHelper;
+	
 
+	@Inject
+	@Named("httpOutputPluginConnectConfiguration")
+	private HttpOutputPluginConnectConfiguration extraConnectData;
+	
 	/**
 	 * Verarbeiten des Requests.
 	 * 
@@ -67,33 +66,21 @@ public class HttpSender {
 	 * @return
 	 */
 	public boolean processOutput(String request) {
-		// Erzeuge Serverkonfiguration
-		ExtraConnectData ecd = new ExtraConnectData();
-		ExtraSenderData senderData = new ExtraSenderData();
 
 		boolean returnCode = true;
 
 		try {
-			ecd = (ExtraConnectData) ExtraPropertiesHelper.processPropertyFile(
-					ecd, serverSettingsLocation);
-			senderData = (ExtraSenderData) ExtraPropertiesHelper
-					.processPropertyFile(senderData, senderSettingsLocation);
-			ecd.setSenderData(senderData);
 
 			try {
 				// Initialisiere Transport-Client
-				client = ExtraTransportFactory.loadTransportImpl(ecd);
-				client.initTransport(ecd);
+				client = extraTransportFactory.loadTransportImpl();
+				client.initTransport(extraConnectData);
 			} catch (ExtraTransportException e) {
 				logger.error("Fehler beim initialisieren des Transports", e);
 			}
 
 			JAXBElement<?> element = client.senden(request);
 			extraResponse = (XMLTransport) element.getValue();
-		} catch (PropertiesHelperException e) {
-			logger.error("Fehler beim Verarbeiten der Properties", e);
-			returnCode = false;
-
 		} catch (ExtraTransportException e) {
 			logger.error("Fehler beim Versand der eXTra-Nachricht", e);
 			returnCode = false;

@@ -21,41 +21,65 @@
  */
 package de.extra.client.plugins.outputplugin.config;
 
-public class ExtraConnectData {
+import javax.inject.Inject;
+import javax.inject.Named;
 
-	private String implClassName = "";
+import de.extra.client.core.annotation.PlugInConfigType;
+import de.extra.client.core.annotation.PlugInConfigutation;
+import de.extra.client.core.annotation.PlugInValue;
 
-	private String userAgent = "";
+@Named("httpOutputPluginConnectConfiguration")
+@PlugInConfigutation(plugInBeanName="httpOutputPlugIn", plugInType = PlugInConfigType.OutputPlugIns)
+public class HttpOutputPluginConnectConfiguration {
 
-	private boolean sslServer = true;
+	@PlugInValue(key="userAgent")
+	private String userAgent;
 
-	private String sslTruststoreLocation = "";
+	@PlugInValue(key="sslServer")
+	private boolean sslServer ;
 
-	private String sslTruststorePassword = "";
+	@PlugInValue(key="sslTruststoreLocation")
+	private String sslTruststoreLocation;
 
-	private String sslCertificate = "";
+	@PlugInValue(key="sslTruststorePassword")
+	private String sslTruststorePassword;
 
+	@PlugInValue(key="sslCertificate")
+	private String sslCertificate;
+
+	@PlugInValue(key="sslCertificateRefresh")
 	private boolean sslCertificateRefresh = false;
 
-	private String serverHost = "";
+	@PlugInValue(key="serverHost")
+	private String serverHost;
 
-	private String serverPort = "";
+	@PlugInValue(key="serverPort")
+	private String serverPort;
 
-	private String serverURL = "";
+	@PlugInValue(key="serverURL")
+	private String serverURL;
 
+	@PlugInValue(key="proxySet")
 	private boolean proxySet = false;
 
-	private String proxyHost = "";
+	@PlugInValue(key="proxyHost")
+	private String proxyHost;
 
-	private String proxyPort = "";
+	@PlugInValue(key="proxyPort")
+	private String proxyPort;
 
+	@PlugInValue(key="proxyAuth")
 	private boolean proxyAuth = false;
 
-	private String proxyUser = "";
+	@PlugInValue(key="proxyUser")
+	private String proxyUser;
 
-	private String proxyPwd = "";
+	@PlugInValue(key="proxyPwd")
+	private String proxyPwd;
 
-	private ExtraSenderData senderData;
+	@Inject
+	@Named("httpOutputPluginSenderDataConfiguration")
+	private HttpOutputPluginSenderDataConfiguration senderData;
 
 	/**
 	 * @return Returns the proxyAuth.
@@ -245,21 +269,6 @@ public class ExtraConnectData {
 	}
 
 	/**
-	 * @return Returns the implClassName.
-	 */
-	public String getImplClassName() {
-		return implClassName;
-	}
-
-	/**
-	 * @param implClassName
-	 *            The implClassName to set.
-	 */
-	public void setImplClassName(String implClassName) {
-		this.implClassName = implClassName;
-	}
-
-	/**
 	 * @return Returns the sslTruststorePassword.
 	 */
 	public String getSslTruststorePassword() {
@@ -297,11 +306,11 @@ public class ExtraConnectData {
 		this.sslCertificateRefresh = sslCertificateRefresh;
 	}
 
-	public ExtraSenderData getSenderData() {
+	public HttpOutputPluginSenderDataConfiguration getSenderData() {
 		return senderData;
 	}
 
-	public void setSenderData(ExtraSenderData senderData) {
+	public void setSenderData(HttpOutputPluginSenderDataConfiguration senderData) {
 		this.senderData = senderData;
 	}
 }
