@@ -47,7 +47,7 @@
 		<Elternelement>TransportBody</Elternelement>
 	</element>
 	<element>
-		<Name>xcpt:ElementSequence</Name>
+		<Name>xcpt:Base64CharSequence</Name>
 		<Elternelement>Data</Elternelement>
 	</element>
 </profil-configuration>
