@@ -2,7 +2,8 @@
 #plugins.dataplugin=dataPlugin
 plugins.dataplugin=queryDataPlugin
 plugins.configplugin=defaultConfigPlugin
-plugins.outputplugIn=httpOutputPlugIn
+#plugins.outputplugIn=httpOutputPlugIn
+plugins.outputplugIn=dummyOutputPlugIn
 
 #Value for MessageHeaderBuilder
 message.builder.header.testIndicator=http://extra-standard.de/test/NONE
