@@ -1,29 +1,34 @@
 #Plugins Bereich
-#plugins.dataplugin=dataPlugin
-plugins.dataplugin=queryDataPlugin
+plugins.dataplugin=fileDataPlugin
+#plugins.dataplugin=queryDataPlugin
 plugins.configplugin=defaultConfigPlugin
-plugins.outputplugIn=httpOutputPlugIn
+#plugins.outputplugIn=httpOutputPlugIn
+plugins.outputplugIn=dummyOutputPlugin
+plugins.responseplugin=fileSaverResponsePlugin
 
-#Value for MessageHeaderBuilder
+# Message Builder Start
+#
+# Transport Configuration
+message.builder.transport.attributes.extraProfile=http://www.extra-standard.de/profile/DUSKO/1.0
+
+# MessageHeaderBuilder Configuration
 message.builder.header.testIndicator=http://extra-standard.de/test/NONE
 #message.builder.header.testIndicator=http://extra-standard.de/test/PROCESS
-
 message.builder.header.senderId.class=Betriebsnummer
 message.builder.header.senderId.value=12345678
 message.builder.header.senderNameValue=Softwarehaus
-
-
 message.builder.header.receiverId.class=Betriebsnummer
 message.builder.header.receiverId.value=12345678
 message.builder.header.receiverNameValue=Softwarehaus
-
 #message.builder.header.requestDetail.procedure=http://www.extra-standard.de/procedure/DUSKO
 #message.builder.header.requestDetail.dataType=http://www.extra-standard.de/datatypes/Datensendung
 #message.builder.header.requestDetail.scenario=http://www.extra-standard.de/scenario/request-with-acknowledgement
-
 message.builder.header.requestDetail.procedure=DeliveryServer
 message.builder.header.requestDetail.dataType=http://www.extra-standard.de/datatypes/DataRequest
 message.builder.header.requestDetail.scenario=http://www.extra-standard.de/scenario/request-with-response
+
+# Message Builder Ende
+#
 
 # Informationen zum Query-Aufbau
 plugins.dataplugin.queryDataPlugin.startId=1
@@ -85,18 +90,16 @@ plugins.outputplugin.httpOutputPlugIn.directorySeparation=false
 #
 
 # Ablage-Ordner
-eingangOrdner=d:/temp/extraClient/Eingang/
-reportOrdner=d:/temp/extraClient/Eingang/Reports/
-inputVerzeichnis=d:/temp/extraClient/Ausgang/
+plugins.responseplugin.fileSaverResponsePlugin.eingangOrdner=d:/temp/extraClient/Response/
+plugins.responseplugin.fileSaverResponsePlugin.reportOrdner=d:/temp/extraClient/Reports/
+plugins.dataplugin.fileDataPlugin.inputVerzeichnis=d:/temp/extraClient/Eingang/
 
 # Speicherort fÃ¼r Profilierungs-Datei
 #profilOrdner=d:/temp/extraClient/config/sendenProfil.xml
 #profilOrdner=d:/temp/extraClient/config/request-Abholen-DEUEV.xml
 #profilOrdner=classpath:testprofile/request-Abholen-DEUEV.xml
-profilOrdner=classpath:testprofile/senden-profil-konfiguration.xml
+plugins.configplugin.defaultConfigPlugin.profilOrdner=classpath:testprofile/senden-profil-konfiguration.xml
 
-# Config-Informationen fÃ¼r den Versand
-extraProfile=http://www.extra-standard.de/profile/DUSKO/1.0
 
 
 
