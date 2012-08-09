@@ -1,13 +1,13 @@
 eXTra java
 
-Ordner fÃ¼r die Referenzimplementierung von eXTra in Java
+Ordner für die Referenzimplementierung von eXTra in Java
 
 apps
 ----------------------------------
-SÃ¤mtliche Anwendungen (Command Line Interface und Webanwendungen) von eXTra 
+Sämtliche Anwendungen (Command Line Interface und Webanwendungen) von eXTra 
 werden hier verwaltet.
 
 components
 ----------------------------------
-SÃ¤mtliche Komponenten von eXTra, die in den Anwendungen Verwendung finden, werden
+Sämtliche Komponenten von eXTra, die in den Anwendungen Verwendung finden, werden
 hier verwaltet.
