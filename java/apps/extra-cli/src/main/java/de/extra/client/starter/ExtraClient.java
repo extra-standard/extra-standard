@@ -18,10 +18,15 @@
  */
 package de.extra.client.starter;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 
 import de.extra.client.core.ClientCore;
 
@@ -46,7 +51,6 @@ public class ExtraClient {
 	 */
 	public int execute() throws Exception {
 		PropertyConfigurator.configureAndWatch(LOG_4_J_FILE);
-		logger.info("Start der Anwendung");
 
 		logger.debug("SpringBeans laden");
 		ApplicationContext applicationContext = null;
@@ -55,6 +59,16 @@ public class ExtraClient {
 			// Spring Beans laden.
 			applicationContext = new ClassPathXmlApplicationContext(
 					SPRING_XML_FILE_PATH);
+			// TODO: Pfad als Property
+			Resource logBoilerplate = applicationContext.getResource("dependency-tree.txt"); 
+			if (logBoilerplate.exists()) {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(logBoilerplate.getInputStream()));
+				String line = reader.readLine();
+				while (line != null) {
+					ExtraClientConstants.opLogger.info(line);
+					line = reader.readLine();
+				}
+			}
 
 		} catch (Exception e) {
 			logger.error("Laden der Beans fehlgeschlagen", e);

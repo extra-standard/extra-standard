@@ -18,6 +18,9 @@
  */
 package de.extra.client.starter;
 
+import java.util.Arrays;
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 
 public class ClientStarter {
@@ -28,7 +31,15 @@ public class ClientStarter {
 		ExtraClient extraClient = new ExtraClient();
 		int returnCode = 0;
 		try {
+			
+			ExtraClientConstants.opLogger.info("Start der Verarbeitung " + ExtraClientConstants.timestampFormat.format(new Date()));
+			ExtraClientConstants.opLogger.info("Eingabeparameter: " + Arrays.toString(args));
 			returnCode = extraClient.execute();
+			ExtraClientConstants.opLogger.info("Ende der Verarbeitung " + ExtraClientConstants.timestampFormat.format(new Date()));
+			// TODO: Ausgabedateien und Anzahl Datensätze einsammeln und loggen
+			ExtraClientConstants.opLogger.info("Ausgabedateien: " + "TODO");
+			ExtraClientConstants.opLogger.info("Anzahl bereitgestellte Saetze : " + "TODO");
+			
 			if (returnCode != 0) {
 				logger.error("Fehler bei der Verarbeitung: " + returnCode);
 
@@ -40,7 +51,6 @@ public class ClientStarter {
 			logger.error("Fehler bei der Verarbeitung", e);
 			returnCode = 9;
 		}
-
 		System.exit(returnCode);
 	}
 }
