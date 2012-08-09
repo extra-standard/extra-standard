@@ -20,16 +20,16 @@ package de.extra.client.plugins.outputplugin.transport;
 
 import javax.inject.Named;
 
-import de.extra.client.core.annotation.PlugInConfigType;
-import de.extra.client.core.annotation.PlugInConfigutation;
-import de.extra.client.core.annotation.PlugInValue;
+import de.extra.client.core.annotation.PluginConfigType;
+import de.extra.client.core.annotation.PluginConfigutation;
+import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.plugins.outputplugin.config.HttpOutputPluginConnectConfiguration;
 
 @Named("extraTransportFactory")
-@PlugInConfigutation(plugInBeanName="httpOutputPlugIn", plugInType = PlugInConfigType.OutputPlugIns)
+@PluginConfigutation(plugInBeanName="httpOutputPlugin", plugInType = PluginConfigType.OutputPlugins)
 public class ExtraTransportFactory {
 	
-	@PlugInValue(key="implClassName")
+	@PluginValue(key="implClassName")
 	private String implClassName;
 
 	public void setImplClassName(String implClassName) {

@@ -40,11 +40,11 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class PropertyPlaceholderPlugInConfigurer extends
+public class PropertyPlaceholderPluginConfigurer extends
 		PropertyPlaceholderConfigurer {
 
 	private static final Logger logger = Logger
-			.getLogger(PropertyPlaceholderPlugInConfigurer.class);
+			.getLogger(PropertyPlaceholderPluginConfigurer.class);
 
 	@Override
 	protected void processProperties(
@@ -61,20 +61,20 @@ public class PropertyPlaceholderPlugInConfigurer extends
 			}
 
 			if (clazz != null
-					&& clazz.isAnnotationPresent(PlugInConfigutation.class)) {
-				PlugInConfigutation annotationConfigutation = clazz
-						.getAnnotation(PlugInConfigutation.class);
+					&& clazz.isAnnotationPresent(PluginConfigutation.class)) {
+				PluginConfigutation annotationConfigutation = clazz
+						.getAnnotation(PluginConfigutation.class);
 				MutablePropertyValues mutablePropertyValues = beanFactory
 						.getBeanDefinition(name).getPropertyValues();
 
 				for (PropertyDescriptor property : BeanUtils
 						.getPropertyDescriptors(clazz)) {
 					Method setter = property.getWriteMethod();
-					PlugInValue valueAnnotation = null;
+					PluginValue valueAnnotation = null;
 					if (setter != null
-							&& setter.isAnnotationPresent(PlugInValue.class)) {
+							&& setter.isAnnotationPresent(PluginValue.class)) {
 						valueAnnotation = setter
-								.getAnnotation(PlugInValue.class);
+								.getAnnotation(PluginValue.class);
 					}
 					if (valueAnnotation != null) {
 						String key = extractKey(annotationConfigutation,
@@ -101,9 +101,9 @@ public class PropertyPlaceholderPlugInConfigurer extends
 						logger.debug("examining field=[" + clazz.getName()
 								+ "." + field.getName() + "]");
 					}
-					if (field.isAnnotationPresent(PlugInValue.class)) {
-						PlugInValue valueAnnotation = field
-								.getAnnotation(PlugInValue.class);
+					if (field.isAnnotationPresent(PluginValue.class)) {
+						PluginValue valueAnnotation = field
+								.getAnnotation(PluginValue.class);
 						PropertyDescriptor property = BeanUtils
 								.getPropertyDescriptor(clazz, field.getName());
 
@@ -150,7 +150,7 @@ public class PropertyPlaceholderPlugInConfigurer extends
 	 * @param annotation
 	 * @return
 	 */
-	private String extractKey(PlugInConfigutation annotation, PlugInValue value) {
+	private String extractKey(PluginConfigutation annotation, PluginValue value) {
 		String initialKey = value.key();
 		String plugInBeanName = annotation.plugInBeanName();
 		String configPrefix = annotation.plugInType().getConfigPrefix();

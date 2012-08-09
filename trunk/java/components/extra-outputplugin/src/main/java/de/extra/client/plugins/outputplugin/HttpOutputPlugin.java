@@ -23,19 +23,20 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
+import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.core.plugin.IOutputPlugin;
 
-@Named("httpOutputPlugIn")
+@Named("httpOutputPlugin")
 public class HttpOutputPlugin implements IOutputPlugin {
 
 	private static Logger logger = Logger.getLogger(HttpOutputPlugin.class);
 
 	@Inject
-	@Named("httpOutputPlugInSender")
-	private HttpOutputPlugInSender httpSender;
+	@Named("httpOutputPluginSender")
+	private HttpOutputPluginSender httpSender;
 
 	@Override
-	public boolean outputData(String request) {
+	public XMLTransport outputData(String request) {
 		logger.info("Start des Versands...");
 		request = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + request;
 		return httpSender.processOutput(request);

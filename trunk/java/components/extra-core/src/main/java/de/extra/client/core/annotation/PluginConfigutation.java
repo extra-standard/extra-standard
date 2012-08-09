@@ -16,29 +16,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.plugins.outputplugin.transport;
+package de.extra.client.core.annotation;
 
-/**
- * Ausnahme, die ausgel�st wird, wenn beim Initialisieren des Transports ein
- * Fehler aufgetreten ist.
- * 
- */
-public class ExtraTransportException extends RuntimeException {
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-	private static final long serialVersionUID = 7815001636383486123L;
-
-	public ExtraTransportException() {
-	}
-
-	public ExtraTransportException(String message) {
-		super(message);
-	}
-
-	public ExtraTransportException(Throwable cause) {
-		super(cause);
-	}
-
-	public ExtraTransportException(String message, Throwable cause) {
-		super(message, cause);
-	}
+@Retention(RetentionPolicy.RUNTIME) 
+@Target({ElementType.TYPE})
+public @interface PluginConfigutation {
+	String plugInBeanName();
+	PluginConfigType plugInType();
 }
+

@@ -16,29 +16,22 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.plugins.outputplugin.transport;
+package de.extra.client.core.plugin;
+
+import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 
 /**
- * Ausnahme, die ausgel�st wird, wenn beim Initialisieren des Transports ein
- * Fehler aufgetreten ist.
- * 
+ * Handelt Response vom eXTra Server
+ * @author Leonid Potap
+ *
  */
-public class ExtraTransportException extends RuntimeException {
+public interface IResponseProcessPlugin {
 
-	private static final long serialVersionUID = 7815001636383486123L;
+	/**
+	 * Handelt Response vom eXTra Server
+	 * @param extraResponse
+	 * @return
+	 */
+	public boolean processResponse(XMLTransport extraResponse);
 
-	public ExtraTransportException() {
-	}
-
-	public ExtraTransportException(String message) {
-		super(message);
-	}
-
-	public ExtraTransportException(Throwable cause) {
-		super(cause);
-	}
-
-	public ExtraTransportException(String message, Throwable cause) {
-		super(message, cause);
-	}
 }

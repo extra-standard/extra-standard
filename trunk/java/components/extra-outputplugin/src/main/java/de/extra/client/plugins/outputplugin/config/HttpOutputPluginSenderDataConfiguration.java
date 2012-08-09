@@ -20,64 +20,64 @@ package de.extra.client.plugins.outputplugin.config;
 
 import javax.inject.Named;
 
-import de.extra.client.core.annotation.PlugInConfigType;
-import de.extra.client.core.annotation.PlugInConfigutation;
-import de.extra.client.core.annotation.PlugInValue;
+import de.extra.client.core.annotation.PluginConfigType;
+import de.extra.client.core.annotation.PluginConfigutation;
+import de.extra.client.core.annotation.PluginValue;
 
 
 @Named("httpOutputPluginSenderDataConfiguration")
-@PlugInConfigutation(plugInBeanName="httpOutputPlugIn", plugInType = PlugInConfigType.OutputPlugIns)
+@PluginConfigutation(plugInBeanName="httpOutputPlugin", plugInType = PluginConfigType.OutputPlugins)
 public class HttpOutputPluginSenderDataConfiguration {
 
-	@PlugInValue(key="senderID")
+	@PluginValue(key="senderID")
 	private String senderID = "";
 
-	@PlugInValue(key="senderClassification")
+	@PluginValue(key="senderClassification")
 	private String senderClassification = null;
 
-	@PlugInValue(key="senderName")
+	@PluginValue(key="senderName")
 	private String senderName = null;
 
-	@PlugInValue(key="serverJ2EESecurity")
+	@PluginValue(key="serverJ2EESecurity")
 	private boolean serverJ2EESecurity = true;
 
-	@PlugInValue(key="serverJ2EEUser")
+	@PluginValue(key="serverJ2EEUser")
 	private String serverJ2EEUser = "";
 
-	@PlugInValue(key="serverJ2EEPwd")
+	@PluginValue(key="serverJ2EEPwd")
 	private String serverJ2EEPwd = "";
 
-	@PlugInValue(key="serverJ2EERealm")
+	@PluginValue(key="serverJ2EERealm")
 	private String serverJ2EERealm = "";
 
-	@PlugInValue(key="certificateAuthentication")
+	@PluginValue(key="certificateAuthentication")
 	private boolean certificateAuthentication = false;
 
-	@PlugInValue(key="privateKeyPassword")
+	@PluginValue(key="privateKeyPassword")
 	private String privateKeyPassword = "";
 
-	@PlugInValue(key="privateKeyStoreLocation")
+	@PluginValue(key="privateKeyStoreLocation")
 	private String privateKeyStoreLocation = "";
 
-	@PlugInValue(key="privateKeyStoreType")
+	@PluginValue(key="privateKeyStoreType")
 	private String privateKeyStoreType = "";
 
-	@PlugInValue(key="privateKeyType")
+	@PluginValue(key="privateKeyType")
 	private String privateKeyType = "";
 
-	@PlugInValue(key="signatureAlgorithm")
+	@PluginValue(key="signatureAlgorithm")
 	private String signatureAlgorithm = "";
 
-	@PlugInValue(key="messageDigestAlgorithm")
+	@PluginValue(key="messageDigestAlgorithm")
 	private String messageDigestAlgorithm = "";
 
-	@PlugInValue(key="directoryOverwrite")
+	@PluginValue(key="directoryOverwrite")
 	private boolean directoryOverwrite = false;
 
-	@PlugInValue(key="directoryPath")
+	@PluginValue(key="directoryPath")
 	private String directoryPath = "";
 
-	@PlugInValue(key="directorySeparation")
+	@PluginValue(key="directorySeparation")
 	private boolean directorySeparation = true;
 
 	public String getPrivateKeyStoreLocation() {
