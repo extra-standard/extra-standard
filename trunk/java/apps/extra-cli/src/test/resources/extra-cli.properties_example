@@ -2,7 +2,7 @@
 plugins.dataplugin=fileDataPlugin
 #plugins.dataplugin=queryDataPlugin
 plugins.configplugin=defaultConfigPlugin
-#plugins.outputplugIn=httpOutputPlugin
+#plugins.outputplugin=httpOutputPlugin
 plugins.outputplugin=dummyOutputPlugin
 plugins.responseprocessplugin=fileSystemResponseProcessPlugin
 
