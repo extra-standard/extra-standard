@@ -16,7 +16,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 package de.extra.client.plugins.responseprocessplugin.filesystem;
 
 import java.util.ArrayList;
