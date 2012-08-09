@@ -87,7 +87,7 @@ plugins.outputplugin.httpOutputPlugin.directorySeparation=false
 #
 
 # Ablage-Ordner
-plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=classpath:src/test/resources/testDirectories/responses
+plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=classpath:testDirectories/responses
 plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner=classpath:testDirectories/reports
 plugins.dataplugin.fileDataPlugin.inputVerzeichnis=classpath:testDirectories/input
 
