@@ -200,9 +200,28 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- Artefakte und Versionen gesammelt in das Client-Artefakt mitaufnehmen, zum beispiel fuer Betriebslog -->
+		    <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-dependency-plugin</artifactId>
+		        <version>2.5</version>
+		        <executions>
+		          <execution>
+		            <id>output-dependency-tree</id>
+		            <phase>compile</phase>
+		            <goals>
+		              <goal>tree</goal>
+		            </goals>
+		            <configuration>
+		                <outputFile>${project.build.outputDirectory}/dependency-tree.txt</outputFile>
+		                <appendOutput>true</appendOutput>
+		                <tokens>whitespace</tokens>		              
+		            </configuration>
+		          </execution>
+		        </executions>
+		    </plugin>
 		</plugins>
 	</build>
-
 	<profiles>
 		<profile>
 			<id>development</id>
