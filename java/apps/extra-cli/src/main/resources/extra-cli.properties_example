@@ -87,6 +87,7 @@ plugins.outputplugin.httpOutputPlugin.directorySeparation=false
 #
 
 # Ablage-Ordner
+plugins.responseprocessplugin=
 plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=d:/temp/extraClient/Response/
 plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner=d:/temp/extraClient/Reports/
 plugins.dataplugin.fileDataPlugin.inputVerzeichnis=d:/temp/extraClient/Eingang/
