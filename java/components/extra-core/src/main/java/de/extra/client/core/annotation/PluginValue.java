@@ -16,12 +16,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.plugins.outputplugin.utils;
+package de.extra.client.core.annotation;
 
-import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public interface IResponseSaver {
-
-	public boolean processResponse(XMLTransport extraResponse);
-
+@Retention(RetentionPolicy.RUNTIME) 
+@Target({ElementType.METHOD, ElementType.FIELD})
+public @interface PluginValue {
+	String key();
 }
+

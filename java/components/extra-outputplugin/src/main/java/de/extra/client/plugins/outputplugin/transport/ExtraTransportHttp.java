@@ -67,7 +67,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	private String requestURL;
 
-	private static Logger logger = Logger.getLogger(ExtraTransportHttp.class);
+	private static final Logger logger = Logger.getLogger(ExtraTransportHttp.class);
 
 	/**
 	 * ExtrasTransportHttp is an implementation of IExtraTransport and provides

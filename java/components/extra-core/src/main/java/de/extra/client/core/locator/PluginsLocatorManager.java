@@ -29,38 +29,45 @@ import org.springframework.beans.factory.annotation.Value;
 import de.extra.client.core.plugin.IConfigPlugin;
 import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.core.plugin.IOutputPlugin;
+import de.extra.client.core.plugin.IResponseProcessPlugin;
 
 /**
  * Sucht nach der in der Konfiguration definierten Plugins.
  * 
  * @author evpqq5
  */
-@Named("plugInsLocatorManager")
-public class PlugInsLocatorManager {
+@Named("pluginsLocatorManager")
+public class PluginsLocatorManager {
 
-	private static final Logger LOG = Logger
-			.getLogger(PlugInsLocatorManager.class);
+	private static final Logger logger = Logger
+			.getLogger(PluginsLocatorManager.class);
 
 	@Inject
-	Map<String, IDataPlugin> dataPlugInMap;
+	Map<String, IDataPlugin> dataPluginMap;
 
 	@Value("${plugins.dataplugin}")
 	String dataPlugBeanName;
 
 	@Inject
-	Map<String, IConfigPlugin> configPlugInMap;
+	Map<String, IConfigPlugin> configPluginMap;
 
 	@Value("${plugins.configplugin}")
-	String configPlugInBeanName;
+	String configPluginBeanName;
 
 	@Inject
-	Map<String, IOutputPlugin> outputPlugInMap;
+	Map<String, IOutputPlugin> outputPluginMap;
 
-	@Value("${plugins.outputplugIn}")
-	String outputPlugInBeanName;
+	@Value("${plugins.outputplugin}")
+	String outputPluginBeanName;
 
-	public void setDataPlugInMap(Map<String, IDataPlugin> dataPlugInMap) {
-		this.dataPlugInMap = dataPlugInMap;
+	@Inject
+	Map<String, IResponseProcessPlugin> responsePluginMap;
+
+	@Value("${plugins.responseprocessplugin}")
+	String responsePluginBeanName;
+
+	public void setDataPluginMap(Map<String, IDataPlugin> dataPluginMap) {
+		this.dataPluginMap = dataPluginMap;
 	}
 
 	/**
@@ -69,11 +76,11 @@ public class PlugInsLocatorManager {
 	 * 
 	 * @return
 	 */
-	public IDataPlugin getConfiguratedDataPlugIn() {
-		LOG.debug(dataPlugBeanName);
-		IDataPlugin idataPlugIn = dataPlugInMap.get(dataPlugBeanName);
-		LOG.debug("DataPlugInClass: " + idataPlugIn.getClass());
-		return idataPlugIn;
+	public IDataPlugin getConfiguratedDataPlugin() {
+		logger.debug(dataPlugBeanName);
+		IDataPlugin idataPlugin = dataPluginMap.get(dataPlugBeanName);
+		logger.debug("DataPlugInClass: " + idataPlugin.getClass());
+		return idataPlugin;
 	}
 
 	/**
@@ -83,10 +90,10 @@ public class PlugInsLocatorManager {
 	 * @return
 	 */
 	public IOutputPlugin getConfiguratedOutputPlugin() {
-		LOG.debug(outputPlugInBeanName);
-		IOutputPlugin ioutputPlugIn = outputPlugInMap.get(outputPlugInBeanName);
-		LOG.debug("OutpuPlugInClass: " + ioutputPlugIn.getClass());
-		return ioutputPlugIn;
+		logger.debug(outputPluginBeanName);
+		IOutputPlugin ioutputPlugin = outputPluginMap.get(outputPluginBeanName);
+		logger.debug("OutpuPlugInClass: " + ioutputPlugin.getClass());
+		return ioutputPlugin;
 	}
 
 	/**
@@ -95,11 +102,25 @@ public class PlugInsLocatorManager {
 	 * 
 	 * @return
 	 */
-	public IConfigPlugin getConfiguratedConfigPlugIn() {
-		LOG.debug(configPlugInBeanName);
-		IConfigPlugin iConfigPlugIn = configPlugInMap.get(configPlugInBeanName);
-		LOG.debug("ConfiPlugInClasse: " + iConfigPlugIn.getClass());
-		return iConfigPlugIn;
+	public IConfigPlugin getConfiguratedConfigPlugin() {
+		logger.debug(configPluginBeanName);
+		IConfigPlugin iConfigPlugin = configPluginMap.get(configPluginBeanName);
+		logger.debug("ConfiPlugInClasse: " + iConfigPlugin.getClass());
+		return iConfigPlugin;
+	}
+
+	/**
+	 * Liefert der in der Konfiguration unter dem Schlüssel plugins.dataplugin
+	 * definierten Bean
+	 * 
+	 * @return
+	 */
+	public IResponseProcessPlugin getConfiguratedResponsePlugin() {
+		logger.debug(configPluginBeanName);
+		IResponseProcessPlugin iResponsePlugin = responsePluginMap
+				.get(responsePluginBeanName);
+		logger.debug("responsePluginClass: " + iResponsePlugin.getClass());
+		return iResponsePlugin;
 	}
 
 }

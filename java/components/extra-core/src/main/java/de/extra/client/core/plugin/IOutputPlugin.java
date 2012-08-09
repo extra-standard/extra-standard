@@ -18,8 +18,10 @@
  */
 package de.extra.client.core.plugin;
 
+import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
+
 public interface IOutputPlugin {
 
-	public boolean outputData(String request);
+	public XMLTransport outputData(String request);
 
 }

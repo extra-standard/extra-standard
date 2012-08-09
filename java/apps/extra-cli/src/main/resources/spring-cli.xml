@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<bean
-		class="de.extra.client.core.annotation.PropertyPlaceholderPlugInConfigurer"
+		class="de.extra.client.core.annotation.PropertyPlaceholderPluginConfigurer"
 		p:location="classpath:extra-cli.properties" />
 
 	<import resource="classpath:spring-schema.xml" />
@@ -14,6 +14,8 @@
 	<import resource="classpath:spring-outputplugin.xml" />
 	<import resource="classpath:spring-dataplugin.xml" />
 	<import resource="classpath:spring-queryplugin.xml" />
+	<import resource="classpath:spring-file-responseprocessplugin.xml" />
+	
 
 	<context:component-scan base-package="de.extra.client.core, de.drv.dsrv.extra" />
 </beans>

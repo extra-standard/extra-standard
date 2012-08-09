@@ -45,31 +45,31 @@ import de.extra.client.core.plugin.IDataPlugin;
 @RunWith(MockitoJUnitRunner.class)
 public class PluginsLocatorManagerTest {
 
-	private PlugInsLocatorManager pluginsLocatorManager;
+	private PluginsLocatorManager pluginsLocatorManager;
 
 	@Mock
-	private Map<String, IDataPlugin> dataPlugInMap;
+	private Map<String, IDataPlugin> dataPluginMap;
 
 	@Mock
 	IDataPlugin dataPlugin;
 
 	@Before
 	public void setUp() throws Exception {
-		pluginsLocatorManager = new PlugInsLocatorManager();
+		pluginsLocatorManager = new PluginsLocatorManager();
 	}
 
 	@Test
-	public void testGetConfiguratedDataPlugIn() {
-		when(dataPlugInMap.get(anyString())).thenReturn(dataPlugin);
+	public void testGetConfiguratedDataPlugin() {
+		when(dataPluginMap.get(anyString())).thenReturn(dataPlugin);
 
-		pluginsLocatorManager.setDataPlugInMap(dataPlugInMap);
+		pluginsLocatorManager.setDataPluginMap(dataPluginMap);
 		IDataPlugin resultDataPlugin = pluginsLocatorManager
-				.getConfiguratedDataPlugIn();
+				.getConfiguratedDataPlugin();
 
 		assertNotNull(resultDataPlugin);
 		assertEquals(dataPlugin, resultDataPlugin);
 
-		verify(dataPlugInMap, atLeastOnce()).get(anyString());
+		verify(dataPluginMap, atLeastOnce()).get(anyString());
 	}
 
 	@Test
@@ -77,6 +77,6 @@ public class PluginsLocatorManagerTest {
 	}
 
 	@Test
-	public void testGetConfiguratedConfigPlugIn() {
+	public void testGetConfiguratedConfigPlugin() {
 	}
 }

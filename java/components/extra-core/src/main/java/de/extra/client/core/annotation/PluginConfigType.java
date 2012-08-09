@@ -16,29 +16,29 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.plugins.outputplugin.transport;
+package de.extra.client.core.annotation;
 
 /**
- * Ausnahme, die ausgel�st wird, wenn beim Initialisieren des Transports ein
- * Fehler aufgetreten ist.
+ * Enumiration für die mögliche Plugins. Hier werden auch die prefixes für die
+ * Konfigparameter verwaltet.
+ * 
+ * @author Leonid Potap
  * 
  */
-public class ExtraTransportException extends RuntimeException {
+public enum PluginConfigType {
 
-	private static final long serialVersionUID = 7815001636383486123L;
+	DataPlugins("plugins.dataplugin"), DataSource("plugins.datasource"), Certificates(
+			"plugins.certificates"), DataTransforms("plugins.datatransform"), Contacts(
+			"plugins.contacts"), OutputPlugins("plugins.outputplugin"), ResponseProcessPlugins(
+			"plugins.responseprocessplugin");
 
-	public ExtraTransportException() {
+	String configPrefix;
+
+	PluginConfigType(String configPrefix) {
+		this.configPrefix = configPrefix;
 	}
 
-	public ExtraTransportException(String message) {
-		super(message);
-	}
-
-	public ExtraTransportException(Throwable cause) {
-		super(cause);
-	}
-
-	public ExtraTransportException(String message, Throwable cause) {
-		super(message, cause);
+	String getConfigPrefix() {
+		return configPrefix;
 	}
 }

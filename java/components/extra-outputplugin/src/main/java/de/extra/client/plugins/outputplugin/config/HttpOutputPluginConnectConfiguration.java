@@ -24,57 +24,57 @@ package de.extra.client.plugins.outputplugin.config;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import de.extra.client.core.annotation.PlugInConfigType;
-import de.extra.client.core.annotation.PlugInConfigutation;
-import de.extra.client.core.annotation.PlugInValue;
+import de.extra.client.core.annotation.PluginConfigType;
+import de.extra.client.core.annotation.PluginConfigutation;
+import de.extra.client.core.annotation.PluginValue;
 
 @Named("httpOutputPluginConnectConfiguration")
-@PlugInConfigutation(plugInBeanName="httpOutputPlugIn", plugInType = PlugInConfigType.OutputPlugIns)
+@PluginConfigutation(plugInBeanName="httpOutputPlugin", plugInType = PluginConfigType.OutputPlugins)
 public class HttpOutputPluginConnectConfiguration {
 
-	@PlugInValue(key="userAgent")
+	@PluginValue(key="userAgent")
 	private String userAgent;
 
-	@PlugInValue(key="sslServer")
+	@PluginValue(key="sslServer")
 	private boolean sslServer ;
 
-	@PlugInValue(key="sslTruststoreLocation")
+	@PluginValue(key="sslTruststoreLocation")
 	private String sslTruststoreLocation;
 
-	@PlugInValue(key="sslTruststorePassword")
+	@PluginValue(key="sslTruststorePassword")
 	private String sslTruststorePassword;
 
-	@PlugInValue(key="sslCertificate")
+	@PluginValue(key="sslCertificate")
 	private String sslCertificate;
 
-	@PlugInValue(key="sslCertificateRefresh")
+	@PluginValue(key="sslCertificateRefresh")
 	private boolean sslCertificateRefresh = false;
 
-	@PlugInValue(key="serverHost")
+	@PluginValue(key="serverHost")
 	private String serverHost;
 
-	@PlugInValue(key="serverPort")
+	@PluginValue(key="serverPort")
 	private String serverPort;
 
-	@PlugInValue(key="serverURL")
+	@PluginValue(key="serverURL")
 	private String serverURL;
 
-	@PlugInValue(key="proxySet")
+	@PluginValue(key="proxySet")
 	private boolean proxySet = false;
 
-	@PlugInValue(key="proxyHost")
+	@PluginValue(key="proxyHost")
 	private String proxyHost;
 
-	@PlugInValue(key="proxyPort")
+	@PluginValue(key="proxyPort")
 	private String proxyPort;
 
-	@PlugInValue(key="proxyAuth")
+	@PluginValue(key="proxyAuth")
 	private boolean proxyAuth = false;
 
-	@PlugInValue(key="proxyUser")
+	@PluginValue(key="proxyUser")
 	private String proxyUser;
 
-	@PlugInValue(key="proxyPwd")
+	@PluginValue(key="proxyPwd")
 	private String proxyPwd;
 
 	@Inject

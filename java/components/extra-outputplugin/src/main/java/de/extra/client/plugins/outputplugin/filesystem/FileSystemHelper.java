@@ -20,11 +20,11 @@ import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.response.Package;
 import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
-import de.extra.client.plugins.outputplugin.utils.IResponseSaver;
+import de.extra.client.core.plugin.IResponseProcessPlugin;
 import de.extra.client.plugins.outputplugin.utils.OutputPluginHelper;
 
-@Named("fileSystemHelper")
-public class FileSystemHelper implements IResponseSaver, Serializable {
+//@Named("fileSystemHelper")
+public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 
 	private static final long serialVersionUID = 1607616003288362662L;
 

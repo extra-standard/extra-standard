@@ -35,28 +35,26 @@ import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 
 import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
 import de.extra.client.core.helper.RequestHelper;
-import de.extra.client.core.locator.PlugInsLocatorManager;
+import de.extra.client.core.locator.PluginsLocatorManager;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.SenderDataBean;
 import de.extra.client.core.plugin.IConfigPlugin;
 import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.core.plugin.IOutputPlugin;
+import de.extra.client.core.plugin.IResponseProcessPlugin;
 
 @Named("clientCore")
 public class ClientCore {
 
-	private static final Logger LOG = Logger.getLogger(ClientCore.class);
+	private static final Logger logger = Logger.getLogger(ClientCore.class);
 
 	public static final int STATUS_CODE_OK = 0;
 
 	public static final int STATUS_CODE_ERROR = 9;
 
-
-	
 	@Inject
-	@Named("plugInsLocatorManager")
-	private PlugInsLocatorManager plugInsLocatorManager;
-
+	@Named("pluginsLocatorManager")
+	private PluginsLocatorManager pluginsLocatorManager;
 
 	@Inject
 	@Named("namespacePrefixMapper")
@@ -73,24 +71,23 @@ public class ClientCore {
 	 */
 	public int buildRequest() {
 		int statusCode = STATUS_CODE_ERROR;
-		
-		IDataPlugin dataPlugin = plugInsLocatorManager.getConfiguratedDataPlugIn();
-		
+
+		IDataPlugin dataPlugin = pluginsLocatorManager
+				.getConfiguratedDataPlugin();
+
 		List<SenderDataBean> versandDatenListe = dataPlugin.getSenderData();
-		
-		if(versandDatenListe == null || versandDatenListe.isEmpty()){
-			// Nothing  TODO Klient refactorn 
+
+		if (versandDatenListe == null || versandDatenListe.isEmpty()) {
+			// Nothing TODO Klient refactorn
 			statusCode = STATUS_CODE_OK;
-			LOG.info("Keine Nachrichten gefunden. Warte auf Nachrichten.");
+			logger.info("Keine Nachrichten gefunden. Warte auf Nachrichten.");
 			return statusCode;
 		}
-		
-		
-		IConfigPlugin configPlugin = plugInsLocatorManager.getConfiguratedConfigPlugIn();
+
+		IConfigPlugin configPlugin = pluginsLocatorManager
+				.getConfiguratedConfigPlugin();
 
 		ConfigFileBean configFile = configPlugin.getConfigFile();
-
-		
 
 		try {
 			// Transformation XML zu String
@@ -121,15 +118,24 @@ public class ClientCore {
 					Writer writer = new StringWriter();
 					marshaller.marshal(request, writer);
 
-					LOG.debug("Ausgabe: " + writer.toString());
-					LOG.debug("Übergabe an OutputPlugin");
+					logger.debug("Ausgabe: " + writer.toString());
+					logger.debug("Übergabe an OutputPlugin");
 
-					IOutputPlugin outputPlugin = plugInsLocatorManager.getConfiguratedOutputPlugin();
-					
-					if (outputPlugin.outputData(writer.toString())) {
+					IOutputPlugin outputPlugin = pluginsLocatorManager
+							.getConfiguratedOutputPlugin();
+
+					de.drv.dsrv.extrastandard.namespace.response.XMLTransport extraResponse = outputPlugin
+							.outputData(writer.toString());
+
+					IResponseProcessPlugin responsePlugin = pluginsLocatorManager
+							.getConfiguratedResponsePlugin();
+
+					boolean isReportSuccesfull = responsePlugin
+							.processResponse(extraResponse);
+
+					if (isReportSuccesfull) {
 						statusCode = STATUS_CODE_OK;
 					} else {
-						LOG.error("Fehler beim Versand des Requests");
 						statusCode = STATUS_CODE_ERROR;
 					}
 				}
@@ -139,7 +145,7 @@ public class ClientCore {
 
 			}
 		} catch (JAXBException e) {
-			LOG.error("Fehler beim Erstellen des Requests", e);
+			logger.error("Fehler beim Erstellen des Requests", e);
 		}
 
 		return statusCode;

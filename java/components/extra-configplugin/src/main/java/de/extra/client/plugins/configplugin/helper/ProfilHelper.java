@@ -32,7 +32,7 @@ import de.extra.client.plugins.configplugin.ConfigConstants;
 @Named("profilHelper")
 public class ProfilHelper {
 
-	private static final Logger LOGGER = Logger.getLogger(ProfilHelper.class);
+	private static final Logger logger = Logger.getLogger(ProfilHelper.class);
 
 
 	/**
