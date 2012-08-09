@@ -88,7 +88,7 @@ plugins.outputplugin.httpOutputPlugin.directorySeparation=false
 
 # Ablage-Ordner
 plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=d:/temp/extraClient/Response/
-plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=d:/temp/extraClient/Reports/
+plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner=d:/temp/extraClient/Reports/
 plugins.dataplugin.fileDataPlugin.inputVerzeichnis=d:/temp/extraClient/Eingang/
 
 # Speicherort fÃ¼r Profilierungs-Datei
