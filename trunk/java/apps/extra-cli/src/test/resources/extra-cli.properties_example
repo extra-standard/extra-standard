@@ -4,7 +4,7 @@ plugins.dataplugin=fileDataPlugin
 plugins.configplugin=defaultConfigPlugin
 #plugins.outputplugIn=httpOutputPlugin
 plugins.outputplugin=dummyOutputPlugin
-plugins.responseplugin=fileSystemResponsePlugin
+plugins.responseprocessplugin=fileSystemResponseProcessPlugin
 
 # Message Builder Start
 #
@@ -87,9 +87,9 @@ plugins.outputplugin.httpOutputPlugin.directorySeparation=false
 #
 
 # Ablage-Ordner
-plugins.responseplugin.fileSystemResponsePlugin.eingangOrdner=d:/temp/extraClient/Response/
-plugins.responseplugin.fileSystemResponsePlugin.reportOrdner=d:/temp/extraClient/Reports/
-plugins.dataplugin.fileDataPlugin.inputVerzeichnis=d:/temp/extraClient/Eingang/
+plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=classpath:src/test/resources/testDirectories/responses
+plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner=classpath:testDirectories/reports
+plugins.dataplugin.fileDataPlugin.inputVerzeichnis=classpath:testDirectories/input
 
 # Speicherort fÃ¼r Profilierungs-Datei
 #profilOrdner=d:/temp/extraClient/config/sendenProfil.xml
