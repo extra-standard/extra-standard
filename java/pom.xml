@@ -17,7 +17,7 @@
 		<module>components/extra-default-configplugin</module>
 		<module>components/extra-file-dataplugin</module>
 		<module>components/extra-http-outputplugin</module>
-		<module>components/extra-queryplugin</module>
+		<module>components/extra-query-dataplugin</module>
 		<module>components/extra-file-responseprocessplugin</module>
 		<module>apps/extra-cli</module>
 		<module>apps/extra-profiling</module>
