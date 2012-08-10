@@ -29,6 +29,7 @@ import javax.inject.Named;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
+import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.XmlMappingException;
 
 import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
@@ -60,7 +61,7 @@ public class ClientCore {
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
-	private org.springframework.oxm.Marshaller marshaller;
+	private Marshaller marshaller;
 
 	/**
 	 * Funktion in der der Request aufgebaut wird.
