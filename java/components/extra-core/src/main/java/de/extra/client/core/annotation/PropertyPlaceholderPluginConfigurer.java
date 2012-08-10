@@ -33,8 +33,12 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 /**
+ * <pre>
  * This class extends the PropertyPlaceholderConfigurer so that we will able to
- * configure our plugins. This code is taken and extended from: http://...
+ * configure our plugins. 
+ * This code is taken and extended from:
+ * http://stackoverflow.com/questions/317687/inject-property-value-into-spring-bean
+ * </pre>
  * 
  * @author Leonid Potap
  * @version 1.0.0
