@@ -21,16 +21,22 @@ package de.extra.client.plugins.responseprocessplugin.filesystem;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.oxm.Marshaller;
+import org.springframework.oxm.XmlMappingException;
 
 import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
@@ -47,6 +53,10 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 	private static Logger logger = Logger
 			.getLogger(FileSystemResponseProcessPlugin.class);
 
+	@Inject
+	@Named("eXTrajaxb2Marshaller")
+	private Marshaller marshaller;
+
 	@Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner}")
 	private File eingangOrdner;
 
@@ -61,6 +71,8 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 	 * .extrastandard.namespace.response.XMLTransport)
 	 */
 	public boolean processResponse(XMLTransport extraResponse) {
+		printResult(extraResponse);
+
 		pruefeVerzeichnis();
 
 		if (!isBodyEmpty(extraResponse.getTransportBody())) {
@@ -126,6 +138,22 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 		}
 
 		return true;
+	}
+
+	private void printResult(XMLTransport extraResponse) {
+		try {
+			Writer writer = new StringWriter();
+			StreamResult streamResult = new StreamResult(writer);
+
+			marshaller.marshal(extraResponse, streamResult);
+			logger.debug("ExtraResponse: " + writer.toString());
+		} catch (XmlMappingException xmlException) {
+			logger.debug("XmlMappingException beim Lesen des Results ",
+					xmlException);
+		} catch (IOException ioException) {
+			logger.debug("IOException beim Lesen des Results ", ioException);
+		}
+
 	}
 
 	private static boolean isBodyEmpty(TransportBody transportBody) {
