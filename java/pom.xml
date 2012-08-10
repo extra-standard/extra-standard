@@ -14,7 +14,7 @@
 	<modules>
 		<module>components/extra-schema</module>
 		<module>components/extra-core</module>
-		<module>components/extra-configplugin</module>
+		<module>components/extra-default-configplugin</module>
 		<module>components/extra-file-dataplugin</module>
 		<module>components/extra-outputplugin</module>
 		<module>components/extra-queryplugin</module>
