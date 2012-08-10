@@ -18,6 +18,7 @@
  */
 package de.extra.client.core;
 
+import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Iterator;
@@ -25,13 +26,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
-
-import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
+import org.springframework.oxm.XmlMappingException;
 
 import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
 import de.extra.client.core.helper.RequestHelper;
@@ -57,12 +55,12 @@ public class ClientCore {
 	private PluginsLocatorManager pluginsLocatorManager;
 
 	@Inject
-	@Named("namespacePrefixMapper")
-	private NamespacePrefixMapper namespacePrefixMapper;
-
-	@Inject
 	@Named("requestHelper")
 	private RequestHelper requestHelper;
+
+	@Inject
+	@Named("eXTrajaxb2Marshaller")
+	private org.springframework.oxm.Marshaller marshaller;
 
 	/**
 	 * Funktion in der der Request aufgebaut wird.
@@ -90,20 +88,6 @@ public class ClientCore {
 		ConfigFileBean configFile = configPlugin.getConfigFile();
 
 		try {
-			// Transformation XML zu String
-			// Laden der Parameter für JaxB
-			JAXBContext context = JAXBContext
-					.newInstance("de.drv.dsrv.extrastandard.namespace.request:de.drv.dsrv.extrastandard.namespace.plugins:de.drv.dsrv.extrastandard.namespace.messages");
-
-			Marshaller marshaller = context.createMarshaller();
-			marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper",
-					namespacePrefixMapper);
-
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-					Boolean.TRUE);
-			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-			marshaller.setProperty(Marshaller.JAXB_ENCODING, "ISO-8859-1");
-
 			SenderDataBean versanddatenBean = null;
 
 			// Überprüfen ob ein PackageLayer benötigt wird
@@ -116,8 +100,9 @@ public class ClientCore {
 							versanddatenBean, configFile);
 
 					Writer writer = new StringWriter();
-					marshaller.marshal(request, writer);
+					StreamResult streamResult = new StreamResult(writer);
 
+					marshaller.marshal(request, streamResult);
 					logger.debug("Ausgabe: " + writer.toString());
 					logger.debug("Übergabe an OutputPlugin");
 
@@ -144,7 +129,9 @@ public class ClientCore {
 				// als Package oder Message
 
 			}
-		} catch (JAXBException e) {
+		} catch (XmlMappingException e) {
+			logger.error("Fehler beim Erstellen des Requests", e);
+		} catch (IOException e) {
 			logger.error("Fehler beim Erstellen des Requests", e);
 		}
 
