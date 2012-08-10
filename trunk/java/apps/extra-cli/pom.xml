@@ -18,7 +18,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.extra</groupId>
-			<artifactId>extra-configplugin</artifactId>
+			<artifactId>extra-default-configplugin</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
