@@ -38,7 +38,7 @@
 		</dependency>
 		<dependency>
 			<groupId>de.extra</groupId>
-			<artifactId>extra-outputplugin</artifactId>
+			<artifactId>extra-http-outputplugin</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
