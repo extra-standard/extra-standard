@@ -34,11 +34,6 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
@@ -67,7 +62,8 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	private String requestURL;
 
-	private static final Logger logger = Logger.getLogger(ExtraTransportHttp.class);
+	private static final Logger logger = Logger
+			.getLogger(ExtraTransportHttp.class);
 
 	/**
 	 * ExtrasTransportHttp is an implementation of IExtraTransport and provides
@@ -76,15 +72,13 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @see de.extra.client.transport.IExtraTransport#senden(java.lang.String)
 	 */
 	@Override
-	public JAXBElement senden(String extraRequest)
+	public InputStream senden(String extraRequest)
 			throws ExtraTransportException {
 
 		if (client != null) {
 
 			// Init response
-			JAXBElement extraResponse = null;
-
-			long start = System.currentTimeMillis();
+			InputStream extraResponse = null;
 
 			// Build url String and create post request
 			PostMethod method = new PostMethod(requestURL);
@@ -107,8 +101,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 					// Read the response body and save it
 
-					extraResponse = responseMarshaller(method
-							.getResponseBodyAsStream());
+					extraResponse = method.getResponseBodyAsStream();
 				}
 
 			} catch (HttpException e) {
@@ -137,7 +130,8 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @return void
 	 */
 	@Override
-	public void initTransport(HttpOutputPluginConnectConfiguration extraConnectData)
+	public void initTransport(
+			HttpOutputPluginConnectConfiguration extraConnectData)
 			throws ExtraTransportException {
 
 		// Create new client instance
@@ -161,10 +155,12 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @param requestURL
 	 * @return
 	 */
-	private String buildLogString(HttpOutputPluginConnectConfiguration extraConnectData,
+	private String buildLogString(
+			HttpOutputPluginConnectConfiguration extraConnectData,
 			String requestURL) {
 
-		HttpOutputPluginSenderDataConfiguration senderData = extraConnectData.getSenderData();
+		HttpOutputPluginSenderDataConfiguration senderData = extraConnectData
+				.getSenderData();
 
 		StringBuffer logString = new StringBuffer("HttpClient initialisiert;");
 		logString.append("\n- RequestURL = ");
@@ -215,7 +211,8 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @param extraConnectData
 	 * @param client
 	 */
-	private void setupHttpClient(HttpOutputPluginConnectConfiguration extraConnectData,
+	private void setupHttpClient(
+			HttpOutputPluginConnectConfiguration extraConnectData,
 			HttpClient client) {
 
 		// Setup user agent and charset
@@ -232,9 +229,11 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @param client
 	 * @throws ExtraTransportException
 	 */
-	private void setupAuthentification(HttpOutputPluginConnectConfiguration extraConnectData,
+	private void setupAuthentification(
+			HttpOutputPluginConnectConfiguration extraConnectData,
 			HttpClient client) throws ExtraTransportException {
-		HttpOutputPluginSenderDataConfiguration senderData = extraConnectData.getSenderData();
+		HttpOutputPluginSenderDataConfiguration senderData = extraConnectData
+				.getSenderData();
 
 		// Check if J2EE security is requested (default)
 		if (senderData.isServerJ2EESecurity()) {
@@ -314,9 +313,12 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @param extraConnectData
 	 * @param client
 	 */
-	private void setupProxy(HttpOutputPluginConnectConfiguration extraConnectData, HttpClient client) {
+	private void setupProxy(
+			HttpOutputPluginConnectConfiguration extraConnectData,
+			HttpClient client) {
 
-		HttpOutputPluginSenderDataConfiguration senderData = extraConnectData.getSenderData();
+		HttpOutputPluginSenderDataConfiguration senderData = extraConnectData
+				.getSenderData();
 
 		// Check if proxy communication is required
 		if (extraConnectData.isProxySet()) {
@@ -362,7 +364,8 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @param extraConnectData
 	 * @param urlString
 	 */
-	private String buildUrlString(HttpOutputPluginConnectConfiguration extraConnectData) {
+	private String buildUrlString(
+			HttpOutputPluginConnectConfiguration extraConnectData) {
 
 		StringBuffer urlString = new StringBuffer();
 
@@ -400,7 +403,8 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @param extraConnectData
 	 * @return
 	 */
-	private void setupTruststore(HttpOutputPluginConnectConfiguration extraConnectData)
+	private void setupTruststore(
+			HttpOutputPluginConnectConfiguration extraConnectData)
 			throws ExtraTransportException {
 
 		// Load TrustStoreLocation from properties
@@ -466,37 +470,6 @@ public class ExtraTransportHttp implements IExtraTransport {
 		} catch (IOException e) {
 			throw new ExtraTransportException("Fehler bei I/O-Operation.", e);
 		}
-	}
-
-	public JAXBElement responseMarshaller(InputStream in) {
-
-		JAXBElement jaxbelement = null;
-
-		JAXBContext jc;
-		try {
-
-			// Initialisieren des JaxB-Contextes
-			jc = JAXBContext.newInstance(ExtraConstants.UNMARSHALL_RESPONSE);
-
-			// Aufruf des Unmarshallers
-
-			Unmarshaller u = jc.createUnmarshaller();
-
-			jaxbelement = (JAXBElement) u.unmarshal(in);
-
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} finally {
-
-			try {
-				in.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return jaxbelement;
-
 	}
 
 }

@@ -18,12 +18,13 @@
  */
 package de.extra.client.plugins.outputplugin;
 
+import java.io.InputStream;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.core.plugin.IOutputPlugin;
 
 @Named("httpOutputPlugin")
@@ -36,7 +37,7 @@ public class HttpOutputPlugin implements IOutputPlugin {
 	private HttpOutputPluginSender httpSender;
 
 	@Override
-	public XMLTransport outputData(String request) {
+	public InputStream outputData(String request) {
 		logger.info("Start des Versands...");
 		request = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + request;
 		return httpSender.processOutput(request);

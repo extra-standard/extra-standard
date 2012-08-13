@@ -19,6 +19,7 @@
 package de.extra.client.core;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Iterator;
@@ -27,9 +28,11 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.apache.log4j.Logger;
 import org.springframework.oxm.Marshaller;
+import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
 
 import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
@@ -62,6 +65,10 @@ public class ClientCore {
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
 	private Marshaller marshaller;
+
+	@Inject
+	@Named("eXTrajaxb2Marshaller")
+	private Unmarshaller unmarshaller;
 
 	/**
 	 * Funktion in der der Request aufgebaut wird.
@@ -110,8 +117,14 @@ public class ClientCore {
 					IOutputPlugin outputPlugin = pluginsLocatorManager
 							.getConfiguratedOutputPlugin();
 
-					de.drv.dsrv.extrastandard.namespace.response.XMLTransport extraResponse = outputPlugin
+					InputStream responseAsStream = outputPlugin
 							.outputData(writer.toString());
+
+					// Source responseSource = new
+					// InputSource(responseAsStream);
+
+					de.drv.dsrv.extrastandard.namespace.response.XMLTransport extraResponse = (de.drv.dsrv.extrastandard.namespace.response.XMLTransport) unmarshaller
+							.unmarshal(new StreamSource(responseAsStream));
 
 					IResponseProcessPlugin responsePlugin = pluginsLocatorManager
 							.getConfiguratedResponsePlugin();

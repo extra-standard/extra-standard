@@ -16,11 +16,20 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.plugins.outputplugin.dummy;
+package de.extra.client.core.plugin.dummies;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.io.Writer;
+
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
+import org.springframework.oxm.Marshaller;
 
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagCodeType;
@@ -42,11 +51,31 @@ public class DummyOutputPlugin implements IOutputPlugin {
 	private static final Logger logger = Logger
 			.getLogger(DummyOutputPlugin.class);
 
+	@Inject
+	@Named("eXTrajaxb2Marshaller")
+	private Marshaller marshaller;
+
 	@Override
-	public XMLTransport outputData(String request) {
-		logger.info(request);
-		XMLTransport response = createExtraResponse(request);
-		return response;
+	public InputStream outputData(String request) {
+		InputStream responseAsinputStream = null;
+		try {
+			logger.info(request);
+			XMLTransport response = createExtraResponse(request);
+
+			Writer writer = new StringWriter();
+			StreamResult streamResult = new StreamResult(writer);
+
+			marshaller.marshal(response, streamResult);
+
+			responseAsinputStream = new ByteArrayInputStream(writer.toString()
+					.getBytes());
+			return responseAsinputStream;
+		} catch (IOException ioException) {
+			// Hier kommt eine ExtraTechnischeRuntimeException
+			logger.error("Unerwarteter Fehler: ", ioException);
+		}
+		return responseAsinputStream;
+
 	}
 
 	private XMLTransport createExtraResponse(String request) {
