@@ -18,13 +18,13 @@
  */
 package de.extra.client.plugins.outputplugin;
 
+import java.io.InputStream;
+
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.xml.bind.JAXBElement;
 
 import org.apache.log4j.Logger;
 
-import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.plugins.outputplugin.config.HttpOutputPluginConnectConfiguration;
 import de.extra.client.plugins.outputplugin.transport.ExtraTransportFactory;
 import de.extra.client.plugins.outputplugin.transport.IExtraTransport;
@@ -51,15 +51,14 @@ public class HttpOutputPluginSender {
 	 *            eXTra-Request aus der CoreLib
 	 * @return
 	 */
-	public XMLTransport processOutput(String request) {
+	public InputStream processOutput(String request) {
 
 		// Initialisiere Transport-Client
 		client = extraTransportFactory.loadTransportImpl();
 		client.initTransport(extraConnectData);
 
-		JAXBElement<?> element = client.senden(request);
-		XMLTransport extraResponse = (XMLTransport) element.getValue();
+		InputStream response = client.senden(request);
 
-		return extraResponse;
+		return response;
 	}
 }

@@ -18,10 +18,10 @@
  */
 package de.extra.client.core.plugin;
 
-import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
+import java.io.InputStream;
 
 public interface IOutputPlugin {
 
-	public XMLTransport outputData(String request);
+	public InputStream outputData(String request);
 
 }
