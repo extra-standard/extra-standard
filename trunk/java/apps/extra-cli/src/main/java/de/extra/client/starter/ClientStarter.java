@@ -81,9 +81,6 @@ public class ClientStarter {
 				
 				extraClient.execute();
 				
-				// TODO: Summe Ausgabedateien und Anzahl Datensätze einsammeln und loggen?
-				// OpLogger.log.info("Ausgabedateien: " + "TODO");
-				// OpLogger.log.info("Anzahl bereitgestellte Saetze : " + "TODO");
 				OpLogger.log.info("Ende der Verarbeitung " + OpLogger.timestampFormat.format(new Date()));
 				returnCode = OpLogger.exitStatus;
 			}
