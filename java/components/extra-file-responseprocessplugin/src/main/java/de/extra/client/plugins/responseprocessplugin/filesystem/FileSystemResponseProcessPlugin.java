@@ -45,6 +45,7 @@ import de.drv.dsrv.extrastandard.namespace.response.Message;
 import de.drv.dsrv.extrastandard.namespace.response.Package;
 import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
+import de.extra.client.core.observation.ITransportObserver;
 import de.extra.client.core.plugin.IResponseProcessPlugin;
 
 @Named("fileSystemResponseProcessPlugin")
@@ -63,6 +64,10 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 	@Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner}")
 	private File reportOrdner;
 
+	@Inject
+	@Named("transportObserver")
+	private ITransportObserver transportObserver;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -75,6 +80,8 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
 		pruefeVerzeichnis();
 
+		transportObserver.responseFilled(0, extraResponse.getTransportHeader());
+		
 		if (!isBodyEmpty(extraResponse.getTransportBody())) {
 			List<Package> packageList = extraResponse.getTransportBody()
 					.getPackage();
@@ -197,6 +204,7 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			fw = new FileWriter(responseFile);
 
 			fw.write(new String(responseBody));
+			transportObserver.responseDataForwarded(responseFile.getAbsolutePath(), responseBody.length);
 
 		} catch (IOException e) {
 			logger.error("Fehler beim schreiben der Antwort", e);
@@ -249,6 +257,8 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			}
 
 			fw.write(sb.toString());
+			transportObserver.responseDataForwarded(reportFile.getAbsolutePath(), 0);
+			
 		} catch (IOException e) {
 			logger.error("Fehler beim Schreiben des Reports", e);
 		} finally {

@@ -26,6 +26,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.observation.ITransportObserver;
 import de.extra.client.plugins.dataplugin.auftragssatz.AuftragssatzType;
 import de.extra.client.plugins.dataplugin.helper.DataPluginHelper;
 import de.extra.client.plugins.dataplugin.interfaces.IDataPluginController;
@@ -36,6 +37,10 @@ public class DataPluginController implements IDataPluginController {
 	@Inject
 	@Named("dataPluginHelper")
 	private DataPluginHelper dataPluginHelper;
+
+	@Inject
+	@Named("transportObserver")
+	private ITransportObserver transportObserver;
 
 	/**
 	 * Verarbeitungs-Controller fuer das DataPlugin.
@@ -51,9 +56,10 @@ public class DataPluginController implements IDataPluginController {
 		// Befüllen der Versanddaten-Liste
 		for (Iterator<String> iter = nutzfileList.iterator(); iter.hasNext();) {
 			String filename = iter.next();
+			
 			SenderDataBean versanddatenBean = new SenderDataBean();
-			versanddatenBean.setNutzdaten(dataPluginHelper
-					.getNutzdaten(filename));
+			byte[] nutzdaten = dataPluginHelper.getNutzdaten(filename);
+			versanddatenBean.setNutzdaten(nutzdaten);
 			AuftragssatzType auftragssatz = new AuftragssatzType();
 //			String auftragssatzName = filename + ".auf";
 //			auftragssatz = dataPluginHelper
@@ -64,6 +70,8 @@ public class DataPluginController implements IDataPluginController {
 			versanddatenBean = dataPluginHelper.fuelleVersandatenBean(
 					versanddatenBean, auftragssatz);
 			versanddatenBeanList.add(versanddatenBean);
+			
+			transportObserver.requestDataReceived(filename, nutzdaten.length);
 		}
 
 		return versanddatenBeanList;

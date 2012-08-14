@@ -39,6 +39,7 @@ import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
 import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
+import de.extra.client.core.observation.ITransportObserver;
 import de.extra.client.core.plugin.IOutputPlugin;
 
 @Named("dummyOutputPlugin")
@@ -55,13 +56,17 @@ public class DummyOutputPlugin implements IOutputPlugin {
 	@Named("eXTrajaxb2Marshaller")
 	private Marshaller marshaller;
 
+	@Inject
+	@Named("transportObserver")
+	private ITransportObserver transportObserver;
+
 	@Override
 	public InputStream outputData(String request) {
 		InputStream responseAsinputStream = null;
 		try {
 			logger.info(request);
 			XMLTransport response = createExtraResponse(request);
-
+			
 			Writer writer = new StringWriter();
 			StreamResult streamResult = new StreamResult(writer);
 
@@ -99,6 +104,13 @@ public class DummyOutputPlugin implements IOutputPlugin {
 		requestDetailsType.setRequestID(requestIdType);
 		transportHeader.setRequestDetails(requestDetailsType);
 		response.setTransportHeader(transportHeader);
+		
+		de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader = 
+				new de.drv.dsrv.extrastandard.namespace.request.TransportHeader();
+		requestHeader.setRequestDetails(requestDetailsType);
+		transportObserver.requestFilled(requestHeader);
+		transportObserver.requestForwarded("dummy, keine Weiterleitung", 0);
+
 		return response;
 	}
 }

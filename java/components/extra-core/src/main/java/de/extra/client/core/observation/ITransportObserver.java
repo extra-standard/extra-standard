@@ -6,19 +6,25 @@ package de.extra.client.core.observation;
  * <p>Vom konkreten Ziel und Protokoll für die Nachrichten wird abstrahiert.</p>
  *
  * <p>Die erwartete Abfolge der Ereignisse ist:<code>
- *    requestCreated requestDone [responseUnmarshalled responseDone]
+ *    requestDataReceived+ requestFilled requestForwarded [responseFilled responseForwarded]
  * </code></p>
  * 
  * <p>Ob Response Ereignisse auftreten, hängt vom im Request spezifizierten erwarteten Antwortverhalten ab.
  * Die Response-Ereignisse <i>müssen</i> auftreten, wenn der Request eine synchrone Response angefordert hat.</p>
  * 
  * TODO: Acknowledge, Error  (extra Kompendium kap. 4.3.2)
- * TODO: Benachrichtigung über Log-Element im XMLTransport (Kap. 4.3.4)
+ * TODO: Benachrichtigung über extra-LogElement im XMLTransport (Kap. 4.3.4)
  */
-public interface TransportLevelOutputObserver {
+public interface ITransportObserver {
 	
-	// Idee: Listen solcher Beobachter in OutputPlugins der Transportebene zur Konfigurationszeit injizieren
-
+	/**
+	 * Ende des Empfangs einer Einheit Daten.
+	 * 
+	 * @param unitName  möglichts eindeutige und menschenlesbare Kurzbezeichnung der Dateneinheit (zum Beispiel Dateiname),
+	 *    <i>muss</i> gleich dem zu Beginn verwendeten sein
+	 */
+	public void requestDataReceived(String unitName, long size);
+	
 	/**
 	 * Der Request ist als Objekt im Speicher vollständig aufgebaut.
 	 * 
@@ -34,10 +40,10 @@ public interface TransportLevelOutputObserver {
 	 *     muss aber nicht spezifisch pro Message sein
 	 * @param size  Größe in Bytes der Transport-Message
 	 */
-	public void requestOutputDone(String destination, long size);
+	public void requestForwarded(String destination, long size);
 	
 	/**
-	 * Der Client hat eine Response empfangen als Objekt im Speicher vollständig aufgebaut.
+	 * Der Client hat eine Response empfangen und als Objekt im Speicher vollständig aufgebaut.
 	 * 
 	 * @param status  status der Requestverarbeitung <i>auf der Transportebene</i>
 	 * @param responseHeader  fertig gestellter Header
@@ -51,5 +57,5 @@ public interface TransportLevelOutputObserver {
 	 *     kann (zum Beispiel, wenn sie ins Dateisystem geschrieben wurde), muss aber nicht spezifisch pro Message sein
 	 * @param size  Größe in Bytes der Transport-Message
 	 */
-	public void responseDone(String destination, long size);
+	public void responseDataForwarded(String destination, long size);
 }
