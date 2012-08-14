@@ -1,29 +1,32 @@
 eXTra components
 
-Hier befinden sich s‰mtliche Komponenten von eXTra.
-
-extra-configplugin
-----------------------------------
-Noch zu erkl‰ren
+Hier befinden sich s√§mtliche Komponenten von eXTra.
 
 extra-core
 ----------------------------------
-Basisfunktionen und Binding zu XSD-Dateien f¸r die eXTra-Spezifikation werden hier
-verwaltet.
+Basisfunktionen f√ºr die eXTra-Spezifikation werden hier verwaltet.
 
-extra-dataplugin
+extra-default-configplugin
 ----------------------------------
-Noch zu erkl‰ren
+Default-Konfiguration-Implementierung f√ºr eXTra wird in dieser Komponente umgesetzt.
 
-extra-outputplugin
+extra-file-dataplugin
 ----------------------------------
-Noch zu erkl‰ren
+File-Implementierung f√ºr das Data Plugin.
 
-extra-queryplugin
+extra-file-responseprocessplugin
 ----------------------------------
-Noch zu erkl‰ren
+File-Implementierung f√ºr das Response Process Plugin.
+
+extra-http-outputplugin
+----------------------------------
+HTTP-Implementierung f√ºr Output Plugin.
+
+extra-query-dataplugin
+----------------------------------
+Query-Implementierung f√ºr das Data Plugin
 
 extra-schema
 ----------------------------------
-In diesem Projekt werden s‰mtliche Schema-Dateien verwaltet und mit JAXB in
+In diesem Projekt werden s√§mtliche Schema-Dateien verwaltet und mit JAXB in
 Java-Klassen generiert.
