@@ -12,15 +12,15 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
 = Entwicklungsumgebung =
   * Java 6
   * Maven 3
-  * Eclipse 3.7.2 mit Maven Plugin m2e oder SpringSource Tool Suite 2.9.2.RELEASE
-  * Encoding UTF-8
+  * Eclipse 3.7.2 mit Maven Plugin m2e oder !SpringSource Tool Suite 2.9.2.RELEASE
+  * Encoding UTF-8 (Eclipse -> Window -> Preferences -> "encoding" -> Content types und Workspace)
 
 = Coding-Regeln =
   * Code-Formatter: Eclipse [built-in] unverändert!
   
 = Modellierungsumgebung =
   * UML 2.x
-  * MagicDraw 17.x. Die MagicDraw-Modelldateien besitzen die Namenserweiterung von *.mdzip*.
+  * !MagicDraw 17.x. Die !MagicDraw-Modelldateien besitzen die Namenserweiterung von *.mdzip*.
   * Zum Lesen der Modelldateien reicht einen kostenlosen MagicDraw-Reader aus. Das Programm MagicDraw-Reader kann unter folgender Adresse [http://www.nomagic.com/products/magicdraw/magicdraw-reader.html] heruntergeladen werden.
    
 = Bauen von Quellcode mit Hilfe von Maven =
