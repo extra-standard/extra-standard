@@ -2,14 +2,15 @@ log4j.appender.StdConsoleAppender=org.apache.log4j.ConsoleAppender
 log4j.appender.StdConsoleAppender.layout=org.apache.log4j.PatternLayout
 log4j.appender.StdConsoleAppender.layout.ConversionPattern=%d{ISO8601} %-5p [%t] %c: %m%n
 
-# Logdatei für den IT-Betrieb
+# Logdatei fuer den IT-Betrieb
 log4j.appender.OperationsAppender=org.apache.log4j.FileAppender
-log4j.appender.OperationsAppender.file=./log/EXTRA-CL.BAT.PROTOKOLL.${date}${time}.log
-log4j.appender.OperationsAppender.layout=org.apache.log4j.PatternLayout 
+log4j.appender.OperationsAppender.file=d:/temp/EXTRA-CL.BAT.PROTOKOLL.${current.date}.log
+log4j.appender.OperationsAppender.layout=org.apache.log4j.PatternLayout
+log4j.appender.OperationsAppender.append=false
 # %n LineSeparato - %m Message
 log4j.appender.OperationsAppender.layout.ConversionPattern=%m%n
 
 log4j.rootLogger=INFO, StdConsoleAppender
 log4j.logger.de.extra.client=DEBUG
 
-log4j.logger.operations=OperationsAppender
+log4j.logger.operations=INFO, OperationsAppender
