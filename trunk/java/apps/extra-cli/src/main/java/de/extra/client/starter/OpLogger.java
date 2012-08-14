@@ -80,6 +80,9 @@ public class OpLogger implements ITransportObserver {
 
 	@Override
 	public void responseDataForwarded(String destination, long size) {
+		// TODO: Summe Ausgabedateien und Anzahl Datensätze einsammeln und loggen?
+		// OpLogger.log.info("Ausgabedateien: " + "TODO");
+		// OpLogger.log.info("Anzahl bereitgestellte Saetze : " + "TODO");
 		log.info("Response-Daten weitergeleitet an " + destination + ", " + size + " Bytes.");
 	}
 }
