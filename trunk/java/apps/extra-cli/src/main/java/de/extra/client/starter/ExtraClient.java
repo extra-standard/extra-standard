@@ -41,6 +41,11 @@ public class ExtraClient {
 	 */
 	private static final String LOG_4_J_FILE = "log4j.properties";
 
+	/**
+	 * Pfad der Ressource, die die Konfiguration des extra-Clients enthält.
+	 */
+	private static final String EXTRA_CONFIG_RESOURCE = "dependency-tree.txt";
+	
 	private static Logger logger = Logger.getLogger(ExtraClient.class);
 
 	/**
@@ -59,12 +64,12 @@ public class ExtraClient {
 			applicationContext = new ClassPathXmlApplicationContext(
 					SPRING_XML_FILE_PATH);
 			// TODO: Pfad als Property
-			Resource logBoilerplate = applicationContext.getResource("dependency-tree.txt"); 
+			Resource logBoilerplate = applicationContext.getResource(EXTRA_CONFIG_RESOURCE); 
 			if (logBoilerplate.exists()) {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(logBoilerplate.getInputStream()));
 				String line = reader.readLine();
 				while (line != null) {
-					ExtraClientConstants.opLogger.info(line);
+					OpLogger.log.info(line);
 					line = reader.readLine();
 				}
 			}

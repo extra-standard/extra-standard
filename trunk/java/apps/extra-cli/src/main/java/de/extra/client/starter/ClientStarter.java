@@ -19,6 +19,7 @@
 package de.extra.client.starter;
 
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -27,6 +28,12 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 public class ClientStarter {
+
+	static{
+		// Startzeitpunkt als System.property setzen, zum Beispiel für Log4J Dateinamen
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+	    System.setProperty("current.date", dateFormat.format(new Date()));
+	}
 
 	private static Logger logger = Logger.getLogger(ClientStarter.class);
 
@@ -67,15 +74,18 @@ public class ClientStarter {
 		try {
 			
 			ClientArguments.ClientActions action = evaluateArgs(args);
-			ExtraClientConstants.opLogger.info("Eingabeparameter: " + Arrays.toString(args));
+			OpLogger.log.info("Eingabeparameter: " + Arrays.toString(args));
 			
 			if (ClientArguments.ClientActions.PROCESS.equals(action)) {
-				ExtraClientConstants.opLogger.info("Start der Verarbeitung " + ExtraClientConstants.timestampFormat.format(new Date()));
-				returnCode = extraClient.execute();
-				// TODO: Ausgabedateien und Anzahl Datensätze einsammeln und loggen
-				ExtraClientConstants.opLogger.info("Ausgabedateien: " + "TODO");
-				ExtraClientConstants.opLogger.info("Anzahl bereitgestellte Saetze : " + "TODO");
-				ExtraClientConstants.opLogger.info("Ende der Verarbeitung " + ExtraClientConstants.timestampFormat.format(new Date()));
+				OpLogger.log.info("Start der Verarbeitung " + OpLogger.timestampFormat.format(new Date()));
+				
+				extraClient.execute();
+				
+				// TODO: Summe Ausgabedateien und Anzahl Datensätze einsammeln und loggen?
+				// OpLogger.log.info("Ausgabedateien: " + "TODO");
+				// OpLogger.log.info("Anzahl bereitgestellte Saetze : " + "TODO");
+				OpLogger.log.info("Ende der Verarbeitung " + OpLogger.timestampFormat.format(new Date()));
+				returnCode = OpLogger.exitStatus;
 			}
 			
 			if (returnCode != 0) {
@@ -86,7 +96,7 @@ public class ClientStarter {
 			}
 		} catch (Exception e) {
 			logger.error("Fehler bei der Verarbeitung", e);
-			returnCode = 9;
+			returnCode = OpLogger.STATUS_LOGICAL_ERROR;
 		}
 		System.exit(returnCode);
 	}

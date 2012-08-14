@@ -16,6 +16,5 @@
 	<import resource="classpath:spring-query-dataplugin.xml" />
 	<import resource="classpath:spring-file-responseprocessplugin.xml" />
 	
-
-	<context:component-scan base-package="de.extra.client.core, de.drv.dsrv.extra" />
+	<context:component-scan base-package="de.extra.client.starter, de.extra.client.core, de.drv.dsrv.extra" />
 </beans>

@@ -53,6 +53,15 @@ public class DataPluginHelper {
 	private final Logger logger = Logger.getLogger(DataPluginHelper.class);
 
 	/**
+	 * Input-Verzeichnis.
+	 * 
+	 * @return Input-Verzeichnis
+	 */
+	public File getInputDirectory() {
+		return inputDirectory;
+	}
+	
+	/**
 	 * Laedt die Nutzdatenfiles aus dem Input-Verzeichnis.
 	 * 
 	 * @return Liste mit den Pfaden der Nutzdateien
