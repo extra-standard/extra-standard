@@ -34,7 +34,7 @@ http://extra-standard.googlecode.com/svn/wiki/images/extra-core-messages.jpg
 
 
 == Command Line Interface - CLI (extra-cli) ==
-Im CLI wird der Aufruf des Clients realisiert.
+Im CLI wird der Aufruf und die betriebliche Schnittstelle des Clients realisiert.
 Hierbei gibt es außer der aufzurufenden Funktion zum Starten des Clients und den Returncodes durch die Anwendung keinerlei Einschränkungen,
 Folgende Szenarien wären denkbar
   * Konsolenbasierter Aufruf z.B. innerhalb eines Scripts
@@ -43,7 +43,7 @@ Folgende Szenarien wären denkbar
 
 
 == Schema-Library (extra-schema) ==
-Diese Bibliothek beinhaltet bereits die fertig konfigurierten JaxB-Klassen für eXTra 1.1 inklusive der Annotationen für den Einsatz der Messages, wie zum Beispiel für den Aufbau der Query. Falls neue eXTra-Standard umgesetzt werden sollten, wird die Anpassung der XSD-Dateien in dieser Bibliothek stattfinden.
+Diese Bibliothek beinhaltet bereits die fertig konfigurierten JaxB-Klassen für eXTra 1.3 inklusive der Annotationen für den Einsatz der Messages, wie zum Beispiel für den Aufbau der Query. Falls neue eXTra-Standard umgesetzt werden sollten, wird die Anpassung der XSD-Dateien in dieser Bibliothek stattfinden.
 
 
 == Core-Library (extra-core) ==
@@ -100,8 +100,11 @@ Dadurch, dass die XML-Struktur in eine Java-Bean überführt wird, lässt sich d
 === Log4j ===
 Als Logging-Framework wird innerhalb der Anwendung das Log4j-Framework verwendet.
 
+=== Apache Commons CLI ===
+Zur Auswertung von Kommandozeilenargumenten wird innerhalb des eXTRa Command-Line-Interface Client die Apache Commons CLI Bibliothek herangezogen.
+
 === Command Line Interface (CLI) ===
-Im CLI-Projekt befindet sich die main-Methode zum Aufruf des Clients. Aus ihr heraus wird eine neue Instanz des Clients erzeugt.
+Im CLI-Projekt befindet sich die main-Methode zum Aufruf des Clients. Aus ihr heraus wird eine neue Instanz des Clients erzeugt. Hier liegt auch die betriebliche Schnittstelle eines Client, zum Beispiel das Log für die Anwendungsüberwachung.
 Im Starter werden auch sämtliche Bibliotheken referenziert, die zur Ausführung des Clients notwendig sind.
 Gegenwärtig liegen dort auch die Konfigurationsdateien für den Gesamt-Client und die einzelnen Plugins in einem Properties-Ordner.
 
