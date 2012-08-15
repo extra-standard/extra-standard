@@ -35,7 +35,8 @@ import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
 
-import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
+import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
+import de.extra.client.core.builder.IExtraMessageBuilder;
 import de.extra.client.core.helper.RequestHelper;
 import de.extra.client.core.locator.PluginsLocatorManager;
 import de.extra.client.core.model.ConfigFileBean;
@@ -61,6 +62,10 @@ public class ClientCore {
 	@Inject
 	@Named("requestHelper")
 	private RequestHelper requestHelper;
+
+	@Inject
+	@Named("extraRequestBuilder")
+	IExtraMessageBuilder extraMessageBuilder;
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -104,8 +109,10 @@ public class ClientCore {
 						.iterator(); iter.hasNext();) {
 					versanddatenBean = iter.next();
 
-					XMLTransport request = requestHelper.buildRequest(
-							versanddatenBean, configFile);
+					// XMLTransport request = requestHelper.buildRequest(
+					// versanddatenBean, configFile);
+					RootElementType request = extraMessageBuilder
+							.buildXmlMessage(versanddatenBean, configFile);
 
 					Writer writer = new StringWriter();
 					StreamResult streamResult = new StreamResult(writer);
