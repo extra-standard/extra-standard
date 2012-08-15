@@ -36,4 +36,4 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
   
   * So sehen die Maven-Module in Jenkins !CloudBees aus: 
    
-http://extra-standard.googlecode.com/svn/wiki/images/jenkins-extra-cloudbees-modules.jpg   
+http://extra-standard.googlecode.com/svn/wiki/images/jenkins-extra-cloudbees-modules.jpg
