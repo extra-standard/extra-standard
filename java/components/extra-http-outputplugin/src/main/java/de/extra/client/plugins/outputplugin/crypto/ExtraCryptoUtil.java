@@ -21,8 +21,7 @@ package de.extra.client.plugins.outputplugin.crypto;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
 public class ExtraCryptoUtil {
 
@@ -70,9 +69,8 @@ public class ExtraCryptoUtil {
 	 */
 	private static SecretKeySpec decodeKey(String encrpKey) throws Exception {
 		SecretKeySpec skeySpec = null;
-		BASE64Decoder base64Decoder = new BASE64Decoder();
-
-		byte[] raw = base64Decoder.decodeBuffer(encrpKey);
+		new Base64().decode(encrpKey);
+		byte[] raw = new Base64().decode(encrpKey);
 		skeySpec = new SecretKeySpec(raw, ALGORITHM);
 
 		return skeySpec;
@@ -101,10 +99,9 @@ public class ExtraCryptoUtil {
 			// do the actual encryption
 			byte[] cipherText = encryptCipher.doFinal(plainText);
 
-			BASE64Encoder base64Encoder = new BASE64Encoder();
 			// Changed to encode() to avoid <cr> on end of string
 			// textEncode = base64Encoder.encodeBuffer(cipherText);
-			textEncode = base64Encoder.encode(cipherText);
+			textEncode = new Base64().encodeAsString(cipherText);
 
 		} catch (Exception e) {
 			e.printStackTrace(System.err);
@@ -129,8 +126,7 @@ public class ExtraCryptoUtil {
 			Cipher decryptCipher = Cipher.getInstance(TRANSFORMATION);
 			decryptCipher.init(Cipher.DECRYPT_MODE, skeySpec);
 
-			BASE64Decoder base64Decoder = new BASE64Decoder();
-			byte[] encpArr = base64Decoder.decodeBuffer(sName.trim());
+			byte[] encpArr = new Base64().decode(sName.trim());
 
 			byte[] plainText = decryptCipher.doFinal(encpArr);
 
