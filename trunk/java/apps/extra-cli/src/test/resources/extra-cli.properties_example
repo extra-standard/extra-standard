@@ -6,6 +6,8 @@ plugins.configplugin=defaultConfigPlugin
 plugins.outputplugin=dummyOutputPlugin
 plugins.responseprocessplugin=fileSystemResponseProcessPlugin
 
+builder.xplg.DataTransforms=dataTransformConfigurablePluginsBuilder
+
 # Message Builder Start
 #
 # Transport Configuration
@@ -60,16 +62,16 @@ plugins.outputplugin.httpOutputPlugin.proxyAuth=false
 plugins.outputplugin.httpOutputPlugin.proxyUser=
 plugins.outputplugin.httpOutputPlugin.proxyPwd=
 
-# Sender Properties fÃÂ¼r lokale RAD-Testumgebung
+# Sender Properties für lokale RAD-Testumgebung
 plugins.outputplugin.httpOutputPlugin.senderID=66668886
 plugins.outputplugin.httpOutputPlugin.senderClassification=Betriebsnummer
 plugins.outputplugin.httpOutputPlugin.senderName=Testfirma GmbH
-# Benutzerkennung und Passwort fÃÂ¼r Verbidungsaufbau
+# Benutzerkennung und Passwort für Verbidungsaufbau
 plugins.outputplugin.httpOutputPlugin.serverJ2EESecurity=false
 plugins.outputplugin.httpOutputPlugin.serverJ2EEUser=
 plugins.outputplugin.httpOutputPlugin.serverJ2EEPwd=
 plugins.outputplugin.httpOutputPlugin.serverJ2EERealm=
-# Zertifikat und Passwort fÃÂ¼r Authentifizierung  keyStoreType={JKS|PKCS12}
+# Zertifikat und Passwort für Authentifizierung  keyStoreType={JKS|PKCS12}
 plugins.outputplugin.httpOutputPlugin.certificateAuthentication=true
 plugins.outputplugin.httpOutputPlugin.privateKeyStoreType=JKS
 plugins.outputplugin.httpOutputPlugin.privateKeyType=
@@ -77,7 +79,7 @@ plugins.outputplugin.httpOutputPlugin.signatureAlgorithm=
 plugins.outputplugin.httpOutputPlugin.messageDigestAlgorithm=
 plugins.outputplugin.httpOutputPlugin.privateKeyStoreLocation=P:\\cert\\66668886.jks
 plugins.outputplugin.httpOutputPlugin.privateKeyPassword=
-# Datenquelle fÃÂ¼r Versand\Empfang\Logging. Standard relativ zum Basisverzeichnis ("false")
+# Datenquelle für Versand\Empfang\Logging. Standard relativ zum Basisverzeichnis ("false")
 plugins.outputplugin.httpOutputPlugin.directoryOverwrite=false
 plugins.outputplugin.httpOutputPlugin.directoryPath=C:\\sofo\\eXTraClientFolders\\cert_lokal_rad
 # Unterteilung der Verzeichnisse mittels Timestamp Standard ist "true"
@@ -91,10 +93,10 @@ plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=clas
 plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner=classpath:testDirectories/reports
 plugins.dataplugin.fileDataPlugin.inputVerzeichnis=classpath:testDirectories/input
 
-# Speicherort fÃÂ¼r Profilierungs-Datei
+# Speicherort für Profilierungs-Datei
 #profilOrdner=d:/temp/extraClient/config/sendenProfil.xml
 #profilOrdner=d:/temp/extraClient/config/request-Abholen-DEUEV.xml
-#profilOrdner=classpath:testprofile/request-Abholen-DEUEV.xml
+#plugins.configplugin.defaultConfigPlugin.profilOrdner=classpath:testprofile/request-abholen-DEUEV-profil-konfiguration.xml
 plugins.configplugin.defaultConfigPlugin.profilOrdner=classpath:testprofile/senden-profil-konfiguration.xml
 
 
