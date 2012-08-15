@@ -12,7 +12,7 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
 = Entwicklungsumgebung =
   * Java 6
   * Maven 3
-  * Eclipse 3.7.2 mit Maven Plugin m2e oder !SpringSource Tool Suite 2.9.2.RELEASE. Damit das Plugin m2e richtig funktionieren kann, müssen die entsprechenden m2e-Konnektoren installiert werden. Dieser Konnektor _m2e connector for build-helper-maven-plugin_ kommt bereits mit m2e Eclipse plugin.
+  * Eclipse 3.7.2 mit Maven Plugin m2e oder !SpringSource Tool Suite 2.9.2.RELEASE. Damit das Plugin m2e richtig funktionieren kann, müssen die entsprechenden m2e-Konnektoren installiert werden. Beispiel: Der Konnektor _m2e connector for build-helper-maven-plugin_ kommt bereits mit m2e Eclipse plugin. Ansonsten beschwert sich Eclipse, dass der Konnektor fehlt und bietet an, diesen nachzuinstallieren.
   * Encoding UTF-8 (Eclipse -> Window -> Preferences -> _encoding_ in Suchfeld eintippen -> Content Types und Workspace)
 
 = Coding-Regeln =
