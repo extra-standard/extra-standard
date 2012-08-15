@@ -42,4 +42,6 @@
 			</map>
 		</property>
 	</bean>
+	
+	<context:component-scan base-package="de.drv.dsrv.extra" />
 </beans>
