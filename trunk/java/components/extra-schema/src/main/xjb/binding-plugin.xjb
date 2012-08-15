@@ -22,6 +22,9 @@
 
   	<jxb:bindings schemaLocation="../xsd/eXTra-plugins-1.xsd" node="//xs:complexType[@name='DataSourceType']">
     	<jxb:class name="DataSource"/>
+    	  <annox:annotate>
+             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"/>
+         </annox:annotate>
 	</jxb:bindings> 
 
     <jxb:bindings schemaLocation="../xsd/eXTra-codelists-1.xsd" node="/xs:schema">
