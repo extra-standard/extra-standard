@@ -34,7 +34,6 @@ public class ProfilHelper {
 
 	private static final Logger logger = Logger.getLogger(ProfilHelper.class);
 
-
 	/**
 	 * Funktion zum befüllen der ConfigFileBean.
 	 * 
@@ -43,36 +42,44 @@ public class ProfilHelper {
 	 * @return ConfigFileBean
 	 */
 	public ConfigFileBean configFileBeanLoader(List<ElementType> profilListe) {
-		ConfigFileBean cfb = new ConfigFileBean();
+		ConfigFileBean configFileBean = new ConfigFileBean();
 
 		for (Iterator<ElementType> iter = profilListe.iterator(); iter
 				.hasNext();) {
 			ElementType element = iter.next();
 
 			// Ermitteln der Content-Art
+			if (element.getElternelement() == null) {
+				configFileBean.setRootElement(element.getName());
+			} else {
+				configFileBean.addElementsHierarchyMap(
+						element.getElternelement(), element.getName());
+			}
+
 			if (element.getElternelement() != null && element.getName() != null) {
+
 				if (element.getElternelement().equalsIgnoreCase(
 						ConfigConstants.PROFIL_DATA)) {
 					// Setzen des Content-Types
-					cfb.setContentType(element.getName());
+					configFileBean.setContentType(element.getName());
 				}
 
 				// Ueberpruefen ob Package-Element angegeben wurde
 				if (element.getName().equalsIgnoreCase(
 						ConfigConstants.PROFIL_PACKAGE)) {
 					// Setzen ob PackageLayer benötigt
-					cfb.setPackageLayer(true);
+					configFileBean.setPackageLayer(true);
 				}
 
 				// Ueberpruefen ob Message-Element angegeben wurde
 				if (element.getName().equalsIgnoreCase(
 						ConfigConstants.PROFIL_MESSAGE)) {
 					// Setzen ob MessageLayer benötigt
-					cfb.setMessageLayer(true);
+					configFileBean.setMessageLayer(true);
 				}
 			}
 		}
-		return cfb;
+		return configFileBean;
 	}
 
 	/**
