@@ -42,6 +42,7 @@ import de.extra.client.core.builder.impl.components.TransportHeaderReceiverBuild
 import de.extra.client.core.builder.impl.components.TransportHeaderRequestDetailsBuilder;
 import de.extra.client.core.builder.impl.components.TransportHeaderSenderBuilder;
 import de.extra.client.core.builder.impl.components.TransportHeaderTestIndicatorBuilder;
+import de.extra.client.core.builder.impl.plugins.DataSourcePluginsBuilder;
 import de.extra.client.core.builder.impl.plugins.TransportPluginsBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportBodyBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportBuilder;
@@ -86,6 +87,7 @@ public class ExtraRequestBuilderTest {
 		IXmlComplexTypeBuilder transportBodyDataBuilder = new TransportBodyDataBuilder();
 		IXmlComplexTypeBuilder transportBodyBase64CharSequenceBuilder = new TransportBodyBase64CharSequenceBuilder();
 		IXmlComplexTypeBuilder transportBodyElementSequenceBuilder = new TransportBodyElementSequenceBuilder();
+		IXmlComplexTypeBuilder dataSourcePluginsBuilder = new DataSourcePluginsBuilder();
 		IXmlComplexTypeBuilder transportPluginsBuilder = new TransportPluginsBuilder();
 		builderMap.put(requestTransportHeaderBuilder.getXmlType(),
 				requestTransportHeaderBuilder);
@@ -106,10 +108,9 @@ public class ExtraRequestBuilderTest {
 				transportBodyElementSequenceBuilder);
 		builderMap.put(transportPluginsBuilder.getXmlType(),
 				transportPluginsBuilder);
+		builderMap.put(dataSourcePluginsBuilder.getXmlType(),
+				dataSourcePluginsBuilder);
 		for (String key : builderMap.keySet()) {
-			when(messageBuilderLocator.getXmlComplexTypeBuilder(key, null))
-					.thenReturn(builderMap.get(key));
-
 			when(
 					messageBuilderLocator.getXmlComplexTypeBuilder(
 							Matchers.eq(key),
@@ -139,6 +140,7 @@ public class ExtraRequestBuilderTest {
 		config.addElementsHierarchyMap("TransportHeader", "xcpt:RequestDetails");
 		config.addElementsHierarchyMap("TransportBody", "xcpt:Data");
 		config.addElementsHierarchyMap("Data", "xcpt:ElementSequence");
+		config.addElementsHierarchyMap("TransportPlugins", "xplg:DataSource");
 		return config;
 	}
 }
