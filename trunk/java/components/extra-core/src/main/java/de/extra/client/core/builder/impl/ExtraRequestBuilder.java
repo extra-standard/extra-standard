@@ -39,11 +39,12 @@ import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.SenderDataBean;
 
 /**
- * Diese klasse steuer, Anhang der Konfiguration, die XmlBuilder an und erstellt
- * einen XmlRootElement
+ * Diese klasse steuer XmlBuilder Anhang konfiguration an und erstellt einen
+ * XmlRootElement
  * 
  * @author Leonid Potap
- * 
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @Named("extraRequestBuilder")
 public class ExtraRequestBuilder implements IExtraMessageBuilder {
