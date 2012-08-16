@@ -49,6 +49,13 @@ import de.extra.client.core.builder.impl.request.RequestTransportHeaderBuilder;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.SenderDataBean;
 
+/**
+ * Test for ExtraRequestBuilder.
+ * 
+ * @author Leonid Potap
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class ExtraRequestBuilderTest {
 
