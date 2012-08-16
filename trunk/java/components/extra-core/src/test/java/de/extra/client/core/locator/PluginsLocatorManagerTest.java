@@ -27,9 +27,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.Map;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -45,6 +45,7 @@ import de.extra.client.core.plugin.IDataPlugin;
 @RunWith(MockitoJUnitRunner.class)
 public class PluginsLocatorManagerTest {
 
+	@InjectMocks
 	private PluginsLocatorManager pluginsLocatorManager;
 
 	@Mock
@@ -53,30 +54,15 @@ public class PluginsLocatorManagerTest {
 	@Mock
 	IDataPlugin dataPlugin;
 
-	@Before
-	public void setUp() throws Exception {
-		pluginsLocatorManager = new PluginsLocatorManager();
-	}
-
 	@Test
 	public void testGetConfiguratedDataPlugin() {
 		when(dataPluginMap.get(anyString())).thenReturn(dataPlugin);
 
-		pluginsLocatorManager.setDataPluginMap(dataPluginMap);
 		IDataPlugin resultDataPlugin = pluginsLocatorManager
 				.getConfiguratedDataPlugin();
-
 		assertNotNull(resultDataPlugin);
 		assertEquals(dataPlugin, resultDataPlugin);
-
 		verify(dataPluginMap, atLeastOnce()).get(anyString());
 	}
 
-	@Test
-	public void testGetConfiguratedOutputPlugin() {
-	}
-
-	@Test
-	public void testGetConfiguratedConfigPlugin() {
-	}
 }
