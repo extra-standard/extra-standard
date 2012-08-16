@@ -176,6 +176,8 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	 * @return
 	 */
 	private String getBeanName(String configKey) {
+		Assert.notNull(configProperties,
+				"Unexpected Container Exception. ConfigProperties is null");
 		return configProperties.getProperty(configKey);
 	}
 
