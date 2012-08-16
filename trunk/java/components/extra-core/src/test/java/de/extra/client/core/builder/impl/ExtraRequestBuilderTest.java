@@ -123,6 +123,19 @@ public class ExtraRequestBuilderTest {
 	public final void testBuildXmlSimleMessage() {
 		SenderDataBean senderData = new SenderDataBean();
 		ConfigFileBean config = createSimpleConfigFileBean();
+
+		RootElementType elementType = extraRequestBuilder.buildXmlMessage(
+				senderData, config);
+		assertNotNull(elementType);
+		// TODO Elemente Prüfen
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public final void testBuildXmlSimleMessageWithException() {
+		SenderDataBean senderData = new SenderDataBean();
+		ConfigFileBean config = createSimpleConfigFileBean();
+		config.addElementsHierarchyMap("TransportPlugins",
+				"xplg:DataTransforms");
 		RootElementType elementType = extraRequestBuilder.buildXmlMessage(
 				senderData, config);
 		assertNotNull(elementType);
