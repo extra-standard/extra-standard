@@ -6,6 +6,7 @@
       * [eXTraArchitekturAnwendungCli Command Line Interface]
       * [eXTraArchitekturNachrichtenAufbau Nachrichtenaufbau]
       * [eXTraArchitekturAnwendungProfiling Profiling]
+      * [eXTraArchitekturAnwendungBetrieb Betrieb von CLI]
   * [eXTraVerfahren Fachverfahren]    
       * [eXTraSterbedatenVerfahren Sterbedatenabgleich]
   * [eXTraEntwProzess Entwicklungsprozess]
