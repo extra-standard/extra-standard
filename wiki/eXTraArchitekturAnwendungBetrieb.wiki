@@ -1,4 +1,7 @@
-#eXTa-Client: Entwurfsdokumentation der betrieblichen Schnittstelle.
+#summary CLI: Entwurfsdokumentation der betrieblichen Schnittstelle.
+
+*Inhaltsverzeichnis*
+<wiki:toc max_depth="1" />
 
 = Betriebliche Schnittstelle =
 
