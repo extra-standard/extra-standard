@@ -105,6 +105,47 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	}
 
 	/**
+	 * Liefert ein MessageBuilder abhängig von dem ParentElement und Type von
+	 * dem childElement
+	 * 
+	 * @param elementType
+	 * @param senderData
+	 * @return
+	 */
+	public IXmlComplexTypeBuilder getXmlComplexTypeBuilder(String elementType,
+			SenderDataBean senderData) {
+		// TODO Auswahl der Builder auch über Context (SenderDataBean)
+		// vorgenommen werden. Konzept erstellen
+		IXmlComplexTypeBuilder complexTypeBuilder = xmlDefaultTypesToComplexTypeBuilderAssignmentMap
+				.get(elementType);
+		if (complexTypeBuilder == null) {
+			complexTypeBuilder = xmlConfigurableTypesToComplexTypeBuilderAssignmentMap
+					.get(elementType);
+		}
+		if (complexTypeBuilder == null) {
+			throw new BeanCreationException(
+					"XmlComplexTypeBuilder for ElementType " + elementType
+							+ " not found");
+		}
+		logger.info("MessageBuilder  " + complexTypeBuilder
+				+ " found for elementType: " + elementType);
+		return complexTypeBuilder;
+	}
+
+	/**
+	 * Liefert ein MessageBuilder abhängig von dem ParentElement und Type von
+	 * dem childElement
+	 * 
+	 * @param elementType
+	 * @return
+	 */
+	public IXmlRootElementBuilder getRootXmlBuilder(String elementType) {
+		IXmlRootElementBuilder rootElementBuilder = xmlTypesToRootElementsBuilderAssignmentMap
+				.get(elementType);
+		return rootElementBuilder;
+	}
+
+	/**
 	 * Untersucht alle Implementierungen der XMLRootBuilder und ordnet
 	 * implementierungen zu den xmlTypen
 	 */
@@ -221,47 +262,6 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 			configKey.append(splittedBuilderXmlTypeString);
 		}
 		return configKey.toString();
-	}
-
-	/**
-	 * Liefert ein MessageBuilder abhängig von dem ParentElement und Type von
-	 * dem childElement
-	 * 
-	 * @param elementType
-	 * @param senderData
-	 * @return
-	 */
-	public IXmlComplexTypeBuilder getXmlComplexTypeBuilder(String elementType,
-			SenderDataBean senderData) {
-		// TODO Auswahl der Builder auch über Context (SenderDataBean)
-		// vorgenommen werden. Konzept erstellen
-		IXmlComplexTypeBuilder complexTypeBuilder = xmlDefaultTypesToComplexTypeBuilderAssignmentMap
-				.get(elementType);
-		if (complexTypeBuilder == null) {
-			complexTypeBuilder = xmlConfigurableTypesToComplexTypeBuilderAssignmentMap
-					.get(elementType);
-		}
-		if (complexTypeBuilder == null) {
-			throw new BeanCreationException(
-					"XmlComplexTypeBuilder for ElementType " + elementType
-							+ " not found");
-		}
-		logger.info("MessageBuilder  " + complexTypeBuilder
-				+ " found for elementType: " + elementType);
-		return complexTypeBuilder;
-	}
-
-	/**
-	 * Liefert ein MessageBuilder abhängig von dem ParentElement und Type von
-	 * dem childElement
-	 * 
-	 * @param elementType
-	 * @return
-	 */
-	public IXmlRootElementBuilder getRootXmlBuilder(String elementType) {
-		IXmlRootElementBuilder rootElementBuilder = xmlTypesToRootElementsBuilderAssignmentMap
-				.get(elementType);
-		return rootElementBuilder;
 	}
 
 }

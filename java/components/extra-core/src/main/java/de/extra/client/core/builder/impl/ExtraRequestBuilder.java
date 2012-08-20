@@ -33,6 +33,7 @@ import org.springframework.util.Assert;
 import de.drv.dsrv.extrastandard.namespace.components.AnyPlugInContainerType;
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.builder.IExtraMessageBuilder;
+import de.extra.client.core.builder.IMessageBuilderLocator;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extra.client.core.builder.IXmlRootElementBuilder;
 import de.extra.client.core.model.ConfigFileBean;
@@ -54,7 +55,7 @@ public class ExtraRequestBuilder implements IExtraMessageBuilder {
 
 	@Inject
 	@Named("messageBuilderLocator")
-	MessageBuilderLocator messageBuilderLocator;
+	IMessageBuilderLocator messageBuilderLocator;
 
 	@Override
 	public RootElementType buildXmlMessage(SenderDataBean senderData,
