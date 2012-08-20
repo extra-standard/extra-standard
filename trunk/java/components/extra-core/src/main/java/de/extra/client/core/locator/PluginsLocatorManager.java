@@ -37,7 +37,7 @@ import de.extra.client.core.plugin.IResponseProcessPlugin;
  * @author evpqq5
  */
 @Named("pluginsLocatorManager")
-public class PluginsLocatorManager {
+public class PluginsLocatorManager implements IPluginsLocatorManager {
 
 	private static final Logger logger = Logger
 			.getLogger(PluginsLocatorManager.class);
@@ -70,12 +70,10 @@ public class PluginsLocatorManager {
 		this.dataPluginMap = dataPluginMap;
 	}
 
-	/**
-	 * Liefert der in der Konfiguration unter dem Schlüssel plugins.dataplugin
-	 * definierten Bean
-	 * 
-	 * @return
+	/* (non-Javadoc)
+	 * @see de.extra.client.core.locator.PluginsLocatorManagerInterface#getConfiguratedDataPlugin()
 	 */
+	@Override
 	public IDataPlugin getConfiguratedDataPlugin() {
 		logger.debug(dataPlugBeanName);
 		IDataPlugin idataPlugin = dataPluginMap.get(dataPlugBeanName);
@@ -83,12 +81,10 @@ public class PluginsLocatorManager {
 		return idataPlugin;
 	}
 
-	/**
-	 * Liefert der in der Konfiguration unter dem Schlüssel plugins.dataplugin
-	 * definierten Bean
-	 * 
-	 * @return
+	/* (non-Javadoc)
+	 * @see de.extra.client.core.locator.PluginsLocatorManagerInterface#getConfiguratedOutputPlugin()
 	 */
+	@Override
 	public IOutputPlugin getConfiguratedOutputPlugin() {
 		logger.debug(outputPluginBeanName);
 		IOutputPlugin ioutputPlugin = outputPluginMap.get(outputPluginBeanName);
@@ -96,12 +92,10 @@ public class PluginsLocatorManager {
 		return ioutputPlugin;
 	}
 
-	/**
-	 * Liefert der in der Konfiguration unter dem Schlüssel plugins.dataplugin
-	 * definierten Bean
-	 * 
-	 * @return
+	/* (non-Javadoc)
+	 * @see de.extra.client.core.locator.PluginsLocatorManagerInterface#getConfiguratedConfigPlugin()
 	 */
+	@Override
 	public IConfigPlugin getConfiguratedConfigPlugin() {
 		logger.debug(configPluginBeanName);
 		IConfigPlugin iConfigPlugin = configPluginMap.get(configPluginBeanName);
@@ -109,12 +103,10 @@ public class PluginsLocatorManager {
 		return iConfigPlugin;
 	}
 
-	/**
-	 * Liefert der in der Konfiguration unter dem Schlüssel plugins.dataplugin
-	 * definierten Bean
-	 * 
-	 * @return
+	/* (non-Javadoc)
+	 * @see de.extra.client.core.locator.PluginsLocatorManagerInterface#getConfiguratedResponsePlugin()
 	 */
+	@Override
 	public IResponseProcessPlugin getConfiguratedResponsePlugin() {
 		logger.debug(configPluginBeanName);
 		IResponseProcessPlugin iResponsePlugin = responsePluginMap
