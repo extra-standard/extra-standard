@@ -25,11 +25,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import de.extra.client.core.annotation.PluginConfigType;
-import de.extra.client.core.annotation.PluginConfigutation;
+import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
 
 @Named("httpOutputPluginConnectConfiguration")
-@PluginConfigutation(plugInBeanName="httpOutputPlugin", plugInType = PluginConfigType.OutputPlugins)
+@PluginConfiguration(pluginBeanName="httpOutputPlugin", pluginType = PluginConfigType.OutputPlugins)
 public class HttpOutputPluginConnectConfiguration {
 
 	@PluginValue(key="userAgent")
