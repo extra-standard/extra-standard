@@ -46,7 +46,7 @@ import de.extra.client.core.plugin.IDataPlugin;
 public class PluginsLocatorManagerTest {
 
 	@InjectMocks
-	private IPluginsLocatorManager pluginsLocatorManager;
+	private PluginsLocatorManager pluginsLocatorManager;
 
 	@Mock
 	private Map<String, IDataPlugin> dataPluginMap;
