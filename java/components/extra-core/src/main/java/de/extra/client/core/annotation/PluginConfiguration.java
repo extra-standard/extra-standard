@@ -23,10 +23,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Retention(RetentionPolicy.RUNTIME) 
-@Target({ElementType.TYPE})
-public @interface PluginConfigutation {
-	String plugInBeanName();
-	PluginConfigType plugInType();
-}
+/**
+ * @author Leonid Potap
+ * 
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.TYPE })
+public @interface PluginConfiguration {
+	String pluginBeanName();
 
+	PluginConfigType pluginType();
+}

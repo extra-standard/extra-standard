@@ -52,6 +52,7 @@ public class DataTransformPluginsBuilder extends XmlComplexTypeBuilderAbstr {
 		// TODO Als erste Lösung Plugins über Konfiguration auswerden.
 		// Es besteht eien Möglichkeit Plugins über SenderDataBean auszuwerten
 		DataTransforms dataTransforms = new DataTransforms();
+		dataTransforms.setVersion(this.getClass().getSimpleName());
 		logger.debug("DataTransformsPlugins created. ");
 		return dataTransforms;
 

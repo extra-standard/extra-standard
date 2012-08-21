@@ -22,7 +22,7 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import de.drv.dsrv.extrastandard.namespace.plugins.DataTransforms;
+import de.drv.dsrv.extrastandard.namespace.plugins.DataSource;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.SenderDataBean;
@@ -31,14 +31,12 @@ import de.extra.client.core.model.SenderDataBean;
  * @author Leonid Potap
  * 
  */
-@Named("dataTransformConfigurablePluginsBuilder")
-public class DataTransformConfigurablePluginsBuilder extends
-		XmlComplexTypeBuilderAbstr {
+@Named("dataSourceInputDataPluginsBuilder")
+public class DataSourceInputDataPluginsBuilder extends XmlComplexTypeBuilderAbstr {
 
-	private static Logger logger = Logger
-			.getLogger(DataTransformConfigurablePluginsBuilder.class);
+	private static Logger logger = Logger.getLogger(DataSourceInputDataPluginsBuilder.class);
 
-	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:DataTransforms";
+	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:DataSource";
 
 	/**
 	 * Erstellt die SenderInformationen im Kontext von Header (non-Javadoc)
@@ -47,15 +45,13 @@ public class DataTransformConfigurablePluginsBuilder extends
 	 *      de.extra.client.core.model.ConfigFileBean)
 	 */
 	@Override
-	public Object buildXmlFragment(SenderDataBean senderData,
-			ConfigFileBean config) {
+	public Object buildXmlFragment(SenderDataBean senderData, ConfigFileBean config) {
 		// Transportplugins erstellen
 		// TODO Als erste Lösung Plugins über Konfiguration auswerden.
-		// Es besteht eien Möglichkeit Plugins über SenderDataBean auszuwerten
-		DataTransforms dataTransforms = new DataTransforms();
-		dataTransforms.setVersion(this.getClass().getSimpleName());
-		logger.debug("DataTransformsConfigurablePlugins created. ");
-		return dataTransforms;
+		// Es besteht die Möglichkeit Plugins über SenderDataBean auszuwerten
+		DataSource dataSource = new DataSource();
+		logger.debug("DataSourcePlugin created. ");
+		return dataSource;
 
 	}
 
