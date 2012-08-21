@@ -7,12 +7,14 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/util    http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<bean class="de.extra.client.core.annotation.PropertyPlaceholderPluginConfigurer">
 	  <property name="properties" ref="extra-cli-properties"/>
 	</bean>
 
 	<util:properties id="extra-cli-properties" location="classpath:extra-cli.properties"/>
 
+
+	<import resource="classpath:spring-core.xml" />
 	<import resource="classpath:spring-schema.xml" />
 	<import resource="classpath:spring-configplugin.xml" />
 	<import resource="classpath:spring-http-outputplugin.xml" />
@@ -20,5 +22,5 @@
 	<import resource="classpath:spring-query-dataplugin.xml" />
 	<import resource="classpath:spring-file-responseprocessplugin.xml" />
 	
-	<context:component-scan base-package="de.extra.client.starter, de.extra.client.core, de.drv.dsrv.extra" />
+	<context:component-scan base-package="de.extra.client.starter, de.extra.client.core" />
 </beans>
