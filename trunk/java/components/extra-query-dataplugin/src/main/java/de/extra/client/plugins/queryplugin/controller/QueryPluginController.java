@@ -25,14 +25,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import de.extra.client.core.annotation.PluginConfigType;
-import de.extra.client.core.annotation.PluginConfigutation;
+import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.model.SenderDataBean;
 import de.extra.client.plugins.queryplugin.helper.QueryHelper;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 
 @Named("queryPluginController")
-@PluginConfigutation(plugInBeanName = "queryDataPlugin", plugInType = PluginConfigType.DataPlugins)
+@PluginConfiguration(pluginBeanName = "queryDataPlugin", pluginType = PluginConfigType.DataPlugins)
 public class QueryPluginController implements IQueryPluginController {
 
 	@Inject

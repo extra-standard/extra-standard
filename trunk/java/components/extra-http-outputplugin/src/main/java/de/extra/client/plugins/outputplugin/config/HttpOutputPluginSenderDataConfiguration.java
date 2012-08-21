@@ -21,12 +21,12 @@ package de.extra.client.plugins.outputplugin.config;
 import javax.inject.Named;
 
 import de.extra.client.core.annotation.PluginConfigType;
-import de.extra.client.core.annotation.PluginConfigutation;
+import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
 
 
 @Named("httpOutputPluginSenderDataConfiguration")
-@PluginConfigutation(plugInBeanName="httpOutputPlugin", plugInType = PluginConfigType.OutputPlugins)
+@PluginConfiguration(pluginBeanName="httpOutputPlugin", pluginType = PluginConfigType.OutputPlugins)
 public class HttpOutputPluginSenderDataConfiguration {
 
 	@PluginValue(key="senderID")

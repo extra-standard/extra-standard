@@ -21,12 +21,12 @@ package de.extra.client.plugins.outputplugin.transport;
 import javax.inject.Named;
 
 import de.extra.client.core.annotation.PluginConfigType;
-import de.extra.client.core.annotation.PluginConfigutation;
+import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.plugins.outputplugin.config.HttpOutputPluginConnectConfiguration;
 
 @Named("extraTransportFactory")
-@PluginConfigutation(plugInBeanName="httpOutputPlugin", plugInType = PluginConfigType.OutputPlugins)
+@PluginConfiguration(pluginBeanName="httpOutputPlugin", pluginType = PluginConfigType.OutputPlugins)
 public class ExtraTransportFactory {
 	
 	@PluginValue(key="implClassName")
