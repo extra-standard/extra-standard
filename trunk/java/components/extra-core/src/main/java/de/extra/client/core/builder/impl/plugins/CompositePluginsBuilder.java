@@ -18,30 +18,44 @@
  */
 package de.extra.client.core.builder.impl.plugins;
 
-import javax.inject.Named;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import de.drv.dsrv.extrastandard.namespace.plugins.DataTransforms;
+import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.SenderDataBean;
 
 /**
- * @author Leonid Potap
+ * @author Leonid Potap Composite Builder wird angewendet, wenn mehrere Plugins
+ *         nacheinander ausgeführt werden.
  * 
  */
-@Named("dataTransformConfigurablePluginsBuilder")
-public class DataTransformConfigurablePluginsBuilder extends
-		XmlComplexTypeBuilderAbstr {
+public class CompositePluginsBuilder extends XmlComplexTypeBuilderAbstr {
 
 	private static Logger logger = Logger
-			.getLogger(DataTransformConfigurablePluginsBuilder.class);
+			.getLogger(CompositePluginsBuilder.class);
 
-	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:DataTransforms";
+	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:?";
+
+	private List<IXmlComplexTypeBuilder> delegatedPluginslist = new LinkedList<IXmlComplexTypeBuilder>();
 
 	/**
-	 * Erstellt die SenderInformationen im Kontext von Header (non-Javadoc)
+	 * Construktor. CompositePluginBuilder kann nur mit einem List von Builder
+	 * instanziert werden.
+	 * 
+	 * @param delegatedPluginslist
+	 */
+	public CompositePluginsBuilder(
+			List<IXmlComplexTypeBuilder> delegatedPluginslist) {
+		this.delegatedPluginslist = delegatedPluginslist;
+	}
+
+	/**
+	 * Erstellt die Plugins Fragment, in dem mehrere Konfgurierten Plugins
+	 * nacheinander aufgerufen werden (non-Javadoc)
 	 * 
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
 	 *      de.extra.client.core.model.ConfigFileBean)
@@ -49,13 +63,15 @@ public class DataTransformConfigurablePluginsBuilder extends
 	@Override
 	public Object buildXmlFragment(SenderDataBean senderData,
 			ConfigFileBean config) {
-		// Transportplugins erstellen
-		// TODO Als erste Lösung Plugins über Konfiguration auswerden.
-		// Es besteht eien Möglichkeit Plugins über SenderDataBean auszuwerten
-		DataTransforms dataTransforms = new DataTransforms();
-		dataTransforms.setVersion(this.getClass().getSimpleName());
-		logger.debug("DataTransformsConfigurablePlugins created. ");
-		return dataTransforms;
+		List<Object> compositeXmlPluginFragment = new LinkedList<Object>();
+
+		for (IXmlComplexTypeBuilder xmlComplexTypeBuilder : delegatedPluginslist) {
+			Object xmlPluginFragment = xmlComplexTypeBuilder.buildXmlFragment(
+					senderData, config);
+			compositeXmlPluginFragment.add(xmlPluginFragment);
+		}
+		logger.debug("Plugins created.");
+		return compositeXmlPluginFragment;
 
 	}
 

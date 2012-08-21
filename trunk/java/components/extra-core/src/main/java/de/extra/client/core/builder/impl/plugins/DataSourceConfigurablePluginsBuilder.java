@@ -21,8 +21,10 @@ package de.extra.client.core.builder.impl.plugins;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 
-import de.drv.dsrv.extrastandard.namespace.plugins.DataTransforms;
+import de.drv.dsrv.extrastandard.namespace.plugins.DataContainerType;
+import de.drv.dsrv.extrastandard.namespace.plugins.DataSource;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.SenderDataBean;
@@ -31,17 +33,25 @@ import de.extra.client.core.model.SenderDataBean;
  * @author Leonid Potap
  * 
  */
-@Named("dataTransformConfigurablePluginsBuilder")
-public class DataTransformConfigurablePluginsBuilder extends
+
+@Named("dataSourceConfigurablePluginsBuilder")
+public class DataSourceConfigurablePluginsBuilder extends
 		XmlComplexTypeBuilderAbstr {
 
 	private static Logger logger = Logger
-			.getLogger(DataTransformConfigurablePluginsBuilder.class);
+			.getLogger(DataSourceConfigurablePluginsBuilder.class);
 
-	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:DataTransforms";
+	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:DataSource";
+
+	@Value("${builder.xplg.DataSource.dataSourceConfigurablePluginsBuilder.type}")
+	private String type;
+	@Value("${builder.xplg.DataSource.dataSourceConfigurablePluginsBuilder.name}")
+	private String name;
+	@Value("${builder.xplg.DataSource.dataSourceConfigurablePluginsBuilder.encoding}")
+	private String encoding;
 
 	/**
-	 * Erstellt die SenderInformationen im Kontext von Header (non-Javadoc)
+	 * Erstellt die DataSource, aus der Konfigurationsdatei (non-Javadoc)
 	 * 
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
 	 *      de.extra.client.core.model.ConfigFileBean)
@@ -49,19 +59,44 @@ public class DataTransformConfigurablePluginsBuilder extends
 	@Override
 	public Object buildXmlFragment(SenderDataBean senderData,
 			ConfigFileBean config) {
-		// Transportplugins erstellen
-		// TODO Als erste Lösung Plugins über Konfiguration auswerden.
-		// Es besteht eien Möglichkeit Plugins über SenderDataBean auszuwerten
-		DataTransforms dataTransforms = new DataTransforms();
-		dataTransforms.setVersion(this.getClass().getSimpleName());
-		logger.debug("DataTransformsConfigurablePlugins created. ");
-		return dataTransforms;
+		DataSource dataSource = new DataSource();
+		DataContainerType dataContainerType = new DataContainerType();
+		dataContainerType.setType(type);
+		dataContainerType.setName(name);
+		dataContainerType.setEncoding(encoding);
+		dataSource.setDataContainer(dataContainerType);
+		logger.debug("DataSourcePlugin created.");
+		return dataSource;
 
 	}
 
 	@Override
 	public String getXmlType() {
 		return BUILDER_XML_MESSAGE_TYPE;
+	}
+
+	/**
+	 * @param type
+	 *            the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	/**
+	 * @param value
+	 *            the value to set
+	 */
+	public void setName(String value) {
+		this.name = value;
+	}
+
+	/**
+	 * @param encoding
+	 *            the encoding to set
+	 */
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
 	}
 
 }

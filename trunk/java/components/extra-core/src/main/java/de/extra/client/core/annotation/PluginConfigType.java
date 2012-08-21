@@ -27,10 +27,9 @@ package de.extra.client.core.annotation;
  */
 public enum PluginConfigType {
 
-	DataPlugins("plugins.dataplugin"), DataSource("plugins.datasource"), Certificates(
-			"plugins.certificates"), DataTransforms("plugins.datatransform"), Contacts(
-			"plugins.contacts"), OutputPlugins("plugins.outputplugin"), ResponseProcessPlugins(
-			"plugins.responseprocessplugin");
+	DataPlugins("plugins.dataplugin"), DataSource("plugins.datasource"), Certificates("plugins.certificates"), DataTransforms(
+			"plugins.datatransform"), Contacts("plugins.contacts"), OutputPlugins("plugins.outputplugin"), ResponseProcessPlugins(
+			"plugins.responseprocessplugin"), Builder("builder");
 
 	String configPrefix;
 
