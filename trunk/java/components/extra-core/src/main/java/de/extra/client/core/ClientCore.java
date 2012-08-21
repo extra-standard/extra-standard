@@ -37,7 +37,6 @@ import org.springframework.oxm.XmlMappingException;
 
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.builder.IExtraMessageBuilder;
-import de.extra.client.core.helper.RequestHelper;
 import de.extra.client.core.locator.IPluginsLocatorManager;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.SenderDataBean;
@@ -58,10 +57,6 @@ public class ClientCore {
 	@Inject
 	@Named("pluginsLocatorManager")
 	private IPluginsLocatorManager pluginsLocatorManager;
-
-	@Inject
-	@Named("requestHelper")
-	private RequestHelper requestHelper;
 
 	@Inject
 	@Named("extraRequestBuilder")
