@@ -98,9 +98,9 @@ Wenn für die Erstellung eines XML Fragmentes nur eine Implementierung vorhanden
 Wenn für die Erstellung eines XML Fragmentes mehrere Implementierung vorhanden sind,  muss die gewünschte Implementierung in properties über den entsprechenen Schlüssel und der Namen der Implementierung konfiguriert sein. 
 
 Z.B.
-
+{{{
 builder.xplg.!DataTransforms=dataTransformConfigurablePluginsBuilder
-
+}}}
 Der Schlüssel wird erstellt durch den Prefix *_builder_*, darauffolgenden Element Prefix *_xplg_* und Elementnamen *_!DataTransforms_* durch den komma getrennt.
 
 Value ist der Name der Implementierung.
