@@ -1,5 +1,5 @@
 #labels Phase-Implementation
-#Beschreibung der Konfiguration für den eXTra Klient
+#summary Beschreibung der Konfiguration für den eXTra Klient
 
 
 *Inhaltsverzeichnis*
