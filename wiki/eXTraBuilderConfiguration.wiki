@@ -115,7 +115,7 @@ builder.xplg.!DataTransforms1=dataTransformPluginsBuilder
 
 Die Schlüssel werden durch hinzufügen von einer Zahl ergänzt. Diese Zahl wird bei der Reihenfolge der Nachrichtenaufbau berücksichtigt.
 
-= Konfiguration der Felder über Properties =
+= Felderkonfiguration über Properties =
 
 Um Properties zu einer Implementierung einfacher voneinander zu trennen sind folgende Namenkonventionen zu berücksichtigen.
 
