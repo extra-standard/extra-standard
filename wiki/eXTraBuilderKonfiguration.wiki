@@ -99,7 +99,7 @@ Wenn für die Erstellung eines XML Fragmentes mehrere Implementierung vorhanden 
 
 Z.B.
 {{{
-builder.xplg.!DataTransforms=dataTransformConfigurablePluginsBuilder
+builder.xplg.DataTransforms=dataTransformConfigurablePluginsBuilder
 }}}
 Der Schlüssel wird erstellt durch den Prefix *_builder_*, darauffolgenden Element Prefix *_xplg_* und Elementnamen *_!DataTransforms_* durch den komma getrennt.
 
@@ -109,11 +109,10 @@ Value ist der Name der Implementierung.
 
 
 Wenn ein XML Fragment Builder mehrfach bei dem Nachrichtenaufbau angewendet werden sollte sind die folgende Konfigurationseinträge zu verwenden:
-
+{{{
 builder.xplg.!DataTransforms=dataTransformConfigurablePluginsBuilder
-
 builder.xplg.!DataTransforms1=dataTransformPluginsBuilder
-
+}}}
 
 Die Schlüssel werden durch hinzufügen von einer Zahl ergänzt. Diese Zahl wird bei der Reihenfolge der Nachrichtenaufbau berücksichtigt.
 
@@ -122,7 +121,7 @@ Die Schlüssel werden durch hinzufügen von einer Zahl ergänzt. Diese Zahl wird
 Um Properties zu einer Implementierung einfacher voneinander zu trennen sind folgende Namenkonventionen zu berücksichtigen.
 
 Propertie für den Feld name in der Implementierung *_dataTransformConfigurablePluginsBuilder_* für die Aufbau des Elementes xplg:!!DataTransforms ist mit dem folgenden Schlüssel zu definieren:
-
+{{{
 builder.xplg.!DataTransforms.dataTransformConfigurablePluginsBuilder=Mein Name
-
+}}}
 
