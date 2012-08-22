@@ -21,10 +21,12 @@ package de.extra.client.core.builder.impl.plugins;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.plugins.DataContainerType;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataSource;
+import de.extra.client.core.annotation.PluginConfigType;
+import de.extra.client.core.annotation.PluginConfiguration;
+import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.SenderDataBean;
@@ -35,6 +37,7 @@ import de.extra.client.core.model.SenderDataBean;
  */
 
 @Named("dataSourceConfigurablePluginsBuilder")
+@PluginConfiguration(pluginBeanName = "dataSourceConfigurablePluginsBuilder", pluginType = PluginConfigType.Builder)
 public class DataSourceConfigurablePluginsBuilder extends
 		XmlComplexTypeBuilderAbstr {
 
@@ -43,11 +46,11 @@ public class DataSourceConfigurablePluginsBuilder extends
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:DataSource";
 
-	@Value("${builder.xplg.DataSource.dataSourceConfigurablePluginsBuilder.type}")
+	@PluginValue(key = "type")
 	private String type;
-	@Value("${builder.xplg.DataSource.dataSourceConfigurablePluginsBuilder.name}")
+	@PluginValue(key = "name")
 	private String name;
-	@Value("${builder.xplg.DataSource.dataSourceConfigurablePluginsBuilder.encoding}")
+	@PluginValue(key = "encoding")
 	private String encoding;
 
 	/**

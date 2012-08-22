@@ -29,7 +29,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
@@ -100,7 +99,7 @@ public class PropertyPlaceholderPluginConfigurer extends
 			}
 			if (valueAnnotation != null) {
 				String key = extractKey(annotationConfigutation,
-						valueAnnotation, beanName, beanFactory);
+						valueAnnotation, clazz);
 				String value = resolvePlaceholder(key, properties,
 						SYSTEM_PROPERTIES_MODE_FALLBACK);
 				if (StringUtils.isEmpty(value)) {
@@ -135,7 +134,7 @@ public class PropertyPlaceholderPluginConfigurer extends
 									+ field.getName() + "] not available.");
 				}
 				String key = extractKey(annotationConfigutation,
-						valueAnnotation, beanName, beanFactory);
+						valueAnnotation, clazz);
 				Object value = resolvePlaceholder(key, properties,
 						SYSTEM_PROPERTIES_MODE_FALLBACK);
 				if (value == null) {
@@ -160,35 +159,43 @@ public class PropertyPlaceholderPluginConfigurer extends
 	 * @return
 	 */
 	private String extractKey(PluginConfiguration annotation,
-			PluginValue value, String beanName, BeanFactory beanFactory) {
+			PluginValue value, Class<?> clazz) {
+		try {
+			String initialKey = value.key();
+			String plugInBeanName = annotation.pluginBeanName();
+			PluginConfigType pluginConfigType = annotation.pluginType();
+			StringBuilder key = new StringBuilder();
+			String configPrefix = annotation.pluginType().getConfigPrefix();
+			if (PluginConfigType.Builder == pluginConfigType) {
+				key.append(configPrefix);
+				Object bean = clazz.newInstance();
+				if (bean instanceof IXmlComplexTypeBuilder) {
+					IXmlComplexTypeBuilder iXmlComplexTypeBuilder = (IXmlComplexTypeBuilder) bean;
+					String xmlType = iXmlComplexTypeBuilder.getXmlType();
+					String xmlTypeKey = extractKeyFromXmlType(xmlType);
+					key.append(".").append(xmlTypeKey);
+					key.append(".").append(plugInBeanName);
+					key.append(".").append(initialKey);
 
-		String initialKey = value.key();
-		String plugInBeanName = annotation.pluginBeanName();
-		PluginConfigType pluginConfigType = annotation.pluginType();
-		StringBuilder key = new StringBuilder();
-		String configPrefix = annotation.pluginType().getConfigPrefix();
-		if (PluginConfigType.Builder == pluginConfigType) {
-			key.append(configPrefix);
-			Object bean = beanFactory.getBean(beanName);
-			if (bean instanceof IXmlComplexTypeBuilder) {
-				IXmlComplexTypeBuilder iXmlComplexTypeBuilder = (IXmlComplexTypeBuilder) bean;
-				String xmlType = iXmlComplexTypeBuilder.getXmlType();
-				String xmlTypeKey = extractKeyFromXmlType(xmlType);
-				key.append(".").append(xmlTypeKey);
-				key.append(".").append(plugInBeanName);
-				key.append(".").append(initialKey);
+				} else {
+					throw new BeanCreationException(
+							clazz.getName(),
+							" unexpected AnnotationType. Use PluginConfigType.Builder for IXmlComplexTypeBuilder");
+				}
+
 			} else {
-				throw new BeanCreationException(
-						beanName,
-						"Unexpected AnnotationType. Use PluginConfigType.Builder for IXmlComplexTypeBuilder");
+				key.append(configPrefix).append(".").append(plugInBeanName)
+						.append(".").append(initialKey);
 			}
-
-		} else {
-			key.append(configPrefix).append(".").append(plugInBeanName)
-					.append(".").append(initialKey);
+			return key.toString();
+		} catch (IllegalAccessException illegalAccessException) {
+			throw new BeanCreationException("IllegalAccessException",
+					illegalAccessException);
+		} catch (InstantiationException instantiationException) {
+			throw new BeanCreationException("InstantiationException",
+					instantiationException);
 		}
 
-		return key.toString();
 	}
 
 	/**
