@@ -1,0 +1,122 @@
+#labels Phase-Implementation
+#Beschreibung der Konfiguration für den eXTra Klient
+
+= Introduction =
+
+Durch die Profiling wird vereinbart welche Nachrichtenteile für die Datenaustausch zwischen Klient und Server zugelassen sind. Dabei wird eine sogenannte Profildatei erstellt. 
+
+Diese Profiledatei wird in dem Klient eingelesen und für die Steuerung der Nachrichtenaufbau verwendet.
+
+= Konfiguration der Nachrichtaufbau über Profilling =
+
+Eine Profildatei sieht wie folgt aus:
+
+{{{
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<profil-configuration
+	xmlns:xcpt="http://www.extra-standard.de/namespace/components/1"
+	xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1"
+	xmlns:xreq="http://www.extra-standard.de/namespace/request/1">
+	<element>
+		<Name>xcpt:XMLTransport</Name>
+	</element>
+	<element>
+		<Name>req:TransportHeader</Name>
+		<Elternelement>XMLTransport</Elternelement>
+	</element>
+	<element>
+		<Name>req:TransportBody</Name>
+		<Elternelement>XMLTransport</Elternelement>
+	</element>
+	<element>
+		<Name>req:TransportPlugins</Name>
+		<Elternelement>XMLTransport</Elternelement>
+	</element>
+	<element>
+		<Name>xplg:DataSource</Name>
+		<Elternelement>TransportPlugins</Elternelement>
+	</element>
+	<element>
+		<Name>xplg:DataTransforms</Name>
+		<Elternelement>TransportPlugins</Elternelement>
+	</element>
+	<element>
+		<Name>xcpt:Sender</Name>
+		<Elternelement>TransportHeader</Elternelement>
+	</element>
+	<element>
+		<Name>xcpt:Receiver</Name>
+		<Elternelement>TransportHeader</Elternelement>
+	</element>
+	<element>
+		<Name>xcpt:TestIndicator</Name>
+		<Elternelement>TransportHeader</Elternelement>
+	</element>
+	<element>
+		<Name>xcpt:RequestDetails</Name>
+		<Elternelement>TransportHeader</Elternelement>
+	</element>
+	<element>
+		<Name>xcpt:Data</Name>
+		<Elternelement>TransportBody</Elternelement>
+	</element>
+	<element>
+		<Name>xcpt:Base64CharSequence</Name>
+		<Elternelement>Data</Elternelement>
+	</element>
+</profil-configuration>
+}}}
+
+Hier ist sowohl Die Reihenfolge als auch die erlaubte Nachrichtenfragmente definiert, was ausreichen ist um die Erstellung der eXTra Datei zu steuern.
+
+= Konfiguration der Builder-Implementierungen über Properties =
+
+Über eXTra Property Datei kann gesteuert werden, wie die Einzelnen Nachricht XML Fragmente erstellt werden sollen.
+
+Hier ist wichtig zu wissen, dass die Implementierungen über die Namen angesprochen werden. 
+
+Z.B. für das Erstellen des Elements xplg:DataTransforms sind 2 Implementierungen vorhenden: dataTransformPluginsBuilder und dataTransformConfigurablePluginsBuilder.
+
+
+Dabei kann zwischen 3 Konfigurationsmöglichkeiten unterschieden werden:
+
+* Default Konfiguration
+* Konfiguration für die mehrfachimplementierten Fragement-Builder
+* Konfiguration für die Plugins, die mehrfach angewendet werden.
+
+== Default Konfiguration ==
+
+Wenn für die Erstellung eines XML Fragmentes nur eine Implementierung vorhanden ist, wird diese Implementierung automatisch ausgewählt, ohne diese impliziert konfiguriert werden muss.
+
+
+== Konfiguration für die mehrfachimplementierten Fragement-Builder ==
+
+Wenn für die Erstellung eines XML Fragmentes mehrere Implementierung vorhanden sind,  muss die gewünschte Implementierung in properties über den entsprechenen Schlüssel und der Namen der Implementierung konfiguriert sein. 
+
+Z.B.
+
+builder.xplg.DataTransforms=dataTransformConfigurablePluginsBuilder
+
+Der Schlüssel wird erstellt durch den Prefix *_builder_, darauffolgenden Element Prefix *_xplg_* und Elementnamen *_DataTransforms_ durch den komma getrennt.
+
+Value ist der Name der Implementierung.
+
+== Konfiguration für die Plugins, die mehrfach angewendet werden ==
+
+
+Wenn ein XML Fragment Builder mehrfach bei dem Nachrichtenaufbau angewendet werden sollte sind die folgende Konfigurationseinträge zu verwenden:
+
+builder.xplg.DataTransforms=dataTransformConfigurablePluginsBuilder
+builder.xplg.DataTransforms1=dataTransformPluginsBuilder
+
+Die Schlüssel werden durch hinzufügen von einer Zahl ergänzt. Diese Zahl wird bei der Reihenfolge der Nachrichtenaufbau berücksichtigt.
+
+= Konfiguration der Felder über Properties =
+
+Um Properties zu einer Implementierung einfacher voneinander zu trennen sind folgende Namenkonventionen zu berücksichtigen.
+
+Propertie für den Feld name in der Implementierung *_dataTransformConfigurablePluginsBuilder_ für die Aufbau des Elementes xplg:DataTransforms ist mit dem folgenden Schlüssel zu definieren:
+
+builder.xplg.DataTransforms.dataTransformConfigurablePluginsBuilder=Mein Name
+
+
