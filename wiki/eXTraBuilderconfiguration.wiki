@@ -1,6 +1,10 @@
 #labels Phase-Implementation
 #Beschreibung der Konfiguration für den eXTra Klient
 
+
+*Inhaltsverzeichnis*
+<wiki:toc max_depth="1" />
+
 = Introduction =
 
 Durch die Profiling wird vereinbart welche Nachrichtenteile für die Datenaustausch zwischen Klient und Server zugelassen sind. Dabei wird eine sogenannte Profildatei erstellt. 
@@ -80,9 +84,9 @@ Z.B. für das Erstellen des Elements xplg:DataTransforms sind 2 Implementierunge
 
 Dabei kann zwischen 3 Konfigurationsmöglichkeiten unterschieden werden:
 
-* Default Konfiguration
-* Konfiguration für die mehrfachimplementierten Fragement-Builder
-* Konfiguration für die Plugins, die mehrfach angewendet werden.
+ * Default Konfiguration
+ * Konfiguration für die mehrfachimplementierten Fragement-Builder
+ * Konfiguration für die Plugins, die mehrfach angewendet werden.
 
 == Default Konfiguration ==
 
@@ -115,7 +119,7 @@ Die Schlüssel werden durch hinzufügen von einer Zahl ergänzt. Diese Zahl wird
 
 Um Properties zu einer Implementierung einfacher voneinander zu trennen sind folgende Namenkonventionen zu berücksichtigen.
 
-Propertie für den Feld name in der Implementierung *_dataTransformConfigurablePluginsBuilder_ für die Aufbau des Elementes xplg:DataTransforms ist mit dem folgenden Schlüssel zu definieren:
+Propertie für den Feld name in der Implementierung *_dataTransformConfigurablePluginsBuilder_* für die Aufbau des Elementes !xplg:DataTransforms ist mit dem folgenden Schlüssel zu definieren:
 
 builder.xplg.DataTransforms.dataTransformConfigurablePluginsBuilder=Mein Name
 
