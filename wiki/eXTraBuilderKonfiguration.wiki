@@ -3,7 +3,7 @@
 
 
 *Inhaltsverzeichnis*
-<wiki:toc max_depth="1" />
+<wiki:toc max_depth="2" />
 
 = Introduction =
 
@@ -71,7 +71,7 @@ Eine Profildatei sieht wie folgt aus:
 </profil-configuration>
 }}}
 
-Hier ist sowohl Die Reihenfolge als auch die erlaubte Nachrichtenfragmente definiert, was ausreichen ist um die Erstellung der eXTra Datei zu steuern.
+Hier ist sowohl die Reihenfolge als auch die erlaubte Nachrichtenfragmente definiert, was ausreichen ist um die Erstellung der eXTra Datei zu steuern.
 
 = Konfiguration der Builder-Implementierungen über Properties =
 
@@ -101,7 +101,7 @@ Z.B.
 
 builder.xplg.!DataTransforms=dataTransformConfigurablePluginsBuilder
 
-Der Schlüssel wird erstellt durch den Prefix *_builder_, darauffolgenden Element Prefix *_xplg_* und Elementnamen *_!DataTransforms_ durch den komma getrennt.
+Der Schlüssel wird erstellt durch den Prefix *_builder_*, darauffolgenden Element Prefix *_xplg_* und Elementnamen *_!DataTransforms_* durch den komma getrennt.
 
 Value ist der Name der Implementierung.
 
