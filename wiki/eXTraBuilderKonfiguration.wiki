@@ -111,7 +111,9 @@ Value ist der Name der Implementierung.
 Wenn ein XML Fragment Builder mehrfach bei dem Nachrichtenaufbau angewendet werden sollte sind die folgende Konfigurationseinträge zu verwenden:
 
 builder.xplg.!DataTransforms=dataTransformConfigurablePluginsBuilder
+
 builder.xplg.!DataTransforms1=dataTransformPluginsBuilder
+
 
 Die Schlüssel werden durch hinzufügen von einer Zahl ergänzt. Diese Zahl wird bei der Reihenfolge der Nachrichtenaufbau berücksichtigt.
 
