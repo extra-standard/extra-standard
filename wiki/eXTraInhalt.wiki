@@ -11,4 +11,4 @@
   * [eXTraVerfahren Fachverfahren]    
       * [eXTraSterbedatenVerfahren Sterbedatenabgleich]
   * [eXTraEntwProzess Entwicklungsprozess]
-  	  * [eXTraBuilderKonfiguration]
+      * [eXTraBuilderKonfiguration]
