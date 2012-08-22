@@ -119,7 +119,7 @@ Die Schlüssel werden durch hinzufügen von einer Zahl ergänzt. Diese Zahl wird
 
 Um Properties zu einer Implementierung einfacher voneinander zu trennen sind folgende Namenkonventionen zu berücksichtigen.
 
-Propertie für den Feld name in der Implementierung *_dataTransformConfigurablePluginsBuilder_* für die Aufbau des Elementes !xplg:DataTransforms ist mit dem folgenden Schlüssel zu definieren:
+Propertie für den Feld name in der Implementierung *_dataTransformConfigurablePluginsBuilder_* für die Aufbau des Elementes xplg:!DataTransforms ist mit dem folgenden Schlüssel zu definieren:
 
 builder.xplg.DataTransforms.dataTransformConfigurablePluginsBuilder=Mein Name
 
