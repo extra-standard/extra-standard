@@ -110,8 +110,8 @@ Value ist der Name der Implementierung.
 
 Wenn ein XML Fragment Builder mehrfach bei dem Nachrichtenaufbau angewendet werden sollte sind die folgende Konfigurationseinträge zu verwenden:
 {{{
-builder.xplg.!DataTransforms=dataTransformConfigurablePluginsBuilder
-builder.xplg.!DataTransforms1=dataTransformPluginsBuilder
+builder.xplg.DataTransforms=dataTransformConfigurablePluginsBuilder
+builder.xplg.DataTransforms1=dataTransformPluginsBuilder
 }}}
 
 Die Schlüssel werden durch hinzufügen von einer Zahl ergänzt. Diese Zahl wird bei der Reihenfolge der Nachrichtenaufbau berücksichtigt.
@@ -122,6 +122,6 @@ Um Properties zu einer Implementierung einfacher voneinander zu trennen sind fol
 
 Propertie für den Feld name in der Implementierung *_dataTransformConfigurablePluginsBuilder_* für die Aufbau des Elementes xplg:!DataTransforms ist mit dem folgenden Schlüssel zu definieren:
 {{{
-builder.xplg.!DataTransforms.dataTransformConfigurablePluginsBuilder=Mein Name
+builder.xplg.DataTransforms.dataTransformConfigurablePluginsBuilder=Mein Name
 }}}
 
