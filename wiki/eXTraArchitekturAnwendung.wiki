@@ -7,5 +7,6 @@
 
   * [eXTraArchitekturAnwendungCli eXTra Command Line Interface (CLI)]
   * [eXTraArchitekturNachrichtenAufbau eXTra Nachrichtenaufbau]
+  * [eXTraBuilderKonfiguration Konfiguration von CLI]
   * [eXTraArchitekturAnwendungProfiling eXTra Profiling]
   * [eXTraArchitekturAnwendungBetrieb eXTra Betrieb von CLI]
