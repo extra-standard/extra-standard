@@ -1,0 +1,17 @@
+#summary Nachrichtenaustausch im Sende-/Holbetrieb.
+#labels Phase-Implementation
+
+= Introduction =
+
+Hier ist die Nachrichtenreihenfolge mit der Beschreibungen für den Sende-/Hol betreib beschrieben
+
+
+= Details =
+
+Eine Detailierte Beschreibung ist in dem Dokument *_Anl-3-Spektrum_Szenarien_eXTra-in-Betrieb_20110619.pdf_* beschrieben. Hier ist eine kurze zusammensetzung mit den für die Entwicklung wichtigen einzelheiten.
+
+Das Dokument ist unter http://www.extra-standard.de/upload/pdf/Anl-3-Spektrum_Szenarien_eXTra-in-Betrieb_20110619.pdf verfügbar.
+
+
+
+http://extra-standard.googlecode.com/svn/wiki/images/extra-nachrichtenaustausch-requestbuilder.jpg
