@@ -14,12 +14,20 @@
   * eXTra-Server: DSRV
 
 = Phasen =
+
+http://extra-standard.googlecode.com/svn/wiki/images/extra-nachrichtenaustausch-sendeholbetrieb.jpg
+
   # Senden Fachverfahren Sterbedatenabgleich (Request - Response)
   # Abrufen Verarbeitungsergebnisse Fachverfahren Sterbedatenabgleich (Request - Response)
   # Bestätigung Verarbeitungsergebnisse Fachverfahren Sterbedatenabgleich (Request - Response)
+
+Eine Detailierte Beschreibung ist in dem Dokument *_Anl-3-Spektrum-Szenarien-eXTra-in-Betrieb_20110619.pdf_* beschrieben. 
+Das Dokument ist unter http://www.extra-standard.de/upload/pdf/Anl-3-Spektrum_Szenarien_eXTra-in-Betrieb_20110619.pdf verfügbar.
+
+
+
   
 = XSD: Profilierung des eXTra-Schemas =
 
   
 = XML: Beispieldateien =
-
