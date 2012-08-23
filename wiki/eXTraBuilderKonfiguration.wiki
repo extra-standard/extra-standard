@@ -1,11 +1,11 @@
-#labels Phase-Implementation
 #summary Beschreibung der Konfiguration für den eXTra Klient
+#labels Phase-Implementation
 
 
 *Inhaltsverzeichnis*
 <wiki:toc max_depth="2" />
 
-= Introduction =
+= Einführung =
 
 Durch die Profiling wird vereinbart welche Nachrichtenteile für die Datenaustausch zwischen Klient und Server zugelassen sind. Dabei wird eine sogenannte Profildatei erstellt. 
 
@@ -124,4 +124,3 @@ Propertie für den Feld name in der Implementierung *_dataTransformConfigurableP
 {{{
 builder.xplg.DataTransforms.dataTransformConfigurablePluginsBuilder=Mein Name
 }}}
-
