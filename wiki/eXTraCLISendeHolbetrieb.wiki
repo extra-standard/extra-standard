@@ -6,9 +6,9 @@
 Hier ist die Nachrichtenreihenfolge mit der Beschreibungen für den Sende-/Hol betreib beschrieben
 
 
-= Details =
+= Zusammenfasung Nachrichtenaustausch =
 
-Eine Detailierte Beschreibung ist in dem Dokument *_Anl-3-Spektrum_Szenarien_eXTra-in-Betrieb_20110619.pdf_* beschrieben. Hier ist eine kurze zusammensetzung mit den für die Entwicklung wichtigen einzelheiten.
+Eine Detailierte Beschreibung ist in dem Dokument *_Anl-3-Spektrum_Szenarien_!eXTra-in-Betrieb_20110619.pdf_* beschrieben. Hier ist eine kurze zusammensetzung mit den für die Entwicklung wichtigen einzelheiten.
 
 Das Dokument ist unter http://www.extra-standard.de/upload/pdf/Anl-3-Spektrum_Szenarien_eXTra-in-Betrieb_20110619.pdf verfügbar.
 
