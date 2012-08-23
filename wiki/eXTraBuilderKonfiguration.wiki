@@ -7,9 +7,9 @@
 
 = Einführung =
 
-Durch die Profiling wird vereinbart welche Nachrichtenteile für die Datenaustausch zwischen Klient und Server zugelassen sind. Dabei wird eine sogenannte Profildatei erstellt. 
+Durch die Profiling wird vereinbart welche Nachrichtenteile für die Datenaustausch zwischen Client und Server zugelassen sind. Dabei wird eine sogenannte Profildatei erstellt. 
 
-Diese Profiledatei wird in dem Klient eingelesen und für die Steuerung der Nachrichtenaufbau verwendet.
+Diese Profiledatei wird in dem Client eingelesen und für die Steuerung der Nachrichtenaufbau verwendet.
 
 = Konfiguration der Nachrichtaufbau über Profilling =
 
