@@ -7,7 +7,7 @@
 
 = Best-Practice =
 
-Als Best-Practice hat sich folgendes Kommunikationsszenario zwischen eXTra-Client und -Server bewährt:
+Als Best-Practice haben sich folgende Phasen zwischen eXTra-Client und -Server bewährt:
   # Senden Fachverfahren X (Request - Response)
   # Abrufen Verarbeitungsergebnisse Fachverfahren X (Request - Response)
   # Bestätigung Verarbeitungsergebnisse Fachverfahren X (Request - Response)
