@@ -13,7 +13,7 @@
   * eXTra-Client: DPRS
   * eXTra-Server: DSRV
 
-= Kommunikationsszenario =
+= Phasen =
   # Senden Fachverfahren Sterbedatenabgleich (Request - Response)
   # Abrufen Verarbeitungsergebnisse Fachverfahren Sterbedatenabgleich (Request - Response)
   # Bestätigung Verarbeitungsergebnisse Fachverfahren Sterbedatenabgleich (Request - Response)
@@ -22,6 +22,4 @@
 
   
 = XML: Beispieldateien =
-
-
 
