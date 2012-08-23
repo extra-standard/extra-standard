@@ -79,7 +79,7 @@ Hier ist sowohl die Reihenfolge als auch die erlaubte Nachrichtenfragmente defin
 
 Hier ist wichtig zu wissen, dass die Implementierungen über die Namen angesprochen werden. 
 
-Z.B. für das Erstellen des Elements xplg:!DataTransforms sind 2 Implementierungen vorhenden: dataTransformPluginsBuilder und dataTransformConfigurablePluginsBuilder.
+Beispiel: Für das Erstellen des Elements xplg:!DataTransforms sind 2 Implementierungen vorhenden: dataTransformPluginsBuilder und dataTransformConfigurablePluginsBuilder.
 
 
 Dabei kann zwischen 3 Konfigurationsmöglichkeiten unterschieden werden:
