@@ -9,5 +9,5 @@
       * [eXTraArchitekturAnwendungBetrieb Betrieb von CLI]      
       * [eXTraArchitekturAnwendungProfiling Profiling]
    * [eXTraVerfahren Fachverfahren]    
-      * [eXTraSterbedatenVerfahren]
+      * [eXTraSterbedatenVerfahren Sterbedatenabgleich]
   * [eXTraEntwProzess Entwicklungsprozess]
