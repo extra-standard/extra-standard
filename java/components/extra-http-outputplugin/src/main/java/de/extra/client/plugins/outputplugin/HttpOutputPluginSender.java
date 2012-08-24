@@ -51,7 +51,7 @@ public class HttpOutputPluginSender {
 	 *            eXTra-Request aus der CoreLib
 	 * @return
 	 */
-	public InputStream processOutput(String request) {
+	public InputStream processOutput(InputStream request) {
 
 		// Initialisiere Transport-Client
 		client = extraTransportFactory.loadTransportImpl();

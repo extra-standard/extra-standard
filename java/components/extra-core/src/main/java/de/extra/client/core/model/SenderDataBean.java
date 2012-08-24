@@ -18,7 +18,7 @@
  */
 package de.extra.client.core.model;
 
-import java.util.Arrays;
+import java.io.InputStream;
 import java.util.List;
 
 import de.drv.dsrv.extrastandard.namespace.messages.DataRequest;
@@ -30,7 +30,7 @@ public class SenderDataBean {
 
 	private String requestId;
 
-	private byte[] nutzdaten;
+	private InputStream inputData;
 
 	private List<PlugindatenBean> plugins;
 
@@ -42,14 +42,6 @@ public class SenderDataBean {
 
 	public void setRequestId(String requestId) {
 		this.requestId = requestId;
-	}
-
-	public byte[] getNutzdaten() {
-		return nutzdaten;
-	}
-
-	public void setNutzdaten(byte[] nutzdaten) {
-		this.nutzdaten = nutzdaten;
 	}
 
 	public List<PlugindatenBean> getPlugins() {
@@ -74,9 +66,6 @@ public class SenderDataBean {
 		builder.append("SenderDataBean [");
 		if (requestId != null)
 			builder.append("requestId=").append(requestId).append(", ");
-		if (nutzdaten != null)
-			builder.append("nutzdaten=").append(Arrays.toString(nutzdaten))
-					.append(", ");
 		if (plugins != null)
 			builder.append("plugins=").append(plugins).append(", ");
 		if (dataRequest != null)
@@ -84,6 +73,20 @@ public class SenderDataBean {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
+
+	/**
+	 * @return the inputData
+	 */
+	public InputStream getInputData() {
+		return inputData;
+	}
+
+	/**
+	 * @param inputData
+	 *            the inputData to set
+	 */
+	public void setInputData(InputStream inputData) {
+		this.inputData = inputData;
+	}
+
 }

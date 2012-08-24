@@ -18,9 +18,12 @@
  */
 package de.extra.client.core.builder.impl.components;
 
+import java.io.IOException;
+
 import javax.inject.Named;
 
-import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64InputStream;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
@@ -46,8 +49,18 @@ public class TransportBodyBase64CharSequenceBuilder extends
 			ConfigFileBean config) {
 		logger.debug("Base64CharSequenceType aufbauen");
 		Base64CharSequenceType base64CharSequence = new Base64CharSequenceType();
-		byte[] encodeData = new Base64().encode(senderData.getNutzdaten());
+
+		Base64InputStream base64InputStream = new Base64InputStream(
+				senderData.getInputData());
+		byte[] encodeData = null;
+		try {
+			encodeData = IOUtils.toByteArray(base64InputStream);
+		} catch (IOException e) {
+			// TODO exception einbauen
+			throw new IllegalStateException(e);
+		}
 		base64CharSequence.setValue(encodeData);
+
 		return base64CharSequence;
 	}
 

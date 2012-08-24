@@ -61,12 +61,12 @@ public class DummyOutputPlugin implements IOutputPlugin {
 	private ITransportObserver transportObserver;
 
 	@Override
-	public InputStream outputData(String request) {
+	public InputStream outputData(InputStream request) {
 		InputStream responseAsinputStream = null;
 		try {
 			logger.info(request);
 			XMLTransport response = createExtraResponse(request);
-			
+
 			Writer writer = new StringWriter();
 			StreamResult streamResult = new StreamResult(writer);
 
@@ -83,7 +83,7 @@ public class DummyOutputPlugin implements IOutputPlugin {
 
 	}
 
-	private XMLTransport createExtraResponse(String request) {
+	private XMLTransport createExtraResponse(InputStream request) {
 		XMLTransport response = new XMLTransport();
 		TransportHeader transportHeader = new TransportHeader();
 		ResponseDetailsType responseDetailsType = new ResponseDetailsType();
@@ -104,9 +104,8 @@ public class DummyOutputPlugin implements IOutputPlugin {
 		requestDetailsType.setRequestID(requestIdType);
 		transportHeader.setRequestDetails(requestDetailsType);
 		response.setTransportHeader(transportHeader);
-		
-		de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader = 
-				new de.drv.dsrv.extrastandard.namespace.request.TransportHeader();
+
+		de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader = new de.drv.dsrv.extrastandard.namespace.request.TransportHeader();
 		requestHeader.setRequestDetails(requestDetailsType);
 		transportObserver.requestFilled(requestHeader);
 		transportObserver.requestForwarded("dummy, keine Weiterleitung", 0);

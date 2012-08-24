@@ -18,6 +18,7 @@
  */
 package de.extra.client.core.plugin.dummies;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -31,6 +32,7 @@ import de.extra.client.core.model.EncryptionPluginBean;
 import de.extra.client.core.model.PlugindatenBean;
 import de.extra.client.core.model.SenderDataBean;
 import de.extra.client.core.plugin.IDataPlugin;
+
 @Named("dummyDataPlugin")
 public class DummyDataPlugin implements IDataPlugin {
 
@@ -56,7 +58,7 @@ public class DummyDataPlugin implements IDataPlugin {
 		String nutzdaten = "Testdaten";
 
 		// Nutzdaten setzen
-		vb.setNutzdaten(nutzdaten.getBytes());
+		vb.setInputData(new ByteArrayInputStream(nutzdaten.getBytes()));
 
 		// Compression-Infos setzen
 		compressionPlugin.setOrder(1);

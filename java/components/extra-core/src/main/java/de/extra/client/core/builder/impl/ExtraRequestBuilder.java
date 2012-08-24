@@ -32,7 +32,7 @@ import org.springframework.util.Assert;
 
 import de.drv.dsrv.extrastandard.namespace.components.AnyPlugInContainerType;
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
-import de.extra.client.core.builder.IExtraMessageBuilder;
+import de.extra.client.core.builder.IExtraRequestBuilder;
 import de.extra.client.core.builder.IMessageBuilderLocator;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extra.client.core.builder.IXmlRootElementBuilder;
@@ -48,7 +48,7 @@ import de.extra.client.core.model.SenderDataBean;
  * @version 1.0.0
  */
 @Named("extraRequestBuilder")
-public class ExtraRequestBuilder implements IExtraMessageBuilder {
+public class ExtraRequestBuilder implements IExtraRequestBuilder {
 
 	private static final Logger logger = Logger
 			.getLogger(ExtraRequestBuilder.class);
