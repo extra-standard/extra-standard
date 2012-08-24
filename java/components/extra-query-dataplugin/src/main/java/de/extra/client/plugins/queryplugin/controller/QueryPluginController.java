@@ -27,7 +27,7 @@ import javax.inject.Named;
 import de.extra.client.core.annotation.PluginConfigType;
 import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.InputDataContainer;
 import de.extra.client.plugins.queryplugin.helper.QueryHelper;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 
@@ -42,9 +42,6 @@ public class QueryPluginController implements IQueryPluginController {
 	@PluginValue(key = "startId")
 	private String startId;
 
-	@PluginValue(key = "packageLimit")
-	private String packageLimit;
-
 	/**
 	 * @param startId
 	 */
@@ -53,23 +50,15 @@ public class QueryPluginController implements IQueryPluginController {
 	}
 
 	/**
-	 * @param packageLimit
-	 */
-	public void setPackageLimit(String packageLimit) {
-		this.packageLimit = packageLimit;
-	}
-
-	/**
 	 * Controller-Klasse zum Aufbau der Query.
 	 */
 	@Override
-	public List<SenderDataBean> processQuery() {
-		List<SenderDataBean> senderDataBeanList = new ArrayList<SenderDataBean>();
-		SenderDataBean senderDataBean = new SenderDataBean();
+	public List<InputDataContainer> processQuery() {
+		List<InputDataContainer> senderDataBeanList = new ArrayList<InputDataContainer>();
+		InputDataContainer senderDataBean = new InputDataContainer();
 
 		// Erzeugen der Query
-		senderDataBean.setDataRequest(queryHelper.createQuery(startId,
-				packageLimit));
+		senderDataBean.setDataRequestId(startId);
 		// Hinzufügen der Bean mit der Query
 		senderDataBeanList.add(senderDataBean);
 

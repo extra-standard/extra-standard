@@ -23,8 +23,8 @@ import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
-import de.extra.client.core.model.ConfigFileBean;
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.IExtraProfileConfiguration;
+import de.extra.client.core.model.IInputDataContainer;
 
 /**
  * @author Leonid Potap
@@ -43,11 +43,11 @@ public class TransportHeaderTestIndicatorBuilder extends
 	 * Erstellt die SenderInformationen im Kontext von Header (non-Javadoc)
 	 * 
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
-	 *      de.extra.client.core.model.ConfigFileBean)
+	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */
 	@Override
-	public Object buildXmlFragment(SenderDataBean senderData,
-			ConfigFileBean config) {
+	public Object buildXmlFragment(IInputDataContainer senderData,
+			IExtraProfileConfiguration config) {
 		// Objects für TestIndicator
 		return testIndicator;
 	}

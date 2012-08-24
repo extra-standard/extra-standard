@@ -26,7 +26,7 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.InputDataContainer;
 import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.plugins.dataplugin.interfaces.IDataPluginController;
 
@@ -40,8 +40,8 @@ public class FileDataPlugin implements IDataPlugin {
 	private IDataPluginController dataPluginController;
 
 	@Override
-	public List<SenderDataBean> getSenderData() {
-		List<SenderDataBean> versanddatenListe = new ArrayList<SenderDataBean>();
+	public List<InputDataContainer> getSenderData() {
+		List<InputDataContainer> versanddatenListe = new ArrayList<InputDataContainer>();
 		versanddatenListe = dataPluginController.processData();
 
 		logger.info("Verarbeitung der Versanddaten abgeschlossen");

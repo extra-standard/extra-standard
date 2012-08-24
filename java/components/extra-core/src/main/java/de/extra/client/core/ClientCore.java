@@ -38,8 +38,9 @@ import org.springframework.oxm.XmlMappingException;
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.builder.IExtraRequestBuilder;
 import de.extra.client.core.locator.IPluginsLocatorManager;
-import de.extra.client.core.model.ConfigFileBean;
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.IExtraProfileConfiguration;
+import de.extra.client.core.model.IInputDataContainer;
+import de.extra.client.core.model.InputDataContainer;
 import de.extra.client.core.plugin.IConfigPlugin;
 import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.core.plugin.IOutputPlugin;
@@ -81,7 +82,7 @@ public class ClientCore {
 		IDataPlugin dataPlugin = pluginsLocatorManager
 				.getConfiguratedDataPlugin();
 
-		List<SenderDataBean> versandDatenListe = dataPlugin.getSenderData();
+		List<InputDataContainer> versandDatenListe = dataPlugin.getSenderData();
 
 		if (versandDatenListe == null || versandDatenListe.isEmpty()) {
 			// Nothing TODO Klient refactorn
@@ -93,14 +94,14 @@ public class ClientCore {
 		IConfigPlugin configPlugin = pluginsLocatorManager
 				.getConfiguratedConfigPlugin();
 
-		ConfigFileBean configFile = configPlugin.getConfigFile();
+		IExtraProfileConfiguration configFile = configPlugin.getConfigFile();
 
 		try {
-			SenderDataBean versanddatenBean = null;
+			IInputDataContainer versanddatenBean = null;
 
 			// Überprüfen ob ein PackageLayer benötigt wird
 			if (!configFile.isPackageLayer()) {
-				for (Iterator<SenderDataBean> iter = versandDatenListe
+				for (Iterator<InputDataContainer> iter = versandDatenListe
 						.iterator(); iter.hasNext();) {
 					versanddatenBean = iter.next();
 

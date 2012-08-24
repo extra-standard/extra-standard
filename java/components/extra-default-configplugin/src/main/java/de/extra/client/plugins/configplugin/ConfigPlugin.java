@@ -23,7 +23,7 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import de.extra.client.core.model.ConfigFileBean;
+import de.extra.client.core.model.IExtraProfileConfiguration;
 import de.extra.client.core.plugin.IConfigPlugin;
 import de.extra.client.plugins.configplugin.controller.ConfigPluginController;
 
@@ -41,7 +41,7 @@ public class ConfigPlugin implements IConfigPlugin {
 	 * wird.
 	 */
 	@Override
-	public ConfigFileBean getConfigFile() {
+	public IExtraProfileConfiguration getConfigFile() {
 		logger.info("Aufruf der Verarbeitung");
 		return configPluginController.processConfigFile();
 	}

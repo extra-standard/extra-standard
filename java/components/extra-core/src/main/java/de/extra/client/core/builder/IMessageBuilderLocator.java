@@ -18,7 +18,7 @@
  */
 package de.extra.client.core.builder;
 
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.IInputDataContainer;
 
 /**
  * @author Leonid Potap Locator für die MessageBuilder
@@ -35,7 +35,7 @@ public interface IMessageBuilderLocator {
 	 * @return
 	 */
 	public IXmlComplexTypeBuilder getXmlComplexTypeBuilder(String elementXmlType,
-			SenderDataBean senderData);
+			IInputDataContainer senderData);
 
 	/**
 	 * Liefert ein MessageBuilder abhängig von dem ParentElement und Type von

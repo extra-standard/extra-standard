@@ -18,5 +18,5 @@
  */
 package de.extra.client.core.model;
 
-public class SignaturePluginBean extends PlugindatenBean {
+public class SignaturePluginDescription implements IInputDataPluginDescription {
 }

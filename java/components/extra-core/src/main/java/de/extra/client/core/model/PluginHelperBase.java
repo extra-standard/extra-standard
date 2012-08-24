@@ -23,5 +23,5 @@ import de.drv.dsrv.extrastandard.namespace.plugins.AbstractPlugInType;
 public abstract class PluginHelperBase {
 
 	public abstract AbstractPlugInType getPluginElement(
-			PlugindatenBean plugindatenBean);
+			IInputDataPluginDescription plugindatenBean);
 }

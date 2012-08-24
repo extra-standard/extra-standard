@@ -32,7 +32,7 @@ import org.apache.commons.lang.StringUtils;
  * Configuration DataBean beinhaltet die profilierungs Informationen
  * 
  */
-public class ConfigFileBean {
+public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 
 	/**
 	 * Speichert der name des parentElements
@@ -51,6 +51,10 @@ public class ConfigFileBean {
 	// Art der Nutzdaten
 	private String contentType;
 
+	/* (non-Javadoc)
+	 * @see de.extra.client.core.model.IExtraProfileConfiguration#getContentType()
+	 */
+	@Override
 	public String getContentType() {
 		return contentType;
 	}
@@ -59,6 +63,10 @@ public class ConfigFileBean {
 		this.contentType = contentType;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.extra.client.core.model.IExtraProfileConfiguration#isMessageLayer()
+	 */
+	@Override
 	public boolean isMessageLayer() {
 		return messageLayer;
 	}
@@ -67,6 +75,10 @@ public class ConfigFileBean {
 		this.messageLayer = messageLayer;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.extra.client.core.model.IExtraProfileConfiguration#isPackageLayer()
+	 */
+	@Override
 	public boolean isPackageLayer() {
 		return packageLayer;
 	}
@@ -75,9 +87,10 @@ public class ConfigFileBean {
 		this.packageLayer = packageLayer;
 	}
 
-	/**
-	 * @return
+	/* (non-Javadoc)
+	 * @see de.extra.client.core.model.IExtraProfileConfiguration#getRootElement()
 	 */
+	@Override
 	public String getRootElement() {
 		return rootElement;
 	}
@@ -89,9 +102,10 @@ public class ConfigFileBean {
 		this.rootElement = rootElement;
 	}
 
-	/**
-	 * @return the elementsHierarchyMap
+	/* (non-Javadoc)
+	 * @see de.extra.client.core.model.IExtraProfileConfiguration#getElementsHierarchyMap()
 	 */
+	@Override
 	public Map<String, List<String>> getElementsHierarchyMap() {
 		return elementsHierarchyMap;
 	}
@@ -110,13 +124,10 @@ public class ConfigFileBean {
 
 	}
 
-	/**
-	 * Liefert alle Kinderelemente der Knote. Wenn Knote keine kinderelemente
-	 * hat, wird ein leeren List zurückgeliefert
-	 * 
-	 * @param parentElement2
-	 * @return
+	/* (non-Javadoc)
+	 * @see de.extra.client.core.model.IExtraProfileConfiguration#getChildElements(java.lang.String)
 	 */
+	@Override
 	public List<String> getChildElements(String parentElement) {
 		String preparedParentElement = removePrefix(parentElement);
 		List<String> childSlements = elementsHierarchyMap
@@ -127,6 +138,10 @@ public class ConfigFileBean {
 		return childSlements;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.extra.client.core.model.IExtraProfileConfiguration#getFieldName(java.lang.String, java.lang.String)
+	 */
+	@Override
 	public String getFieldName(String parentElement, String childElement) {
 		// Die Implementierung geht davon aus, dass Feldname des Elements dem
 		// childElementName ohne Prefix entspricht.

@@ -27,8 +27,8 @@ import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
 import de.drv.dsrv.extrastandard.namespace.components.SenderType;
 import de.drv.dsrv.extrastandard.namespace.components.TextType;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
-import de.extra.client.core.model.ConfigFileBean;
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.IExtraProfileConfiguration;
+import de.extra.client.core.model.IInputDataContainer;
 
 /**
  * @author Leonid Potap
@@ -53,11 +53,11 @@ public class TransportHeaderSenderBuilder implements IXmlComplexTypeBuilder {
 	 * Erstellt die SenderInformationen im Kontext von Header (non-Javadoc)
 	 * 
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
-	 *      de.extra.client.core.model.ConfigFileBean)
+	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */
 	@Override
-	public Object buildXmlFragment(SenderDataBean senderData,
-			ConfigFileBean config) {
+	public Object buildXmlFragment(IInputDataContainer senderData,
+			IExtraProfileConfiguration config) {
 		// Objects für Senderinformation
 		SenderType sender = new SenderType();
 		ClassifiableIDType senderId = new ClassifiableIDType();

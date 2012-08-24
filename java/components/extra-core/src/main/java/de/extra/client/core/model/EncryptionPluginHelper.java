@@ -34,9 +34,9 @@ public class EncryptionPluginHelper extends TransformHelperBase {
 
 	@Override
 	public AbstractTransformType getTransformElement(
-			PlugindatenBean pluginDatenBean) {
+			IInputDataPluginDescription pluginDatenBean) {
 
-		EncryptionPluginBean encBean = (EncryptionPluginBean) pluginDatenBean;
+		EncryptionPluginDescription encBean = (EncryptionPluginDescription) pluginDatenBean;
 
 		EncryptionType encryption = new EncryptionType();
 		EncryptionAlgorithmType encAlgo = new EncryptionAlgorithmType();

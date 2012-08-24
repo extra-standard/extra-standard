@@ -18,7 +18,7 @@
  */
 package de.extra.client.core.model;
 
-public class EncryptionPluginBean extends PlugindatenBean {
+public class EncryptionPluginDescription implements IInputDataPluginDescription {
 
 	private String encAlgoId;
 	private String encAlgoVers;

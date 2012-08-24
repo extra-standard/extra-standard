@@ -47,8 +47,10 @@ import de.extra.client.core.builder.impl.plugins.TransportPluginsBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportBodyBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportHeaderBuilder;
-import de.extra.client.core.model.ConfigFileBean;
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.ExtraProfileConfiguration;
+import de.extra.client.core.model.IExtraProfileConfiguration;
+import de.extra.client.core.model.IInputDataContainer;
+import de.extra.client.core.model.InputDataContainer;
 
 /**
  * Test for ExtraRequestBuilder.
@@ -114,15 +116,15 @@ public class ExtraRequestBuilderTest {
 			when(
 					messageBuilderLocator.getXmlComplexTypeBuilder(
 							Matchers.eq(key),
-							(SenderDataBean) Matchers.anyObject())).thenReturn(
-					builderMap.get(key));
+							(IInputDataContainer) Matchers.anyObject()))
+					.thenReturn(builderMap.get(key));
 		}
 	}
 
 	@Test
 	public final void testBuildXmlSimleMessage() {
-		SenderDataBean senderData = new SenderDataBean();
-		ConfigFileBean config = createSimpleConfigFileBean();
+		IInputDataContainer senderData = new InputDataContainer();
+		IExtraProfileConfiguration config = createSimpleConfigFileBean();
 		RootElementType elementType = extraRequestBuilder.buildXmlMessage(
 				senderData, config);
 		assertNotNull(elementType);
@@ -130,8 +132,8 @@ public class ExtraRequestBuilderTest {
 
 	@Test(expected = UnsupportedOperationException.class)
 	public final void testBuildXmlSimleMessageWithException() {
-		SenderDataBean senderData = new SenderDataBean();
-		ConfigFileBean config = createSimpleConfigFileBean();
+		IInputDataContainer senderData = new InputDataContainer();
+		ExtraProfileConfiguration config = createSimpleConfigFileBean();
 		config.addElementsHierarchyMap("TransportPlugins",
 				"xplg:DataTransforms");
 		RootElementType elementType = extraRequestBuilder.buildXmlMessage(
@@ -139,8 +141,8 @@ public class ExtraRequestBuilderTest {
 		assertNotNull(elementType);
 	}
 
-	private ConfigFileBean createSimpleConfigFileBean() {
-		ConfigFileBean config = new ConfigFileBean();
+	private ExtraProfileConfiguration createSimpleConfigFileBean() {
+		ExtraProfileConfiguration config = new ExtraProfileConfiguration();
 		config.setRootElement(requiredXmlType);
 		config.addElementsHierarchyMap("XMLTransport", "req:TransportBody");
 		config.addElementsHierarchyMap("XMLTransport", "req:TransportPlugins");

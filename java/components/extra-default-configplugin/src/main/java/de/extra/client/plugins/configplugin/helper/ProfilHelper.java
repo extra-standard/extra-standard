@@ -26,7 +26,8 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 
 import de.drv.dsrv.schema.ElementType;
-import de.extra.client.core.model.ConfigFileBean;
+import de.extra.client.core.model.ExtraProfileConfiguration;
+import de.extra.client.core.model.IExtraProfileConfiguration;
 import de.extra.client.plugins.configplugin.ConfigConstants;
 
 @Named("profilHelper")
@@ -41,8 +42,8 @@ public class ProfilHelper {
 	 *            JaxB-Element der Profildatei
 	 * @return ConfigFileBean
 	 */
-	public ConfigFileBean configFileBeanLoader(List<ElementType> profilListe) {
-		ConfigFileBean configFileBean = new ConfigFileBean();
+	public IExtraProfileConfiguration configFileBeanLoader(List<ElementType> profilListe) {
+		ExtraProfileConfiguration configFileBean = new ExtraProfileConfiguration();
 
 		for (Iterator<ElementType> iter = profilListe.iterator(); iter
 				.hasNext();) {

@@ -28,7 +28,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.InputDataContainer;
 import de.extra.client.core.observation.ITransportObserver;
 import de.extra.client.plugins.dataplugin.auftragssatz.AuftragssatzType;
 import de.extra.client.plugins.dataplugin.helper.DataPluginHelper;
@@ -49,8 +49,8 @@ public class DataPluginController implements IDataPluginController {
 	 * Verarbeitungs-Controller fuer das DataPlugin.
 	 */
 	@Override
-	public List<SenderDataBean> processData() {
-		List<SenderDataBean> versanddatenBeanList = new ArrayList<SenderDataBean>();
+	public List<InputDataContainer> processData() {
+		List<InputDataContainer> versanddatenBeanList = new ArrayList<InputDataContainer>();
 		List<String> nutzfileList = new ArrayList<String>();
 
 		// Ermitteln der Nutzdaten
@@ -60,7 +60,7 @@ public class DataPluginController implements IDataPluginController {
 		for (Iterator<String> iter = nutzfileList.iterator(); iter.hasNext();) {
 			String filename = iter.next();
 
-			SenderDataBean versanddatenBean = new SenderDataBean();
+			InputDataContainer versanddatenBean = new InputDataContainer();
 			File inputFile = new File(filename);
 			FileInputStream inputData;
 			try {

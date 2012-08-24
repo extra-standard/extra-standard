@@ -19,8 +19,8 @@
 package de.extra.client.core.builder;
 
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
-import de.extra.client.core.model.ConfigFileBean;
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.IExtraProfileConfiguration;
+import de.extra.client.core.model.IInputDataContainer;
 
 /**
  * @author Leonid Potap
@@ -33,7 +33,7 @@ public interface IExtraRequestBuilder {
 	 * 
 	 * @return eine XML Message
 	 */
-	RootElementType buildXmlMessage(SenderDataBean senderData,
-			ConfigFileBean config);
+	RootElementType buildXmlMessage(IInputDataContainer senderData,
+			IExtraProfileConfiguration config);
 
 }

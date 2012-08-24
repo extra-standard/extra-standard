@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.schema.ProfilkonfigurationType;
-import de.extra.client.core.model.ConfigFileBean;
+import de.extra.client.core.model.IExtraProfileConfiguration;
 import de.extra.client.plugins.configplugin.ConfigConstants;
 import de.extra.client.plugins.configplugin.helper.ProfilHelper;
 
@@ -56,8 +56,8 @@ public class ConfigPluginController {
 	 * 
 	 * @return ConfigFileBean
 	 */
-	public ConfigFileBean processConfigFile() {
-		ConfigFileBean cfb = null;
+	public IExtraProfileConfiguration processConfigFile() {
+		IExtraProfileConfiguration cfb = null;
 
 		// Laden der Profildatei
 		if (logger.isDebugEnabled()) {

@@ -34,11 +34,11 @@ import javax.xml.bind.Unmarshaller;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 
-import de.extra.client.core.model.CompressionPluginBean;
-import de.extra.client.core.model.DataSourcePluginBean;
-import de.extra.client.core.model.EncryptionPluginBean;
-import de.extra.client.core.model.PlugindatenBean;
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.CompressionPluginDescription;
+import de.extra.client.core.model.DataSourcePluginDescription;
+import de.extra.client.core.model.EncryptionPluginDescription;
+import de.extra.client.core.model.IInputDataPluginDescription;
+import de.extra.client.core.model.InputDataContainer;
 import de.extra.client.plugins.dataplugin.auftragssatz.AuftragssatzType;
 import de.extra.client.plugins.dataplugin.auftragssatz.CompressionInfoType;
 import de.extra.client.plugins.dataplugin.auftragssatz.DataSourceInfoType;
@@ -176,13 +176,13 @@ public class DataPluginHelper {
 	 *            Auftragssatz
 	 * @return VersanddatenBean
 	 */
-	public SenderDataBean fuelleVersandatenBean(SenderDataBean vdb,
+	public InputDataContainer fuelleVersandatenBean(InputDataContainer vdb,
 			AuftragssatzType auftragssatz) {
-		CompressionPluginBean compressionPlugin = new CompressionPluginBean();
-		EncryptionPluginBean encryptionPlugin = new EncryptionPluginBean();
-		DataSourcePluginBean dataSourcePlugin = new DataSourcePluginBean();
+		CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
+		EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();
+		DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
 
-		List<PlugindatenBean> pluginListe = new ArrayList<PlugindatenBean>();
+		List<IInputDataPluginDescription> pluginListe = new ArrayList<IInputDataPluginDescription>();
 		if (auftragssatz.getCompressionInfo() != null) {
 
 			compressionPlugin = fuelleCompression(auftragssatz
@@ -223,9 +223,9 @@ public class DataPluginHelper {
 	 * @param compressionInfo
 	 * @return CompressionPluginBean
 	 */
-	private static CompressionPluginBean fuelleCompression(
+	private static CompressionPluginDescription fuelleCompression(
 			CompressionInfoType compressionInfo) {
-		CompressionPluginBean compressionPlugin = new CompressionPluginBean();
+		CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
 
 		compressionPlugin.setOrder(compressionInfo.getOrder().intValue());
 		compressionPlugin.setCompAlgoId(compressionInfo.getAlgoId());
@@ -248,9 +248,9 @@ public class DataPluginHelper {
 	 * @param encryptionInfo
 	 * @return EncryptionPluginBean
 	 */
-	private static EncryptionPluginBean fuelleEncryption(
+	private static EncryptionPluginDescription fuelleEncryption(
 			EncryptionInfoType encryptionInfo) {
-		EncryptionPluginBean encryptionPlugin = new EncryptionPluginBean();
+		EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();
 
 		encryptionPlugin.setOrder(encryptionInfo.getOrder().intValue());
 		encryptionPlugin.setEncAlgoId(encryptionInfo.getAlgoId());
@@ -272,9 +272,9 @@ public class DataPluginHelper {
 	 * @param dataSource
 	 * @return
 	 */
-	private static DataSourcePluginBean fuelleDataSource(
+	private static DataSourcePluginDescription fuelleDataSource(
 			DataSourceInfoType dataSource) {
-		DataSourcePluginBean dataSourcePlugin = new DataSourcePluginBean();
+		DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
 
 		dataSourcePlugin.setDsType(dataSource.getDsType());
 		dataSourcePlugin.setDsName(dataSource.getDsName());

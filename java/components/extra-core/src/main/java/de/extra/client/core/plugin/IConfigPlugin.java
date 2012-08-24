@@ -18,10 +18,10 @@
  */
 package de.extra.client.core.plugin;
 
-import de.extra.client.core.model.ConfigFileBean;
+import de.extra.client.core.model.IExtraProfileConfiguration;
 
 public interface IConfigPlugin {
 
-	public ConfigFileBean getConfigFile();
+	public IExtraProfileConfiguration getConfigFile();
 
 }
