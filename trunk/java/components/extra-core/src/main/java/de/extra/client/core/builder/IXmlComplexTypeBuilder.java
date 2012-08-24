@@ -18,8 +18,8 @@
  */
 package de.extra.client.core.builder;
 
-import de.extra.client.core.model.ConfigFileBean;
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.IExtraProfileConfiguration;
+import de.extra.client.core.model.IInputDataContainer;
 
 /**
  * Interface für die MessageBuilder.
@@ -43,6 +43,6 @@ public interface IXmlComplexTypeBuilder {
 	 * @param config
 	 * @return
 	 */
-	Object buildXmlFragment(SenderDataBean senderData, ConfigFileBean config);
+	Object buildXmlFragment(IInputDataContainer senderData, IExtraProfileConfiguration config);
 
 }

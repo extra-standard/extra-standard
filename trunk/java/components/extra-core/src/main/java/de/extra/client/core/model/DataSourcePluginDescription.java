@@ -20,7 +20,7 @@ package de.extra.client.core.model;
 
 import java.util.Date;
 
-public class DataSourcePluginBean extends PlugindatenBean {
+public class DataSourcePluginDescription implements IInputDataPluginDescription {
 
 	// DataSource-Plugin
 

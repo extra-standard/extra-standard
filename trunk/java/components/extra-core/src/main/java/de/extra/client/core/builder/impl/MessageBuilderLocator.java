@@ -41,7 +41,7 @@ import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extra.client.core.builder.IXmlRootElementBuilder;
 import de.extra.client.core.builder.impl.plugins.CompositePluginsBuilder;
 import de.extra.client.core.locator.PluginsLocatorManager;
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.IInputDataContainer;
 
 /**
  * MessageBuilderLocator sucht zu jedem elementType ein entsprechenen
@@ -121,7 +121,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	 * @param senderData
 	 * @return
 	 */
-	public IXmlComplexTypeBuilder getXmlComplexTypeBuilder(String elementType, SenderDataBean senderData) {
+	public IXmlComplexTypeBuilder getXmlComplexTypeBuilder(String elementType, IInputDataContainer senderData) {
 		// TODO Auswahl der Builder auch über Context (SenderDataBean)
 		// vorgenommen werden. Konzept erstellen
 		IXmlComplexTypeBuilder complexTypeBuilder = xmlDefaultTypesToComplexTypeBuilderAssignmentMap.get(elementType);

@@ -19,7 +19,7 @@
 package de.extra.client.core.builder;
 
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
-import de.extra.client.core.model.ConfigFileBean;
+import de.extra.client.core.model.IExtraProfileConfiguration;
 
 /**
  * @author Leonid Potap
@@ -34,6 +34,6 @@ public interface IXmlRootElementBuilder extends IXmlComplexTypeBuilder {
 	 * @param config
 	 * @return ein Extra RootElementTyp
 	 */
-	RootElementType buildXmlRootElement(ConfigFileBean config);
+	RootElementType buildXmlRootElement(IExtraProfileConfiguration config);
 
 }

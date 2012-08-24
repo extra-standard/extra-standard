@@ -36,7 +36,7 @@ import de.extra.client.core.builder.IXmlRootElementBuilder;
 import de.extra.client.core.builder.impl.plugins.DataTransformConfigurablePluginsBuilder;
 import de.extra.client.core.builder.impl.plugins.DataTransformPluginsBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportBuilder;
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.InputDataContainer;
 
 /**
  * Test for PluginsLocatorManager.
@@ -50,7 +50,7 @@ public class MessageBuilderLocatorTest {
 
 	/**
 	 * Test method for
-	 * {@link de.extra.client.core.builder.impl.MessageBuilderLocator#getXmlComplexTypeBuilder(java.lang.String, de.extra.client.core.model.SenderDataBean)}
+	 * {@link de.extra.client.core.builder.impl.MessageBuilderLocator#getXmlComplexTypeBuilder(java.lang.String, de.extra.client.core.model.InputDataContainer)}
 	 * .
 	 */
 	@Test
@@ -62,14 +62,14 @@ public class MessageBuilderLocatorTest {
 		IXmlComplexTypeBuilder currentXmlComplexTypeBuilder = messageBuilderLocator
 				.getXmlComplexTypeBuilder(
 						expectedXmlComplexTypeBuilder.getXmlType(),
-						new SenderDataBean());
+						new InputDataContainer());
 		Assert.assertEquals("Unexpected XmlComplexTypeBuilder found",
 				currentXmlComplexTypeBuilder, expectedXmlComplexTypeBuilder);
 	}
 
 	/**
 	 * Test method for
-	 * {@link de.extra.client.core.builder.impl.MessageBuilderLocator#getXmlComplexTypeBuilder(java.lang.String, de.extra.client.core.model.SenderDataBean)}
+	 * {@link de.extra.client.core.builder.impl.MessageBuilderLocator#getXmlComplexTypeBuilder(java.lang.String, de.extra.client.core.model.InputDataContainer)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -81,12 +81,12 @@ public class MessageBuilderLocatorTest {
 		MessageBuilderLocator messageBuilderLocator = createMessageBuilderlocator(complexTypeBuilderMap);
 		messageBuilderLocator.getXmlComplexTypeBuilder(
 				expectedXmlComplexTypeBuilder.getXmlType(),
-				new SenderDataBean());
+				new InputDataContainer());
 	}
 
 	/**
 	 * Test method for
-	 * {@link de.extra.client.core.builder.impl.MessageBuilderLocator#getXmlComplexTypeBuilder(java.lang.String, de.extra.client.core.model.SenderDataBean)}
+	 * {@link de.extra.client.core.builder.impl.MessageBuilderLocator#getXmlComplexTypeBuilder(java.lang.String, de.extra.client.core.model.InputDataContainer)}
 	 * .
 	 */
 	@Test
@@ -108,7 +108,7 @@ public class MessageBuilderLocatorTest {
 		IXmlComplexTypeBuilder currentXmlComplexTypeBuilder = messageBuilderLocator
 				.getXmlComplexTypeBuilder(
 						expectedXmlComplexTypeBuilder.getXmlType(),
-						new SenderDataBean());
+						new InputDataContainer());
 		Assert.assertEquals("Unexpected XmlComplexTypeBuilder found",
 				currentXmlComplexTypeBuilder, expectedXmlComplexTypeBuilder);
 	}

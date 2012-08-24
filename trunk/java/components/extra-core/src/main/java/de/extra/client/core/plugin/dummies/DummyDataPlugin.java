@@ -26,19 +26,19 @@ import java.util.List;
 
 import javax.inject.Named;
 
-import de.extra.client.core.model.CompressionPluginBean;
-import de.extra.client.core.model.DataSourcePluginBean;
-import de.extra.client.core.model.EncryptionPluginBean;
-import de.extra.client.core.model.PlugindatenBean;
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.CompressionPluginDescription;
+import de.extra.client.core.model.DataSourcePluginDescription;
+import de.extra.client.core.model.EncryptionPluginDescription;
+import de.extra.client.core.model.IInputDataPluginDescription;
+import de.extra.client.core.model.InputDataContainer;
 import de.extra.client.core.plugin.IDataPlugin;
 
 @Named("dummyDataPlugin")
 public class DummyDataPlugin implements IDataPlugin {
 
 	@Override
-	public List<SenderDataBean> getSenderData() {
-		List<SenderDataBean> versanddatenList = new ArrayList<SenderDataBean>();
+	public List<InputDataContainer> getSenderData() {
+		List<InputDataContainer> versanddatenList = new ArrayList<InputDataContainer>();
 		versanddatenList.add(loadVersanddaten());
 		return versanddatenList;
 	}
@@ -48,12 +48,12 @@ public class DummyDataPlugin implements IDataPlugin {
 	 * 
 	 * @return Versanddatenbean
 	 */
-	private SenderDataBean loadVersanddaten() {
+	private InputDataContainer loadVersanddaten() {
 
-		SenderDataBean vb = new SenderDataBean();
-		CompressionPluginBean compressionPlugin = new CompressionPluginBean();
-		EncryptionPluginBean encryptionPlugin = new EncryptionPluginBean();
-		DataSourcePluginBean dataSourcePlugin = new DataSourcePluginBean();
+		InputDataContainer vb = new InputDataContainer();
+		CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
+		EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();
+		DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
 
 		String nutzdaten = "Testdaten";
 
@@ -99,7 +99,7 @@ public class DummyDataPlugin implements IDataPlugin {
 		dataSourcePlugin.setDsCreated(cal.getTime());
 		dataSourcePlugin.setDsEncoding("I8");
 
-		List<PlugindatenBean> pluginList = new ArrayList<PlugindatenBean>();
+		List<IInputDataPluginDescription> pluginList = new ArrayList<IInputDataPluginDescription>();
 
 		pluginList.add(compressionPlugin);
 		pluginList.add(encryptionPlugin);

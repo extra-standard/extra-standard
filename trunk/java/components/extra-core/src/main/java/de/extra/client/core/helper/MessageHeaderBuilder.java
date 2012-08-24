@@ -35,7 +35,7 @@ import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.SenderType;
 import de.drv.dsrv.extrastandard.namespace.components.TextType;
 import de.drv.dsrv.extrastandard.namespace.request.TransportHeader;
-import de.extra.client.core.model.ConfigFileBean;
+import de.extra.client.core.model.IExtraProfileConfiguration;
 
 @Named("headerHelper")
 public class MessageHeaderBuilder {
@@ -79,7 +79,7 @@ public class MessageHeaderBuilder {
 	 *            RequestID der Sendung
 	 * @return TransportHeader
 	 */
-	public TransportHeader createHeader(ConfigFileBean configFile,
+	public TransportHeader createHeader(IExtraProfileConfiguration configFile,
 			String requestID) {
 		TransportHeader header = new TransportHeader();
 

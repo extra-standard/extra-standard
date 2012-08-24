@@ -19,8 +19,8 @@
 package de.extra.client.core.builder;
 
 import de.drv.dsrv.extrastandard.namespace.request.TransportHeader;
-import de.extra.client.core.model.ConfigFileBean;
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.IExtraProfileConfiguration;
+import de.extra.client.core.model.IInputDataContainer;
 
 /**
  * @author Leonid Potap
@@ -37,7 +37,7 @@ public interface IRequestTransportHeaderBuilder extends IXmlComplexTypeBuilder {
 	 * @param config
 	 * @return
 	 */
-	TransportHeader buildTransportHeader(SenderDataBean senderData,
-			ConfigFileBean config);
+	TransportHeader buildTransportHeader(IInputDataContainer senderData,
+			IExtraProfileConfiguration config);
 
 }

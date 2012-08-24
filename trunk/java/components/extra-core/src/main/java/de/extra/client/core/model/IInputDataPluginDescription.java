@@ -18,5 +18,5 @@
  */
 package de.extra.client.core.model;
 
-public abstract class PlugindatenBean {
+public interface IInputDataPluginDescription {
 }

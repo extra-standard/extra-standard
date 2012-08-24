@@ -20,7 +20,8 @@ package de.extra.client.plugins.configplugin.dummy;
 
 import javax.inject.Named;
 
-import de.extra.client.core.model.ConfigFileBean;
+import de.extra.client.core.model.ExtraProfileConfiguration;
+import de.extra.client.core.model.IExtraProfileConfiguration;
 import de.extra.client.core.plugin.IConfigPlugin;
 
 @Named("dummyConfigPlugin")
@@ -30,12 +31,12 @@ public class ConfigPlugin implements IConfigPlugin {
 	 * Dummy zum Testen der Anwendung.
 	 */
 	@Override
-	public ConfigFileBean getConfigFile() {
+	public IExtraProfileConfiguration getConfigFile() {
 		return loadConfigFile();
 	}
 
-	private ConfigFileBean loadConfigFile() {
-		ConfigFileBean config = new ConfigFileBean();
+	private IExtraProfileConfiguration loadConfigFile() {
+		ExtraProfileConfiguration config = new ExtraProfileConfiguration();
 
 		config.setContentType("xcpt:Base64CharSequence");
 		config.setPackageLayer(false);

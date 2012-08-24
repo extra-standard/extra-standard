@@ -36,9 +36,9 @@ public class CompressionPluginHelper extends TransformHelperBase {
 	 */
 	@Override
 	public AbstractTransformType getTransformElement(
-			PlugindatenBean pluginDatenBean) {
+			IInputDataPluginDescription pluginDatenBean) {
 
-		CompressionPluginBean compPluginBean = (CompressionPluginBean) pluginDatenBean;
+		CompressionPluginDescription compPluginBean = (CompressionPluginDescription) pluginDatenBean;
 
 		CompressionType compression = new CompressionType();
 		CompressionAlgorithmType compAlgorithm = new CompressionAlgorithmType();

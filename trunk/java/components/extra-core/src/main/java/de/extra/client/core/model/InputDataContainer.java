@@ -21,21 +21,25 @@ package de.extra.client.core.model;
 import java.io.InputStream;
 import java.util.List;
 
-import de.drv.dsrv.extrastandard.namespace.messages.DataRequest;
-
 /**
  * Bean für die Nutzdaten.
  */
-public class SenderDataBean {
+public class InputDataContainer implements IInputDataContainer {
 
 	private String requestId;
 
 	private InputStream inputData;
 
-	private List<PlugindatenBean> plugins;
+	private List<IInputDataPluginDescription> plugins;
 
-	private DataRequest dataRequest;
+	private String dataRequestId;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.extra.client.core.model.ISenderDataBean#getRequestId()
+	 */
+	@Override
 	public String getRequestId() {
 		return requestId;
 	}
@@ -44,20 +48,28 @@ public class SenderDataBean {
 		this.requestId = requestId;
 	}
 
-	public List<PlugindatenBean> getPlugins() {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.extra.client.core.model.ISenderDataBean#getPlugins()
+	 */
+	@Override
+	public List<IInputDataPluginDescription> getPlugins() {
 		return plugins;
 	}
 
-	public void setPlugins(List<PlugindatenBean> plugins) {
+	public void setPlugins(List<IInputDataPluginDescription> plugins) {
 		this.plugins = plugins;
 	}
 
-	public DataRequest getDataRequest() {
-		return dataRequest;
-	}
-
-	public void setDataRequest(DataRequest dataRequest) {
-		this.dataRequest = dataRequest;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.extra.client.core.model.ISenderDataBean#getDataRequest()
+	 */
+	@Override
+	public String getDataRequestId() {
+		return dataRequestId;
 	}
 
 	@Override
@@ -68,15 +80,18 @@ public class SenderDataBean {
 			builder.append("requestId=").append(requestId).append(", ");
 		if (plugins != null)
 			builder.append("plugins=").append(plugins).append(", ");
-		if (dataRequest != null)
-			builder.append("dataRequest=").append(dataRequest);
+		if (dataRequestId != null)
+			builder.append("dataRequestId=").append(dataRequestId);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	/**
-	 * @return the inputData
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.extra.client.core.model.ISenderDataBean#getInputData()
 	 */
+	@Override
 	public InputStream getInputData() {
 		return inputData;
 	}
@@ -87,6 +102,11 @@ public class SenderDataBean {
 	 */
 	public void setInputData(InputStream inputData) {
 		this.inputData = inputData;
+	}
+
+	public void setDataRequestId(String startId) {
+		this.dataRequestId = startId;
+
 	}
 
 }

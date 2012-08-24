@@ -29,7 +29,7 @@ public class SignaturePluginHelper extends TransformHelperBase {
 
 	@Override
 	public AbstractTransformType getTransformElement(
-			PlugindatenBean pluginDatenBean) {
+			IInputDataPluginDescription pluginDatenBean) {
 
 		return null;
 	}

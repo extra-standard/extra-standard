@@ -36,8 +36,8 @@ import de.extra.client.core.builder.IExtraRequestBuilder;
 import de.extra.client.core.builder.IMessageBuilderLocator;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extra.client.core.builder.IXmlRootElementBuilder;
-import de.extra.client.core.model.ConfigFileBean;
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.IExtraProfileConfiguration;
+import de.extra.client.core.model.IInputDataContainer;
 
 /**
  * Diese klasse steuer XmlBuilder Anhang konfiguration an und erstellt einen
@@ -58,8 +58,8 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 	IMessageBuilderLocator messageBuilderLocator;
 
 	@Override
-	public RootElementType buildXmlMessage(SenderDataBean senderData,
-			ConfigFileBean config) {
+	public RootElementType buildXmlMessage(IInputDataContainer senderData,
+			IExtraProfileConfiguration config) {
 		Assert.notNull(senderData, "SenderData is null");
 		Assert.notNull(config, "ConfigFileBean is null");
 		String rootElementName = config.getRootElement();
@@ -84,8 +84,8 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 	 * @param senderData
 	 */
 	private void buildXmlMessage(Object parentXmlFragement,
-			String parentElementName, ConfigFileBean config,
-			SenderDataBean senderData) {
+			String parentElementName, IExtraProfileConfiguration config,
+			IInputDataContainer senderData) {
 		List<String> childElements = config.getChildElements(parentElementName);
 		for (String childElementName : childElements) {
 			IXmlComplexTypeBuilder childElementComplexTypeBuilder = messageBuilderLocator

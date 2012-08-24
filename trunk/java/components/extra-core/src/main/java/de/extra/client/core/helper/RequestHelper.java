@@ -23,8 +23,8 @@ import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
-import de.extra.client.core.model.ConfigFileBean;
-import de.extra.client.core.model.SenderDataBean;
+import de.extra.client.core.model.IExtraProfileConfiguration;
+import de.extra.client.core.model.IInputDataContainer;
 
 @Named("requestHelper")
 public class RequestHelper {
@@ -53,8 +53,8 @@ public class RequestHelper {
 	 *            Enthält alle Informationen zum den Versandinformationen
 	 * @return JaxB-Objekt XMLTransport
 	 */
-	public XMLTransport buildRequest(SenderDataBean versanddatenBean,
-			ConfigFileBean configBean) {
+	public XMLTransport buildRequest(IInputDataContainer versanddatenBean,
+			IExtraProfileConfiguration configBean) {
 		XMLTransport request = new XMLTransport();
 
 		request.setProfile(extraProfile);

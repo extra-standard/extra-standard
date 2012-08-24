@@ -32,8 +32,8 @@ import de.drv.dsrv.extrastandard.namespace.plugins.DataSource;
 public class DataSourcePluginHelper extends PluginHelperBase {
 
 	@Override
-	public AbstractPlugInType getPluginElement(PlugindatenBean plugindatenBean) {
-		DataSourcePluginBean dataSourcePluginBean = (DataSourcePluginBean) plugindatenBean;
+	public AbstractPlugInType getPluginElement(IInputDataPluginDescription plugindatenBean) {
+		DataSourcePluginDescription dataSourcePluginBean = (DataSourcePluginDescription) plugindatenBean;
 
 		DataSource dataSource = new DataSource();
 		DataContainerType dataContainer = new DataContainerType();

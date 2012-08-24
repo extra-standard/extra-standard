@@ -18,7 +18,7 @@
  */
 package de.extra.client.core.model;
 
-public class CompressionPluginBean extends PlugindatenBean {
+public class CompressionPluginDescription implements IInputDataPluginDescription {
 
 	/**
 	 * CompressionAlgorithmId
