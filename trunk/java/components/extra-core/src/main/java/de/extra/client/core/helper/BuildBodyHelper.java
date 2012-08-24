@@ -18,8 +18,11 @@
  */
 package de.extra.client.core.helper;
 
+import java.io.IOException;
+
 import javax.inject.Named;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
@@ -58,7 +61,15 @@ public class BuildBodyHelper {
 			 * base64CharSequence.setValue(new BASE64Encoder().encode(
 			 * versanddatenBean.getNutzdaten()).getBytes());
 			 */
-			base64CharSequence.setValue(versanddatenBean.getNutzdaten());
+			byte[] inputDataArray;
+			try {
+				inputDataArray = IOUtils.toByteArray(versanddatenBean
+						.getInputData());
+			} catch (IOException e) {
+				// TODO exception einbauen
+				throw new IllegalStateException(e);
+			}
+			base64CharSequence.setValue(inputDataArray);
 			data.setBase64CharSequence(base64CharSequence);
 
 			transportBody.setData(data);

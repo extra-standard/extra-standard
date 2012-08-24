@@ -22,6 +22,6 @@ import java.io.InputStream;
 
 public interface IOutputPlugin {
 
-	public InputStream outputData(String request);
+	public InputStream outputData(InputStream request);
 
 }

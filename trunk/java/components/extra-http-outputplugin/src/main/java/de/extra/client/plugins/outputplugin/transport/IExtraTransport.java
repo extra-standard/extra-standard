@@ -28,6 +28,6 @@ public interface IExtraTransport {
 			HttpOutputPluginConnectConfiguration extraConnectData)
 			throws ExtraTransportException;
 
-	public InputStream senden(String extraRequest)
+	public InputStream senden(InputStream extraRequest)
 			throws ExtraTransportException;
 }

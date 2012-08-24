@@ -40,9 +40,9 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.contrib.ssl.AuthSSLProtocolSocketFactory;
+import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 import org.apache.log4j.Logger;
@@ -72,7 +72,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 	 * @see de.extra.client.transport.IExtraTransport#senden(java.lang.String)
 	 */
 	@Override
-	public InputStream senden(String extraRequest)
+	public InputStream senden(InputStream extraRequest)
 			throws ExtraTransportException {
 
 		if (client != null) {
@@ -85,8 +85,8 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 			try {
 
-				RequestEntity entity = new StringRequestEntity(extraRequest,
-						null, null);
+				RequestEntity entity = new InputStreamRequestEntity(
+						extraRequest);
 				method.setRequestEntity(entity);
 
 				// Execute the method - send it

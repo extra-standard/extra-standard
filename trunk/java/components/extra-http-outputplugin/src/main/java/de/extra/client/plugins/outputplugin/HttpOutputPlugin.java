@@ -37,9 +37,10 @@ public class HttpOutputPlugin implements IOutputPlugin {
 	private HttpOutputPluginSender httpSender;
 
 	@Override
-	public InputStream outputData(String request) {
+	public InputStream outputData(InputStream inputStream) {
 		logger.info("Start des Versands...");
-		request = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + request;
-		return httpSender.processOutput(request);
+		// TODO request = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+		// request;
+		return httpSender.processOutput(inputStream);
 	}
 }

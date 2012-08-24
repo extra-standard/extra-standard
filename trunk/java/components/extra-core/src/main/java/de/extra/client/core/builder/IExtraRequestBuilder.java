@@ -26,7 +26,7 @@ import de.extra.client.core.model.SenderDataBean;
  * @author Leonid Potap
  * 
  */
-public interface IExtraMessageBuilder {
+public interface IExtraRequestBuilder {
 
 	/**
 	 * TODO configFile ist eine Statische Komponente. Kann injiziert werden.

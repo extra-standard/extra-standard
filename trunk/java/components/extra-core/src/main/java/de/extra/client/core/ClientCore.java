@@ -18,10 +18,10 @@
  */
 package de.extra.client.core;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,7 +36,7 @@ import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
 
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
-import de.extra.client.core.builder.IExtraMessageBuilder;
+import de.extra.client.core.builder.IExtraRequestBuilder;
 import de.extra.client.core.locator.IPluginsLocatorManager;
 import de.extra.client.core.model.ConfigFileBean;
 import de.extra.client.core.model.SenderDataBean;
@@ -60,7 +60,7 @@ public class ClientCore {
 
 	@Inject
 	@Named("extraRequestBuilder")
-	IExtraMessageBuilder extraMessageBuilder;
+	IExtraRequestBuilder extraMessageBuilder;
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -109,18 +109,19 @@ public class ClientCore {
 					RootElementType request = extraMessageBuilder
 							.buildXmlMessage(versanddatenBean, configFile);
 
-					Writer writer = new StringWriter();
-					StreamResult streamResult = new StreamResult(writer);
+					ByteArrayOutputStream outpuStream = new ByteArrayOutputStream();
+					StreamResult streamResult = new StreamResult(outpuStream);
 
 					marshaller.marshal(request, streamResult);
-					logger.debug("Ausgabe: " + writer.toString());
+					logger.debug("Ausgabe: " + outpuStream.toString());
 					logger.debug("Übergabe an OutputPlugin");
 
 					IOutputPlugin outputPlugin = pluginsLocatorManager
 							.getConfiguratedOutputPlugin();
 
 					InputStream responseAsStream = outputPlugin
-							.outputData(writer.toString());
+							.outputData(new ByteArrayInputStream(outpuStream
+									.toByteArray()));
 
 					// Source responseSource = new
 					// InputSource(responseAsStream);

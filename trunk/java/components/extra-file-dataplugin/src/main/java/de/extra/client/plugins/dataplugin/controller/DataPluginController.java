@@ -18,6 +18,9 @@
  */
 package de.extra.client.plugins.dataplugin.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -56,22 +59,29 @@ public class DataPluginController implements IDataPluginController {
 		// Befüllen der Versanddaten-Liste
 		for (Iterator<String> iter = nutzfileList.iterator(); iter.hasNext();) {
 			String filename = iter.next();
-			
+
 			SenderDataBean versanddatenBean = new SenderDataBean();
-			byte[] nutzdaten = dataPluginHelper.getNutzdaten(filename);
-			versanddatenBean.setNutzdaten(nutzdaten);
+			File inputFile = new File(filename);
+			FileInputStream inputData;
+			try {
+				inputData = new FileInputStream(inputFile);
+			} catch (FileNotFoundException e) {
+				// TODO exception reinbauen
+				throw new IllegalStateException(e);
+			}
+			versanddatenBean.setInputData(inputData);
 			AuftragssatzType auftragssatz = new AuftragssatzType();
-//			String auftragssatzName = filename + ".auf";
-//			auftragssatz = dataPluginHelper
-//					.unmarshalAuftragssatz(auftragssatzName);
+			// String auftragssatzName = filename + ".auf";
+			// auftragssatz = dataPluginHelper
+			// .unmarshalAuftragssatz(auftragssatzName);
 
 			// Setzen der RequestId
 			versanddatenBean.setRequestId(auftragssatz.getRequestId());
 			versanddatenBean = dataPluginHelper.fuelleVersandatenBean(
 					versanddatenBean, auftragssatz);
 			versanddatenBeanList.add(versanddatenBean);
-			
-			transportObserver.requestDataReceived(filename, nutzdaten.length);
+
+			transportObserver.requestDataReceived(filename, inputFile.length());
 		}
 
 		return versanddatenBeanList;

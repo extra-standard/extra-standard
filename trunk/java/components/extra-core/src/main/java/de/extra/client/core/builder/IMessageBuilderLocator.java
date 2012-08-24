@@ -30,11 +30,11 @@ public interface IMessageBuilderLocator {
 	 * Liefert ein MessageBuilder abhängig von dem ParentElement und Type von
 	 * dem childElement
 	 * 
-	 * @param elementType
+	 * @param elementXmlType
 	 * @param senderData
 	 * @return
 	 */
-	public IXmlComplexTypeBuilder getXmlComplexTypeBuilder(String elementType,
+	public IXmlComplexTypeBuilder getXmlComplexTypeBuilder(String elementXmlType,
 			SenderDataBean senderData);
 
 	/**
