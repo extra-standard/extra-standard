@@ -21,14 +21,16 @@ package de.extra.client.core.plugin;
 import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 
 /**
- * Handelt Response vom eXTra Server
+ * Verarbeitet Response vom eXTra Server.
+ * 
  * @author Leonid Potap
- *
+ * @version $Id$
  */
 public interface IResponseProcessPlugin {
 
 	/**
-	 * Handelt Response vom eXTra Server
+	 * Handelt Response vom eXTra Server.
+	 * 
 	 * @param extraResponse
 	 * @return
 	 */
