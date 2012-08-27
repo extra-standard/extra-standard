@@ -28,11 +28,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import org.apache.log4j.Logger;
 import org.springframework.oxm.Marshaller;
-import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
 
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
@@ -66,10 +64,6 @@ public class ClientCore {
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
 	private Marshaller marshaller;
-
-	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Unmarshaller unmarshaller;
 
 	/**
 	 * Funktion in der der Request aufgebaut wird.
@@ -127,14 +121,11 @@ public class ClientCore {
 					// Source responseSource = new
 					// InputSource(responseAsStream);
 
-					de.drv.dsrv.extrastandard.namespace.response.XMLTransport extraResponse = (de.drv.dsrv.extrastandard.namespace.response.XMLTransport) unmarshaller
-							.unmarshal(new StreamSource(responseAsStream));
-
 					IResponseProcessPlugin responsePlugin = pluginsLocatorManager
 							.getConfiguratedResponsePlugin();
 
 					boolean isReportSuccesfull = responsePlugin
-							.processResponse(extraResponse);
+							.processResponse(responseAsStream);
 
 					if (isReportSuccesfull) {
 						statusCode = STATUS_CODE_OK;
