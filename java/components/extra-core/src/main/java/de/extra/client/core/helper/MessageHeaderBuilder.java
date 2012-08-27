@@ -35,7 +35,7 @@ import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.SenderType;
 import de.drv.dsrv.extrastandard.namespace.components.TextType;
 import de.drv.dsrv.extrastandard.namespace.request.TransportHeader;
-import de.extra.client.core.model.IExtraProfileConfiguration;
+import de.extrastandard.api.model.IExtraProfileConfiguration;
 
 @Named("headerHelper")
 public class MessageHeaderBuilder {

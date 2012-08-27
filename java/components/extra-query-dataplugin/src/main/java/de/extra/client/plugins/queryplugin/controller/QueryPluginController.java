@@ -30,6 +30,7 @@ import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.model.InputDataContainer;
 import de.extra.client.plugins.queryplugin.helper.QueryHelper;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
+import de.extrastandard.api.model.IInputDataContainer;
 
 @Named("queryPluginController")
 @PluginConfiguration(pluginBeanName = "queryDataPlugin", pluginType = PluginConfigType.DataPlugins)
@@ -53,8 +54,8 @@ public class QueryPluginController implements IQueryPluginController {
 	 * Controller-Klasse zum Aufbau der Query.
 	 */
 	@Override
-	public List<InputDataContainer> processQuery() {
-		List<InputDataContainer> senderDataBeanList = new ArrayList<InputDataContainer>();
+	public List<IInputDataContainer> processQuery() {
+		List<IInputDataContainer> senderDataBeanList = new ArrayList<IInputDataContainer>();
 		InputDataContainer senderDataBean = new InputDataContainer();
 
 		// Erzeugen der Query

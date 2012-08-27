@@ -24,6 +24,7 @@ import de.drv.dsrv.extrastandard.namespace.plugins.AbstractTransformType;
 import de.drv.dsrv.extrastandard.namespace.plugins.CompressionAlgorithmType;
 import de.drv.dsrv.extrastandard.namespace.plugins.CompressionType;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataType;
+import de.extrastandard.api.model.IInputDataPluginDescription;
 
 /**
  * Helper erstellt aus Bean Objekt vom Typ AbstractPlugInType zum Einbau in den

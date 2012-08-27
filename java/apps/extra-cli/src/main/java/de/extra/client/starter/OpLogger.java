@@ -6,7 +6,8 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import de.extra.client.core.observation.ITransportObserver;
+import de.extrastandard.api.observer.ITransportInfo;
+import de.extrastandard.api.observer.ITransportObserver;
 
 /**
  * Betriebslogger.
@@ -16,10 +17,11 @@ import de.extra.client.core.observation.ITransportObserver;
 @Named("transportObserver")
 public class OpLogger implements ITransportObserver {
 
-    /** Standard-Format für Zeitstempel */
-	private final static String TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm:ss";	
+	/** Standard-Format für Zeitstempel */
+	private final static String TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm:ss";
 	/** Formatter für das Standard-Zeitstempelformat */
-	public final static SimpleDateFormat timestampFormat = new SimpleDateFormat(TIMESTAMP_FORMAT);
+	public final static SimpleDateFormat timestampFormat = new SimpleDateFormat(
+			TIMESTAMP_FORMAT);
 
 	/** Logger für das betriebliche Log */
 	public static Logger log = Logger.getLogger("operations");
@@ -32,7 +34,7 @@ public class OpLogger implements ITransportObserver {
 	public static int STATUS_OPERATIONAL_ERROR = 32;
 	/** exit-status fachlicher bzw. logischer Fehler */
 	public static int STATUS_LOGICAL_ERROR = 64;
-	
+
 	/** aggregierter exit-status */
 	static int exitStatus = STATUS_OK;
 
@@ -44,45 +46,46 @@ public class OpLogger implements ITransportObserver {
 	public int getExitStatus() {
 		return exitStatus;
 	}
-	
+
 	@Override
 	public void requestDataReceived(String unitName, long size) {
-		log.info("Request-Daten erhalten aus " + unitName + ", " + size + " Bytes.");
+		log.info("Request-Daten erhalten aus " + unitName + ", " + size
+				+ " Bytes.");
 	}
 
 	@Override
-	public void requestFilled(de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader) {
-		log.info("Request erstellt, " +
-				"ID = " + requestHeader.getRequestDetails().getRequestID().getValue() + "," +
-				"Zeitstempel = " + requestHeader.getRequestDetails().getTimeStamp() + "," +
-				"Applikation = " + requestHeader.getRequestDetails().getApplication() + ", " +
-				"Prozedur = " + requestHeader.getRequestDetails().getProcedure());
+	public void requestFilled(ITransportInfo transportInfo) {
+		log.info("Request erstellt, " + "ID = " + transportInfo.getHeaderId()
+				+ "," + "Zeitstempel = " + transportInfo.getTime() + ","
+				+ "Applikation = " + transportInfo.getApplication() + ", "
+				+ "Prozedur = " + transportInfo.getProcedure());
 	}
 
 	@Override
 	public void requestForwarded(String destination, long size) {
-		log.info("Request weitergeleitet an " + destination + ", " + size + " Bytes.");
+		log.info("Request weitergeleitet an " + destination + ", " + size
+				+ " Bytes.");
 	}
 
 	@Override
-	public void responseFilled(
-			int status,
-			de.drv.dsrv.extrastandard.namespace.response.TransportHeader responseHeader) {
-		log.info("Response erhalten, " +
-				"ID = " + responseHeader.getResponseDetails().getResponseID().getValue() + "," +
-				"Request-ID = " + responseHeader.getRequestDetails().getRequestID().getValue() + "," +
-				"Zeitstempel = " + responseHeader.getResponseDetails().getTimeStamp() + "," +
-				"Applikation = " + responseHeader.getResponseDetails().getApplication());
-		// TODO statt des betriebsspezifischen Status-Codes sollte hier etwas allgemeiners als Parameter kommen
+	public void responseFilled(int status, ITransportInfo transportInfo) {
+		log.info("Response erhalten, " + "ID = " + transportInfo.getHeaderId()
+				+ "," + "Request-ID = " + transportInfo.getHeaderId() + ","
+				+ "Zeitstempel = " + transportInfo.getTime() + ","
+				+ "Applikation = " + transportInfo.getApplication());
+		// TODO statt des betriebsspezifischen Status-Codes sollte hier etwas
+		// allgemeiners als Parameter kommen
 		// TODO auch bei error oder acknowledge status aggregieren
 		exitStatus |= status;
 	}
 
 	@Override
 	public void responseDataForwarded(String destination, long size) {
-		// TODO: Summe Ausgabedateien und Anzahl Datensätze einsammeln und loggen?
+		// TODO: Summe Ausgabedateien und Anzahl Datensätze einsammeln und
+		// loggen?
 		// OpLogger.log.info("Ausgabedateien: " + "TODO");
 		// OpLogger.log.info("Anzahl bereitgestellte Saetze : " + "TODO");
-		log.info("Response-Daten weitergeleitet an " + destination + ", " + size + " Bytes.");
+		log.info("Response-Daten weitergeleitet an " + destination + ", "
+				+ size + " Bytes.");
 	}
 }

@@ -25,9 +25,9 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import de.extra.client.core.model.InputDataContainer;
-import de.extra.client.core.plugin.IDataPlugin;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
+import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.plugin.IDataPlugin;
 
 @Named("queryDataPlugin")
 public class QueryDataPlugin implements IDataPlugin {
@@ -39,7 +39,7 @@ public class QueryDataPlugin implements IDataPlugin {
 	private IQueryPluginController queryController;
 
 	@Override
-	public List<InputDataContainer> getSenderData() {
+	public List<IInputDataContainer> getSenderData() {
 		logger.info("Start des Versands");
 		if (logger.isDebugEnabled()) {
 			logger.debug("Erstelle Query");

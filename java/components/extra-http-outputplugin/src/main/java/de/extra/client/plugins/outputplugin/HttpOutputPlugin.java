@@ -25,7 +25,7 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import de.extra.client.core.plugin.IOutputPlugin;
+import de.extrastandard.api.plugin.IOutputPlugin;
 
 @Named("httpOutputPlugin")
 public class HttpOutputPlugin implements IOutputPlugin {

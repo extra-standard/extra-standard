@@ -26,10 +26,10 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 
-import de.extra.client.core.plugin.IConfigPlugin;
-import de.extra.client.core.plugin.IDataPlugin;
-import de.extra.client.core.plugin.IOutputPlugin;
-import de.extra.client.core.plugin.IResponseProcessPlugin;
+import de.extrastandard.api.plugin.IConfigPlugin;
+import de.extrastandard.api.plugin.IDataPlugin;
+import de.extrastandard.api.plugin.IOutputPlugin;
+import de.extrastandard.api.plugin.IResponseProcessPlugin;
 
 /**
  * Sucht nach der in der Konfiguration definierten Plugins.

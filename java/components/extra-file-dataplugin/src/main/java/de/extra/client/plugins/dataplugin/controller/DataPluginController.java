@@ -29,10 +29,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import de.extra.client.core.model.InputDataContainer;
-import de.extra.client.core.observation.ITransportObserver;
 import de.extra.client.plugins.dataplugin.auftragssatz.AuftragssatzType;
 import de.extra.client.plugins.dataplugin.helper.DataPluginHelper;
 import de.extra.client.plugins.dataplugin.interfaces.IDataPluginController;
+import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.observer.ITransportObserver;
 
 @Named("dataPluginController")
 public class DataPluginController implements IDataPluginController {
@@ -49,8 +50,8 @@ public class DataPluginController implements IDataPluginController {
 	 * Verarbeitungs-Controller fuer das DataPlugin.
 	 */
 	@Override
-	public List<InputDataContainer> processData() {
-		List<InputDataContainer> versanddatenBeanList = new ArrayList<InputDataContainer>();
+	public List<IInputDataContainer> processData() {
+		List<IInputDataContainer> versanddatenBeanList = new ArrayList<IInputDataContainer>();
 		List<String> nutzfileList = new ArrayList<String>();
 
 		// Ermitteln der Nutzdaten

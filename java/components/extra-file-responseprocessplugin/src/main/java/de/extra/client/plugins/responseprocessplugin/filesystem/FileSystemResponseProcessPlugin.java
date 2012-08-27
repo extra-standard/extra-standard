@@ -48,8 +48,10 @@ import de.drv.dsrv.extrastandard.namespace.response.Message;
 import de.drv.dsrv.extrastandard.namespace.response.Package;
 import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
-import de.extra.client.core.observation.ITransportObserver;
-import de.extra.client.core.plugin.IResponseProcessPlugin;
+import de.extra.client.core.observer.TransportInfoBuilder;
+import de.extrastandard.api.observer.ITransportObserver;
+import de.extrastandard.api.observer.impl.TransportInfo;
+import de.extrastandard.api.plugin.IResponseProcessPlugin;
 
 @Named("fileSystemResponseProcessPlugin")
 public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
@@ -75,6 +77,10 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 	@Named("eXTrajaxb2Marshaller")
 	private Unmarshaller unmarshaller;
 
+	@Inject
+	@Named("transportInfoBuilder")
+	private TransportInfoBuilder transportInfoBuilder;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -93,8 +99,9 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
 			pruefeVerzeichnis();
 
-			transportObserver.responseFilled(0,
-					extraResponse.getTransportHeader());
+			TransportInfo transportInfo = transportInfoBuilder
+					.createTransportInfo(extraResponse.getTransportHeader());
+			transportObserver.responseFilled(0, transportInfo);
 
 			if (!isBodyEmpty(extraResponse.getTransportBody())) {
 				List<Package> packageList = extraResponse.getTransportBody()

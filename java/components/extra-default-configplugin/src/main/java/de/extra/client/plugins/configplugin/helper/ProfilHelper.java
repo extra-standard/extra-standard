@@ -27,8 +27,8 @@ import org.apache.log4j.Logger;
 
 import de.drv.dsrv.schema.ElementType;
 import de.extra.client.core.model.ExtraProfileConfiguration;
-import de.extra.client.core.model.IExtraProfileConfiguration;
 import de.extra.client.plugins.configplugin.ConfigConstants;
+import de.extrastandard.api.model.IExtraProfileConfiguration;
 
 @Named("profilHelper")
 public class ProfilHelper {

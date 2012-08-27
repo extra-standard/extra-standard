@@ -39,8 +39,10 @@ import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
 import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
-import de.extra.client.core.observation.ITransportObserver;
-import de.extra.client.core.plugin.IOutputPlugin;
+import de.extra.client.core.observer.TransportInfoBuilder;
+import de.extrastandard.api.observer.ITransportInfo;
+import de.extrastandard.api.observer.ITransportObserver;
+import de.extrastandard.api.plugin.IOutputPlugin;
 
 @Named("dummyOutputPlugin")
 public class DummyOutputPlugin implements IOutputPlugin {
@@ -59,6 +61,10 @@ public class DummyOutputPlugin implements IOutputPlugin {
 	@Inject
 	@Named("transportObserver")
 	private ITransportObserver transportObserver;
+
+	@Inject
+	@Named("transportInfoBuilder")
+	private TransportInfoBuilder transportInfoBuilder;
 
 	@Override
 	public InputStream outputData(InputStream request) {
@@ -107,7 +113,9 @@ public class DummyOutputPlugin implements IOutputPlugin {
 
 		de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader = new de.drv.dsrv.extrastandard.namespace.request.TransportHeader();
 		requestHeader.setRequestDetails(requestDetailsType);
-		transportObserver.requestFilled(requestHeader);
+		ITransportInfo transportInfo = transportInfoBuilder
+				.createTransportInfo(requestHeader);
+		transportObserver.requestFilled(transportInfo);
 		transportObserver.requestForwarded("dummy, keine Weiterleitung", 0);
 
 		return response;
