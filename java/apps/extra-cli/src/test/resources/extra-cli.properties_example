@@ -47,7 +47,7 @@ message.builder.header.requestDetail.scenario=http://www.extra-standard.de/scena
 
 # Informationen zum Query-Aufbau
 plugins.dataplugin.queryDataPlugin.startId=1
-plugins.dataplugin.queryDataPlugin.packageLimit=10
+builder.xcpt.ElementSequencelocator.transportBodyElementSequenceBuilder.packageLimit=10
 
 
 
