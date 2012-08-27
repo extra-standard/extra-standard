@@ -25,8 +25,8 @@ import org.apache.log4j.Logger;
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
 import de.extra.client.core.builder.IXmlRootElementBuilder;
-import de.extra.client.core.model.IExtraProfileConfiguration;
-import de.extra.client.core.model.IInputDataContainer;
+import de.extrastandard.api.model.IExtraProfileConfiguration;
+import de.extrastandard.api.model.IInputDataContainer;
 
 /**
  * @author Leonid Potap

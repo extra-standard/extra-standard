@@ -21,6 +21,9 @@ package de.extra.client.core.model;
 import java.io.InputStream;
 import java.util.List;
 
+import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.IInputDataPluginDescription;
+
 /**
  * Bean für die Nutzdaten.
  */

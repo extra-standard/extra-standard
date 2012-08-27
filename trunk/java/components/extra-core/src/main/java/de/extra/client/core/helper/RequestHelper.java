@@ -23,8 +23,8 @@ import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
-import de.extra.client.core.model.IExtraProfileConfiguration;
-import de.extra.client.core.model.IInputDataContainer;
+import de.extrastandard.api.model.IExtraProfileConfiguration;
+import de.extrastandard.api.model.IInputDataContainer;
 
 @Named("requestHelper")
 public class RequestHelper {

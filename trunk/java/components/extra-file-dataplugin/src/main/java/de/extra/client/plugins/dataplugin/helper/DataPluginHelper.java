@@ -37,12 +37,12 @@ import org.springframework.beans.factory.annotation.Value;
 import de.extra.client.core.model.CompressionPluginDescription;
 import de.extra.client.core.model.DataSourcePluginDescription;
 import de.extra.client.core.model.EncryptionPluginDescription;
-import de.extra.client.core.model.IInputDataPluginDescription;
 import de.extra.client.core.model.InputDataContainer;
 import de.extra.client.plugins.dataplugin.auftragssatz.AuftragssatzType;
 import de.extra.client.plugins.dataplugin.auftragssatz.CompressionInfoType;
 import de.extra.client.plugins.dataplugin.auftragssatz.DataSourceInfoType;
 import de.extra.client.plugins.dataplugin.auftragssatz.EncryptionInfoType;
+import de.extrastandard.api.model.IInputDataPluginDescription;
 
 @Named("dataPluginHelper")
 public class DataPluginHelper {

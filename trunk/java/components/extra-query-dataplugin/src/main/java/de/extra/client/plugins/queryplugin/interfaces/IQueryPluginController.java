@@ -20,10 +20,10 @@ package de.extra.client.plugins.queryplugin.interfaces;
 
 import java.util.List;
 
-import de.extra.client.core.model.InputDataContainer;
+import de.extrastandard.api.model.IInputDataContainer;
 
 public interface IQueryPluginController {
 
-	public List<InputDataContainer> processQuery();
+	public List<IInputDataContainer> processQuery();
 
 }

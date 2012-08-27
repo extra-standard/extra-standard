@@ -34,8 +34,8 @@ import de.drv.dsrv.extrastandard.namespace.messages.DataRequestArgument;
 import de.drv.dsrv.extrastandard.namespace.messages.DataRequestQuery;
 import de.drv.dsrv.extrastandard.namespace.messages.Operand;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
-import de.extra.client.core.model.IExtraProfileConfiguration;
-import de.extra.client.core.model.IInputDataContainer;
+import de.extrastandard.api.model.IExtraProfileConfiguration;
+import de.extrastandard.api.model.IInputDataContainer;
 
 /**
  * @author Leonid Potap

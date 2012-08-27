@@ -30,9 +30,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.schema.ProfilkonfigurationType;
-import de.extra.client.core.model.IExtraProfileConfiguration;
 import de.extra.client.plugins.configplugin.ConfigConstants;
 import de.extra.client.plugins.configplugin.helper.ProfilHelper;
+import de.extrastandard.api.model.IExtraProfileConfiguration;
 
 @Named("configController")
 public class ConfigPluginController {

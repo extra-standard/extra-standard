@@ -23,9 +23,9 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import de.extra.client.core.model.IExtraProfileConfiguration;
-import de.extra.client.core.plugin.IConfigPlugin;
 import de.extra.client.plugins.configplugin.controller.ConfigPluginController;
+import de.extrastandard.api.model.IExtraProfileConfiguration;
+import de.extrastandard.api.plugin.IConfigPlugin;
 
 @Named("defaultConfigPlugin")
 public class ConfigPlugin implements IConfigPlugin {

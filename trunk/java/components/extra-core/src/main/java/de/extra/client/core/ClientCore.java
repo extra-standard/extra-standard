@@ -36,13 +36,12 @@ import org.springframework.oxm.XmlMappingException;
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.builder.IExtraRequestBuilder;
 import de.extra.client.core.locator.IPluginsLocatorManager;
-import de.extra.client.core.model.IExtraProfileConfiguration;
-import de.extra.client.core.model.IInputDataContainer;
-import de.extra.client.core.model.InputDataContainer;
-import de.extra.client.core.plugin.IConfigPlugin;
-import de.extra.client.core.plugin.IDataPlugin;
-import de.extra.client.core.plugin.IOutputPlugin;
-import de.extra.client.core.plugin.IResponseProcessPlugin;
+import de.extrastandard.api.model.IExtraProfileConfiguration;
+import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.plugin.IConfigPlugin;
+import de.extrastandard.api.plugin.IDataPlugin;
+import de.extrastandard.api.plugin.IOutputPlugin;
+import de.extrastandard.api.plugin.IResponseProcessPlugin;
 
 @Named("clientCore")
 public class ClientCore {
@@ -76,7 +75,8 @@ public class ClientCore {
 		IDataPlugin dataPlugin = pluginsLocatorManager
 				.getConfiguratedDataPlugin();
 
-		List<InputDataContainer> versandDatenListe = dataPlugin.getSenderData();
+		List<IInputDataContainer> versandDatenListe = dataPlugin
+				.getSenderData();
 
 		if (versandDatenListe == null || versandDatenListe.isEmpty()) {
 			// Nothing TODO Klient refactorn
@@ -95,7 +95,7 @@ public class ClientCore {
 
 			// Überprüfen ob ein PackageLayer benötigt wird
 			if (!configFile.isPackageLayer()) {
-				for (Iterator<InputDataContainer> iter = versandDatenListe
+				for (Iterator<IInputDataContainer> iter = versandDatenListe
 						.iterator(); iter.hasNext();) {
 					versanddatenBean = iter.next();
 

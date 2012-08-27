@@ -19,7 +19,7 @@
 package de.extra.client.core.builder;
 
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
-import de.extra.client.core.model.IExtraProfileConfiguration;
+import de.extrastandard.api.model.IExtraProfileConfiguration;
 
 /**
  * @author Leonid Potap

@@ -19,6 +19,7 @@
 package de.extra.client.core.model;
 
 import de.drv.dsrv.extrastandard.namespace.plugins.AbstractPlugInType;
+import de.extrastandard.api.model.IInputDataPluginDescription;
 
 public abstract class PluginHelperBase {
 

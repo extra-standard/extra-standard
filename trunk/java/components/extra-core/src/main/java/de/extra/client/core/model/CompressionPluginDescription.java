@@ -18,6 +18,8 @@
  */
 package de.extra.client.core.model;
 
+import de.extrastandard.api.model.IInputDataPluginDescription;
+
 public class CompressionPluginDescription implements IInputDataPluginDescription {
 
 	/**

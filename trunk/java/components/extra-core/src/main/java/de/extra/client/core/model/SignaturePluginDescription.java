@@ -18,5 +18,7 @@
  */
 package de.extra.client.core.model;
 
+import de.extrastandard.api.model.IInputDataPluginDescription;
+
 public class SignaturePluginDescription implements IInputDataPluginDescription {
 }

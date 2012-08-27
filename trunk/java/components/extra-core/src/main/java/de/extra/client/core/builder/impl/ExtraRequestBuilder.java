@@ -36,8 +36,8 @@ import de.extra.client.core.builder.IExtraRequestBuilder;
 import de.extra.client.core.builder.IMessageBuilderLocator;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extra.client.core.builder.IXmlRootElementBuilder;
-import de.extra.client.core.model.IExtraProfileConfiguration;
-import de.extra.client.core.model.IInputDataContainer;
+import de.extrastandard.api.model.IExtraProfileConfiguration;
+import de.extrastandard.api.model.IInputDataContainer;
 
 /**
  * Diese klasse steuer XmlBuilder Anhang konfiguration an und erstellt einen

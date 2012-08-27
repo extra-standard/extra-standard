@@ -24,8 +24,8 @@ import org.apache.log4j.Logger;
 
 import de.drv.dsrv.extrastandard.namespace.components.AnyPlugInContainerType;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
-import de.extra.client.core.model.IExtraProfileConfiguration;
-import de.extra.client.core.model.IInputDataContainer;
+import de.extrastandard.api.model.IExtraProfileConfiguration;
+import de.extrastandard.api.model.IInputDataContainer;
 
 /**
  * @author Leonid Potap

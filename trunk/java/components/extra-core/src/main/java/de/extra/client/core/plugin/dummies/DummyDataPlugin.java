@@ -29,16 +29,17 @@ import javax.inject.Named;
 import de.extra.client.core.model.CompressionPluginDescription;
 import de.extra.client.core.model.DataSourcePluginDescription;
 import de.extra.client.core.model.EncryptionPluginDescription;
-import de.extra.client.core.model.IInputDataPluginDescription;
 import de.extra.client.core.model.InputDataContainer;
-import de.extra.client.core.plugin.IDataPlugin;
+import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.IInputDataPluginDescription;
+import de.extrastandard.api.plugin.IDataPlugin;
 
 @Named("dummyDataPlugin")
 public class DummyDataPlugin implements IDataPlugin {
 
 	@Override
-	public List<InputDataContainer> getSenderData() {
-		List<InputDataContainer> versanddatenList = new ArrayList<InputDataContainer>();
+	public List<IInputDataContainer> getSenderData() {
+		List<IInputDataContainer> versanddatenList = new ArrayList<IInputDataContainer>();
 		versanddatenList.add(loadVersanddaten());
 		return versanddatenList;
 	}

@@ -24,8 +24,8 @@ import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.response.Package;
-import de.extra.client.core.plugin.IResponseProcessPlugin;
 import de.extra.client.plugins.outputplugin.utils.OutputPluginHelper;
+import de.extrastandard.api.plugin.IResponseProcessPlugin;
 
 //@Named("fileSystemHelper")
 public class FileSystemHelper implements IResponseProcessPlugin, Serializable {

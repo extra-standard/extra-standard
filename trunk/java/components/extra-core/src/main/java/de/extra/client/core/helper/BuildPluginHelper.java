@@ -34,9 +34,9 @@ import de.extra.client.core.model.DataSourcePluginDescription;
 import de.extra.client.core.model.DataSourcePluginHelper;
 import de.extra.client.core.model.EncryptionPluginDescription;
 import de.extra.client.core.model.EncryptionPluginHelper;
-import de.extra.client.core.model.IInputDataPluginDescription;
 import de.extra.client.core.model.SignaturePluginDescription;
 import de.extra.client.core.model.SignaturePluginHelper;
+import de.extrastandard.api.model.IInputDataPluginDescription;
 
 @Named("pluginHelper")
 public class BuildPluginHelper {

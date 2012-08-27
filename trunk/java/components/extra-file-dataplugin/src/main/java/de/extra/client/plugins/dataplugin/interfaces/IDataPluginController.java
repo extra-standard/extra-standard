@@ -20,10 +20,10 @@ package de.extra.client.plugins.dataplugin.interfaces;
 
 import java.util.List;
 
-import de.extra.client.core.model.InputDataContainer;
+import de.extrastandard.api.model.IInputDataContainer;
 
 public interface IDataPluginController {
 
-	public List<InputDataContainer> processData();
+	public List<IInputDataContainer> processData();
 
 }

@@ -18,7 +18,7 @@
  */
 package de.extra.client.core.builder;
 
-import de.extra.client.core.model.IInputDataContainer;
+import de.extrastandard.api.model.IInputDataContainer;
 
 /**
  * @author Leonid Potap Locator für die MessageBuilder
