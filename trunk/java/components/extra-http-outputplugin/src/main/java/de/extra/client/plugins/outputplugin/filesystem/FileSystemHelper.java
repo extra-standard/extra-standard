@@ -3,6 +3,7 @@ package de.extra.client.plugins.outputplugin.filesystem;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -10,16 +11,19 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.xml.transform.stream.StreamSource;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.oxm.Unmarshaller;
+import org.springframework.oxm.XmlMappingException;
 
 import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.response.Package;
-import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.core.plugin.IResponseProcessPlugin;
 import de.extra.client.plugins.outputplugin.utils.OutputPluginHelper;
 
@@ -30,6 +34,10 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 
 	private static Logger logger = Logger.getLogger(FileSystemHelper.class);
 
+	@Inject
+	@Named("eXTrajaxb2Marshaller")
+	private Unmarshaller unmarshaller;
+
 	@Value("${plugins.responseplugin.fileSaverResponsePlugin.eingangOrdner}")
 	private String eingangOrdner;
 
@@ -37,72 +45,88 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 	private String reportOrdner;
 
 	@Override
-	public boolean processResponse(XMLTransport extraResponse) {
-		pruefeVerzeichnis();
+	public boolean processResponse(InputStream responseAsStream) {
+		try {
+			de.drv.dsrv.extrastandard.namespace.response.XMLTransport extraResponse;
 
-		List<Package> packageList = extraResponse.getTransportBody()
-				.getPackage();
-		if (!OutputPluginHelper.isBodyEmpty(extraResponse.getTransportBody())) {
-			if (packageList == null || packageList.size() == 0) {
-				String responseId = extraResponse.getTransportHeader()
-						.getResponseDetails().getResponseID().getValue();
-				logger.debug("Keine Pakete vorhanden");
-				byte[] responseBody = extraResponse.getTransportBody()
-						.getData().getBase64CharSequence().getValue();
+			extraResponse = (de.drv.dsrv.extrastandard.namespace.response.XMLTransport) unmarshaller
+					.unmarshal(new StreamSource(responseAsStream));
 
-				if (saveBodyToFilesystem(responseId, responseBody)) {
-					logger.debug("Speicheren des Body auf Filesystem erfolgreich");
-				}
-			} else {
-				for (Iterator<Package> iter = packageList.iterator(); iter
-						.hasNext();) {
-					Package extraPackage = iter.next();
+			pruefeVerzeichnis();
 
-					String responseId = extraPackage.getPackageHeader()
+			List<Package> packageList = extraResponse.getTransportBody()
+					.getPackage();
+			if (!OutputPluginHelper.isBodyEmpty(extraResponse
+					.getTransportBody())) {
+				if (packageList == null || packageList.size() == 0) {
+					String responseId = extraResponse.getTransportHeader()
 							.getResponseDetails().getResponseID().getValue();
-					DataType data = new DataType();
-					data = extraPackage.getPackageBody().getData();
-					byte[] packageBody = null;
+					logger.debug("Keine Pakete vorhanden");
+					byte[] responseBody = extraResponse.getTransportBody()
+							.getData().getBase64CharSequence().getValue();
 
-					if (data.getBase64CharSequence() != null) {
-						packageBody = data.getBase64CharSequence().getValue();
-
-					} else {
-						if (data.getCharSequence() != null) {
-							packageBody = data.getCharSequence().getValue()
-									.getBytes();
-						}
+					if (saveBodyToFilesystem(responseId, responseBody)) {
+						logger.debug("Speicheren des Body auf Filesystem erfolgreich");
 					}
+				} else {
+					for (Iterator<Package> iter = packageList.iterator(); iter
+							.hasNext();) {
+						Package extraPackage = iter.next();
 
-					if (packageBody != null) {
-						if (saveBodyToFilesystem(responseId, packageBody)) {
-							if (logger.isDebugEnabled()) {
-								logger.debug("Speichern für RespId "
-										+ responseId + " erfolgreich");
+						String responseId = extraPackage.getPackageHeader()
+								.getResponseDetails().getResponseID()
+								.getValue();
+						DataType data = new DataType();
+						data = extraPackage.getPackageBody().getData();
+						byte[] packageBody = null;
+
+						if (data.getBase64CharSequence() != null) {
+							packageBody = data.getBase64CharSequence()
+									.getValue();
+
+						} else {
+							if (data.getCharSequence() != null) {
+								packageBody = data.getCharSequence().getValue()
+										.getBytes();
 							}
 						}
-					} else {
-						logger.error("PackageBody nicht gefüllt");
 
+						if (packageBody != null) {
+							if (saveBodyToFilesystem(responseId, packageBody)) {
+								if (logger.isDebugEnabled()) {
+									logger.debug("Speichern für RespId "
+											+ responseId + " erfolgreich");
+								}
+							}
+						} else {
+							logger.error("PackageBody nicht gefüllt");
+
+						}
 					}
 				}
+			} else {
+
+				ReportType report = extraResponse.getTransportHeader()
+						.getResponseDetails().getReport();
+
+				String requestId = extraResponse.getTransportHeader()
+						.getRequestDetails().getRequestID().getValue();
+				String responseId = extraResponse.getTransportHeader()
+						.getResponseDetails().getResponseID().getValue();
+
+				saveReportToFilesystem(report, responseId, requestId);
+
+				logger.info("Body leer");
 			}
-		} else {
 
-			ReportType report = extraResponse.getTransportHeader()
-					.getResponseDetails().getReport();
-
-			String requestId = extraResponse.getTransportHeader()
-					.getRequestDetails().getRequestID().getValue();
-			String responseId = extraResponse.getTransportHeader()
-					.getResponseDetails().getResponseID().getValue();
-
-			saveReportToFilesystem(report, responseId, requestId);
-
-			logger.info("Body leer");
+			return false;
+		} catch (XmlMappingException xmlMappingException) {
+			// TODO Exceptionhandling
+			throw new IllegalStateException(xmlMappingException);
+		} catch (IOException ioException) {
+			// TODO Auto-generated catch block
+			throw new IllegalStateException(ioException);
 		}
-
-		return false;
 	}
 
 	private boolean saveBodyToFilesystem(String responseId, byte[] responseBody) {

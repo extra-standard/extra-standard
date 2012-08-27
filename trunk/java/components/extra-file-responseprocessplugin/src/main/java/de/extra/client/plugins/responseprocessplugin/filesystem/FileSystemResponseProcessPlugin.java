@@ -21,6 +21,7 @@ package de.extra.client.plugins.responseprocessplugin.filesystem;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
@@ -32,10 +33,12 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.Marshaller;
+import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
 
 import de.drv.dsrv.extrastandard.namespace.components.DataType;
@@ -68,6 +71,10 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 	@Named("transportObserver")
 	private ITransportObserver transportObserver;
 
+	@Inject
+	@Named("eXTrajaxb2Marshaller")
+	private Unmarshaller unmarshaller;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -75,76 +82,92 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 	 * de.extra.client.core.plugin.IResponsePlugin#processResponse(de.drv.dsrv
 	 * .extrastandard.namespace.response.XMLTransport)
 	 */
-	public boolean processResponse(XMLTransport extraResponse) {
-		printResult(extraResponse);
+	public boolean processResponse(InputStream responseAsStream) {
+		try {
+			de.drv.dsrv.extrastandard.namespace.response.XMLTransport extraResponse;
 
-		pruefeVerzeichnis();
+			extraResponse = (de.drv.dsrv.extrastandard.namespace.response.XMLTransport) unmarshaller
+					.unmarshal(new StreamSource(responseAsStream));
 
-		transportObserver.responseFilled(0, extraResponse.getTransportHeader());
-		
-		if (!isBodyEmpty(extraResponse.getTransportBody())) {
-			List<Package> packageList = extraResponse.getTransportBody()
-					.getPackage();
-			if (packageList == null || packageList.size() == 0) {
-				String responseId = extraResponse.getTransportHeader()
-						.getResponseDetails().getResponseID().getValue();
-				logger.debug("Keine Pakete vorhanden");
-				byte[] responseBody = extraResponse.getTransportBody()
-						.getData().getBase64CharSequence().getValue();
+			printResult(extraResponse);
 
-				if (saveBodyToFilesystem(responseId, responseBody)) {
-					logger.debug("Speicheren des Body auf Filesystem erfolgreich");
-				}
-			} else {
-				for (Iterator<Package> iter = packageList.iterator(); iter
-						.hasNext();) {
-					Package extraPackage = iter.next();
+			pruefeVerzeichnis();
 
-					String responseId = extraPackage.getPackageHeader()
+			transportObserver.responseFilled(0,
+					extraResponse.getTransportHeader());
+
+			if (!isBodyEmpty(extraResponse.getTransportBody())) {
+				List<Package> packageList = extraResponse.getTransportBody()
+						.getPackage();
+				if (packageList == null || packageList.size() == 0) {
+					String responseId = extraResponse.getTransportHeader()
 							.getResponseDetails().getResponseID().getValue();
-					DataType data = new DataType();
-					data = extraPackage.getPackageBody().getData();
-					byte[] packageBody = null;
+					logger.debug("Keine Pakete vorhanden");
+					byte[] responseBody = extraResponse.getTransportBody()
+							.getData().getBase64CharSequence().getValue();
 
-					if (data.getBase64CharSequence() != null) {
-						packageBody = data.getBase64CharSequence().getValue();
-
-					} else {
-						if (data.getCharSequence() != null) {
-							packageBody = data.getCharSequence().getValue()
-									.getBytes();
-						}
+					if (saveBodyToFilesystem(responseId, responseBody)) {
+						logger.debug("Speicheren des Body auf Filesystem erfolgreich");
 					}
+				} else {
+					for (Iterator<Package> iter = packageList.iterator(); iter
+							.hasNext();) {
+						Package extraPackage = iter.next();
 
-					if (packageBody != null) {
-						if (saveBodyToFilesystem(responseId, packageBody)) {
-							if (logger.isDebugEnabled()) {
-								logger.debug("Speichern für RespId "
-										+ responseId + " erfolgreich");
+						String responseId = extraPackage.getPackageHeader()
+								.getResponseDetails().getResponseID()
+								.getValue();
+						DataType data = new DataType();
+						data = extraPackage.getPackageBody().getData();
+						byte[] packageBody = null;
+
+						if (data.getBase64CharSequence() != null) {
+							packageBody = data.getBase64CharSequence()
+									.getValue();
+
+						} else {
+							if (data.getCharSequence() != null) {
+								packageBody = data.getCharSequence().getValue()
+										.getBytes();
 							}
 						}
-					} else {
-						logger.error("PackageBody nicht gefüllt");
 
+						if (packageBody != null) {
+							if (saveBodyToFilesystem(responseId, packageBody)) {
+								if (logger.isDebugEnabled()) {
+									logger.debug("Speichern für RespId "
+											+ responseId + " erfolgreich");
+								}
+							}
+						} else {
+							logger.error("PackageBody nicht gefüllt");
+
+						}
 					}
 				}
+			} else {
+
+				ReportType report = extraResponse.getTransportHeader()
+						.getResponseDetails().getReport();
+
+				String requestId = extraResponse.getTransportHeader()
+						.getRequestDetails().getRequestID().getValue();
+				String responseId = extraResponse.getTransportHeader()
+						.getResponseDetails().getResponseID().getValue();
+
+				saveReportToFilesystem(report, responseId, requestId);
+
+				logger.info("Body leer");
 			}
-		} else {
 
-			ReportType report = extraResponse.getTransportHeader()
-					.getResponseDetails().getReport();
-
-			String requestId = extraResponse.getTransportHeader()
-					.getRequestDetails().getRequestID().getValue();
-			String responseId = extraResponse.getTransportHeader()
-					.getResponseDetails().getResponseID().getValue();
-
-			saveReportToFilesystem(report, responseId, requestId);
-
-			logger.info("Body leer");
+			return true;
+		} catch (XmlMappingException xmlMappingException) {
+			// TODO Exceptionhandling
+			throw new IllegalStateException(xmlMappingException);
+		} catch (IOException ioException) {
+			// TODO Auto-generated catch block
+			throw new IllegalStateException(ioException);
 		}
-
-		return true;
 	}
 
 	private void printResult(XMLTransport extraResponse) {
@@ -204,7 +227,8 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			fw = new FileWriter(responseFile);
 
 			fw.write(new String(responseBody));
-			transportObserver.responseDataForwarded(responseFile.getAbsolutePath(), responseBody.length);
+			transportObserver.responseDataForwarded(
+					responseFile.getAbsolutePath(), responseBody.length);
 
 		} catch (IOException e) {
 			logger.error("Fehler beim schreiben der Antwort", e);
@@ -257,8 +281,9 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			}
 
 			fw.write(sb.toString());
-			transportObserver.responseDataForwarded(reportFile.getAbsolutePath(), 0);
-			
+			transportObserver.responseDataForwarded(
+					reportFile.getAbsolutePath(), 0);
+
 		} catch (IOException e) {
 			logger.error("Fehler beim Schreiben des Reports", e);
 		} finally {

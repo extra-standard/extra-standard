@@ -18,7 +18,7 @@
  */
 package de.extra.client.core.plugin;
 
-import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
+import java.io.InputStream;
 
 /**
  * Verarbeitet Response vom eXTra Server.
@@ -34,6 +34,6 @@ public interface IResponseProcessPlugin {
 	 * @param extraResponse
 	 * @return
 	 */
-	public boolean processResponse(XMLTransport extraResponse);
+	public boolean processResponse(InputStream responseAsStream);
 
 }
