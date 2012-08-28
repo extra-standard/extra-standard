@@ -4,12 +4,14 @@ plugins.dataplugin=fileDataPlugin
 plugins.configplugin=defaultConfigPlugin
 #plugins.outputplugin=httpOutputPlugin
 plugins.outputplugin=dummyOutputPlugin
-plugins.responseprocessplugin=fileSystemResponseProcessPlugin
+plugins.responseprocessplugin=acknowledgePhase1ResponseProcessPlugin
 
 builder.xplg.DataTransforms1=dataTransformConfigurablePluginsBuilder
 builder.xplg.DataTransforms2=dataTransformConfigurablePluginsBuilder
 builder.xplg.DataTransforms3=dataTransformPluginsBuilder
 builder.xplg.DataTransforms4=dataTransformConfigurablePluginsBuilder
+
+de.extra.client.core.util.ExtraReturnCodeAnalyser.returncodelist=C00,I000,E98
 
 
 builder.xplg.DataSource=dataSourceConfigurablePluginsBuilder
