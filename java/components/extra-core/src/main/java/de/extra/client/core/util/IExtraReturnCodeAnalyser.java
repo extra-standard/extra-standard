@@ -16,28 +16,21 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extrastandard.api.plugin;
-
-import java.io.InputStream;
-import java.util.List;
-
-import de.extrastandard.api.model.IResponseData;
+package de.extra.client.core.util;
 
 /**
- * Verarbeitet Response vom eXTra Server.
- * 
  * @author Leonid Potap
  * @version $Id$
  */
-public interface IResponseProcessPlugin {
+public interface IExtraReturnCodeAnalyser {
 
 	/**
-	 * Handelt Response vom eXTra Server. Liefert eine Liste mit den Ergebnissen
-	 * der Verarbeitung zurück
+	 * Analysiert ExtraReturnCode und liefert True, wenn einen positiven Return
+	 * Code zurückgeliefert ist.
 	 * 
-	 * @param extraResponse
+	 * @param extraReturnCode
 	 * @return
 	 */
-	List<IResponseData> processResponse(InputStream responseAsStream);
+	boolean isReturnCodeSuccessful(String extraReturnCode);
 
 }

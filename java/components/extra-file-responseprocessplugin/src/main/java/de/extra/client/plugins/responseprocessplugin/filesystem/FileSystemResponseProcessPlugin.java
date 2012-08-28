@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -44,11 +45,16 @@ import org.springframework.oxm.XmlMappingException;
 import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
+import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
+import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
 import de.drv.dsrv.extrastandard.namespace.response.Message;
 import de.drv.dsrv.extrastandard.namespace.response.Package;
 import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
+import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
 import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.core.observer.TransportInfoBuilder;
+import de.extrastandard.api.model.IResponseData;
+import de.extrastandard.api.model.ResponseData;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.observer.impl.TransportInfo;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
@@ -56,8 +62,7 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
 @Named("fileSystemResponseProcessPlugin")
 public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
-	private static Logger logger = Logger
-			.getLogger(FileSystemResponseProcessPlugin.class);
+	private static Logger logger = Logger.getLogger(FileSystemResponseProcessPlugin.class);
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -88,8 +93,11 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 	 * de.extra.client.core.plugin.IResponsePlugin#processResponse(de.drv.dsrv
 	 * .extrastandard.namespace.response.XMLTransport)
 	 */
-	public boolean processResponse(InputStream responseAsStream) {
+	@Override
+	public List<IResponseData> processResponse(final InputStream responseAsStream) {
+		final List<IResponseData> responseDataList = new ArrayList<IResponseData>();
 		try {
+
 			de.drv.dsrv.extrastandard.namespace.response.XMLTransport extraResponse;
 
 			extraResponse = (de.drv.dsrv.extrastandard.namespace.response.XMLTransport) unmarshaller
@@ -99,51 +107,52 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
 			pruefeVerzeichnis();
 
-			TransportInfo transportInfo = transportInfoBuilder
-					.createTransportInfo(extraResponse.getTransportHeader());
+			final TransportHeader transportHeader = extraResponse.getTransportHeader();
+			final TransportInfo transportInfo = transportInfoBuilder.createTransportInfo(transportHeader);
 			transportObserver.responseFilled(0, transportInfo);
 
+			final ResponseDetailsType responseDetails = transportHeader.getResponseDetails();
+			final RequestDetailsType requestDetails = transportHeader.getRequestDetails();
 			if (!isBodyEmpty(extraResponse.getTransportBody())) {
-				List<Package> packageList = extraResponse.getTransportBody()
-						.getPackage();
+
+				final List<Package> packageList = extraResponse.getTransportBody().getPackage();
 				if (packageList == null || packageList.size() == 0) {
-					String responseId = extraResponse.getTransportHeader()
-							.getResponseDetails().getResponseID().getValue();
+					final String responseId = responseDetails.getResponseID().getValue();
 					logger.debug("Keine Pakete vorhanden");
-					byte[] responseBody = extraResponse.getTransportBody()
-							.getData().getBase64CharSequence().getValue();
+					final byte[] responseBody = extraResponse.getTransportBody().getData().getBase64CharSequence()
+							.getValue();
 
 					if (saveBodyToFilesystem(responseId, responseBody)) {
 						logger.debug("Speicheren des Body auf Filesystem erfolgreich");
 					}
-				} else {
-					for (Iterator<Package> iter = packageList.iterator(); iter
-							.hasNext();) {
-						Package extraPackage = iter.next();
 
-						String responseId = extraPackage.getPackageHeader()
-								.getResponseDetails().getResponseID()
+					final IResponseData responseData = new ResponseData(requestDetails.getRequestID().getValue(),
+							"C00", "RETURNTEXT", responseId);
+					responseDataList.add(responseData);
+
+				} else {
+					for (final Iterator<Package> iter = packageList.iterator(); iter.hasNext();) {
+						final Package extraPackage = iter.next();
+
+						final String responseId = extraPackage.getPackageHeader().getResponseDetails().getResponseID()
 								.getValue();
 						DataType data = new DataType();
 						data = extraPackage.getPackageBody().getData();
 						byte[] packageBody = null;
 
 						if (data.getBase64CharSequence() != null) {
-							packageBody = data.getBase64CharSequence()
-									.getValue();
+							packageBody = data.getBase64CharSequence().getValue();
 
 						} else {
 							if (data.getCharSequence() != null) {
-								packageBody = data.getCharSequence().getValue()
-										.getBytes();
+								packageBody = data.getCharSequence().getValue().getBytes();
 							}
 						}
 
 						if (packageBody != null) {
 							if (saveBodyToFilesystem(responseId, packageBody)) {
 								if (logger.isDebugEnabled()) {
-									logger.debug("Speichern für RespId "
-											+ responseId + " erfolgreich");
+									logger.debug("Speichern für RespId " + responseId + " erfolgreich");
 								}
 							}
 						} else {
@@ -154,59 +163,55 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 				}
 			} else {
 
-				ReportType report = extraResponse.getTransportHeader()
-						.getResponseDetails().getReport();
-
-				String requestId = extraResponse.getTransportHeader()
-						.getRequestDetails().getRequestID().getValue();
-				String responseId = extraResponse.getTransportHeader()
-						.getResponseDetails().getResponseID().getValue();
+				final ReportType report = responseDetails.getReport();
+				final String requestId = requestDetails.getRequestID().getValue();
+				final String responseId = responseDetails.getResponseID().getValue();
 
 				saveReportToFilesystem(report, responseId, requestId);
 
+				final IResponseData responseData = new ResponseData(requestId, "C00", "RETURNTEXT", responseId);
+				responseDataList.add(responseData);
 				logger.info("Body leer");
 			}
 
-			return true;
-		} catch (XmlMappingException xmlMappingException) {
+		} catch (final XmlMappingException xmlMappingException) {
 			// TODO Exceptionhandling
 			throw new IllegalStateException(xmlMappingException);
-		} catch (IOException ioException) {
+		} catch (final IOException ioException) {
 			// TODO Auto-generated catch block
 			throw new IllegalStateException(ioException);
 		}
+		return responseDataList;
 	}
 
-	private void printResult(XMLTransport extraResponse) {
+	private void printResult(final XMLTransport extraResponse) {
 		try {
-			Writer writer = new StringWriter();
-			StreamResult streamResult = new StreamResult(writer);
+			final Writer writer = new StringWriter();
+			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(extraResponse, streamResult);
 			logger.debug("ExtraResponse: " + writer.toString());
-		} catch (XmlMappingException xmlException) {
-			logger.debug("XmlMappingException beim Lesen des Results ",
-					xmlException);
-		} catch (IOException ioException) {
+		} catch (final XmlMappingException xmlException) {
+			logger.debug("XmlMappingException beim Lesen des Results ", xmlException);
+		} catch (final IOException ioException) {
 			logger.debug("IOException beim Lesen des Results ", ioException);
 		}
 
 	}
 
-	private static boolean isBodyEmpty(TransportBody transportBody) {
+	private static boolean isBodyEmpty(final TransportBody transportBody) {
 		boolean isEmpty = false;
 
 		if (transportBody == null) {
 			isEmpty = true;
 		} else {
-			if (transportBody.getData() == null
-					|| transportBody.getEncryptedData() == null) {
+			if (transportBody.getData() == null || transportBody.getEncryptedData() == null) {
 
 				isEmpty = true;
 			}
 
-			List<Package> packageList = transportBody.getPackage();
-			List<Message> messageList = transportBody.getMessage();
+			final List<Package> packageList = transportBody.getPackage();
+			final List<Message> messageList = transportBody.getMessage();
 			if (messageList.size() == 0 && packageList.size() == 0 && isEmpty) {
 				isEmpty = true;
 			} else {
@@ -217,16 +222,16 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 		return isEmpty;
 	}
 
-	private boolean saveBodyToFilesystem(String responseId, byte[] responseBody) {
-		boolean erfolgreichGespeichert = false;
+	private boolean saveBodyToFilesystem(final String responseId, final byte[] responseBody) {
+		final boolean erfolgreichGespeichert = false;
 
-		StringBuffer dateiName = new StringBuffer();
+		final StringBuffer dateiName = new StringBuffer();
 
 		dateiName.append(baueDateiname());
 		dateiName.append("-");
 		dateiName.append(responseId);
 
-		File responseFile = new File(eingangOrdner, dateiName.toString());
+		final File responseFile = new File(eingangOrdner, dateiName.toString());
 
 		FileWriter fw = null;
 
@@ -234,10 +239,9 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			fw = new FileWriter(responseFile);
 
 			fw.write(new String(responseBody));
-			transportObserver.responseDataForwarded(
-					responseFile.getAbsolutePath(), responseBody.length);
+			transportObserver.responseDataForwarded(responseFile.getAbsolutePath(), responseBody.length);
 
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			logger.error("Fehler beim schreiben der Antwort", e);
 		}
 
@@ -248,18 +252,17 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 		return erfolgreichGespeichert;
 	}
 
-	private boolean saveReportToFilesystem(ReportType report,
-			String responseId, String requestId) {
-		boolean erfolgreichGespeichert = false;
+	private boolean saveReportToFilesystem(final ReportType report, final String responseId, final String requestId) {
+		final boolean erfolgreichGespeichert = false;
 
-		StringBuffer dateiName = new StringBuffer();
+		final StringBuffer dateiName = new StringBuffer();
 
 		dateiName.append(baueDateiname());
 		dateiName.append(".rep");
 
-		File reportFile = new File(reportOrdner, dateiName.toString());
+		final File reportFile = new File(reportOrdner, dateiName.toString());
 
-		List<FlagType> flagList = report.getFlag();
+		final List<FlagType> flagList = report.getFlag();
 		FlagType flagItem = null;
 
 		if (flagList.size() >= 1) {
@@ -288,15 +291,14 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			}
 
 			fw.write(sb.toString());
-			transportObserver.responseDataForwarded(
-					reportFile.getAbsolutePath(), 0);
+			transportObserver.responseDataForwarded(reportFile.getAbsolutePath(), 0);
 
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			logger.error("Fehler beim Schreiben des Reports", e);
 		} finally {
 			try {
 				fw.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				logger.error("Fehler beim schließen das FileWriters");
 			}
 		}
@@ -309,8 +311,8 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 	}
 
 	private String baueDateiname() {
-		Date now = Calendar.getInstance().getTime();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HHmm");
+		final Date now = Calendar.getInstance().getTime();
+		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HHmm");
 		sdf.format(now);
 
 		return sdf.format(now);

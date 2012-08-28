@@ -78,8 +78,7 @@ public class DataPluginController implements IDataPluginController {
 
 			// Setzen der RequestId
 			versanddatenBean.setRequestId(auftragssatz.getRequestId());
-			versanddatenBean = dataPluginHelper.fuelleVersandatenBean(
-					versanddatenBean, auftragssatz);
+			versanddatenBean = dataPluginHelper.fuelleVersandatenBean(versanddatenBean, auftragssatz);
 			versanddatenBeanList.add(versanddatenBean);
 
 			transportObserver.requestDataReceived(filename, inputFile.length());

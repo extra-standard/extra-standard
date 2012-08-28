@@ -21,6 +21,7 @@ package de.extra.client.core.model;
 import java.io.InputStream;
 import java.util.List;
 
+import de.extrastandard.api.exception.ExtraCoreRuntimeException;
 import de.extrastandard.api.model.IInputDataContainer;
 import de.extrastandard.api.model.IInputDataPluginDescription;
 
@@ -47,7 +48,7 @@ public class InputDataContainer implements IInputDataContainer {
 		return requestId;
 	}
 
-	public void setRequestId(String requestId) {
+	public void setRequestId(final String requestId) {
 		this.requestId = requestId;
 	}
 
@@ -61,7 +62,7 @@ public class InputDataContainer implements IInputDataContainer {
 		return plugins;
 	}
 
-	public void setPlugins(List<IInputDataPluginDescription> plugins) {
+	public void setPlugins(final List<IInputDataPluginDescription> plugins) {
 		this.plugins = plugins;
 	}
 
@@ -77,7 +78,7 @@ public class InputDataContainer implements IInputDataContainer {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("SenderDataBean [");
 		if (requestId != null)
 			builder.append("requestId=").append(requestId).append(", ");
@@ -103,13 +104,27 @@ public class InputDataContainer implements IInputDataContainer {
 	 * @param inputData
 	 *            the inputData to set
 	 */
-	public void setInputData(InputStream inputData) {
+	public void setInputData(final InputStream inputData) {
 		this.inputData = inputData;
 	}
 
-	public void setDataRequestId(String startId) {
+	public void setDataRequestId(final String startId) {
 		this.dataRequestId = startId;
 
+	}
+
+	@Override
+	public String getInputIdentification() {
+		// Erste bilige Refactoring. Muss in 2 Klassen verteilt werden.
+		String identification = null;
+		if (requestId != null) {
+			identification = requestId;
+		} else if (dataRequestId != null) {
+			identification = dataRequestId;
+		} else {
+			throw new ExtraCoreRuntimeException("Keine Nachrichtidentification vorhanden!!!!");
+		}
+		return identification;
 	}
 
 }

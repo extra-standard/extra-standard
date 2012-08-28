@@ -16,28 +16,47 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extrastandard.api.plugin;
-
-import java.io.InputStream;
-import java.util.List;
-
-import de.extrastandard.api.model.IResponseData;
+package de.extrastandard.api.exception;
 
 /**
- * Verarbeitet Response vom eXTra Server.
+ * Das Parent Class von den unchecked Exceptions in Extra
  * 
  * @author Leonid Potap
  * @version $Id$
  */
-public interface IResponseProcessPlugin {
+public class ExtraResponseProcessPluginRuntimeException extends ExtraRuntimeException {
 
 	/**
-	 * Handelt Response vom eXTra Server. Liefert eine Liste mit den Ergebnissen
-	 * der Verarbeitung zurück
 	 * 
-	 * @param extraResponse
-	 * @return
 	 */
-	List<IResponseData> processResponse(InputStream responseAsStream);
+	private static final long serialVersionUID = 5994106615480611067L;
+
+	/**
+	 * 
+	 */
+	public ExtraResponseProcessPluginRuntimeException() {
+	}
+
+	/**
+	 * @param message
+	 */
+	public ExtraResponseProcessPluginRuntimeException(String message) {
+		super(message);
+	}
+
+	/**
+	 * @param cause
+	 */
+	public ExtraResponseProcessPluginRuntimeException(Throwable cause) {
+		super(cause);
+	}
+
+	/**
+	 * @param message
+	 * @param cause
+	 */
+	public ExtraResponseProcessPluginRuntimeException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
 }

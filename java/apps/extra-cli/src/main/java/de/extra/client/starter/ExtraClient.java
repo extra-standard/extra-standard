@@ -28,6 +28,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 
 import de.extra.client.core.ClientCore;
+import de.extra.client.core.ClientProcessResult;
 
 public class ExtraClient {
 
@@ -45,7 +46,7 @@ public class ExtraClient {
 	 * Pfad der Ressource, die die Konfiguration des extra-Clients enthält.
 	 */
 	private static final String EXTRA_CONFIG_RESOURCE = "dependency-tree.txt";
-	
+
 	private static Logger logger = Logger.getLogger(ExtraClient.class);
 
 	/**
@@ -53,7 +54,7 @@ public class ExtraClient {
 	 * 
 	 * @return Statuscode
 	 */
-	public int execute() throws Exception {
+	public ClientProcessResult execute() throws Exception {
 		PropertyConfigurator.configureAndWatch(LOG_4_J_FILE);
 
 		logger.debug("SpringBeans laden");
@@ -61,12 +62,11 @@ public class ExtraClient {
 
 		try {
 			// Spring Beans laden.
-			applicationContext = new ClassPathXmlApplicationContext(
-					SPRING_XML_FILE_PATH);
+			applicationContext = new ClassPathXmlApplicationContext(SPRING_XML_FILE_PATH);
 			// TODO: Pfad als Property
-			Resource logBoilerplate = applicationContext.getResource(EXTRA_CONFIG_RESOURCE); 
+			final Resource logBoilerplate = applicationContext.getResource(EXTRA_CONFIG_RESOURCE);
 			if (logBoilerplate.exists()) {
-				BufferedReader reader = new BufferedReader(new InputStreamReader(logBoilerplate.getInputStream()));
+				final BufferedReader reader = new BufferedReader(new InputStreamReader(logBoilerplate.getInputStream()));
 				String line = reader.readLine();
 				while (line != null) {
 					OpLogger.log.info(line);
@@ -74,16 +74,20 @@ public class ExtraClient {
 				}
 			}
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			logger.error("Laden der Beans fehlgeschlagen", e);
 		}
 
 		// Steuerung an Controller übergeben
 		logger.info("Beginn der Verarbeitung");
 
-		ClientCore clientCore = applicationContext.getBean("clientCore",
-				ClientCore.class);
+		final ClientCore clientCore = applicationContext.getBean("clientCore", ClientCore.class);
 
-		return clientCore.buildRequest();
+		final ClientProcessResult processResult = clientCore.process();
+
+		// Auswerten Ergebnisse
+
+		return processResult;
+
 	}
 }
