@@ -25,32 +25,40 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.XmlMappingException;
 
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.builder.IExtraRequestBuilder;
 import de.extra.client.core.locator.IPluginsLocatorManager;
+import de.extrastandard.api.exception.ExtraCoreRuntimeException;
 import de.extrastandard.api.model.IExtraProfileConfiguration;
 import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.IResponseData;
 import de.extrastandard.api.plugin.IConfigPlugin;
 import de.extrastandard.api.plugin.IDataPlugin;
 import de.extrastandard.api.plugin.IOutputPlugin;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
 
 @Named("clientCore")
-public class ClientCore {
+public class ClientCore implements ApplicationContextAware {
 
 	private static final Logger logger = Logger.getLogger(ClientCore.class);
 
 	public static final int STATUS_CODE_OK = 0;
 
 	public static final int STATUS_CODE_ERROR = 9;
+
+	ApplicationContext applicationContext;
 
 	@Inject
 	@Named("pluginsLocatorManager")
@@ -64,86 +72,174 @@ public class ClientCore {
 	@Named("eXTrajaxb2Marshaller")
 	private Marshaller marshaller;
 
-	/**
-	 * Funktion in der der Request aufgebaut wird.
-	 * 
-	 * @return StatusCode nach der Verarbeitung
-	 */
-	public int buildRequest() {
-		int statusCode = STATUS_CODE_ERROR;
+	private IDataPlugin dataPlugin;
 
-		IDataPlugin dataPlugin = pluginsLocatorManager
-				.getConfiguratedDataPlugin();
+	private IConfigPlugin configPlugin;
 
-		List<IInputDataContainer> versandDatenListe = dataPlugin
-				.getSenderData();
+	private IOutputPlugin outputPlugin;
 
-		if (versandDatenListe == null || versandDatenListe.isEmpty()) {
-			// Nothing TODO Klient refactorn
-			statusCode = STATUS_CODE_OK;
-			logger.info("Keine Nachrichten gefunden. Warte auf Nachrichten.");
-			return statusCode;
-		}
+	private IResponseProcessPlugin responsePlugin;
 
-		IConfigPlugin configPlugin = pluginsLocatorManager
-				.getConfiguratedConfigPlugin();
+	@PostConstruct
+	public void init() {
+		dataPlugin = pluginsLocatorManager.getConfiguratedDataPlugin();
 
-		IExtraProfileConfiguration configFile = configPlugin.getConfigFile();
+		configPlugin = pluginsLocatorManager.getConfiguratedConfigPlugin();
 
-		try {
-			IInputDataContainer versanddatenBean = null;
+		outputPlugin = pluginsLocatorManager.getConfiguratedOutputPlugin();
 
-			// Überprüfen ob ein PackageLayer benötigt wird
-			if (!configFile.isPackageLayer()) {
-				for (Iterator<IInputDataContainer> iter = versandDatenListe
-						.iterator(); iter.hasNext();) {
-					versanddatenBean = iter.next();
+		responsePlugin = pluginsLocatorManager.getConfiguratedResponsePlugin();
 
-					// XMLTransport request = requestHelper.buildRequest(
-					// versanddatenBean, configFile);
-					RootElementType request = extraMessageBuilder
-							.buildXmlMessage(versanddatenBean, configFile);
-
-					ByteArrayOutputStream outpuStream = new ByteArrayOutputStream();
-					StreamResult streamResult = new StreamResult(outpuStream);
-
-					marshaller.marshal(request, streamResult);
-					logger.debug("Ausgabe: " + outpuStream.toString());
-					logger.debug("Übergabe an OutputPlugin");
-
-					IOutputPlugin outputPlugin = pluginsLocatorManager
-							.getConfiguratedOutputPlugin();
-
-					InputStream responseAsStream = outputPlugin
-							.outputData(new ByteArrayInputStream(outpuStream
-									.toByteArray()));
-
-					// Source responseSource = new
-					// InputSource(responseAsStream);
-
-					IResponseProcessPlugin responsePlugin = pluginsLocatorManager
-							.getConfiguratedResponsePlugin();
-
-					boolean isReportSuccesfull = responsePlugin
-							.processResponse(responseAsStream);
-
-					if (isReportSuccesfull) {
-						statusCode = STATUS_CODE_OK;
-					} else {
-						statusCode = STATUS_CODE_ERROR;
-					}
-				}
-			} else {
-				// TODO Aufbau der Logik zum Versand von mehreren Nachrichten
-				// als Package oder Message
-
-			}
-		} catch (XmlMappingException e) {
-			logger.error("Fehler beim Erstellen des Requests", e);
-		} catch (IOException e) {
-			logger.error("Fehler beim Erstellen des Requests", e);
-		}
-
-		return statusCode;
 	}
+
+	/**
+	 * <pre>
+	 *  1. Holt über den DataPlugin die zu verarbeitenden Daten.
+	 *  2. Verpackt die Daten in eine Extra Message Anhand der Meassagekonfiguration
+	 *  3. Versendet die Daten via Outputplugin
+	 *  4. Verarbeitet die eXTra Response via Reponse-Process Plugins
+	 * </pre>
+	 */
+	public ClientProcessResult process() {
+
+		final IExtraProfileConfiguration configFile = configPlugin.getConfigFile();
+
+		final Iterator<IInputDataContainer> versandDatenIterator = dataPlugin.getData();
+
+		final ClientProcessResult clientProcessResult = applicationContext.getBean("clientProcessResult",
+				ClientProcessResult.class);
+		while (versandDatenIterator.hasNext()) {
+			final IInputDataContainer dataContainer = versandDatenIterator.next();
+			try {
+				final List<IResponseData> responses = processInputData(dataContainer, configFile);
+				clientProcessResult.addResult(dataContainer, responses);
+			} catch (final Exception exception) {
+				logger.error("Exception in der Extra-Processing", exception);
+				clientProcessResult.addException(dataContainer, exception);
+			}
+		}
+		return clientProcessResult;
+
+	}
+
+	private List<IResponseData> processInputData(final IInputDataContainer inputDataContainer,
+			final IExtraProfileConfiguration configFile) {
+		try {
+
+			final RootElementType request = extraMessageBuilder.buildXmlMessage(inputDataContainer, configFile);
+
+			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			final StreamResult streamResult = new StreamResult(outputStream);
+
+			marshaller.marshal(request, streamResult);
+
+			logger.debug("Ausgabe: " + outputStream.toString());
+			logger.debug("Übergabe an OutputPlugin");
+
+			final InputStream responseAsStream = outputPlugin.outputData(new ByteArrayInputStream(outputStream
+					.toByteArray()));
+
+			final List<IResponseData> responseDataList = responsePlugin.processResponse(responseAsStream);
+
+			return responseDataList;
+
+		} catch (final XmlMappingException xmlMappingException) {
+			throw new ExtraCoreRuntimeException(xmlMappingException);
+		} catch (final IOException ioException) {
+			throw new ExtraCoreRuntimeException(ioException);
+		}
+
+	}
+
+	//
+	// /**
+	// * Funktion in der der Request aufgebaut wird.
+	// *
+	// * @return StatusCode nach der Verarbeitung
+	// */
+	// public int buildRequest() {
+	// int statusCode = STATUS_CODE_ERROR;
+	//
+	// final IDataPlugin dataPlugin =
+	// pluginsLocatorManager.getConfiguratedDataPlugin();
+	//
+	// final Iterator<IInputDataContainer> versandDatenIterator =
+	// dataPlugin.getData();
+	//
+	// while (versandDatenIterator.hasNext()) {
+	// // Nothing TODO Klient refactorn
+	// statusCode = STATUS_CODE_OK;
+	// logger.info("Keine Nachrichten gefunden. Warte auf Nachrichten.");
+	// return statusCode;
+	// }
+	//
+	// final IConfigPlugin configPlugin =
+	// pluginsLocatorManager.getConfiguratedConfigPlugin();
+	//
+	// final IExtraProfileConfiguration configFile =
+	// configPlugin.getConfigFile();
+	//
+	// try {
+	// IInputDataContainer versanddatenBean = null;
+	//
+	// // Überprüfen ob ein PackageLayer benötigt wird
+	// if (!configFile.isPackageLayer()) {
+	// for (final Iterator<IInputDataContainer> iter =
+	// versandDatenListe.iterator(); iter.hasNext();) {
+	// versanddatenBean = iter.next();
+	//
+	// // XMLTransport request = requestHelper.buildRequest(
+	// // versanddatenBean, configFile);
+	// final RootElementType request =
+	// extraMessageBuilder.buildXmlMessage(versanddatenBean, configFile);
+	//
+	// final ByteArrayOutputStream outpuStream = new ByteArrayOutputStream();
+	// final StreamResult streamResult = new StreamResult(outpuStream);
+	//
+	// marshaller.marshal(request, streamResult);
+	// logger.debug("Ausgabe: " + outpuStream.toString());
+	// logger.debug("Übergabe an OutputPlugin");
+	//
+	// final IOutputPlugin outputPlugin =
+	// pluginsLocatorManager.getConfiguratedOutputPlugin();
+	//
+	// final InputStream responseAsStream = outputPlugin.outputData(new
+	// ByteArrayInputStream(outpuStream
+	// .toByteArray()));
+	//
+	// // Source responseSource = new
+	// // InputSource(responseAsStream);
+	//
+	// final IResponseProcessPlugin responsePlugin =
+	// pluginsLocatorManager.getConfiguratedResponsePlugin();
+	//
+	// final boolean isReportSuccesfull =
+	// responsePlugin.processResponse(responseAsStream);
+	//
+	// if (isReportSuccesfull) {
+	// statusCode = STATUS_CODE_OK;
+	// } else {
+	// statusCode = STATUS_CODE_ERROR;
+	// }
+	// }
+	// } else {
+	// // TODO Aufbau der Logik zum Versand von mehreren Nachrichten
+	// // als Package oder Message
+	//
+	// }
+	// } catch (final XmlMappingException e) {
+	// logger.error("Fehler beim Erstellen des Requests", e);
+	// } catch (final IOException e) {
+	// logger.error("Fehler beim Erstellen des Requests", e);
+	// }
+	//
+	// return statusCode;
+	// }
+
+	@Override
+	public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
+		this.applicationContext = applicationContext;
+
+	}
+
 }

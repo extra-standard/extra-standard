@@ -18,12 +18,12 @@
  */
 package de.extrastandard.api.plugin;
 
-import java.util.List;
+import java.util.Iterator;
 
 import de.extrastandard.api.model.IInputDataContainer;
 
 public interface IDataPlugin {
 
-	public List<IInputDataContainer> getSenderData();
+	public Iterator<IInputDataContainer> getData();
 
 }

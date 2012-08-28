@@ -19,16 +19,15 @@
 package de.extra.client.plugins.queryplugin.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import de.extra.client.core.annotation.PluginConfigType;
 import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.model.InputDataContainer;
-import de.extra.client.plugins.queryplugin.helper.QueryHelper;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 import de.extrastandard.api.model.IInputDataContainer;
 
@@ -36,17 +35,13 @@ import de.extrastandard.api.model.IInputDataContainer;
 @PluginConfiguration(pluginBeanName = "queryDataPlugin", pluginType = PluginConfigType.DataPlugins)
 public class QueryPluginController implements IQueryPluginController {
 
-	@Inject
-	@Named("queryHelper")
-	private QueryHelper queryHelper;
-
 	@PluginValue(key = "startId")
 	private String startId;
 
 	/**
 	 * @param startId
 	 */
-	public void setStartId(String startId) {
+	public void setStartId(final String startId) {
 		this.startId = startId;
 	}
 
@@ -54,15 +49,15 @@ public class QueryPluginController implements IQueryPluginController {
 	 * Controller-Klasse zum Aufbau der Query.
 	 */
 	@Override
-	public List<IInputDataContainer> processQuery() {
-		List<IInputDataContainer> senderDataBeanList = new ArrayList<IInputDataContainer>();
-		InputDataContainer senderDataBean = new InputDataContainer();
+	public Iterator<IInputDataContainer> processQuery() {
+		final List<IInputDataContainer> senderDataBeanList = new ArrayList<IInputDataContainer>();
+		final InputDataContainer senderDataBean = new InputDataContainer();
 
 		// Erzeugen der Query
 		senderDataBean.setDataRequestId(startId);
 		// Hinzufügen der Bean mit der Query
 		senderDataBeanList.add(senderDataBean);
 
-		return senderDataBeanList;
+		return senderDataBeanList.iterator();
 	}
 }

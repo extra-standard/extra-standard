@@ -22,6 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Named;
@@ -38,10 +39,10 @@ import de.extrastandard.api.plugin.IDataPlugin;
 public class DummyDataPlugin implements IDataPlugin {
 
 	@Override
-	public List<IInputDataContainer> getSenderData() {
-		List<IInputDataContainer> versanddatenList = new ArrayList<IInputDataContainer>();
+	public Iterator<IInputDataContainer> getData() {
+		final List<IInputDataContainer> versanddatenList = new ArrayList<IInputDataContainer>();
 		versanddatenList.add(loadVersanddaten());
-		return versanddatenList;
+		return versanddatenList.iterator();
 	}
 
 	/**
@@ -51,20 +52,19 @@ public class DummyDataPlugin implements IDataPlugin {
 	 */
 	private InputDataContainer loadVersanddaten() {
 
-		InputDataContainer vb = new InputDataContainer();
-		CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
-		EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();
-		DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
+		final InputDataContainer vb = new InputDataContainer();
+		final CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
+		final EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();
+		final DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
 
-		String nutzdaten = "Testdaten";
+		final String nutzdaten = "Testdaten";
 
 		// Nutzdaten setzen
 		vb.setInputData(new ByteArrayInputStream(nutzdaten.getBytes()));
 
 		// Compression-Infos setzen
 		compressionPlugin.setOrder(1);
-		compressionPlugin
-				.setCompAlgoId("http://www.extra-standard.de/transforms/compression/NONE");
+		compressionPlugin.setCompAlgoId("http://www.extra-standard.de/transforms/compression/NONE");
 		compressionPlugin.setCompAlgoVers("1.0");
 		compressionPlugin.setCompAlgoName("KKS");
 
@@ -77,8 +77,7 @@ public class DummyDataPlugin implements IDataPlugin {
 
 		// Encryption-Infos setzen
 		encryptionPlugin.setOrder(2);
-		encryptionPlugin
-				.setEncAlgoId("http://www.extra-standard.de/transforms/encryption/PKCS7");
+		encryptionPlugin.setEncAlgoId("http://www.extra-standard.de/transforms/encryption/PKCS7");
 		encryptionPlugin.setEncAlgoVers("1.3");
 		encryptionPlugin.setEncAlgoName("KKS");
 
@@ -93,14 +92,14 @@ public class DummyDataPlugin implements IDataPlugin {
 		dataSourcePlugin.setDsType("http://extra-standard.de/container/FILE");
 		dataSourcePlugin.setDsName("EDUA0000003");
 
-		Calendar cal = new GregorianCalendar();
+		final Calendar cal = new GregorianCalendar();
 		cal.set(Calendar.YEAR, 2012);
 		cal.set(Calendar.MONTH, 12);
 		cal.set(Calendar.DATE, 01);
 		dataSourcePlugin.setDsCreated(cal.getTime());
 		dataSourcePlugin.setDsEncoding("I8");
 
-		List<IInputDataPluginDescription> pluginList = new ArrayList<IInputDataPluginDescription>();
+		final List<IInputDataPluginDescription> pluginList = new ArrayList<IInputDataPluginDescription>();
 
 		pluginList.add(compressionPlugin);
 		pluginList.add(encryptionPlugin);

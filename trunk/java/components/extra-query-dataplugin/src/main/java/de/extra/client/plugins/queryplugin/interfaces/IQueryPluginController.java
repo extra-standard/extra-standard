@@ -18,12 +18,12 @@
  */
 package de.extra.client.plugins.queryplugin.interfaces;
 
-import java.util.List;
+import java.util.Iterator;
 
 import de.extrastandard.api.model.IInputDataContainer;
 
 public interface IQueryPluginController {
 
-	public List<IInputDataContainer> processQuery();
+	public Iterator<IInputDataContainer> processQuery();
 
 }

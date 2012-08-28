@@ -21,12 +21,15 @@ package de.extra.client.starter;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.extra.client.core.ClientCore;
+import de.extra.client.core.ClientProcessResult;
 
 public class ExtraClientTest {
+
+	private static final Logger logger = Logger.getLogger(ExtraClientTest.class);
 
 	private ExtraClient extraClient;
 
@@ -37,11 +40,14 @@ public class ExtraClientTest {
 
 	@Test
 	public void testExecute() throws Exception {
-		int returnCode = extraClient.execute();
-		if (returnCode == ClientCore.STATUS_CODE_OK) {
+		final ClientProcessResult clientProcessResult = extraClient.execute();
+		if (clientProcessResult.isSuccessful()) {
 			assertTrue(true);
 		} else {
 			fail("Fehler bei der Verarbeitung!");
+			if (clientProcessResult.hasExceptions()) {
+				// logger.info(clientProcessResult.
+			}
 		}
 	}
 }
