@@ -88,7 +88,7 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.extra.client.core.plugin.IResponsePlugin#processResponse(de.drv.dsrv
 	 * .extrastandard.namespace.response.XMLTransport)
@@ -109,7 +109,7 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
 			final TransportHeader transportHeader = extraResponse.getTransportHeader();
 			final TransportInfo transportInfo = transportInfoBuilder.createTransportInfo(transportHeader);
-			transportObserver.responseFilled(0, transportInfo);
+			transportObserver.responseFilled(transportInfo);
 
 			final ResponseDetailsType responseDetails = transportHeader.getResponseDetails();
 			final RequestDetailsType requestDetails = transportHeader.getRequestDetails();

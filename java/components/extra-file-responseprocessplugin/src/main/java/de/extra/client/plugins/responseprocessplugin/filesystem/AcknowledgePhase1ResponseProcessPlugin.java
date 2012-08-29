@@ -52,10 +52,10 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
 /**
  * Verarbeitet eine Acknowledge (Scenario request-with-acknowledge ) auf den
  * Extra Request in der Phase 1 der Nachrichtenaustausch.
- * 
+ *
  * Erste Ausführung für den Scenario mit der Übertragung der Daten in dem (1
  * Nachricht - 1 Datensatz) TransportBody
- * 
+ *
  * @author DPRS
  * @version $Id$
  */
@@ -88,7 +88,7 @@ public class AcknowledgePhase1ResponseProcessPlugin implements IResponseProcessP
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.extra.client.core.plugin.IResponsePlugin#processResponse(de.drv.dsrv
 	 * .extrastandard.namespace.response.XMLTransport)
@@ -108,7 +108,7 @@ public class AcknowledgePhase1ResponseProcessPlugin implements IResponseProcessP
 			Assert.notNull(transportHeader, "Transportheader in der Acknowledge sind leer");
 			final TransportInfo transportInfo = transportInfoBuilder.createTransportInfo(transportHeader);
 
-			transportObserver.responseFilled(0, transportInfo);
+			transportObserver.responseFilled(transportInfo);
 
 			final ResponseDetailsType responseDetails = transportHeader.getResponseDetails();
 			Assert.notNull(responseDetails, "ResponseDetailsType in der Acknowledge ist leer");

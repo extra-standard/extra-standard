@@ -1,21 +1,22 @@
 package de.extra.client.starter;
 
-import java.io.PrintWriter;
-import java.util.Arrays;
+import java.io.File;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.log4j.Level;
+import org.apache.commons.cli.PosixParser;
+import org.springframework.util.StringUtils;
+
+import de.extra.client.exit.JvmSystemExiter;
+import de.extra.client.exit.SystemExiter;
 
 /**
  * Extra Client Argumentauswertung.
- * 
+ *
  * <p>
  * Argumente werden beim Start des Extra-Clients übergeben (zum Beispiel über
  * die Kommandozeile) und steuern und konfigurieren die Verarbeitung des
@@ -23,173 +24,105 @@ import org.apache.log4j.Level;
  * Konfigurationsparametern. Es gibt pro Client-Lauf nur eine Instanz, die
  * einmalig zum Start des Clients gefüllt wird.
  * </p>
- * 
+ *
  * <p>
  * Kapselt die technische Realisierung der Kommandozeilenauswertung.
  * </p>
+ * @author DPRS
+ * @version $Id$
  */
 public class ClientArguments {
 
-	private static Option OPT_HELP = new Option("h", "help", false,
-			"print help");
-	private static Option OPT_PROCESS = new Option("p", "process", false,
-			"process files");
+	public static final String OPTION_NAME_HELP = "help";
+	public static final String OPTION_NAME_HELP_SHORTCUT = "h";
 
-	// mandant
-	// verfahren
-	// phase
+	public static final String OPTION_NAME_CONFIGDIR = "configDirectory";
+	public static final String OPTION_NAME_CONFIGDIR_SHORTCUT = "c";
 
-	private static final Option OPT_QUIET = new Option("q", "quiet", false,
-			"be quiet");
-	private static final Option OPT_VERBOSE = new Option("v", "verbose", false,
-			"be verbose");
-	private static final Option OPT_DEBUG = new Option("d", "debug", false,
-			"print additional debug information during processing (very verbose)");
-	private static final Option OPT_TRACE = new Option("t", "trace", false,
-			"print additional trace information (extremely verbose)");
-	// private static final Option IN_DIR = OptionBuilder.withArgName(
-	// "inputDirectoy" )
-	// .hasArg()
-	// .withDescription( "use given directory to read request files" )
-	// .create( "logfile" ));
+	private static final Option OPT_HELP = new Option(OPTION_NAME_HELP_SHORTCUT, OPTION_NAME_HELP, false, "Hilfe anzeigen");
 
-	private static OptionGroup OPTGRP_VERBOSITY = new OptionGroup();
-	private static OptionGroup OPTGRP_ACTION = new OptionGroup();
+	private static final Option OPT_CONFIGDIRECTORY = new Option(OPTION_NAME_CONFIGDIR_SHORTCUT, OPTION_NAME_CONFIGDIR, true, "Konfigurationsverzeichnis");
 
-	private static Options RECOGNIZED_OPTIONS = new Options();
+	public static final Options OPTIONS;
 
-	public static enum ClientActions {
-		PRINT_HELP, PROCESS
-	}
+	private final SystemExiter exiter = new JvmSystemExiter();
 
 	static {
-		OPTGRP_VERBOSITY.addOption(OPT_QUIET);
-		OPTGRP_VERBOSITY.addOption(OPT_VERBOSE);
-		OPTGRP_VERBOSITY.addOption(OPT_DEBUG);
-		OPTGRP_VERBOSITY.addOption(OPT_TRACE);
-
-		OPTGRP_ACTION.addOption(OPT_HELP);
-		OPTGRP_ACTION.addOption(OPT_PROCESS);
-
-		RECOGNIZED_OPTIONS.addOptionGroup(OPTGRP_VERBOSITY);
-		RECOGNIZED_OPTIONS.addOptionGroup(OPTGRP_ACTION);
+		OPTIONS = new Options();
+		OPTIONS.addOption(OPT_HELP);
+		OPTIONS.addOption(OPT_CONFIGDIRECTORY);
 	}
 
-	/** (ungeparste) Kommandozeile */
-	private String[] args;
-	/**
-	 * Log-Level, wenn ein bestimmter über die Kommandozeile festgelegt wird,
-	 * sonst null
-	 */
-	private Level selectedLogLevel = null;
-	/**
-	 * Action, die sich aus der Kommandozeile ergibt. Es gibt immer eine
-	 * (Default: Process).
-	 */
-	private ClientActions action = ClientActions.PROCESS;
+	private final String[] args;
 
-	/** Postfix für den Hilfstext */
-	private String helpPostfix = "";
+	/**
+	 * Wert aus dem ermitteltem Kommandozeilenparameter {@link #OPTION_NAME_CONFIGDIR}.
+	 */
+	private File configDirectory = null;
+
+	/**
+	 * Gibt an ob ein Hilfetext ausgegeben werden soll Parameter #OPTION_NAME_HELP.
+	 */
+	private Boolean showHelp = null;
+
+	public ClientArguments(final String[] args) {
+		this.args = args;
+	}
 
 	/**
 	 * Zerlegt die Kommandozeile, setzt erwartete Optionen, behandelt ggf.
 	 * Fehler.
 	 */
-	private void parseArgs() {
-		CommandLineParser parser = new GnuParser();
+	public void parseArgs() {
+		CommandLineParser parser = new PosixParser();
 
+		CommandLine commandLine = null;
 		try {
-			CommandLine commandLine = parser.parse(
-					ClientArguments.RECOGNIZED_OPTIONS, this.args);
-			if (commandLine.getArgs() != null
-					&& commandLine.getArgs().length > 0) {
-				throw new ParseException(
-						"unbekannte Kommandozeilenargumente gefunden "
-								+ Arrays.toString(commandLine.getArgs()));
-			}
+			commandLine = parser.parse(OPTIONS, this.args);
+		} catch (ParseException e) {
+			printHelpText(e);
+			exiter.exit(ReturnCode.TECHNICAL);
+		}
 
-			String selectedVerbosity = OPTGRP_VERBOSITY.getSelected();
-			if (OPT_QUIET.getOpt().equals(selectedVerbosity)) {
-				this.selectedLogLevel = Level.ERROR;
-			} else if (OPT_VERBOSE.getOpt().equals(selectedVerbosity)) {
-				this.selectedLogLevel = Level.INFO;
-			} else if (OPT_DEBUG.getOpt().equals(selectedVerbosity)) {
-				this.selectedLogLevel = Level.DEBUG;
-			} else if (OPT_TRACE.getOpt().equals(selectedVerbosity)) {
-				this.selectedLogLevel = Level.TRACE;
-			}
+		if (commandLine.hasOption(OPTION_NAME_HELP)) {
+			this.showHelp = Boolean.TRUE;
+		}
 
-			if (commandLine.hasOption(OPT_HELP.getArgName())) {
-				this.action = ClientActions.PRINT_HELP;
-			} else if (commandLine.hasOption(OPT_PROCESS.getArgName())) {
-				this.action = ClientActions.PROCESS;
+		if (commandLine.hasOption(OPTION_NAME_CONFIGDIR)) {
+			String optionValue = commandLine.getOptionValue(OPTION_NAME_CONFIGDIR);
+			if (!StringUtils.hasText(optionValue)) {
+				throw new IllegalArgumentException("Konfigurationsverzeichnis muss angegeben werden.");
 			}
-		} catch (ParseException exp) {
-			// im Fehlerfall ergibt sich aus der Kommandozeile die Aktion
-			// "Hilfstext ausgeben", ergänzt um Fehlermessage
-			this.action = ClientActions.PRINT_HELP;
-			this.helpPostfix = "Fehler beim Aufruf: " + exp.getMessage();
+			this.configDirectory = new File(optionValue);
+			if (!configDirectory.exists()) {
+				throw new IllegalArgumentException("Konfigurationsverzeichnis existiert nicht.");
+			}
+			if (!configDirectory.isDirectory()) {
+				throw new IllegalArgumentException("Konfigurationsverzeichnis ist kein Verzeichnis.");
+			}
+			if (!configDirectory.canRead()) {
+				throw new IllegalArgumentException("Konfigurationsverzeichnis nicht zugreifbar.");
+			}
+		}
+
+		if (showHelp == null && configDirectory == null) {
+			throw new IllegalArgumentException("Bitte Parameter angeben.");
 		}
 	}
 
-	/**
-	 * Create an arguments object for a command line.
-	 * 
-	 * @param args
-	 *            unparsed command line
-	 */
-	public ClientArguments(String[] args) {
-		this.args = args;
-		parseArgs();
-	}
-
-	/**
-	 * Get unparsed command line.
-	 * 
-	 * @param args
-	 * @return
-	 */
-	public String[] getArgs(String[] args) {
-		return this.args;
-	}
-
-	/**
-	 * Log-Level wie er sich aus den Argumenten ergibt.
-	 * 
-	 * Wenn sich aus den Argumenten kein bestimmter Log-Level ergibt,
-	 * <code>null</code>. In diesem Fall sind die Einstellungen der Log4j
-	 * Konfiguration unverändert.
-	 * 
-	 * @return Log-Level oder <code>null</code>
-	 */
-	public Level getSelectedLogLevel() {
-		return this.selectedLogLevel;
-	}
-
-	/**
-	 * Per Kommandozeile gewählte Aktion des Clients.
-	 * 
-	 * <p>
-	 * Ist immer gegeben.
-	 * </p>
-	 * 
-	 * @return Aktion
-	 */
-	public ClientActions getSelectedAction() {
-		return this.action;
-	}
-
-	/**
-	 * Gibt Hilfstext zur Kommandozeile aus.
-	 * 
-	 * Kann benutzt werden, um die entsprechende Aktion zu realisieren.
-	 * 
-	 * @param destination
-	 *            wohin der Hilfstext ausgegeben werden soll
-	 */
-	public void printHelpText(PrintWriter destination) {
+	public void printHelpText(final Exception e) {
 		HelpFormatter formatter = new HelpFormatter();
-		formatter.printHelp("extraClient", "", RECOGNIZED_OPTIONS,
-				this.helpPostfix);
+		formatter.printHelp("extraClient", OPTIONS);
+		if (e != null) {
+			System.out.println("\nFehler: " + e.getMessage());
+		}
+	}
+
+	public boolean isShowHelp() {
+		return showHelp;
+	}
+
+	public File getConfigDirectory() {
+		return configDirectory;
 	}
 }

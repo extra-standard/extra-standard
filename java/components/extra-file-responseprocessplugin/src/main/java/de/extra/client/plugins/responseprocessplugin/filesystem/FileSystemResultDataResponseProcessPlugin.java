@@ -55,11 +55,11 @@ import de.extrastandard.api.observer.impl.TransportInfo;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
 
 /**
- * 
+ *
  * Speichert Verarbeitungsergebnisse des Fachverfahren in dem Filesystem. Hier
  * wird initial eine einfache Verarbeitung vorrausgesetzt. Die Daten werden in
  * dem MessageBodybereich in dem Data-Fragment erwartet.
- * 
+ *
  * @author DPRS
  * @version $Id$
  */
@@ -89,7 +89,7 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.extra.client.core.plugin.IResponsePlugin#processResponse(de.drv.dsrv
 	 * .extrastandard.namespace.response.XMLTransport)
@@ -108,7 +108,7 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 
 			final TransportHeader transportHeader = extraResponse.getTransportHeader();
 			final TransportInfo transportInfo = transportInfoBuilder.createTransportInfo(transportHeader);
-			transportObserver.responseFilled(0, transportInfo);
+			transportObserver.responseFilled(transportInfo);
 
 			final ResponseDetailsType responseDetails = transportHeader.getResponseDetails();
 			final RequestDetailsType requestDetails = transportHeader.getRequestDetails();
@@ -202,7 +202,7 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 
 	/**
 	 * Erzeugt einen eindeitigen Filenamen mit milissekunden und ResponseID
-	 * 
+	 *
 	 * @param responseId
 	 * @return
 	 */

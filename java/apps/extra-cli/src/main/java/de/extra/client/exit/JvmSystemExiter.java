@@ -16,19 +16,22 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extrastandard.api.plugin;
+package de.extra.client.exit;
 
-import de.extrastandard.api.model.IExtraProfileConfiguration;
+import de.extra.client.starter.ReturnCode;
 
 /**
  * @author DPRS
  * @version $Id$
  */
-public interface IConfigPlugin {
+public class JvmSystemExiter implements SystemExiter {
 
 	/**
-	 * @return
+	 * @see de.extra.client.starter.SystemExiter#exit(de.extra.client.starter.ReturnCode)
 	 */
-	public IExtraProfileConfiguration getConfigFile();
+	@Override
+	public void exit(final ReturnCode code) {
+		System.exit(code.getCode());
+	}
 
 }
