@@ -18,83 +18,86 @@
  */
 package de.extra.client.starter;
 
-import java.io.PrintWriter;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import de.extra.client.core.ClientProcessResult;
+import de.extra.client.exit.JvmSystemExiter;
+import de.extra.client.exit.SystemExiter;
+
+/**
+ * @author DRV
+ * @version $Id$
+ */
 public class ClientStarter {
 
-	static{
-		// Startzeitpunkt als System.property setzen, zum Beispiel für Log4J Dateinamen
-	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-	    System.setProperty("current.date", dateFormat.format(new Date()));
+	private static final String KEY_CURRENT_DATE = "current.date";
+
+	private static final SystemExiter EXITER = new JvmSystemExiter();
+
+	static {
+		// Startzeitpunkt als System.property setzen, zum Beispiel für Log4J
+		// Dateinamen
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		System.setProperty(KEY_CURRENT_DATE, dateFormat.format(new Date()));
 	}
 
-	private static Logger logger = Logger.getLogger(ClientStarter.class);
+	private static final Logger LOG = Logger.getLogger(ClientStarter.class);
 
 	/**
-	 * Wertet Kommandozeilenparameter aus.
-	 * 
-	 * @param args Kommandozeilenparameter
-	 * @return auszuführende Aktion des Clients
+	 * Main
+	 *
+	 * @param args
+	 *            Kommandozeilenparameter
 	 */
-	private static ClientArguments.ClientActions evaluateArgs(String[] args) {
-		
-		ClientArguments clientArgs = new ClientArguments(args);
-		
-		// Log-Level laut Kommandozeile einstellen
-		Level selectedLogLevel = clientArgs.getSelectedLogLevel();
-		if (selectedLogLevel != null) {
-			LogManager.getRootLogger().setLevel(selectedLogLevel);
-			LogManager.getLoggerRepository().setThreshold(selectedLogLevel);
-		}
-	
-		// auszuführende Aktion bestimmen
-		ClientArguments.ClientActions action = clientArgs.getSelectedAction();
-		if (ClientArguments.ClientActions.PRINT_HELP.equals(action)) {
-			clientArgs.printHelpText(new PrintWriter(System.out, true));
-		}
-		
-		return action;
-	}
-	
-	/**
-	 * Main 
-	 * 
-	 * @param args Kommandozeilenparameter
-	 */
-	public static void main(String[] args) {
-		ExtraClient extraClient = new ExtraClient();
-		int returnCode = 0;
+	public static void main(final String[] args) {
+		OpLogger.log.info("Eingabeparameter: " + Arrays.toString(args));
+		ReturnCode returnCode = ReturnCode.SUCCESS;
+
+		ClientArguments clientArguments = new ClientArguments(args);
 		try {
-			
-			ClientArguments.ClientActions action = evaluateArgs(args);
-			OpLogger.log.info("Eingabeparameter: " + Arrays.toString(args));
-			
-			if (ClientArguments.ClientActions.PROCESS.equals(action)) {
-				OpLogger.log.info("Start der Verarbeitung " + OpLogger.timestampFormat.format(new Date()));
-				
-				extraClient.execute();
-				
-				OpLogger.log.info("Ende der Verarbeitung " + OpLogger.timestampFormat.format(new Date()));
-				returnCode = OpLogger.exitStatus;
-			}
-			
-			if (returnCode != 0) {
-				logger.error("Fehler bei der Verarbeitung: " + returnCode);
-
-			} else {
-				logger.info("Verarbeitung erfolgreich");
-			}
+			clientArguments.parseArgs();
 		} catch (Exception e) {
-			logger.error("Fehler bei der Verarbeitung", e);
-			returnCode = OpLogger.STATUS_LOGICAL_ERROR;
+			clientArguments.printHelpText(e);
+			EXITER.exit(ReturnCode.TECHNICAL);
 		}
-		System.exit(returnCode);
+
+		if (clientArguments.isShowHelp()) {
+			clientArguments.printHelpText(null);
+			EXITER.exit(returnCode);
+		}
+
+		File configDir = clientArguments.getConfigDirectory();
+
+		ExtraClient extraClient = new ExtraClient();
+		try {
+
+			OpLogger.log.info("Start der Verarbeitung "
+					+ OpLogger.timestampFormat.format(new Date()));
+
+			ClientProcessResult result = extraClient.execute();
+
+			OpLogger.log.info("Ende der Verarbeitung "
+					+ OpLogger.timestampFormat.format(new Date()));
+
+			// TODO refactor
+			returnCode = !result.isSuccessful() ? ReturnCode.BUSINESS :
+				(result.hasExceptions() ? ReturnCode.TECHNICAL : ReturnCode.SUCCESS);
+
+			if (returnCode.getCode() != 0) {
+				LOG.error("Fehler bei der Verarbeitung: " + returnCode);
+			} else {
+				LOG.info("Verarbeitung erfolgreich");
+			}
+
+		} catch (Exception e) {
+			LOG.error("Fehler bei der Verarbeitung", e);
+			returnCode = ReturnCode.BUSINESS;
+		}
+		EXITER.exit(returnCode);
 	}
 }

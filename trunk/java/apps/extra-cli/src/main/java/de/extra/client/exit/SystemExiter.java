@@ -16,19 +16,21 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extrastandard.api.plugin;
+package de.extra.client.exit;
 
-import de.extrastandard.api.model.IExtraProfileConfiguration;
+import de.extra.client.starter.ReturnCode;
 
 /**
  * @author DPRS
  * @version $Id$
  */
-public interface IConfigPlugin {
+public interface SystemExiter {
 
 	/**
-	 * @return
+	 * Beendet das System.
+	 *
+	 * @param code {@link ReturnCode}, der zurückgeliefert werden soll.
 	 */
-	public IExtraProfileConfiguration getConfigFile();
+	void exit(ReturnCode code);
 
 }
