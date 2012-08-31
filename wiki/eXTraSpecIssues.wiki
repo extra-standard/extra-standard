@@ -3,4 +3,5 @@
 = Offene Punkte der eXTra-Spezifikation zur Diskussion =
 
   * Verhalten bzw. Semantik von Plugins (Contact, ...) werden in der Spezifikation nicht beschrieben: 
-    * Was passiert auf der Client-Seite, wenn ich ein Contact-Plugin auf der ebenen des Transports definiert habe? Und auf der Server-Seite?
+    * Was passiert auf der Client-Seite, wenn ich ein Contact-Plugin auf der ebenen des Transports definiert habe? 
+    * Und auf der Server-Seite?
