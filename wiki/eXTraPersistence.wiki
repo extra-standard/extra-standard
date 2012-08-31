@@ -1,0 +1,28 @@
+#summary Persistence für die Unterstützung Szenarien mit mehreren Phasen
+
+= Introduction =
+
+In der Dokumentation  http://www.extra-standard.de/upload/pdf/Anl-3-Spektrum_Szenarien_eXTra-in-Betrieb_20110619.pdf sind mehrstufige 
+Austauschvarianten beschrieben. 
+Für die bessere Unterstützung diesen Szenarien ist einen persistnence-modul entwickelt.
+
+
+= Domain Model=
+
+Die Domain Model besteht aus mehreren Entitäten. In dem folgenen Diagramm sind die Entitäte, deren Funktionen sowie die Beziehungen dargestellt.
+
+http://extra-standard.googlecode.com/svn/wiki/images/persistence_layer.png
+
+Die oberste Entity in der Hierarchy ist Mandant (MANDATOR). Zu einem Mandanten können mehrere Verfahren (PROCEDURE) zugeordnet werden.
+
+Die Laufe (Execution) stellen einzelne Ausführungen dar. Eine Ausführung wird durch start, ende und dazugehörigen Parameters kennzeichnet.
+
+Während eines Laufs können mehrere Dateien übertragen werden. Die Dateien sind durch einen Identifikation (Identifier) und ggf. hashcode eindeutig Kennzeichnet.
+
+Jede Datei in einem, mehrstufigen Szenario passiert unterschiedlichen Statuses:
+
+http://extra-standard.googlecode.com/svn/wiki/images/input_data_states.png
+
+Jede Statusänderung zwischen 2 Übertragungsschritten wird durch Entity 
+
+Übergang (Transition) festgehalten. Durch Qualifyer werden die Phasen der Übertragung kennzeichnet.
