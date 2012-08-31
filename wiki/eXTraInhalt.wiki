@@ -11,5 +11,5 @@
       * [eXTraCLISendeHolbetrieb  Nachrichtenreihenfolge]
   * [eXTraVerfahren Fachverfahren]    
       * [eXTraSterbedatenVerfahren Sterbedatenabgleich]
-  * [eXTraSpecIssues Offene Punkte der Spezifikation zur Diskussion]    
+  * [eXTraSpecIssues Offene Punkte zur Diskussion]    
   * [eXTraEntwProzess Entwicklungsprozess]
