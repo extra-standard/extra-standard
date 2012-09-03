@@ -19,44 +19,38 @@
 package de.extrastandard.api.exception;
 
 /**
- * Das Parent Class von den unchecked Exceptions in Extra
- * 
+ * Process Response Plugin Exception
+ *
  * @author Leonid Potap
  * @version $Id$
  */
-public class ExtraResponseProcessPluginRuntimeException extends ExtraRuntimeException {
+public class ExtraResponseProcessPluginRuntimeException extends
+		ExtraRuntimeException {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5994106615480611067L;
 
-	/**
-	 * 
-	 */
 	public ExtraResponseProcessPluginRuntimeException() {
+		super();
 	}
 
-	/**
-	 * @param message
-	 */
-	public ExtraResponseProcessPluginRuntimeException(String message) {
-		super(message);
+	public ExtraResponseProcessPluginRuntimeException(final ExceptionCode code) {
+		super(code);
 	}
 
-	/**
-	 * @param cause
-	 */
-	public ExtraResponseProcessPluginRuntimeException(Throwable cause) {
+	public ExtraResponseProcessPluginRuntimeException(final ExceptionCode code, final String message) {
+		super(code, message);
+	}
+
+	public ExtraResponseProcessPluginRuntimeException(final ExceptionCode code, final Throwable cause) {
+		super(code, cause);
+	}
+
+	public ExtraResponseProcessPluginRuntimeException(final Throwable cause) {
 		super(cause);
 	}
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public ExtraResponseProcessPluginRuntimeException(String message, Throwable cause) {
-		super(message, cause);
+	public ExtraResponseProcessPluginRuntimeException(final ExceptionCode code, final String message, final Throwable cause) {
+		super(code, message, cause);
 	}
 
 }

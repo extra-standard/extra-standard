@@ -1,4 +1,4 @@
-package de.extrastandard.api.model;
+package de.extrastandard.api.model.content;
 
 import java.util.List;
 import java.util.Map;

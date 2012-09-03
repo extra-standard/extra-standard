@@ -1,4 +1,4 @@
-package de.extrastandard.api.model;
+package de.extrastandard.api.model.content;
 
 import java.io.InputStream;
 import java.util.List;

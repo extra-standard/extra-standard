@@ -19,44 +19,47 @@
 package de.extrastandard.api.exception;
 
 /**
- * Das Parent Class von den unchecked Exceptions in Extra
- * 
+ * Die Parent-Class der unchecked Exceptions in Extra.
+ *
  * @author Leonid Potap
  * @version $Id$
  */
-public class ExtraRuntimeException extends RuntimeException {
+public abstract class ExtraRuntimeException extends RuntimeException {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4193374961001009768L;
 
-	/**
-	 * 
-	 */
+	protected final ExceptionCode code;
+
 	public ExtraRuntimeException() {
+		this.code = ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION;
 	}
 
-	/**
-	 * @param message
-	 */
-	public ExtraRuntimeException(String message) {
+	public ExtraRuntimeException(final ExceptionCode code) {
+		this.code = code;
+	}
+
+	public ExtraRuntimeException(final ExceptionCode code, final String message) {
 		super(message);
+		this.code = code;
 	}
 
-	/**
-	 * @param cause
-	 */
-	public ExtraRuntimeException(Throwable cause) {
+	public ExtraRuntimeException(final ExceptionCode code, final Throwable cause) {
 		super(cause);
+		this.code = code;
 	}
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public ExtraRuntimeException(String message, Throwable cause) {
+	public ExtraRuntimeException(final Throwable cause) {
+		super(cause);
+		this.code = ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION;
+	}
+
+	public ExtraRuntimeException(final ExceptionCode code, final String message, final Throwable cause) {
 		super(message, cause);
+		this.code = code;
+	}
+
+	public ExceptionCode getCode() {
+		return code;
 	}
 
 }
