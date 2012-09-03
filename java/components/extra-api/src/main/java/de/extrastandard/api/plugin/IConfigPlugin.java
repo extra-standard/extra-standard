@@ -18,7 +18,7 @@
  */
 package de.extrastandard.api.plugin;
 
-import de.extrastandard.api.model.IExtraProfileConfiguration;
+import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 
 /**
  * @author DPRS

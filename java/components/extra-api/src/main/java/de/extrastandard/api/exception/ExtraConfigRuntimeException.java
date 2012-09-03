@@ -19,44 +19,37 @@
 package de.extrastandard.api.exception;
 
 /**
- * Das Parent Class von den unchecked Exceptions in Extra
- * 
+ * Config Exception
+ *
  * @author Leonid Potap
  * @version $Id$
  */
 public class ExtraConfigRuntimeException extends ExtraRuntimeException {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8985688274178113929L;
 
-	/**
-	 * 
-	 */
 	public ExtraConfigRuntimeException() {
+		super();
 	}
 
-	/**
-	 * @param message
-	 */
-	public ExtraConfigRuntimeException(String message) {
-		super(message);
+	public ExtraConfigRuntimeException(final ExceptionCode code) {
+		super(code);
 	}
 
-	/**
-	 * @param cause
-	 */
-	public ExtraConfigRuntimeException(Throwable cause) {
+	public ExtraConfigRuntimeException(final ExceptionCode code, final String message) {
+		super(code, message);
+	}
+
+	public ExtraConfigRuntimeException(final ExceptionCode code, final Throwable cause) {
+		super(code, cause);
+	}
+
+	public ExtraConfigRuntimeException(final Throwable cause) {
 		super(cause);
 	}
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public ExtraConfigRuntimeException(String message, Throwable cause) {
-		super(message, cause);
+	public ExtraConfigRuntimeException(final ExceptionCode code, final String message, final Throwable cause) {
+		super(code, message, cause);
 	}
 
 }

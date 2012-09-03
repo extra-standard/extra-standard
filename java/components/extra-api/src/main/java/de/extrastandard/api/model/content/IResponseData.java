@@ -1,4 +1,4 @@
-package de.extrastandard.api.model;
+package de.extrastandard.api.model.content;
 
 /**
  * Liefert Ergebnisse einer Anfrage/Übertragung zurück.

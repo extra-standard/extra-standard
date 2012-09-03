@@ -19,37 +19,11 @@
 package de.extrastandard.api.exception;
 
 /**
- * Data Plugin Exception
- *
- * @author Leonid Potap
+ * @author DPRS
  * @version $Id$
  */
-public class ExtraDataPluginRuntimeException extends ExtraRuntimeException {
+public enum ExceptionCode {
 
-	private static final long serialVersionUID = 2453455957258814963L;
-
-	public ExtraDataPluginRuntimeException() {
-		super();
-	}
-
-	public ExtraDataPluginRuntimeException(final ExceptionCode code) {
-		super(code);
-	}
-
-	public ExtraDataPluginRuntimeException(final ExceptionCode code, final String message) {
-		super(code, message);
-	}
-
-	public ExtraDataPluginRuntimeException(final ExceptionCode code, final Throwable cause) {
-		super(code, cause);
-	}
-
-	public ExtraDataPluginRuntimeException(final Throwable cause) {
-		super(cause);
-	}
-
-	public ExtraDataPluginRuntimeException(final ExceptionCode code, final String message, final Throwable cause) {
-		super(code, message, cause);
-	}
+	UNEXPECTED_INTERNAL_EXCEPTION // fatal
 
 }

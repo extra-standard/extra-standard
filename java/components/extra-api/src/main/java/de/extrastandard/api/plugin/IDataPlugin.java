@@ -20,7 +20,7 @@ package de.extrastandard.api.plugin;
 
 import java.util.Iterator;
 
-import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.content.IInputDataContainer;
 
 public interface IDataPlugin {
 

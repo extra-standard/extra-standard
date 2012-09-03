@@ -21,7 +21,7 @@ package de.extrastandard.api.plugin;
 import java.io.InputStream;
 import java.util.List;
 
-import de.extrastandard.api.model.IResponseData;
+import de.extrastandard.api.model.content.IResponseData;
 
 /**
  * Verarbeitet Response vom eXTra Server.
