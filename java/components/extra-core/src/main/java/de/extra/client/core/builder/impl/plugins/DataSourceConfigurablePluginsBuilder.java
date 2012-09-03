@@ -28,8 +28,8 @@ import de.extra.client.core.annotation.PluginConfigType;
 import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
-import de.extrastandard.api.model.IExtraProfileConfiguration;
-import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.content.IExtraProfileConfiguration;
+import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap

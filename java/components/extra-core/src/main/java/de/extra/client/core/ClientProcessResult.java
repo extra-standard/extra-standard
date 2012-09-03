@@ -29,8 +29,8 @@ import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 
 import de.extra.client.core.util.IExtraReturnCodeAnalyser;
-import de.extrastandard.api.model.IInputDataContainer;
-import de.extrastandard.api.model.IResponseData;
+import de.extrastandard.api.model.content.IInputDataContainer;
+import de.extrastandard.api.model.content.IResponseData;
 
 /**
  * Beinhaltet Ergebnisse eines Laufs.

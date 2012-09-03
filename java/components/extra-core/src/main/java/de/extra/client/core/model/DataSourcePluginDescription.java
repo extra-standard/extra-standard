@@ -20,7 +20,7 @@ package de.extra.client.core.model;
 
 import java.util.Date;
 
-import de.extrastandard.api.model.IInputDataPluginDescription;
+import de.extrastandard.api.model.content.IInputDataPluginDescription;
 
 public class DataSourcePluginDescription implements IInputDataPluginDescription {
 

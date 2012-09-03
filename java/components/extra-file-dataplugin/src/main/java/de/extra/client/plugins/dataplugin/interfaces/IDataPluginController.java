@@ -20,7 +20,7 @@ package de.extra.client.plugins.dataplugin.interfaces;
 
 import java.util.List;
 
-import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.content.IInputDataContainer;
 
 public interface IDataPluginController {
 

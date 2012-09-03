@@ -49,8 +49,8 @@ import de.extra.client.core.builder.impl.request.RequestTransportBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportHeaderBuilder;
 import de.extra.client.core.model.ExtraProfileConfiguration;
 import de.extra.client.core.model.InputDataContainer;
-import de.extrastandard.api.model.IExtraProfileConfiguration;
-import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.content.IExtraProfileConfiguration;
+import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * Test for ExtraRequestBuilder.

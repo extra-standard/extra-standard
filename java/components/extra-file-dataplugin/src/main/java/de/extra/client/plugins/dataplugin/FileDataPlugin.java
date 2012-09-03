@@ -34,7 +34,7 @@ import org.springframework.beans.factory.annotation.Value;
 import de.extra.client.core.model.InputDataContainer;
 import de.extra.client.plugins.dataplugin.auftragssatz.AuftragssatzType;
 import de.extra.client.plugins.dataplugin.helper.DataPluginHelper;
-import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.plugin.IDataPlugin;
 

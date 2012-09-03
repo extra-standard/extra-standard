@@ -26,7 +26,7 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
-import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.plugin.IDataPlugin;
 
 @Named("queryDataPlugin")

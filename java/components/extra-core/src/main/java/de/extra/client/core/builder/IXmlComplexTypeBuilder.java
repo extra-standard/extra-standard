@@ -18,8 +18,8 @@
  */
 package de.extra.client.core.builder;
 
-import de.extrastandard.api.model.IExtraProfileConfiguration;
-import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.content.IExtraProfileConfiguration;
+import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * Interface für die MessageBuilder.

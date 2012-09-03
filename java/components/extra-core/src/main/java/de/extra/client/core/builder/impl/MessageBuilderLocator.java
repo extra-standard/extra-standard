@@ -41,7 +41,7 @@ import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extra.client.core.builder.IXmlRootElementBuilder;
 import de.extra.client.core.builder.impl.plugins.CompositePluginsBuilder;
 import de.extra.client.core.locator.PluginsLocatorManager;
-import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * MessageBuilderLocator sucht zu jedem elementType ein entsprechenen

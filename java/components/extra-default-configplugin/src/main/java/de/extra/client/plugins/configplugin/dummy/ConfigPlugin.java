@@ -21,7 +21,7 @@ package de.extra.client.plugins.configplugin.dummy;
 import javax.inject.Named;
 
 import de.extra.client.core.model.ExtraProfileConfiguration;
-import de.extrastandard.api.model.IExtraProfileConfiguration;
+import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.plugin.IConfigPlugin;
 
 @Named("dummyConfigPlugin")

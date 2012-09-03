@@ -38,8 +38,8 @@ import de.drv.dsrv.extrastandard.namespace.messages.DataRequestArgument;
 import de.drv.dsrv.extrastandard.namespace.messages.DataRequestQuery;
 import de.drv.dsrv.extrastandard.namespace.messages.Operand;
 import de.drv.dsrv.extrastandard.namespace.request.TransportBody;
-import de.extrastandard.api.model.IExtraProfileConfiguration;
-import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.content.IExtraProfileConfiguration;
+import de.extrastandard.api.model.content.IInputDataContainer;
 
 @Named("bodyHelper")
 public class BuildBodyHelper {

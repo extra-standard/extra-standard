@@ -20,7 +20,7 @@ package de.extra.client.plugins.queryplugin.interfaces;
 
 import java.util.Iterator;
 
-import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.content.IInputDataContainer;
 
 public interface IQueryPluginController {
 

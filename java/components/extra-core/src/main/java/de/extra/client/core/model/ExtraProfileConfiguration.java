@@ -28,7 +28,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
-import de.extrastandard.api.model.IExtraProfileConfiguration;
+import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 
 /**
  * Configuration DataBean beinhaltet die profilierungs Informationen

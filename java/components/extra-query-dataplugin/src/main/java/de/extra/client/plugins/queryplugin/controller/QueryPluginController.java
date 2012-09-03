@@ -29,7 +29,7 @@ import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.model.InputDataContainer;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
-import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.content.IInputDataContainer;
 
 @Named("queryPluginController")
 @PluginConfiguration(pluginBeanName = "queryDataPlugin", pluginType = PluginConfigType.DataPlugins)
