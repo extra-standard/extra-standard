@@ -26,7 +26,7 @@ import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.response.Package;
 import de.extra.client.plugins.outputplugin.utils.OutputPluginHelper;
-import de.extrastandard.api.model.IResponseData;
+import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
 
 //@Named("fileSystemHelper")

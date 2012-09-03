@@ -27,8 +27,8 @@ import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
 import de.drv.dsrv.extrastandard.namespace.components.SenderType;
 import de.drv.dsrv.extrastandard.namespace.components.TextType;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
-import de.extrastandard.api.model.IExtraProfileConfiguration;
-import de.extrastandard.api.model.IInputDataContainer;
+import de.extrastandard.api.model.content.IExtraProfileConfiguration;
+import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap

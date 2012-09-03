@@ -47,9 +47,10 @@ import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
 import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.core.observer.TransportInfoBuilder;
+import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraResponseProcessPluginRuntimeException;
-import de.extrastandard.api.model.IResponseData;
-import de.extrastandard.api.model.ResponseData;
+import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ResponseData;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.observer.impl.TransportInfo;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
@@ -113,7 +114,7 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 			final ResponseDetailsType responseDetails = transportHeader.getResponseDetails();
 			final RequestDetailsType requestDetails = transportHeader.getRequestDetails();
 			if (isBodyEmpty(extraResponse.getTransportBody())) {
-				throw new ExtraResponseProcessPluginRuntimeException("Keine Daten vorhanden. Body Element ist leer");
+				throw new ExtraResponseProcessPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION, "Keine Daten vorhanden. Body Element ist leer");
 			}
 
 			final String responseId = responseDetails.getResponseID().getValue();
@@ -196,7 +197,7 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 			}
 
 		} catch (final IOException ioException) {
-			throw new ExtraResponseProcessPluginRuntimeException("Fehler beim schreiben der Antwort", ioException);
+			throw new ExtraResponseProcessPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION, "Fehler beim schreiben der Antwort", ioException);
 		}
 	}
 

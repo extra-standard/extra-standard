@@ -31,8 +31,8 @@ import de.extra.client.core.model.CompressionPluginDescription;
 import de.extra.client.core.model.DataSourcePluginDescription;
 import de.extra.client.core.model.EncryptionPluginDescription;
 import de.extra.client.core.model.InputDataContainer;
-import de.extrastandard.api.model.IInputDataContainer;
-import de.extrastandard.api.model.IInputDataPluginDescription;
+import de.extrastandard.api.model.content.IInputDataContainer;
+import de.extrastandard.api.model.content.IInputDataPluginDescription;
 import de.extrastandard.api.plugin.IDataPlugin;
 
 @Named("dummyDataPlugin")

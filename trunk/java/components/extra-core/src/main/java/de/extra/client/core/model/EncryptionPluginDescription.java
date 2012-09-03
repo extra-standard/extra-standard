@@ -18,7 +18,7 @@
  */
 package de.extra.client.core.model;
 
-import de.extrastandard.api.model.IInputDataPluginDescription;
+import de.extrastandard.api.model.content.IInputDataPluginDescription;
 
 public class EncryptionPluginDescription implements IInputDataPluginDescription {
 

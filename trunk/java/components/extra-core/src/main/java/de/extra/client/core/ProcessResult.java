@@ -2,7 +2,7 @@ package de.extra.client.core;
 
 import java.util.List;
 
-import de.extrastandard.api.model.IResponseData;
+import de.extrastandard.api.model.content.IResponseData;
 
 /**
  * @author DPRS

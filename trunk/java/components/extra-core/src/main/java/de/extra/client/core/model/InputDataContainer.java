@@ -21,9 +21,10 @@ package de.extra.client.core.model;
 import java.io.InputStream;
 import java.util.List;
 
+import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraCoreRuntimeException;
-import de.extrastandard.api.model.IInputDataContainer;
-import de.extrastandard.api.model.IInputDataPluginDescription;
+import de.extrastandard.api.model.content.IInputDataContainer;
+import de.extrastandard.api.model.content.IInputDataPluginDescription;
 
 /**
  * Bean für die Nutzdaten.
@@ -40,7 +41,7 @@ public class InputDataContainer implements IInputDataContainer {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.extra.client.core.model.ISenderDataBean#getRequestId()
 	 */
 	@Override
@@ -54,7 +55,7 @@ public class InputDataContainer implements IInputDataContainer {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.extra.client.core.model.ISenderDataBean#getPlugins()
 	 */
 	@Override
@@ -68,7 +69,7 @@ public class InputDataContainer implements IInputDataContainer {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.extra.client.core.model.ISenderDataBean#getDataRequest()
 	 */
 	@Override
@@ -92,7 +93,7 @@ public class InputDataContainer implements IInputDataContainer {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.extra.client.core.model.ISenderDataBean#getInputData()
 	 */
 	@Override
@@ -122,7 +123,7 @@ public class InputDataContainer implements IInputDataContainer {
 		} else if (dataRequestId != null) {
 			identification = dataRequestId;
 		} else {
-			throw new ExtraCoreRuntimeException("Keine Nachrichtidentification vorhanden!!!!");
+			throw new ExtraCoreRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION, "Keine Nachrichtidentification vorhanden!!!!");
 		}
 		return identification;
 	}

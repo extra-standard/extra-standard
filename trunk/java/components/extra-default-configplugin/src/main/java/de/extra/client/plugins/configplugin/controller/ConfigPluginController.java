@@ -32,7 +32,7 @@ import org.springframework.beans.factory.annotation.Value;
 import de.drv.dsrv.schema.ProfilkonfigurationType;
 import de.extra.client.plugins.configplugin.ConfigConstants;
 import de.extra.client.plugins.configplugin.helper.ProfilHelper;
-import de.extrastandard.api.model.IExtraProfileConfiguration;
+import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 
 @Named("configController")
 public class ConfigPluginController {

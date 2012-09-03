@@ -42,7 +42,7 @@ import de.extra.client.plugins.dataplugin.auftragssatz.AuftragssatzType;
 import de.extra.client.plugins.dataplugin.auftragssatz.CompressionInfoType;
 import de.extra.client.plugins.dataplugin.auftragssatz.DataSourceInfoType;
 import de.extra.client.plugins.dataplugin.auftragssatz.EncryptionInfoType;
-import de.extrastandard.api.model.IInputDataPluginDescription;
+import de.extrastandard.api.model.content.IInputDataPluginDescription;
 
 @Named("dataPluginHelper")
 public class DataPluginHelper {
