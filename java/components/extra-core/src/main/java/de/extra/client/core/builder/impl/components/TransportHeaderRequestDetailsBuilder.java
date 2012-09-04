@@ -25,7 +25,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.components.ApplicationType;
@@ -38,13 +39,13 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap
- * 
+ *
  */
 @Named("transportHeaderRequestDetailsBuilder")
 public class TransportHeaderRequestDetailsBuilder implements
 		IXmlComplexTypeBuilder {
 
-	private static Logger logger = Logger
+	private static final Logger LOG = LoggerFactory
 			.getLogger(TransportHeaderRequestDetailsBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:RequestDetails";
@@ -62,13 +63,13 @@ public class TransportHeaderRequestDetailsBuilder implements
 
 	/**
 	 * Erstellt die SenderInformationen im Kontext von Header (non-Javadoc)
-	 * 
+	 *
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
 	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */
 	@Override
-	public Object buildXmlFragment(IInputDataContainer senderData,
-			IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		// Objects für RequestDetails
 		RequestDetailsType requestDetails = new RequestDetailsType();
 		ClassifiableIDType requestId = new ClassifiableIDType();
@@ -95,14 +96,14 @@ public class TransportHeaderRequestDetailsBuilder implements
 		requestDetails.setDataType(requestDetailDataType);
 		requestDetails.setScenario(requestDetailScenario);
 
-		logger.debug("TransportHeaderReceiver created.");
+		LOG.debug("TransportHeaderReceiver created.");
 		return requestDetails;
 	}
 
 	/**
-	 * 
+	 *
 	 * Erstellen des aktuellen Timestamps.
-	 * 
+	 *
 	 * @return XMLGregorianCalendar mit aktuellem Datum
 	 */
 	private XMLGregorianCalendar CreateCurrentTimestamp() {
@@ -111,7 +112,7 @@ public class TransportHeaderRequestDetailsBuilder implements
 		try {
 			timestamp = DatatypeFactory.newInstance().newXMLGregorianCalendar();
 		} catch (DatatypeConfigurationException e) {
-			logger.error(e.getMessage());
+			LOG.error(e.getMessage());
 		}
 
 		Calendar now = Calendar.getInstance();

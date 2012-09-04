@@ -20,7 +20,8 @@ package de.extra.client.core.builder.impl.plugins;
 
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.extrastandard.namespace.plugins.DataTransforms;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
@@ -29,31 +30,31 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap
- * 
+ *
  */
 @Named("dataTransformPluginsBuilder")
 public class DataTransformPluginsBuilder extends XmlComplexTypeBuilderAbstr {
 
-	private static Logger logger = Logger
+	private static final Logger LOG = LoggerFactory
 			.getLogger(DataTransformPluginsBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:DataTransforms";
 
 	/**
 	 * Erstellt die SenderInformationen im Kontext von Header (non-Javadoc)
-	 * 
+	 *
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
 	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */
 	@Override
-	public Object buildXmlFragment(IInputDataContainer senderData,
-			IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		// Transportplugins erstellen
 		// TODO Als erste Lösung Plugins über Konfiguration auswerden.
 		// Es besteht eien Möglichkeit Plugins über SenderDataBean auszuwerten
 		DataTransforms dataTransforms = new DataTransforms();
 		dataTransforms.setVersion(this.getClass().getSimpleName());
-		logger.debug("DataTransformsPlugins created. ");
+		LOG.debug("DataTransformsPlugins created. ");
 		return dataTransforms;
 
 	}

@@ -26,7 +26,8 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
@@ -44,26 +45,27 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 @Named("bodyHelper")
 public class BuildBodyHelper {
 
-	private static Logger logger = Logger.getLogger(BuildBodyHelper.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(BuildBodyHelper.class);
 
 	@Value("${builder.xcpt.ElementSequencelocator.transportBodyElementSequenceBuilder.packageLimit}")
 	private String packageLimit;
 
 	/**
 	 * Funktion zum Aufbau des Transportbodys.
-	 * 
+	 *
 	 * @param configBean
 	 *            ConfigFileBean mit den Informationen aus der Profildatei
 	 * @param versanddatenBean
 	 *            VersanddatenBean mit den Nutzdaten
 	 * @return
 	 */
-	public TransportBody buildTransportBody(IExtraProfileConfiguration configBean,
-			IInputDataContainer versanddatenBean) {
-		logger.debug("TransportBody aufbauen");
+	public TransportBody buildTransportBody(final IExtraProfileConfiguration configBean,
+			final IInputDataContainer versanddatenBean) {
+		LOG.debug("TransportBody aufbauen");
 
 		TransportBody transportBody = new TransportBody();
-		logger.debug("Baue TransportBody auf");
+		LOG.debug("Baue TransportBody auf");
 		if (configBean.getContentType().equalsIgnoreCase(
 				"xcpt:Base64CharSequence")) {
 			DataType data = new DataType();
@@ -104,7 +106,7 @@ public class BuildBodyHelper {
 		return transportBody;
 	}
 
-	private DataRequest createDataRequest(IInputDataContainer senderData) {
+	private DataRequest createDataRequest(final IInputDataContainer senderData) {
 		DataRequest dataRequest = new DataRequest();
 
 		Control controlElement = new Control();

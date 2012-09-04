@@ -28,7 +28,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.oxm.Marshaller;
 
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
@@ -51,7 +52,7 @@ public class DummyOutputPlugin implements IOutputPlugin {
 	// || flagCode.getValue().equalsIgnoreCase("I000")
 	// || flagCode.getValue().equalsIgnoreCase("E98"))
 
-	private static final Logger logger = Logger
+	private static final Logger LOG = LoggerFactory
 			.getLogger(DummyOutputPlugin.class);
 
 	@Inject
@@ -67,10 +68,10 @@ public class DummyOutputPlugin implements IOutputPlugin {
 	private TransportInfoBuilder transportInfoBuilder;
 
 	@Override
-	public InputStream outputData(InputStream request) {
+	public InputStream outputData(final InputStream request) {
 		InputStream responseAsinputStream = null;
 		try {
-			logger.info(request);
+			LOG.info("request={}", request);
 			XMLTransport response = createExtraResponse(request);
 
 			Writer writer = new StringWriter();
@@ -83,13 +84,13 @@ public class DummyOutputPlugin implements IOutputPlugin {
 			return responseAsinputStream;
 		} catch (IOException ioException) {
 			// Hier kommt eine ExtraTechnischeRuntimeException
-			logger.error("Unerwarteter Fehler: ", ioException);
+			LOG.error("Unerwarteter Fehler: ", ioException);
 		}
 		return responseAsinputStream;
 
 	}
 
-	private XMLTransport createExtraResponse(InputStream request) {
+	private XMLTransport createExtraResponse(final InputStream request) {
 		XMLTransport response = new XMLTransport();
 		TransportHeader transportHeader = new TransportHeader();
 		ResponseDetailsType responseDetailsType = new ResponseDetailsType();

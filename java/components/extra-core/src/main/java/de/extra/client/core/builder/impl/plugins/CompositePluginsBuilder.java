@@ -21,7 +21,8 @@ package de.extra.client.core.builder.impl.plugins;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
@@ -31,11 +32,11 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 /**
  * @author Leonid Potap Composite Builder wird angewendet, wenn mehrere Plugins
  *         nacheinander ausgeführt werden.
- * 
+ *
  */
 public class CompositePluginsBuilder extends XmlComplexTypeBuilderAbstr {
 
-	private static Logger logger = Logger
+	private static final Logger LOG = LoggerFactory
 			.getLogger(CompositePluginsBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:?";
@@ -45,24 +46,24 @@ public class CompositePluginsBuilder extends XmlComplexTypeBuilderAbstr {
 	/**
 	 * Construktor. CompositePluginBuilder kann nur mit einem List von Builder
 	 * instanziert werden.
-	 * 
+	 *
 	 * @param delegatedPluginslist
 	 */
 	public CompositePluginsBuilder(
-			List<IXmlComplexTypeBuilder> delegatedPluginslist) {
+			final List<IXmlComplexTypeBuilder> delegatedPluginslist) {
 		this.delegatedPluginslist = delegatedPluginslist;
 	}
 
 	/**
 	 * Erstellt die Plugins Fragment, in dem mehrere Konfgurierten Plugins
 	 * nacheinander aufgerufen werden (non-Javadoc)
-	 * 
+	 *
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
 	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */
 	@Override
-	public Object buildXmlFragment(IInputDataContainer senderData,
-			IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		List<Object> compositeXmlPluginFragment = new LinkedList<Object>();
 
 		for (IXmlComplexTypeBuilder xmlComplexTypeBuilder : delegatedPluginslist) {
@@ -70,7 +71,7 @@ public class CompositePluginsBuilder extends XmlComplexTypeBuilderAbstr {
 					senderData, config);
 			compositeXmlPluginFragment.add(xmlPluginFragment);
 		}
-		logger.debug("Plugins created.");
+		LOG.debug("Plugins created.");
 		return compositeXmlPluginFragment;
 
 	}

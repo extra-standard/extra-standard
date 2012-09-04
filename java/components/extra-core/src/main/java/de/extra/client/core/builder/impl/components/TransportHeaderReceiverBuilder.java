@@ -20,7 +20,8 @@ package de.extra.client.core.builder.impl.components;
 
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
@@ -32,12 +33,12 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap
- * 
+ *
  */
 @Named("transportHeaderReceiverBuilder")
 public class TransportHeaderReceiverBuilder implements IXmlComplexTypeBuilder {
 
-	private static Logger logger = Logger
+	private static final Logger LOG = LoggerFactory
 			.getLogger(TransportHeaderReceiverBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:Receiver";
@@ -51,13 +52,13 @@ public class TransportHeaderReceiverBuilder implements IXmlComplexTypeBuilder {
 
 	/**
 	 * Erstellt die SenderInformationen im Kontext von Header (non-Javadoc)
-	 * 
+	 *
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
 	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */
 	@Override
-	public Object buildXmlFragment(IInputDataContainer senderData,
-			IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		// Objects für Receiverinformation
 		ReceiverType receiver = new ReceiverType();
 		ClassifiableIDType receiverId = new ClassifiableIDType();
@@ -68,7 +69,7 @@ public class TransportHeaderReceiverBuilder implements IXmlComplexTypeBuilder {
 		receiverName.setValue(receiverNameValue);
 		receiver.setReceiverID(receiverId);
 		receiver.setName(receiverName);
-		logger.debug("TransportHeaderReceiver created.");
+		LOG.debug("TransportHeaderReceiver created.");
 		return receiver;
 	}
 

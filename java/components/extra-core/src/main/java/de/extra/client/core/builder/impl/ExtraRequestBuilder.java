@@ -24,7 +24,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.PropertyValue;
@@ -42,7 +43,7 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 /**
  * Diese klasse steuer XmlBuilder Anhang konfiguration an und erstellt einen
  * XmlRootElement
- * 
+ *
  * @author Leonid Potap
  * @since 1.0.0
  * @version 1.0.0
@@ -50,7 +51,7 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 @Named("extraRequestBuilder")
 public class ExtraRequestBuilder implements IExtraRequestBuilder {
 
-	private static final Logger logger = Logger
+	private static final Logger LOG = LoggerFactory
 			.getLogger(ExtraRequestBuilder.class);
 
 	@Inject
@@ -58,8 +59,8 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 	IMessageBuilderLocator messageBuilderLocator;
 
 	@Override
-	public RootElementType buildXmlMessage(IInputDataContainer senderData,
-			IExtraProfileConfiguration config) {
+	public RootElementType buildXmlMessage(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		Assert.notNull(senderData, "SenderData is null");
 		Assert.notNull(config, "ConfigFileBean is null");
 		String rootElementName = config.getRootElement();
@@ -77,15 +78,15 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 	 * Fügt ein XML Fragment zu dem ParentXmlFragement. Über die Konfiguration
 	 * wird ein Builder gefunden und die Methode zum bauen der XML Nachricht aufgerufen.
 	 * </pre>
-	 * 
+	 *
 	 * @param parentXmlFragement
 	 * @param parentElementName
 	 * @param config
 	 * @param senderData
 	 */
-	private void buildXmlMessage(Object parentXmlFragement,
-			String parentElementName, IExtraProfileConfiguration config,
-			IInputDataContainer senderData) {
+	private void buildXmlMessage(final Object parentXmlFragement,
+			final String parentElementName, final IExtraProfileConfiguration config,
+			final IInputDataContainer senderData) {
 		List<String> childElements = config.getChildElements(parentElementName);
 		for (String childElementName : childElements) {
 			IXmlComplexTypeBuilder childElementComplexTypeBuilder = messageBuilderLocator
@@ -108,13 +109,13 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 
 	/**
 	 * Set XMLChildValue in XMLParenObjekt
-	 * 
+	 *
 	 * @param parentXMLElement
 	 * @param childXmlElement
 	 * @param fieldName
 	 */
-	private void setXmlElement(Object parentXMLElement, Object childXmlElement,
-			String fieldName) {
+	private void setXmlElement(final Object parentXMLElement, final Object childXmlElement,
+			final String fieldName) {
 		if (parentXMLElement instanceof AnyPlugInContainerType) {
 			processPlugins(parentXMLElement, childXmlElement);
 		} else {
@@ -124,27 +125,27 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 
 	/**
 	 * Set Fields.
-	 * 
+	 *
 	 * @param parentXMLElement
 	 * @param childXmlElement
 	 * @param propertyName
 	 */
-	private void processField(Object parentXMLElement, Object childXmlElement,
-			String propertyName) {
+	private void processField(final Object parentXMLElement, final Object childXmlElement,
+			final String propertyName) {
 		BeanWrapper beanWrapper = new BeanWrapperImpl(parentXMLElement);
 		PropertyValue propertyValue = new PropertyValue(propertyName,
 				childXmlElement);
 		beanWrapper.setPropertyValue(propertyValue);
-		logger.debug(parentXMLElement);
+		LOG.debug("{}", parentXMLElement);
 	}
 
 	/**
 	 * Bearbeitet Plugins Elements
-	 * 
+	 *
 	 * @param parentXMLElement
 	 * @param childXmlElement
 	 */
-	private void processPlugins(Object parentXMLElement, Object childXmlElement) {
+	private void processPlugins(final Object parentXMLElement, final Object childXmlElement) {
 		// Bei dem AnyPlugInContainerType werden die childElements zu einem
 		// List hinzugefügt
 		AnyPlugInContainerType parentAnyPlugInContainerType = (AnyPlugInContainerType) parentXMLElement;

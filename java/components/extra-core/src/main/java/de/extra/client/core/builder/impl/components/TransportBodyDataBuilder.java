@@ -20,7 +20,8 @@ package de.extra.client.core.builder.impl.components;
 
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
@@ -29,20 +30,19 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap
- * 
  */
 @Named("transportBodyDataBuilder")
 public class TransportBodyDataBuilder extends XmlComplexTypeBuilderAbstr {
 
-	private static Logger logger = Logger
+	private static final Logger LOG = LoggerFactory
 			.getLogger(TransportBodyDataBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:Data";
 
 	@Override
-	public Object buildXmlFragment(IInputDataContainer senderData,
-			IExtraProfileConfiguration config) {
-		logger.debug("TransportBody aufbauen");
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
+		LOG.debug("TransportBody aufbauen");
 
 		DataType data = new DataType();
 		return data;
