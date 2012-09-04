@@ -23,7 +23,8 @@ import java.io.InputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.extra.client.plugins.outputplugin.config.HttpOutputPluginConnectConfiguration;
 import de.extra.client.plugins.outputplugin.transport.ExtraTransportFactory;
@@ -32,7 +33,7 @@ import de.extra.client.plugins.outputplugin.transport.IExtraTransport;
 @Named("httpOutputPluginSender")
 public class HttpOutputPluginSender {
 
-	private static final Logger logger = Logger
+	private static final Logger LOG = LoggerFactory
 			.getLogger(HttpOutputPluginSender.class);
 
 	private IExtraTransport client;
@@ -46,12 +47,12 @@ public class HttpOutputPluginSender {
 
 	/**
 	 * Verarbeiten des Requests.
-	 * 
+	 *
 	 * @param request
 	 *            eXTra-Request aus der CoreLib
 	 * @return
 	 */
-	public InputStream processOutput(InputStream request) {
+	public InputStream processOutput(final InputStream request) {
 
 		// Initialisiere Transport-Client
 		client = extraTransportFactory.loadTransportImpl();
