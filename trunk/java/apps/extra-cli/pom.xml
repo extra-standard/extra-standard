@@ -18,32 +18,32 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>de.extra</groupId>
+			<groupId>de.extrastandard</groupId>
 			<artifactId>extra-default-configplugin</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>de.extra</groupId>
+			<groupId>de.extrastandard</groupId>
 			<artifactId>extra-file-responseprocessplugin</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>de.extra</groupId>
+			<groupId>de.extrastandard</groupId>
 			<artifactId>extra-query-dataplugin</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>de.extra</groupId>
+			<groupId>de.extrastandard</groupId>
 			<artifactId>extra-file-dataplugin</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>de.extra</groupId>
+			<groupId>de.extrastandard</groupId>
 			<artifactId>extra-http-outputplugin</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>de.extra</groupId>
+			<groupId>de.extrastandard</groupId>
 			<artifactId>extra-core</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>

@@ -21,8 +21,8 @@ package de.extra.client.starter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
@@ -30,7 +30,14 @@ import org.springframework.core.io.Resource;
 import de.extra.client.core.ClientCore;
 import de.extra.client.core.ClientProcessResult;
 
+/**
+ * @author DSRV
+ * @version $Id$
+ */
 public class ExtraClient {
+
+	private static final Logger LOG = LoggerFactory
+			.getLogger(ExtraClient.class);
 
 	/**
 	 * Pfad und Dateiname in der die springconfig.xml liegt.
@@ -40,24 +47,22 @@ public class ExtraClient {
 	/**
 	 * Dateipfad der log4jProperties.
 	 */
-	private static final String LOG_4_J_FILE = "log4j.properties";
+	//private static final String LOG_4_J_FILE = "log4j.properties";
 
 	/**
 	 * Pfad der Ressource, die die Konfiguration des extra-Clients enthält.
 	 */
 	private static final String EXTRA_CONFIG_RESOURCE = "dependency-tree.txt";
 
-	private static Logger logger = Logger.getLogger(ExtraClient.class);
-
 	/**
 	 * Startmethode zum Aufruf aus dem startenden Programm.
-	 * 
+	 *
 	 * @return Statuscode
 	 */
 	public ClientProcessResult execute() throws Exception {
-		PropertyConfigurator.configureAndWatch(LOG_4_J_FILE);
+		//PropertyConfigurator.configureAndWatch(LOG_4_J_FILE);
 
-		logger.debug("SpringBeans laden");
+		LOG.debug("SpringBeans laden");
 		ApplicationContext applicationContext = null;
 
 		try {
@@ -75,17 +80,17 @@ public class ExtraClient {
 			}
 
 		} catch (final Exception e) {
-			logger.error("Laden der Beans fehlgeschlagen", e);
+			LOG.error("Laden der Beans fehlgeschlagen", e);
 		}
 
 		// Steuerung an Controller übergeben
-		logger.info("Beginn der Verarbeitung");
+		LOG.info("Beginn der Verarbeitung");
 
 		final ClientCore clientCore = applicationContext.getBean("clientCore", ClientCore.class);
 
 		final ClientProcessResult processResult = clientCore.process();
 
-		// Auswerten Ergebnisse
+		// TODO Auswerten Ergebnisse
 
 		return processResult;
 

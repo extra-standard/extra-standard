@@ -21,15 +21,12 @@ package de.extra.client.starter;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
 import de.extra.client.core.ClientProcessResult;
 
 public class ExtraClientTest {
-
-	private static final Logger logger = Logger.getLogger(ExtraClientTest.class);
 
 	private ExtraClient extraClient;
 

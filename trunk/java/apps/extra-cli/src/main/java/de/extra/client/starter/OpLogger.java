@@ -4,7 +4,8 @@ import java.text.SimpleDateFormat;
 
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.extrastandard.api.observer.ITransportInfo;
 import de.extrastandard.api.observer.ITransportObserver;
@@ -29,7 +30,7 @@ public class OpLogger implements ITransportObserver {
 			TIMESTAMP_FORMAT);
 
 	/** Logger für das betriebliche Log */
-	public static final Logger log = Logger.getLogger("operations");
+	public static final Logger log = LoggerFactory.getLogger("operations");
 
 	/**
 	 * @see de.extrastandard.api.observer.ITransportObserver#requestDataReceived(java.lang.String, long)
