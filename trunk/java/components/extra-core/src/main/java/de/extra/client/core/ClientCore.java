@@ -41,7 +41,9 @@ import org.springframework.oxm.XmlMappingException;
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.builder.IExtraRequestBuilder;
 import de.extra.client.core.locator.IPluginsLocatorManager;
+import de.extrastandard.api.exception.ExtraConfigRuntimeException;
 import de.extrastandard.api.exception.ExtraCoreRuntimeException;
+import de.extrastandard.api.exception.ExtraRuntimeException;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.IResponseData;
@@ -114,6 +116,12 @@ public class ClientCore implements ApplicationContextAware {
 			try {
 				final List<IResponseData> responses = processInputData(dataContainer, configFile);
 				clientProcessResult.addResult(dataContainer, responses);
+			} catch (final ExtraConfigRuntimeException extraConfigException) {
+				LOG.error("Exception in der Extra-Processing", extraConfigException);
+				clientProcessResult.addException(dataContainer, extraConfigException);
+			} catch (final ExtraRuntimeException extraRuntimeException) {
+				LOG.error("Exception in der Extra-Processing", extraRuntimeException);
+				clientProcessResult.addException(dataContainer, extraRuntimeException);
 			} catch (final Exception exception) {
 				LOG.error("Exception in der Extra-Processing", exception);
 				clientProcessResult.addException(dataContainer, exception);
