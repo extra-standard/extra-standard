@@ -28,7 +28,8 @@ import javax.inject.Named;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.extra.client.core.model.InputDataContainer;
@@ -45,7 +46,8 @@ import de.extrastandard.api.plugin.IDataPlugin;
 @Named("fileDataPlugin")
 public class FileDataPlugin implements IDataPlugin {
 
-	private static final Logger LOG = Logger.getLogger(FileDataPlugin.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(FileDataPlugin.class);
 
 	// @Inject
 	// @Named("dataPluginController")
