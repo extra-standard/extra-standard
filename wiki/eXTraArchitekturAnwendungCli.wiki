@@ -22,7 +22,7 @@ Um diese Ziele zu erreichen, wurde zugunsten eines Plugin-Systems auf eine starr
 So lässt sich der Client individuell auf die Bedürfnisse des jeweiligen Verfahrens und der Systemumgebung, in der er verwendet werden soll, anpassen.
 Die Plugins haben dazu fest definierte Schnittstellen nach außen, über welche sie untereinander kommunizieren. Die Implementierungsabhängigkeit der einzelnen Plugins und Core-Library wird wie folgt definiert:
 
-http://extra-standard.googlecode.com/svn/wiki/images/extra-cli-app-architecture.jpg
+http://extra-standard.googlecode.com/svn/wiki/images/extra-cli-app-architecture.png
 
 Folgende Interfaces stehen als zentrale Schnittstellen in der eXTra-Verarbeitung zur Verfügung:
 
