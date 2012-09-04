@@ -23,7 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.extra.client.core.ClientProcessResult;
 import de.extra.client.exit.JvmSystemExiter;
@@ -35,6 +36,8 @@ import de.extra.client.exit.SystemExiter;
  */
 public class ClientStarter {
 
+	private static final Logger LOG = LoggerFactory.getLogger(ClientStarter.class);
+
 	private static final String KEY_CURRENT_DATE = "current.date";
 
 	private static final SystemExiter EXITER = new JvmSystemExiter();
@@ -45,8 +48,6 @@ public class ClientStarter {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		System.setProperty(KEY_CURRENT_DATE, dateFormat.format(new Date()));
 	}
-
-	private static final Logger LOG = Logger.getLogger(ClientStarter.class);
 
 	/**
 	 * Main
@@ -72,7 +73,7 @@ public class ClientStarter {
 		}
 
 		File configDir = clientArguments.getConfigDirectory();
-
+		// TODO config dir zur konfiguration des clients nutzen
 		ExtraClient extraClient = new ExtraClient();
 		try {
 
