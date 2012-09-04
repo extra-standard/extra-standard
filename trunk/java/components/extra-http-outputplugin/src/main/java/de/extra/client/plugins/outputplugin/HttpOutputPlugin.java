@@ -23,22 +23,24 @@ import java.io.InputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.extrastandard.api.plugin.IOutputPlugin;
 
 @Named("httpOutputPlugin")
 public class HttpOutputPlugin implements IOutputPlugin {
 
-	private static Logger logger = Logger.getLogger(HttpOutputPlugin.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(HttpOutputPlugin.class);
 
 	@Inject
 	@Named("httpOutputPluginSender")
 	private HttpOutputPluginSender httpSender;
 
 	@Override
-	public InputStream outputData(InputStream inputStream) {
-		logger.info("Start des Versands...");
+	public InputStream outputData(final InputStream inputStream) {
+		LOG.info("Start des Versands...");
 		// TODO request = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
 		// request;
 		return httpSender.processOutput(inputStream);

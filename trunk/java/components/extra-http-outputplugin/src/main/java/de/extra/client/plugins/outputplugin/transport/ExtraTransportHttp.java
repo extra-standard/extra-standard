@@ -45,7 +45,8 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.extra.client.plugins.outputplugin.ExtraConstants;
 import de.extra.client.plugins.outputplugin.config.HttpOutputPluginConnectConfiguration;
@@ -62,17 +63,17 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	private String requestURL;
 
-	private static final Logger logger = Logger
+	private static final Logger LOG = LoggerFactory
 			.getLogger(ExtraTransportHttp.class);
 
 	/**
 	 * ExtrasTransportHttp is an implementation of IExtraTransport and provides
 	 * Communication via http(s) protocol.
-	 * 
+	 *
 	 * @see de.extra.client.transport.IExtraTransport#senden(java.lang.String)
 	 */
 	@Override
-	public InputStream senden(InputStream extraRequest)
+	public InputStream senden(final InputStream extraRequest)
 			throws ExtraTransportException {
 
 		if (client != null) {
@@ -125,13 +126,13 @@ public class ExtraTransportHttp implements IExtraTransport {
 	/**
 	 * Inits ExtraTransportHttp including setup of HttpClient, Proxy,
 	 * Authentication and Truststore.
-	 * 
+	 *
 	 * @param extraConnectData
 	 * @return void
 	 */
 	@Override
 	public void initTransport(
-			HttpOutputPluginConnectConfiguration extraConnectData)
+			final HttpOutputPluginConnectConfiguration extraConnectData)
 			throws ExtraTransportException {
 
 		// Create new client instance
@@ -150,14 +151,14 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	/**
 	 * Creates a LogString for the requested URL.
-	 * 
+	 *
 	 * @param extraConnectData
 	 * @param requestURL
 	 * @return
 	 */
 	private String buildLogString(
-			HttpOutputPluginConnectConfiguration extraConnectData,
-			String requestURL) {
+			final HttpOutputPluginConnectConfiguration extraConnectData,
+			final String requestURL) {
 
 		HttpOutputPluginSenderDataConfiguration senderData = extraConnectData
 				.getSenderData();
@@ -207,13 +208,13 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	/**
 	 * Sets up the HttpClient by setting Parameters.
-	 * 
+	 *
 	 * @param extraConnectData
 	 * @param client
 	 */
 	private void setupHttpClient(
-			HttpOutputPluginConnectConfiguration extraConnectData,
-			HttpClient client) {
+			final HttpOutputPluginConnectConfiguration extraConnectData,
+			final HttpClient client) {
 
 		// Setup user agent and charset
 		client.getParams().setParameter("http.useragent",
@@ -224,14 +225,14 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	/**
 	 * Sets up Authentication for the client.
-	 * 
+	 *
 	 * @param extraConnectData
 	 * @param client
 	 * @throws ExtraTransportException
 	 */
 	private void setupAuthentification(
-			HttpOutputPluginConnectConfiguration extraConnectData,
-			HttpClient client) throws ExtraTransportException {
+			final HttpOutputPluginConnectConfiguration extraConnectData,
+			final HttpClient client) throws ExtraTransportException {
 		HttpOutputPluginSenderDataConfiguration senderData = extraConnectData
 				.getSenderData();
 
@@ -309,13 +310,13 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	/**
 	 * Sets up a Proxy for the client.
-	 * 
+	 *
 	 * @param extraConnectData
 	 * @param client
 	 */
 	private void setupProxy(
-			HttpOutputPluginConnectConfiguration extraConnectData,
-			HttpClient client) {
+			final HttpOutputPluginConnectConfiguration extraConnectData,
+			final HttpClient client) {
 
 		HttpOutputPluginSenderDataConfiguration senderData = extraConnectData
 				.getSenderData();
@@ -360,12 +361,12 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	/**
 	 * Builds an URLString with "http://" or "https://" (if SSL is used).
-	 * 
+	 *
 	 * @param extraConnectData
 	 * @param urlString
 	 */
 	private String buildUrlString(
-			HttpOutputPluginConnectConfiguration extraConnectData) {
+			final HttpOutputPluginConnectConfiguration extraConnectData) {
 
 		StringBuffer urlString = new StringBuffer();
 
@@ -399,18 +400,18 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	/**
 	 * Sets up the Truststore.
-	 * 
+	 *
 	 * @param extraConnectData
 	 * @return
 	 */
 	private void setupTruststore(
-			HttpOutputPluginConnectConfiguration extraConnectData)
+			final HttpOutputPluginConnectConfiguration extraConnectData)
 			throws ExtraTransportException {
 
 		// Load TrustStoreLocation from properties
 		String truststoreLocation = extraConnectData.getSslTruststoreLocation();
 
-		logger.debug("TruststoreLoc: " + truststoreLocation);
+		LOG.debug("TruststoreLoc: " + truststoreLocation);
 
 		// If no location specified -> fallback to JRE default
 		if (truststoreLocation == null || truststoreLocation.length() == 0) {
@@ -419,7 +420,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 					+ "security" + File.separatorChar + "cacerts";
 		}
 
-		logger.debug("TruststoreLoc: " + truststoreLocation);
+		LOG.debug("TruststoreLoc: " + truststoreLocation);
 
 		try {
 			// Create keystore instance
@@ -444,7 +445,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 			if (extraConnectData.isSslCertificateRefresh()
 					|| ks.getCertificateAlias(cert) == null) {
 
-				logger.info("Zertifikat wird eingetragen");
+				LOG.info("Zertifikat wird eingetragen");
 
 				ks.store(new FileOutputStream(truststoreLocation),
 						extraConnectData.getSslTruststorePassword()

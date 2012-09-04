@@ -16,7 +16,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
@@ -34,7 +35,7 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 
 	private static final long serialVersionUID = 1607616003288362662L;
 
-	private static Logger logger = Logger.getLogger(FileSystemHelper.class);
+	private static final Logger LOG = LoggerFactory.getLogger(FileSystemHelper.class);
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -61,12 +62,12 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 				if (packageList == null || packageList.size() == 0) {
 					final String responseId = extraResponse.getTransportHeader().getResponseDetails().getResponseID()
 							.getValue();
-					logger.debug("Keine Pakete vorhanden");
+					LOG.debug("Keine Pakete vorhanden");
 					final byte[] responseBody = extraResponse.getTransportBody().getData().getBase64CharSequence()
 							.getValue();
 
 					if (saveBodyToFilesystem(responseId, responseBody)) {
-						logger.debug("Speicheren des Body auf Filesystem erfolgreich");
+						LOG.debug("Speicheren des Body auf Filesystem erfolgreich");
 					}
 				} else {
 					for (final Iterator<Package> iter = packageList.iterator(); iter.hasNext();) {
@@ -89,12 +90,12 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 
 						if (packageBody != null) {
 							if (saveBodyToFilesystem(responseId, packageBody)) {
-								if (logger.isDebugEnabled()) {
-									logger.debug("Speichern für RespId " + responseId + " erfolgreich");
+								if (LOG.isDebugEnabled()) {
+									LOG.debug("Speichern für RespId " + responseId + " erfolgreich");
 								}
 							}
 						} else {
-							logger.error("PackageBody nicht gefüllt");
+							LOG.error("PackageBody nicht gefüllt");
 
 						}
 					}
@@ -110,7 +111,7 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 
 				saveReportToFilesystem(report, responseId, requestId);
 
-				logger.info("Body leer");
+				LOG.info("Body leer");
 			}
 
 			return new ArrayList<IResponseData>();
@@ -143,11 +144,11 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 			fw.write(new String(responseBody));
 
 		} catch (final IOException e) {
-			logger.error("Fehler beim schreiben der Antwort", e);
+			LOG.error("Fehler beim schreiben der Antwort", e);
 		}
 
-		if (logger.isTraceEnabled()) {
-			logger.trace("Dateiname: '" + dateiName + "'");
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("Dateiname: '" + dateiName + "'");
 		}
 
 		return erfolgreichGespeichert;
@@ -192,17 +193,17 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 
 			fw.write(sb.toString());
 		} catch (final IOException e) {
-			logger.error("Fehler beim Schreiben des Reports", e);
+			LOG.error("Fehler beim Schreiben des Reports", e);
 		} finally {
 			try {
 				fw.close();
 			} catch (final IOException e) {
-				logger.error("Fehler beim schließen das FileWriters");
+				LOG.error("Fehler beim schließen das FileWriters");
 			}
 		}
 
-		if (logger.isTraceEnabled()) {
-			logger.trace("Report: '" + dateiName + "'");
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("Report: '" + dateiName + "'");
 		}
 
 		return erfolgreichGespeichert;
@@ -221,12 +222,12 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 		final File reportsOrdner = new File(reportOrdner);
 
 		if (!eingangsOrdner.exists()) {
-			logger.debug("Eingangsordner anlegen");
+			LOG.debug("Eingangsordner anlegen");
 
 			eingangsOrdner.mkdir();
 		}
 		if (!reportsOrdner.exists()) {
-			logger.debug("Reportordner anlegen");
+			LOG.debug("Reportordner anlegen");
 
 			reportsOrdner.mkdir();
 		}
