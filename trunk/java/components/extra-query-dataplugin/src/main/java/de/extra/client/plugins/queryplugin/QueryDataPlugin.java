@@ -23,7 +23,8 @@ import java.util.Iterator;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 import de.extrastandard.api.model.content.IInputDataContainer;
@@ -32,7 +33,7 @@ import de.extrastandard.api.plugin.IDataPlugin;
 @Named("queryDataPlugin")
 public class QueryDataPlugin implements IDataPlugin {
 
-	private static Logger logger = Logger.getLogger(QueryDataPlugin.class);
+	private static final Logger LOG = LoggerFactory.getLogger(QueryDataPlugin.class);
 
 	@Inject
 	@Named("queryPluginController")
@@ -40,11 +41,8 @@ public class QueryDataPlugin implements IDataPlugin {
 
 	@Override
 	public Iterator<IInputDataContainer> getData() {
-		logger.info("Start des Versands");
-		if (logger.isDebugEnabled()) {
-			logger.debug("Erstelle Query");
-		}
-
+		LOG.info("Start des Versands");
+		LOG.debug("Erstelle Query");
 		return queryController.processQuery();
 	}
 }
