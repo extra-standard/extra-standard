@@ -23,7 +23,8 @@ import java.util.List;
 
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.schema.ElementType;
 import de.extra.client.core.model.ExtraProfileConfiguration;
@@ -33,16 +34,16 @@ import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 @Named("profilHelper")
 public class ProfilHelper {
 
-	private static final Logger logger = Logger.getLogger(ProfilHelper.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ProfilHelper.class);
 
 	/**
 	 * Funktion zum befüllen der ConfigFileBean.
-	 * 
+	 *
 	 * @param profilListe
 	 *            JaxB-Element der Profildatei
 	 * @return ConfigFileBean
 	 */
-	public IExtraProfileConfiguration configFileBeanLoader(List<ElementType> profilListe) {
+	public IExtraProfileConfiguration configFileBeanLoader(final List<ElementType> profilListe) {
 		ExtraProfileConfiguration configFileBean = new ExtraProfileConfiguration();
 
 		for (Iterator<ElementType> iter = profilListe.iterator(); iter
@@ -85,7 +86,7 @@ public class ProfilHelper {
 
 	/**
 	 * Generiert zur Zeit aus dem TimeStamp die RequestId.
-	 * 
+	 *
 	 * @return requestId
 	 */
 	public String generateReqId() {

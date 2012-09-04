@@ -26,7 +26,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.schema.ProfilkonfigurationType;
@@ -37,7 +38,8 @@ import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 @Named("configController")
 public class ConfigPluginController {
 
-	Logger logger = Logger.getLogger(ConfigPluginController.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(ConfigPluginController.class);
 
 	private File profileFile;
 
@@ -46,42 +48,37 @@ public class ConfigPluginController {
 	private ProfilHelper profilHelper;
 
 	@Value("${plugins.configplugin.defaultConfigPlugin.profilOrdner}")
-	public void setProfileFile(File profileFile) {
+	public void setProfileFile(final File profileFile) {
 		this.profileFile = profileFile;
 	}
 
 
 	/**
 	 * Verarbeitung der Konfigurations-Files.
-	 * 
+	 *
 	 * @return ConfigFileBean
 	 */
 	public IExtraProfileConfiguration processConfigFile() {
 		IExtraProfileConfiguration cfb = null;
 
 		// Laden der Profildatei
-		if (logger.isDebugEnabled()) {
-			logger.debug("Unmarshaling der Profildatei");
-		}
+		LOG.debug("Unmarshaling der Profildatei");
 
 		// Unmarshalling der Profildatei
 		ProfilkonfigurationType profilConfig = unmarshalConfig(profileFile);
 		cfb = profilHelper.configFileBeanLoader(profilConfig.getElement());
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("Füllen der Versandinformationen");
-
-		}
+		LOG.debug("Füllen der Versandinformationen");
 
 		// Erzeugen der RequestId
 		/*
 		 * Auskommentiert, da RequestId über den Auftragssatz der Nutzdatei
 		 * mitgeliefert wird
-		 * 
+		 *
 		 * String requestId = profilHelper.generateReqId();
-		 * 
+		 *
 		 * logger.info("RequestId: " + requestId);
-		 * 
+		 *
 		 * cfb.setRequestId(requestId);
 		 */
 
@@ -90,12 +87,12 @@ public class ConfigPluginController {
 
 	/**
 	 * Unmarshalling der Profildatei.
-	 * 
+	 *
 	 * @param dateiName
 	 *            Vollstaendiger Pfad der Profildatei
 	 * @return JaxB-Element
 	 */
-	private ProfilkonfigurationType unmarshalConfig(File profileFile) {
+	private ProfilkonfigurationType unmarshalConfig(final File profileFile) {
 		ProfilkonfigurationType pkt = null;
 		JAXBContext jc;
 		try {
@@ -106,9 +103,9 @@ public class ConfigPluginController {
 			Unmarshaller u = jc.createUnmarshaller();
 			pkt = (ProfilkonfigurationType) u.unmarshal(profileFile);
 		} catch (JAXBException e) {
-			logger.error("Fehler beim Verarbeiten des XML", e);
+			LOG.error("Fehler beim Verarbeiten des XML", e);
 		} catch (Exception e) {
-			logger.error("Fehler beim Verarbeiten des XML", e);
+			LOG.error("Fehler beim Verarbeiten des XML", e);
 		}
 		return pkt;
 	}
