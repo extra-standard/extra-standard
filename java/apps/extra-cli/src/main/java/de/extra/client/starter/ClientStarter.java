@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.extra.client.core.ClientProcessResult;
+import de.extra.client.core.observer.OpLogger;
 import de.extra.client.exit.JvmSystemExiter;
 import de.extra.client.exit.SystemExiter;
 

@@ -29,6 +29,7 @@ import org.springframework.core.io.Resource;
 
 import de.extra.client.core.ClientCore;
 import de.extra.client.core.ClientProcessResult;
+import de.extra.client.core.observer.OpLogger;
 
 /**
  * @author DSRV
