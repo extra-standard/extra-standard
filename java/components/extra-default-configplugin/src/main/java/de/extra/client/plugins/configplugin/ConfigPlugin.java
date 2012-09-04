@@ -21,7 +21,8 @@ package de.extra.client.plugins.configplugin;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.extra.client.plugins.configplugin.controller.ConfigPluginController;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
@@ -30,11 +31,11 @@ import de.extrastandard.api.plugin.IConfigPlugin;
 @Named("defaultConfigPlugin")
 public class ConfigPlugin implements IConfigPlugin {
 
+	private static final Logger LOG = LoggerFactory.getLogger(ConfigPlugin.class);
+
 	@Inject
 	@Named("configController")
 	private ConfigPluginController configPluginController;
-
-	private static Logger logger = Logger.getLogger(ConfigPlugin.class);
 
 	/**
 	 * Basismethode mit der die Verarbeitung der Konfigurationsdatei aufgerufen
@@ -42,7 +43,7 @@ public class ConfigPlugin implements IConfigPlugin {
 	 */
 	@Override
 	public IExtraProfileConfiguration getConfigFile() {
-		logger.info("Aufruf der Verarbeitung");
+		LOG.info("Aufruf der Verarbeitung");
 		return configPluginController.processConfigFile();
 	}
 }
