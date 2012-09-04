@@ -30,7 +30,8 @@ import javax.inject.Named;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
@@ -62,7 +63,8 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
 @Named("acknowledgePhase1ResponseProcessPlugin")
 public class AcknowledgePhase1ResponseProcessPlugin implements IResponseProcessPlugin {
 
-	private static Logger logger = Logger.getLogger(AcknowledgePhase1ResponseProcessPlugin.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(AcknowledgePhase1ResponseProcessPlugin.class);
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -142,11 +144,11 @@ public class AcknowledgePhase1ResponseProcessPlugin implements IResponseProcessP
 			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(extraResponse, streamResult);
-			logger.debug("ExtraResponse: " + writer.toString());
+			LOG.debug("ExtraResponse: " + writer.toString());
 		} catch (final XmlMappingException xmlException) {
-			logger.debug("XmlMappingException beim Lesen des Results ", xmlException);
+			LOG.debug("XmlMappingException beim Lesen des Results ", xmlException);
 		} catch (final IOException ioException) {
-			logger.debug("IOException beim Lesen des Results ", ioException);
+			LOG.debug("IOException beim Lesen des Results ", ioException);
 		}
 
 	}

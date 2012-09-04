@@ -36,7 +36,8 @@ import javax.inject.Named;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
@@ -62,7 +63,8 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
 @Named("fileSystemResponseProcessPlugin")
 public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
-	private static Logger logger = Logger.getLogger(FileSystemResponseProcessPlugin.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(FileSystemResponseProcessPlugin.class);
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -118,12 +120,12 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 				final List<Package> packageList = extraResponse.getTransportBody().getPackage();
 				if (packageList == null || packageList.size() == 0) {
 					final String responseId = responseDetails.getResponseID().getValue();
-					logger.debug("Keine Pakete vorhanden");
+					LOG.debug("Keine Pakete vorhanden");
 					final byte[] responseBody = extraResponse.getTransportBody().getData().getBase64CharSequence()
 							.getValue();
 
 					if (saveBodyToFilesystem(responseId, responseBody)) {
-						logger.debug("Speicheren des Body auf Filesystem erfolgreich");
+						LOG.debug("Speicheren des Body auf Filesystem erfolgreich");
 					}
 
 					final IResponseData responseData = new ResponseData(requestDetails.getRequestID().getValue(),
@@ -151,12 +153,12 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
 						if (packageBody != null) {
 							if (saveBodyToFilesystem(responseId, packageBody)) {
-								if (logger.isDebugEnabled()) {
-									logger.debug("Speichern für RespId " + responseId + " erfolgreich");
+								if (LOG.isDebugEnabled()) {
+									LOG.debug("Speichern für RespId " + responseId + " erfolgreich");
 								}
 							}
 						} else {
-							logger.error("PackageBody nicht gefüllt");
+							LOG.error("PackageBody nicht gefüllt");
 
 						}
 					}
@@ -171,7 +173,7 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
 				final IResponseData responseData = new ResponseData(requestId, "C00", "RETURNTEXT", responseId);
 				responseDataList.add(responseData);
-				logger.info("Body leer");
+				LOG.info("Body leer");
 			}
 
 		} catch (final XmlMappingException xmlMappingException) {
@@ -190,11 +192,11 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(extraResponse, streamResult);
-			logger.debug("ExtraResponse: " + writer.toString());
+			LOG.debug("ExtraResponse: " + writer.toString());
 		} catch (final XmlMappingException xmlException) {
-			logger.debug("XmlMappingException beim Lesen des Results ", xmlException);
+			LOG.debug("XmlMappingException beim Lesen des Results ", xmlException);
 		} catch (final IOException ioException) {
-			logger.debug("IOException beim Lesen des Results ", ioException);
+			LOG.debug("IOException beim Lesen des Results ", ioException);
 		}
 
 	}
@@ -242,11 +244,20 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			transportObserver.responseDataForwarded(responseFile.getAbsolutePath(), responseBody.length);
 
 		} catch (final IOException e) {
-			logger.error("Fehler beim schreiben der Antwort", e);
+			LOG.error("Fehler beim schreiben der Antwort", e);
+		} finally {
+			if (fw != null) {
+				try {
+					fw.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 
-		if (logger.isTraceEnabled()) {
-			logger.trace("Dateiname: '" + dateiName + "'");
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("Dateiname: '" + dateiName + "'");
 		}
 
 		return erfolgreichGespeichert;
@@ -294,17 +305,17 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			transportObserver.responseDataForwarded(reportFile.getAbsolutePath(), 0);
 
 		} catch (final IOException e) {
-			logger.error("Fehler beim Schreiben des Reports", e);
+			LOG.error("Fehler beim Schreiben des Reports", e);
 		} finally {
 			try {
 				fw.close();
 			} catch (final IOException e) {
-				logger.error("Fehler beim schließen das FileWriters");
+				LOG.error("Fehler beim schließen das FileWriters");
 			}
 		}
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("Report: '" + reportFile.getAbsolutePath() + "'");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Report: '" + reportFile.getAbsolutePath() + "'");
 		}
 
 		return erfolgreichGespeichert;
@@ -320,12 +331,12 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
 	private void pruefeVerzeichnis() {
 		if (!eingangOrdner.exists()) {
-			logger.debug("Eingangsordner anlegen");
+			LOG.debug("Eingangsordner anlegen");
 
 			eingangOrdner.mkdir();
 		}
 		if (!reportOrdner.exists()) {
-			logger.debug("Reportordner anlegen");
+			LOG.debug("Reportordner anlegen");
 
 			reportOrdner.mkdir();
 		}

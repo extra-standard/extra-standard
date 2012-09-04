@@ -21,23 +21,25 @@ package de.extra.client.plugins.responseprocessplugin.filesystem;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.extrastandard.namespace.components.FlagCodeType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 
 public class ExtraMessageReturnCodeExtractor {
-	
-	private static final Logger logger = Logger.getLogger(ExtraMessageReturnCodeExtractor.class);
-	
+
+	private static final Logger LOG = LoggerFactory
+			.getLogger(ExtraMessageReturnCodeExtractor.class);
+
 	/**
 	 * Liefert FlagCode aus der Nachricht
 	 * @param extraResponse
 	 * @return
 	 */
-	public FlagCodeType getReturnCode(XMLTransport extraResponse){
-//		TODO Allgemeine Lösung 
+	public FlagCodeType getReturnCode(final XMLTransport extraResponse){
+//		TODO Allgemeine Lösung
 		List<FlagType> flagList = new ArrayList<FlagType>();
 
 		flagList = extraResponse.getTransportHeader().getResponseDetails()
@@ -51,11 +53,11 @@ public class ExtraMessageReturnCodeExtractor {
 				|| flagCode.getValue().equalsIgnoreCase("I000")
 				|| flagCode.getValue().equalsIgnoreCase("E98")) {
 
-			logger.debug("Verarbeitung erfolgreich");
+			LOG.debug("Verarbeitung erfolgreich");
 
 		} else {
 
-			logger.debug("Verarbeitung nicht erfolgreich");
+			LOG.debug("Verarbeitung nicht erfolgreich");
 
 		}
 		return flagCode;
