@@ -9,6 +9,7 @@
 
 	<bean class="de.extra.client.core.annotation.PropertyPlaceholderPluginConfigurer">
 	  <property name="properties" ref="extra-cli-properties"/>
+	  <property name="ignoreNullValues" value="true" />
 	</bean>
 
 	<util:properties id="extra-cli-properties" location="classpath:extra-cli.properties"/>
