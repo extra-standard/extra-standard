@@ -24,7 +24,8 @@ import java.lang.reflect.Method;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.MutablePropertyValues;
@@ -37,11 +38,11 @@ import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 /**
  * <pre>
  * This class extends the PropertyPlaceholderConfigurer so that we will able to
- * configure our plugins. 
+ * configure our plugins.
  * This code is taken and extended from:
  * http://stackoverflow.com/questions/317687/inject-property-value-into-spring-bean
  * </pre>
- * 
+ *
  * @author Leonid Potap
  * @version 1.0.0
  * @since 1.0.0
@@ -49,20 +50,20 @@ import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 public class PropertyPlaceholderPluginConfigurer extends
 		PropertyPlaceholderConfigurer {
 
-	private static final Logger logger = Logger
+	private static final Logger LOG = LoggerFactory
 			.getLogger(PropertyPlaceholderPluginConfigurer.class);
 
 	@Override
 	protected void processProperties(
-			ConfigurableListableBeanFactory beanFactory, Properties properties)
+			final ConfigurableListableBeanFactory beanFactory, final Properties properties)
 			throws BeansException {
 		super.processProperties(beanFactory, properties);
 
 		for (String beanName : beanFactory.getBeanDefinitionNames()) {
 			Class<?> clazz = beanFactory.getType(beanName);
 
-			if (logger.isDebugEnabled()) {
-				logger.debug("Configuring properties for bean=" + beanName
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("Configuring properties for bean=" + beanName
 						+ "[" + clazz + "]");
 			}
 
@@ -75,16 +76,16 @@ public class PropertyPlaceholderPluginConfigurer extends
 	}
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 * @param beanFactory
 	 * @param properties
 	 * @param beanName
 	 * @param clazz
 	 */
 	private void setPluginsProperties(
-			ConfigurableListableBeanFactory beanFactory, Properties properties,
-			String beanName, Class<?> clazz) {
+			final ConfigurableListableBeanFactory beanFactory, final Properties properties,
+			final String beanName, final Class<?> clazz) {
 		PluginConfiguration annotationConfigutation = clazz
 				.getAnnotation(PluginConfiguration.class);
 		MutablePropertyValues mutablePropertyValues = beanFactory
@@ -107,8 +108,8 @@ public class PropertyPlaceholderPluginConfigurer extends
 							"No such property=[" + key
 									+ "] found in properties.");
 				}
-				if (logger.isDebugEnabled()) {
-					logger.debug("setting property=[" + clazz.getName() + "."
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("setting property=[" + clazz.getName() + "."
 							+ property.getName() + "] value=[" + key + "="
 							+ value + "]");
 				}
@@ -118,8 +119,8 @@ public class PropertyPlaceholderPluginConfigurer extends
 		}
 
 		for (Field field : clazz.getDeclaredFields()) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("examining field=[" + clazz.getName() + "."
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("examining field=[" + clazz.getName() + "."
 						+ field.getName() + "]");
 			}
 			if (field.isAnnotationPresent(PluginValue.class)) {
@@ -142,8 +143,8 @@ public class PropertyPlaceholderPluginConfigurer extends
 							"No such property=[" + key
 									+ "] found in properties.");
 				}
-				if (logger.isDebugEnabled()) {
-					logger.debug("setting property=[" + clazz.getName() + "."
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("setting property=[" + clazz.getName() + "."
 							+ field.getName() + "] value=[" + key + "=" + value
 							+ "]");
 				}
@@ -154,12 +155,12 @@ public class PropertyPlaceholderPluginConfigurer extends
 
 	/**
 	 * Findet Key Anhang Annotation.
-	 * 
+	 *
 	 * @param annotation
 	 * @return
 	 */
-	private String extractKey(PluginConfiguration annotation,
-			PluginValue value, Class<?> clazz) {
+	private String extractKey(final PluginConfiguration annotation,
+			final PluginValue value, final Class<?> clazz) {
 		try {
 			String initialKey = value.key();
 			String plugInBeanName = annotation.pluginBeanName();
@@ -200,11 +201,11 @@ public class PropertyPlaceholderPluginConfigurer extends
 
 	/**
 	 * Berechnet Key aus dem xmlType indem ':' durch '.' replased wird
-	 * 
+	 *
 	 * @param xmlType
 	 * @return
 	 */
-	private String extractKeyFromXmlType(String xmlType) {
+	private String extractKeyFromXmlType(final String xmlType) {
 		String xmlTypeKey = StringUtils.replace(xmlType, ":", ".");
 		return xmlTypeKey;
 	}

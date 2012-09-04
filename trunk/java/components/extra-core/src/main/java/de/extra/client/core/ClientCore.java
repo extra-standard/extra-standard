@@ -30,7 +30,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -52,7 +53,7 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
 @Named("clientCore")
 public class ClientCore implements ApplicationContextAware {
 
-	private static final Logger logger = Logger.getLogger(ClientCore.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ClientCore.class);
 
 	public static final int STATUS_CODE_OK = 0;
 
@@ -114,7 +115,7 @@ public class ClientCore implements ApplicationContextAware {
 				final List<IResponseData> responses = processInputData(dataContainer, configFile);
 				clientProcessResult.addResult(dataContainer, responses);
 			} catch (final Exception exception) {
-				logger.error("Exception in der Extra-Processing", exception);
+				LOG.error("Exception in der Extra-Processing", exception);
 				clientProcessResult.addException(dataContainer, exception);
 			}
 		}
@@ -133,8 +134,8 @@ public class ClientCore implements ApplicationContextAware {
 
 			marshaller.marshal(request, streamResult);
 
-			logger.debug("Ausgabe: " + outputStream.toString());
-			logger.debug("Übergabe an OutputPlugin");
+			LOG.debug("Ausgabe: " + outputStream.toString());
+			LOG.debug("Übergabe an OutputPlugin");
 
 			final InputStream responseAsStream = outputPlugin.outputData(new ByteArrayInputStream(outputStream
 					.toByteArray()));

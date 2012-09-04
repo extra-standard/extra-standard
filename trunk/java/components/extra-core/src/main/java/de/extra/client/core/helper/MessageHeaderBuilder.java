@@ -25,7 +25,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.components.ApplicationType;
@@ -39,30 +40,31 @@ import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 
 @Named("headerHelper")
 public class MessageHeaderBuilder {
-	
-	private static Logger logger = Logger.getLogger(MessageHeaderBuilder.class);
-	
+
+	private static final Logger LOG = LoggerFactory
+			.getLogger(MessageHeaderBuilder.class);
+
 	private static final String PRODUCT_NAME = "eXTra Klient OpenSource";
-	
+
 	private static final String MANUFACTURE = "OpenSource";
-	
+
 	@Value("${message.builder.header.testIndicator}")
 	private String testIndicator;
-	
+
 	@Value("${message.builder.header.senderId.class}")
 	private String senderIdClass;
 	@Value("${message.builder.header.senderId.value}")
 	private String senderIdValue;
 	@Value("${message.builder.header.senderNameValue}")
 	private String senderNameValue;
-	
+
 	@Value("${message.builder.header.receiverId.class}")
 	private String receiverIdClass;
 	@Value("${message.builder.header.receiverId.value}")
 	private String receiverIdValue;
 	@Value("${message.builder.header.receiverNameValue}")
 	private String receiverNameValue;
-	
+
 	@Value("${message.builder.header.requestDetail.procedure}")
 	private String requestDetailProcedure;
 	@Value("${message.builder.header.requestDetail.dataType}")
@@ -72,15 +74,15 @@ public class MessageHeaderBuilder {
 
 	/**
 	 * Funktion zum Aufbau des Headers.
-	 * 
+	 *
 	 * @param configFile
 	 *            ConfigFileBean mit den Informationen aus der ProfilDatei
 	 * @param requestID
 	 *            RequestID der Sendung
 	 * @return TransportHeader
 	 */
-	public TransportHeader createHeader(IExtraProfileConfiguration configFile,
-			String requestID) {
+	public TransportHeader createHeader(final IExtraProfileConfiguration configFile,
+			final String requestID) {
 		TransportHeader header = new TransportHeader();
 
 		// Objects für Senderinformation
@@ -143,9 +145,9 @@ public class MessageHeaderBuilder {
 	}
 
 	/**
-	 * 
+	 *
 	 * Erstellen des aktuellen Timestamps.
-	 * 
+	 *
 	 * @return XMLGregorianCalendar mit aktuellem Datum
 	 */
 	private XMLGregorianCalendar CreateCurrentTimestamp() {
@@ -154,7 +156,7 @@ public class MessageHeaderBuilder {
 		try {
 			timestamp = DatatypeFactory.newInstance().newXMLGregorianCalendar();
 		} catch (DatatypeConfigurationException e) {
-			logger.error(e.getMessage());
+			LOG.error(e.getMessage());
 		}
 
 		Calendar now = Calendar.getInstance();

@@ -24,7 +24,8 @@ import javax.inject.Named;
 
 import org.apache.commons.codec.binary.Base64InputStream;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
@@ -33,21 +34,21 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap
- * 
+ *
  */
 @Named("transportBodyBase64CharSequenceBuilder")
 public class TransportBodyBase64CharSequenceBuilder extends
 		XmlComplexTypeBuilderAbstr {
 
-	private static Logger logger = Logger
+	private static final Logger LOG = LoggerFactory
 			.getLogger(TransportBodyBase64CharSequenceBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:Base64CharSequence";
 
 	@Override
-	public Object buildXmlFragment(IInputDataContainer senderData,
-			IExtraProfileConfiguration config) {
-		logger.debug("Base64CharSequenceType aufbauen");
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
+		LOG.debug("Base64CharSequenceType aufbauen");
 		Base64CharSequenceType base64CharSequence = new Base64CharSequenceType();
 
 		Base64InputStream base64InputStream = new Base64InputStream(

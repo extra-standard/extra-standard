@@ -20,7 +20,8 @@ package de.extra.client.core.builder.impl.plugins;
 
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.extrastandard.namespace.plugins.DataContainerType;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataSource;
@@ -33,7 +34,7 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap
- * 
+ *
  */
 
 @Named("dataSourceConfigurablePluginsBuilder")
@@ -41,7 +42,7 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 public class DataSourceConfigurablePluginsBuilder extends
 		XmlComplexTypeBuilderAbstr {
 
-	private static Logger logger = Logger
+	private static final Logger LOG = LoggerFactory
 			.getLogger(DataSourceConfigurablePluginsBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:DataSource";
@@ -55,20 +56,20 @@ public class DataSourceConfigurablePluginsBuilder extends
 
 	/**
 	 * Erstellt die DataSource, aus der Konfigurationsdatei (non-Javadoc)
-	 * 
+	 *
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
 	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */
 	@Override
-	public Object buildXmlFragment(IInputDataContainer senderData,
-			IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		DataSource dataSource = new DataSource();
 		DataContainerType dataContainerType = new DataContainerType();
 		dataContainerType.setType(type);
 		dataContainerType.setName(name);
 		dataContainerType.setEncoding(encoding);
 		dataSource.setDataContainer(dataContainerType);
-		logger.debug("DataSourcePlugin created.");
+		LOG.debug("DataSourcePlugin created.");
 		return dataSource;
 
 	}
@@ -82,7 +83,7 @@ public class DataSourceConfigurablePluginsBuilder extends
 	 * @param type
 	 *            the type to set
 	 */
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
 
@@ -90,7 +91,7 @@ public class DataSourceConfigurablePluginsBuilder extends
 	 * @param value
 	 *            the value to set
 	 */
-	public void setName(String value) {
+	public void setName(final String value) {
 		this.name = value;
 	}
 
@@ -98,7 +99,7 @@ public class DataSourceConfigurablePluginsBuilder extends
 	 * @param encoding
 	 *            the encoding to set
 	 */
-	public void setEncoding(String encoding) {
+	public void setEncoding(final String encoding) {
 		this.encoding = encoding;
 	}
 

@@ -24,7 +24,8 @@ import javax.inject.Named;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.components.ElementSequenceType;
@@ -39,13 +40,13 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap
- * 
+ *
  */
 @Named("transportBodyElementSequenceBuilder")
 public class TransportBodyElementSequenceBuilder extends
 		XmlComplexTypeBuilderAbstr {
 
-	private static Logger logger = Logger
+	private final static Logger LOG = LoggerFactory
 			.getLogger(TransportBodyElementSequenceBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:ElementSequence";
@@ -54,9 +55,9 @@ public class TransportBodyElementSequenceBuilder extends
 	private String packageLimit;
 
 	@Override
-	public Object buildXmlFragment(IInputDataContainer senderData,
-			IExtraProfileConfiguration config) {
-		logger.debug("xcpt:ElementSequence aufbauen");
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
+		LOG.debug("xcpt:ElementSequence aufbauen");
 		// TODO DataRequest anders aufbauen. Der sollte über die Nutzdaten zu
 		// ziehen sein.
 		DataRequest dataRequest = createDataRequest(senderData);
@@ -65,7 +66,7 @@ public class TransportBodyElementSequenceBuilder extends
 		return elementSequence;
 	}
 
-	private DataRequest createDataRequest(IInputDataContainer senderData) {
+	private DataRequest createDataRequest(final IInputDataContainer senderData) {
 		DataRequest dataRequest = new DataRequest();
 
 		Control controlElement = new Control();
