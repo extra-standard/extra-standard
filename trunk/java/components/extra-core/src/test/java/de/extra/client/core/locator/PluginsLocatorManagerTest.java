@@ -33,6 +33,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import de.extra.client.core.locator.impl.PluginsLocatorManager;
 import de.extrastandard.api.plugin.IDataPlugin;
 
 /**

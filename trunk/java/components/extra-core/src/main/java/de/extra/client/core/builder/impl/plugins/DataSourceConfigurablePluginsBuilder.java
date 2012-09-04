@@ -19,6 +19,7 @@
 package de.extra.client.core.builder.impl.plugins;
 
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,37 +35,39 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap
- *
+ * 
  */
 
 @Named("dataSourceConfigurablePluginsBuilder")
 @PluginConfiguration(pluginBeanName = "dataSourceConfigurablePluginsBuilder", pluginType = PluginConfigType.Builder)
-public class DataSourceConfigurablePluginsBuilder extends
-		XmlComplexTypeBuilderAbstr {
+public class DataSourceConfigurablePluginsBuilder extends XmlComplexTypeBuilderAbstr {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(DataSourceConfigurablePluginsBuilder.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DataSourceConfigurablePluginsBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:DataSource";
 
 	@PluginValue(key = "type")
+	@NotNull
 	private String type;
+
 	@PluginValue(key = "name")
+	@NotNull
 	private String name;
+
 	@PluginValue(key = "encoding")
+	@NotNull
 	private String encoding;
 
 	/**
 	 * Erstellt die DataSource, aus der Konfigurationsdatei (non-Javadoc)
-	 *
+	 * 
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
 	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */
 	@Override
-	public Object buildXmlFragment(final IInputDataContainer senderData,
-			final IExtraProfileConfiguration config) {
-		DataSource dataSource = new DataSource();
-		DataContainerType dataContainerType = new DataContainerType();
+	public Object buildXmlFragment(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
+		final DataSource dataSource = new DataSource();
+		final DataContainerType dataContainerType = new DataContainerType();
 		dataContainerType.setType(type);
 		dataContainerType.setName(name);
 		dataContainerType.setEncoding(encoding);
