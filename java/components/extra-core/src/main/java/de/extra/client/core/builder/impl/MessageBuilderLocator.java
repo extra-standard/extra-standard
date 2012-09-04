@@ -36,25 +36,30 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;
+import org.springframework.validation.DirectFieldBindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.Validator;
 
 import de.extra.client.core.builder.IMessageBuilderLocator;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extra.client.core.builder.IXmlRootElementBuilder;
 import de.extra.client.core.builder.impl.plugins.CompositePluginsBuilder;
+import de.extrastandard.api.exception.ExceptionCode;
+import de.extrastandard.api.exception.ExtraConfigRuntimeException;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * MessageBuilderLocator sucht zu jedem elementType ein entsprechenen
  * MessageBuilder
- *
+ * 
  * @author Leonid Potap
- *
+ * 
  */
 @Named("messageBuilderLocator")
 public class MessageBuilderLocator implements IMessageBuilderLocator {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(MessageBuilderLocator.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MessageBuilderLocator.class);
 
 	private static final String XML_BUILDER_KEY_SEPARATOR = ":";
 
@@ -71,11 +76,15 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	@Named("extra-cli-properties")
 	private Properties configProperties;
 
+	@Inject
+	@Named("validator")
+	private Validator validator;
+
 	/**
 	 * Hier werden alle XMLRootElementbuilder injected
 	 */
 	@Inject
-	Map<String, IXmlRootElementBuilder> rootElementsBuilderMap;
+	private Map<String, IXmlRootElementBuilder> rootElementsBuilderMap;
 
 	/**
 	 * In der InitMethode wird die Typ Map aufgebaut
@@ -86,7 +95,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	 * Hier werden alle bekannten IXmlComplexTypeBuilder injected
 	 */
 	@Inject
-	Map<String, IXmlComplexTypeBuilder> complexTypeBuilderMap;
+	private Map<String, IXmlComplexTypeBuilder> complexTypeBuilderMap;
 
 	/**
 	 * In diesem Map werden die dafault (Systemweit eindeutig)
@@ -117,13 +126,14 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	/**
 	 * Liefert ein MessageBuilder abhängig von dem ParentElement und Type von
 	 * dem childElement
-	 *
+	 * 
 	 * @param elementType
 	 * @param senderData
 	 * @return
 	 */
 	@Override
-	public IXmlComplexTypeBuilder getXmlComplexTypeBuilder(final String elementType, final IInputDataContainer senderData) {
+	public IXmlComplexTypeBuilder getXmlComplexTypeBuilder(final String elementType,
+			final IInputDataContainer senderData) {
 		// TODO Auswahl der Builder auch über Context (SenderDataBean)
 		// vorgenommen werden. Konzept erstellen
 		IXmlComplexTypeBuilder complexTypeBuilder = xmlDefaultTypesToComplexTypeBuilderAssignmentMap.get(elementType);
@@ -134,19 +144,41 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 			throw new BeanCreationException("XmlComplexTypeBuilder for ElementType " + elementType + " not found");
 		}
 		LOG.info("MessageBuilder  " + complexTypeBuilder + " found for elementType: " + elementType);
+		final Errors errors = new DirectFieldBindingResult(complexTypeBuilder, complexTypeBuilder.getClass().getName());
+		// Validierung. Sind alle Elemente vorhanden
+		validator.validate(complexTypeBuilder, errors);
+
+		if (errors.hasErrors()) {
+			throw new ExtraConfigRuntimeException(ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, convertToString(errors));
+		}
+
 		return complexTypeBuilder;
+	}
+
+	private String convertToString(final Errors errors) {
+		final List<FieldError> fieldErrors = errors.getFieldErrors();
+		final StringBuilder stringBuilder = new StringBuilder(fieldErrors.size() + " Konfigurationsfehler: ");
+		final String sep = ";";
+		for (final FieldError fieldError : fieldErrors) {
+			// TODO statt Klassennamen den Konfigurationskey ausgeben
+			stringBuilder.append(fieldError.getObjectName());
+			stringBuilder.append(".").append(fieldError.getField());
+			stringBuilder.append(" ").append(fieldError.getDefaultMessage());
+			stringBuilder.append(sep);
+		}
+		return stringBuilder.toString();
 	}
 
 	/**
 	 * Liefert ein MessageBuilder abhängig von dem ParentElement und Type von
 	 * dem childElement
-	 *
+	 * 
 	 * @param elementType
 	 * @return
 	 */
 	@Override
 	public IXmlRootElementBuilder getRootXmlBuilder(final String elementType) {
-		IXmlRootElementBuilder rootElementBuilder = xmlTypesToRootElementsBuilderAssignmentMap.get(elementType);
+		final IXmlRootElementBuilder rootElementBuilder = xmlTypesToRootElementsBuilderAssignmentMap.get(elementType);
 		return rootElementBuilder;
 	}
 
@@ -155,9 +187,9 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	 * implementierungen zu den xmlTypen
 	 */
 	private void processXmlRootElementBuilder() {
-		Collection<IXmlRootElementBuilder> rootElementsBuilderEtrySet = rootElementsBuilderMap.values();
-		for (IXmlRootElementBuilder rootElementBuilder : rootElementsBuilderEtrySet) {
-			String rootElementBuilderXmlType = rootElementBuilder.getXmlType();
+		final Collection<IXmlRootElementBuilder> rootElementsBuilderEtrySet = rootElementsBuilderMap.values();
+		for (final IXmlRootElementBuilder rootElementBuilder : rootElementsBuilderEtrySet) {
+			final String rootElementBuilderXmlType = rootElementBuilder.getXmlType();
 			xmlTypesToRootElementsBuilderAssignmentMap.put(rootElementBuilderXmlType, rootElementBuilder);
 		}
 	}
@@ -182,7 +214,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	 *
 	 */
 	private void analyseMultipleImplementations() {
-		for (String currentBuilderXmlType : xmlMultipleImplementationBuilderList) {
+		for (final String currentBuilderXmlType : xmlMultipleImplementationBuilderList) {
 			// Wenn es um xplg geht kann mehrere Implementierungen vorhanden
 			// sein.
 			IXmlComplexTypeBuilder complexTypeBuilder;
@@ -198,43 +230,43 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Liefert einen Builder für ein xmlType
-	 *
+	 * 
 	 * @param currentBuilderXmlType
 	 * @return
 	 */
 	private IXmlComplexTypeBuilder getComplexTypeBuilder(final String currentBuilderXmlType) {
-		String configKey = calculateConfigKey(currentBuilderXmlType);
+		final String configKey = calculateConfigKey(currentBuilderXmlType);
 		// Jetzt Implementierung holen und den Typ vergleichen
-		String beanName = getBeanName(configKey);
+		final String beanName = getBeanName(configKey);
 		Assert.notNull(beanName, "Configuration with the key '" + configKey + "' for XmlBuilderType "
 				+ currentBuilderXmlType + " not found, although multiple XmlComplexTypeBuilder defined system-wide.");
-		IXmlComplexTypeBuilder complexTypeBuilder = complexTypeBuilderMap.get(beanName);
+		final IXmlComplexTypeBuilder complexTypeBuilder = complexTypeBuilderMap.get(beanName);
 		validateComplexTypeBuilder(complexTypeBuilder, currentBuilderXmlType, beanName);
 		return complexTypeBuilder;
 	}
 
 	/**
 	 * Liefert einen Builder für ein Plugin XmlType
-	 *
+	 * 
 	 * @param xmlType
 	 * @return
 	 */
 	private IXmlComplexTypeBuilder getComplexTypeBuilderForPluginType(final String xmlType) {
-		List<IXmlComplexTypeBuilder> pluginBuilderList = new LinkedList<IXmlComplexTypeBuilder>();
+		final List<IXmlComplexTypeBuilder> pluginBuilderList = new LinkedList<IXmlComplexTypeBuilder>();
 		// zuerst mal eine simple Key
-		String initialConfigKey = calculateConfigKey(xmlType);
-		String beanName = getBeanName(initialConfigKey);
-		IXmlComplexTypeBuilder complexTypeBuilder = complexTypeBuilderMap.get(beanName);
+		final String initialConfigKey = calculateConfigKey(xmlType);
+		final String beanName = getBeanName(initialConfigKey);
+		final IXmlComplexTypeBuilder complexTypeBuilder = complexTypeBuilderMap.get(beanName);
 		if (complexTypeBuilder != null) {
 			pluginBuilderList.add(complexTypeBuilder);
 		}
 
 		// Dann eine Key mit der Nummer als Suffix
 		for (int counter = 1; counter < maxPluginsMessageCount; counter++) {
-			String currentConfigKey = initialConfigKey + counter;
-			String currentBeanName = getBeanName(currentConfigKey);
+			final String currentConfigKey = initialConfigKey + counter;
+			final String currentBeanName = getBeanName(currentConfigKey);
 			if (currentBeanName != null) {
-				IXmlComplexTypeBuilder currenComplexTypeBuilder = complexTypeBuilderMap.get(currentBeanName);
+				final IXmlComplexTypeBuilder currenComplexTypeBuilder = complexTypeBuilderMap.get(currentBeanName);
 				Assert.notNull(currenComplexTypeBuilder, "ComplexTypeBuilderBean with Name: " + beanName + " not found");
 				validateComplexTypeBuilder(currenComplexTypeBuilder, xmlType, currentBeanName);
 				pluginBuilderList.add(currenComplexTypeBuilder);
@@ -252,7 +284,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Eine Plugin Message hat der Prefix xplg
-	 *
+	 * 
 	 * @param currentBuilderXmlBype
 	 * @return
 	 */
@@ -271,9 +303,9 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	 * aussortiert.
 	 */
 	private void analyseComplexBuilderMap() {
-		Collection<IXmlComplexTypeBuilder> entrySet = complexTypeBuilderMap.values();
-		for (IXmlComplexTypeBuilder messageBuilder : entrySet) {
-			String builderXmlType = messageBuilder.getXmlType();
+		final Collection<IXmlComplexTypeBuilder> entrySet = complexTypeBuilderMap.values();
+		for (final IXmlComplexTypeBuilder messageBuilder : entrySet) {
+			final String builderXmlType = messageBuilder.getXmlType();
 			// prüfen ob eine Implementierung bereits angemeldet ist
 			if (xmlMultipleImplementationBuilderList.contains(builderXmlType)) {
 				// Nothing To Do
@@ -291,7 +323,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Holt aus der konfiguration die entsprechende BeanNaem
-	 *
+	 * 
 	 * @param configKey
 	 * @return
 	 */
@@ -302,14 +334,14 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Prüft. ob der gefundene Builder zu dem deklarierten Teil passt
-	 *
+	 * 
 	 * @param complexTypeBuilder
 	 * @param builderXmlType
 	 */
-	private void validateComplexTypeBuilder(final IXmlComplexTypeBuilder complexTypeBuilder, final String currentBuilderXmlBype,
-			final String beanName) {
+	private void validateComplexTypeBuilder(final IXmlComplexTypeBuilder complexTypeBuilder,
+			final String currentBuilderXmlBype, final String beanName) {
 		Assert.notNull(complexTypeBuilder, "XmlBuilder " + currentBuilderXmlBype + " not found for Bean " + beanName);
-		String compexTypeBuilderXmlType = complexTypeBuilder.getXmlType();
+		final String compexTypeBuilderXmlType = complexTypeBuilder.getXmlType();
 		if (!currentBuilderXmlBype.equals(compexTypeBuilderXmlType)) {
 			throw new BeanCreationException("Configured IXmlComplexTypeBuilder : " + complexTypeBuilder
 					+ " does not match the desired XmlType: " + currentBuilderXmlBype);
@@ -319,17 +351,17 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Berechnet ConfigKey für ein mehrfach vorhandeten Builder
-	 *
+	 * 
 	 * @param builderXmlType
 	 * @return
 	 */
 	private String calculateConfigKey(final String builderXmlType) {
 		// Es wäre Möglich ein key.pattern zu erstellen.
 
-		String[] splittedBuilderXmlType = StringUtils.split(builderXmlType, XML_BUILDER_KEY_SEPARATOR);
-		StringBuilder configKey = new StringBuilder(XML_BUILDER_CONFIG_KEY_PREFIX);
+		final String[] splittedBuilderXmlType = StringUtils.split(builderXmlType, XML_BUILDER_KEY_SEPARATOR);
+		final StringBuilder configKey = new StringBuilder(XML_BUILDER_CONFIG_KEY_PREFIX);
 
-		for (String splittedBuilderXmlTypeString : splittedBuilderXmlType) {
+		for (final String splittedBuilderXmlTypeString : splittedBuilderXmlType) {
 			configKey.append(".");
 			configKey.append(splittedBuilderXmlTypeString);
 		}
