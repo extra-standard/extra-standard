@@ -33,7 +33,8 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
@@ -67,7 +68,8 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
 @Named("fileSystemResultDataResponseProcessPlugin")
 public class FileSystemResultDataResponseProcessPlugin implements IResponseProcessPlugin {
 
-	private static Logger logger = Logger.getLogger(FileSystemResultDataResponseProcessPlugin.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(FileSystemResultDataResponseProcessPlugin.class);
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -144,11 +146,11 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(extraResponse, streamResult);
-			logger.debug("ExtraResponse: " + writer.toString());
+			LOG.debug("ExtraResponse: " + writer.toString());
 		} catch (final XmlMappingException xmlException) {
-			logger.debug("XmlMappingException beim Lesen des Results ", xmlException);
+			LOG.debug("XmlMappingException beim Lesen des Results ", xmlException);
 		} catch (final IOException ioException) {
-			logger.debug("IOException beim Lesen des Results ", ioException);
+			LOG.debug("IOException beim Lesen des Results ", ioException);
 		}
 
 	}
@@ -192,8 +194,8 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 
 			transportObserver.responseDataForwarded(responseFile.getAbsolutePath(), responseBody.length);
 
-			if (logger.isDebugEnabled()) {
-				logger.debug("Response gespeichert in File: '" + dateiName + "'");
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("Response gespeichert in File: '" + dateiName + "'");
 			}
 
 		} catch (final IOException ioException) {
