@@ -24,6 +24,6 @@ package de.extrastandard.api.exception;
  */
 public enum ExceptionCode {
 
-	UNEXPECTED_INTERNAL_EXCEPTION // fatal
+	UNEXPECTED_INTERNAL_EXCEPTION, EXTRA_CONFIGURATION_EXCEPTION // fatal
 
 }
