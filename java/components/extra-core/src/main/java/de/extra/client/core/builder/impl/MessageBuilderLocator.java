@@ -73,8 +73,12 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	private final Integer maxPluginsMessageCount = DEFAULT_MAX_PLUGIN_COUNT;
 
 	@Inject
-	@Named("extra-cli-properties")
-	private Properties configProperties;
+	@Named("extra-properties-basic")
+	private Properties configBasicProperties;
+
+	@Inject
+	@Named("extra-properties-user")
+	private Properties configUserProperties;
 
 	@Inject
 	@Named("validator")
@@ -328,8 +332,8 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	 * @return
 	 */
 	private String getBeanName(final String configKey) {
-		Assert.notNull(configProperties, "Unexpected Container Exception. ConfigProperties is null");
-		return configProperties.getProperty(configKey);
+		Assert.notNull(configBasicProperties, "Unexpected Container Exception. ConfigProperties is null");
+		return configBasicProperties.getProperty(configKey);
 	}
 
 	/**
