@@ -16,7 +16,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>de.extra</groupId>
+			<groupId>de.extrastandard</groupId>
 			<artifactId>extra-core</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
