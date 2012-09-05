@@ -42,7 +42,7 @@ import de.extra.client.core.model.InputDataContainer;
 
 /**
  * Test for PluginsLocatorManager.
- * 
+ *
  * @author Leonid Potap
  * @since 1.0.0
  * @version 1.0.0
@@ -51,7 +51,7 @@ import de.extra.client.core.model.InputDataContainer;
 public class MessageBuilderLocatorTest {
 
 	@Mock
-	Validator validator;
+	private Validator validator;
 
 	// @Before
 	// public void setUp() {
@@ -70,10 +70,12 @@ public class MessageBuilderLocatorTest {
 		final IXmlComplexTypeBuilder expectedXmlComplexTypeBuilder = new DataTransformConfigurablePluginsBuilder();
 		complexTypeBuilderMap.put("test1", expectedXmlComplexTypeBuilder);
 		final MessageBuilderLocator messageBuilderLocator = createMessageBuilderlocator(complexTypeBuilderMap);
-		final IXmlComplexTypeBuilder currentXmlComplexTypeBuilder = messageBuilderLocator.getXmlComplexTypeBuilder(
-				expectedXmlComplexTypeBuilder.getXmlType(), new InputDataContainer());
-		Assert.assertEquals("Unexpected XmlComplexTypeBuilder found", currentXmlComplexTypeBuilder,
-				expectedXmlComplexTypeBuilder);
+		final IXmlComplexTypeBuilder currentXmlComplexTypeBuilder = messageBuilderLocator
+				.getXmlComplexTypeBuilder(
+						expectedXmlComplexTypeBuilder.getXmlType(),
+						new InputDataContainer());
+		Assert.assertEquals("Unexpected XmlComplexTypeBuilder found",
+				currentXmlComplexTypeBuilder, expectedXmlComplexTypeBuilder);
 	}
 
 	/**
@@ -88,7 +90,8 @@ public class MessageBuilderLocatorTest {
 		complexTypeBuilderMap.put("test1", expectedXmlComplexTypeBuilder);
 		complexTypeBuilderMap.put("test2", expectedXmlComplexTypeBuilder);
 		final MessageBuilderLocator messageBuilderLocator = createMessageBuilderlocator(complexTypeBuilderMap);
-		messageBuilderLocator.getXmlComplexTypeBuilder(expectedXmlComplexTypeBuilder.getXmlType(),
+		messageBuilderLocator.getXmlComplexTypeBuilder(
+				expectedXmlComplexTypeBuilder.getXmlType(),
 				new InputDataContainer());
 	}
 
@@ -105,16 +108,20 @@ public class MessageBuilderLocatorTest {
 		complexTypeBuilderMap.put("test1", secondXmlComplexTypeBuilder);
 		complexTypeBuilderMap.put("test2", expectedXmlComplexTypeBuilder);
 		final Properties properties = new Properties();
-		final String key = "builder." + StringUtils.replace(expectedXmlComplexTypeBuilder.getXmlType(), ":", ".");
+		final String key = "builder."
+				+ StringUtils.replace(
+						expectedXmlComplexTypeBuilder.getXmlType(), ":", ".");
 		properties.put(key, "test2");
-		final MessageBuilderLocator messageBuilderLocator = createMessageBuilderlocator(complexTypeBuilderMap,
-				properties);
+		final MessageBuilderLocator messageBuilderLocator = createMessageBuilderlocator(
+				complexTypeBuilderMap, properties);
 		// Implementierung setzen in Propertyes
 
-		final IXmlComplexTypeBuilder currentXmlComplexTypeBuilder = messageBuilderLocator.getXmlComplexTypeBuilder(
-				expectedXmlComplexTypeBuilder.getXmlType(), new InputDataContainer());
-		Assert.assertEquals("Unexpected XmlComplexTypeBuilder found", currentXmlComplexTypeBuilder,
-				expectedXmlComplexTypeBuilder);
+		final IXmlComplexTypeBuilder currentXmlComplexTypeBuilder = messageBuilderLocator
+				.getXmlComplexTypeBuilder(
+						expectedXmlComplexTypeBuilder.getXmlType(),
+						new InputDataContainer());
+		Assert.assertEquals("Unexpected XmlComplexTypeBuilder found",
+				currentXmlComplexTypeBuilder, expectedXmlComplexTypeBuilder);
 	}
 
 	/**
@@ -126,32 +133,39 @@ public class MessageBuilderLocatorTest {
 	public void testGetRootXmlBuilder() {
 		final Map<String, IXmlRootElementBuilder> rootElementsBuilderMap = new HashMap<String, IXmlRootElementBuilder>();
 		final IXmlRootElementBuilder xmlRootElementBuilder = new RequestTransportBuilder();
-		rootElementsBuilderMap.put("testRootElementBuilder", xmlRootElementBuilder);
+		rootElementsBuilderMap.put("testRootElementBuilder",
+				xmlRootElementBuilder);
 		final Map<String, IXmlComplexTypeBuilder> complexTypeBuilderMap = new HashMap<String, IXmlComplexTypeBuilder>();
 
-		final MessageBuilderLocator messageBuilderLocator = createMessageBuilderlocator(rootElementsBuilderMap,
-				complexTypeBuilderMap, null);
+		final MessageBuilderLocator messageBuilderLocator = createMessageBuilderlocator(
+				rootElementsBuilderMap, complexTypeBuilderMap, new Properties());
 
 		final IXmlRootElementBuilder expectedXmlRootElementBuilder = messageBuilderLocator
 				.getRootXmlBuilder(xmlRootElementBuilder.getXmlType());
-		Assert.assertEquals("Unexpected RootElementBuilder found", expectedXmlRootElementBuilder, xmlRootElementBuilder);
+		Assert.assertEquals("Unexpected RootElementBuilder found",
+				expectedXmlRootElementBuilder, xmlRootElementBuilder);
 	}
 
 	/**
 	 * Die 2 Maps werden von dem Spring Kontainer befüllt. Danach wird init
 	 * Merhod ausgeführt.
-	 * 
+	 *
 	 * @param rootElementsBuilderMap
 	 * @param complexTypeBuilderMap
 	 * @return
 	 */
 	private MessageBuilderLocator createMessageBuilderlocator(
 			final Map<String, IXmlRootElementBuilder> rootElementsBuilderMap,
-			final Map<String, IXmlComplexTypeBuilder> complexTypeBuilderMap, final Properties properties) {
+			final Map<String, IXmlComplexTypeBuilder> complexTypeBuilderMap,
+			final Properties properties) {
 		final MessageBuilderLocator messageBuilderLocator = new MessageBuilderLocator();
-		injectValue(messageBuilderLocator, rootElementsBuilderMap, "rootElementsBuilderMap");
-		injectValue(messageBuilderLocator, complexTypeBuilderMap, "complexTypeBuilderMap");
-		injectValue(messageBuilderLocator, properties, "configProperties");
+		injectValue(messageBuilderLocator, rootElementsBuilderMap,
+				"rootElementsBuilderMap");
+		injectValue(messageBuilderLocator, complexTypeBuilderMap,
+				"complexTypeBuilderMap");
+		injectValue(messageBuilderLocator, properties, "configBasicProperties");
+		injectValue(messageBuilderLocator, new Properties(),
+				"configUserProperties");
 		injectValue(messageBuilderLocator, validator, "validator");
 		messageBuilderLocator.initMethod();
 		return messageBuilderLocator;
@@ -160,38 +174,43 @@ public class MessageBuilderLocatorTest {
 	/**
 	 * Die Maps werden von dem Spring Kontainer befüllt. Danach wird init Merhod
 	 * ausgeführt.
-	 * 
+	 *
 	 * @param complexTypeBuilderMap
 	 * @return
 	 */
 	private MessageBuilderLocator createMessageBuilderlocator(
 			final Map<String, IXmlComplexTypeBuilder> complexTypeBuilderMap) {
 		final Map<String, IXmlRootElementBuilder> rootElementsBuilderMap = new HashMap<String, IXmlRootElementBuilder>();
-		return createMessageBuilderlocator(rootElementsBuilderMap, complexTypeBuilderMap, null);
+		return createMessageBuilderlocator(rootElementsBuilderMap,
+				complexTypeBuilderMap, new Properties());
 	}
 
 	/**
 	 * Die Maps werden von dem Spring Kontainer befüllt. Danach wird init Merhod
 	 * ausgeführt.
-	 * 
+	 *
 	 * @param complexTypeBuilderMap
 	 * @return
 	 */
 	private MessageBuilderLocator createMessageBuilderlocator(
-			final Map<String, IXmlComplexTypeBuilder> complexTypeBuilderMap, final Properties propertiers) {
+			final Map<String, IXmlComplexTypeBuilder> complexTypeBuilderMap,
+			final Properties properties) {
 		final Map<String, IXmlRootElementBuilder> rootElementsBuilderMap = new HashMap<String, IXmlRootElementBuilder>();
-		return createMessageBuilderlocator(rootElementsBuilderMap, complexTypeBuilderMap, propertiers);
+		return createMessageBuilderlocator(rootElementsBuilderMap,
+				complexTypeBuilderMap, properties);
 	}
 
 	/**
 	 * Setzt eine Value über ReflectionUtils
-	 * 
+	 *
 	 * @param messageBuilderLocator
 	 * @param rootElementsBuilderMap
 	 * @param string
 	 */
-	private void injectValue(final Object object, final Object value, final String fieldName) {
-		final Field fieldToSet = ReflectionUtils.findField(object.getClass(), fieldName);
+	private void injectValue(final Object object, final Object value,
+			final String fieldName) {
+		final Field fieldToSet = ReflectionUtils.findField(object.getClass(),
+				fieldName);
 		ReflectionUtils.makeAccessible(fieldToSet);
 		ReflectionUtils.setField(fieldToSet, object, value);
 	}
