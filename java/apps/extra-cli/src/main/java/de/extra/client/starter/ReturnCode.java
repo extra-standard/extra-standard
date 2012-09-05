@@ -7,7 +7,7 @@ package de.extra.client.starter;
  * Returncodes für Batchanwendungen.
  *
  * @author Thorsten Vogel
- * @version $Id: ReturnCode.java,v 1.1 2010/10/13 11:22:43 zf4iks1 Exp $
+ * @version $Id$
  */
 public enum ReturnCode {
 
