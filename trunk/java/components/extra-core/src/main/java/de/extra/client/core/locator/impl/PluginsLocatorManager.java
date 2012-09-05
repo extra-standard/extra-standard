@@ -85,7 +85,7 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	 * getConfiguratedDataPlugin()
 	 */
 	@Override
-	public IDataPlugin getConfiguratedDataPlugin() {
+	public IDataPlugin getConfiguredDataPlugin() {
 		LOG.debug(dataPlugBeanName);
 		final IDataPlugin idataPlugin = dataPluginMap.get(dataPlugBeanName);
 		LOG.debug("DataPlugInClass: " + idataPlugin.getClass());

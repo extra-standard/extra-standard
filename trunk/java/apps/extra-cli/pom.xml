@@ -135,14 +135,8 @@
 						<configuration>
 							<target>
 								<copy
-									file="${project.basedir}/src/main/resources/extra-cli.properties_example"
-									tofile="${project.basedir}/src/main/resources/extra-cli.properties" />
-								<copy
 									file="${project.basedir}/src/main/resources/log4j.properties_example"
 									tofile="${project.basedir}/src/main/resources/log4j.properties" />
-								<copy
-									file="${project.basedir}/src/test/resources/extra-cli.properties_example"
-									tofile="${project.basedir}/src/test/resources/extra-cli.properties" />
 								<copy
 									file="${project.basedir}/src/test/resources/extra-properties-basic.properties_example"
 									tofile="${project.basedir}/src/test/resources/extra-properties-basic.properties" />
