@@ -23,6 +23,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
 
 import de.extra.client.core.ClientProcessResult;
 
@@ -32,7 +33,7 @@ public class ExtraClientTest {
 
 	@Before
 	public void setUp() throws Exception {
-		extraClient = new ExtraClient();
+		extraClient = new ExtraClient(new ClassPathResource("/testconfig").getFile());
 	}
 
 	@Test
