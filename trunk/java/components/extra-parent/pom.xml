@@ -160,7 +160,7 @@
 
 		<!-- Unit-Testing Libraries Versions -->
 		<org.junit.version>4.10</org.junit.version>
-		<org.hsqldb.hsqldb.version>2.2.1</org.hsqldb.hsqldb.version>
+		<org.hsqldb.hsqldb.version>2.2.4</org.hsqldb.hsqldb.version>
 		<org.mockito-core.version>1.9.5-rc1</org.mockito-core.version>
 
 		<!-- Encoding -->
