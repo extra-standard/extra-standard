@@ -18,21 +18,28 @@
  */
 package de.extra.client.starter;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.Resource;
 
 import de.extra.client.core.ClientCore;
 import de.extra.client.core.ClientProcessResult;
-import de.extra.client.core.observer.OpLogger;
+import de.extrastandard.api.exception.ExceptionCode;
+import de.extrastandard.api.exception.ExtraConfigRuntimeException;
 
 /**
- * @author DSRV
+ *
+ * @author Leonid Potab
+ * @author Thorsten Vogel
  * @version $Id$
  */
 public class ExtraClient {
@@ -41,59 +48,93 @@ public class ExtraClient {
 			.getLogger(ExtraClient.class);
 
 	/**
-	 * Pfad und Dateiname in der die springconfig.xml liegt.
+	 * Name der grundlegenden Konfiguration
+	 */
+	public static final String PROPERTIES_BASIC_FILENAME = "extra-properties-basic.properties";
+
+	/**
+	 * Dateiname der Benutzerkonfiguration
+	 */
+	public static final String PROPERTIES_USER_FILENAME = "extra-properties-user.properties";
+
+	/**
+	 * Pfad und Dateiname der Spring Konfiguration
 	 */
 	private static String SPRING_XML_FILE_PATH = "spring-cli.xml";
 
-	/**
-	 * Dateipfad der log4jProperties.
-	 */
-	//private static final String LOG_4_J_FILE = "log4j.properties";
+	private final File configurationDirectory;
 
 	/**
-	 * Pfad der Ressource, die die Konfiguration des extra-Clients enthält.
+	 * Erzeugt einen ExtraClient. Die Konfiguration wird aus den Dateien
+	 * {@link #PROPERTIES_BASIC_FILENAME} und {@link #PROPERTIES_USER_FILENAME}
+	 * ausgelesen.
+	 *
+	 * @param configurationDirectory
+	 *            Konfigurationsverzeichnis
 	 */
-	private static final String EXTRA_CONFIG_RESOURCE = "dependency-tree.txt";
+	public ExtraClient(final File configurationDirectory) {
+		this.configurationDirectory = configurationDirectory;
+	}
 
 	/**
 	 * Startmethode zum Aufruf aus dem startenden Programm.
 	 *
 	 * @return Statuscode
 	 */
-	public ClientProcessResult execute() throws Exception {
-		//PropertyConfigurator.configureAndWatch(LOG_4_J_FILE);
-
+	public ClientProcessResult execute() {
 		LOG.debug("SpringBeans laden");
 		ApplicationContext applicationContext = null;
-
+		File basicPropsFile = new File(configurationDirectory,
+				PROPERTIES_BASIC_FILENAME);
+		if (!basicPropsFile.exists() || !basicPropsFile.canRead()) {
+			throw new ExtraConfigRuntimeException(
+					ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, String.format(
+							"Konfiguration nicht gefunden: %s",
+							PROPERTIES_BASIC_FILENAME));
+		}
+		File userPropsFile = new File(configurationDirectory,
+				PROPERTIES_USER_FILENAME);
+		if (!userPropsFile.exists() || !userPropsFile.canRead()) {
+			throw new ExtraConfigRuntimeException(
+					ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, String.format(
+							"Konfiguration nicht gefunden: %s",
+							PROPERTIES_USER_FILENAME));
+		}
 		try {
-			// Spring Beans laden.
-			applicationContext = new ClassPathXmlApplicationContext(SPRING_XML_FILE_PATH);
-			// TODO: Pfad als Property
-			final Resource logBoilerplate = applicationContext.getResource(EXTRA_CONFIG_RESOURCE);
-			if (logBoilerplate.exists()) {
-				final BufferedReader reader = new BufferedReader(new InputStreamReader(logBoilerplate.getInputStream()));
-				String line = reader.readLine();
-				while (line != null) {
-					OpLogger.log.info(line);
-					line = reader.readLine();
+			Properties basicProperties = new Properties();
+			FileInputStream basicPropsStream = new FileInputStream(basicPropsFile);
+			basicProperties.load(basicPropsStream);
+			IOUtils.closeQuietly(basicPropsStream);
+
+			Properties userProperties = new Properties();
+			FileInputStream userPropsStream = new FileInputStream(userPropsFile);
+			basicProperties.load(userPropsStream);
+			IOUtils.closeQuietly(userPropsStream);
+
+			Map<String, Object> env = new HashMap<String, Object>();
+			env.put("_extern_extra-properties-basic", basicProperties);
+			env.put("_extern_extra-properties-user", userProperties);
+			applicationContext = new ApplicationContextStarter<AbstractApplicationContext>() {
+				@Override
+				protected AbstractApplicationContext createUninitializedContext() {
+					return new ClassPathXmlApplicationContext(
+							new String[] { SPRING_XML_FILE_PATH }, false);
 				}
-			}
+			}.createApplicationContext(env);
+
+			LOG.info("Beginn der Verarbeitung");
+
+			final ClientCore clientCore = applicationContext.getBean("clientCore", ClientCore.class);
+
+			final ClientProcessResult processResult = clientCore.process();
+
+			// TODO Auswerten Ergebnisse
+
+			return processResult;
 
 		} catch (final Exception e) {
-			LOG.error("Laden der Beans fehlgeschlagen", e);
+			LOG.error("Fehler beim Start", e);
+			throw new ExtraConfigRuntimeException(e);
 		}
-
-		// Steuerung an Controller übergeben
-		LOG.info("Beginn der Verarbeitung");
-
-		final ClientCore clientCore = applicationContext.getBean("clientCore", ClientCore.class);
-
-		final ClientProcessResult processResult = clientCore.process();
-
-		// TODO Auswerten Ergebnisse
-
-		return processResult;
-
 	}
 }
