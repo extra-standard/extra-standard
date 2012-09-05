@@ -23,12 +23,23 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+/**
+ * Um den eigentlichen Context zu starten werden die Konfigurationsbeans
+ * benötigt, die in der Datei spring-properties.xml definiert sind. Daher ist
+ * diese Datei zusätzlich anzugeben.
+ *
+ * @author Thorsten Vogel
+ * @version $Id$
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-cli.xml")
+@ContextConfiguration(locations = { "classpath:spring-properties.xml",
+		"classpath:spring-cli.xml" })
 public class ContextTest {
 
 	@Test
 	public void test() {
 		// Do nothing just load the spring context
+		System.out.println("im test");
 	}
+
 }
