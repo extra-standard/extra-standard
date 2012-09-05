@@ -37,14 +37,15 @@ import de.extra.client.core.ClientProcessResult;
  * @version $Id$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/threephaseszenario/spring-configuration-phase1-datasent.xml")
+@ContextConfiguration(locations = { "classpath:/threephaseszenario/phase1/spring-properties.xml",
+		"classpath:/threephaseszenario/phase1/spring-configuration-phase1-datasent.xml" })
 public class ScenarioPhase1IT {
 
 	private static Logger logger = LoggerFactory.getLogger(ScenarioPhase1IT.class);
 
 	@Inject
 	@Named("clientCore")
-	ClientCore clientCore;
+	private ClientCore clientCore;
 
 	@Test
 	public final void test() {
