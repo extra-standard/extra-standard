@@ -11,17 +11,17 @@
 		class="de.extra.client.core.annotation.PropertyPlaceholderPluginConfigurer">
 		<property name="propertiesArray">
 			<array>
-				<ref bean="extra-properties-basic" />
-				<ref bean="extra-properties-user" />
+				<ref bean="_extern_extra-properties-basic" />
+				<ref bean="_extern_extra-properties-user" />
 			</array>
 		</property>	
 			<property name="ignoreNullValues" value="true" />
 	</bean>
 
-	<util:properties id="extra-properties-basic"
-		location="classpath:extra-properties-basic.properties" />
-	<util:properties id="extra-properties-user"
-		location="classpath:extra-properties-user.properties" />
+<!-- 	<util:properties id="extra-properties-basic" -->
+<!-- 		location="classpath:extra-properties-basic.properties" /> -->
+<!-- 	<util:properties id="extra-properties-user" -->
+<!-- 		location="classpath:extra-properties-user.properties" /> -->
 
 	<bean id="validator"
 		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />

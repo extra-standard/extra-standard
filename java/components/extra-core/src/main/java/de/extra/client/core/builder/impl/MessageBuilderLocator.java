@@ -52,9 +52,9 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 /**
  * MessageBuilderLocator sucht zu jedem elementType ein entsprechenen
  * MessageBuilder
- * 
+ *
  * @author Leonid Potap
- * 
+ *
  */
 @Named("messageBuilderLocator")
 public class MessageBuilderLocator implements IMessageBuilderLocator {
@@ -73,11 +73,11 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	private final Integer maxPluginsMessageCount = DEFAULT_MAX_PLUGIN_COUNT;
 
 	@Inject
-	@Named("extra-properties-basic")
+	@Named("_extern_extra-properties-basic")
 	private Properties configBasicProperties;
 
 	@Inject
-	@Named("extra-properties-user")
+	@Named("_extern_extra-properties-user")
 	private Properties configUserProperties;
 
 	/**
@@ -138,7 +138,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	/**
 	 * Liefert ein MessageBuilder abhängig von dem ParentElement und Type von
 	 * dem childElement
-	 * 
+	 *
 	 * @param elementType
 	 * @param senderData
 	 * @return
@@ -184,7 +184,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	/**
 	 * Liefert ein MessageBuilder abhängig von dem ParentElement und Type von
 	 * dem childElement
-	 * 
+	 *
 	 * @param elementType
 	 * @return
 	 */
@@ -242,7 +242,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Liefert einen Builder für ein xmlType
-	 * 
+	 *
 	 * @param currentBuilderXmlType
 	 * @return
 	 */
@@ -259,7 +259,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Liefert einen Builder für ein Plugin XmlType
-	 * 
+	 *
 	 * @param xmlType
 	 * @return
 	 */
@@ -296,7 +296,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Eine Plugin Message hat der Prefix xplg
-	 * 
+	 *
 	 * @param currentBuilderXmlBype
 	 * @return
 	 */
@@ -335,7 +335,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Holt aus der konfiguration die entsprechende BeanNaem
-	 * 
+	 *
 	 * @param configKey
 	 * @return
 	 */
@@ -346,7 +346,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Prüft. ob der gefundene Builder zu dem deklarierten Teil passt
-	 * 
+	 *
 	 * @param complexTypeBuilder
 	 * @param builderXmlType
 	 */
@@ -363,7 +363,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Berechnet ConfigKey für ein mehrfach vorhandeten Builder
-	 * 
+	 *
 	 * @param builderXmlType
 	 * @return
 	 */
