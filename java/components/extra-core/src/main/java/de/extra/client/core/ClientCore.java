@@ -85,13 +85,13 @@ public class ClientCore implements ApplicationContextAware {
 
 	@PostConstruct
 	public void init() {
-		dataPlugin = pluginsLocatorManager.getConfiguratedDataPlugin();
+		dataPlugin = pluginsLocatorManager.getConfiguredDataPlugin();
 
-		configPlugin = pluginsLocatorManager.getConfiguratedConfigPlugin();
+		configPlugin = pluginsLocatorManager.getConfiguredConfigPlugin();
 
-		outputPlugin = pluginsLocatorManager.getConfiguratedOutputPlugin();
+		outputPlugin = pluginsLocatorManager.getConfiguredOutputPlugin();
 
-		responsePlugin = pluginsLocatorManager.getConfiguratedResponsePlugin();
+		responsePlugin = pluginsLocatorManager.getConfiguredResponsePlugin();
 
 	}
 

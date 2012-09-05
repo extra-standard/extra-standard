@@ -79,7 +79,7 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	 * getConfiguratedDataPlugin()
 	 */
 	@Override
-	public IDataPlugin getConfiguratedDataPlugin() {
+	public IDataPlugin getConfiguredDataPlugin() {
 		LOG.debug(dataPlugBeanName);
 		final IDataPlugin idataPlugin = dataPluginMap.get(dataPlugBeanName);
 		LOG.debug("DataPlugInClass: " + idataPlugin.getClass());
@@ -93,7 +93,7 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	 * getConfiguratedOutputPlugin()
 	 */
 	@Override
-	public IOutputPlugin getConfiguratedOutputPlugin() {
+	public IOutputPlugin getConfiguredOutputPlugin() {
 		LOG.debug(outputPluginBeanName);
 		final IOutputPlugin ioutputPlugin = outputPluginMap.get(outputPluginBeanName);
 		LOG.debug("OutpuPlugInClass: " + ioutputPlugin.getClass());
@@ -107,7 +107,7 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	 * getConfiguratedConfigPlugin()
 	 */
 	@Override
-	public IConfigPlugin getConfiguratedConfigPlugin() {
+	public IConfigPlugin getConfiguredConfigPlugin() {
 		LOG.debug(configPluginBeanName);
 		final IConfigPlugin iConfigPlugin = configPluginMap.get(configPluginBeanName);
 		LOG.debug("ConfiPlugInClasse: " + iConfigPlugin.getClass());
@@ -121,7 +121,7 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	 * getConfiguratedResponsePlugin()
 	 */
 	@Override
-	public IResponseProcessPlugin getConfiguratedResponsePlugin() {
+	public IResponseProcessPlugin getConfiguredResponsePlugin() {
 		LOG.debug(configPluginBeanName);
 		final IResponseProcessPlugin iResponsePlugin = responsePluginMap.get(responsePluginBeanName);
 		LOG.debug("responsePluginClass: " + iResponsePlugin.getClass());
