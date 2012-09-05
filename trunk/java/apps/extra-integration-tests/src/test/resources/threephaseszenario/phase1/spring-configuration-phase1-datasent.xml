@@ -8,10 +8,15 @@
 		http://www.springframework.org/schema/util    http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
 	<bean class="de.extra.client.core.annotation.PropertyPlaceholderPluginConfigurer">
-	  <property name="properties" ref="extra-cli-properties"/>
+		<property name="propertiesArray">
+			<array>
+				<ref bean="_extern_extra-properties-basic" />
+				<ref bean="_extern_extra-properties-user" />
+			</array>
+		</property>	
+		<property name="ignoreNullValues" value="true" />
 	</bean>
 
-	<util:properties id="extra-cli-properties" location="classpath:/threephaseszenario/phase1-sent.properties"/>
 
 
 	<import resource="classpath:spring-core.xml" />
