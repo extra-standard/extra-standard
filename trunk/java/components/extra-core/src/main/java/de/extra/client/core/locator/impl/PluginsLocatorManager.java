@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.extra.client.core.locator.IPluginsLocatorManager;
+import de.extra.client.core.util.IExtraValidator;
 import de.extrastandard.api.plugin.IConfigPlugin;
 import de.extrastandard.api.plugin.IDataPlugin;
 import de.extrastandard.api.plugin.IOutputPlugin;
@@ -37,12 +38,17 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
  * Sucht nach der in der Konfiguration definierten Plugins.
  * 
  * @author DPRS
- * @version $Id$
+ * @version $Id: PluginsLocatorManager.java 512 2012-09-04 11:34:28Z
+ *          potap.rentenservice@gmail.com $
  */
 @Named("pluginsLocatorManager")
 public class PluginsLocatorManager implements IPluginsLocatorManager {
 
 	private static final Logger LOG = LoggerFactory.getLogger(PluginsLocatorManager.class);
+
+	@Inject
+	@Named("extraValidator")
+	private IExtraValidator validator;
 
 	@Inject
 	private Map<String, IDataPlugin> dataPluginMap;
@@ -79,10 +85,11 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	 * getConfiguratedDataPlugin()
 	 */
 	@Override
-	public IDataPlugin getConfiguredDataPlugin() {
+	public IDataPlugin getConfiguratedDataPlugin() {
 		LOG.debug(dataPlugBeanName);
 		final IDataPlugin idataPlugin = dataPluginMap.get(dataPlugBeanName);
 		LOG.debug("DataPlugInClass: " + idataPlugin.getClass());
+		validator.validate(idataPlugin);
 		return idataPlugin;
 	}
 
@@ -97,6 +104,7 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 		LOG.debug(outputPluginBeanName);
 		final IOutputPlugin ioutputPlugin = outputPluginMap.get(outputPluginBeanName);
 		LOG.debug("OutpuPlugInClass: " + ioutputPlugin.getClass());
+		validator.validate(ioutputPlugin);
 		return ioutputPlugin;
 	}
 
@@ -111,6 +119,7 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 		LOG.debug(configPluginBeanName);
 		final IConfigPlugin iConfigPlugin = configPluginMap.get(configPluginBeanName);
 		LOG.debug("ConfiPlugInClasse: " + iConfigPlugin.getClass());
+		validator.validate(iConfigPlugin);
 		return iConfigPlugin;
 	}
 
@@ -125,6 +134,7 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 		LOG.debug(configPluginBeanName);
 		final IResponseProcessPlugin iResponsePlugin = responsePluginMap.get(responsePluginBeanName);
 		LOG.debug("responsePluginClass: " + iResponsePlugin.getClass());
+		validator.validate(iResponsePlugin);
 		return iResponsePlugin;
 	}
 

@@ -36,17 +36,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;
-import org.springframework.validation.DirectFieldBindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.Validator;
 
 import de.extra.client.core.builder.IMessageBuilderLocator;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extra.client.core.builder.IXmlRootElementBuilder;
 import de.extra.client.core.builder.impl.plugins.CompositePluginsBuilder;
-import de.extrastandard.api.exception.ExceptionCode;
-import de.extrastandard.api.exception.ExtraConfigRuntimeException;
+import de.extra.client.core.util.IExtraValidator;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
@@ -86,8 +81,8 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	private final Properties configProperties = new Properties();
 
 	@Inject
-	@Named("validator")
-	private Validator validator;
+	@Named("extraValidator")
+	private IExtraValidator validator;
 
 	/**
 	 * Hier werden alle XMLRootElementbuilder injected
@@ -156,29 +151,9 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 			throw new BeanCreationException("XmlComplexTypeBuilder for ElementType " + elementType + " not found");
 		}
 		LOG.info("MessageBuilder  " + complexTypeBuilder + " found for elementType: " + elementType);
-		final Errors errors = new DirectFieldBindingResult(complexTypeBuilder, complexTypeBuilder.getClass().getName());
-		// Validierung. Sind alle Elemente vorhanden
-		validator.validate(complexTypeBuilder, errors);
-
-		if (errors.hasErrors()) {
-			throw new ExtraConfigRuntimeException(ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, convertToString(errors));
-		}
+		validator.validate(complexTypeBuilder);
 
 		return complexTypeBuilder;
-	}
-
-	private String convertToString(final Errors errors) {
-		final List<FieldError> fieldErrors = errors.getFieldErrors();
-		final StringBuilder stringBuilder = new StringBuilder(fieldErrors.size() + " Konfigurationsfehler: ");
-		final String sep = ";";
-		for (final FieldError fieldError : fieldErrors) {
-			// TODO statt Klassennamen den Konfigurationskey ausgeben
-			stringBuilder.append(fieldError.getObjectName());
-			stringBuilder.append(".").append(fieldError.getField());
-			stringBuilder.append(" ").append(fieldError.getDefaultMessage());
-			stringBuilder.append(sep);
-		}
-		return stringBuilder.toString();
 	}
 
 	/**
