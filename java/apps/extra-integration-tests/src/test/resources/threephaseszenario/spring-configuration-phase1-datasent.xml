@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/util    http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+	<bean class="de.extra.client.core.annotation.PropertyPlaceholderPluginConfigurer">
+	  <property name="properties" ref="extra-cli-properties"/>
+	</bean>
+
+	<util:properties id="extra-cli-properties" location="classpath:/threephaseszenario/phase1-sent.properties"/>
+
+
+	<import resource="classpath:spring-core.xml" />
+	<import resource="classpath:spring-schema.xml" />
+	<import resource="classpath:spring-configplugin.xml" />
+	<import resource="classpath:spring-file-dataplugin.xml" />
+	<import resource="classpath:spring-query-dataplugin.xml" />
+	<import resource="classpath:spring-file-responseprocessplugin.xml" />
+	
+	<context:component-scan base-package="de.extra.client.core" />
+</beans>
