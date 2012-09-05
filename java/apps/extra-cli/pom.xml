@@ -180,6 +180,12 @@
 								<copy
 									file="${project.basedir}/src/test/resources/extra-cli.properties_example"
 									tofile="${project.basedir}/src/test/resources/extra-cli.properties" />
+								<copy
+									file="${project.basedir}/src/test/resources/extra-properties-basic.properties_example"
+									tofile="${project.basedir}/src/test/resources/extra-properties-basic.properties" />
+								<copy
+									file="${project.basedir}/src/test/resources/extra-properties-user.properties_example"
+									tofile="${project.basedir}/src/test/resources/extra-properties-user.properties" />
 							</target>
 						</configuration>
 					</execution>
