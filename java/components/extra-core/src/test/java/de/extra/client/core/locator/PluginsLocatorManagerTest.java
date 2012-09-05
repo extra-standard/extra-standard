@@ -34,6 +34,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import de.extra.client.core.locator.impl.PluginsLocatorManager;
+import de.extra.client.core.util.IExtraValidator;
 import de.extrastandard.api.plugin.IDataPlugin;
 
 /**
@@ -47,7 +48,7 @@ import de.extrastandard.api.plugin.IDataPlugin;
 public class PluginsLocatorManagerTest {
 
 	@InjectMocks
-	private IPluginsLocatorManager pluginsLocatorManager = new PluginsLocatorManager();
+	private final IPluginsLocatorManager pluginsLocatorManager = new PluginsLocatorManager();
 
 	@Mock
 	private Map<String, IDataPlugin> dataPluginMap;
@@ -55,12 +56,14 @@ public class PluginsLocatorManagerTest {
 	@Mock
 	IDataPlugin dataPlugin;
 
+	@Mock
+	IExtraValidator validator;
+
 	@Test
 	public void testGetConfiguratedDataPlugin() {
 		when(dataPluginMap.get(anyString())).thenReturn(dataPlugin);
 
-		IDataPlugin resultDataPlugin = pluginsLocatorManager
-				.getConfiguredDataPlugin();
+		final IDataPlugin resultDataPlugin = pluginsLocatorManager.getConfiguredDataPlugin();
 		assertNotNull(resultDataPlugin);
 		assertEquals(dataPlugin, resultDataPlugin);
 		verify(dataPluginMap, atLeastOnce()).get(anyString());
