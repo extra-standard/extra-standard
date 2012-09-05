@@ -80,6 +80,11 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	@Named("extra-properties-user")
 	private Properties configUserProperties;
 
+	/**
+	 * merged User and Basic Properties
+	 */
+	private final Properties configProperties = new Properties();
+
 	@Inject
 	@Named("validator")
 	private Validator validator;
@@ -121,6 +126,9 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	@PostConstruct
 	public void initMethod() {
+		configProperties.putAll(configBasicProperties);
+		configProperties.putAll(configUserProperties);
+
 		processXmlComplexTypeBuilder();
 
 		processXmlRootElementBuilder();
@@ -332,8 +340,8 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	 * @return
 	 */
 	private String getBeanName(final String configKey) {
-		Assert.notNull(configBasicProperties, "Unexpected Container Exception. ConfigProperties is null");
-		return configBasicProperties.getProperty(configKey);
+		Assert.notNull(configProperties, "Unexpected Container Exception. ConfigProperties is null");
+		return configProperties.getProperty(configKey);
 	}
 
 	/**
