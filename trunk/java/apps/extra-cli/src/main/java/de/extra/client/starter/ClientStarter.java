@@ -73,11 +73,10 @@ public class ClientStarter {
 			EXITER.exit(returnCode);
 		}
 
-		File configDir = clientArguments.getConfigDirectory();
-		// TODO config dir zur konfiguration des clients nutzen
-		ExtraClient extraClient = new ExtraClient();
+		File configurationDirectory = clientArguments.getConfigDirectory();
+		// config dir zur konfiguration des clients nutzen
+		ExtraClient extraClient = new ExtraClient(configurationDirectory);
 		try {
-
 			OpLogger.log.info("Start der Verarbeitung "
 					+ OpLogger.timestampFormat.format(new Date()));
 

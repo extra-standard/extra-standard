@@ -16,4 +16,5 @@
 	<import resource="classpath:spring-file-responseprocessplugin.xml" />
 	
 	<context:component-scan base-package="de.extra.client.starter" />
+
 </beans>
