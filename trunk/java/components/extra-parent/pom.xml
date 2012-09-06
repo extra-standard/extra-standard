@@ -125,7 +125,7 @@
 	<!-- =============================================================== -->
 
 	<properties>
-	
+
 		<!-- Java Version -->
 		<project.java.version>1.6</project.java.version>
 
@@ -361,7 +361,8 @@
 					<version>0.8.1</version>
 				</plugin>
 
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -412,6 +413,14 @@
 						</manifest>
 					</archive>
 				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
@@ -435,7 +444,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<!-- Generiere Versions-info zur Compile-Zeit -->
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
@@ -443,12 +452,15 @@
 				<configuration>
 					<tasks>
 						<tstamp>
-							<format pattern="yyyyMMdd" property="TODAY"/>
+							<format pattern="yyyyMMdd" property="TODAY" />
 						</tstamp>
-						<mkdir dir="${basedir}/target"/>
-						<echo append="false" file="${basedir}/target/version.txt" message="${project.name}${line.separator}"/>
-						<echo append="true" file="${basedir}/target/version.txt" message="V${project.version}${line.separator}"/>
-						<echo append="true" file="${basedir}/target/version.txt" message="${TODAY}${line.separator}"/>
+						<mkdir dir="${basedir}/target" />
+						<echo append="false" file="${basedir}/target/version.txt"
+							message="${project.name}${line.separator}" />
+						<echo append="true" file="${basedir}/target/version.txt"
+							message="V${project.version}${line.separator}" />
+						<echo append="true" file="${basedir}/target/version.txt"
+							message="${TODAY}${line.separator}" />
 					</tasks>
 				</configuration>
 				<executions>
