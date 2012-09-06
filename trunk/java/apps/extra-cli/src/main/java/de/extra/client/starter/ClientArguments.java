@@ -11,7 +11,6 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.springframework.util.StringUtils;
 
-import de.extra.client.exit.JvmSystemExiter;
 import de.extra.client.exit.SystemExiter;
 
 /**
@@ -45,7 +44,7 @@ public class ClientArguments {
 
 	public static final Options OPTIONS;
 
-	private final SystemExiter exiter = new JvmSystemExiter();
+	private final SystemExiter exiter;
 
 	static {
 		OPTIONS = new Options();
@@ -53,6 +52,9 @@ public class ClientArguments {
 		OPTIONS.addOption(OPT_CONFIGDIRECTORY);
 	}
 
+	/**
+	 * Kommandozeile
+	 */
 	private final String[] args;
 
 	/**
@@ -65,8 +67,9 @@ public class ClientArguments {
 	 */
 	private Boolean showHelp = null;
 
-	public ClientArguments(final String[] args) {
+	public ClientArguments(final String[] args, final SystemExiter exiter) {
 		this.args = args;
+		this.exiter = exiter;
 	}
 
 	/**
@@ -84,25 +87,25 @@ public class ClientArguments {
 			exiter.exit(ReturnCode.TECHNICAL);
 		}
 
-		if (commandLine.hasOption(OPTION_NAME_HELP)) {
-			this.showHelp = Boolean.TRUE;
-		}
+		this.showHelp = Boolean.valueOf(commandLine.hasOption(OPTION_NAME_HELP));
 
 		if (commandLine.hasOption(OPTION_NAME_CONFIGDIR)) {
-			String optionValue = commandLine.getOptionValue(OPTION_NAME_CONFIGDIR);
+			String optionValue = commandLine.getOptionValue(OPTION_NAME_CONFIGDIR) != null ? commandLine.getOptionValue(OPTION_NAME_CONFIGDIR).trim() : null;
 			if (!StringUtils.hasText(optionValue)) {
 				throw new IllegalArgumentException("Konfigurationsverzeichnis muss angegeben werden.");
 			}
-			this.configDirectory = new File(optionValue);
+			configDirectory = new File(optionValue);
 			if (!configDirectory.exists()) {
-				throw new IllegalArgumentException("Konfigurationsverzeichnis existiert nicht.");
+				throw new IllegalArgumentException(String.format("Konfigurationsverzeichnis existiert nicht: %s", configDirectory));
 			}
 			if (!configDirectory.isDirectory()) {
-				throw new IllegalArgumentException("Konfigurationsverzeichnis ist kein Verzeichnis.");
+				throw new IllegalArgumentException(String.format("Konfigurationsverzeichnis ist kein Verzeichnis: %s", configDirectory));
 			}
 			if (!configDirectory.canRead()) {
-				throw new IllegalArgumentException("Konfigurationsverzeichnis nicht zugreifbar.");
+				throw new IllegalArgumentException(String.format("Konfigurationsverzeichnis nicht zugreifbar: %s", configDirectory));
 			}
+		} else if (Boolean.FALSE.equals(showHelp)) {
+			throw new IllegalArgumentException("Bitte Parameter angeben.");
 		}
 
 		if (showHelp == null && configDirectory == null) {

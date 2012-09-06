@@ -19,7 +19,6 @@
 package de.extra.client.starter;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -32,6 +31,8 @@ import de.extra.client.exit.JvmSystemExiter;
 import de.extra.client.exit.SystemExiter;
 
 /**
+ * eXTRa-CLI Startklasse.
+ *
  * @author DRV
  * @version $Id$
  */
@@ -39,28 +40,18 @@ public class ClientStarter {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ClientStarter.class);
 
-	private static final String KEY_CURRENT_DATE = "current.date";
-
 	private static final SystemExiter EXITER = new JvmSystemExiter();
-
-	static {
-		// Startzeitpunkt als System.property setzen, zum Beispiel für Log4J
-		// Dateinamen
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-		System.setProperty(KEY_CURRENT_DATE, dateFormat.format(new Date()));
-	}
 
 	/**
 	 * Main
 	 *
-	 * @param args
-	 *            Kommandozeilenparameter
+	 * @param args Kommandozeilenparameter
 	 */
 	public static void main(final String[] args) {
 		OpLogger.log.info("Eingabeparameter: " + Arrays.toString(args));
 		ReturnCode returnCode = ReturnCode.SUCCESS;
 
-		ClientArguments clientArguments = new ClientArguments(args);
+		ClientArguments clientArguments = new ClientArguments(args, EXITER);
 		try {
 			clientArguments.parseArgs();
 		} catch (Exception e) {
