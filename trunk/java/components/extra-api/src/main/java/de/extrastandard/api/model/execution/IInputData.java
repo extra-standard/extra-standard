@@ -109,9 +109,16 @@ public interface IInputData extends PersistentEntity {
 	String getResponseId();
 
 	/**
+	 * Liefert den aktuellen Status.
 	 *
+	 * @return Status.
+	 */
+	IStatus getStatus();
+
+	/**
+	 * Liefert die zugehörige Execution.
 	 *
-	 * @return
+	 * @return Execution
 	 */
 	IExecution getExecution();
 

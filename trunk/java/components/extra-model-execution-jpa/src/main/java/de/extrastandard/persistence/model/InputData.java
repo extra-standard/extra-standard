@@ -121,7 +121,8 @@ public class InputData extends AbstractEntity implements IInputData {
 		// create a transition
 		InputDataTransition transition = new InputDataTransition();
 		transition.setPreviousStatus(null);
-		transition.setCurrentStatus(statusRepository.findByName(PersistentStatus.INITIAL.toString()));
+		this.status = statusRepository.findByName(PersistentStatus.INITIAL.toString());
+		transition.setCurrentStatus(this.status);
 		transition.setTransitionDate(new Date());
 		transition.setQualifier(qualifier);
 		transition.setInputData(this);
@@ -145,8 +146,7 @@ public class InputData extends AbstractEntity implements IInputData {
 
 		InputDataTransition currentTransition = new InputDataTransition();
 		currentTransition.setPreviousStatus(this.status);
-		currentTransition.setCurrentStatus(statusRepository
-				.findByName(newStatus.getName()));
+		currentTransition.setCurrentStatus(statusRepository.findByName(newStatus.getName()));
 		currentTransition.setTransitionDate(new Date());
 		currentTransition.setQualifier(qualifier);
 		currentTransition.setDuration(currentTransition.getTransitionDate()
@@ -167,6 +167,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	public void failed(final String errorCode, final String errorMessage) {
 		this.errorCode = errorCode;
 		this.errorMessage = errorMessage;
+		// TODO transition / status setzen
 		saveOrUpdate();
 	}
 
@@ -177,6 +178,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	public void failed(final ExtraRuntimeException exception) {
 		this.errorCode = exception.getCode().name();
 		this.errorMessage = exception.getMessage();
+		// TODO transition / status setzen
 		saveOrUpdate();
 	}
 
@@ -186,6 +188,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	@Override
 	public void success(final String responseId) {
 		this.responseId = responseId;
+		// TODO transition / status setzen
 		saveOrUpdate();
 	}
 
@@ -244,6 +247,14 @@ public class InputData extends AbstractEntity implements IInputData {
 	@Override
 	public String getResponseId() {
 		return responseId;
+	}
+
+	/**
+	 * @see de.extrastandard.api.model.execution.IInputData#getStatus()
+	 */
+	@Override
+	public Status getStatus() {
+		return status;
 	}
 
 	/**
