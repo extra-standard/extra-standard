@@ -6,12 +6,21 @@
 	<formats>
 		<format>zip</format>
 	</formats>
-	<baseDirectory>${project.build.finalName}</baseDirectory>
+	<baseDirectory>${program.name}</baseDirectory>
 	<includeBaseDirectory>true</includeBaseDirectory>
 	<fileSets>
 		<fileSet>
+			<directory>target</directory>
+			<outputDirectory>/</outputDirectory>
+			<useDefaultExcludes>true</useDefaultExcludes>
+			<includes>
+				<include>version.txt</include>
+			</includes>
+		</fileSet>
+		<fileSet>
 			<directory>src/main/bin</directory>
 			<outputDirectory>/bin</outputDirectory>
+			<filtered>true</filtered>
 		</fileSet>
 		<fileSet>
 			<directory>src/main/conf</directory>
