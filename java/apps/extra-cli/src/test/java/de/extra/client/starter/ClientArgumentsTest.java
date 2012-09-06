@@ -46,7 +46,7 @@ public class ClientArgumentsTest {
 	@Test
 	public void testClientArguments() throws Exception {
 		Resource configDir = new ClassPathResource("testconfig");
-		String[] args = {"-c " + configDir.getFile().getAbsolutePath()};
+		String[] args = {"-c " + configDir.getFile().getAbsolutePath(), "-l d:\\temp"};
 		ClientArguments arguments = new ClientArguments(args, new NotExiter());
 		arguments.parseArgs();
 		assertNotNull(arguments.getConfigDirectory());

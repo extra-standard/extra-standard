@@ -29,6 +29,7 @@ import de.extra.client.core.ClientProcessResult;
 import de.extra.client.core.observer.OpLogger;
 import de.extra.client.exit.JvmSystemExiter;
 import de.extra.client.exit.SystemExiter;
+import de.extra.client.logging.LogFileHandler;
 
 /**
  * eXTRa-CLI Startklasse.
@@ -48,7 +49,6 @@ public class ClientStarter {
 	 * @param args Kommandozeilenparameter
 	 */
 	public static void main(final String[] args) {
-		OpLogger.log.info("Eingabeparameter: " + Arrays.toString(args));
 		ReturnCode returnCode = ReturnCode.SUCCESS;
 
 		ClientArguments clientArguments = new ClientArguments(args, EXITER);
@@ -63,8 +63,13 @@ public class ClientStarter {
 			clientArguments.printHelpText(null);
 			EXITER.exit(returnCode);
 		}
+		OpLogger.log.info("Eingabeparameter: " + Arrays.toString(args));
 
 		File configurationDirectory = clientArguments.getConfigDirectory();
+
+		// initialisiert logging
+		new LogFileHandler(clientArguments.getLogDirectory(), configurationDirectory);
+
 		// config dir zur konfiguration des clients nutzen
 		ExtraClient extraClient = new ExtraClient(configurationDirectory);
 		try {
