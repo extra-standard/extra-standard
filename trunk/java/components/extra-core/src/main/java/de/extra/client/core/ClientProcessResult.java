@@ -96,4 +96,41 @@ public class ClientProcessResult {
 		return false;
 	}
 
+	public String exceptionsToString() {
+		final StringBuilder stringBuilder = new StringBuilder();
+		final Set<String> keySet = responseMap.keySet();
+		for (final String key : keySet) {
+			final ProcessResult result = responseMap.get(key);
+			if (result.getException() != null) {
+				stringBuilder.append("ExceptionKey: ").append(key);
+				stringBuilder.append(" Exception Message: ").append(result.getException().getMessage());
+				stringBuilder.append(" For Results: ").append(result.getResponseDatas());
+
+			}
+		}
+		return stringBuilder.toString();
+	}
+
+	/**
+	 * @return Aufbereitete Liste mit ReturnCodes zu jeder empfangener Nachricht
+	 */
+	public String printReturnCodes() {
+		final StringBuilder resultAsString = new StringBuilder();
+		final Set<String> keySet = responseMap.keySet();
+		for (final String key : keySet) {
+			final ProcessResult result = responseMap.get(key);
+			resultAsString.append("Result Identifikation: ").append(key);
+			final Exception exception = result.getException();
+			if (exception != null) {
+				resultAsString.append("ResultException: ").append(exception);
+			}
+			if (result.getResponseDatas() != null) {
+				for (final IResponseData iResponseData : result.getResponseDatas()) {
+					resultAsString.append(" ResponseData").append(iResponseData);
+				}
+			}
+		}
+		return resultAsString.toString();
+	}
+
 }
