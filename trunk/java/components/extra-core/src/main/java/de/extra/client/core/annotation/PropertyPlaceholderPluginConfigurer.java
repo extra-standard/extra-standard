@@ -119,14 +119,15 @@ public class PropertyPlaceholderPluginConfigurer extends PropertyPlaceholderConf
 				}
 				final String key = extractKey(annotationConfigutation, valueAnnotation, clazz);
 				final Object value = resolvePlaceholder(key, properties, SYSTEM_PROPERTIES_MODE_FALLBACK);
-				if (value == null && !ignoreNullValues) {
+				if (value != null) {
+					if (LOG.isDebugEnabled()) {
+						LOG.debug("setting property=[" + clazz.getName() + "." + field.getName() + "] value=[" + key
+								+ "=" + value + "]");
+					}
+					mutablePropertyValues.addPropertyValue(field.getName(), value);
+				} else if (!ignoreNullValues) {
 					throw new BeanCreationException(beanName, "No such property=[" + key + "] found in properties.");
 				}
-				if (LOG.isDebugEnabled()) {
-					LOG.debug("setting property=[" + clazz.getName() + "." + field.getName() + "] value=[" + key + "="
-							+ value + "]");
-				}
-				mutablePropertyValues.addPropertyValue(field.getName(), value);
 			}
 		}
 	}
