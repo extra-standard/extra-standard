@@ -38,9 +38,14 @@ public class ClientArguments {
 	public static final String OPTION_NAME_CONFIGDIR = "configDirectory";
 	public static final String OPTION_NAME_CONFIGDIR_SHORTCUT = "c";
 
+	public static final String OPTION_NAME_LOGDIR = "logDirectory";
+	public static final String OPTION_NAME_LOGDIR_SHORTCUT = "l";
+
 	private static final Option OPT_HELP = new Option(OPTION_NAME_HELP_SHORTCUT, OPTION_NAME_HELP, false, "Hilfe anzeigen");
 
 	private static final Option OPT_CONFIGDIRECTORY = new Option(OPTION_NAME_CONFIGDIR_SHORTCUT, OPTION_NAME_CONFIGDIR, true, "Konfigurationsverzeichnis");
+
+	private static final Option OPT_LOGDIRECTORY = new Option(OPTION_NAME_LOGDIR_SHORTCUT, OPTION_NAME_LOGDIR, true, "Logverzeichnis");
 
 	public static final Options OPTIONS;
 
@@ -50,6 +55,7 @@ public class ClientArguments {
 		OPTIONS = new Options();
 		OPTIONS.addOption(OPT_HELP);
 		OPTIONS.addOption(OPT_CONFIGDIRECTORY);
+		OPTIONS.addOption(OPT_LOGDIRECTORY);
 	}
 
 	/**
@@ -61,6 +67,11 @@ public class ClientArguments {
 	 * Wert aus dem ermitteltem Kommandozeilenparameter {@link #OPTION_NAME_CONFIGDIR}.
 	 */
 	private File configDirectory = null;
+
+	/**
+	 * Wert aus dem ermitteltem Kommandozeilenparameter {@link #OPTION_NAME_LOGDIR}.
+	 */
+	private File logDirectory = null;
 
 	/**
 	 * Gibt an ob ein Hilfetext ausgegeben werden soll Parameter #OPTION_NAME_HELP.
@@ -89,27 +100,45 @@ public class ClientArguments {
 
 		this.showHelp = Boolean.valueOf(commandLine.hasOption(OPTION_NAME_HELP));
 
+		if (commandLine.hasOption(OPTION_NAME_LOGDIR)) {
+			String optionValue = commandLine.getOptionValue(OPTION_NAME_LOGDIR) != null ? commandLine.getOptionValue(OPTION_NAME_LOGDIR).trim() : null;
+			if (!StringUtils.hasText(optionValue)) {
+				throw new IllegalArgumentException("Logverzeichnis muss angegeben werden.");
+			}
+			logDirectory = new File(optionValue);
+			checkDirectory(optionValue, logDirectory);
+		} else if (Boolean.FALSE.equals(showHelp)) {
+			throw new IllegalArgumentException("Bitte Parameter angeben.");
+		}
+
 		if (commandLine.hasOption(OPTION_NAME_CONFIGDIR)) {
 			String optionValue = commandLine.getOptionValue(OPTION_NAME_CONFIGDIR) != null ? commandLine.getOptionValue(OPTION_NAME_CONFIGDIR).trim() : null;
 			if (!StringUtils.hasText(optionValue)) {
 				throw new IllegalArgumentException("Konfigurationsverzeichnis muss angegeben werden.");
 			}
 			configDirectory = new File(optionValue);
-			if (!configDirectory.exists()) {
-				throw new IllegalArgumentException(String.format("Konfigurationsverzeichnis existiert nicht: %s", configDirectory));
-			}
-			if (!configDirectory.isDirectory()) {
-				throw new IllegalArgumentException(String.format("Konfigurationsverzeichnis ist kein Verzeichnis: %s", configDirectory));
-			}
-			if (!configDirectory.canRead()) {
-				throw new IllegalArgumentException(String.format("Konfigurationsverzeichnis nicht zugreifbar: %s", configDirectory));
-			}
+			checkDirectory(optionValue, configDirectory);
 		} else if (Boolean.FALSE.equals(showHelp)) {
 			throw new IllegalArgumentException("Bitte Parameter angeben.");
 		}
 
 		if (showHelp == null && configDirectory == null) {
 			throw new IllegalArgumentException("Bitte Parameter angeben.");
+		}
+	}
+
+	/**
+	 * @param optionValue
+	 */
+	private void checkDirectory(final String optionValue, final File directory) {
+		if (!directory.exists()) {
+			throw new IllegalArgumentException(String.format("Verzeichnis existiert nicht: %s", directory));
+		}
+		if (!directory.isDirectory()) {
+			throw new IllegalArgumentException(String.format("Verzeichnis ist kein Verzeichnis: %s", directory));
+		}
+		if (!directory.canRead()) {
+			throw new IllegalArgumentException(String.format("Verzeichnis nicht zugreifbar: %s", directory));
 		}
 	}
 
@@ -127,5 +156,9 @@ public class ClientArguments {
 
 	public File getConfigDirectory() {
 		return configDirectory;
+	}
+
+	public File getLogDirectory() {
+		return logDirectory;
 	}
 }
