@@ -16,23 +16,26 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.starter;
+package de.extra.client.threephasentest;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class ExtraClientTest {
+import de.extra.client.starter.ExtraClient;
+import de.extra.client.starter.ExtraClientTestBasic;
+
+public class ScenarioPhase2KlientIT {
 
 	private final ExtraClientTestBasic extraClientTestBasic = new ExtraClientTestBasic();
 
-	private static final String TEST_PATH = "/testconfig";
-
 	private ExtraClient extraClient;
+
+	private static final String TEST_CONFIG = "/threephaseszenario/phase2";
 
 	@Before
 	public void setUp() throws Exception {
 
-		extraClient = extraClientTestBasic.createExtraKlient(TEST_PATH);
+		extraClient = extraClientTestBasic.createExtraKlient(TEST_CONFIG);
 	}
 
 	@Test

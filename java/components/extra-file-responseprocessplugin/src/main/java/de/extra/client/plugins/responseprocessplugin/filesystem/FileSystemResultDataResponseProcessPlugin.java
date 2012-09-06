@@ -57,19 +57,18 @@ import de.extrastandard.api.observer.impl.TransportInfo;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
 
 /**
- *
+ * 
  * Speichert Verarbeitungsergebnisse des Fachverfahren in dem Filesystem. Hier
  * wird initial eine einfache Verarbeitung vorrausgesetzt. Die Daten werden in
  * dem MessageBodybereich in dem Data-Fragment erwartet.
- *
+ * 
  * @author DPRS
  * @version $Id$
  */
 @Named("fileSystemResultDataResponseProcessPlugin")
 public class FileSystemResultDataResponseProcessPlugin implements IResponseProcessPlugin {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(FileSystemResultDataResponseProcessPlugin.class);
+	private static final Logger LOG = LoggerFactory.getLogger(FileSystemResultDataResponseProcessPlugin.class);
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -92,7 +91,7 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * de.extra.client.core.plugin.IResponsePlugin#processResponse(de.drv.dsrv
 	 * .extrastandard.namespace.response.XMLTransport)
@@ -116,7 +115,8 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 			final ResponseDetailsType responseDetails = transportHeader.getResponseDetails();
 			final RequestDetailsType requestDetails = transportHeader.getRequestDetails();
 			if (isBodyEmpty(extraResponse.getTransportBody())) {
-				throw new ExtraResponseProcessPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION, "Keine Daten vorhanden. Body Element ist leer");
+				throw new ExtraResponseProcessPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
+						"Keine Daten vorhanden. Body Element ist leer");
 			}
 
 			final String responseId = responseDetails.getResponseID().getValue();
@@ -161,7 +161,7 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 		if (transportBody == null) {
 			isEmpty = true;
 		} else {
-			if (transportBody.getData() == null || transportBody.getEncryptedData() == null) {
+			if (transportBody.getData() == null && transportBody.getEncryptedData() == null) {
 
 				isEmpty = true;
 			}
@@ -194,18 +194,17 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 
 			transportObserver.responseDataForwarded(responseFile.getAbsolutePath(), responseBody.length);
 
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("Response gespeichert in File: '" + dateiName + "'");
-			}
+			LOG.info("Response gespeichert in File: '" + dateiName + "'");
 
 		} catch (final IOException ioException) {
-			throw new ExtraResponseProcessPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION, "Fehler beim schreiben der Antwort", ioException);
+			throw new ExtraResponseProcessPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
+					"Fehler beim schreiben der Antwort", ioException);
 		}
 	}
 
 	/**
 	 * Erzeugt einen eindeitigen Filenamen mit milissekunden und ResponseID
-	 *
+	 * 
 	 * @param responseId
 	 * @return
 	 */

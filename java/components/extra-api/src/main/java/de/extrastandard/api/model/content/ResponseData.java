@@ -82,4 +82,36 @@ public class ResponseData implements IResponseData {
 		return responseId;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+		builder.append("ResponseData [");
+		if (requestId != null) {
+			builder.append("requestId=");
+			builder.append(requestId);
+			builder.append(", ");
+		}
+		if (returnCode != null) {
+			builder.append("returnCode=");
+			builder.append(returnCode);
+			builder.append(", ");
+		}
+		if (returnText != null) {
+			builder.append("returnText=");
+			builder.append(returnText);
+			builder.append(", ");
+		}
+		if (responseId != null) {
+			builder.append("responseId=");
+			builder.append(responseId);
+		}
+		builder.append("]");
+		return builder.toString();
+	}
+
 }
