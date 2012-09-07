@@ -41,28 +41,33 @@ public class ClientArgumentsTest {
 	}
 
 	/**
-	 * Test method for {@link de.extra.client.starter.ClientArguments#ClientArguments(java.lang.String[])}.
+	 * Test method for
+	 * {@link de.extra.client.starter.ClientArguments#ClientArguments(java.lang.String[])}
+	 * .
 	 */
 	@Test
 	public void testClientArguments() throws Exception {
-		Resource configDir = new ClassPathResource("testconfig");
-		String[] args = {"-c " + configDir.getFile().getAbsolutePath(), "-l d:\\temp"};
-		ClientArguments arguments = new ClientArguments(args, new NotExiter());
+		final Resource configDir = new ClassPathResource("testconfig");
+		final Resource logDir = new ClassPathResource("log");
+		final String[] args = { "-c " + configDir.getFile().getAbsolutePath(),
+				"-l  " + logDir.getFile().getAbsolutePath() };
+		final ClientArguments arguments = new ClientArguments(args, new NotExiter());
 		arguments.parseArgs();
 		assertNotNull(arguments.getConfigDirectory());
 	}
 
 	/**
-	 * Test method for {@link de.extra.client.starter.ClientArguments#parseArgs()}.
+	 * Test method for
+	 * {@link de.extra.client.starter.ClientArguments#parseArgs()}.
 	 */
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testParseNonArgs() {
-		ClientArguments arguments = new ClientArguments(null, new NotExiter());
+		final ClientArguments arguments = new ClientArguments(null, new NotExiter());
 		arguments.parseArgs();
 	}
 
 	public void testHelp() throws Exception {
-		ClientArguments arguments = new ClientArguments(new String[] {"-h"}, new NotExiter());
+		final ClientArguments arguments = new ClientArguments(new String[] { "-h" }, new NotExiter());
 		arguments.parseArgs();
 		assertTrue(arguments.isShowHelp());
 	}
