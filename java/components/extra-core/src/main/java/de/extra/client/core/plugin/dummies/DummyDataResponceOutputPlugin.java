@@ -133,7 +133,7 @@ public class DummyDataResponceOutputPlugin implements IOutputPlugin {
 	private TransportBody createDummyBodyResponse() {
 		final TransportBody transportBody = new TransportBody();
 		final DataType value = new DataType();
-		final String stringValue = "DUMMY Responce";
+		final String stringValue = "DUMMY Response";
 		final byte[] decodeBase64Value = Base64.encodeBase64(stringValue.getBytes());
 
 		final Base64CharSequenceType base64CharSequenceType = new Base64CharSequenceType();
