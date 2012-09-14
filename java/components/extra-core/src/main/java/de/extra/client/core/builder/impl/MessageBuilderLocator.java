@@ -47,9 +47,9 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 /**
  * MessageBuilderLocator sucht zu jedem elementType ein entsprechenen
  * MessageBuilder
- *
+ * 
  * @author Leonid Potap
- *
+ * 
  */
 @Named("messageBuilderLocator")
 public class MessageBuilderLocator implements IMessageBuilderLocator {
@@ -133,7 +133,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	/**
 	 * Liefert ein MessageBuilder abhängig von dem ParentElement und Type von
 	 * dem childElement
-	 *
+	 * 
 	 * @param elementType
 	 * @param senderData
 	 * @return
@@ -159,7 +159,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	/**
 	 * Liefert ein MessageBuilder abhängig von dem ParentElement und Type von
 	 * dem childElement
-	 *
+	 * 
 	 * @param elementType
 	 * @return
 	 */
@@ -217,7 +217,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Liefert einen Builder für ein xmlType
-	 *
+	 * 
 	 * @param currentBuilderXmlType
 	 * @return
 	 */
@@ -234,7 +234,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Liefert einen Builder für ein Plugin XmlType
-	 *
+	 * 
 	 * @param xmlType
 	 * @return
 	 */
@@ -271,7 +271,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Eine Plugin Message hat der Prefix xplg
-	 *
+	 * 
 	 * @param currentBuilderXmlBype
 	 * @return
 	 */
@@ -294,23 +294,23 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 		for (final IXmlComplexTypeBuilder messageBuilder : entrySet) {
 			final String builderXmlType = messageBuilder.getXmlType();
 			// prüfen ob eine Implementierung bereits angemeldet ist
-			if (xmlMultipleImplementationBuilderList.contains(builderXmlType)) {
-				// Nothing To Do
-			} else if (xmlDefaultTypesToComplexTypeBuilderAssignmentMap.containsKey(builderXmlType)) {
-				// die 2 Realisierung in den MultipleImplementationBuilder
-				// hinzufügen
-				xmlMultipleImplementationBuilderList.add(builderXmlType);
-				// Builder aus der defaultMap entfernen
-				xmlDefaultTypesToComplexTypeBuilderAssignmentMap.remove(builderXmlType);
-			} else {
-				xmlDefaultTypesToComplexTypeBuilderAssignmentMap.put(builderXmlType, messageBuilder);
+			if (!xmlMultipleImplementationBuilderList.contains(builderXmlType)) {
+				if (!xmlDefaultTypesToComplexTypeBuilderAssignmentMap.containsKey(builderXmlType)) {
+					xmlDefaultTypesToComplexTypeBuilderAssignmentMap.put(builderXmlType, messageBuilder);
+				} else {
+					// die 2 Realisierung in den MultipleImplementationBuilder
+					// hinzufügen
+					xmlMultipleImplementationBuilderList.add(builderXmlType);
+					// Builder aus der defaultMap entfernen
+					xmlDefaultTypesToComplexTypeBuilderAssignmentMap.remove(builderXmlType);
+				}
 			}
 		}
 	}
 
 	/**
 	 * Holt aus der konfiguration die entsprechende BeanNaem
-	 *
+	 * 
 	 * @param configKey
 	 * @return
 	 */
@@ -321,7 +321,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Prüft. ob der gefundene Builder zu dem deklarierten Teil passt
-	 *
+	 * 
 	 * @param complexTypeBuilder
 	 * @param builderXmlType
 	 */
@@ -338,7 +338,7 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 
 	/**
 	 * Berechnet ConfigKey für ein mehrfach vorhandeten Builder
-	 *
+	 * 
 	 * @param builderXmlType
 	 * @return
 	 */
