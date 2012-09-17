@@ -183,9 +183,9 @@ Mit Hilfe von javax.validation (z.B hier _*@!NotNull*_) werden die Konfiguration
 || *!PluginConfiType* || *Prefix* || 
 || !DataPlugins || plugins.dataplugin ||   
 || !DataSource || plugins.datasource ||   
-|| !Certificates || plugins.certificates ||   
+|| Certificates || plugins.certificates ||   
 || !DataTransforms || plugins.datatransform ||   
-|| !Contacts || plugins.contacts ||   
+|| Contacts || plugins.contacts ||   
 || !OutputPlugins || plugins.outputplugin ||   
 || !ResponseProcessPlugins || plugins.responseprocessplugin ||   
 || Builder || builder || 
