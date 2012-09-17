@@ -9,6 +9,7 @@
       * [eXTraArchitekturAnwendungBetrieb Betrieb von CLI]      
       * [eXTraArchitekturAnwendungProfiling Profiling]
       * [eXTraPersistence]  
+      * [eXTraExceptionHierarchie]
   * [eXTraVerfahren Fachverfahren]    
       * [eXTraSterbedatenVerfahren Sterbedatenabgleich]
   * [eXTraSpecIssues Offene Punkte]    
