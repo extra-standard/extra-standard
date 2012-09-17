@@ -181,13 +181,13 @@ Mit Hilfe von javax.validation (z.B hier _*@!NotNull*_) werden die Konfiguration
 == Plugins Prefix ==
 
 || *!PluginConfiType* || *Prefix* || 
-|| DataPlugins || plugins.dataplugin ||   
-|| DataSource || plugins.datasource ||   
-|| Certificates || plugins.certificates ||   
-|| DataTransforms || plugins.datatransform ||   
-|| Contacts || plugins.contacts ||   
-|| OutputPlugins || plugins.outputplugin ||   
-|| ResponseProcessPlugins || plugins.responseprocessplugin ||   
+|| !DataPlugins || plugins.dataplugin ||   
+|| !DataSource || plugins.datasource ||   
+|| !Certificates || plugins.certificates ||   
+|| !DataTransforms || plugins.datatransform ||   
+|| !Contacts || plugins.contacts ||   
+|| !OutputPlugins || plugins.outputplugin ||   
+|| !ResponseProcessPlugins || plugins.responseprocessplugin ||   
 || Builder || builder || 
 
 
