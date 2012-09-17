@@ -154,7 +154,7 @@ builder.xplg.Contacts.configurableSMTPContactsPluginsBuilder.emailaddress=test@r
 Der Key besteht aus folgenden Teilen:
 
  * Builderprefix = builder
- 	* !BuilderPrefix wird aus dem Wert !PluginConfiguration.pluginType abgeleitet. Die Lieste des Builder bzw. Pluginsprefixes ist [hier|eXTraBuilderKonfiguration#Plugins_Prefix] zu finden 
+ 	* !BuilderPrefix wird aus dem Wert !PluginConfiguration.pluginType abgeleitet. Die Lieste des Builder bzw. Pluginsprefixes ist [eXTraBuilderKonfiguration#Plugins_Prefix] zu finden 
  * Plugintype = xplg.Contacts
  * !PluginBeanName = configurableSMTPContactsPluginsBuilder 
  	* Der !PluginBeanName wird aus dem @!PluginConfiguration.pluginBeanName übernommen
