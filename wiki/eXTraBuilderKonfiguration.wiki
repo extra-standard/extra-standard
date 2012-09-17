@@ -125,3 +125,58 @@ Propertie für den Feld name in der Implementierung *_dataTransformConfigurableP
 {{{
 builder.xplg.DataTransforms.dataTransformConfigurablePluginsBuilder=Mein Name
 }}}
+
+== Annotation PluginConfiguration und PluginValue
+
+Für die Unterstützung bei der Plugin Entwicklung sind 2 Annotation entwickelt worden. Die dienen der Erleichterung bei der Plugin und Builder Konfiguration. 
+
+Ein Beispiel für die Anwendung der Annotation sieht wie folgt aus:
+
+{{{
+@Named("configurableSMTPContactsPluginsBuilder")
+@PluginConfiguration(pluginBeanName = "configurableSMTPContactsPluginsBuilder", pluginType = PluginConfigType.Builder)
+public class ConfigurableSMTPContactsPluginsBuilder extends XmlComplexTypeBuilderAbstr {
+
+	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:Contacts";
+
+	@PluginValue(key = "emailaddress")
+	@NotNull
+	private String eMailAddress;
+}}} 
+
+Der Konfigurationseintrag zu der Value eMailAddress wird von dem Programm automatisch berechnet:
+
+{{{
+#Konfigurationsvalue
+builder.xplg.Contacts.configurableSMTPContactsPluginsBuilder.emailaddress=test@rentenservice.de
+}}}
+
+Der Key besteht aus folgenden Teilen:
+
+ * Builderprefix = builder
+ * Plugintype = xplg.Contactsa
+ * PluginBeanName = configurableSMTPContactsPluginsBuilder 
+ ** Der PluginBeanName wird aus dem @PluginConfiguration.pluginBeanName übernommen
+ * ValueName = emailaddress
+ ** Der Name der Value wird aus dem Wert @PluginValue.key übernommen
+ 
+Aktivierung der @PluginConfiguration wird durch den Spring Eintrag vorgenommen:
+{{{
+	<bean
+		class="de.extra.client.core.annotation.PropertyPlaceholderPluginConfigurer">
+		<property name="propertiesArray">
+			<array>
+				<ref bean="meineProperty" />
+			</array>
+		</property>	
+			<property name="ignoreNullValues" value="true" />
+	</bean> 
+}}}
+Dabei stellt der Eintrag _*ignoreNullValues = true*_ sicher, 
+dass die fehlenden Konfigurationswerte für die nicht aktivierte Plugins bzw. Builder dem Start der Applikation nicht hindern.
+
+Mit Hilfe von javax.validation (z.B hier _*@NotNull*_) werden die Konfigurationswerte zur Laufzeit überprüft.
+
+ 
+
+ 
