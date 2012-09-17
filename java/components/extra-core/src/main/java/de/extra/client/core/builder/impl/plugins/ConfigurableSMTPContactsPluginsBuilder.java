@@ -48,7 +48,6 @@ public class ConfigurableSMTPContactsPluginsBuilder extends XmlComplexTypeBuilde
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:Contacts";
 
 	@PluginValue(key = "emailaddress")
-	// @Value("${builder.xplg.Contacts.configurableSMTPContactsPluginsBuilder.emailaddress}")
 	@NotNull
 	private String eMailAddress;
 
