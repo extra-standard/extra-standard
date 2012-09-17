@@ -11,4 +11,4 @@ In dem folgendem Diagram sind die Exception grafisch dargestellt.
 
 http://extra-standard.googlecode.com/svn/wiki/images/exception-hierarchie.png
 
-Alle Exception leiten von dem !ExtraRuntimeException ab und beinhalten einen !ExceptionCode. Bei der auswertung der Exception wird !ExceptionCode berücksichtigt.
+Alle Exception leiten von dem !ExtraRuntimeException ab und beinhalten einen !ExceptionCode. Bei der Auswertung der Exception wird !ExceptionCode berücksichtigt.
