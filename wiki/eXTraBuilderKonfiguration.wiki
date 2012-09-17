@@ -154,7 +154,8 @@ builder.xplg.Contacts.configurableSMTPContactsPluginsBuilder.emailaddress=test@r
 Der Key besteht aus folgenden Teilen:
 
  * Builderprefix = builder
- * Plugintype = xplg.Contactsa
+ 	* !BuilderPrefix wird aus dem Wert !PluginConfiguration.pluginType abgeleitet. Die Lieste des Builder bzw. Pluginsprefixes ist hier zu finden 
+ * Plugintype = xplg.Contacts
  * !PluginBeanName = configurableSMTPContactsPluginsBuilder 
  	* Der !PluginBeanName wird aus dem @!PluginConfiguration.pluginBeanName übernommen
  * !ValueName = emailaddress
@@ -176,6 +177,20 @@ Dabei stellt der Eintrag _*ignoreNullValues = true*_ sicher,
 dass die fehlenden Konfigurationswerte für die nicht aktivierte Plugins bzw. Builder dem Start der Applikation nicht hindern.
 
 Mit Hilfe von javax.validation (z.B hier _*@!NotNull*_) werden die Konfigurationswerte zur Laufzeit überprüft.
+
+== Plugins Prefix ==
+
+|| *!PluginConfiType* || *Prefix* || 
+|| DataPlugins || plugins.dataplugin ||   
+|| DataSource || plugins.datasource ||   
+|| Certificates || plugins.certificates ||   
+|| DataTransforms || plugins.datatransform ||   
+|| Contacts || plugins.contacts ||   
+|| OutputPlugins || plugins.outputplugin ||   
+|| ResponseProcessPlugins || plugins.responseprocessplugin ||   
+|| Builder || builder || 
+
+
 
  
 
