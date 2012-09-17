@@ -174,7 +174,7 @@ Aktivierung der @!PluginConfiguration wird durch den Spring Eintrag vorgenommen:
 	</bean> 
 }}}
 Dabei stellt der Eintrag _*ignoreNullValues = true*_ sicher, 
-dass die fehlenden Konfigurationswerte für die nicht aktivierte Plugins bzw. Builder dem Start der Applikation nicht hindern.
+dass die fehlenden Konfigurationswerte für die nicht aktivierte Plugins bzw. Builder den Start der Applikation nicht hindern.
 
 Mit Hilfe von javax.validation (z.B hier _*@!NotNull*_) werden die Konfigurationswerte zur Laufzeit überprüft.
 
