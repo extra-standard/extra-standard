@@ -126,7 +126,7 @@ Propertie für den Feld name in der Implementierung *_dataTransformConfigurableP
 builder.xplg.DataTransforms.dataTransformConfigurablePluginsBuilder=Mein Name
 }}}
 
- == Annotation !PluginConfiguration und !PluginValue
+== Annotation !PluginConfiguration und !PluginValue ==
 
 Für die Unterstützung bei der Plugin Entwicklung sind 2 Annotation entwickelt worden. Die dienen der Erleichterung bei der Plugin und Builder Konfiguration. 
 
@@ -154,9 +154,9 @@ builder.xplg.Contacts.configurableSMTPContactsPluginsBuilder.emailaddress=test@r
 Der Key besteht aus folgenden Teilen:
 
  * Builderprefix = builder
- * !Plugintype = xplg.Contactsa
+ * Plugintype = xplg.Contactsa
  * !PluginBeanName = configurableSMTPContactsPluginsBuilder 
- 	* Der !PluginBeanName wird aus dem @PluginConfiguration.pluginBeanName übernommen
+ 	* Der !PluginBeanName wird aus dem @!PluginConfiguration.pluginBeanName übernommen
  * !ValueName = emailaddress
  	* Der Name der Value wird aus dem Wert @!PluginValue.key übernommen
  
