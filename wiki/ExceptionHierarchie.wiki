@@ -1,0 +1,14 @@
+#summary Beschreibt die Exception Hierarchie in eXTra Klient.
+
+= Introduction =
+
+Die Exceptions in eXTra Klient leiten von der Klasse ExtraRuntimeException ab und sind hiermit *_"unchecked"_*. Eine "checked" Exception wird nur dann geworfen, wenn der Aufrufer darauf reagieren kann. Bei anderen Exception wird das ExceptionHandling in einer zentralen Stelle (am Start der Verarbeitung) stattfinden.
+
+
+= Details =
+
+In dem folgendem Diagram sind die Exception grafisch dargestellt.
+
+http://extra-standard.googlecode.com/svn/wiki/images/exception-hierarchie.png
+
+Alle Exception leiten von dem ExtraRuntimeException und beinhalten einen ExceptionCode. Bei der auswertung der Exception wird ExceptionCode berücksichtigt.
