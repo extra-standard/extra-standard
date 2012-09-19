@@ -22,15 +22,16 @@ import de.extrastandard.api.exception.ExtraRuntimeException;
 
 /**
  * Inputdaten.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: IInputData.java 562 2012-09-06 14:12:43Z
+ *          thorstenvogel@gmail.com $
  */
 public interface IInputData extends PersistentEntity {
 
 	/**
 	 * Aktualisiert diese Inputdaten mit dem angegebenen Status.
-	 *
+	 * 
 	 * @param newStatus
 	 *            Der zu setzende Status.
 	 * @param qualifier
@@ -40,7 +41,7 @@ public interface IInputData extends PersistentEntity {
 
 	/**
 	 * Markiert diese Instanz mit den angegebenen Fehlerdaten.
-	 *
+	 * 
 	 * @param errorCode
 	 *            Code des Fehlers.
 	 * @param errorMessage
@@ -50,7 +51,7 @@ public interface IInputData extends PersistentEntity {
 
 	/**
 	 * Markiert diese Instanz mit der angegebenen Exception.
-	 *
+	 * 
 	 * @param exception
 	 *            die den Fehler auslösende Exception.
 	 */
@@ -58,7 +59,7 @@ public interface IInputData extends PersistentEntity {
 
 	/**
 	 * Markiert diese Instanz als erfolgreich übertragen.
-	 *
+	 * 
 	 * @param responseId
 	 *            ID der Response.
 	 */
@@ -66,7 +67,7 @@ public interface IInputData extends PersistentEntity {
 
 	/**
 	 * Identifikation dieser Daten.
-	 *
+	 * 
 	 * @return Identifier
 	 */
 	String getInputIdentifier();
@@ -74,50 +75,42 @@ public interface IInputData extends PersistentEntity {
 	/**
 	 * Hashcode dieser Daten. Sollte kein HashCode verwendet werden können, so
 	 * ist der Rückgabewert <code>null</code>.
-	 *
+	 * 
 	 * @return Hashcode oder <code>null</code>.
 	 */
 	String getHashcode();
 
-
 	/**
 	 * Liefert <code>true</code>, falls ein Fehler vorliegt.
-	 *
+	 * 
 	 * @return <code>true</code> bei Fehler, ansonsten <code>false</code>.
 	 */
 	boolean hasError();
 
 	/**
 	 * Falls vorhanden, ein Fehlercode.
-	 *
+	 * 
 	 * @return Fehlercode oder <code>null</code>.
 	 */
 	String getErrorCode();
 
 	/**
 	 * Falls vorhanden, eine Fehlermeldung.
-	 *
+	 * 
 	 * @return Fehlermeldung oder <code>null</code>.
 	 */
 	String getErrorMessage();
 
 	/**
 	 * Response ID oder <code>null</code>.
-	 *
+	 * 
 	 * @return Response ID oder <code>null</code>.
 	 */
 	String getResponseId();
 
 	/**
-	 * Liefert den aktuellen Status.
-	 *
-	 * @return Status.
-	 */
-	IStatus getStatus();
-
-	/**
 	 * Liefert die zugehörige Execution.
-	 *
+	 * 
 	 * @return Execution
 	 */
 	IExecution getExecution();
