@@ -24,8 +24,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -38,17 +42,22 @@ import de.extrastandard.persistence.repository.InputDataTransitionRepository;
 
 /**
  * JPA Implementierung von {@link IInputDataTransition}.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: InputDataTransition.java 508 2012-09-04 09:35:41Z
+ *          thorstenvogel@gmail.com $
  */
-@Configurable(preConstruction=true)
+@Configurable(preConstruction = true)
 @Entity
-@Table(name="INPUT_DATA_TRANSITION")
-public class InputDataTransition extends AbstractEntity implements
-		IInputDataTransition {
+@Table(name = "INPUT_DATA_TRANSITION")
+public class InputDataTransition extends AbstractEntity implements IInputDataTransition {
 
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "input_data_transition_entity_seq_gen")
+	@SequenceGenerator(name = "input_data_transition_entity_seq_gen", sequenceName = "seq_input_data_transition_id")
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "current_status_id")
@@ -135,7 +144,6 @@ public class InputDataTransition extends AbstractEntity implements
 		return inputData;
 	}
 
-
 	public void setCurrentStatus(final Status currentStatus) {
 		this.currentStatus = currentStatus;
 	}
@@ -161,8 +169,13 @@ public class InputDataTransition extends AbstractEntity implements
 	}
 
 	@Override
+	public Long getId() {
+		return id;
+	}
+
+	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("InputDataTransition [transitionDate=");
 		builder.append(transitionDate);
 		builder.append(", currentStatus=");

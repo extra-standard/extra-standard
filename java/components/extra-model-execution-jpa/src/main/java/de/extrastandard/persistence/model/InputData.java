@@ -25,8 +25,12 @@ import javax.inject.Named;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -46,9 +50,10 @@ import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * JPA Implementierung von {@link IInputData}.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: InputData.java 562 2012-09-06 14:12:43Z thorstenvogel@gmail.com
+ *          $
  */
 @Configurable(preConstruction = true)
 @Entity
@@ -57,20 +62,21 @@ public class InputData extends AbstractEntity implements IInputData {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "input_data_entity_seq_gen")
+	@SequenceGenerator(name = "input_data_entity_seq_gen", sequenceName = "seq_input_data_id")
+	private Long id;
+
 	@Column(name = "input_identifier")
 	private String inputIdentifier;
 
 	@Column(name = "hashcode")
 	private String hashcode;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "status_id")
-	private Status status;
-
-	@Column(name = "errorcode")
+	@Column(name = "error_code")
 	private String errorCode;
 
-	@Column(name = "errormessage")
+	@Column(name = "error_message")
 	private String errorMessage;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -103,26 +109,31 @@ public class InputData extends AbstractEntity implements IInputData {
 	}
 
 	/**
-	 * Erzeugt eine neue IInputData-Instanz und legt gleichzeitig eine neue Transition an.
-	 *
-	 * @param inputIdentifier Identifier
-	 * @param hashCode Hashcode der Daten
-	 * @param qualifier Qualifizierung
+	 * Erzeugt eine neue IInputData-Instanz und legt gleichzeitig eine neue
+	 * Transition an.
+	 * 
+	 * @param inputIdentifier
+	 *            Identifier
+	 * @param hashCode
+	 *            Hashcode der Daten
+	 * @param qualifier
+	 *            Qualifizierung
 	 */
-	public InputData(final String inputIdentifier, final String hashCode,
+	public InputData(final Execution execution, final String inputIdentifier, final String hashCode,
 			final String qualifier) {
 		Assert.notNull(inputIdentifier, "inputIdentifier must be specified");
 		Assert.notNull(qualifier, "qualifier must be specified");
 
 		this.inputIdentifier = inputIdentifier;
 		this.hashcode = hashCode;
+		this.execution = execution;
 		saveOrUpdate();
 
 		// create a transition
-		InputDataTransition transition = new InputDataTransition();
+		final InputDataTransition transition = new InputDataTransition();
 		transition.setPreviousStatus(null);
-		this.status = statusRepository.findByName(PersistentStatus.INITIAL.toString());
-		transition.setCurrentStatus(this.status);
+		final Status status = statusRepository.findByName(PersistentStatus.INITIAL.toString());
+		transition.setCurrentStatus(status);
 		transition.setTransitionDate(new Date());
 		transition.setQualifier(qualifier);
 		transition.setInputData(this);
@@ -134,7 +145,8 @@ public class InputData extends AbstractEntity implements IInputData {
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputData#updateProgress(de.extrastandard.api.model.execution.IStatus, java.lang.String)
+	 * @see de.extrastandard.api.model.execution.IInputData#updateProgress(de.extrastandard.api.model.execution.IStatus,
+	 *      java.lang.String)
 	 */
 	@Override
 	@Transactional
@@ -142,20 +154,19 @@ public class InputData extends AbstractEntity implements IInputData {
 		Assert.notNull(newStatus, "newStatus must be specified");
 		Assert.notNull(qualifier, "qualifier must be specified");
 
-		Date lastTransitionDate = this.lastTransition.getTransitionDate();
+		final Date lastTransitionDate = this.lastTransition.getTransitionDate();
 
-		InputDataTransition currentTransition = new InputDataTransition();
-		currentTransition.setPreviousStatus(this.status);
+		final InputDataTransition currentTransition = new InputDataTransition();
+		final Status currentStatus = statusRepository.findByName(lastTransition.getCurrentStatus().getName());
+		currentTransition.setPreviousStatus(currentStatus);
 		currentTransition.setCurrentStatus(statusRepository.findByName(newStatus.getName()));
 		currentTransition.setTransitionDate(new Date());
 		currentTransition.setQualifier(qualifier);
-		currentTransition.setDuration(currentTransition.getTransitionDate()
-				.getTime() - lastTransitionDate.getTime());
+		currentTransition.setDuration(currentTransition.getTransitionDate().getTime() - lastTransitionDate.getTime());
 		currentTransition.setInputData(this);
 		currentTransition.saveOrUpdate();
 
 		this.lastTransition = currentTransition;
-		this.status = (Status) newStatus;
 		saveOrUpdate();
 	}
 
@@ -186,6 +197,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	 * @see de.extrastandard.api.model.execution.IInputData#success(java.lang.String)
 	 */
 	@Override
+	@Transactional
 	public void success(final String responseId) {
 		this.responseId = responseId;
 		// TODO transition / status setzen
@@ -197,8 +209,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	 */
 	@Override
 	public boolean hasError() {
-		return StringUtils.hasText(errorCode)
-				|| StringUtils.hasText(errorMessage);
+		return StringUtils.hasText(errorCode) || StringUtils.hasText(errorMessage);
 	}
 
 	/**
@@ -250,14 +261,6 @@ public class InputData extends AbstractEntity implements IInputData {
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputData#getStatus()
-	 */
-	@Override
-	public Status getStatus() {
-		return status;
-	}
-
-	/**
 	 * @see de.extrastandard.api.model.execution.IInputData#getExecution()
 	 */
 	@Override
@@ -281,10 +284,6 @@ public class InputData extends AbstractEntity implements IInputData {
 		this.hashcode = hashcode;
 	}
 
-	public void setStatus(final IStatus status) {
-		this.status = (Status) status;
-	}
-
 	public void setErrorCode(final String errorCode) {
 		this.errorCode = errorCode;
 	}
@@ -306,14 +305,17 @@ public class InputData extends AbstractEntity implements IInputData {
 	}
 
 	@Override
+	public Long getId() {
+		return id;
+	}
+
+	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("InputData [inputIdentifier=");
 		builder.append(inputIdentifier);
 		builder.append(", hashcode=");
 		builder.append(hashcode);
-		builder.append(", status=");
-		builder.append(status);
 		builder.append(", errorCode=");
 		builder.append(errorCode);
 		builder.append(", errorMessage=");

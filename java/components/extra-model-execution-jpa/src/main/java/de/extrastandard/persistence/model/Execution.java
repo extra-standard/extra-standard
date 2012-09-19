@@ -27,14 +27,19 @@ import javax.inject.Named;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
@@ -43,20 +48,27 @@ import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.ExecutionRepository;
+import de.extrastandard.persistence.repository.ProcedureRepository;
 import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * JPA Implementierung von {@link IExecution}.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: Execution.java 508 2012-09-04 09:35:41Z thorstenvogel@gmail.com
+ *          $
  */
-@Configurable(preConstruction=true)
+@Configurable(preConstruction = true)
 @Entity
 @Table(name = "EXECUTION")
 public class Execution extends AbstractEntity implements IExecution {
 
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "execution_entity_seq_gen")
+	@SequenceGenerator(name = "execution_entity_seq_gen", sequenceName = "seq_execution_id")
+	private Long id;
 
 	@Column(name = "start_time")
 	private Date startTime;
@@ -75,7 +87,10 @@ public class Execution extends AbstractEntity implements IExecution {
 	@JoinColumn(name = "status_id")
 	private Status status;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	// @OneToMany(fetch = FetchType.LAZY)
+	// @JoinColumn(name = "execution_id")
+	// @JoinTable(name = "INPUT_DATA")
+	@OneToMany(mappedBy = "execution", fetch = FetchType.LAZY)
 	private Set<InputData> inputDataSet = new HashSet<InputData>();
 
 	@Inject
@@ -88,6 +103,11 @@ public class Execution extends AbstractEntity implements IExecution {
 	@Transient
 	private transient StatusRepository statusRepository;
 
+	@Inject
+	@Named("procedureRepository")
+	@Transient
+	private transient ProcedureRepository procedureRepository;
+
 	/**
 	 *
 	 */
@@ -96,11 +116,14 @@ public class Execution extends AbstractEntity implements IExecution {
 
 	/**
 	 * Erzeugt eine neue Execution, die sogleich persistiert wird.
-	 *
-	 * @param parameters Parameter, mit denen die Execution gestartet wurde.
+	 * 
+	 * @param parameters
+	 *            Parameter, mit denen die Execution gestartet wurde.
 	 */
-	public Execution(final String parameters) {
+	public Execution(final IProcedure procedure, final String parameters) {
+		Assert.notNull(procedure, "Procedure is null");
 		this.parameters = parameters;
+		this.procedure = procedureRepository.findByName(procedure.getName());
 		this.startTime = new Date();
 		this.status = statusRepository.findByName(PersistentStatus.INITIAL.name());
 		saveOrUpdate();
@@ -122,9 +145,9 @@ public class Execution extends AbstractEntity implements IExecution {
 	 */
 	@Override
 	@Transactional
-	public IInputData startInputData(final String inputIdentifier,
-			final String hashCode) {
-		InputData inputData = new InputData(inputIdentifier, hashCode, PhaseQualifier.PHASE1.name());
+	public IInputData startInputData(final String inputIdentifier, final String hashCode) {
+		final InputData inputData = new InputData(this, inputIdentifier, hashCode, PhaseQualifier.PHASE1.name());
+		inputData.setExecution(this);
 		this.inputDataSet.add(inputData);
 		saveOrUpdate();
 		return inputData;
@@ -181,10 +204,10 @@ public class Execution extends AbstractEntity implements IExecution {
 	/**
 	 * @see de.extrastandard.api.model.execution.IExecution#getInputDataSet()
 	 */
-//	@Override
-//	public Set<InputData> getInputDataSet() {
-//		return inputDataSet;
-//	}
+	// @Override
+	// public Set<InputData> getInputDataSet() {
+	// return inputDataSet;
+	// }
 
 	public void setStartTime(final Date startTime) {
 		this.startTime = startTime;
@@ -211,8 +234,13 @@ public class Execution extends AbstractEntity implements IExecution {
 	}
 
 	@Override
+	public Long getId() {
+		return id;
+	}
+
+	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("Execution [parameters=");
 		builder.append(parameters);
 		builder.append(", procedure=");

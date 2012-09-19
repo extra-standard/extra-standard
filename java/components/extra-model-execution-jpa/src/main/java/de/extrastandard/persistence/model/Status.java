@@ -22,6 +22,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -29,22 +30,26 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.extrastandard.api.model.execution.IStatus;
+import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * JPA Implementierung von {@link IStatus}.
- *
+ * 
  * @author Thorsten Vogel
  * @version $Id$
  */
-@Configurable(preConstruction=true)
+@Configurable(preConstruction = true)
 @Entity
-@Table(name="STATUS")
+@Table(name = "STATUS")
 public class Status extends AbstractEntity implements IStatus {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="name")
+	@Id
+	private Long id;
+
+	@Column(name = "name")
 	private String name;
 
 	@Transient
@@ -55,8 +60,9 @@ public class Status extends AbstractEntity implements IStatus {
 	public Status() {
 	}
 
-	public Status(final String name) {
-		this.name = name;
+	public Status(final PersistentStatus persistentStatus) {
+		this.name = persistentStatus.toString();
+		this.id = persistentStatus.getId();
 	}
 
 	/**
@@ -83,6 +89,11 @@ public class Status extends AbstractEntity implements IStatus {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	@Override
+	public Long getId() {
+		return id;
 	}
 
 }

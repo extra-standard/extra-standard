@@ -22,12 +22,14 @@ import javax.inject.Named;
 
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
+import de.extrastandard.api.model.execution.IProcedure;
 
 /**
  * Einstiegsklasse zum Management von Executions.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: ExecutionPersistence.java 508 2012-09-04 09:35:41Z
+ *          thorstenvogel@gmail.com $
  */
 @Named("executionPersistence")
 public class ExecutionPersistence implements IExecutionPersistence {
@@ -36,8 +38,8 @@ public class ExecutionPersistence implements IExecutionPersistence {
 	 * @see de.extrastandard.api.model.execution.IExecutionPersistence#startExecution(java.lang.String)
 	 */
 	@Override
-	public IExecution startExecution(final String parameters) {
-		return new Execution(parameters);
+	public IExecution startExecution(final IProcedure procedure, final String parameters) {
+		return new Execution(procedure, parameters);
 	}
 
 }

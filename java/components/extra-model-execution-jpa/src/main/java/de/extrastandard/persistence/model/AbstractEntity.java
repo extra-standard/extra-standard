@@ -20,39 +20,26 @@ package de.extrastandard.persistence.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 import de.extrastandard.api.model.execution.PersistentEntity;
 
 /**
  * Abstrakte Basisklasse persistenter Entities.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: AbstractEntity.java 508 2012-09-04 09:35:41Z
+ *          thorstenvogel@gmail.com $
  */
 @SuppressWarnings("serial")
 @MappedSuperclass
 public abstract class AbstractEntity implements PersistentEntity, Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private Long id;
-
-	@Override
-	public Long getId() {
-		return id;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
 		return result;
 	}
 
@@ -64,11 +51,11 @@ public abstract class AbstractEntity implements PersistentEntity, Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AbstractEntity other = (AbstractEntity) obj;
-		if (id == null) {
-			if (other.id != null)
+		final AbstractEntity other = (AbstractEntity) obj;
+		if (getId() == null) {
+			if (other.getId() != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!getId().equals(other.getId()))
 			return false;
 		return true;
 	}
