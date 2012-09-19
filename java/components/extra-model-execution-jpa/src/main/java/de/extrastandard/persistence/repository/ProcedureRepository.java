@@ -27,14 +27,15 @@ import de.extrastandard.persistence.model.Procedure;
 
 /**
  * Repository für Verfahren.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: ProcedureRepository.java 508 2012-09-04 09:35:41Z
+ *          thorstenvogel@gmail.com $
  */
 @Repository("procedureRepository")
 public interface ProcedureRepository extends JpaRepository<Procedure, Long> {
 
-	@Query("FROM procedure WHERE name = :name")
+	@Query("FROM Procedure WHERE name = :name")
 	Procedure findByName(@Param("name") String name);
 
 }
