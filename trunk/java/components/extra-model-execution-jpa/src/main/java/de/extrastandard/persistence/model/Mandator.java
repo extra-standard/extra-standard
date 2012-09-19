@@ -22,28 +22,40 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.extrastandard.api.model.execution.IMandator;
 import de.extrastandard.persistence.repository.MandatorRepository;
 
 /**
  * JPA Implementierung von {@link IMandator}.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: Mandator.java 508 2012-09-04 09:35:41Z thorstenvogel@gmail.com
+ *          $
  */
-@Configurable(preConstruction=true)
+@Configurable(preConstruction = true)
 @Entity
-@Table(name="MANDATOR")
+@Table(name = "MANDATOR", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Mandator extends AbstractEntity implements IMandator {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="name")
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mandator_entity_seq_gen")
+	@SequenceGenerator(name = "mandator_entity_seq_gen", sequenceName = "seq_mandator_id")
+	private Long id;
+
+	@Column(name = "name")
 	private String name;
 
 	@Transient
@@ -51,10 +63,20 @@ public class Mandator extends AbstractEntity implements IMandator {
 	@Named("mandatorRepository")
 	private transient MandatorRepository repository;
 
+	public Mandator() {
+		super();
+	}
+
+	public Mandator(final String name) {
+		super();
+		this.name = name;
+	}
+
 	/**
 	 * @see de.extrastandard.api.model.execution.PersistentEntity#saveOrUpdate()
 	 */
 	@Override
+	@Transactional
 	public void saveOrUpdate() {
 		repository.save(this);
 	}
@@ -74,6 +96,11 @@ public class Mandator extends AbstractEntity implements IMandator {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	@Override
+	public Long getId() {
+		return id;
 	}
 
 }
