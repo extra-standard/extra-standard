@@ -27,14 +27,15 @@ import de.extrastandard.persistence.model.Mandator;
 
 /**
  * Repository für Mandanten.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: MandatorRepository.java 508 2012-09-04 09:35:41Z
+ *          thorstenvogel@gmail.com $
  */
 @Repository("mandatorRepository")
 public interface MandatorRepository extends JpaRepository<Mandator, Long> {
 
-	@Query("FROM mandator WHERE name = :name")
+	@Query("FROM Mandator WHERE name = :name")
 	Mandator findByName(@Param("name") String name);
 
 }
