@@ -19,19 +19,22 @@
 package de.extrastandard.api.model.execution;
 
 /**
- * Stellt Funktionen zur persistenten Protokollierung von {@link IExecution}s bereit.
- *
+ * Stellt Funktionen zur persistenten Protokollierung von {@link IExecution}s
+ * bereit.
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: IExecutionPersistence.java 487 2012-09-03 13:07:52Z
+ *          thorstenvogel@gmail.com $
  */
 public interface IExecutionPersistence {
 
 	/**
-	 * Beginnt eine Execution.
-	 *
-	 * @param parameters Aufrufparameter
+	 * @param procedure
+	 *            Execution Scenario
+	 * @param parameters
+	 *            Aufrufparameter
 	 * @return eine {@link IExecution} Instanz.
 	 */
-	IExecution startExecution(String parameters);
+	IExecution startExecution(IProcedure procedure, String parameters);
 
 }
