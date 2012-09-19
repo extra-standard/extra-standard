@@ -30,6 +30,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
@@ -38,13 +40,18 @@ import de.extrastandard.api.model.execution.PersistentStatus;
 
 /**
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: PersistenceTest.java 562 2012-09-06 14:12:43Z
+ *          thorstenvogel@gmail.com $
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/spring-persistence-jpa.xml")
-public class PersistenceTest {
+@ContextConfiguration(locations = { "/spring-persistence-jpa.xml", "/spring-ittest-hsqldb-propertyplaceholder.xml" })
+// @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
+// "/spring-ittest-hsqldb-propertyplaceholder.xml" })
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@Transactional
+public class PersistenceIT {
 
-	@Resource(type=ExecutionPersistence.class)
+	@Resource(type = ExecutionPersistence.class)
 	private ExecutionPersistence executionPersistence;
 
 	public static boolean dbInit = false;
@@ -63,30 +70,38 @@ public class PersistenceTest {
 
 	private Status statusDone;
 
+	private Procedure procedureSendFetch;
+
 	@Before
 	public void before() throws Exception {
 		if (!dbInit) {
 
-			statusInital = new Status(PersistentStatus.INITIAL.toString());
+			statusInital = new Status(PersistentStatus.INITIAL);
 			statusInital.saveOrUpdate();
 
-			statusEnveloped = new Status(PersistentStatus.ENVELOPED.toString());
+			statusEnveloped = new Status(PersistentStatus.ENVELOPED);
 			statusEnveloped.saveOrUpdate();
 
-			statusTransmitted = new Status(PersistentStatus.TRANSMITTED.toString());
+			statusTransmitted = new Status(PersistentStatus.TRANSMITTED);
 			statusTransmitted.saveOrUpdate();
 
-			statusResultsExpected = new Status(PersistentStatus.RESULTS_EXPECTED.toString());
+			statusResultsExpected = new Status(PersistentStatus.RESULTS_EXPECTED);
 			statusResultsExpected.saveOrUpdate();
 
-			statusResultsProcessed = new Status(PersistentStatus.RESULTS_PROCESSED.toString());
+			statusResultsProcessed = new Status(PersistentStatus.RESULTS_PROCESSED);
 			statusResultsProcessed.saveOrUpdate();
 
-			statusReceiptConfirmed = new Status(PersistentStatus.RECEIPT_CONFIRMED.toString());
+			statusReceiptConfirmed = new Status(PersistentStatus.RECEIPT_CONFIRMED);
 			statusReceiptConfirmed.saveOrUpdate();
 
-			statusDone = new Status(PersistentStatus.DONE.toString());
+			statusDone = new Status(PersistentStatus.DONE);
 			statusDone.saveOrUpdate();
+
+			final Mandator mandatorTEST = new Mandator("TEST");
+			mandatorTEST.saveOrUpdate();
+
+			procedureSendFetch = new Procedure(mandatorTEST, "SCENARIO_SEND_FETCH");
+			procedureSendFetch.saveOrUpdate();
 
 			dbInit = true;
 		}
@@ -96,22 +111,22 @@ public class PersistenceTest {
 	public void testExecutionConstruction() throws Exception {
 		assertNotNull(executionPersistence);
 
-		IExecution execution = executionPersistence.startExecution("-c d:/extras/configdir");
+		final IExecution execution = executionPersistence.startExecution(procedureSendFetch, "-c d:/extras/configdir");
 
 		assertNotNull(execution.getParameters());
 		assertNotNull(execution.getId());
 		assertNotNull(execution.getStartTime());
 
 		// start input data
-		IInputData inputData = execution.startInputData("inputIdentifier", "hashCode");
+		final IInputData inputData = execution.startInputData("inputIdentifier", "hashCode");
 		assertNotNull(inputData.getId());
 		assertEquals("inputIdentifier", inputData.getInputIdentifier());
 		assertEquals("hashCode", inputData.getHashcode());
-		assertEquals(execution.getId(), inputData.getId());
-		assertEquals(statusInital, inputData.getStatus());
+		assertEquals(execution.getId(), inputData.getExecution().getId());
+		assertEquals(statusInital, inputData.getLastTransition().getCurrentStatus());
 
 		// check if transition is created and pertinent
-		IInputDataTransition firstTransition = inputData.getLastTransition();
+		final IInputDataTransition firstTransition = inputData.getLastTransition();
 		assertNotNull(firstTransition);
 		assertNotNull(firstTransition.getId());
 		assertNull(firstTransition.getPreviousStatus());
@@ -123,15 +138,15 @@ public class PersistenceTest {
 		Thread.sleep(500);
 
 		// update progress
-		inputData.updateProgress(statusEnveloped, "qualifier");
+		inputData.updateProgress(statusEnveloped, "PHASE2");
 
-		IInputDataTransition envelopedTransition = inputData.getLastTransition();
+		final IInputDataTransition envelopedTransition = inputData.getLastTransition();
 
 		assertNotNull(envelopedTransition);
 		assertTrue(!firstTransition.getId().equals(envelopedTransition.getId()));
 		assertEquals(statusInital, envelopedTransition.getPreviousStatus());
 		assertEquals(statusEnveloped, envelopedTransition.getCurrentStatus());
-		assertEquals(statusEnveloped, inputData.getStatus());
+		assertEquals(statusEnveloped, inputData.getLastTransition().getCurrentStatus());
 
 		// success
 		inputData.success("responseId");
@@ -139,6 +154,5 @@ public class PersistenceTest {
 		assertEquals("responseId", inputData.getResponseId());
 
 	}
-
 
 }
