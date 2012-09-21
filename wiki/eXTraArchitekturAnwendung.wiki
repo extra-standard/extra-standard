@@ -10,3 +10,5 @@
   * [eXTraBuilderKonfiguration eXTra Konfiguration von CLI]
   * [eXTraArchitekturAnwendungBetrieb eXTra Betrieb von CLI]
   * [eXTraArchitekturAnwendungProfiling eXTra Profiling]
+  * [eXTraPersistence eXTra Persistenz]  
+  * [eXTraExceptionHierarchie eXTra Exception Hierarchie]
