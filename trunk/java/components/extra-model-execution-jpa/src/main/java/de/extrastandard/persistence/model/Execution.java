@@ -46,7 +46,6 @@ import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
-import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.ExecutionRepository;
 import de.extrastandard.persistence.repository.ProcedureRepository;
 import de.extrastandard.persistence.repository.StatusRepository;
@@ -123,9 +122,9 @@ public class Execution extends AbstractEntity implements IExecution {
 	public Execution(final IProcedure procedure, final String parameters) {
 		Assert.notNull(procedure, "Procedure is null");
 		this.parameters = parameters;
-		this.procedure = procedureRepository.findByName(procedure.getName());
 		this.startTime = new Date();
 		this.status = statusRepository.findByName(PersistentStatus.INITIAL.name());
+		this.procedure = procedureRepository.findByName(procedure.getName());
 		saveOrUpdate();
 	}
 
@@ -146,7 +145,7 @@ public class Execution extends AbstractEntity implements IExecution {
 	@Override
 	@Transactional
 	public IInputData startInputData(final String inputIdentifier, final String hashCode) {
-		final InputData inputData = new InputData(this, inputIdentifier, hashCode, PhaseQualifier.PHASE1.name());
+		final InputData inputData = new InputData(this, inputIdentifier, hashCode);
 		inputData.setExecution(this);
 		this.inputDataSet.add(inputData);
 		saveOrUpdate();
