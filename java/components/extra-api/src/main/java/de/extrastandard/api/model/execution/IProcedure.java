@@ -20,24 +20,36 @@ package de.extrastandard.api.model.execution;
 
 /**
  * Verfahren.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: IProcedure.java 487 2012-09-03 13:07:52Z
+ *          thorstenvogel@gmail.com $
  */
 public interface IProcedure extends PersistentEntity {
 
 	/**
 	 * Mandant dieses Verfahrens.
-	 *
+	 * 
 	 * @return Mandant
 	 */
 	IMandator getMandator();
 
 	/**
 	 * Name dieses Verfahrens.
-	 *
+	 * 
 	 * @return Name
 	 */
 	String getName();
 
+	/**
+	 * @param phase
+	 * @return liefert end Status dieser Phase
+	 */
+	public IStatus getPhaseEndStatus(final PhaseQualifier phase);
+
+	/**
+	 * @param status
+	 * @return true, wenn {@link Status} der letzte in diesem Scenario ist
+	 */
+	public boolean isProcedureEndStatus(final IStatus status);
 }
