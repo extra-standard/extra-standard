@@ -75,52 +75,33 @@ public class PersistenceIT {
 
 	@Before
 	public void before() throws Exception {
-		// if (!dbInit) {
 
 		statusInital = new Status(PersistentStatus.INITIAL);
-		statusInital.saveOrUpdate();
 
 		statusEnveloped = new Status(PersistentStatus.ENVELOPED);
-		statusEnveloped.saveOrUpdate();
 
 		statusTransmitted = new Status(PersistentStatus.TRANSMITTED);
-		statusTransmitted.saveOrUpdate();
 
 		statusResultsExpected = new Status(PersistentStatus.RESULTS_EXPECTED);
-		statusResultsExpected.saveOrUpdate();
 
 		statusResultsProcessed = new Status(PersistentStatus.RESULTS_PROCESSED);
-		statusResultsProcessed.saveOrUpdate();
 
 		statusReceiptConfirmed = new Status(PersistentStatus.RECEIPT_CONFIRMED);
-		statusReceiptConfirmed.saveOrUpdate();
 
 		statusDone = new Status(PersistentStatus.DONE);
-		statusDone.saveOrUpdate();
 
 		final Mandator mandatorTEST = new Mandator("TEST");
-		mandatorTEST.saveOrUpdate();
 
 		final ProcedureType procedureSendFetch = new ProcedureType("SCENARIO_SEND_FETCH", statusReceiptConfirmed);
-		// procedureSendFetch.saveOrUpdate();
 
-		final ProcedurePhaseConfiguration procedurePhase1Configuration = new ProcedurePhaseConfiguration(
-				procedureSendFetch, PhaseQualifier.PHASE1, PersistentStatus.RESULTS_EXPECTED);
-		procedurePhase1Configuration.saveOrUpdate();
+		new ProcedurePhaseConfiguration(procedureSendFetch, PhaseQualifier.PHASE1, PersistentStatus.RESULTS_EXPECTED);
 
-		final ProcedurePhaseConfiguration procedurePhase2Configuration = new ProcedurePhaseConfiguration(
-				procedureSendFetch, PhaseQualifier.PHASE2, PersistentStatus.RESULTS_PROCESSED);
-		procedurePhase2Configuration.saveOrUpdate();
+		new ProcedurePhaseConfiguration(procedureSendFetch, PhaseQualifier.PHASE2, PersistentStatus.RESULTS_PROCESSED);
 
-		final ProcedurePhaseConfiguration procedurePhase3Configuration = new ProcedurePhaseConfiguration(
-				procedureSendFetch, PhaseQualifier.PHASE3, PersistentStatus.RECEIPT_CONFIRMED);
-		procedurePhase3Configuration.saveOrUpdate();
+		new ProcedurePhaseConfiguration(procedureSendFetch, PhaseQualifier.PHASE3, PersistentStatus.RECEIPT_CONFIRMED);
 
 		procedureDataMatch = new Procedure(mandatorTEST, procedureSendFetch, "Datenabgleich");
-		procedureDataMatch.saveOrUpdate();
 
-		// dbInit = true;
-		// }
 	}
 
 	@Test

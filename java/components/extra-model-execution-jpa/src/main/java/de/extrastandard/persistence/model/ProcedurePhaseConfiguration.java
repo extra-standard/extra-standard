@@ -101,6 +101,7 @@ public class ProcedurePhaseConfiguration extends AbstractEntity {
 		this.procedureType = procedureType;
 		this.phaseEndStatus = statusRepository.findOne(phaseEndStatus.getId());
 		this.phase = phaseQualifier.name();
+		repository.save(this);
 	}
 
 	/**

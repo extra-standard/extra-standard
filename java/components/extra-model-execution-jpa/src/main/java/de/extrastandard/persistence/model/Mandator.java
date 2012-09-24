@@ -70,6 +70,7 @@ public class Mandator extends AbstractEntity implements IMandator {
 	public Mandator(final String name) {
 		super();
 		this.name = name;
+		repository.save(this);
 	}
 
 	/**
