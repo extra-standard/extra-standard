@@ -196,6 +196,9 @@ public class InputData extends AbstractEntity implements IInputData {
 					lastTransitionDate);
 			this.lastTransition = transitionDone;
 			saveOrUpdate();
+			// Auch Execution wird abgeschlossen
+			this.execution.setEndTime(new Date());
+			execution.saveOrUpdate();
 		}
 	}
 
