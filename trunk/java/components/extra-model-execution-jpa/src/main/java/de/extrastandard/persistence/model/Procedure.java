@@ -94,6 +94,7 @@ public class Procedure extends AbstractEntity implements IProcedure {
 		this.mandator = mandator;
 		this.procedureType = procedureType;
 		this.name = name;
+		repository.save(this);
 	}
 
 	@Override

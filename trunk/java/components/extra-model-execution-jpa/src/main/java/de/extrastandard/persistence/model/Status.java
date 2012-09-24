@@ -37,7 +37,8 @@ import de.extrastandard.persistence.repository.StatusRepository;
  * JPA Implementierung von {@link IStatus}.
  * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: Status.java 607 2012-09-19 14:30:34Z
+ *          potap.rentenservice@gmail.com $
  */
 @Configurable(preConstruction = true)
 @Entity
@@ -63,6 +64,7 @@ public class Status extends AbstractEntity implements IStatus {
 	public Status(final PersistentStatus persistentStatus) {
 		this.name = persistentStatus.toString();
 		this.id = persistentStatus.getId();
+		repository.save(this);
 	}
 
 	/**
