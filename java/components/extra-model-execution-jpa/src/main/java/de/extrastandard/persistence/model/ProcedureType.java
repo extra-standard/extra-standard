@@ -35,53 +35,58 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import de.extrastandard.api.model.execution.IMandator;
 import de.extrastandard.api.model.execution.IProcedure;
+import de.extrastandard.api.model.execution.IProcedureType;
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
-import de.extrastandard.persistence.repository.ProcedureRepository;
+import de.extrastandard.persistence.repository.ProcedurePhaseConfigurationRepository;
+import de.extrastandard.persistence.repository.ProcedureTypeRepository;
+import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * JPA Implementierung von {@link IProcedure}.
  * 
- * @author Thorsten Vogel
- * @version $Id: Procedure.java 508 2012-09-04 09:35:41Z thorstenvogel@gmail.com
- *          $
+ * @author Leonid Potap
+ * @version $Id$
  */
 @Configurable(preConstruction = true)
 @Entity
-@Table(name = "PROCEDURE")
-public class Procedure extends AbstractEntity implements IProcedure {
+@Table(name = "PROCEDURE_TYPE")
+public class ProcedureType extends AbstractEntity implements IProcedureType {
 
 	private static final long serialVersionUID = 1L;
 
-	// private
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "procedure_entity_seq_gen")
-	@SequenceGenerator(name = "procedure_entity_seq_gen", sequenceName = "seq_procedure_id")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "procedure_type_entity_seq_gen")
+	@SequenceGenerator(name = "procedure_type_entity_seq_gen", sequenceName = "seq_procedure_type_id")
 	private Long id;
-
-	@ManyToOne()
-	@JoinColumn(name = "mandator_id")
-	private Mandator mandator;
-
-	@ManyToOne()
-	@JoinColumn(name = "procedure_type_id")
-	private ProcedureType procedureType;
 
 	@Column(name = "name")
 	private String name;
 
+	@ManyToOne
+	@JoinColumn(name = "end_status_id")
+	private Status endStatus;
+
 	@Transient
 	@Inject
-	@Named("procedureRepository")
-	private transient ProcedureRepository repository;
+	@Named("procedureTypeRepository")
+	private transient ProcedureTypeRepository repository;
+
+	@Transient
+	@Inject
+	@Named("procedurePhaseConfigurationRepository")
+	private transient ProcedurePhaseConfigurationRepository procedurePhaseConfigurationRepository;
+
+	@Transient
+	@Inject
+	@Named("statusRepository")
+	private transient StatusRepository statusRepository;
 
 	/**
 	 * Default Empty Constructor
 	 */
-	public Procedure() {
+	public ProcedureType() {
 		super();
 	}
 
@@ -89,11 +94,11 @@ public class Procedure extends AbstractEntity implements IProcedure {
 	 * @param mandator
 	 * @param name
 	 */
-	public Procedure(final Mandator mandator, final ProcedureType procedureType, final String name) {
+	public ProcedureType(final String name, final IStatus endStatus) {
 		super();
-		this.mandator = mandator;
-		this.procedureType = procedureType;
 		this.name = name;
+		this.endStatus = statusRepository.findByName(endStatus.getName());
+		repository.save(this);
 	}
 
 	@Override
@@ -101,49 +106,43 @@ public class Procedure extends AbstractEntity implements IProcedure {
 		return id;
 	}
 
-	/**
-	 * @see de.extrastandard.api.model.execution.IProcedure#getIMandator()
-	 */
-	@Override
-	public IMandator getMandator() {
-		return mandator;
-	}
-
-	/**
-	 * @see de.extrastandard.api.model.execution.IProcedure#getName()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.extrastandard.persistence.model.IProcedureType#getName()
 	 */
 	@Override
 	public String getName() {
 		return name;
 	}
 
-	public void setMandator(final IMandator mandator) {
-		this.mandator = (Mandator) mandator;
-	}
-
-	public void setName(final String name) {
-		this.name = name;
-	}
-
-	/**
-	 * @param phase
-	 * @return liefert end Status dieser Phase
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.extrastandard.persistence.model.IProcedureType#getPhaseEndStatus(de
+	 * .extrastandard.api.model.execution.PhaseQualifier)
 	 */
 	@Override
 	public IStatus getPhaseEndStatus(final PhaseQualifier phase) {
 		Assert.notNull(phase, "PhaseQualifier must be specified");
-		final IStatus phaseEndStatus = procedureType.getPhaseEndStatus(phase);
+		final ProcedurePhaseConfiguration configuration = procedurePhaseConfigurationRepository
+				.findByPhaseAndProcedureType(phase.toString(), this);
+		final Status phaseEndStatus = configuration.getPhaseEndStatus();
 		return phaseEndStatus;
 	}
 
-	/**
-	 * @param status
-	 * @return true, wenn {@link Status} der letzte in diesem Scenario ist
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.extrastandard.persistence.model.IProcedureType#isProcedureEndStatus
+	 * (de.extrastandard.api.model.execution.IStatus)
 	 */
 	@Override
 	public boolean isProcedureEndStatus(final IStatus status) {
 		Assert.notNull(status, "Status must be specified");
-		return procedureType.isProcedureEndStatus(status);
+		return this.endStatus.getName().equals(status.getName());
 	}
 
 	/**
@@ -155,14 +154,31 @@ public class Procedure extends AbstractEntity implements IProcedure {
 		repository.save(this);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
-		builder.append("Procedure [mandator=");
-		builder.append(mandator);
-		builder.append(", name=");
-		builder.append(name);
+		builder.append("ProcedureType [");
+		if (id != null) {
+			builder.append("id=");
+			builder.append(id);
+			builder.append(", ");
+		}
+		if (name != null) {
+			builder.append("name=");
+			builder.append(name);
+			builder.append(", ");
+		}
+		if (endStatus != null) {
+			builder.append("endStatus=");
+			builder.append(endStatus);
+		}
 		builder.append("]");
 		return builder.toString();
 	}
+
 }

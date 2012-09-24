@@ -34,11 +34,14 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.util.Assert;
 
 import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.IInputDataTransition;
 import de.extrastandard.api.model.execution.IStatus;
+import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.persistence.repository.InputDataTransitionRepository;
+import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * JPA Implementierung von {@link IInputDataTransition}.
@@ -51,6 +54,11 @@ import de.extrastandard.persistence.repository.InputDataTransitionRepository;
 @Entity
 @Table(name = "INPUT_DATA_TRANSITION")
 public class InputDataTransition extends AbstractEntity implements IInputDataTransition {
+
+	@Transient
+	@Inject
+	@Named("statusRepository")
+	private transient StatusRepository statusRepository;
 
 	private static final long serialVersionUID = 1L;
 
@@ -73,9 +81,6 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 	@Column(name = "duration")
 	private Long duration;
 
-	@Column(name = "qualifier")
-	private String qualifier;
-
 	@ManyToOne
 	@JoinColumn(name = "input_data_id")
 	private InputData inputData;
@@ -86,6 +91,47 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 	private transient InputDataTransitionRepository repository;
 
 	public InputDataTransition() {
+	}
+
+	/**
+	 * Erstellt eine neue Transition mit dem PreviousStatus = null und mit dem
+	 * CurrentStatus (Initial)
+	 * 
+	 * @param inputData
+	 * @param persistentStatus
+	 */
+	public InputDataTransition(final InputData inputData) {
+		Assert.notNull(inputData, "InputData must be specified");
+		final Status currentStatus = statusRepository.findByName(PersistentStatus.INITIAL.toString());
+		this.currentStatus = currentStatus;
+		this.transitionDate = new Date();
+		this.inputData = inputData;
+		repository.save(this);
+	}
+
+	/**
+	 * Erstellt eine neue Transition mit den angegebenen Daten
+	 * 
+	 * @param inputData
+	 * @param iPreviousStatus
+	 * @param iCurrentStatus
+	 * @param lastTransitionDate
+	 */
+	public InputDataTransition(final InputData inputData, final IStatus iPreviousStatus, final IStatus iCurrentStatus,
+			final Date lastTransitionDate) {
+		Assert.notNull(iPreviousStatus, "CurrentStatus must be specified");
+		Assert.notNull(iCurrentStatus, "PreviousStatus must be specified");
+		Assert.notNull(lastTransitionDate, "LastTransitionDate must be specified");
+		final Status previousStatus = statusRepository.findByName(iPreviousStatus.getName());
+		this.setPreviousStatus(previousStatus);
+		final Status currentStatus = statusRepository.findByName(iCurrentStatus.getName());
+		this.setCurrentStatus(currentStatus);
+		final Date transitionDate = new Date();
+		this.setTransitionDate(transitionDate);
+		final long duration = transitionDate.getTime() - lastTransitionDate.getTime();
+		this.setDuration(duration);
+		this.inputData = inputData;
+		repository.save(this);
 	}
 
 	/**
@@ -129,14 +175,6 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputDataTransition#getQualifier()
-	 */
-	@Override
-	public String getQualifier() {
-		return qualifier;
-	}
-
-	/**
 	 * @see de.extrastandard.api.model.execution.IInputDataTransition#getInputData()
 	 */
 	@Override
@@ -160,10 +198,6 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 		this.duration = duration;
 	}
 
-	public void setQualifier(final String qualifier) {
-		this.qualifier = qualifier;
-	}
-
 	public void setInputData(final InputData inputData) {
 		this.inputData = inputData;
 	}
@@ -184,8 +218,6 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 		builder.append(previousStatus);
 		builder.append(", duration=");
 		builder.append(duration);
-		builder.append(", qualifier=");
-		builder.append(qualifier);
 		builder.append(", inputData=");
 		builder.append(inputData);
 		builder.append("]");

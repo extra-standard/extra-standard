@@ -43,8 +43,10 @@ import de.extrastandard.api.exception.ExtraRuntimeException;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.IInputDataTransition;
+import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
+import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.InputDataRepository;
 import de.extrastandard.persistence.repository.StatusRepository;
 
@@ -119,27 +121,13 @@ public class InputData extends AbstractEntity implements IInputData {
 	 * @param qualifier
 	 *            Qualifizierung
 	 */
-	public InputData(final Execution execution, final String inputIdentifier, final String hashCode,
-			final String qualifier) {
+	public InputData(final Execution execution, final String inputIdentifier, final String hashCode) {
 		Assert.notNull(inputIdentifier, "inputIdentifier must be specified");
-		Assert.notNull(qualifier, "qualifier must be specified");
-
 		this.inputIdentifier = inputIdentifier;
 		this.hashcode = hashCode;
 		this.execution = execution;
 		saveOrUpdate();
-
-		// create a transition
-		final InputDataTransition transition = new InputDataTransition();
-		transition.setPreviousStatus(null);
-		final Status status = statusRepository.findByName(PersistentStatus.INITIAL.toString());
-		transition.setCurrentStatus(status);
-		transition.setTransitionDate(new Date());
-		transition.setQualifier(qualifier);
-		transition.setInputData(this);
-		transition.saveOrUpdate();
-
-		// update this with the newly created transition
+		final InputDataTransition transition = new InputDataTransition(this);
 		this.lastTransition = transition;
 		saveOrUpdate();
 	}
@@ -150,23 +138,16 @@ public class InputData extends AbstractEntity implements IInputData {
 	 */
 	@Override
 	@Transactional
-	public void updateProgress(final IStatus newStatus, final String qualifier) {
+	public void updateProgress(final IStatus newStatus) {
 		Assert.notNull(newStatus, "newStatus must be specified");
-		Assert.notNull(qualifier, "qualifier must be specified");
+
+		final IInputDataTransition lastTransition = this.getLastTransition();
+		final IStatus currentStatus = lastTransition.getCurrentStatus();
 
 		final Date lastTransitionDate = this.lastTransition.getTransitionDate();
-
-		final InputDataTransition currentTransition = new InputDataTransition();
-		final Status currentStatus = statusRepository.findByName(lastTransition.getCurrentStatus().getName());
-		currentTransition.setPreviousStatus(currentStatus);
-		currentTransition.setCurrentStatus(statusRepository.findByName(newStatus.getName()));
-		currentTransition.setTransitionDate(new Date());
-		currentTransition.setQualifier(qualifier);
-		currentTransition.setDuration(currentTransition.getTransitionDate().getTime() - lastTransitionDate.getTime());
-		currentTransition.setInputData(this);
-		currentTransition.saveOrUpdate();
-
-		this.lastTransition = currentTransition;
+		final InputDataTransition transition = new InputDataTransition(this, currentStatus, newStatus,
+				lastTransitionDate);
+		this.lastTransition = transition;
 		saveOrUpdate();
 	}
 
@@ -198,10 +179,24 @@ public class InputData extends AbstractEntity implements IInputData {
 	 */
 	@Override
 	@Transactional
-	public void success(final String responseId) {
+	public void success(final String responseId, final PhaseQualifier phaseQualifier) {
 		this.responseId = responseId;
-		// TODO transition / status setzen
+		final IStatus currentStatus = this.lastTransition.getCurrentStatus();
+		final IProcedure procedure = this.execution.getProcedure();
+		final IStatus newStatus = procedure.getPhaseEndStatus(phaseQualifier);
+		final Date lastTransitionDate = this.lastTransition.getTransitionDate();
+		final InputDataTransition transition = new InputDataTransition(this, currentStatus, newStatus,
+				lastTransitionDate);
+		this.lastTransition = transition;
 		saveOrUpdate();
+		if (procedure.isProcedureEndStatus(newStatus)) {
+			// wechseln zu dem Status Done
+			final Status statusDone = statusRepository.findByName(PersistentStatus.DONE.toString());
+			final InputDataTransition transitionDone = new InputDataTransition(this, newStatus, statusDone,
+					lastTransitionDate);
+			this.lastTransition = transitionDone;
+			saveOrUpdate();
+		}
 	}
 
 	/**

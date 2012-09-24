@@ -37,6 +37,7 @@ import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.IInputDataTransition;
 import de.extrastandard.api.model.execution.PersistentStatus;
+import de.extrastandard.api.model.execution.PhaseQualifier;
 
 /**
  * @author Thorsten Vogel
@@ -46,7 +47,7 @@ import de.extrastandard.api.model.execution.PersistentStatus;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-persistence-jpa.xml", "/spring-ittest-hsqldb-propertyplaceholder.xml" })
 // @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
-// "/spring-ittest-hsqldb-propertyplaceholder.xml" })
+// "/spring-ittest-oracle-propertyplaceholder.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
 public class PersistenceIT {
@@ -70,48 +71,63 @@ public class PersistenceIT {
 
 	private Status statusDone;
 
-	private Procedure procedureSendFetch;
+	private Procedure procedureDataMatch;
 
 	@Before
 	public void before() throws Exception {
-		if (!dbInit) {
+		// if (!dbInit) {
 
-			statusInital = new Status(PersistentStatus.INITIAL);
-			statusInital.saveOrUpdate();
+		statusInital = new Status(PersistentStatus.INITIAL);
+		statusInital.saveOrUpdate();
 
-			statusEnveloped = new Status(PersistentStatus.ENVELOPED);
-			statusEnveloped.saveOrUpdate();
+		statusEnveloped = new Status(PersistentStatus.ENVELOPED);
+		statusEnveloped.saveOrUpdate();
 
-			statusTransmitted = new Status(PersistentStatus.TRANSMITTED);
-			statusTransmitted.saveOrUpdate();
+		statusTransmitted = new Status(PersistentStatus.TRANSMITTED);
+		statusTransmitted.saveOrUpdate();
 
-			statusResultsExpected = new Status(PersistentStatus.RESULTS_EXPECTED);
-			statusResultsExpected.saveOrUpdate();
+		statusResultsExpected = new Status(PersistentStatus.RESULTS_EXPECTED);
+		statusResultsExpected.saveOrUpdate();
 
-			statusResultsProcessed = new Status(PersistentStatus.RESULTS_PROCESSED);
-			statusResultsProcessed.saveOrUpdate();
+		statusResultsProcessed = new Status(PersistentStatus.RESULTS_PROCESSED);
+		statusResultsProcessed.saveOrUpdate();
 
-			statusReceiptConfirmed = new Status(PersistentStatus.RECEIPT_CONFIRMED);
-			statusReceiptConfirmed.saveOrUpdate();
+		statusReceiptConfirmed = new Status(PersistentStatus.RECEIPT_CONFIRMED);
+		statusReceiptConfirmed.saveOrUpdate();
 
-			statusDone = new Status(PersistentStatus.DONE);
-			statusDone.saveOrUpdate();
+		statusDone = new Status(PersistentStatus.DONE);
+		statusDone.saveOrUpdate();
 
-			final Mandator mandatorTEST = new Mandator("TEST");
-			mandatorTEST.saveOrUpdate();
+		final Mandator mandatorTEST = new Mandator("TEST");
+		mandatorTEST.saveOrUpdate();
 
-			procedureSendFetch = new Procedure(mandatorTEST, "SCENARIO_SEND_FETCH");
-			procedureSendFetch.saveOrUpdate();
+		final ProcedureType procedureSendFetch = new ProcedureType("SCENARIO_SEND_FETCH", statusReceiptConfirmed);
+		// procedureSendFetch.saveOrUpdate();
 
-			dbInit = true;
-		}
+		final ProcedurePhaseConfiguration procedurePhase1Configuration = new ProcedurePhaseConfiguration(
+				procedureSendFetch, PhaseQualifier.PHASE1, PersistentStatus.RESULTS_EXPECTED);
+		procedurePhase1Configuration.saveOrUpdate();
+
+		final ProcedurePhaseConfiguration procedurePhase2Configuration = new ProcedurePhaseConfiguration(
+				procedureSendFetch, PhaseQualifier.PHASE2, PersistentStatus.RESULTS_PROCESSED);
+		procedurePhase2Configuration.saveOrUpdate();
+
+		final ProcedurePhaseConfiguration procedurePhase3Configuration = new ProcedurePhaseConfiguration(
+				procedureSendFetch, PhaseQualifier.PHASE3, PersistentStatus.RECEIPT_CONFIRMED);
+		procedurePhase3Configuration.saveOrUpdate();
+
+		procedureDataMatch = new Procedure(mandatorTEST, procedureSendFetch, "Datenabgleich");
+		procedureDataMatch.saveOrUpdate();
+
+		// dbInit = true;
+		// }
 	}
 
 	@Test
 	public void testExecutionConstruction() throws Exception {
 		assertNotNull(executionPersistence);
 
-		final IExecution execution = executionPersistence.startExecution(procedureSendFetch, "-c d:/extras/configdir");
+		final IExecution execution = executionPersistence.startExecution(procedureDataMatch, "-c d:/extras/configdir");
 
 		assertNotNull(execution.getParameters());
 		assertNotNull(execution.getId());
@@ -131,14 +147,14 @@ public class PersistenceIT {
 		assertNotNull(firstTransition.getId());
 		assertNull(firstTransition.getPreviousStatus());
 		assertNotNull(firstTransition.getCurrentStatus());
-		assertEquals(PersistentStatus.INITIAL.toString(), firstTransition.getCurrentStatus().toString());
+		assertEquals(PersistentStatus.INITIAL.toString(), firstTransition.getCurrentStatus().getName());
 		assertNotNull(firstTransition.getInputData());
 		assertEquals(inputData.getId(), firstTransition.getInputData().getId());
 
 		Thread.sleep(500);
 
-		// update progress
-		inputData.updateProgress(statusEnveloped, "PHASE2");
+		// update progress Enveloped
+		inputData.updateProgress(statusEnveloped);
 
 		final IInputDataTransition envelopedTransition = inputData.getLastTransition();
 
@@ -148,9 +164,50 @@ public class PersistenceIT {
 		assertEquals(statusEnveloped, envelopedTransition.getCurrentStatus());
 		assertEquals(statusEnveloped, inputData.getLastTransition().getCurrentStatus());
 
-		// success
-		inputData.success("responseId");
+		// update progress Transmitted
+		inputData.updateProgress(statusTransmitted);
 
+		final IInputDataTransition transmittedTransition = inputData.getLastTransition();
+
+		assertNotNull(transmittedTransition);
+		assertTrue(!envelopedTransition.getId().equals(transmittedTransition.getId()));
+		assertEquals(statusEnveloped, transmittedTransition.getPreviousStatus());
+		assertEquals(statusTransmitted, transmittedTransition.getCurrentStatus());
+		assertEquals(statusTransmitted, inputData.getLastTransition().getCurrentStatus());
+
+	}
+
+	@Test
+	public void testInputDataSuccess() throws Exception {
+		assertNotNull(executionPersistence);
+
+		final IExecution execution = executionPersistence.startExecution(procedureDataMatch, "-c d:/extras/configdir");
+		final IInputData inputData = execution.startInputData("inputIdentifier", "hashCode");
+		// success Phase 1
+		inputData.success("responseId", PhaseQualifier.PHASE1);
+		final IInputDataTransition resultExcectedTransition = inputData.getLastTransition();
+		assertNotNull(resultExcectedTransition);
+		assertEquals(statusInital, resultExcectedTransition.getPreviousStatus());
+		assertEquals(statusResultsExpected, resultExcectedTransition.getCurrentStatus());
+		assertEquals(statusResultsExpected, inputData.getLastTransition().getCurrentStatus());
+		assertEquals("responseId", inputData.getResponseId());
+
+		// success Phase 2
+		inputData.success("responseId", PhaseQualifier.PHASE2);
+		final IInputDataTransition resultProcessedTransition = inputData.getLastTransition();
+		assertNotNull(resultProcessedTransition);
+		assertEquals(statusResultsExpected, resultProcessedTransition.getPreviousStatus());
+		assertEquals(statusResultsProcessed, resultProcessedTransition.getCurrentStatus());
+		assertEquals(statusResultsProcessed, inputData.getLastTransition().getCurrentStatus());
+		assertEquals("responseId", inputData.getResponseId());
+
+		// success Phase 3
+		inputData.success("responseId", PhaseQualifier.PHASE3);
+		final IInputDataTransition inputDataTransitionDone = inputData.getLastTransition();
+		assertNotNull(inputDataTransitionDone);
+		assertEquals(statusReceiptConfirmed, inputDataTransitionDone.getPreviousStatus());
+		assertEquals(statusDone, inputDataTransitionDone.getCurrentStatus());
+		assertEquals(statusDone, inputData.getLastTransition().getCurrentStatus());
 		assertEquals("responseId", inputData.getResponseId());
 
 	}
