@@ -20,9 +20,10 @@ package de.extrastandard.api.model.execution;
 
 /**
  * Qualifizierungen.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: PhaseQualifier.java 487 2012-09-03 13:07:52Z
+ *          thorstenvogel@gmail.com $
  */
 public enum PhaseQualifier {
 
@@ -30,6 +31,6 @@ public enum PhaseQualifier {
 
 	PHASE2,
 
-	PHASE3
+	PHASE3;
 
 }

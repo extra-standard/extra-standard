@@ -34,10 +34,8 @@ public interface IInputData extends PersistentEntity {
 	 * 
 	 * @param newStatus
 	 *            Der zu setzende Status.
-	 * @param qualifier
-	 *            Qualifizierung
 	 */
-	void updateProgress(IStatus newStatus, String qualifier);
+	void updateProgress(IStatus newStatus);
 
 	/**
 	 * Markiert diese Instanz mit den angegebenen Fehlerdaten.
@@ -62,8 +60,9 @@ public interface IInputData extends PersistentEntity {
 	 * 
 	 * @param responseId
 	 *            ID der Response.
+	 * @param phaseQualifier
 	 */
-	void success(String responseId);
+	void success(String responseId, PhaseQualifier phaseQualifier);
 
 	/**
 	 * Identifikation dieser Daten.

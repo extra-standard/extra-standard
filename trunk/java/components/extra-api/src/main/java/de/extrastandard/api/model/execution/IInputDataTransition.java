@@ -22,52 +22,46 @@ import java.util.Date;
 
 /**
  * Bildet den Übergang zwischen zwei Status einer {@link IInputData}-Instanz ab.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: IInputDataTransition.java 487 2012-09-03 13:07:52Z
+ *          thorstenvogel@gmail.com $
  */
 public interface IInputDataTransition extends PersistentEntity {
 
 	/**
 	 * Aktueller Status.
-	 *
+	 * 
 	 * @return Momentaner Status
 	 */
 	IStatus getCurrentStatus();
 
 	/**
 	 * Vorheriger Status.
-	 *
+	 * 
 	 * @return Vorheriger Status
 	 */
 	IStatus getPreviousStatus();
 
 	/**
 	 * Zeitpunkt der letzten Statusänderung.
-	 *
+	 * 
 	 * @return Zeitpunkt dieser Transition
 	 */
 	Date getTransitionDate();
 
 	/**
 	 * Dauer der Transition.
-	 *
+	 * 
 	 * @return Dauer der Transisition in Millisekunden.
 	 */
 	Long getDuration();
 
-    /**
-     * Qualifizierung der Transition.
-     *
-     * @return Qualifier
-     */
-    String getQualifier();
-
-    /**
-     * Bezogene Instanz.
-     *
-     * @return Inputdaten, auf die sich diese Transition bezieht.
-     */
-    IInputData getInputData();
+	/**
+	 * Bezogene Instanz.
+	 * 
+	 * @return Inputdaten, auf die sich diese Transition bezieht.
+	 */
+	IInputData getInputData();
 
 }
