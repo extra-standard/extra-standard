@@ -14,13 +14,13 @@ Die Ablage der eigentlichen Nutzdaten ist z.Z. unklar. Insgesamt können fünf A
 
  
 
-      * EncryptedData
-      * TransformedData     
-      * Data
-      * Data.CharSequence
-      * Data.Base64CharSequence
-      * Data.ElementSequence
-      * Data.AnyXML
+      * `EncryptedData`
+      * `TransformedData`     
+      * `Data`
+      * `Data.CharSequence`
+      * `Data.Base64CharSequence`
+      * `Data.ElementSequence`
+      * `Data.AnyXML`
 
 Es ist nicht klar definiert, wo die Daten zu extrahieren sind.
 
