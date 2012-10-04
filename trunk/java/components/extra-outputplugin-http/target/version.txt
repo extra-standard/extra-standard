@@ -1,0 +1,3 @@
+extra-outputplugin-http
+V1.0.0-SNAPSHOT
+20121004

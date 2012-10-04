@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <tstamp>
+    <format pattern="yyyyMMdd" property="TODAY"/>
+  </tstamp>
+  <mkdir dir="D:\eclipse-workspaces\extra\eXTra Full\components\extra-outputplugin-http/target"/>
+  <echo message="extra-outputplugin-http&#10;" append="false" file="D:\eclipse-workspaces\extra\eXTra Full\components\extra-outputplugin-http/target/version.txt"/>
+  <echo message="V1.0.0-SNAPSHOT&#10;" append="true" file="D:\eclipse-workspaces\extra\eXTra Full\components\extra-outputplugin-http/target/version.txt"/>
+  <echo message="${TODAY}&#10;" append="true" file="D:\eclipse-workspaces\extra\eXTra Full\components\extra-outputplugin-http/target/version.txt"/>
+</target>
+</project>
