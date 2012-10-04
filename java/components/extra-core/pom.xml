@@ -52,7 +52,7 @@
 		
 		<dependency>
 			<groupId>de.extrastandard</groupId>
-			<artifactId>extra-annotation</artifactId>
+			<artifactId>extra-sample</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		
