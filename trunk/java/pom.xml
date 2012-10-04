@@ -31,16 +31,16 @@
 	<modules>
 		<module>components/extra-parent</module>
 		<module>components/extra-api</module>
-		<module>components/extra-annotations</module>
+		<module>components/extra-sample</module>
 		<module>components/extra-schema</module>
-		<module>components/extra-core</module>
-		<module>components/extra-default-configplugin</module>
-		<module>components/extra-file-dataplugin</module>
-		<module>components/extra-http-outputplugin</module>
-		<module>components/extra-query-dataplugin</module>
-		<module>components/extra-file-responseprocessplugin</module>
-		<module>components/extra-model-execution-jpa</module>
+		<module>components/extra-configplugin-default</module>
+		<module>components/extra-dataplugin-file</module>
+		<module>components/extra-dataplugin-simplequery</module>
 		<module>components/extra-dataplugin-dbquery</module>
+		<module>components/extra-outputplugin-http</module>
+		<module>components/extra-responseprocessplugin-sample</module>
+		<module>components/extra-execution-jpa</module>
+		<module>components/extra-core</module>
 		<module>apps/extra-cli</module>
 		<module>apps/extra-profiling</module>
 		<module>apps/extra-scenario-sendfetch</module>	
