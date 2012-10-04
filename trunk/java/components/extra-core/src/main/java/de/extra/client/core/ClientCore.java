@@ -168,11 +168,13 @@ public class ClientCore implements ApplicationContextAware {
 				String responseId = null;
 				if (isProcedureStartPhase && singleResponseData != null) {
 					responseId = singleResponseData.getResponseId();
+					inputData.success(responseId, phaseQualifier);
+				} else {
+					inputData.success(phaseQualifier);
 				}
 				/**
 				 * TODO ENDE
 				 * */
-				inputData.success(responseId, phaseQualifier);
 
 				clientProcessResult.addResult(inputDataContainer, responseData);
 			} catch (final ExtraConfigRuntimeException extraConfigException) {

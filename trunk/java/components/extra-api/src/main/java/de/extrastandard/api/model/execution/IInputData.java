@@ -67,6 +67,15 @@ public interface IInputData extends PersistentEntity {
 	void success(String responseId, PhaseQualifier phaseQualifier);
 
 	/**
+	 * Markiert diese Instanz als erfolgreich übertragen.
+	 * 
+	 * @param responseId
+	 *            ID der Response.
+	 * @param phaseQualifier
+	 */
+	void success(PhaseQualifier phaseQualifier);
+
+	/**
 	 * @return requestId, unique identification of this message
 	 */
 	String getRequestId();
