@@ -32,8 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
-import de.extra.client.core.model.InputDataContainer;
-import de.extra.client.plugins.dataplugin.auftragssatz.AuftragssatzType;
+import de.extra.client.core.model.FileInputData;
 import de.extra.client.plugins.dataplugin.helper.DataPluginHelper;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.observer.ITransportObserver;
@@ -46,8 +45,7 @@ import de.extrastandard.api.plugin.IDataPlugin;
 @Named("fileDataPlugin")
 public class FileDataPlugin implements IDataPlugin {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(FileDataPlugin.class);
+	private static final Logger LOG = LoggerFactory.getLogger(FileDataPlugin.class);
 
 	// @Inject
 	// @Named("dataPluginController")
@@ -77,7 +75,7 @@ public class FileDataPlugin implements IDataPlugin {
 			@Override
 			public IInputDataContainer next() {
 				final File inputFile = iterator.next();
-				InputDataContainer inputDataContainer = new InputDataContainer();
+
 				FileInputStream inputData;
 				try {
 					inputData = new FileInputStream(inputFile);
@@ -85,15 +83,10 @@ public class FileDataPlugin implements IDataPlugin {
 					// TODO exception reinbauen
 					throw new IllegalStateException(e);
 				}
-				inputDataContainer.setInputData(inputData);
-				final AuftragssatzType auftragssatz = new AuftragssatzType();
-				auftragssatz.setRequestId(inputFile.getAbsolutePath());
 
-				// Setzen der RequestId
-				inputDataContainer.setRequestId(auftragssatz.getRequestId());
-				inputDataContainer = dataPluginHelper.fuelleVersandatenBean(inputDataContainer, auftragssatz);
-
-				transportObserver.requestDataReceived(inputFile.getName(), inputFile.length());
+				// TODO HashCode Setzen?
+				final FileInputData inputDataContainer = new FileInputData(inputFile.getName(), inputData, null);
+				transportObserver.requestDataReceived(inputFile.getAbsolutePath(), inputFile.length());
 				return inputDataContainer;
 			}
 

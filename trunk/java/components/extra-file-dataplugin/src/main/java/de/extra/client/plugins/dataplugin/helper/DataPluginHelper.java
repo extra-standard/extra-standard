@@ -38,7 +38,6 @@ import org.springframework.beans.factory.annotation.Value;
 import de.extra.client.core.model.CompressionPluginDescription;
 import de.extra.client.core.model.DataSourcePluginDescription;
 import de.extra.client.core.model.EncryptionPluginDescription;
-import de.extra.client.core.model.InputDataContainer;
 import de.extra.client.plugins.dataplugin.auftragssatz.AuftragssatzType;
 import de.extra.client.plugins.dataplugin.auftragssatz.CompressionInfoType;
 import de.extra.client.plugins.dataplugin.auftragssatz.DataSourceInfoType;
@@ -48,15 +47,14 @@ import de.extrastandard.api.model.content.IInputDataPluginDescription;
 @Named("dataPluginHelper")
 public class DataPluginHelper {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(DataPluginHelper.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DataPluginHelper.class);
 
 	@Value("${plugins.dataplugin.fileDataPlugin.inputVerzeichnis}")
 	private File inputDirectory;
 
 	/**
 	 * Input-Verzeichnis.
-	 *
+	 * 
 	 * @return Input-Verzeichnis
 	 */
 	public File getInputDirectory() {
@@ -65,12 +63,12 @@ public class DataPluginHelper {
 
 	/**
 	 * Laedt die Nutzdatenfiles aus dem Input-Verzeichnis.
-	 *
+	 * 
 	 * @return Liste mit den Pfaden der Nutzdateien
 	 */
 	public List<String> getNutzfiles() {
-		List<String> worklist = new ArrayList<String>();
-		File[] files = inputDirectory.listFiles();
+		final List<String> worklist = new ArrayList<String>();
+		final File[] files = inputDirectory.listFiles();
 
 		// Prüfe auf gueltige Dateien
 		for (int i = 0; i < files.length; i++) {
@@ -84,8 +82,7 @@ public class DataPluginHelper {
 				} else {
 					LOG.debug("Auftragssatz gefunden");
 				}
-				LOG.debug("Datei " + files[i].getAbsolutePath() + " ("
-						+ files[i].length()
+				LOG.debug("Datei " + files[i].getAbsolutePath() + " (" + files[i].length()
 						+ "Bytes) zur Arbeitsliste hinzugef�gt.");
 			}
 		}
@@ -95,7 +92,7 @@ public class DataPluginHelper {
 
 	/**
 	 * Wandelt die Nutzdatei in ein Byte-Array für den Aufbau des Requests um.
-	 *
+	 * 
 	 * @param filename
 	 *            Name der Datei
 	 * @return Byte-Array mit den Nutzdaten
@@ -103,7 +100,7 @@ public class DataPluginHelper {
 	public byte[] getNutzdaten(final String filename) {
 		byte[] nutzdaten = null;
 
-		File nutzdatei = new File(filename);
+		final File nutzdatei = new File(filename);
 		FileInputStream fis = null;
 
 		if (nutzdatei.exists() && !nutzdatei.isDirectory()) {
@@ -117,14 +114,14 @@ public class DataPluginHelper {
 				if (LOG.isTraceEnabled()) {
 					LOG.trace("Nutzdaten: " + new String(nutzdaten));
 				}
-			} catch (FileNotFoundException e) {
+			} catch (final FileNotFoundException e) {
 				LOG.error("Datei konnte nicht gefunden werden", e);
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				LOG.error("Fehler beim Lesen der Datei", e);
 			} finally {
 				try {
 					fis.close();
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					LOG.error("Fehler beim Schlie�en des Streams", e);
 				}
 			}
@@ -137,7 +134,7 @@ public class DataPluginHelper {
 
 	/**
 	 * Hilfsklasse zum unmarshalling des Auftragssatzes.
-	 *
+	 * 
 	 * @param auftragssatzName
 	 * @return JaxB-Element vom Typ AuftragssatzType
 	 */
@@ -146,16 +143,15 @@ public class DataPluginHelper {
 		JAXBElement<?> element = null;
 		try {
 			// Initialisieren des JaxB-Contextes
-			jc = JAXBContext
-					.newInstance("de.extra.client.plugins.dataPlugin.auftragssatz");
+			jc = JAXBContext.newInstance("de.extra.client.plugins.dataPlugin.auftragssatz");
 
 			// Aufruf des Unmarshallers
-			Unmarshaller u = jc.createUnmarshaller();
-			File auftragsFile = new File(auftragssatzName);
+			final Unmarshaller u = jc.createUnmarshaller();
+			final File auftragsFile = new File(auftragssatzName);
 			element = (JAXBElement<?>) u.unmarshal(auftragsFile);
-		} catch (JAXBException e) {
+		} catch (final JAXBException e) {
 			LOG.error("Fehler beim Verarbeiten des XML", e);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			LOG.error("Fehler beim Verarbeiten des XML", e);
 		}
 
@@ -164,24 +160,22 @@ public class DataPluginHelper {
 
 	/**
 	 * Fuellt die Liste der VersanddatenBean.
-	 *
+	 * 
 	 * @param vdb
 	 *            VersanddatenBean
 	 * @param auftragssatz
 	 *            Auftragssatz
 	 * @return VersanddatenBean
 	 */
-	public InputDataContainer fuelleVersandatenBean(
-			final InputDataContainer vdb, final AuftragssatzType auftragssatz) {
+	public List<IInputDataPluginDescription> extractPluginListe(final AuftragssatzType auftragssatz) {
 		CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
 		EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();
 		DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
 
-		List<IInputDataPluginDescription> pluginListe = new ArrayList<IInputDataPluginDescription>();
+		final List<IInputDataPluginDescription> pluginListe = new ArrayList<IInputDataPluginDescription>();
 		if (auftragssatz.getCompressionInfo() != null) {
 
-			compressionPlugin = fuelleCompression(auftragssatz
-					.getCompressionInfo());
+			compressionPlugin = fuelleCompression(auftragssatz.getCompressionInfo());
 			pluginListe.add(compressionPlugin);
 		} else {
 			if (LOG.isDebugEnabled()) {
@@ -190,8 +184,7 @@ public class DataPluginHelper {
 		}
 
 		if (auftragssatz.getEncryptionInfo() != null) {
-			encryptionPlugin = fuelleEncryption(auftragssatz
-					.getEncryptionInfo());
+			encryptionPlugin = fuelleEncryption(auftragssatz.getEncryptionInfo());
 			pluginListe.add(encryptionPlugin);
 		} else {
 			if (LOG.isDebugEnabled()) {
@@ -199,28 +192,24 @@ public class DataPluginHelper {
 			}
 		}
 		if (auftragssatz.getDataSourceInfo() != null) {
-			dataSourcePlugin = fuelleDataSource(auftragssatz
-					.getDataSourceInfo());
+			dataSourcePlugin = fuelleDataSource(auftragssatz.getDataSourceInfo());
 			pluginListe.add(dataSourcePlugin);
 		} else {
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Keine Informationen zur DataSource gefunden");
 			}
 		}
-
-		vdb.setPlugins(pluginListe);
-		return vdb;
+		return pluginListe;
 	}
 
 	/**
 	 * Hilfsklasse zum Befüllen der CompressionPluginBean.
-	 *
+	 * 
 	 * @param compressionInfo
 	 * @return CompressionPluginBean
 	 */
-	private static CompressionPluginDescription fuelleCompression(
-			final CompressionInfoType compressionInfo) {
-		CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
+	private static CompressionPluginDescription fuelleCompression(final CompressionInfoType compressionInfo) {
+		final CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
 
 		compressionPlugin.setOrder(compressionInfo.getOrder().intValue());
 		compressionPlugin.setCompAlgoId(compressionInfo.getAlgoId());
@@ -229,23 +218,20 @@ public class DataPluginHelper {
 		compressionPlugin.setCompSpecUrl(compressionInfo.getSpecUrl());
 		compressionPlugin.setCompSpecName(compressionInfo.getSpecName());
 		compressionPlugin.setCompSpecVers(compressionInfo.getSpecVers());
-		compressionPlugin.setCompInput(compressionInfo.getInputSize()
-				.intValue());
-		compressionPlugin.setCompOutput(compressionInfo.getOutputSize()
-				.intValue());
+		compressionPlugin.setCompInput(compressionInfo.getInputSize().intValue());
+		compressionPlugin.setCompOutput(compressionInfo.getOutputSize().intValue());
 
 		return compressionPlugin;
 	}
 
 	/**
 	 * Hilfsklasse zum Befüllen der EncryprionPluginBean.
-	 *
+	 * 
 	 * @param encryptionInfo
 	 * @return EncryptionPluginBean
 	 */
-	private static EncryptionPluginDescription fuelleEncryption(
-			final EncryptionInfoType encryptionInfo) {
-		EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();
+	private static EncryptionPluginDescription fuelleEncryption(final EncryptionInfoType encryptionInfo) {
+		final EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();
 
 		encryptionPlugin.setOrder(encryptionInfo.getOrder().intValue());
 		encryptionPlugin.setEncAlgoId(encryptionInfo.getAlgoId());
@@ -255,26 +241,23 @@ public class DataPluginHelper {
 		encryptionPlugin.setEncSpecName(encryptionInfo.getSpecName());
 		encryptionPlugin.setEncSpecVers(encryptionInfo.getSpecVers());
 		encryptionPlugin.setEncInput(encryptionInfo.getInputSize().intValue());
-		encryptionPlugin
-				.setEncOutput(encryptionInfo.getOutputSize().intValue());
+		encryptionPlugin.setEncOutput(encryptionInfo.getOutputSize().intValue());
 
 		return encryptionPlugin;
 	}
 
 	/**
 	 * Hilfsklasse zum Befüllen der DataSourcePlugin.
-	 *
+	 * 
 	 * @param dataSource
 	 * @return
 	 */
-	private static DataSourcePluginDescription fuelleDataSource(
-			final DataSourceInfoType dataSource) {
-		DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
+	private static DataSourcePluginDescription fuelleDataSource(final DataSourceInfoType dataSource) {
+		final DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
 
 		dataSourcePlugin.setDsType(dataSource.getDsType());
 		dataSourcePlugin.setDsName(dataSource.getDsName());
-		dataSourcePlugin.setDsCreated(dataSource.getDsCreateDate()
-				.toGregorianCalendar().getTime());
+		dataSourcePlugin.setDsCreated(dataSource.getDsCreateDate().toGregorianCalendar().getTime());
 		dataSourcePlugin.setDsEncoding(dataSource.getDsEncoding());
 
 		return dataSourcePlugin;

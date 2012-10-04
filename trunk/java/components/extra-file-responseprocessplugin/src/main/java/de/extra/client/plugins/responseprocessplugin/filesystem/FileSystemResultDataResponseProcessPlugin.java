@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -51,7 +50,9 @@ import de.extra.client.core.observer.TransportInfoBuilder;
 import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraResponseProcessPluginRuntimeException;
 import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.content.ResponseData;
+import de.extrastandard.api.model.content.SingleResponseData;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.observer.impl.TransportInfo;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
@@ -97,8 +98,8 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 	 * .extrastandard.namespace.response.XMLTransport)
 	 */
 	@Override
-	public List<IResponseData> processResponse(final InputStream responseAsStream) {
-		final List<IResponseData> responseDataList = new ArrayList<IResponseData>();
+	public IResponseData processResponse(final InputStream responseAsStream) {
+		final IResponseData responseData = new ResponseData();
 		try {
 
 			de.drv.dsrv.extrastandard.namespace.response.XMLTransport extraResponse;
@@ -128,16 +129,16 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 
 			saveBodyToFilesystem(responseId, decodedData);
 
-			final IResponseData responseData = new ResponseData(requestDetails.getRequestID().getValue(), "RETURNCODE",
-					"RETURNTEXT", responseId);
-			responseDataList.add(responseData);
+			final ISingleResponseData singleResponseData = new SingleResponseData(requestDetails.getRequestID()
+					.getValue(), "RETURNCODE", "RETURNTEXT", responseId);
+			responseData.addSingleResponse(singleResponseData);
 
 		} catch (final XmlMappingException xmlMappingException) {
 			throw new ExtraResponseProcessPluginRuntimeException(xmlMappingException);
 		} catch (final IOException ioException) {
 			throw new ExtraResponseProcessPluginRuntimeException(ioException);
 		}
-		return responseDataList;
+		return responseData;
 	}
 
 	private void printResult(final XMLTransport extraResponse) {

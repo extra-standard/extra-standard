@@ -28,11 +28,12 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import de.extra.client.core.model.InputDataContainer;
+import de.extra.client.core.model.FileInputData;
 import de.extra.client.plugins.dataplugin.auftragssatz.AuftragssatzType;
 import de.extra.client.plugins.dataplugin.helper.DataPluginHelper;
 import de.extra.client.plugins.dataplugin.interfaces.IDataPluginController;
 import de.extrastandard.api.model.content.IInputDataContainer;
+import de.extrastandard.api.model.content.IInputDataPluginDescription;
 import de.extrastandard.api.observer.ITransportObserver;
 
 @Named("dataPluginController")
@@ -51,34 +52,36 @@ public class DataPluginController implements IDataPluginController {
 	 */
 	@Override
 	public List<IInputDataContainer> processData() {
-		List<IInputDataContainer> versanddatenBeanList = new ArrayList<IInputDataContainer>();
+		final List<IInputDataContainer> versanddatenBeanList = new ArrayList<IInputDataContainer>();
 		List<String> nutzfileList = new ArrayList<String>();
 
 		// Ermitteln der Nutzdaten
 		nutzfileList = dataPluginHelper.getNutzfiles();
 
 		// Befüllen der Versanddaten-Liste
-		for (Iterator<String> iter = nutzfileList.iterator(); iter.hasNext();) {
-			String filename = iter.next();
+		for (final Iterator<String> iter = nutzfileList.iterator(); iter.hasNext();) {
+			final String filename = iter.next();
 
-			InputDataContainer versanddatenBean = new InputDataContainer();
-			File inputFile = new File(filename);
+			final File inputFile = new File(filename);
 			FileInputStream inputData;
 			try {
 				inputData = new FileInputStream(inputFile);
-			} catch (FileNotFoundException e) {
+			} catch (final FileNotFoundException e) {
 				// TODO exception reinbauen
 				throw new IllegalStateException(e);
 			}
-			versanddatenBean.setInputData(inputData);
-			AuftragssatzType auftragssatz = new AuftragssatzType();
+
+			final AuftragssatzType auftragssatz = new AuftragssatzType();
+			final List<IInputDataPluginDescription> pluginListe = dataPluginHelper.extractPluginListe(auftragssatz);
 			// String auftragssatzName = filename + ".auf";
 			// auftragssatz = dataPluginHelper
 			// .unmarshalAuftragssatz(auftragssatzName);
 
 			// Setzen der RequestId
+			final FileInputData versanddatenBean = new FileInputData(inputFile.getName(), inputData, null);
+
 			versanddatenBean.setRequestId(auftragssatz.getRequestId());
-			versanddatenBean = dataPluginHelper.fuelleVersandatenBean(versanddatenBean, auftragssatz);
+			versanddatenBean.setPlugins(pluginListe);
 			versanddatenBeanList.add(versanddatenBean);
 
 			transportObserver.requestDataReceived(filename, inputFile.length());

@@ -25,7 +25,6 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -55,7 +54,9 @@ import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
 import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.core.observer.TransportInfoBuilder;
 import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.content.ResponseData;
+import de.extrastandard.api.model.content.SingleResponseData;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.observer.impl.TransportInfo;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
@@ -63,8 +64,7 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
 @Named("fileSystemResponseProcessPlugin")
 public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(FileSystemResponseProcessPlugin.class);
+	private static final Logger LOG = LoggerFactory.getLogger(FileSystemResponseProcessPlugin.class);
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -90,14 +90,14 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * de.extra.client.core.plugin.IResponsePlugin#processResponse(de.drv.dsrv
 	 * .extrastandard.namespace.response.XMLTransport)
 	 */
 	@Override
-	public List<IResponseData> processResponse(final InputStream responseAsStream) {
-		final List<IResponseData> responseDataList = new ArrayList<IResponseData>();
+	public IResponseData processResponse(final InputStream responseAsStream) {
+		final IResponseData responseData = new ResponseData();
 		try {
 
 			de.drv.dsrv.extrastandard.namespace.response.XMLTransport extraResponse;
@@ -128,9 +128,9 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 						LOG.debug("Speicheren des Body auf Filesystem erfolgreich");
 					}
 
-					final IResponseData responseData = new ResponseData(requestDetails.getRequestID().getValue(),
-							"C00", "RETURNTEXT", responseId);
-					responseDataList.add(responseData);
+					final ISingleResponseData singleResponseData = new SingleResponseData(requestDetails.getRequestID()
+							.getValue(), "C00", "RETURNTEXT", responseId);
+					responseData.addSingleResponse(singleResponseData);
 
 				} else {
 					for (final Iterator<Package> iter = packageList.iterator(); iter.hasNext();) {
@@ -171,8 +171,9 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
 				saveReportToFilesystem(report, responseId, requestId);
 
-				final IResponseData responseData = new ResponseData(requestId, "C00", "RETURNTEXT", responseId);
-				responseDataList.add(responseData);
+				final ISingleResponseData singleResponseData = new SingleResponseData(requestId, "C00", "RETURNTEXT",
+						responseId);
+				responseData.addSingleResponse(singleResponseData);
 				LOG.info("Body leer");
 			}
 
@@ -183,7 +184,7 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			// TODO Auto-generated catch block
 			throw new IllegalStateException(ioException);
 		}
-		return responseDataList;
+		return responseData;
 	}
 
 	private void printResult(final XMLTransport extraResponse) {
@@ -249,7 +250,7 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			if (fw != null) {
 				try {
 					fw.close();
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
