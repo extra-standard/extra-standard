@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -28,6 +27,7 @@ import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.response.Package;
 import de.extra.client.plugins.outputplugin.utils.OutputPluginHelper;
 import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ResponseData;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
 
 //@Named("fileSystemHelper")
@@ -48,8 +48,9 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 	private String reportOrdner;
 
 	@Override
-	public List<IResponseData> processResponse(final InputStream responseAsStream) {
+	public IResponseData processResponse(final InputStream responseAsStream) {
 		try {
+			final IResponseData responseData = new ResponseData();
 			de.drv.dsrv.extrastandard.namespace.response.XMLTransport extraResponse;
 
 			extraResponse = (de.drv.dsrv.extrastandard.namespace.response.XMLTransport) unmarshaller
@@ -114,7 +115,7 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 				LOG.info("Body leer");
 			}
 
-			return new ArrayList<IResponseData>();
+			return responseData;
 		} catch (final XmlMappingException xmlMappingException) {
 			// TODO Exceptionhandling
 			throw new IllegalStateException(xmlMappingException);

@@ -39,6 +39,7 @@
 		<module>components/extra-query-dataplugin</module>
 		<module>components/extra-file-responseprocessplugin</module>
 		<module>components/extra-model-execution-jpa</module>
+		<module>components/extra-dataplugin-dbquery</module>
 		<module>apps/extra-cli</module>
 		<module>apps/extra-profiling</module>
 		<module>apps/extra-scenario-sendfetch</module>	
