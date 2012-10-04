@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: extra-ws-outputplugin
-Implementation-Version: 1.0.0-SNAPSHOT
-Implementation-Vendor-Id: de.extrastandard
-Build-Jdk: 1.6.0_33
-Built-By: evpqq5
-Created-By: Maven Integration for Eclipse
-
