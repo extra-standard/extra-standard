@@ -15,6 +15,7 @@
 	<import resource="classpath:spring-query-dataplugin.xml" />
 	<import resource="classpath:spring-file-responseprocessplugin.xml" />
 	<import resource="classpath:spring-persistence-jpa.xml" />
+	
 	<context:component-scan base-package="de.extra.client.starter" />
 
 </beans>
