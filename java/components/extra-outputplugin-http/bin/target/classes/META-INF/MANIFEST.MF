@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: extra-http-outputplugin
-Implementation-Version: 1.0.0-SNAPSHOT
-Implementation-Vendor-Id: de.extra
-Build-Jdk: 1.6.0_31
-Built-By: evpqq5
-Created-By: Maven Integration for Eclipse
-
