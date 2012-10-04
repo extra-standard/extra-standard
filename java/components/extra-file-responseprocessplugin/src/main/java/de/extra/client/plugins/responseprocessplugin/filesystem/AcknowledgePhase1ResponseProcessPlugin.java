@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -45,7 +43,9 @@ import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.core.observer.TransportInfoBuilder;
 import de.extrastandard.api.exception.ExtraResponseProcessPluginRuntimeException;
 import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.content.ResponseData;
+import de.extrastandard.api.model.content.SingleResponseData;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.observer.impl.TransportInfo;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
@@ -53,18 +53,17 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
 /**
  * Verarbeitet eine Acknowledge (Scenario request-with-acknowledge ) auf den
  * Extra Request in der Phase 1 der Nachrichtenaustausch.
- *
+ * 
  * Erste Ausführung für den Scenario mit der Übertragung der Daten in dem (1
  * Nachricht - 1 Datensatz) TransportBody
- *
+ * 
  * @author DPRS
  * @version $Id$
  */
 @Named("acknowledgePhase1ResponseProcessPlugin")
 public class AcknowledgePhase1ResponseProcessPlugin implements IResponseProcessPlugin {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(AcknowledgePhase1ResponseProcessPlugin.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AcknowledgePhase1ResponseProcessPlugin.class);
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -90,14 +89,14 @@ public class AcknowledgePhase1ResponseProcessPlugin implements IResponseProcessP
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * de.extra.client.core.plugin.IResponsePlugin#processResponse(de.drv.dsrv
 	 * .extrastandard.namespace.response.XMLTransport)
 	 */
 	@Override
-	public List<IResponseData> processResponse(final InputStream responseAsStream) {
-		final List<IResponseData> responseDataList = new ArrayList<IResponseData>();
+	public IResponseData processResponse(final InputStream responseAsStream) {
+		final IResponseData responseData = new ResponseData();
 		try {
 
 			final XMLTransport extraResponse = (de.drv.dsrv.extrastandard.namespace.response.XMLTransport) unmarshaller
@@ -127,15 +126,16 @@ public class AcknowledgePhase1ResponseProcessPlugin implements IResponseProcessP
 			final String requestId = classifiableRequestIDType.getValue();
 
 			// TODO Ergebnisse der Übertragung abfragen
-			final IResponseData responseData = new ResponseData(requestId, "C00", "RETURNTEXT", responseId);
-			responseDataList.add(responseData);
+			final ISingleResponseData singleResponseData = new SingleResponseData(requestId, "C00", "RETURNTEXT",
+					responseId);
+			responseData.addSingleResponse(singleResponseData);
 
 		} catch (final XmlMappingException xmlMappingException) {
 			throw new ExtraResponseProcessPluginRuntimeException(xmlMappingException);
 		} catch (final IOException ioException) {
 			throw new ExtraResponseProcessPluginRuntimeException(ioException);
 		}
-		return responseDataList;
+		return responseData;
 	}
 
 	private void printResult(final XMLTransport extraResponse) {
