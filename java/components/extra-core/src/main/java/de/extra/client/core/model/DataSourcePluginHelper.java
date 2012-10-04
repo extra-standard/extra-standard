@@ -28,6 +28,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import de.drv.dsrv.extrastandard.namespace.plugins.AbstractPlugInType;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataContainerType;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataSource;
+import de.extra.client.core.model.impl.DataSourcePluginDescription;
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 
 public class DataSourcePluginHelper extends PluginHelperBase {

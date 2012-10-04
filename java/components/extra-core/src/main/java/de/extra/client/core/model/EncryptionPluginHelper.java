@@ -25,6 +25,7 @@ import de.drv.dsrv.extrastandard.namespace.plugins.DataType;
 import de.drv.dsrv.extrastandard.namespace.plugins.EncryptionAlgorithmType;
 import de.drv.dsrv.extrastandard.namespace.plugins.EncryptionType;
 import de.drv.dsrv.extrastandard.namespace.plugins.SpecificationType;
+import de.extra.client.core.model.impl.EncryptionPluginDescription;
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 
 /**

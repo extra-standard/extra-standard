@@ -38,7 +38,7 @@ import de.extra.client.core.builder.IXmlRootElementBuilder;
 import de.extra.client.core.builder.impl.plugins.DataTransformConfigurablePluginsBuilder;
 import de.extra.client.core.builder.impl.plugins.DataTransformPluginsBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportBuilder;
-import de.extra.client.core.model.FileInputData;
+import de.extra.client.core.model.inputdata.impl.FileInputData;
 import de.extra.client.core.util.IExtraValidator;
 import de.extrastandard.api.model.content.IInputDataContainer;
 

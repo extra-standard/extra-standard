@@ -27,11 +27,11 @@ import java.util.List;
 
 import javax.inject.Named;
 
-import de.extra.client.core.model.CompressionPluginDescription;
-import de.extra.client.core.model.DataSourcePluginDescription;
-import de.extra.client.core.model.EncryptionPluginDescription;
-import de.extra.client.core.model.FileInputData;
-import de.extra.client.core.model.InputDataContainer;
+import de.extra.client.core.model.impl.CompressionPluginDescription;
+import de.extra.client.core.model.impl.DataSourcePluginDescription;
+import de.extra.client.core.model.impl.EncryptionPluginDescription;
+import de.extra.client.core.model.inputdata.impl.FileInputData;
+import de.extra.client.core.model.inputdata.impl.InputDataContainer;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 import de.extrastandard.api.plugin.IDataPlugin;

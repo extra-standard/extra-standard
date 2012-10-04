@@ -24,6 +24,7 @@ import de.drv.dsrv.extrastandard.namespace.plugins.AbstractTransformType;
 import de.drv.dsrv.extrastandard.namespace.plugins.CompressionAlgorithmType;
 import de.drv.dsrv.extrastandard.namespace.plugins.CompressionType;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataType;
+import de.extra.client.core.model.impl.CompressionPluginDescription;
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 
 /**
