@@ -55,7 +55,7 @@ public class Mandator extends AbstractEntity implements IMandator {
 	@SequenceGenerator(name = "mandator_entity_seq_gen", sequenceName = "seq_mandator_id")
 	private Long id;
 
-	@Column(name = "name")
+	@Column(name = "name", unique = true, nullable = false)
 	private String name;
 
 	@Transient

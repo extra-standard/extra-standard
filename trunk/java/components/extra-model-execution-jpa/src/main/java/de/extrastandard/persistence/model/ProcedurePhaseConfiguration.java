@@ -67,6 +67,10 @@ public class ProcedurePhaseConfiguration extends AbstractEntity {
 	@JoinColumn(name = "phase_endstatus_id")
 	private Status phaseEndStatus;
 
+	@ManyToOne()
+	@JoinColumn(name = "phase_startstatus_id")
+	private Status phaseStartStatus;
+
 	@Column(name = "phase")
 	private String phase;
 
@@ -94,12 +98,26 @@ public class ProcedurePhaseConfiguration extends AbstractEntity {
 	 */
 	public ProcedurePhaseConfiguration(final ProcedureType procedureType, final PhaseQualifier phaseQualifier,
 			final PersistentStatus phaseEndStatus) {
+		this(procedureType, phaseQualifier, phaseEndStatus, null);
+	}
+
+	/**
+	 * @param procedureType
+	 * @param phaseQualifier
+	 * @param phaseEndStatus
+	 * @param phaseStartStatus
+	 */
+	public ProcedurePhaseConfiguration(final ProcedureType procedureType, final PhaseQualifier phaseQualifier,
+			final PersistentStatus phaseEndStatus, final PersistentStatus phaseStartStatus) {
 		super();
 		Assert.notNull(phaseEndStatus, "PhaseEndStatus must be specified");
 		Assert.notNull(procedureType, "ProcedureType must be specified");
 		Assert.notNull(phaseQualifier, "PhaseQualifier must be specified");
 		this.procedureType = procedureType;
 		this.phaseEndStatus = statusRepository.findOne(phaseEndStatus.getId());
+		if (phaseStartStatus != null) {
+			this.phaseStartStatus = statusRepository.findOne(phaseStartStatus.getId());
+		}
 		this.phase = phaseQualifier.name();
 		repository.save(this);
 	}
@@ -163,6 +181,13 @@ public class ProcedurePhaseConfiguration extends AbstractEntity {
 		return procedureType;
 	}
 
+	/**
+	 * @return the phaseStartStatus
+	 */
+	public Status getPhaseStartStatus() {
+		return phaseStartStatus;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -194,4 +219,5 @@ public class ProcedurePhaseConfiguration extends AbstractEntity {
 		builder.append("]");
 		return builder.toString();
 	}
+
 }

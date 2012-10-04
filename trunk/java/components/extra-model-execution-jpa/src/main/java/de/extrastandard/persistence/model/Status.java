@@ -50,7 +50,7 @@ public class Status extends AbstractEntity implements IStatus {
 	@Id
 	private Long id;
 
-	@Column(name = "name")
+	@Column(name = "name", unique = true, nullable = false)
 	private String name;
 
 	@Transient
@@ -89,13 +89,25 @@ public class Status extends AbstractEntity implements IStatus {
 	}
 
 	@Override
-	public String toString() {
-		return name;
-	}
-
-	@Override
 	public Long getId() {
 		return id;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+		builder.append("Status [");
+		if (name != null) {
+			builder.append("name=");
+			builder.append(name);
+		}
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

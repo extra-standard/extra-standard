@@ -70,8 +70,11 @@ public class Procedure extends AbstractEntity implements IProcedure {
 	@JoinColumn(name = "procedure_type_id")
 	private ProcedureType procedureType;
 
-	@Column(name = "name")
+	@Column(name = "name", unique = true, nullable = false)
 	private String name;
+
+	@Column(name = "short_key", unique = true, nullable = false, length = 30)
+	private String shortKey;
 
 	@Transient
 	@Inject
@@ -89,11 +92,13 @@ public class Procedure extends AbstractEntity implements IProcedure {
 	 * @param mandator
 	 * @param name
 	 */
-	public Procedure(final Mandator mandator, final ProcedureType procedureType, final String name) {
+	public Procedure(final Mandator mandator, final ProcedureType procedureType, final String name,
+			final String shortKey) {
 		super();
 		this.mandator = mandator;
 		this.procedureType = procedureType;
 		this.name = name;
+		this.shortKey = shortKey;
 		repository.save(this);
 	}
 
@@ -124,6 +129,30 @@ public class Procedure extends AbstractEntity implements IProcedure {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return the shortKey
+	 */
+	@Override
+	public String getShortKey() {
+		return shortKey;
+	}
+
+	/**
+	 * @param shortKey
+	 *            the shortKey to set
+	 */
+	public void setShortKey(final String shortKey) {
+		this.shortKey = shortKey;
+	}
+
+	/**
+	 * @return the procedureType
+	 */
+	@Override
+	public ProcedureType getProcedureType() {
+		return procedureType;
 	}
 
 	/**
@@ -166,4 +195,5 @@ public class Procedure extends AbstractEntity implements IProcedure {
 		builder.append("]");
 		return builder.toString();
 	}
+
 }
