@@ -1,7 +1,8 @@
 package de.extrastandard.api.model.content;
 
-import java.io.InputStream;
 import java.util.List;
+
+import de.extrastandard.api.util.IImplementor;
 
 /**
  * <pre>
@@ -19,14 +20,7 @@ import java.util.List;
  * @author DPRS
  * @version $Id$
  */
-public interface IInputDataContainer {
-
-	/**
-	 * Identifizierung der InputDaten in der phase 2
-	 * 
-	 * @return
-	 */
-	String getRequestId();
+public interface IInputDataContainer extends IImplementor {
 
 	/**
 	 * Liefert Daten Verschlüsselung, Transformation usw Beschreibung.
@@ -36,25 +30,24 @@ public interface IInputDataContainer {
 	List<IInputDataPluginDescription> getPlugins();
 
 	/**
-	 * Identifizierung der InputDaten in der phase 1
-	 * 
-	 * @return
-	 */
-	String getDataRequestId();
-
-	/**
-	 * InputData als Stream
-	 * 
-	 * @return the inputData
-	 */
-	InputStream getInputData();
-
-	/**
 	 * Liefert eine Identifizierung der InputDaten In der Phase 1 DataRequestId
-	 * In derPhase 2 requestID
+	 * In derPhase 2 responseId
 	 * 
 	 * @return
 	 */
 	String getInputIdentification();
 
+	/**
+	 * Liefert RequestId, für die eindeutige Identifizierung in der XmlMessage
+	 * 
+	 * @return
+	 */
+	String getRequestId();
+
+	/**
+	 * @param requestId
+	 *            Setzt RequestId für die eindeutige Identifizierung in der
+	 *            XmlMesage
+	 */
+	public void setRequestId(final String requestId);
 }

@@ -20,7 +20,7 @@ package de.extrastandard.api.exception;
 
 /**
  * Core Exception
- *
+ * 
  * @author Leonid Potap
  * @version $Id$
  */
@@ -30,6 +30,10 @@ public class ExtraCoreRuntimeException extends ExtraRuntimeException {
 
 	public ExtraCoreRuntimeException() {
 		super();
+	}
+
+	public ExtraCoreRuntimeException(final String message) {
+		super(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION, message);
 	}
 
 	public ExtraCoreRuntimeException(final ExceptionCode code) {

@@ -21,9 +21,10 @@ package de.extrastandard.api.model.execution;
 /**
  * Enum Abbildung der in der Datenbank gespeicherten Status. Muss mit
  * insert-script synchron sein.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: PersistentStatus.java 487 2012-09-03 13:07:52Z
+ *          thorstenvogel@gmail.com $
  */
 public enum PersistentStatus {
 
@@ -60,7 +61,12 @@ public enum PersistentStatus {
 	/**
 	 * Abgeschlossen.
 	 */
-	DONE(7L);
+	DONE(7L),
+
+	/**
+	 * FAIL.
+	 */
+	FAIL(8L);
 
 	private final Long id;
 

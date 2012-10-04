@@ -35,10 +35,11 @@ public interface IInputData extends PersistentEntity {
 	 * @param newStatus
 	 *            Der zu setzende Status.
 	 */
-	void updateProgress(IStatus newStatus);
+	void updateProgress(PersistentStatus newStatus);
 
 	/**
-	 * Markiert diese Instanz mit den angegebenen Fehlerdaten.
+	 * Marks this instance with the specified error data. This method do not
+	 * throw any exception
 	 * 
 	 * @param errorCode
 	 *            Code des Fehlers.
@@ -48,7 +49,8 @@ public interface IInputData extends PersistentEntity {
 	void failed(String errorCode, String errorMessage);
 
 	/**
-	 * Markiert diese Instanz mit der angegebenen Exception.
+	 * Marks this instance with the specified error data. This method do not
+	 * throw any exception
 	 * 
 	 * @param exception
 	 *            die den Fehler auslösende Exception.
@@ -63,6 +65,11 @@ public interface IInputData extends PersistentEntity {
 	 * @param phaseQualifier
 	 */
 	void success(String responseId, PhaseQualifier phaseQualifier);
+
+	/**
+	 * @return requestId, unique identification of this message
+	 */
+	String getRequestId();
 
 	/**
 	 * Identifikation dieser Daten.
@@ -118,5 +125,17 @@ public interface IInputData extends PersistentEntity {
 	 * @return
 	 */
 	IInputDataTransition getLastTransition();
+
+	/**
+	 * @return berechnete RequestId
+	 */
+	String calculateRequestId();
+
+	/**
+	 * Setzt RequestId
+	 * 
+	 * @param requestId
+	 */
+	void setRequestId(String requestId);
 
 }

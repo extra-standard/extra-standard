@@ -18,6 +18,7 @@
  */
 package de.extrastandard.api.model.execution;
 
+
 /**
  * Verfahren.
  * 
@@ -52,4 +53,15 @@ public interface IProcedure extends PersistentEntity {
 	 * @return true, wenn {@link Status} der letzte in diesem Scenario ist
 	 */
 	public boolean isProcedureEndStatus(final IStatus status);
+
+	/**
+	 * @return the shortKey
+	 */
+	public String getShortKey();
+
+	/**
+	 * @return the procedureType
+	 */
+	public IProcedureType getProcedureType();
+
 }

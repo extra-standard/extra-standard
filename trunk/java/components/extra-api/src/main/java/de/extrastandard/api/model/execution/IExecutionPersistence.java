@@ -18,6 +18,8 @@
  */
 package de.extrastandard.api.model.execution;
 
+import java.util.List;
+
 /**
  * Stellt Funktionen zur persistenten Protokollierung von {@link IExecution}s
  * bereit.
@@ -29,6 +31,8 @@ package de.extrastandard.api.model.execution;
 public interface IExecutionPersistence {
 
 	/**
+	 * The method starts an execution.
+	 * 
 	 * @param procedure
 	 *            Execution Scenario
 	 * @param parameters
@@ -37,4 +41,40 @@ public interface IExecutionPersistence {
 	 */
 	IExecution startExecution(IProcedure procedure, String parameters);
 
+	/**
+	 * <pre>
+	 * The method starts an execution. 
+	 * If the procedure name is not found, an unchecked exception is thrown.
+	 * </pre>
+	 * 
+	 * @param procedure
+	 *            Execution Scenario
+	 * @param parameters
+	 *            Aufrufparameter
+	 * @return eine {@link IExecution} Instanz.
+	 */
+	IExecution startExecution(String procedureName, String parameters);
+
+	/**
+	 * @param executionProcedure
+	 * @param executionPhase
+	 * @return true, if executionPhase is starting phase of the
+	 *         executionProcedure
+	 */
+	boolean isProcedureStartPhase(String executionProcedure, String executionPhase);
+
+	/**
+	 * @param requestId
+	 * @return
+	 */
+	IInputData findInputDataByRequestId(String requestId);
+
+	/**
+	 * Seeks InputData for further Procesierung depending on the ExecutePhase
+	 * 
+	 * @param executionProcedure
+	 * @param phaseQualifier
+	 * @return
+	 */
+	List<IInputData> findInputDataForExecution(String executionProcedure, PhaseQualifier phaseQualifier);
 }
