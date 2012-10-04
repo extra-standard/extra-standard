@@ -30,6 +30,7 @@ import javax.inject.Named;
 import de.extra.client.core.model.CompressionPluginDescription;
 import de.extra.client.core.model.DataSourcePluginDescription;
 import de.extra.client.core.model.EncryptionPluginDescription;
+import de.extra.client.core.model.FileInputData;
 import de.extra.client.core.model.InputDataContainer;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
@@ -52,15 +53,11 @@ public class DummyDataPlugin implements IDataPlugin {
 	 */
 	private InputDataContainer loadVersanddaten() {
 
-		final InputDataContainer vb = new InputDataContainer();
 		final CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
 		final EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();
 		final DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
 
 		final String nutzdaten = "Testdaten";
-
-		// Nutzdaten setzen
-		vb.setInputData(new ByteArrayInputStream(nutzdaten.getBytes()));
 
 		// Compression-Infos setzen
 		compressionPlugin.setOrder(1);
@@ -105,8 +102,9 @@ public class DummyDataPlugin implements IDataPlugin {
 		pluginList.add(encryptionPlugin);
 		pluginList.add(dataSourcePlugin);
 
-		vb.setPlugins(pluginList);
-
-		return vb;
+		final FileInputData fileInputData = new FileInputData("DummyFile", new ByteArrayInputStream(
+				nutzdaten.getBytes()), "10");
+		fileInputData.setPlugins(pluginList);
+		return fileInputData;
 	}
 }

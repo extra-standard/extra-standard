@@ -32,6 +32,7 @@ import de.drv.dsrv.extrastandard.namespace.components.CharSequenceType;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
 import de.extrastandard.api.exception.ExtraCoreRuntimeException;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
+import de.extrastandard.api.model.content.IFileInputdata;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
@@ -53,7 +54,8 @@ public class TransportBodyCharSequenceBuilder extends XmlComplexTypeBuilderAbstr
 			logger.debug("CharSequenceType aufbauen");
 			final CharSequenceType charSequence = new CharSequenceType();
 
-			final InputStream inputData = senderData.getInputData();
+			final IFileInputdata fileInputdata = senderData.cast(IFileInputdata.class);
+			final InputStream inputData = fileInputdata.getInputData();
 
 			Assert.notNull(inputData, "InputData is null.");
 
