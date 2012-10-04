@@ -29,25 +29,15 @@
 		<artifactId>extra-parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	
-	
 
 	<artifactId>extra-dataplugin-dbquery</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	
-	
-
 	<name>extra-dataplugin-dbquery</name>
 	<description>Dataplugin provides query data from the database</description>
 
 	<dependencies>
-	
-		<dependency>
-			<groupId>de.extrastandard</groupId>
-			<artifactId>extra-core</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>	
 
 		<dependency>
 			<groupId>de.extrastandard</groupId>
@@ -57,19 +47,19 @@
 
 		<dependency>
 			<groupId>de.extrastandard</groupId>
-			<artifactId>extra-annotation</artifactId>
+			<artifactId>extra-sample</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>de.extrastandard</groupId>
-			<artifactId>extra-model-execution-jpa</artifactId>
+			<artifactId>extra-execution-jpa</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>			
 		
 		<dependency>
 			<groupId>de.extrastandard</groupId>
-			<artifactId>extra-model-execution-jpa</artifactId>
+			<artifactId>extra-execution-jpa</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 			<scope>test</scope>
 			<type>test-jar</type>
