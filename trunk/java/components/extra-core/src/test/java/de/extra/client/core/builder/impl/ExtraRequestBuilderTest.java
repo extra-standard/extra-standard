@@ -47,8 +47,8 @@ import de.extra.client.core.builder.impl.plugins.TransportPluginsBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportBodyBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportHeaderBuilder;
-import de.extra.client.core.model.DBQueryInputData;
-import de.extra.client.core.model.ExtraProfileConfiguration;
+import de.extra.client.core.config.impl.ExtraProfileConfiguration;
+import de.extra.client.core.model.inputdata.impl.DBQueryInputData;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 

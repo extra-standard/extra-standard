@@ -28,14 +28,14 @@ import de.drv.dsrv.extrastandard.namespace.plugins.CompressionType;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataTransforms;
 import de.drv.dsrv.extrastandard.namespace.plugins.EncryptionType;
 import de.drv.dsrv.extrastandard.namespace.plugins.SignatureType;
-import de.extra.client.core.model.CompressionPluginDescription;
 import de.extra.client.core.model.CompressionPluginHelper;
-import de.extra.client.core.model.DataSourcePluginDescription;
 import de.extra.client.core.model.DataSourcePluginHelper;
-import de.extra.client.core.model.EncryptionPluginDescription;
 import de.extra.client.core.model.EncryptionPluginHelper;
-import de.extra.client.core.model.SignaturePluginDescription;
 import de.extra.client.core.model.SignaturePluginHelper;
+import de.extra.client.core.model.impl.CompressionPluginDescription;
+import de.extra.client.core.model.impl.DataSourcePluginDescription;
+import de.extra.client.core.model.impl.EncryptionPluginDescription;
+import de.extra.client.core.model.impl.SignaturePluginDescription;
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 
 @Named("pluginHelper")

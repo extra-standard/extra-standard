@@ -41,7 +41,7 @@ import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
 import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
-import de.extra.client.core.observer.TransportInfoBuilder;
+import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extrastandard.api.observer.ITransportInfo;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.plugin.IOutputPlugin;
