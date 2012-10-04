@@ -37,15 +37,15 @@ import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraConfigRuntimeException;
 
 /**
- *
+ * 
  * @author Leonid Potab
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: ExtraClient.java 538 2012-09-05 09:48:23Z
+ *          thorstenvogel@gmail.com $
  */
 public class ExtraClient {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ExtraClient.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ExtraClient.class);
 
 	/**
 	 * Name der grundlegenden Konfiguration
@@ -68,7 +68,7 @@ public class ExtraClient {
 	 * Erzeugt einen ExtraClient. Die Konfiguration wird aus den Dateien
 	 * {@link #PROPERTIES_BASIC_FILENAME} und {@link #PROPERTIES_USER_FILENAME}
 	 * ausgelesen.
-	 *
+	 * 
 	 * @param configurationDirectory
 	 *            Konfigurationsverzeichnis
 	 */
@@ -78,47 +78,40 @@ public class ExtraClient {
 
 	/**
 	 * Startmethode zum Aufruf aus dem startenden Programm.
-	 *
+	 * 
 	 * @return Statuscode
 	 */
 	public ClientProcessResult execute() {
 		LOG.debug("SpringBeans laden");
 		ApplicationContext applicationContext = null;
-		File basicPropsFile = new File(configurationDirectory,
-				PROPERTIES_BASIC_FILENAME);
+		final File basicPropsFile = new File(configurationDirectory, PROPERTIES_BASIC_FILENAME);
 		if (!basicPropsFile.exists() || !basicPropsFile.canRead()) {
-			throw new ExtraConfigRuntimeException(
-					ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, String.format(
-							"Konfiguration nicht gefunden: %s",
-							PROPERTIES_BASIC_FILENAME));
+			throw new ExtraConfigRuntimeException(ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, String.format(
+					"Konfiguration nicht gefunden: %s", PROPERTIES_BASIC_FILENAME));
 		}
-		File userPropsFile = new File(configurationDirectory,
-				PROPERTIES_USER_FILENAME);
+		final File userPropsFile = new File(configurationDirectory, PROPERTIES_USER_FILENAME);
 		if (!userPropsFile.exists() || !userPropsFile.canRead()) {
-			throw new ExtraConfigRuntimeException(
-					ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, String.format(
-							"Konfiguration nicht gefunden: %s",
-							PROPERTIES_USER_FILENAME));
+			throw new ExtraConfigRuntimeException(ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, String.format(
+					"Konfiguration nicht gefunden: %s", PROPERTIES_USER_FILENAME));
 		}
 		try {
-			Properties basicProperties = new Properties();
-			FileInputStream basicPropsStream = new FileInputStream(basicPropsFile);
+			final Properties basicProperties = new Properties();
+			final FileInputStream basicPropsStream = new FileInputStream(basicPropsFile);
 			basicProperties.load(basicPropsStream);
 			IOUtils.closeQuietly(basicPropsStream);
 
-			Properties userProperties = new Properties();
-			FileInputStream userPropsStream = new FileInputStream(userPropsFile);
+			final Properties userProperties = new Properties();
+			final FileInputStream userPropsStream = new FileInputStream(userPropsFile);
 			basicProperties.load(userPropsStream);
 			IOUtils.closeQuietly(userPropsStream);
 
-			Map<String, Object> env = new HashMap<String, Object>();
+			final Map<String, Object> env = new HashMap<String, Object>();
 			env.put("_extern_extra-properties-basic", basicProperties);
 			env.put("_extern_extra-properties-user", userProperties);
 			applicationContext = new ApplicationContextStarter<AbstractApplicationContext>() {
 				@Override
 				protected AbstractApplicationContext createUninitializedContext() {
-					return new ClassPathXmlApplicationContext(
-							new String[] { SPRING_XML_FILE_PATH }, false);
+					return new ClassPathXmlApplicationContext(new String[] { SPRING_XML_FILE_PATH }, false);
 				}
 			}.createApplicationContext(env);
 
@@ -126,7 +119,7 @@ public class ExtraClient {
 
 			final ClientCore clientCore = applicationContext.getBean("clientCore", ClientCore.class);
 
-			final ClientProcessResult processResult = clientCore.process();
+			final ClientProcessResult processResult = clientCore.process(configurationDirectory.getAbsolutePath());
 
 			// TODO Auswerten Ergebnisse
 
