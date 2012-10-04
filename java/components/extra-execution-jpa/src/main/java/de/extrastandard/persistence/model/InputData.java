@@ -207,12 +207,18 @@ public class InputData extends AbstractEntity implements IInputData {
 	@Override
 	@Transactional
 	public void success(final String responseId, final PhaseQualifier phaseQualifier) {
+		this.responseId = responseId;
+		success(phaseQualifier);
+	}
+
+	@Override
+	@Transactional
+	public void success(final PhaseQualifier phaseQualifier) {
 		// Merge?? Wie kann es besser laufen?
 		final InputData mergedInputData = repository.save(this);
-		this.responseId = responseId;
-		final IStatus currentStatus = this.lastTransition.getCurrentStatus();
 		final Execution execution = mergedInputData.execution;
 
+		final IStatus currentStatus = this.lastTransition.getCurrentStatus();
 		final IProcedure procedure = execution.getProcedure();
 
 		final IStatus newStatus = procedure.getPhaseEndStatus(phaseQualifier);

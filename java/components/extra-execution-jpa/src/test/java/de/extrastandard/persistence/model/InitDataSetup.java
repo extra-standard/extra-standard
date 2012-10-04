@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @version $Id$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring-persistence-jpa.xml", "/spring-ittest-hsqldb-propertyplaceholder.xml" })
+@ContextConfiguration(locations = { "/spring-persistence-jpa.xml", "/spring-ittest-oracle-propertyplaceholder.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 @Named("initDataSetup")
 public class InitDataSetup {
@@ -56,8 +56,8 @@ public class InitDataSetup {
 		LOGGER.info("setupInitialDaten");
 		// persistenceTestSetup.setupInitialDaten();
 		// persistenceTestSetup.setupProcedureSendFeths();
-		persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
-		persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase3();
+		// persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
+		// persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase3();
 	}
 
 }
