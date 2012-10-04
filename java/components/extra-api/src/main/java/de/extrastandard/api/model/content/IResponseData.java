@@ -1,7 +1,9 @@
 package de.extrastandard.api.model.content;
 
+import java.util.Collection;
+
 /**
- * Liefert Ergebnisse einer Anfrage/Übertragung zurück.
+ * Provides results back to a request / transmission.
  * 
  * @author Leonid Potap
  * @version $Id$
@@ -9,20 +11,24 @@ package de.extrastandard.api.model.content;
 public interface IResponseData {
 
 	/**
-	 * requestId der Ursprung Anfrage
-	 */
-	String getRequestId();
-
-	/**
-	 * @return Liefert Return-Code der Nachricht.
-	 */
-	String getReturnCode();
-
-	/**
-	 * Liefert Return-Text der Nachricht, wenn vorhanden.
 	 * 
+	 * @return all results contained in the response
+	 */
+	Collection<ISingleResponseData> getReponses();
+
+	/**
+	 * returns an {@link SingleResponseData} specified by reguestId
+	 * 
+	 * @param reguestId
 	 * @return
 	 */
-	String getReturnText();
+	ISingleResponseData getResponse(String reguestId);
+
+	/**
+	 * Add a {@link SingleResponseData} to ResponseData
+	 * 
+	 * @param singleResponseData
+	 */
+	void addSingleResponse(ISingleResponseData singleResponseData);
 
 }

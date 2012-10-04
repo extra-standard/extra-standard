@@ -19,7 +19,6 @@
 package de.extrastandard.api.plugin;
 
 import java.io.InputStream;
-import java.util.List;
 
 import de.extrastandard.api.model.content.IResponseData;
 
@@ -38,6 +37,6 @@ public interface IResponseProcessPlugin {
 	 * @param extraResponse
 	 * @return
 	 */
-	List<IResponseData> processResponse(InputStream responseAsStream);
+	IResponseData processResponse(InputStream responseAsStream);
 
 }

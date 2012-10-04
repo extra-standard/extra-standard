@@ -9,14 +9,31 @@ public interface IProcedureType {
 
 	/**
 	 * @param phase
-	 * @return liefert end Status dieser Phase
+	 * @return provides end status of this phase in the scenario
 	 */
 	public abstract IStatus getPhaseEndStatus(PhaseQualifier phase);
 
 	/**
 	 * @param status
-	 * @return true, wenn {@link Status} der letzte in diesem Scenario ist
+	 * @return true, if @ link Status} , the last in this scenario is
 	 */
 	public abstract boolean isProcedureEndStatus(IStatus status);
 
+	/**
+	 * @return the startPhase of the Procedure
+	 */
+	public String getStartPhase();
+
+	/**
+	 * @param phase
+	 * @return true, if phase configured as a start phase of this ProcedureType
+	 */
+	public boolean isProcedureStartPhase(String phase);
+
+	/**
+	 * provides start status of this phase in the scenario
+	 * 
+	 * @param phase
+	 */
+	public IStatus getPhaseStartStatus(PhaseQualifier phase);
 }

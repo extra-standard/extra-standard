@@ -27,10 +27,35 @@ package de.extrastandard.api.model.execution;
  */
 public enum PhaseQualifier {
 
-	PHASE1,
+	PHASE1("PHASE1"),
 
-	PHASE2,
+	PHASE2("PHASE2"),
 
-	PHASE3;
+	PHASE3("PHASE3");
+
+	private String name;
+
+	private PhaseQualifier(final String name) {
+		this.name = name;
+	}
+
+	public static PhaseQualifier resolveByName(final String name) {
+		if (name == null) {
+			throw new IllegalArgumentException("Name is null");
+		}
+		for (final PhaseQualifier phaseQualifier : PhaseQualifier.values()) {
+			if (name.equalsIgnoreCase(phaseQualifier.name)) {
+				return phaseQualifier;
+			}
+		}
+		throw new IllegalArgumentException("PhaseQualifier not found for Name:" + name);
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
 
 }
