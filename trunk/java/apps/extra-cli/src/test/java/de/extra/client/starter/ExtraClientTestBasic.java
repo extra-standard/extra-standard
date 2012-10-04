@@ -65,7 +65,7 @@ public class ExtraClientTestBasic {
 				LOG.error(clientProcessResult.exceptionsToString());
 			}
 
-			LOG.info(clientProcessResult.printReturnCodes());
+			LOG.info(clientProcessResult.printResults());
 
 			fail("Fehler bei der Verarbeitung!");
 		}
