@@ -34,6 +34,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -47,7 +49,9 @@ import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
+import de.extrastandard.persistence.repository.ExecutionRepository;
 import de.extrastandard.persistence.repository.InputDataRepository;
+import de.extrastandard.persistence.repository.ProcedureRepository;
 import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
@@ -63,6 +67,8 @@ import de.extrastandard.persistence.repository.StatusRepository;
 public class InputData extends AbstractEntity implements IInputData {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final Logger LOG = LoggerFactory.getLogger(InputData.class);
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "input_data_entity_seq_gen")
@@ -88,6 +94,9 @@ public class InputData extends AbstractEntity implements IInputData {
 	@Column(name = "responseid")
 	private String responseId;
 
+	@Column(name = "requestId")
+	private String requestId;
+
 	@ManyToOne
 	@JoinColumn(name = "last_transition_id")
 	private InputDataTransition lastTransition;
@@ -101,6 +110,16 @@ public class InputData extends AbstractEntity implements IInputData {
 	@Inject
 	@Named("statusRepository")
 	private transient StatusRepository statusRepository;
+
+	@Transient
+	@Inject
+	@Named("executionRepository")
+	private transient ExecutionRepository executionRepository;
+
+	@Transient
+	@Inject
+	@Named("procedureRepository")
+	private transient ProcedureRepository procedureRepository;
 
 	/**
 	 * Dieser Konstruktur wird ausschliesslich durch das ORM Tool genutzt.
@@ -138,14 +157,15 @@ public class InputData extends AbstractEntity implements IInputData {
 	 */
 	@Override
 	@Transactional
-	public void updateProgress(final IStatus newStatus) {
-		Assert.notNull(newStatus, "newStatus must be specified");
+	public void updateProgress(final PersistentStatus newPersistentStatusEnum) {
+		Assert.notNull(newPersistentStatusEnum, "newStatus must be specified");
+		final Status newPersistentStatus = statusRepository.findOne(newPersistentStatusEnum.getId());
 
 		final IInputDataTransition lastTransition = this.getLastTransition();
 		final IStatus currentStatus = lastTransition.getCurrentStatus();
 
 		final Date lastTransitionDate = this.lastTransition.getTransitionDate();
-		final InputDataTransition transition = new InputDataTransition(this, currentStatus, newStatus,
+		final InputDataTransition transition = new InputDataTransition(this, currentStatus, newPersistentStatus,
 				lastTransitionDate);
 		this.lastTransition = transition;
 		saveOrUpdate();
@@ -157,10 +177,13 @@ public class InputData extends AbstractEntity implements IInputData {
 	 */
 	@Override
 	public void failed(final String errorCode, final String errorMessage) {
-		this.errorCode = errorCode;
-		this.errorMessage = errorMessage;
-		// TODO transition / status setzen
-		saveOrUpdate();
+		try {
+			this.errorCode = errorCode;
+			this.errorMessage = errorMessage;
+			updateProgress(PersistentStatus.FAIL);
+		} catch (final Exception exception) {
+			LOG.error("Exception beim inputData.failed", exception);
+		}
 	}
 
 	/**
@@ -168,10 +191,14 @@ public class InputData extends AbstractEntity implements IInputData {
 	 */
 	@Override
 	public void failed(final ExtraRuntimeException exception) {
-		this.errorCode = exception.getCode().name();
-		this.errorMessage = exception.getMessage();
-		// TODO transition / status setzen
-		saveOrUpdate();
+		try {
+			this.errorCode = exception.getCode().name();
+			this.errorMessage = exception.getMessage();
+			failed(errorCode, errorMessage);
+
+		} catch (final Exception exception2) {
+			LOG.error("Exception beim inputData.failed", exception);
+		}
 	}
 
 	/**
@@ -180,9 +207,14 @@ public class InputData extends AbstractEntity implements IInputData {
 	@Override
 	@Transactional
 	public void success(final String responseId, final PhaseQualifier phaseQualifier) {
+		// Merge?? Wie kann es besser laufen?
+		final InputData mergedInputData = repository.save(this);
 		this.responseId = responseId;
 		final IStatus currentStatus = this.lastTransition.getCurrentStatus();
-		final IProcedure procedure = this.execution.getProcedure();
+		final Execution execution = mergedInputData.execution;
+
+		final IProcedure procedure = execution.getProcedure();
+
 		final IStatus newStatus = procedure.getPhaseEndStatus(phaseQualifier);
 		final Date lastTransitionDate = this.lastTransition.getTransitionDate();
 		final InputDataTransition transition = new InputDataTransition(this, currentStatus, newStatus,
@@ -216,6 +248,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	@Override
 	public void saveOrUpdate() {
 		repository.save(this);
+
 	}
 
 	/**
@@ -303,8 +336,33 @@ public class InputData extends AbstractEntity implements IInputData {
 	}
 
 	@Override
+	public String calculateRequestId() {
+		final IProcedure procedure = execution.getProcedure();
+		final StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(procedure.getShortKey()).append("_").append(id);
+		return stringBuilder.toString();
+	}
+
+	@Override
 	public Long getId() {
 		return id;
+	}
+
+	/**
+	 * @return the requestId
+	 */
+	@Override
+	public String getRequestId() {
+		return requestId;
+	}
+
+	/**
+	 * @param requestId
+	 *            the requestId to set
+	 */
+	@Override
+	public void setRequestId(final String requestId) {
+		this.requestId = requestId;
 	}
 
 	@Override

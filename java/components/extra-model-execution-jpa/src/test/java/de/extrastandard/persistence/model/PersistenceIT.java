@@ -24,6 +24,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,6 +40,7 @@ import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.IInputDataTransition;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
+import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * @author Thorsten Vogel
@@ -55,7 +58,9 @@ public class PersistenceIT {
 	@Resource(type = ExecutionPersistence.class)
 	private ExecutionPersistence executionPersistence;
 
-	public static boolean dbInit = false;
+	@Inject
+	@Named("statusRepository")
+	private transient StatusRepository statusRepository;
 
 	private Status statusInital;
 
@@ -71,44 +76,27 @@ public class PersistenceIT {
 
 	private Status statusDone;
 
-	private Procedure procedureDataMatch;
-
 	@Before
 	public void before() throws Exception {
 
-		statusInital = new Status(PersistentStatus.INITIAL);
+		// persistenceTestSetup.setupInitialDaten();
+		// persistenceTestSetup.setupProcedureSendFeths();
 
-		statusEnveloped = new Status(PersistentStatus.ENVELOPED);
-
-		statusTransmitted = new Status(PersistentStatus.TRANSMITTED);
-
-		statusResultsExpected = new Status(PersistentStatus.RESULTS_EXPECTED);
-
-		statusResultsProcessed = new Status(PersistentStatus.RESULTS_PROCESSED);
-
-		statusReceiptConfirmed = new Status(PersistentStatus.RECEIPT_CONFIRMED);
-
-		statusDone = new Status(PersistentStatus.DONE);
-
-		final Mandator mandatorTEST = new Mandator("TEST");
-
-		final ProcedureType procedureSendFetch = new ProcedureType("SCENARIO_SEND_FETCH", statusReceiptConfirmed);
-
-		new ProcedurePhaseConfiguration(procedureSendFetch, PhaseQualifier.PHASE1, PersistentStatus.RESULTS_EXPECTED);
-
-		new ProcedurePhaseConfiguration(procedureSendFetch, PhaseQualifier.PHASE2, PersistentStatus.RESULTS_PROCESSED);
-
-		new ProcedurePhaseConfiguration(procedureSendFetch, PhaseQualifier.PHASE3, PersistentStatus.RECEIPT_CONFIRMED);
-
-		procedureDataMatch = new Procedure(mandatorTEST, procedureSendFetch, "Datenabgleich");
+		statusInital = statusRepository.findByName(PersistentStatus.INITIAL.name());
+		statusEnveloped = statusRepository.findByName(PersistentStatus.ENVELOPED.name());
+		statusTransmitted = statusRepository.findByName(PersistentStatus.TRANSMITTED.name());
+		statusResultsExpected = statusRepository.findByName(PersistentStatus.RESULTS_EXPECTED.name());
+		statusResultsProcessed = statusRepository.findByName(PersistentStatus.RESULTS_PROCESSED.name());
+		statusReceiptConfirmed = statusRepository.findByName(PersistentStatus.RECEIPT_CONFIRMED.name());
+		statusDone = statusRepository.findByName(PersistentStatus.DONE.name());
 
 	}
 
 	@Test
 	public void testExecutionConstruction() throws Exception {
 		assertNotNull(executionPersistence);
-
-		final IExecution execution = executionPersistence.startExecution(procedureDataMatch, "-c d:/extras/configdir");
+		final IExecution execution = executionPersistence.startExecution(
+				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "-c d:/extras/configdir");
 
 		assertNotNull(execution.getParameters());
 		assertNotNull(execution.getId());
@@ -135,7 +123,7 @@ public class PersistenceIT {
 		Thread.sleep(500);
 
 		// update progress Enveloped
-		inputData.updateProgress(statusEnveloped);
+		inputData.updateProgress(PersistentStatus.ENVELOPED);
 
 		final IInputDataTransition envelopedTransition = inputData.getLastTransition();
 
@@ -146,7 +134,7 @@ public class PersistenceIT {
 		assertEquals(statusEnveloped, inputData.getLastTransition().getCurrentStatus());
 
 		// update progress Transmitted
-		inputData.updateProgress(statusTransmitted);
+		inputData.updateProgress(PersistentStatus.TRANSMITTED);
 
 		final IInputDataTransition transmittedTransition = inputData.getLastTransition();
 
@@ -162,7 +150,8 @@ public class PersistenceIT {
 	public void testInputDataSuccess() throws Exception {
 		assertNotNull(executionPersistence);
 
-		final IExecution execution = executionPersistence.startExecution(procedureDataMatch, "-c d:/extras/configdir");
+		final IExecution execution = executionPersistence.startExecution(
+				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "-c d:/extras/configdir");
 		final IInputData inputData = execution.startInputData("inputIdentifier", "hashCode");
 		// success Phase 1
 		inputData.success("responseId", PhaseQualifier.PHASE1);
@@ -190,6 +179,11 @@ public class PersistenceIT {
 		assertEquals(statusDone, inputDataTransitionDone.getCurrentStatus());
 		assertEquals(statusDone, inputData.getLastTransition().getCurrentStatus());
 		assertEquals("responseId", inputData.getResponseId());
+
+	}
+
+	@Test
+	public void testInputDataSucessAnotherTransaction() throws Exception {
 
 	}
 

@@ -14,10 +14,11 @@
 		<property name="propertiesArray">
 			<array>
 				<util:properties id="persistence-jpa-basic-properties"
-				location="classpath:extra-persistence-properties-hsqldb-basic.properties" />
+				location="classpath:extra-persistence-properties-basic.properties" />
 				<util:properties id="persistence-jpa-user-properties"
 				location="classpath:extra-persistence-properties-hsqldb-user.properties" />
 			</array>
 		</property>	
+		<property name="ignoreUnresolvablePlaceholders" value="false"></property>
 	</bean>
 </beans>

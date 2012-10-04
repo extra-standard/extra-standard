@@ -18,17 +18,32 @@
  */
 package de.extrastandard.persistence.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.IProcedure;
+import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.persistence.model.InputData;
 
 /**
  * Repository für InputData.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: InputDataRepository.java 508 2012-09-04 09:35:41Z
+ *          thorstenvogel@gmail.com $
  */
 @Repository("inputDataRepository")
 public interface InputDataRepository extends JpaRepository<InputData, Long> {
+
+	@Query("FROM InputData WHERE requestId = :requestId")
+	IInputData findByRequestId(@Param("requestId") String requestId);
+
+	@Query("select inputdata FROM InputData inputdata WHERE inputdata.lastTransition.currentStatus = :status and inputdata.execution.procedure = :procedure")
+	List<IInputData> findByProcedureAndStatus(@Param("procedure") final IProcedure procedure,
+			@Param("status") IStatus status);
 }

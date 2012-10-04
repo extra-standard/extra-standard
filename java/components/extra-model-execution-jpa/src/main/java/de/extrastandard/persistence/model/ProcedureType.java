@@ -64,6 +64,9 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 	@Column(name = "name")
 	private String name;
 
+	@Column(name = "start_phase")
+	private String startPhase;
+
 	@ManyToOne
 	@JoinColumn(name = "end_status_id")
 	private Status endStatus;
@@ -94,9 +97,10 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 	 * @param mandator
 	 * @param name
 	 */
-	public ProcedureType(final String name, final IStatus endStatus) {
+	public ProcedureType(final String name, final IStatus endStatus, final String startPhase) {
 		super();
 		this.name = name;
+		this.startPhase = startPhase;
 		this.endStatus = statusRepository.findByName(endStatus.getName());
 		repository.save(this);
 	}
@@ -114,6 +118,14 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	/**
+	 * @return the startPhase
+	 */
+	@Override
+	public String getStartPhase() {
+		return startPhase;
 	}
 
 	/*
@@ -143,6 +155,26 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 	public boolean isProcedureEndStatus(final IStatus status) {
 		Assert.notNull(status, "Status must be specified");
 		return this.endStatus.getName().equals(status.getName());
+	}
+
+	@Override
+	public boolean isProcedureStartPhase(final String phase) {
+		Assert.notNull(phase, "Phase must be specified");
+		final boolean isStartPhaseOfProcedure = phase.equalsIgnoreCase(this.startPhase);
+		return isStartPhaseOfProcedure;
+	}
+
+	/**
+	 * @see de.extrastandard.api.model.execution.IProcedureType#getPhaseStartStatus(de.extrastandard.api.model.execution.PhaseQualifier)
+	 */
+	@Override
+	public IStatus getPhaseStartStatus(final PhaseQualifier phase) {
+		Assert.notNull(phase, "Phase must be specified");
+		final ProcedurePhaseConfiguration findByPhaseAndProcedureType = procedurePhaseConfigurationRepository
+				.findByPhaseAndProcedureType(phase.getName(), this);
+		final Status phaseStartStatus = findByPhaseAndProcedureType.getPhaseStartStatus();
+		return phaseStartStatus;
+
 	}
 
 	/**

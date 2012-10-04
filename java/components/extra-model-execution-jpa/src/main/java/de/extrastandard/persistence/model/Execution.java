@@ -24,6 +24,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -78,7 +79,7 @@ public class Execution extends AbstractEntity implements IExecution {
 	@Column(name = "parameters")
 	private String parameters;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "procedure_id")
 	private Procedure procedure;
 
@@ -86,9 +87,6 @@ public class Execution extends AbstractEntity implements IExecution {
 	@JoinColumn(name = "status_id")
 	private Status status;
 
-	// @OneToMany(fetch = FetchType.LAZY)
-	// @JoinColumn(name = "execution_id")
-	// @JoinTable(name = "INPUT_DATA")
 	@OneToMany(mappedBy = "execution", fetch = FetchType.LAZY)
 	private Set<InputData> inputDataSet = new HashSet<InputData>();
 
