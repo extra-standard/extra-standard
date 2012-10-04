@@ -18,15 +18,12 @@
  */
 package de.extra.client.core.builder.impl.components;
 
-import java.math.BigInteger;
-
 import javax.inject.Named;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.components.ElementSequenceType;
 import de.drv.dsrv.extrastandard.namespace.messages.Control;
@@ -35,66 +32,56 @@ import de.drv.dsrv.extrastandard.namespace.messages.DataRequestArgument;
 import de.drv.dsrv.extrastandard.namespace.messages.DataRequestQuery;
 import de.drv.dsrv.extrastandard.namespace.messages.Operand;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap
- *
+ * 
  */
 @Named("transportBodyElementSequenceBuilder")
-public class TransportBodyElementSequenceBuilder extends
-		XmlComplexTypeBuilderAbstr {
+public class TransportBodyElementSequenceBuilder extends XmlComplexTypeBuilderAbstr {
 
-	private final static Logger LOG = LoggerFactory
-			.getLogger(TransportBodyElementSequenceBuilder.class);
+	private final static Logger LOG = LoggerFactory.getLogger(TransportBodyElementSequenceBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:ElementSequence";
 
-	@Value("${builder.xcpt.ElementSequencelocator.transportBodyElementSequenceBuilder.packageLimit}")
-	private String packageLimit;
-
 	@Override
-	public Object buildXmlFragment(final IInputDataContainer senderData,
-			final IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
 		LOG.debug("xcpt:ElementSequence aufbauen");
 		// TODO DataRequest anders aufbauen. Der sollte über die Nutzdaten zu
 		// ziehen sein.
-		DataRequest dataRequest = createDataRequest(senderData);
-		ElementSequenceType elementSequence = new ElementSequenceType();
+		final DataRequest dataRequest = createDataRequest(senderData);
+		final ElementSequenceType elementSequence = new ElementSequenceType();
 		elementSequence.getAny().add(dataRequest);
 		return elementSequence;
 	}
 
 	private DataRequest createDataRequest(final IInputDataContainer senderData) {
-		DataRequest dataRequest = new DataRequest();
+		final DataRequest dataRequest = new DataRequest();
 
-		Control controlElement = new Control();
-		DataRequestQuery query = new DataRequestQuery();
-		DataRequestArgument dataRequestArgument = new DataRequestArgument();
-		Operand operand = new Operand();
-		operand.setValue(senderData.getDataRequestId());
+		final Control controlElement = new Control();
+		final DataRequestQuery query = new DataRequestQuery();
+		final DataRequestArgument dataRequestArgument = new DataRequestArgument();
+		final Operand operand = new Operand();
+		final IDbQueryInputData iDbQueryInputData = senderData.cast(IDbQueryInputData.class);
+		operand.setValue(iDbQueryInputData.getServerResponceId());
 
 		// Setzen des Tags
-		QName qname = new QName("xs:string");
-		JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(new QName(
-				"http://www.extra-standard.de/namespace/message/1", "GE"),
-				Operand.class, operand);
+		final QName qname = new QName("xs:string");
+		final JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(new QName(
+				"http://www.extra-standard.de/namespace/message/1", "GE"), Operand.class, operand);
 		jaxbOperand.setValue(operand);
 
 		// Setzen der Property
-		dataRequestArgument
-				.setProperty("http://www.extra-standard.de/property/ResponseID");
+		dataRequestArgument.setProperty("http://www.extra-standard.de/property/ResponseID");
 		dataRequestArgument.setType(qname);
 		dataRequestArgument.getContent().add(jaxbOperand);
 
 		query.getArgument().add(dataRequestArgument);
 
 		// Befüllen des Control-Arguments
-		if (packageLimit != null) {
-			controlElement.setMaximumPackages(new BigInteger(packageLimit));
-		}
-
 		dataRequest.setQuery(query);
 		dataRequest.setControl(controlElement);
 

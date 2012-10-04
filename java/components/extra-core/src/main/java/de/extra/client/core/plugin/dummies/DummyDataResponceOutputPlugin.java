@@ -72,6 +72,10 @@ public class DummyDataResponceOutputPlugin implements IOutputPlugin {
 	@Named("transportInfoBuilder")
 	private TransportInfoBuilder transportInfoBuilder;
 
+	@Inject
+	@Named("dummyOutputPluginUtil")
+	private DummyOutputPluginUtil dummyOutputPluginUtil;
+
 	@Override
 	public InputStream outputData(final InputStream request) {
 		InputStream responseAsinputStream = null;
@@ -95,6 +99,7 @@ public class DummyDataResponceOutputPlugin implements IOutputPlugin {
 	}
 
 	private XMLTransport createExtraResponse(final InputStream request) {
+		final String requestId = dummyOutputPluginUtil.extractRequestId(request);
 		final XMLTransport response = new XMLTransport();
 		final TransportHeader transportHeader = new TransportHeader();
 		final ResponseDetailsType responseDetailsType = new ResponseDetailsType();
@@ -111,7 +116,7 @@ public class DummyDataResponceOutputPlugin implements IOutputPlugin {
 		transportHeader.setResponseDetails(responseDetailsType);
 		final RequestDetailsType requestDetailsType = new RequestDetailsType();
 		final ClassifiableIDType requestIdType = new ClassifiableIDType();
-		requestIdType.setValue("4242");
+		requestIdType.setValue(requestId);
 		requestDetailsType.setRequestID(requestIdType);
 		transportHeader.setRequestDetails(requestDetailsType);
 		response.setTransportHeader(transportHeader);

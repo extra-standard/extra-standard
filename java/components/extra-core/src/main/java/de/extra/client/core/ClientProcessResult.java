@@ -19,7 +19,6 @@
 package de.extra.client.core;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,6 +30,7 @@ import org.springframework.context.annotation.Scope;
 import de.extra.client.core.util.IExtraReturnCodeAnalyser;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ISingleResponseData;
 
 /**
  * Beinhaltet Ergebnisse eines Laufs.
@@ -48,9 +48,9 @@ public class ClientProcessResult {
 
 	private final Map<String, ProcessResult> responseMap = new HashMap<String, ProcessResult>();
 
-	public void addResult(final IInputDataContainer dataContainer, final List<IResponseData> responses) {
-		final String requestId = dataContainer.getInputIdentification();
-		responseMap.put(requestId, new ProcessResult(responses));
+	public void addResult(final IInputDataContainer dataContainer, final IResponseData responseData) {
+		final String inputIdentification = dataContainer.getInputIdentification();
+		responseMap.put(inputIdentification, new ProcessResult(responseData));
 	}
 
 	public void addException(final IInputDataContainer dataContainer, final Exception exception) {
@@ -69,8 +69,9 @@ public class ClientProcessResult {
 		boolean hasErrors = false;
 		for (final String key : keySet) {
 			final ProcessResult result = responseMap.get(key);
-			if (result.getResponseDatas() != null) {
-				for (final IResponseData iResponseData : result.getResponseDatas()) {
+			final IResponseData responseData = result.getResponseData();
+			if (responseData != null && responseData.getReponses() != null) {
+				for (final ISingleResponseData iResponseData : responseData.getReponses()) {
 					if (!returnCodeAnalyser.isReturnCodeSuccessful(iResponseData.getReturnCode())) {
 						hasErrors = true;
 						// TODO refactor
@@ -104,7 +105,7 @@ public class ClientProcessResult {
 			if (result.getException() != null) {
 				stringBuilder.append("ExceptionKey: ").append(key);
 				stringBuilder.append(" Exception Message: ").append(result.getException().getMessage());
-				stringBuilder.append(" For Results: ").append(result.getResponseDatas());
+				stringBuilder.append(" For Results: ").append(result.getResponseData());
 
 			}
 		}
@@ -114,21 +115,14 @@ public class ClientProcessResult {
 	/**
 	 * @return Aufbereitete Liste mit ReturnCodes zu jeder empfangener Nachricht
 	 */
-	public String printReturnCodes() {
+	public String printResults() {
 		final StringBuilder resultAsString = new StringBuilder();
 		final Set<String> keySet = responseMap.keySet();
 		for (final String key : keySet) {
 			final ProcessResult result = responseMap.get(key);
 			resultAsString.append("Result Identifikation: ").append(key);
-			final Exception exception = result.getException();
-			if (exception != null) {
-				resultAsString.append("ResultException: ").append(exception);
-			}
-			if (result.getResponseDatas() != null) {
-				for (final IResponseData iResponseData : result.getResponseDatas()) {
-					resultAsString.append(" ResponseData").append(iResponseData);
-				}
-			}
+			resultAsString.append("Result Identifikation: ").append(result);
+
 		}
 		return resultAsString.toString();
 	}

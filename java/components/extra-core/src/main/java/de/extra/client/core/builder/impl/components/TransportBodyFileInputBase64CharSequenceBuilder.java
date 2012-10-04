@@ -29,36 +29,35 @@ import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
+import de.extrastandard.api.exception.ExtraCoreRuntimeException;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
+import de.extrastandard.api.model.content.IFileInputdata;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
+ * IFileInputData expect. Stores inputdata in Base64CharSequenceType.value
+ * 
  * @author Leonid Potap
- *
+ * @version $Id$
  */
-@Named("transportBodyBase64CharSequenceBuilder")
-public class TransportBodyBase64CharSequenceBuilder extends
-		XmlComplexTypeBuilderAbstr {
+@Named("transportBodyFileInputBase64CharSequenceBuilder")
+public class TransportBodyFileInputBase64CharSequenceBuilder extends XmlComplexTypeBuilderAbstr {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(TransportBodyBase64CharSequenceBuilder.class);
+	private static final Logger LOG = LoggerFactory.getLogger(TransportBodyFileInputBase64CharSequenceBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:Base64CharSequence";
 
 	@Override
-	public Object buildXmlFragment(final IInputDataContainer senderData,
-			final IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
 		LOG.debug("Base64CharSequenceType aufbauen");
-		Base64CharSequenceType base64CharSequence = new Base64CharSequenceType();
-
-		Base64InputStream base64InputStream = new Base64InputStream(
-				senderData.getInputData());
+		final Base64CharSequenceType base64CharSequence = new Base64CharSequenceType();
+		final IFileInputdata iFileInputdata = senderData.cast(IFileInputdata.class);
+		final Base64InputStream base64InputStream = new Base64InputStream(iFileInputdata.getInputData());
 		byte[] encodeData = null;
 		try {
 			encodeData = IOUtils.toByteArray(base64InputStream);
-		} catch (IOException e) {
-			// TODO exception einbauen
-			throw new IllegalStateException(e);
+		} catch (final IOException ioException) {
+			throw new ExtraCoreRuntimeException(ioException);
 		}
 		base64CharSequence.setValue(encodeData);
 

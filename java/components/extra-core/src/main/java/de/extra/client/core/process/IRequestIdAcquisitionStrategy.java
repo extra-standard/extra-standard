@@ -16,28 +16,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.core.annotation;
+package de.extra.client.core.process;
+
+import de.extrastandard.api.model.content.IInputDataContainer;
+import de.extrastandard.api.model.execution.IInputData;
 
 /**
- * Enumiration für die mögliche Plugins. Hier werden auch die prefixes für die
- * Konfigparameter verwaltet.
- * 
  * @author Leonid Potap
- * 
+ * @version $Id$
  */
-public enum PluginConfigType {
+public interface IRequestIdAcquisitionStrategy {
 
-	DataPlugins("plugins.dataplugin"), DataSource("plugins.datasource"), Certificates("plugins.certificates"), DataTransforms(
-			"plugins.datatransform"), Contacts("plugins.contacts"), OutputPlugins("plugins.outputplugin"), ResponseProcessPlugins(
-			"plugins.responseprocessplugin"), Builder("builder");
+	void setRequestId(IInputData inputData, IInputDataContainer inputDataContainer);
 
-	String configPrefix;
-
-	PluginConfigType(String configPrefix) {
-		this.configPrefix = configPrefix;
-	}
-
-	String getConfigPrefix() {
-		return configPrefix;
-	}
 }

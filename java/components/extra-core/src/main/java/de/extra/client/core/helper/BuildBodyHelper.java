@@ -39,21 +39,22 @@ import de.drv.dsrv.extrastandard.namespace.messages.DataRequestArgument;
 import de.drv.dsrv.extrastandard.namespace.messages.DataRequestQuery;
 import de.drv.dsrv.extrastandard.namespace.messages.Operand;
 import de.drv.dsrv.extrastandard.namespace.request.TransportBody;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
+import de.extrastandard.api.model.content.IFileInputdata;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
 @Named("bodyHelper")
 public class BuildBodyHelper {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(BuildBodyHelper.class);
+	private static final Logger LOG = LoggerFactory.getLogger(BuildBodyHelper.class);
 
 	@Value("${builder.xcpt.ElementSequencelocator.transportBodyElementSequenceBuilder.packageLimit}")
 	private String packageLimit;
 
 	/**
 	 * Funktion zum Aufbau des Transportbodys.
-	 *
+	 * 
 	 * @param configBean
 	 *            ConfigFileBean mit den Informationen aus der Profildatei
 	 * @param versanddatenBean
@@ -64,12 +65,11 @@ public class BuildBodyHelper {
 			final IInputDataContainer versanddatenBean) {
 		LOG.debug("TransportBody aufbauen");
 
-		TransportBody transportBody = new TransportBody();
+		final TransportBody transportBody = new TransportBody();
 		LOG.debug("Baue TransportBody auf");
-		if (configBean.getContentType().equalsIgnoreCase(
-				"xcpt:Base64CharSequence")) {
-			DataType data = new DataType();
-			Base64CharSequenceType base64CharSequence = new Base64CharSequenceType();
+		if (configBean.getContentType().equalsIgnoreCase("xcpt:Base64CharSequence")) {
+			final DataType data = new DataType();
+			final Base64CharSequenceType base64CharSequence = new Base64CharSequenceType();
 
 			/*
 			 * base64CharSequence.setValue(new BASE64Encoder().encode(
@@ -77,9 +77,9 @@ public class BuildBodyHelper {
 			 */
 			byte[] inputDataArray;
 			try {
-				inputDataArray = IOUtils.toByteArray(versanddatenBean
-						.getInputData());
-			} catch (IOException e) {
+				final IFileInputdata fileInputdata = versanddatenBean.cast(IFileInputdata.class);
+				inputDataArray = IOUtils.toByteArray(fileInputdata.getInputData());
+			} catch (final IOException e) {
 				// TODO exception einbauen
 				throw new IllegalStateException(e);
 			}
@@ -89,12 +89,11 @@ public class BuildBodyHelper {
 			transportBody.setData(data);
 		}
 
-		if (configBean.getContentType()
-				.equalsIgnoreCase("xcpt:ElementSequence")) {
-			DataType data = new DataType();
-			ElementSequenceType elementSequence = new ElementSequenceType();
+		if (configBean.getContentType().equalsIgnoreCase("xcpt:ElementSequence")) {
+			final DataType data = new DataType();
+			final ElementSequenceType elementSequence = new ElementSequenceType();
 
-			DataRequest dataRequest = createDataRequest(versanddatenBean);
+			final DataRequest dataRequest = createDataRequest(versanddatenBean);
 			elementSequence.getAny().add(dataRequest);
 			data.setElementSequence(elementSequence);
 			transportBody.setData(data);
@@ -107,24 +106,23 @@ public class BuildBodyHelper {
 	}
 
 	private DataRequest createDataRequest(final IInputDataContainer senderData) {
-		DataRequest dataRequest = new DataRequest();
+		final DataRequest dataRequest = new DataRequest();
 
-		Control controlElement = new Control();
-		DataRequestQuery query = new DataRequestQuery();
-		DataRequestArgument dataRequestArgument = new DataRequestArgument();
-		Operand operand = new Operand();
-		operand.setValue(senderData.getDataRequestId());
+		final Control controlElement = new Control();
+		final DataRequestQuery query = new DataRequestQuery();
+		final DataRequestArgument dataRequestArgument = new DataRequestArgument();
+		final Operand operand = new Operand();
+		final IDbQueryInputData dnQueryInputData = senderData.cast(IDbQueryInputData.class);
+		operand.setValue(dnQueryInputData.getRequestId());
 
 		// Setzen des Tags
-		QName qname = new QName("xs:string");
-		JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(new QName(
-				"http://www.extra-standard.de/namespace/message/1", "GE"),
-				Operand.class, operand);
+		final QName qname = new QName("xs:string");
+		final JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(new QName(
+				"http://www.extra-standard.de/namespace/message/1", "GE"), Operand.class, operand);
 		jaxbOperand.setValue(operand);
 
 		// Setzen der Property
-		dataRequestArgument
-				.setProperty("http://www.extra-standard.de/property/ResponseID");
+		dataRequestArgument.setProperty("http://www.extra-standard.de/property/ResponseID");
 		dataRequestArgument.setType(qname);
 		dataRequestArgument.getContent().add(jaxbOperand);
 

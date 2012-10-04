@@ -1,7 +1,5 @@
 package de.extra.client.core;
 
-import java.util.List;
-
 import de.extrastandard.api.model.content.IResponseData;
 
 /**
@@ -10,17 +8,17 @@ import de.extrastandard.api.model.content.IResponseData;
  */
 public class ProcessResult {
 
-	private final List<IResponseData> responseDatas;
+	private final IResponseData responseData;
 
 	private final Exception exception;
 
-	public ProcessResult(final List<IResponseData> responseDatas, final Exception exception) {
-		this.responseDatas = responseDatas;
+	public ProcessResult(final IResponseData responseData, final Exception exception) {
+		this.responseData = responseData;
 		this.exception = exception;
 	}
 
-	public ProcessResult(final List<IResponseData> responseDatas) {
-		this(responseDatas, null);
+	public ProcessResult(final IResponseData responseData) {
+		this(responseData, null);
 	}
 
 	public ProcessResult(final Exception exception) {
@@ -30,8 +28,8 @@ public class ProcessResult {
 	/**
 	 * @return the responseDatas
 	 */
-	public List<IResponseData> getResponseDatas() {
-		return responseDatas;
+	public IResponseData getResponseData() {
+		return responseData;
 	}
 
 	/**
@@ -39,6 +37,28 @@ public class ProcessResult {
 	 */
 	public Exception getException() {
 		return exception;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+		builder.append("ProcessResult [");
+		if (responseData != null) {
+			builder.append("responseData=");
+			builder.append(responseData);
+			builder.append(", ");
+		}
+		if (exception != null) {
+			builder.append("exception=");
+			builder.append(exception);
+		}
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

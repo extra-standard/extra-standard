@@ -18,44 +18,23 @@
  */
 package de.extra.client.core.model;
 
-import java.io.InputStream;
 import java.util.List;
 
-import de.extrastandard.api.exception.ExceptionCode;
-import de.extrastandard.api.exception.ExtraCoreRuntimeException;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 
 /**
  * Bean für die Nutzdaten.
  */
-public class InputDataContainer implements IInputDataContainer {
-
-	private String requestId;
-
-	private InputStream inputData;
+public abstract class InputDataContainer implements IInputDataContainer {
 
 	private List<IInputDataPluginDescription> plugins;
 
-	private String dataRequestId;
+	private String requestId;
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see de.extra.client.core.model.ISenderDataBean#getRequestId()
-	 */
-	@Override
-	public String getRequestId() {
-		return requestId;
-	}
-
-	public void setRequestId(final String requestId) {
-		this.requestId = requestId;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see de.extra.client.core.model.ISenderDataBean#getPlugins()
 	 */
 	@Override
@@ -63,69 +42,51 @@ public class InputDataContainer implements IInputDataContainer {
 		return plugins;
 	}
 
+	/**
+	 * casten übergebene Klasse Klasse ist.
+	 */
+	@Override
+	public <X> X cast(final Class<X> iface) {
+		if (iface == null) {
+			throw new IllegalArgumentException("Parameter 'cls' muss angegeben werden");
+		}
+		if (iface.isAssignableFrom(this.getClass())) {
+			return iface.cast(this);
+		}
+		throw new ClassCastException("Klasse " + this.getClass() + " kann nicht nach " + iface + " gewandelt werden");
+	}
+
+	@Override
+	/**
+	 * prueft, ob uebergebene Klasse <code>assignable</code> von aktueller
+	 * Klasse ist.
+	 */
+	public <X> boolean isImplementationOf(final Class<X> cls) {
+		return cls == null ? false : cls.isAssignableFrom(this.getClass());
+	}
+
+	/**
+	 * @param plugins
+	 *            the plugins to set
+	 */
 	public void setPlugins(final List<IInputDataPluginDescription> plugins) {
 		this.plugins = plugins;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see de.extra.client.core.model.ISenderDataBean#getDataRequest()
+	/**
+	 * @return the requestId
 	 */
 	@Override
-	public String getDataRequestId() {
-		return dataRequestId;
-	}
-
-	@Override
-	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("SenderDataBean [");
-		if (requestId != null)
-			builder.append("requestId=").append(requestId).append(", ");
-		if (plugins != null)
-			builder.append("plugins=").append(plugins).append(", ");
-		if (dataRequestId != null)
-			builder.append("dataRequestId=").append(dataRequestId);
-		builder.append("]");
-		return builder.toString();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see de.extra.client.core.model.ISenderDataBean#getInputData()
-	 */
-	@Override
-	public InputStream getInputData() {
-		return inputData;
+	public String getRequestId() {
+		return requestId;
 	}
 
 	/**
-	 * @param inputData
-	 *            the inputData to set
+	 * @param requestId
+	 *            the requestId to set
 	 */
-	public void setInputData(final InputStream inputData) {
-		this.inputData = inputData;
-	}
-
-	public void setDataRequestId(final String startId) {
-		this.dataRequestId = startId;
-
-	}
-
-	@Override
-	public String getInputIdentification() {
-		// Erste bilige Refactoring. Muss in 2 Klassen verteilt werden.
-		String identification = null;
-		if (requestId != null) {
-			identification = requestId;
-		} else if (dataRequestId != null) {
-			identification = dataRequestId;
-		} else {
-			throw new ExtraCoreRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION, "Keine Nachrichtidentification vorhanden!!!!");
-		}
-		return identification;
+	public void setRequestId(final String requestId) {
+		this.requestId = requestId;
 	}
 
 }

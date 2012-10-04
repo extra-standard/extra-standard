@@ -18,6 +18,7 @@
  */
 package de.extra.client.core.locator;
 
+import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.plugin.IConfigPlugin;
 import de.extrastandard.api.plugin.IDataPlugin;
 import de.extrastandard.api.plugin.IOutputPlugin;
@@ -32,7 +33,7 @@ public interface IPluginsLocatorManager {
 	/**
 	 * Liefert der in der Konfiguration unter dem Schlüssel plugins.dataplugin
 	 * definierten Bean
-	 *
+	 * 
 	 * @return
 	 */
 	IDataPlugin getConfiguredDataPlugin();
@@ -40,7 +41,7 @@ public interface IPluginsLocatorManager {
 	/**
 	 * Liefert der in der Konfiguration unter dem Schlüssel plugins.dataplugin
 	 * definierten Bean
-	 *
+	 * 
 	 * @return
 	 */
 	IOutputPlugin getConfiguredOutputPlugin();
@@ -48,7 +49,7 @@ public interface IPluginsLocatorManager {
 	/**
 	 * Liefert der in der Konfiguration unter dem Schlüssel plugins.dataplugin
 	 * definierten Bean
-	 *
+	 * 
 	 * @return
 	 */
 	IConfigPlugin getConfiguredConfigPlugin();
@@ -56,9 +57,17 @@ public interface IPluginsLocatorManager {
 	/**
 	 * Liefert der in der Konfiguration unter dem Schlüssel plugins.dataplugin
 	 * definierten Bean
-	 *
+	 * 
 	 * @return
 	 */
 	IResponseProcessPlugin getConfiguredResponsePlugin();
+
+	/**
+	 * Liefert der in der Konfiguration unter dem Schlüssel plugins.execution
+	 * definierten Bean
+	 * 
+	 * @return
+	 */
+	IExecutionPersistence getConfiguredExecutionPesistence();
 
 }

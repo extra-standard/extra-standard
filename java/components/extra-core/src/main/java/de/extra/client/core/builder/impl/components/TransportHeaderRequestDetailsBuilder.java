@@ -39,14 +39,12 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap
- *
+ * 
  */
 @Named("transportHeaderRequestDetailsBuilder")
-public class TransportHeaderRequestDetailsBuilder implements
-		IXmlComplexTypeBuilder {
+public class TransportHeaderRequestDetailsBuilder implements IXmlComplexTypeBuilder {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(TransportHeaderRequestDetailsBuilder.class);
+	private static final Logger LOG = LoggerFactory.getLogger(TransportHeaderRequestDetailsBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:RequestDetails";
 
@@ -63,19 +61,18 @@ public class TransportHeaderRequestDetailsBuilder implements
 
 	/**
 	 * Erstellt die SenderInformationen im Kontext von Header (non-Javadoc)
-	 *
+	 * 
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
 	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */
 	@Override
-	public Object buildXmlFragment(final IInputDataContainer senderData,
-			final IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
 		// Objects für RequestDetails
-		RequestDetailsType requestDetails = new RequestDetailsType();
-		ClassifiableIDType requestId = new ClassifiableIDType();
-		ApplicationType application = new ApplicationType();
-		TextType product = new TextType();
-		ClassifiableIDType registrationId = new ClassifiableIDType();
+		final RequestDetailsType requestDetails = new RequestDetailsType();
+		final ClassifiableIDType requestId = new ClassifiableIDType();
+		final ApplicationType application = new ApplicationType();
+		final TextType product = new TextType();
+		final ClassifiableIDType registrationId = new ClassifiableIDType();
 
 		// Applicationinformation
 		product.setValue(PRODUCT_NAME);
@@ -86,7 +83,8 @@ public class TransportHeaderRequestDetailsBuilder implements
 
 		// Setting RequestDetails
 		requestId.setClazz("0");
-		String requestID = senderData.getRequestId();
+
+		final String requestID = senderData.getInputIdentification();
 		requestId.setValue(requestID);
 		requestDetails.setRequestID(requestId);
 		requestDetails.setTimeStamp(CreateCurrentTimestamp());
@@ -101,9 +99,9 @@ public class TransportHeaderRequestDetailsBuilder implements
 	}
 
 	/**
-	 *
+	 * 
 	 * Erstellen des aktuellen Timestamps.
-	 *
+	 * 
 	 * @return XMLGregorianCalendar mit aktuellem Datum
 	 */
 	private XMLGregorianCalendar CreateCurrentTimestamp() {
@@ -111,18 +109,17 @@ public class TransportHeaderRequestDetailsBuilder implements
 
 		try {
 			timestamp = DatatypeFactory.newInstance().newXMLGregorianCalendar();
-		} catch (DatatypeConfigurationException e) {
+		} catch (final DatatypeConfigurationException e) {
 			LOG.error(e.getMessage());
 		}
 
-		Calendar now = Calendar.getInstance();
+		final Calendar now = Calendar.getInstance();
 		timestamp.setDay(now.get(Calendar.DAY_OF_MONTH));
 		// We do a +1 below because XMLGregorianCalendar goes from 1 to 12
 		// while Calendar.MONTH goes from 0 to 11 !!!
 		timestamp.setMonth(now.get(Calendar.MONTH) + 1);
 		timestamp.setYear(now.get(Calendar.YEAR));
-		timestamp.setTime(now.get(Calendar.HOUR_OF_DAY),
-				now.get(Calendar.MINUTE), now.get(Calendar.SECOND));
+		timestamp.setTime(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), now.get(Calendar.SECOND));
 
 		return timestamp;
 	}

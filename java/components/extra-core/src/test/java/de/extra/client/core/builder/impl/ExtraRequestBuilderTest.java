@@ -35,9 +35,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extra.client.core.builder.IXmlRootElementBuilder;
-import de.extra.client.core.builder.impl.components.TransportBodyBase64CharSequenceBuilder;
 import de.extra.client.core.builder.impl.components.TransportBodyDataBuilder;
 import de.extra.client.core.builder.impl.components.TransportBodyElementSequenceBuilder;
+import de.extra.client.core.builder.impl.components.TransportBodyFileInputBase64CharSequenceBuilder;
 import de.extra.client.core.builder.impl.components.TransportHeaderReceiverBuilder;
 import de.extra.client.core.builder.impl.components.TransportHeaderRequestDetailsBuilder;
 import de.extra.client.core.builder.impl.components.TransportHeaderSenderBuilder;
@@ -47,8 +47,8 @@ import de.extra.client.core.builder.impl.plugins.TransportPluginsBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportBodyBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportHeaderBuilder;
+import de.extra.client.core.model.DBQueryInputData;
 import de.extra.client.core.model.ExtraProfileConfiguration;
-import de.extra.client.core.model.InputDataContainer;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
@@ -73,76 +73,63 @@ public class ExtraRequestBuilderTest {
 	@Before
 	public void setUp() throws Exception {
 		// Builder Anmelden in dem MessageBuilderLocator
-		IXmlRootElementBuilder xmlRootElementBuilder = new RequestTransportBuilder();
-		String rootXmlType = xmlRootElementBuilder.getXmlType();
-		when(messageBuilderLocator.getRootXmlBuilder(rootXmlType)).thenReturn(
-				xmlRootElementBuilder);
+		final IXmlRootElementBuilder xmlRootElementBuilder = new RequestTransportBuilder();
+		final String rootXmlType = xmlRootElementBuilder.getXmlType();
+		when(messageBuilderLocator.getRootXmlBuilder(rootXmlType)).thenReturn(xmlRootElementBuilder);
 		requiredXmlType = rootXmlType;
 
-		Map<String, IXmlComplexTypeBuilder> builderMap = new HashMap<String, IXmlComplexTypeBuilder>();
-		IXmlComplexTypeBuilder requestTransportHeaderBuilder = new RequestTransportHeaderBuilder();
-		IXmlComplexTypeBuilder requestTransportBody = new RequestTransportBodyBuilder();
-		IXmlComplexTypeBuilder transportHeaderSenderBuilder = new TransportHeaderSenderBuilder();
-		IXmlComplexTypeBuilder transportHeaderReceiverBuilder = new TransportHeaderReceiverBuilder();
-		IXmlComplexTypeBuilder transportHeaderTestIndicatorBuilder = new TransportHeaderTestIndicatorBuilder();
-		IXmlComplexTypeBuilder transportHeaderRequestDetailsBuilder = new TransportHeaderRequestDetailsBuilder();
-		IXmlComplexTypeBuilder transportBodyDataBuilder = new TransportBodyDataBuilder();
-		IXmlComplexTypeBuilder transportBodyBase64CharSequenceBuilder = new TransportBodyBase64CharSequenceBuilder();
-		IXmlComplexTypeBuilder transportBodyElementSequenceBuilder = new TransportBodyElementSequenceBuilder();
-		IXmlComplexTypeBuilder dataSourcePluginsBuilder = new DataSourcePluginsBuilder();
-		IXmlComplexTypeBuilder transportPluginsBuilder = new TransportPluginsBuilder();
-		builderMap.put(requestTransportHeaderBuilder.getXmlType(),
-				requestTransportHeaderBuilder);
+		final Map<String, IXmlComplexTypeBuilder> builderMap = new HashMap<String, IXmlComplexTypeBuilder>();
+		final IXmlComplexTypeBuilder requestTransportHeaderBuilder = new RequestTransportHeaderBuilder();
+		final IXmlComplexTypeBuilder requestTransportBody = new RequestTransportBodyBuilder();
+		final IXmlComplexTypeBuilder transportHeaderSenderBuilder = new TransportHeaderSenderBuilder();
+		final IXmlComplexTypeBuilder transportHeaderReceiverBuilder = new TransportHeaderReceiverBuilder();
+		final IXmlComplexTypeBuilder transportHeaderTestIndicatorBuilder = new TransportHeaderTestIndicatorBuilder();
+		final IXmlComplexTypeBuilder transportHeaderRequestDetailsBuilder = new TransportHeaderRequestDetailsBuilder();
+		final IXmlComplexTypeBuilder transportBodyDataBuilder = new TransportBodyDataBuilder();
+		final IXmlComplexTypeBuilder transportBodyFileInputBase64CharSequenceBuilder = new TransportBodyFileInputBase64CharSequenceBuilder();
+		final IXmlComplexTypeBuilder transportBodyElementSequenceBuilder = new TransportBodyElementSequenceBuilder();
+		final IXmlComplexTypeBuilder dataSourcePluginsBuilder = new DataSourcePluginsBuilder();
+		final IXmlComplexTypeBuilder transportPluginsBuilder = new TransportPluginsBuilder();
+		builderMap.put(requestTransportHeaderBuilder.getXmlType(), requestTransportHeaderBuilder);
 		builderMap.put(requestTransportBody.getXmlType(), requestTransportBody);
-		builderMap.put(transportHeaderSenderBuilder.getXmlType(),
-				transportHeaderSenderBuilder);
-		builderMap.put(transportHeaderReceiverBuilder.getXmlType(),
-				transportHeaderReceiverBuilder);
-		builderMap.put(transportHeaderTestIndicatorBuilder.getXmlType(),
-				transportHeaderTestIndicatorBuilder);
-		builderMap.put(transportHeaderRequestDetailsBuilder.getXmlType(),
-				transportHeaderRequestDetailsBuilder);
-		builderMap.put(transportBodyDataBuilder.getXmlType(),
-				transportBodyDataBuilder);
-		builderMap.put(transportBodyBase64CharSequenceBuilder.getXmlType(),
-				transportBodyBase64CharSequenceBuilder);
-		builderMap.put(transportBodyElementSequenceBuilder.getXmlType(),
-				transportBodyElementSequenceBuilder);
-		builderMap.put(transportPluginsBuilder.getXmlType(),
-				transportPluginsBuilder);
-		builderMap.put(dataSourcePluginsBuilder.getXmlType(),
-				dataSourcePluginsBuilder);
-		for (String key : builderMap.keySet()) {
+		builderMap.put(transportHeaderSenderBuilder.getXmlType(), transportHeaderSenderBuilder);
+		builderMap.put(transportHeaderReceiverBuilder.getXmlType(), transportHeaderReceiverBuilder);
+		builderMap.put(transportHeaderTestIndicatorBuilder.getXmlType(), transportHeaderTestIndicatorBuilder);
+		builderMap.put(transportHeaderRequestDetailsBuilder.getXmlType(), transportHeaderRequestDetailsBuilder);
+		builderMap.put(transportBodyDataBuilder.getXmlType(), transportBodyDataBuilder);
+		builderMap.put(transportBodyFileInputBase64CharSequenceBuilder.getXmlType(),
+				transportBodyFileInputBase64CharSequenceBuilder);
+		builderMap.put(transportBodyElementSequenceBuilder.getXmlType(), transportBodyElementSequenceBuilder);
+		builderMap.put(transportPluginsBuilder.getXmlType(), transportPluginsBuilder);
+		builderMap.put(dataSourcePluginsBuilder.getXmlType(), dataSourcePluginsBuilder);
+		for (final String key : builderMap.keySet()) {
 			when(
-					messageBuilderLocator.getXmlComplexTypeBuilder(
-							Matchers.eq(key),
-							(IInputDataContainer) Matchers.anyObject()))
-					.thenReturn(builderMap.get(key));
+					messageBuilderLocator.getXmlComplexTypeBuilder(Matchers.eq(key),
+							(IInputDataContainer) Matchers.anyObject())).thenReturn(builderMap.get(key));
 		}
 	}
 
 	@Test
 	public final void testBuildXmlSimleMessage() {
-		IInputDataContainer senderData = new InputDataContainer();
-		IExtraProfileConfiguration config = createSimpleConfigFileBean();
-		RootElementType elementType = extraRequestBuilder.buildXmlMessage(
-				senderData, config);
+		final IInputDataContainer senderData = new DBQueryInputData("1", "23", "42");
+		senderData.setRequestId("requestId");
+		final IExtraProfileConfiguration config = createSimpleConfigFileBean();
+		final RootElementType elementType = extraRequestBuilder.buildXmlMessage(senderData, config);
 		assertNotNull(elementType);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public final void testBuildXmlSimleMessageWithException() {
-		IInputDataContainer senderData = new InputDataContainer();
-		ExtraProfileConfiguration config = createSimpleConfigFileBean();
-		config.addElementsHierarchyMap("TransportPlugins",
-				"xplg:DataTransforms");
-		RootElementType elementType = extraRequestBuilder.buildXmlMessage(
-				senderData, config);
+		final IInputDataContainer senderData = new DBQueryInputData("1", "23", "42");
+		senderData.setRequestId("requestId");
+		final ExtraProfileConfiguration config = createSimpleConfigFileBean();
+		config.addElementsHierarchyMap("TransportPlugins", "xplg:DataTransforms");
+		final RootElementType elementType = extraRequestBuilder.buildXmlMessage(senderData, config);
 		assertNotNull(elementType);
 	}
 
 	private ExtraProfileConfiguration createSimpleConfigFileBean() {
-		ExtraProfileConfiguration config = new ExtraProfileConfiguration();
+		final ExtraProfileConfiguration config = new ExtraProfileConfiguration();
 		config.setRootElement(requiredXmlType);
 		config.addElementsHierarchyMap("XMLTransport", "req:TransportBody");
 		config.addElementsHierarchyMap("XMLTransport", "req:TransportPlugins");

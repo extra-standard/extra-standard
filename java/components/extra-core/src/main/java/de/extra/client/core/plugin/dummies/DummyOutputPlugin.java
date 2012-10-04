@@ -31,6 +31,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.Marshaller;
+import org.springframework.oxm.Unmarshaller;
 
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagCodeType;
@@ -52,12 +53,15 @@ public class DummyOutputPlugin implements IOutputPlugin {
 	// || flagCode.getValue().equalsIgnoreCase("I000")
 	// || flagCode.getValue().equalsIgnoreCase("E98"))
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(DummyOutputPlugin.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DummyOutputPlugin.class);
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
 	private Marshaller marshaller;
+
+	@Inject
+	@Named("eXTrajaxb2Marshaller")
+	private Unmarshaller unmarshaller;
 
 	@Inject
 	@Named("transportObserver")
@@ -67,22 +71,25 @@ public class DummyOutputPlugin implements IOutputPlugin {
 	@Named("transportInfoBuilder")
 	private TransportInfoBuilder transportInfoBuilder;
 
+	@Inject
+	@Named("dummyOutputPluginUtil")
+	private DummyOutputPluginUtil dummyOutputPluginUtil;
+
 	@Override
 	public InputStream outputData(final InputStream request) {
 		InputStream responseAsinputStream = null;
 		try {
 			LOG.info("request={}", request);
-			XMLTransport response = createExtraResponse(request);
+			final XMLTransport response = createExtraResponse(request);
 
-			Writer writer = new StringWriter();
-			StreamResult streamResult = new StreamResult(writer);
+			final Writer writer = new StringWriter();
+			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(response, streamResult);
 
-			responseAsinputStream = new ByteArrayInputStream(writer.toString()
-					.getBytes());
+			responseAsinputStream = new ByteArrayInputStream(writer.toString().getBytes());
 			return responseAsinputStream;
-		} catch (IOException ioException) {
+		} catch (final IOException ioException) {
 			// Hier kommt eine ExtraTechnischeRuntimeException
 			LOG.error("Unerwarteter Fehler: ", ioException);
 		}
@@ -91,34 +98,35 @@ public class DummyOutputPlugin implements IOutputPlugin {
 	}
 
 	private XMLTransport createExtraResponse(final InputStream request) {
-		XMLTransport response = new XMLTransport();
-		TransportHeader transportHeader = new TransportHeader();
-		ResponseDetailsType responseDetailsType = new ResponseDetailsType();
-		ClassifiableIDType idType = new ClassifiableIDType();
+		final String requestId = dummyOutputPluginUtil.extractRequestId(request);
+		final XMLTransport response = new XMLTransport();
+		final TransportHeader transportHeader = new TransportHeader();
+		final ResponseDetailsType responseDetailsType = new ResponseDetailsType();
+		final ClassifiableIDType idType = new ClassifiableIDType();
 		idType.setValue("42");
 		responseDetailsType.setResponseID(idType);
-		ReportType reportType = new ReportType();
-		FlagType flagType = new FlagType();
-		FlagCodeType flagCodeType = new FlagCodeType();
+		final ReportType reportType = new ReportType();
+		final FlagType flagType = new FlagType();
+		final FlagCodeType flagCodeType = new FlagCodeType();
 		flagCodeType.setValue("C00");
 		flagType.setCode(flagCodeType);
 		reportType.getFlag().add(flagType);
 		responseDetailsType.setReport(reportType);
 		transportHeader.setResponseDetails(responseDetailsType);
-		RequestDetailsType requestDetailsType = new RequestDetailsType();
-		ClassifiableIDType requestIdType = new ClassifiableIDType();
-		requestIdType.setValue("4242");
+		final RequestDetailsType requestDetailsType = new RequestDetailsType();
+		final ClassifiableIDType requestIdType = new ClassifiableIDType();
+		requestIdType.setValue(requestId);
 		requestDetailsType.setRequestID(requestIdType);
 		transportHeader.setRequestDetails(requestDetailsType);
 		response.setTransportHeader(transportHeader);
 
-		de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader = new de.drv.dsrv.extrastandard.namespace.request.TransportHeader();
+		final de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader = new de.drv.dsrv.extrastandard.namespace.request.TransportHeader();
 		requestHeader.setRequestDetails(requestDetailsType);
-		ITransportInfo transportInfo = transportInfoBuilder
-				.createTransportInfo(requestHeader);
+		final ITransportInfo transportInfo = transportInfoBuilder.createTransportInfo(requestHeader);
 		transportObserver.requestFilled(transportInfo);
 		transportObserver.requestForwarded("dummy, keine Weiterleitung", 0);
 
 		return response;
 	}
+
 }

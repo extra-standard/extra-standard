@@ -29,11 +29,10 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 public interface IExtraRequestBuilder {
 
 	/**
-	 * TODO configFile ist eine Statische Komponente. Kann injiziert werden.
+	 * 
 	 * 
 	 * @return eine XML Message
 	 */
-	RootElementType buildXmlMessage(IInputDataContainer senderData,
-			IExtraProfileConfiguration config);
+	RootElementType buildXmlMessage(IInputDataContainer senderData, IExtraProfileConfiguration config);
 
 }
