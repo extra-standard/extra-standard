@@ -1,4 +1,4 @@
-#summary Sterbedatenaustausch mit eXTra
+#summary Sterbedatenaustausch Ausland mit eXTra
 
 = Sterbedatenaustausch zwischen DSRV und DPRS mit eXTra =
 
