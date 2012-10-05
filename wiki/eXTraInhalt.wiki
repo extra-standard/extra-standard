@@ -11,6 +11,6 @@
       * [eXTraPersistence Persistenz]  
       * [eXTraExceptionHierarchie Exception Hierarchie]
   * [eXTraVerfahren Fachverfahren]    
-      * [eXTraSterbedatenVerfahren Sterbedatenabgleich]
+      * [eXTraSterbedatenVerfahren Sterbedatenabgleich Ausland]
   * [eXTraSpecIssues Offene Punkte]    
   * [eXTraEntwProzess Entwicklungsprozess]
