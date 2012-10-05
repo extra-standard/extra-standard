@@ -23,65 +23,64 @@ import java.util.Date;
 /**
  * Ein Execution bietet Möglichkeiten zur Protokollierung der zu verarbeitenden
  * Eingangsdaten.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: IExecution.java 487 2012-09-03 13:07:52Z
+ *          thorstenvogel@gmail.com $
  */
 public interface IExecution extends PersistentEntity {
 
 	/**
 	 * Parameter für diese Execution.
-	 *
+	 * 
 	 * @return Parameter dieser Execution
 	 */
 	String getParameters();
 
 	/**
 	 * Zeitpunkt, an dem diese Execution gestartet wurde.
-	 *
+	 * 
 	 * @return Startzeitpunkt.
 	 */
 	Date getStartTime();
 
 	/**
 	 * Name des Verfahrens.
-	 *
+	 * 
 	 * @return Verfahren
 	 */
 	IProcedure getProcedure();
 
 	/**
 	 * Zeitpunkt, an dem diese Execution beendet wurde.
-	 *
+	 * 
 	 * @return Endzeitpunkt, oder <code>null</code> falls noch nicht beendet.
 	 */
 	Date getEndTime();
 
 	/**
-	 * @return
-	 */
-	//Set<IInputData> getInputDataSet();
-
-	/**
 	 * Momentaner Status dieser Execution.
-	 *
+	 * 
 	 * @return Status
 	 */
 	IStatus getStatus();
 
 	/**
 	 * Persistiert eine neue {@link IInputData} Instanz.
-	 *
-	 * @param inputIdentifier Identifikation der Eingabedaten
-	 * @param hashCode Hashcode der Eingabedaten
+	 * 
+	 * @param inputIdentifier
+	 *            Identifikation der Eingabedaten
+	 * @param hashCode
+	 *            Hashcode der Eingabedaten
 	 * @return Instanz
 	 */
 	IInputData startInputData(String inputIdentifier, String hashCode);
 
 	/**
 	 * Beendet diese Execution.
-	 *
-	 * @param status Der Status, mit dem die Execution beendet werden soll.
+	 * 
+	 * @param status
+	 *            Der Status, mit dem die Execution beendet werden soll.
 	 */
 	void endExecution(IStatus status);
 
