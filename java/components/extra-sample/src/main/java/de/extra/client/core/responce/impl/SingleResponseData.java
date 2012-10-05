@@ -16,7 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extrastandard.api.model.content;
+package de.extra.client.core.responce.impl;
+
+import de.extrastandard.api.model.content.ISingleResponseData;
 
 /**
  * @author Leonid Potap

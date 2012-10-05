@@ -1,8 +1,11 @@
-package de.extrastandard.api.model.content;
+package de.extra.client.core.responce.impl;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ISingleResponseData;
 
 public class ResponseData implements IResponseData {
 
