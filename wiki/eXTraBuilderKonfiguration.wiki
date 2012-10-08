@@ -180,7 +180,7 @@ Mit Hilfe von javax.validation (z.B hier _*@!NotNull*_) werden die Konfiguration
 
 == Plugins Prefix ==
 
-|| *!PluginConfiType* || *Prefix* || 
+|| *!PluginConfigType* || *Prefix* || 
 || !DataPlugins || plugins.dataplugin ||   
 || !DataSource || plugins.datasource ||   
 || Certificates || plugins.certificates ||   
