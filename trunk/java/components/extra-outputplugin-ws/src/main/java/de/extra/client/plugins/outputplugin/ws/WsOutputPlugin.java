@@ -40,7 +40,8 @@ import de.extrastandard.api.plugin.IOutputPlugin;
 @Named("wsOutputPlugin")
 public class WsOutputPlugin implements IOutputPlugin {
 
-	private static final Logger LOG = LoggerFactory.getLogger(WsOutputPlugin.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(WsOutputPlugin.class);
 
 	@Inject
 	@Named("webServiceTemplate")
@@ -53,13 +54,12 @@ public class WsOutputPlugin implements IOutputPlugin {
 	public InputStream outputData(final InputStream requestAsStream) {
 		ByteArrayOutputStream temp = new ByteArrayOutputStream();
 
-		LOG.debug("sending request");
+		logger.debug("sending request");
 
 		StreamSource source = new StreamSource(requestAsStream);
-        StreamResult result = new StreamResult(temp);
-        webServiceTemplate.sendSourceAndReceiveToResult(source, result);
+		StreamResult result = new StreamResult(temp);
+		webServiceTemplate.sendSourceAndReceiveToResult(source, result);
 
 		return new ByteArrayInputStream(temp.toByteArray());
 	}
-
 }
