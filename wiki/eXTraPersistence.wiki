@@ -9,7 +9,7 @@ Für die bessere Unterstützung diesen Szenarien ist einen persistnence-modul en
 
 = Domain Model=
 
-Die Domain Model besteht aus mehreren Entitäten. In dem folgenen Diagramm sind die Entitäte, deren Funktionen sowie die Beziehungen dargestellt.
+Die Domain Model besteht aus mehreren Entitäten. In dem folgenen Diagramm sind die Entitäten, deren Funktionen sowie die Beziehungen dargestellt.
 
 http://extra-standard.googlecode.com/svn/wiki/images/persistence_layer.png
 
@@ -25,4 +25,3 @@ http://extra-standard.googlecode.com/svn/wiki/images/input_data_states.png
 
 Jede Statusänderung zwischen 2 Übertragungsschritten wird durch Objekt Übergang (Transition) festgehalten. Durch Qualifyer werden die Phasen der Übertragung kennzeichnet.  Dabei werden nicht nut die einzelne Phasen festgehalten, sondern auch die internen Übergängen eXTra Applikation.
 Die Dauer der Verpackung und Übertragung einer Nachricht wird protokolliert und kann hiermit ggf. analysiert werden.
-
