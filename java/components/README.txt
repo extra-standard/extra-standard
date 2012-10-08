@@ -2,29 +2,53 @@ eXTra components
 
 Hier befinden sich sämtliche Komponenten von eXTra.
 
+extra-api
+----------------------------------
+Sämtliche API-Definitionen werden in diesem Projekt definiert.
+
+extra-configplugin-default
+----------------------------------
+Default-Konfiguration-Implementierung für eXTra wird in dieser Komponente umgesetzt.
+
 extra-core
 ----------------------------------
 Basisfunktionen für die eXTra-Spezifikation werden hier verwaltet.
 
-extra-default-configplugin
+extra-dataplugin-dbquery
 ----------------------------------
-Default-Konfiguration-Implementierung für eXTra wird in dieser Komponente umgesetzt.
+Datenbank-Implementierung für das Data Plugin.
 
-extra-file-dataplugin
+extra-dataplugin-file
 ----------------------------------
 File-Implementierung für das Data Plugin.
 
-extra-file-responseprocessplugin
+extra-dataplugin-simplequery
 ----------------------------------
-File-Implementierung für das Response Process Plugin.
+Einfache Implementierung für das Data Plugin.
 
-extra-http-outputplugin
+extra-execution-jpa
+----------------------------------
+Ausführungsumgebung für die Persistenzschicht mit JPA.
+
+extra-outputplugin-http
 ----------------------------------
 HTTP-Implementierung für Output Plugin.
 
-extra-query-dataplugin
+extra-outputplugin-ws
 ----------------------------------
-Query-Implementierung für das Data Plugin
+Webservice-Implementierung für Output Plugin.
+
+extra-parent
+----------------------------------
+Parent-POM für Maven.
+
+extra-responseprocessplugin-sample
+----------------------------------
+Unterschiedliche Implementierungen für das Response Process Plugin.
+
+extra-sample
+----------------------------------
+Unterschiedliche Helper-Implementierung für extra-api.
 
 extra-schema
 ----------------------------------
