@@ -16,7 +16,7 @@ Basisfunktionen für die eXTra-Spezifikation werden hier verwaltet.
 
 extra-dataplugin-dbquery
 ----------------------------------
-Datenbank-Implementierung für das Data Plugin.
+Datenbank-Query-Implementierung für das Data Plugin.
 
 extra-dataplugin-file
 ----------------------------------
@@ -24,7 +24,7 @@ File-Implementierung für das Data Plugin.
 
 extra-dataplugin-simplequery
 ----------------------------------
-Einfache Implementierung für das Data Plugin.
+Einfache Query-Implementierung für das Data Plugin.
 
 extra-execution-jpa
 ----------------------------------
@@ -48,7 +48,7 @@ Unterschiedliche Implementierungen für das Response Process Plugin.
 
 extra-sample
 ----------------------------------
-Unterschiedliche Helper-Implementierung für extra-api.
+Unterschiedliche Helper-Implementierung für das Module extra-api.
 
 extra-schema
 ----------------------------------
