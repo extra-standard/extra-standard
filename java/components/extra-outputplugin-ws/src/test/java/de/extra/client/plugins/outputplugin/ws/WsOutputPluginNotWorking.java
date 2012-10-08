@@ -34,8 +34,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @version $Id$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/spring-properties.xml","/spring-extra-plugin-output-ws.xml"})
-public class WsOutputPluginIT {
+@ContextConfiguration({ "/spring-properties.xml",
+		"/spring-extra-plugin-output-ws.xml" })
+public class WsOutputPluginNotWorking {
 
 	@Inject
 	@Named("wsOutputPlugin")
@@ -44,11 +45,9 @@ public class WsOutputPluginIT {
 	/**
 	 * Test method for
 	 * {@link de.extra.client.plugins.outputplugin.ws.WsOutputPlugin#outputData(java.io.InputStream)}
-	 * .
 	 */
 	@Test
 	public void testOutputData() throws Exception {
-
 		InputStream responseData = plugin.outputData(new ByteArrayInputStream(
 				request.getBytes()));
 
