@@ -230,6 +230,7 @@
 			</dependency>
 
 			<!-- Aspects -->
+			
 			<dependency>
 				<groupId>org.aspectj</groupId>
 				<artifactId>aspectjrt</artifactId>
@@ -348,7 +349,6 @@
 
 		</dependencies>
 	</dependencyManagement>
-
 
 	<!-- =============================================================== -->
 	<!-- Build -->
