@@ -38,6 +38,7 @@
 		<module>components/extra-dataplugin-simplequery</module>
 		<module>components/extra-dataplugin-dbquery</module>
 		<module>components/extra-outputplugin-http</module>
+		<module>components/extra-outputplugin-ws</module>
 		<module>components/extra-responseprocessplugin-sample</module>
 		<module>components/extra-execution-jpa</module>
 		<module>components/extra-core</module>
