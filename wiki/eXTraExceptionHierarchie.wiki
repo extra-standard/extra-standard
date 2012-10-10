@@ -1,4 +1,4 @@
-#summary Beschreibt die Exception Hierarchie in eXTra Klient.
+#summary Beschreibt die Exception Hierarchie in eXTra Client.
 
 = Introduction =
 
