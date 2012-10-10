@@ -19,15 +19,14 @@ Das Domänenmodell besteht aus mehreren Entitäten. Im folgenden Diagramm sind d
 
 http://extra-standard.googlecode.com/svn/wiki/images/persistence_layer.png
 
-Die oberste Entity in der Hierarchy ist Mandant (MANDATOR). Zu einem Mandanten können mehrere Verfahren (PROCEDURE) zugeordnet werden.
+Die oberste Entity in der Hierarchy ist Mandant (Klasse Mandator). Zu einem Mandanten können mehrere Verfahren (Klasse Procedure) zugeordnet werden.
 
-Die Laufe (Execution) stellen einzelne Ausführungen dar. Eine Ausführung wird durch start, ende und dazugehörigen Parameters kennzeichnet.
+Die Läufe (Die Klasse Execution) stellen einzelne Ausführungen dar. Eine Ausführung wird durch start, ende und dazugehörigen Parameters kennzeichnet.
 
-Während eines Laufs können mehrere Dateien übertragen werden. Die Dateien sind durch einen Identifikation (Identifier) und ggf. hashcode eindeutig Kennzeichnet.
+Während eines Laufs können mehrere Dateien übertragen werden. Die Dateien sind durch einen Identifikation (Identifier) und ggf. hashcode eindeutig kennzeichnet.
 
-Jede Datei in einem, mehrstufigen Szenario passiert unterschiedlichen Statuses:
+Jede Datei in einem mehrstufigen Szenario durchläuft unterschiedliche Stati:
 
 http://extra-standard.googlecode.com/svn/wiki/images/input_data_states.png
 
-Jede Statusänderung zwischen 2 Übertragungsschritten wird durch Objekt Übergang (Transition) festgehalten. Durch Qualifyer werden die Phasen der Übertragung kennzeichnet.  Dabei werden nicht nut die einzelne Phasen festgehalten, sondern auch die internen Übergängen eXTra Applikation.
-Die Dauer der Verpackung und Übertragung einer Nachricht wird protokolliert und kann hiermit ggf. analysiert werden.
+Jede Statusänderung zwischen 2 Übertragungsschritten wird durch Objekt Übergang (Transition) festgehalten. Durch Qualifier werden die Phasen der Übertragung gekennzeichnet. Dabei werden nicht nur die einzelne Phasen festgehalten, sondern auch die internen Übergängen innerhalb der eXTra-Client. Die Dauer der Verpackung und Übertragung einer Nachricht wird protokolliert und kann hiermit ggf. analysiert werden.
