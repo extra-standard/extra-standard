@@ -1,7 +1,7 @@
 #summary Beschreibung der Konfiguration für den eXTra-Client
 #labels Phase-Implementation
 
-= eXTra-Nachrichtenaufbau =
+= eXTra Konfiguration von CLI =
 
 *Inhaltsverzeichnis*
 <wiki:toc max_depth="2" />
