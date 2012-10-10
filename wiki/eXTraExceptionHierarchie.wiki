@@ -6,7 +6,7 @@
 
 = Einführung =
 
-Die Exceptions in eXTra-Client leiten von der Klasse ExtraRuntimeException ab und sind hiermit *_"unchecked"_*. Eine "checked" Exception wird nur dann geworfen, wenn der Aufrufer darauf reagieren kann. Bei anderen Exception wird das ExceptionHandling in einer zentralen Stelle (am Start der Verarbeitung) stattfinden.
+Die Exceptions in eXTra-Client leiten von der Klasse !ExtraRuntimeException ab und sind hiermit *_"unchecked"_*. Eine "checked" Exception wird nur dann geworfen, wenn der Aufrufer darauf reagieren kann. Bei anderen Exception wird das !ExceptionHandling in einer zentralen Stelle (am Start der Verarbeitung) stattfinden.
 
 
 = Details =
