@@ -1,4 +1,6 @@
-#summary Beschreibt die Exception Hierarchie in eXTra Client.
+#summary Beschreibt die Exception Hierarchie in eXTra-Client.
+
+= eXTra-Client-Exceptions =
 
 *Inhaltsverzeichnis*
 <wiki:toc max_depth="1" />
