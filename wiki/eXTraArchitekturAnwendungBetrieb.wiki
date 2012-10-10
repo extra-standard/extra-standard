@@ -7,7 +7,7 @@
 
 = Betriebliche Schnittstelle =
 
-Zur betrieblichen Schnittstelle des eXTRa Clients gehören:
+Zur betrieblichen Schnittstelle des eXTra Clients gehören:
  * Aufruf und Argumente des CLI
  * Exit-Code
  * das Filtern und Loggen betrieblich wichtiger Ereignisse
