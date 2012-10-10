@@ -1,6 +1,7 @@
-#summary Beschreibung der Konfiguration für den eXTra Klient
+#summary Beschreibung der Konfiguration für den eXTra-Client
 #labels Phase-Implementation
 
+= eXTra-Nachrichtenaufbau =
 
 *Inhaltsverzeichnis*
 <wiki:toc max_depth="2" />
