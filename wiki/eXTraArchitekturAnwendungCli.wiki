@@ -50,18 +50,18 @@ Diese Bibliothek beinhaltet bereits die fertig konfigurierten JAXB-Klassen für 
 Die Core-Library bildet das Herzstück des eXTra-Clients. Sie wird durch den CLI-Starter aufgerufen und in ihr werden aus den durch die anderen Plugins gelieferten Informationen eXTra-Requests generiert, welche dann zur weiteren Verarbeitung an das Output-Plugin übergeben wird.
 
 
-== Config-Plugin (extra-default-configplugin) ==
+== Config-Plugin (extra-configplugin-default) ==
 Im Config-Plugin werden generelle Informationen hinterlegt, welche sendungsunabhängig und –übergreifend gültig sind. Dazu zählen z.B. die Absender- und Empfängerinformationen und welche Verfahren angesprochen werden.
 Außerdem werden vom Config-Plugin wichtige Informationen zum Aufbau des Request an die Core-Library übergeben.
 Um hierzu nicht das ganze Schema verwenden zu müssen, könnte an dieser Stelle auch die aus dem XSDCreator gewonnene Profildatei ausgewertet werden.
 
 
-== Data-Plugin (extra-file-dataplugin, extra-query-dataplugin) == 
+== Data-Plugin (extra-dataplugin-file, extra-dataplugin-simplequery, extra-dataplugin-dbquery) == 
 Das Data-Plugin versorgt die Core-Library mit den entsprechenden Nutzdaten, die transportiert werden sollen. Neben den reinen Nutzdaten werden hier auch die Zusatzinformationen zu den Nutzdaten abgelegt, wie u. a. Daten mit denen die Plugins im Request befüllt werden, z.B. die RequestID zum Datensatz. Eine mögliche Implementierung des Data-Plugins ist das Query-Data-Plugin. Beim Abruf der Daten werden vom Data-Plugin keine Nutzdaten im Sinne von Datensätzen übergeben, sondern lediglich die fertig zusammengestellte Query zum Abruf der Daten. 
 Diese werden nicht als fertig geparstes XML übergeben, sondern als JAXB-Element, welches direkt in den Request eingefügt werden kann.
 
 
-== Output-Plugin (extra-http-outputplugin) == 
+== Output-Plugin (extra-outputplugin-http, extra-outputplugin-ws) == 
 Das Output-Plugin übernimmt von der Core-Library den Request und kümmert sich um dessen Verarbeitung.
 Ein Weg, was mit dem Request geschieht, ist nicht vorgeschrieben.
 So sind zum Beispiel die folgenden Szenarien denkbar:
@@ -73,7 +73,7 @@ So sind zum Beispiel die folgenden Szenarien denkbar:
 Bei Verfahren in denen eine Antwort in Form einer eXTra-Response erwartet wird, muss die Verarbeitung der Response und Auswertung der darin enthaltenen Informationen auch durch das Output-Plugin bzw. in dem noch zu definierenden Confirmation-Plugin geschehen.
 
 
-== Responseprocess-Plugin (extra-file-responseprocessplugin) ==
+== Responseprocess-Plugin (extra-responseprocessplugin-sample) ==
 Noch zu definieren, siehe: http://code.google.com/p/extra-standard/issues/detail?id=4
 
 
