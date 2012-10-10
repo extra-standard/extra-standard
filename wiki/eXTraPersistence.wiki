@@ -6,16 +6,16 @@
 <wiki:toc max_depth="1" />
 
 
-= Introduction =
+= Einführung =
 
 In der Dokumentation  http://www.extra-standard.de/upload/pdf/Anl-3-Spektrum_Szenarien_eXTra-in-Betrieb_20110619.pdf sind mehrstufige 
 Austauschvarianten beschrieben. 
 Für die bessere Unterstützung diesen Szenarien ist einen persistnence-modul entwickelt.
 
 
-= Domain Model=
+= Domänenmodell=
 
-Die Domain Model besteht aus mehreren Entitäten. In dem folgenen Diagramm sind die Entitäten, deren Funktionen sowie die Beziehungen dargestellt.
+Das Domänenmodell besteht aus mehreren Entitäten. Im folgenden Diagramm sind die Entitäten, deren Funktionen sowie die Beziehungen dargestellt.
 
 http://extra-standard.googlecode.com/svn/wiki/images/persistence_layer.png
 
