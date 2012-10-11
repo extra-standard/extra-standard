@@ -225,7 +225,7 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-tx</artifactId>
-				<version>${org.springframework.aspects.version}</version>
+				<version>${org.springframework.version}</version>
 			</dependency>
 
 			<dependency>
