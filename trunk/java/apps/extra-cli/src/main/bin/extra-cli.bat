@@ -57,15 +57,18 @@ echo Die JRE_HOME Umgebungsvariablen ist nicht korrekt definiert.
 goto exit
 
 :okJava
+rem Start-Archiv angeben (Projekt extra-cli)
+set PROGRAM_JAR=extra-cli-1.0.0-SNAPSHOT.jar
+set JAR_FILE=%EXTRA_CLIENT_HOME%\lib\%PROGRAM_JAR%
 set _JAVA="%JRE_HOME%\bin\java"
 set HEAP_MS=-Xms512m
 set HEAP_MX=-Xmx1024m
-if not "%JAVA_OPTS%" == "" set JAVA_OPTS=%HEAP_MS% %HEAP_MX%
-set %JAR_FILE%=%EXTRA_CLIENT_HOME%\lib\${program.jar}.jar
+if "%JAVA_OPTS%" == "" set JAVA_OPTS=%HEAP_MS% %HEAP_MX%
 if not "%LOGFILEPATH%" == "" set LOGFILEPATH=%~dp0\..\logs
 
 rem java aufruf
-%_JAVA% %JAVA_OPTS% -jar %JAR_FILE% -l %~dp0\..\logs %*
+rem im Aufruf wird beispielhaft die Konfiguration im Verzeichnis 'conf' erwartet und Logausgaben ins Verzeichnis 'logs' geschrieben (Syntax siehe Betriebshandbuch)
+%_JAVA% %JAVA_OPTS% -jar %JAR_FILE% -l logs %* -c conf
 goto end
 
 :exit
