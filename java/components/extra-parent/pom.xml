@@ -222,6 +222,11 @@
 				<artifactId>spring-aspects</artifactId>
 				<version>${org.springframework.aspects.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${org.springframework.aspects.version}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>javax.enterprise</groupId>
