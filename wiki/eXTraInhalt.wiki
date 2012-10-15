@@ -14,3 +14,4 @@
       * [eXTraSterbedatenVerfahren Sterbedatenabgleich Ausland]
   * [eXTraSpecIssues Offene Punkte]    
   * [eXTraEntwProzess Entwicklungsprozess]
+  * [eXTraClientBetriebsanleitung Betriebsanleitung]
