@@ -30,8 +30,8 @@
 		<property name="dataSource" ref="dbcpDataSource" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<property name="generateDdl" value="${plugins.execution.executionPersistenceJPA.hibernate.generateDdl}" />
-				<property name="database" value="${plugins.execution.executionPersistenceJPA.hibernate.database}" />
+				<property name="generateDdl" value="${plugins.execution.executionPersistenceJpa.hibernate.generateDdl}" />
+				<property name="database" value="${plugins.execution.executionPersistenceJpa.hibernate.database}" />
 			</bean>
 		</property>
 	</bean>
@@ -39,21 +39,21 @@
 	<!-- | DataSource & Pool -->
 	<bean id="dbcpDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
-		<property name="driverClassName" value="${plugins.execution.executionPersistenceJPA.database.driver_class}" />
-		<property name="url" value="${plugins.execution.executionPersistenceJPA.database.connect_url}" />
-		<property name="username" value="${plugins.execution.executionPersistenceJPA.database.username}" />
-		<property name="password" value="${plugins.execution.executionPersistenceJPA.database.password}" />
+		<property name="driverClassName" value="${plugins.execution.executionPersistenceJpa.database.driver_class}" />
+		<property name="url" value="${plugins.execution.executionPersistenceJpa.database.connect_url}" />
+		<property name="username" value="${plugins.execution.executionPersistenceJpa.database.username}" />
+		<property name="password" value="${plugins.execution.executionPersistenceJpa.database.password}" />
 		<!-- pool config -->
-		<property name="maxIdle" value="${plugins.execution.executionPersistenceJPA.db.pool.maxIdle}" />
-		<property name="maxActive" value="${plugins.execution.executionPersistenceJPA.db.pool.maxActive}" />
-		<property name="maxWait" value="${plugins.execution.executionPersistenceJPA.db.pool.maxWait}" />
-		<property name="validationQuery" value="${plugins.execution.executionPersistenceJPA.db.pool.validationQuery}" />
-		<property name="testOnBorrow" value="${plugins.execution.executionPersistenceJPA.db.pool.testOnBorrow}" />
-		<property name="testWhileIdle" value="${plugins.execution.executionPersistenceJPA.db.pool.testWhileIdle}" />
-		<property name="timeBetweenEvictionRunsMillis" value="${plugins.execution.executionPersistenceJPA.db.pool.timeBetweenEvictionRunsMillis}" />
-		<property name="minEvictableIdleTimeMillis" value="${plugins.execution.executionPersistenceJPA.db.pool.minEvictableIdleTimeMillis}" />
-		<property name="numTestsPerEvictionRun" value="${plugins.execution.executionPersistenceJPA.db.pool.numTestsPerEvictionRun}" />
-		<property name="defaultAutoCommit" value="${plugins.execution.executionPersistenceJPA.db.pool.defaultAutoCommit}" />
+		<property name="maxIdle" value="${plugins.execution.executionPersistenceJpa.db.pool.maxIdle}" />
+		<property name="maxActive" value="${plugins.execution.executionPersistenceJpa.db.pool.maxActive}" />
+		<property name="maxWait" value="${plugins.execution.executionPersistenceJpa.db.pool.maxWait}" />
+		<property name="validationQuery" value="${plugins.execution.executionPersistenceJpa.db.pool.validationQuery}" />
+		<property name="testOnBorrow" value="${plugins.execution.executionPersistenceJpa.db.pool.testOnBorrow}" />
+		<property name="testWhileIdle" value="${plugins.execution.executionPersistenceJpa.db.pool.testWhileIdle}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${plugins.execution.executionPersistenceJpa.db.pool.timeBetweenEvictionRunsMillis}" />
+		<property name="minEvictableIdleTimeMillis" value="${plugins.execution.executionPersistenceJpa.db.pool.minEvictableIdleTimeMillis}" />
+		<property name="numTestsPerEvictionRun" value="${plugins.execution.executionPersistenceJpa.db.pool.numTestsPerEvictionRun}" />
+		<property name="defaultAutoCommit" value="${plugins.execution.executionPersistenceJpa.db.pool.defaultAutoCommit}" />
 	</bean>
 
 </beans>

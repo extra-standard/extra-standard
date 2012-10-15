@@ -74,7 +74,7 @@ public class InputDataIT {
 	private transient InputDataRepository inputDataRepository;
 
 	@Inject
-	@Named("executionPersistenceJPA")
+	@Named("executionPersistenceJpa")
 	private IExecutionPersistence executionPersistence;
 
 	@Before

@@ -41,11 +41,11 @@ import de.extrastandard.persistence.repository.StatusRepository;
  * Einstiegsklasse zum Management von Executions.
  * 
  * @author Thorsten Vogel
- * @version $Id: ExecutionPersistence.java 508 2012-09-04 09:35:41Z
+ * @version $Id: ExecutionPersistenceJpa.java 508 2012-09-04 09:35:41Z
  *          thorstenvogel@gmail.com $
  */
-@Named("executionPersistenceJPA")
-public class ExecutionPersistence implements IExecutionPersistence {
+@Named("executionPersistenceJpa")
+public class ExecutionPersistenceJpa implements IExecutionPersistence {
 
 	@Inject
 	@Named("procedureRepository")

@@ -49,8 +49,8 @@ public class PersistenceTestSetup {
 	private transient MandatorRepository mandatorRepository;
 
 	@Inject
-	@Named("executionPersistenceJPA")
-	private ExecutionPersistence executionPersistence;
+	@Named("executionPersistenceJpa")
+	private ExecutionPersistenceJpa executionPersistence;
 
 	@Transactional
 	public void setupInitialDaten() {
