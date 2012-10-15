@@ -21,7 +21,7 @@ package de.extrastandard.api.model.execution;
 import java.util.Date;
 
 /**
- * Bildet den Übergang zwischen zwei Status einer {@link IInputData}-Instanz ab.
+ * Bildet den Übergang zwischen zwei Status einer {@link IExecution}-Instanz ab.
  * 
  * @author Thorsten Vogel
  * @version $Id: IProcessTransition.java 487 2012-09-03 13:07:52Z
