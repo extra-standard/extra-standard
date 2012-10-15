@@ -12,13 +12,21 @@
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.request"/>
         </jxb:schemaBindings>
     </jxb:bindings>
-    
+    <!-- 
   	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestType']">
     	<jxb:class name="XMLTransport"/>
     	 <annox:annotate>
              <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"/>
          </annox:annotate>
 	</jxb:bindings> 
+	 -->
+  	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestType']">
+    	<jxb:class name="Transport"/>
+    	 <annox:annotate>
+             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"/>
+         </annox:annotate>
+	</jxb:bindings> 	
+	
   	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestHeaderType']">
     	<jxb:class name="TransportHeader"/>
 	</jxb:bindings> 

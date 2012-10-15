@@ -17,7 +17,7 @@ public class ResponseData implements IResponseData {
 	 * @see de.extrastandard.api.model.content.IResponseData#getReponses()
 	 */
 	@Override
-	public Collection<ISingleResponseData> getReponses() {
+	public Collection<ISingleResponseData> getResponses() {
 		return responseDatenMap.values();
 	}
 
@@ -52,7 +52,7 @@ public class ResponseData implements IResponseData {
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
 		builder.append("ResponseData [");
-		final Collection<ISingleResponseData> responses = getReponses();
+		final Collection<ISingleResponseData> responses = getResponses();
 		if (responses != null && !responses.isEmpty()) {
 			for (final ISingleResponseData singleResponseData : responses) {
 				builder.append(" SingleResponseData: ").append(singleResponseData);

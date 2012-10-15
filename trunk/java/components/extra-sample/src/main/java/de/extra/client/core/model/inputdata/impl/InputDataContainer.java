@@ -18,28 +18,30 @@
  */
 package de.extra.client.core.model.inputdata.impl;
 
-import java.util.List;
-
 import de.extrastandard.api.model.content.IInputDataContainer;
-import de.extrastandard.api.model.content.IInputDataPluginDescription;
 
 /**
  * Bean für die Nutzdaten.
  */
 public abstract class InputDataContainer implements IInputDataContainer {
 
-	private List<IInputDataPluginDescription> plugins;
-
 	private String requestId;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.extra.client.core.model.ISenderDataBean#getPlugins()
+	/**
+	 * @return the requestId
 	 */
 	@Override
-	public List<IInputDataPluginDescription> getPlugins() {
-		return plugins;
+	public String getRequestId() {
+		return requestId;
+	}
+
+	/**
+	 * @param requestId
+	 *            the requestId to set
+	 */
+	@Override
+	public void setRequestId(final String requestId) {
+		this.requestId = requestId;
 	}
 
 	/**
@@ -63,30 +65,6 @@ public abstract class InputDataContainer implements IInputDataContainer {
 	 */
 	public <X> boolean isImplementationOf(final Class<X> cls) {
 		return cls == null ? false : cls.isAssignableFrom(this.getClass());
-	}
-
-	/**
-	 * @param plugins
-	 *            the plugins to set
-	 */
-	public void setPlugins(final List<IInputDataPluginDescription> plugins) {
-		this.plugins = plugins;
-	}
-
-	/**
-	 * @return the requestId
-	 */
-	@Override
-	public String getRequestId() {
-		return requestId;
-	}
-
-	/**
-	 * @param requestId
-	 *            the requestId to set
-	 */
-	public void setRequestId(final String requestId) {
-		this.requestId = requestId;
 	}
 
 }
