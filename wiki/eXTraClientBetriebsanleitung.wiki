@@ -1,0 +1,91 @@
+#summary Einrichtung und Konfiguration der eXTra-Client Auslieferungsversion
+
+= Einleitung =
+
+Auf dieser Seite wird beschrieben, wie die Auslieferungsversion des eXTra-Clients auf einem Betriebsrechner eingerichtet und konfiguriert werden kann.
+
+Der eXTra-Client unterstützt folgende Anwendungsfallszenarien:
+ * Fachliche Inputdatei in ein eXTra-konformes Format (XML) wandeln
+ * eXTra-Datei (XML) an einen eXTra-Server über einen Webservice versenden
+ * Response des eXTra-Servers über Webservice empfangen und verarbeiten
+
+Durch Kombination dieser Anwendungsfälle können komplexere Kommunikationsabläufe realisiert werden (z.B. der Sende-/Holbetrieb). Aufgrund seines modularen Aufbaus und vielfältiger Konfigurationsmöglichkeiten kann der eXTra-Client auch zur Durchführung von Fachverfahren (z.B. Sterbedatenabgleich) eingesetzt werden. Programmänderungen des eXTra-Clients sind nur bei tiefgreifenden Funktionserweiterungen (z.B. Anpassungen an neuen eXTra-Standard) notwendig.
+
+Für den Kommunikationsablauf bietet der eXTra-Client folgende technische Unterstützung:
+====Protokollierung der Kommunikation in einer Datenbank====
+Die Kommunikationsschritte können in einer DB protokolliert werden. So können z.B. Serverantworten die in späteren Schritten benötigt werden (z.B. Response-ID) oder Empfangszertifikate gespeichert werden. 
+====Logging====
+Zur Fehlersuche und Betriebsunterstützung kann der Kommunikationsablauf in verschiedenen Ebenen geloggt werden.
+
+Die Auslieferungsversion des eXTra-Clients besteht aus einem zip-Archiv für den Basisteil. Die einzelnen Fachverfahren werden jeweils in gesonderten zip-Archiven ausgeliefert.
+
+= Anforderungen an den Betriebsrechner =
+Der eXTra-Client wird als Java Anwendung ausgeliefert und benötigt eine Java 6 Laufzeitumgebung. Er ist nicht an ein spezielles Betriebssystem gebunden. Je nach Anwendungsfall bzw. Einsatzgebiet wird evtl. eine Datenbank benötigt. Für den Kommunikationsablauf müssen evtl. bestimmte Externe eXTra-Server erreichbar sein.
+
+= Bestandteile der Auslieferungsversion =
+
+Die Auslieferungsversion besteht aus dem Ausführungs-, dem Konfigurations- und dem Programm-Bereich. Jeder Bereich befindet sich in einem Verzeichnis:
+
+====/bin==== 
+Hier befinden sich beispielhaft Batch-Dateien für Windows (eXTra-cli.bat) und Linux. 
+
+====/conf====
+Hier werden die Konfigurationsverzeichnisse/-dateien für die mitgelieferten Fachverfahren abgelegt.
+
+====/lib====
+Hier stehen sämtliche benötigte Jar-Dateien - sowohl die eXTra-Jar-Dateien als auch die externen Bibliotheken zur Verfügung.
+
+Aufgrund des modularen Aufbaus und der konfigurativen Steuerung des EXTra-Clients können zur Basisversion weitere Anwendungsfälle hinzugefügt werden. Pro Anwendungsfall muss die Konfiguration in einem Konfigurationsverzeichnisse abgelegt werden (TODO: evtl. Änderungen in der DB notwendig?!). 
+
+= Installation/Bereitstellung einer Version =
+Die Bereitstellung einer Version erfolgt in diesen Schritten:
+* Auspacken der Auslieferungsversion in einem Verzeichnis auf dem Betriebsrechner
+* Konfigurationsverzeicnisse/-dateien der Fachverfahren im conf Ordner ablegen 
+* Konfigurationsdateien an die Umgebung des Betriebsrechners anpassen (z.B. Verzeichnisse für Input und Output).
+* Eventuell notwendige Infrastruktur (z.B. eine Datenbank) einrichten, initialisieren oder updaten (z.B. über mitgeliefertes SQL-Skript).
+* Batch-Dateien für den Aufruf der Fachverfahren im Ordner _bin_ erstellen bzw. anpassen
+
+Konfiguration
+Alle Konfigurationsdateien für einen Anwendungsfall befinden sich üblicherweise in einem Verzeichnis (z.B. conf). Dieses Verzeichnis wird beim Aufruf als Parameter übergeben. 
+Folgende Dateien bilden die Konfigurationsdaten für einen Anwendungsfall:
+
+|| *Datei* || *Beschreibung* ||
+|| eXTra-properties-basic.properties || Zentrale Konfigurationsdatei ||
+|| eXTra-properties-user.properties || Ergänzende/überschreibende Einstellungen ||
+|| logging-config.xml || Logging Einstellungen (z.B. Name der Logfiles und Loglevel) ||
+|| ‚profile.xml’ || eXTra-Profil Datei (siehe eXTra Standard) Gibt an welche Nachrichtenteile für die Datenaustausch zwischen Client und Server zugelassen sind. (Der Name ist frei wählbar.) ||
+
+==Beschreibung eXTra-properties-basic.properties==
+Diese Konfigurationsdatei besteht aus Attribut-Werte Paaren (Java-properties Format). In jeder Zeile wird der Wert für ein Attribut angegeben. Die Datei kann in folgende Bereiche aufgeteilt werden:
+ * Fachverfahren
+   * Informationen für das durchzuführende Fachverfahren 
+   * Beispiel: 	core.execution.procedure=Datenabgleich
+   * Das Verfahren ‚Datenabgleich’ soll durchgeführt werden
+ * Profiling
+   * Zu verwendende Profiling-Dateien, Beispiel: plugins.configplugin.defaultConfigPlugin.profilOrdner=conf/profil.xml
+ * Auswahl der Plugins 
+   * Angabe der Plugins die bei der Ausführung verwendet werden sollen (Eine Auflistung und Beschreibung der vorhandenen Plugins befindet sich im Anhang).
+ * Auswahl der Builder?!
+ * Konfiguration der Plugins
+   * Die einzelnen Plugins benötigen unterschiedliche Konfigurationsparameter. So benötigt z.B. das ‚executionPersistenceJpa’ Plugin eine DB-Verbindung. Beispiel:
+plugins.execution.executionPersistenceJPA.hibernate.database=HSQL
+
+==Beschreibung eXTra-properties-user.properties==
+In dieser Datei können spezielle Einstellungen eingetragen werden, die die Einstellungen aus eXTra-properties-basic.properties ergänzen oder überschreiben.
+
+==Aufruf der Anwendungsfälle==
+Die Anwendungsfälle können über Batch-Dateien aufgerufen werden. Beispielhaft befindet sich im /bin Verzeichnis der Auslieferungsversion ein Aufruf für Windows und Linux. In diesen Skripten wird eine Umgebungsvariable EXTRA_CLIENT_HOME für den Zugriff auf die eXTra-Client Dateien verwendet.
+
+*Beispiel für einen einfachen Aufruf:*
+
+java -jar extra-cli-1.0.0-SNAPSHOT.jar -l logs -c conf
+
+Aufruf des eXTra-Clients. Das Logging erfolgt in das Verzeichnis logs. Die Konfiguration wird aus dem Verzeichnis conf gelesen.
+
+Aufrufparameter:
+
+|| Parameter || Beispiel || Beschreibung ||
+|| -c || -c conf || Konfiguration wird aus Verzeichnis conf gelesen (Pflicht) ||
+|| -l || -l logs || Logs werden in das Verzeichnis logs geschrieben
+|| -h || -h || Hilfe ||
+		
