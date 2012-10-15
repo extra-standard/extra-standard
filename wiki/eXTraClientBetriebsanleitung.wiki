@@ -2,7 +2,7 @@
 
 = Betriebsanleitung =
 
-Auf dieser Seite wird beschrieben, wie die Auslieferungsversion des eXTra-Clients auf einem Betriebsrechner eingerichtet und konfiguriert werden kann.
+Auf dieser Seite wird beschrieben, wie die Auslieferungsversion des eXTra-Clients auf einem Betriebsrechner eingerichtet und konfiguriert werden kann. Die Auslieferungsversion des eXTra-Clients besteht aus einem zip-Archiv für den Basisteil. Die einzelnen Fachverfahren werden jeweils in gesonderten zip-Archiven ausgeliefert.
 
 Der eXTra-Client unterstützt folgende Anwendungsfallszenarien:
  * Fachliche Inputdatei in ein eXTra-konformes Format (XML) wandeln
@@ -17,8 +17,6 @@ Die Kommunikationsschritte können in einer DB protokolliert werden. So können 
 ====Logging====
 Zur Fehlersuche und Betriebsunterstützung kann der Kommunikationsablauf in verschiedenen Ebenen geloggt werden.
 
-Die Auslieferungsversion des eXTra-Clients besteht aus einem zip-Archiv für den Basisteil. Die einzelnen Fachverfahren werden jeweils in gesonderten zip-Archiven ausgeliefert.
-
 = Anforderungen an den Betriebsrechner =
 Der eXTra-Client wird als Java Anwendung ausgeliefert und benötigt eine Java 6 Laufzeitumgebung. Er ist nicht an ein spezielles Betriebssystem gebunden. Je nach Anwendungsfall bzw. Einsatzgebiet wird evtl. eine Datenbank benötigt. Für den Kommunikationsablauf müssen evtl. bestimmte Externe eXTra-Server erreichbar sein.
 
@@ -26,16 +24,16 @@ Der eXTra-Client wird als Java Anwendung ausgeliefert und benötigt eine Java 6 
 
 Die Auslieferungsversion besteht aus dem Ausführungs-, dem Konfigurations- und dem Programm-Bereich. Jeder Bereich befindet sich in einem Verzeichnis:
 
-====/bin==== 
+====/bin (Ausführungsbereich)==== 
 Hier befinden sich beispielhaft Batch-Dateien für Windows (eXTra-cli.bat) und Linux. 
 
-====/conf====
-Hier werden die Konfigurationsverzeichnisse/-dateien für die mitgelieferten Fachverfahren abgelegt.
+====/conf (Konfigurationsbereich)====
+Hier werden die Konfigurationsverzeichnisse/-dateien der mitgelieferten Fachverfahren abgelegt.
 
-====/lib====
+====/lib (Programmbereich)====
 Hier stehen sämtliche benötigte Jar-Dateien - sowohl die eXTra-Jar-Dateien als auch die externen Bibliotheken zur Verfügung.
 
-Aufgrund des modularen Aufbaus und der konfigurativen Steuerung des EXTra-Clients können zur Basisversion weitere Anwendungsfälle hinzugefügt werden. Pro Anwendungsfall muss die Konfiguration in einem Konfigurationsverzeichnisse abgelegt werden (TODO: evtl. Änderungen in der DB notwendig?!). 
+Aufgrund des modularen Aufbaus und der konfigurativen Steuerung des EXTra-Clients können zur Basisversion weitere Fachverfahren hinzugefügt werden. Pro Fachverfahren sollte die Konfiguration in einem Konfigurationsverzeichnisse abgelegt werden (TODO: evtl. Änderungen in der DB notwendig?!). 
 
 = Installation/Bereitstellung einer Version =
 Die Bereitstellung einer Version erfolgt in diesen Schritten:
@@ -45,7 +43,9 @@ Die Bereitstellung einer Version erfolgt in diesen Schritten:
 * Eventuell notwendige Infrastruktur (z.B. eine Datenbank) einrichten, initialisieren oder updaten (z.B. über mitgeliefertes SQL-Skript).
 * Batch-Dateien für den Aufruf der Fachverfahren im Ordner _bin_ erstellen bzw. anpassen
 
-Konfiguration
+Genauere Informationen zur Einrichtung eines Fachverfahrens befinden sich in der Dokumentation des jeweiligen Fachverfahrens.
+
+==Konfiguration==
 Alle Konfigurationsdateien für einen Anwendungsfall befinden sich üblicherweise in einem Verzeichnis (z.B. conf). Dieses Verzeichnis wird beim Aufruf als Parameter übergeben. 
 Folgende Dateien bilden die Konfigurationsdaten für einen Anwendungsfall:
 
@@ -85,7 +85,7 @@ Aufruf des eXTra-Clients. Das Logging erfolgt in das Verzeichnis logs. Die Konfi
 Aufrufparameter:
 
 || Parameter || Beispiel || Beschreibung ||
-|| -c || -c conf || Konfiguration wird aus Verzeichnis conf gelesen (Pflicht) ||
-|| -l || -l logs || Logs werden in das Verzeichnis logs geschrieben
+|| -c || -c conf || Konfiguration wird aus dem Verzeichnis _conf_ gelesen *(Pflicht)* ||
+|| -l || -l logs || Logs werden in das Verzeichnis _logs_ geschrieben
 || -h || -h || Hilfe ||
 		
