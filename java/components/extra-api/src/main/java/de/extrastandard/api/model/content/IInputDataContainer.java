@@ -18,8 +18,6 @@
  */
 package de.extrastandard.api.model.content;
 
-import java.util.List;
-
 import de.extrastandard.api.util.IImplementor;
 
 /**
@@ -34,13 +32,6 @@ import de.extrastandard.api.util.IImplementor;
  * @version $Id$
  */
 public interface IInputDataContainer extends IImplementor {
-
-	/**
-	 * Liefert Daten Verschlüsselung, Transformation usw Beschreibung.
-	 * 
-	 * @return
-	 */
-	List<IInputDataPluginDescription> getPlugins();
 
 	/**
 	 * Liefert eine Identifizierung der InputDaten In der Phase 1 DataRequestId
@@ -62,5 +53,15 @@ public interface IInputDataContainer extends IImplementor {
 	 *            Setzt RequestId für die eindeutige Identifizierung in der
 	 *            XmlMesage
 	 */
-	public void setRequestId(final String requestId);
+	void setRequestId(final String requestId);
+
+	/**
+	 * @return true, if containers is empty
+	 */
+	boolean isContentEmpty();
+
+	/**
+	 * @return contentSize
+	 */
+	int getContentSize();
 }

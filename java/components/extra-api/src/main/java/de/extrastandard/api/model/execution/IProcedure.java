@@ -18,7 +18,6 @@
  */
 package de.extrastandard.api.model.execution;
 
-
 /**
  * Verfahren.
  * 
@@ -43,18 +42,6 @@ public interface IProcedure extends PersistentEntity {
 	String getName();
 
 	/**
-	 * @param phase
-	 * @return liefert end Status dieser Phase
-	 */
-	public IStatus getPhaseEndStatus(final PhaseQualifier phase);
-
-	/**
-	 * @param status
-	 * @return true, wenn {@link Status} der letzte in diesem Scenario ist
-	 */
-	public boolean isProcedureEndStatus(final IStatus status);
-
-	/**
 	 * @return the shortKey
 	 */
 	public String getShortKey();
@@ -63,5 +50,11 @@ public interface IProcedure extends PersistentEntity {
 	 * @return the procedureType
 	 */
 	public IProcedureType getProcedureType();
+
+	/**
+	 * @param phase
+	 * @return true, this phase end Phase of the scenario
+	 */
+	boolean isProcedureEndPhase(String phase);
 
 }

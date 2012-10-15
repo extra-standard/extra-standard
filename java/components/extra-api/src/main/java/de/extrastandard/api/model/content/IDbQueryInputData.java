@@ -18,16 +18,18 @@
  */
 package de.extrastandard.api.model.content;
 
+import java.util.List;
+
 public interface IDbQueryInputData extends IInputDataContainer {
 
 	/**
-	 * @return the dbInputDataId
+	 * @return
 	 */
-	public abstract String getDbInputDataId();
+	List<ISingleQueryInputData> getInputData();
 
 	/**
-	 * @return the serverResponceId
+	 * @param originRequestId
+	 * @param serverResponceId
 	 */
-	public abstract String getServerResponceId();
-
+	void addSingleDBQueryInputData(String originRequestId, String serverResponceId);
 }

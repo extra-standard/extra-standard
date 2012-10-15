@@ -19,6 +19,10 @@
 package de.extrastandard.api.model.execution;
 
 import java.util.Date;
+import java.util.Set;
+
+import de.extrastandard.api.exception.ExtraRuntimeException;
+import de.extrastandard.api.model.content.IResponseData;
 
 /**
  * Ein Execution bietet Möglichkeiten zur Protokollierung der zu verarbeitenden
@@ -59,13 +63,6 @@ public interface IExecution extends PersistentEntity {
 	Date getEndTime();
 
 	/**
-	 * Momentaner Status dieser Execution.
-	 * 
-	 * @return Status
-	 */
-	IStatus getStatus();
-
-	/**
 	 * Persistiert eine neue {@link IInputData} Instanz.
 	 * 
 	 * @param inputIdentifier
@@ -74,14 +71,85 @@ public interface IExecution extends PersistentEntity {
 	 *            Hashcode der Eingabedaten
 	 * @return Instanz
 	 */
-	IInputData startInputData(String inputIdentifier, String hashCode);
+	IInputData startContentInputData(String inputIdentifier, String hashCode);
 
 	/**
 	 * Beendet diese Execution.
 	 * 
-	 * @param status
-	 *            Der Status, mit dem die Execution beendet werden soll.
+	 * @param responseData
 	 */
-	void endExecution(IStatus status);
+	void endExecution(IResponseData responseData);
+
+	/**
+	 * Aktualisiert diese Execution mit dem angegebenen Status.
+	 * 
+	 * @param newPersistentStatus
+	 */
+	void updateProgress(PersistentStatus newPersistentStatus);
+
+	/**
+	 * Marks this instance with the specified error data. This method do not
+	 * throw any exception
+	 * 
+	 * @param errorCode
+	 *            Code des Fehlers.
+	 * @param errorMessage
+	 *            Fehlermeldung.
+	 */
+	void failed(String errorCode, String errorMessage);
+
+	/**
+	 * Marks this instance with the specified error data. This method do not
+	 * throw any exception
+	 * 
+	 * @param exception
+	 *            die den Fehler auslösende Exception.
+	 */
+	void failed(ExtraRuntimeException exception);
+
+	/**
+	 * Liefert <code>true</code>, falls ein Fehler vorliegt.
+	 * 
+	 * @return <code>true</code> bei Fehler, ansonsten <code>false</code>.
+	 */
+	boolean hasError();
+
+	/**
+	 * Falls vorhanden, ein Fehlercode.
+	 * 
+	 * @return Fehlercode oder <code>null</code>.
+	 */
+	String getErrorCode();
+
+	/**
+	 * Falls vorhanden, eine Fehlermeldung.
+	 * 
+	 * @return Fehlermeldung oder <code>null</code>.
+	 */
+	String getErrorMessage();
+
+	/**
+	 * @return lastTransition
+	 */
+	IProcessTransition getLastTransition();
+
+	/**
+	 * @return phase of the Execution
+	 */
+	String getPhase();
+
+	/**
+	 * Startet InputData für eine DB Query
+	 * 
+	 * @param serverResponseId
+	 * @param originRequestId
+	 * @return
+	 */
+	IInputData startDbQueryInputData(String serverResponseId, String originRequestId);
+
+	/**
+	 * @return
+	 */
+	Set<IInputData> getInputDataSet();
 
 }

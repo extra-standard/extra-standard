@@ -31,17 +31,6 @@ import java.util.List;
 public interface IExecutionPersistence {
 
 	/**
-	 * The method starts an execution.
-	 * 
-	 * @param procedure
-	 *            Execution Scenario
-	 * @param parameters
-	 *            Aufrufparameter
-	 * @return eine {@link IExecution} Instanz.
-	 */
-	IExecution startExecution(IProcedure procedure, String parameters);
-
-	/**
 	 * <pre>
 	 * The method starts an execution. 
 	 * If the procedure name is not found, an unchecked exception is thrown.
@@ -53,7 +42,7 @@ public interface IExecutionPersistence {
 	 *            Aufrufparameter
 	 * @return eine {@link IExecution} Instanz.
 	 */
-	IExecution startExecution(String procedureName, String parameters);
+	IExecution startExecution(String procedureName, String parameters, PhaseQualifier phaseQualifier);
 
 	/**
 	 * @param executionProcedure

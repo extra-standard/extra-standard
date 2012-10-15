@@ -18,7 +18,7 @@
  */
 package de.extrastandard.api.model.execution;
 
-import de.extrastandard.api.exception.ExtraRuntimeException;
+import de.extrastandard.api.model.content.ISingleResponseData;
 
 /**
  * Inputdaten.
@@ -30,50 +30,13 @@ import de.extrastandard.api.exception.ExtraRuntimeException;
 public interface IInputData extends PersistentEntity {
 
 	/**
-	 * Aktualisiert diese Inputdaten mit dem angegebenen Status.
-	 * 
-	 * @param newStatus
-	 *            Der zu setzende Status.
-	 */
-	void updateProgress(PersistentStatus newStatus);
-
-	/**
-	 * Marks this instance with the specified error data. This method do not
-	 * throw any exception
-	 * 
-	 * @param errorCode
-	 *            Code des Fehlers.
-	 * @param errorMessage
-	 *            Fehlermeldung.
-	 */
-	void failed(String errorCode, String errorMessage);
-
-	/**
-	 * Marks this instance with the specified error data. This method do not
-	 * throw any exception
-	 * 
-	 * @param exception
-	 *            die den Fehler auslösende Exception.
-	 */
-	void failed(ExtraRuntimeException exception);
-
-	/**
 	 * Markiert diese Instanz als erfolgreich übertragen.
 	 * 
 	 * @param responseId
 	 *            ID der Response.
 	 * @param phaseQualifier
 	 */
-	void success(String responseId, PhaseQualifier phaseQualifier);
-
-	/**
-	 * Markiert diese Instanz als erfolgreich übertragen.
-	 * 
-	 * @param responseId
-	 *            ID der Response.
-	 * @param phaseQualifier
-	 */
-	void success(PhaseQualifier phaseQualifier);
+	// void success(PhaseQualifier phaseQualifier);
 
 	/**
 	 * @return requestId, unique identification of this message
@@ -96,27 +59,6 @@ public interface IInputData extends PersistentEntity {
 	String getHashcode();
 
 	/**
-	 * Liefert <code>true</code>, falls ein Fehler vorliegt.
-	 * 
-	 * @return <code>true</code> bei Fehler, ansonsten <code>false</code>.
-	 */
-	boolean hasError();
-
-	/**
-	 * Falls vorhanden, ein Fehlercode.
-	 * 
-	 * @return Fehlercode oder <code>null</code>.
-	 */
-	String getErrorCode();
-
-	/**
-	 * Falls vorhanden, eine Fehlermeldung.
-	 * 
-	 * @return Fehlermeldung oder <code>null</code>.
-	 */
-	String getErrorMessage();
-
-	/**
 	 * Response ID oder <code>null</code>.
 	 * 
 	 * @return Response ID oder <code>null</code>.
@@ -131,11 +73,6 @@ public interface IInputData extends PersistentEntity {
 	IExecution getExecution();
 
 	/**
-	 * @return
-	 */
-	IInputDataTransition getLastTransition();
-
-	/**
 	 * @return berechnete RequestId
 	 */
 	String calculateRequestId();
@@ -146,5 +83,38 @@ public interface IInputData extends PersistentEntity {
 	 * @param requestId
 	 */
 	void setRequestId(String requestId);
+
+	/**
+	 * @return
+	 */
+	String getReturnText();
+
+	/**
+	 * @param returnText
+	 */
+	void setReturnText(String returnText);
+
+	/**
+	 * @return
+	 */
+	String getReturnCode();
+
+	/**
+	 * @param returnCode
+	 */
+	void setReturnCode(String returnCode);
+
+	/**
+	 * @return nextPhase
+	 */
+	IPhaseConnection getNextPhaseConnection();
+
+	/**
+	 * MarkiertInputData ala Übertragen. Die ResponseDaten werden in den
+	 * InputData festgehalten
+	 * 
+	 * @param singleResponseData
+	 */
+	void transmitted(ISingleResponseData singleResponseData);
 
 }
