@@ -9,34 +9,36 @@ Insert into STATUS (ID, NAME) Values (7, 'DONE');
 
 Insert into MANDATOR (ID, NAME) Values (seq_mandator_id.nextval, 'TEST');
    
-Insert into PROCEDURE_TYPE  (ID, NAME, END_STATUS_ID, START_PHASE) Values
-   (seq_procedure_type_id.nextval, 'SCENARIO_SEND_FETCH', (select id from status where name = 'RECEIPT_CONFIRMED'), 'PHASE1');
+Insert into PROCEDURE_TYPE (ID, NAME, START_PHASE, END_PHASE)
+ Values (seq_procedure_type_id.nextval, 'SCENARIO_SEND_FETCH', 'PHASE1', 'PHASE3');
    
-Insert into PROCEDURE_PHASE_CONFIGURATION (ID, PHASE, PHASE_ENDSTATUS_ID, PROCEDURE_TYPE_ID)
+Insert into PROCEDURE_PHASE_CONFIGURATION (ID, PHASE, PROCEDURE_TYPE_ID)
  Values
    (seq_procephase_config_id.nextval,
-    'PHASE1', 
-    (select id from status where name = 'RESULTS_EXPECTED'), 
-    (select id from procedure_type where name = 'SCENARIO_SEND_FETCH')
-    );
+    'PHASE3', 
+    (select id from procedure_type where name = 'SCENARIO_SEND_FETCH') );
    
 Insert into PROCEDURE_PHASE_CONFIGURATION
-   (ID, PHASE, PHASE_ENDSTATUS_ID, PROCEDURE_TYPE_ID, PHASE_STARTSTATUS_ID)
+   (ID, PHASE, PROCEDURE_TYPE_ID, NEXT_PHASE_CONFIGURATION_ID)
  Values
    (seq_procephase_config_id.nextval,
     'PHASE2', 
-    (select id from status where name = 'RESULTS_PROCESSED'), 
     (select id from procedure_type where name = 'SCENARIO_SEND_FETCH'),
-     (select id from status where name = 'RESULTS_EXPECTED'));
+     (select id from PROCEDURE_PHASE_CONFIGURATION 
+         where PROCEDURE_PHASE_CONFIGURATION.PROCEDURE_TYPE_ID =
+        (select id from PROCEDURE_TYPE where PROCEDURE_TYPE.NAME = 'SCENARIO_SEND_FETCH')
+        and   PROCEDURE_PHASE_CONFIGURATION.PHASE = 'PHASE3'  ));
      
 Insert into PROCEDURE_PHASE_CONFIGURATION
-   (ID, PHASE, PHASE_ENDSTATUS_ID, PROCEDURE_TYPE_ID, PHASE_STARTSTATUS_ID)
+   (ID, PHASE, PROCEDURE_TYPE_ID, NEXT_PHASE_CONFIGURATION_ID)
  Values
-     (seq_procephase_config_id.nextval,
-    'PHASE3', 
-    (select id from status where name = 'RESULTS_EXPECTED'), 
+   (seq_procephase_config_id.nextval,
+    'PHASE1', 
     (select id from procedure_type where name = 'SCENARIO_SEND_FETCH'),
-    (select id from status where name = 'RECEIPT_CONFIRMED'));
+     (select id from PROCEDURE_PHASE_CONFIGURATION 
+         where PROCEDURE_PHASE_CONFIGURATION.PROCEDURE_TYPE_ID =
+        (select id from PROCEDURE_TYPE where PROCEDURE_TYPE.NAME = 'SCENARIO_SEND_FETCH')
+        and   PROCEDURE_PHASE_CONFIGURATION.PHASE = 'PHASE2'  ));
 
 
 Insert into PROCEDURE
