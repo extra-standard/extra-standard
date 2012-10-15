@@ -19,6 +19,7 @@
 package de.extra.client.core.builder.impl.components;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Named;
 
@@ -26,13 +27,15 @@ import org.apache.commons.codec.binary.Base64InputStream;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
 import de.extrastandard.api.exception.ExtraCoreRuntimeException;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
-import de.extrastandard.api.model.content.IFileInputdata;
+import de.extrastandard.api.model.content.IFileInputData;
 import de.extrastandard.api.model.content.IInputDataContainer;
+import de.extrastandard.api.model.content.ISingleContentInputData;
 
 /**
  * IFileInputData expect. Stores inputdata in Base64CharSequenceType.value
@@ -51,8 +54,12 @@ public class TransportBodyFileInputBase64CharSequenceBuilder extends XmlComplexT
 	public Object buildXmlFragment(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
 		LOG.debug("Base64CharSequenceType aufbauen");
 		final Base64CharSequenceType base64CharSequence = new Base64CharSequenceType();
-		final IFileInputdata iFileInputdata = senderData.cast(IFileInputdata.class);
-		final Base64InputStream base64InputStream = new Base64InputStream(iFileInputdata.getInputData());
+		final IFileInputData fileInputdata = senderData.cast(IFileInputData.class);
+		final List<ISingleContentInputData> inputDataList = fileInputdata.getInputData();
+		// Es kann nicht in Transport mehrere Datensätze übertragen werden!!
+		Assert.isTrue(inputDataList.size() == 1, "Unexpected InputData size.");
+		final ISingleContentInputData singleInputData = inputDataList.get(0);
+		final Base64InputStream base64InputStream = new Base64InputStream(singleInputData.getInputDataAsStream());
 		byte[] encodeData = null;
 		try {
 			encodeData = IOUtils.toByteArray(base64InputStream);

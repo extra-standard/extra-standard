@@ -18,11 +18,9 @@
  */
 package de.extra.client.core.plugin.dummies;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Named;
@@ -32,6 +30,7 @@ import de.extra.client.core.model.impl.DataSourcePluginDescription;
 import de.extra.client.core.model.impl.EncryptionPluginDescription;
 import de.extra.client.core.model.inputdata.impl.FileInputData;
 import de.extra.client.core.model.inputdata.impl.InputDataContainer;
+import de.extra.client.core.model.inputdata.impl.SingleStringInputData;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 import de.extrastandard.api.plugin.IDataPlugin;
@@ -40,10 +39,8 @@ import de.extrastandard.api.plugin.IDataPlugin;
 public class DummyDataPlugin implements IDataPlugin {
 
 	@Override
-	public Iterator<IInputDataContainer> getData() {
-		final List<IInputDataContainer> versanddatenList = new ArrayList<IInputDataContainer>();
-		versanddatenList.add(loadVersanddaten());
-		return versanddatenList.iterator();
+	public IInputDataContainer getData() {
+		return loadVersanddaten();
 	}
 
 	/**
@@ -53,11 +50,13 @@ public class DummyDataPlugin implements IDataPlugin {
 	 */
 	private InputDataContainer loadVersanddaten() {
 
+		final String nutzdaten = "Testdaten";
+
+		final FileInputData fileInputData = new FileInputData();
+
 		final CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
 		final EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();
 		final DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
-
-		final String nutzdaten = "Testdaten";
 
 		// Compression-Infos setzen
 		compressionPlugin.setOrder(1);
@@ -101,10 +100,8 @@ public class DummyDataPlugin implements IDataPlugin {
 		pluginList.add(compressionPlugin);
 		pluginList.add(encryptionPlugin);
 		pluginList.add(dataSourcePlugin);
-
-		final FileInputData fileInputData = new FileInputData("DummyFile", new ByteArrayInputStream(
-				nutzdaten.getBytes()), "10");
-		fileInputData.setPlugins(pluginList);
+		final SingleStringInputData singleStringInputData = new SingleStringInputData(nutzdaten, pluginList);
+		fileInputData.addSingleInputData(singleStringInputData);
 		return fileInputData;
 	}
 }

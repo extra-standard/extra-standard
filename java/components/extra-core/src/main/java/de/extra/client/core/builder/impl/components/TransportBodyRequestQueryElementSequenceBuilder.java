@@ -31,19 +31,21 @@ import de.drv.dsrv.extrastandard.namespace.messages.DataRequest;
 import de.drv.dsrv.extrastandard.namespace.messages.DataRequestArgument;
 import de.drv.dsrv.extrastandard.namespace.messages.DataRequestQuery;
 import de.drv.dsrv.extrastandard.namespace.messages.Operand;
+import de.drv.dsrv.extrastandard.namespace.messages.OperandSet;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
-import de.extrastandard.api.model.content.IDbQueryInputData;
+import de.extra.client.core.model.inputdata.impl.DBQueryInputData;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
+import de.extrastandard.api.model.content.ISingleQueryInputData;
 
 /**
  * @author Leonid Potap
  * 
  */
-@Named("transportBodyElementSequenceBuilder")
-public class TransportBodyElementSequenceBuilder extends XmlComplexTypeBuilderAbstr {
+@Named("transportBodyRequestQueryElementSequenceBuilder")
+public class TransportBodyRequestQueryElementSequenceBuilder extends XmlComplexTypeBuilderAbstr {
 
-	private final static Logger LOG = LoggerFactory.getLogger(TransportBodyElementSequenceBuilder.class);
+	private final static Logger LOG = LoggerFactory.getLogger(TransportBodyRequestQueryElementSequenceBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:ElementSequence";
 
@@ -59,32 +61,32 @@ public class TransportBodyElementSequenceBuilder extends XmlComplexTypeBuilderAb
 	}
 
 	private DataRequest createDataRequest(final IInputDataContainer senderData) {
+		final DBQueryInputData dbQueryInputData = senderData.cast(DBQueryInputData.class);
 		final DataRequest dataRequest = new DataRequest();
 
 		final Control controlElement = new Control();
 		final DataRequestQuery query = new DataRequestQuery();
 		final DataRequestArgument dataRequestArgument = new DataRequestArgument();
-		final Operand operand = new Operand();
-		final IDbQueryInputData iDbQueryInputData = senderData.cast(IDbQueryInputData.class);
-		operand.setValue(iDbQueryInputData.getServerResponceId());
-
-		// Setzen des Tags
-		final QName qname = new QName("xs:string");
-		final JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(new QName(
-				"http://www.extra-standard.de/namespace/message/1", "GE"), Operand.class, operand);
-		jaxbOperand.setValue(operand);
-
-		// Setzen der Property
 		dataRequestArgument.setProperty("http://www.extra-standard.de/property/ResponseID");
-		dataRequestArgument.setType(qname);
+		final OperandSet operandSet = new OperandSet();
+		final QName qnameStringType = new QName("xs:string");
+		dataRequestArgument.setType(qnameStringType);
+		dataRequestArgument.setEvent("http://www.extra-standard.de/event/RequestData");
+		// Setzen des Tags
+		final JAXBElement<OperandSet> jaxbOperand = new JAXBElement<OperandSet>(new QName(
+				"http://www.extra-standard.de/namespace/message/1", "IN"), OperandSet.class, operandSet);
+		jaxbOperand.setValue(operandSet);
+		// Setzen der Property
 		dataRequestArgument.getContent().add(jaxbOperand);
-
+		for (final ISingleQueryInputData singleQueryInputData : dbQueryInputData.getInputData()) {
+			final Operand operand = new Operand();
+			operand.setValue(singleQueryInputData.getServerResponceId());
+			operandSet.getEQ().add(operand);
+		}
 		query.getArgument().add(dataRequestArgument);
-
 		// Befüllen des Control-Arguments
 		dataRequest.setQuery(query);
 		dataRequest.setControl(controlElement);
-
 		return dataRequest;
 	}
 

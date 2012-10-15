@@ -70,8 +70,8 @@ public class ClientProcessResult {
 		for (final String key : keySet) {
 			final ProcessResult result = responseMap.get(key);
 			final IResponseData responseData = result.getResponseData();
-			if (responseData != null && responseData.getReponses() != null) {
-				for (final ISingleResponseData iResponseData : responseData.getReponses()) {
+			if (responseData != null && responseData.getResponses() != null) {
+				for (final ISingleResponseData iResponseData : responseData.getResponses()) {
 					if (!returnCodeAnalyser.isReturnCodeSuccessful(iResponseData.getReturnCode())) {
 						hasErrors = true;
 						// TODO refactor

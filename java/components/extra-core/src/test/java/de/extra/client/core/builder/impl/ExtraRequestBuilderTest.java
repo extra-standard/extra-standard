@@ -36,8 +36,8 @@ import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extra.client.core.builder.IXmlRootElementBuilder;
 import de.extra.client.core.builder.impl.components.TransportBodyDataBuilder;
-import de.extra.client.core.builder.impl.components.TransportBodyElementSequenceBuilder;
 import de.extra.client.core.builder.impl.components.TransportBodyFileInputBase64CharSequenceBuilder;
+import de.extra.client.core.builder.impl.components.TransportBodyRequestQueryElementSequenceBuilder;
 import de.extra.client.core.builder.impl.components.TransportHeaderReceiverBuilder;
 import de.extra.client.core.builder.impl.components.TransportHeaderRequestDetailsBuilder;
 import de.extra.client.core.builder.impl.components.TransportHeaderSenderBuilder;
@@ -49,6 +49,7 @@ import de.extra.client.core.builder.impl.request.RequestTransportBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportHeaderBuilder;
 import de.extra.client.core.config.impl.ExtraProfileConfiguration;
 import de.extra.client.core.model.inputdata.impl.DBQueryInputData;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
@@ -87,7 +88,7 @@ public class ExtraRequestBuilderTest {
 		final IXmlComplexTypeBuilder transportHeaderRequestDetailsBuilder = new TransportHeaderRequestDetailsBuilder();
 		final IXmlComplexTypeBuilder transportBodyDataBuilder = new TransportBodyDataBuilder();
 		final IXmlComplexTypeBuilder transportBodyFileInputBase64CharSequenceBuilder = new TransportBodyFileInputBase64CharSequenceBuilder();
-		final IXmlComplexTypeBuilder transportBodyElementSequenceBuilder = new TransportBodyElementSequenceBuilder();
+		final IXmlComplexTypeBuilder transportBodyElementSequenceBuilder = new TransportBodyRequestQueryElementSequenceBuilder();
 		final IXmlComplexTypeBuilder dataSourcePluginsBuilder = new DataSourcePluginsBuilder();
 		final IXmlComplexTypeBuilder transportPluginsBuilder = new TransportPluginsBuilder();
 		builderMap.put(requestTransportHeaderBuilder.getXmlType(), requestTransportHeaderBuilder);
@@ -111,21 +112,33 @@ public class ExtraRequestBuilderTest {
 
 	@Test
 	public final void testBuildXmlSimleMessage() {
-		final IInputDataContainer senderData = new DBQueryInputData("1", "23", "42");
+		final IInputDataContainer senderData = createTestDummyDBQueryInputData();
 		senderData.setRequestId("requestId");
 		final IExtraProfileConfiguration config = createSimpleConfigFileBean();
 		final RootElementType elementType = extraRequestBuilder.buildXmlMessage(senderData, config);
 		assertNotNull(elementType);
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
-	public final void testBuildXmlSimleMessageWithException() {
-		final IInputDataContainer senderData = new DBQueryInputData("1", "23", "42");
+	// @Test(expected = UnsupportedOperationException.class)
+	// public final void testBuildXmlSimleMessageWithException() {
+	// final IInputDataContainer senderData = createTestDummyDBQueryInputData();
+	// senderData.setRequestId("requestId");
+	// final ExtraProfileConfiguration config = createSimpleConfigFileBean();
+	// config.addElementsHierarchyMap("TransportPlugins",
+	// "xplg:DataTransforms");
+	// final RootElementType elementType =
+	// extraRequestBuilder.buildXmlMessage(senderData, config);
+	// assertNotNull(elementType);
+	// }
+	/**
+	 * @return
+	 */
+	private IDbQueryInputData createTestDummyDBQueryInputData() {
+		final IDbQueryInputData senderData = new DBQueryInputData();
+		senderData.addSingleDBQueryInputData("23", "23");
+		senderData.addSingleDBQueryInputData("24", "24");
 		senderData.setRequestId("requestId");
-		final ExtraProfileConfiguration config = createSimpleConfigFileBean();
-		config.addElementsHierarchyMap("TransportPlugins", "xplg:DataTransforms");
-		final RootElementType elementType = extraRequestBuilder.buildXmlMessage(senderData, config);
-		assertNotNull(elementType);
+		return senderData;
 	}
 
 	private ExtraProfileConfiguration createSimpleConfigFileBean() {

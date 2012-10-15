@@ -18,8 +18,9 @@
  */
 package de.extra.client.core.builder.impl;
 
-import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -72,8 +73,7 @@ public class MessageBuilderLocatorTest {
 		final IXmlComplexTypeBuilder expectedXmlComplexTypeBuilder = new DataTransformConfigurablePluginsBuilder();
 		complexTypeBuilderMap.put("test1", expectedXmlComplexTypeBuilder);
 		final MessageBuilderLocator messageBuilderLocator = createMessageBuilderlocator(complexTypeBuilderMap);
-		final IInputDataContainer senderData = new FileInputData("TestFile.xml", new ByteArrayInputStream(
-				"TestDaten".getBytes()), "23");
+		final IInputDataContainer senderData = createTestinputData("Dummy Content");
 		final IXmlComplexTypeBuilder currentXmlComplexTypeBuilder = messageBuilderLocator.getXmlComplexTypeBuilder(
 				expectedXmlComplexTypeBuilder.getXmlType(), senderData);
 		Assert.assertEquals("Unexpected XmlComplexTypeBuilder found", currentXmlComplexTypeBuilder,
@@ -92,9 +92,16 @@ public class MessageBuilderLocatorTest {
 		complexTypeBuilderMap.put("test1", expectedXmlComplexTypeBuilder);
 		complexTypeBuilderMap.put("test2", expectedXmlComplexTypeBuilder);
 		final MessageBuilderLocator messageBuilderLocator = createMessageBuilderlocator(complexTypeBuilderMap);
-		final IInputDataContainer senderData = new FileInputData("TestFile.xml", new ByteArrayInputStream(
-				"TestDaten".getBytes()), "23");
+
+		final IInputDataContainer senderData = createTestinputData("Dummy Content");
 		messageBuilderLocator.getXmlComplexTypeBuilder(expectedXmlComplexTypeBuilder.getXmlType(), senderData);
+	}
+
+	/**
+	 * @return
+	 */
+	private FileInputData createTestinputData(final String singleContent) {
+		return new FileInputData(new ArrayList<String>(Arrays.asList(singleContent)));
 	}
 
 	/**
@@ -115,8 +122,7 @@ public class MessageBuilderLocatorTest {
 		final MessageBuilderLocator messageBuilderLocator = createMessageBuilderlocator(complexTypeBuilderMap,
 				properties);
 		// Implementierung setzen in Propertyes
-		final IInputDataContainer senderData = new FileInputData("TestFile.xml", new ByteArrayInputStream(
-				"TestDaten".getBytes()), "23");
+		final IInputDataContainer senderData = createTestinputData("Dummy Content");
 		final IXmlComplexTypeBuilder currentXmlComplexTypeBuilder = messageBuilderLocator.getXmlComplexTypeBuilder(
 				expectedXmlComplexTypeBuilder.getXmlType(), senderData);
 		Assert.assertEquals("Unexpected XmlComplexTypeBuilder found", currentXmlComplexTypeBuilder,
