@@ -37,11 +37,11 @@ Aufgrund des modularen Aufbaus und der konfigurativen Steuerung des EXTra-Client
 
 = Installation/Bereitstellung einer Version =
 Die Bereitstellung einer Version erfolgt in diesen Schritten:
-* Auspacken der Auslieferungsversion in einem Verzeichnis auf dem Betriebsrechner
-* Konfigurationsverzeicnisse/-dateien der Fachverfahren im conf Ordner ablegen 
-* Konfigurationsdateien an die Umgebung des Betriebsrechners anpassen (z.B. Verzeichnisse für Input und Output).
-* Eventuell notwendige Infrastruktur (z.B. eine Datenbank) einrichten, initialisieren oder updaten (z.B. über mitgeliefertes SQL-Skript).
-* Batch-Dateien für den Aufruf der Fachverfahren im Ordner _bin_ erstellen bzw. anpassen
+ * Auspacken der Auslieferungsversion in einem Verzeichnis auf dem Betriebsrechner
+ * Konfigurationsverzeicnisse/-dateien der Fachverfahren im conf Ordner ablegen 
+ * Konfigurationsdateien an die Umgebung des Betriebsrechners anpassen (z.B. Verzeichnisse für Input und Output).
+ * Eventuell notwendige Infrastruktur (z.B. eine Datenbank) einrichten, initialisieren oder updaten (z.B. über mitgeliefertes SQL-Skript).
+ * Batch-Dateien für den Aufruf der Fachverfahren im Ordner _bin_ erstellen bzw. anpassen
 
 Genauere Informationen zur Einrichtung eines Fachverfahrens befinden sich in der Dokumentation des jeweiligen Fachverfahrens.
 
@@ -86,6 +86,6 @@ Aufrufparameter:
 
 || Parameter || Beispiel || Beschreibung ||
 || -c || -c conf || Konfiguration wird aus dem Verzeichnis _conf_ gelesen *(Pflicht)* ||
-|| -l || -l logs || Logs werden in das Verzeichnis _logs_ geschrieben
+|| -l || -l logs || Logs werden in das Verzeichnis _logs_ geschrieben ||
 || -h || -h || Hilfe ||
 		
