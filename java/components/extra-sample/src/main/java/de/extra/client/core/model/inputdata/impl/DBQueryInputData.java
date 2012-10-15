@@ -18,7 +18,12 @@
  */
 package de.extra.client.core.model.inputdata.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import de.extrastandard.api.model.content.IDbQueryInputData;
+import de.extrastandard.api.model.content.ISingleQueryInputData;
 
 /**
  * Identifiziert QueryInputDaten aus der DB
@@ -28,45 +33,55 @@ import de.extrastandard.api.model.content.IDbQueryInputData;
  */
 public class DBQueryInputData extends InputDataContainer implements IDbQueryInputData {
 
-	String dbInputDataId;
+	private final List<ISingleQueryInputData> inDBQueryInputDataList = new ArrayList<ISingleQueryInputData>();
 
-	String serverResponceId;
+	@Override
+	public List<ISingleQueryInputData> getInputData() {
+		return Collections.unmodifiableList(inDBQueryInputDataList);
+	}
 
 	/**
-	 * @param dbInputDataId
+	 * @param originRequestId
 	 * @param requestId
 	 * @param serverResponceId
 	 */
-	public DBQueryInputData(final String dbInputDataId, final String requestId, final String serverResponceId) {
+	public DBQueryInputData() {
+		super();
+	}
+
+	/**
+	 * @param originRequestId
+	 * @param requestId
+	 * @param serverResponceId
+	 */
+	public DBQueryInputData(final String requestId) {
 		super();
 		super.setRequestId(requestId);
-		this.dbInputDataId = dbInputDataId;
-		this.serverResponceId = serverResponceId;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see de.extra.client.core.model.IDbQueryInputData#getDbInputDataId()
+	 * @see de.extrastandard.api.model.content.IDbQueryInputData#
+	 * addSingleDBQueryInputData(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public String getDbInputDataId() {
-		return dbInputDataId;
+	public void addSingleDBQueryInputData(final String dbInputDataId, final String serverResponceId) {
+		final InDBQueryInputData singleDBQueryInputData = new InDBQueryInputData(dbInputDataId, serverResponceId);
+		inDBQueryInputDataList.add(singleDBQueryInputData);
+
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see de.extra.client.core.model.IDbQueryInputData#getServerResponceId()
+	 * @see
+	 * de.extrastandard.api.model.content.IInputDataContainer#getInputIdentification
+	 * ()
 	 */
-	@Override
-	public String getServerResponceId() {
-		return serverResponceId;
-	}
-
 	@Override
 	public String getInputIdentification() {
-		return dbInputDataId;
+		return getRequestId();
 	}
 
 	/*
@@ -78,21 +93,22 @@ public class DBQueryInputData extends InputDataContainer implements IDbQueryInpu
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
 		builder.append("DBQueryInputData [");
-		if (getRequestId() != null) {
-			builder.append("requestId=");
-			builder.append(getRequestId());
-			builder.append(", ");
-		}
-		if (dbInputDataId != null) {
-			builder.append("dbInputDataId=");
-			builder.append(dbInputDataId);
-			builder.append(", ");
-		}
-		if (serverResponceId != null) {
-			builder.append("serverResponceId=");
-			builder.append(serverResponceId);
+		if (inDBQueryInputDataList != null) {
+			builder.append("QueryInputDataList=");
+			builder.append(inDBQueryInputDataList);
 		}
 		builder.append("]");
 		return builder.toString();
 	}
+
+	@Override
+	public boolean isContentEmpty() {
+		return inDBQueryInputDataList.isEmpty();
+	}
+
+	@Override
+	public int getContentSize() {
+		return inDBQueryInputDataList.size();
+	}
+
 }

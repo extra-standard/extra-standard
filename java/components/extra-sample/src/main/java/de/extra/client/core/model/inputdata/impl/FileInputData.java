@@ -18,9 +18,14 @@
  */
 package de.extra.client.core.model.inputdata.impl;
 
-import java.io.InputStream;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
-import de.extrastandard.api.model.content.IFileInputdata;
+import de.extrastandard.api.model.content.IFileInputData;
+import de.extrastandard.api.model.content.ISingleContentInputData;
 
 /**
  * Identifiziert InputDaten aus der Filesystem
@@ -28,54 +33,59 @@ import de.extrastandard.api.model.content.IFileInputdata;
  * @author DPRS
  * @version $Id$
  */
-public class FileInputData extends InputDataContainer implements IFileInputdata {
+public class FileInputData extends InputDataContainer implements IFileInputData {
 
-	private final InputStream inputData;
-
-	private final String hashCode;
-
-	private final String fileName;
-
-	public FileInputData(final String fileName, final InputStream inputData, final String hashCode) {
-		super();
-		this.inputData = inputData;
-		this.hashCode = hashCode;
-		this.fileName = fileName;
+	public FileInputData() {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.extra.client.core.model.IFileInputdata#getInputData()
-	 */
-	@Override
-	public InputStream getInputData() {
-		return inputData;
+	private final List<ISingleContentInputData> inputDataList = new ArrayList<ISingleContentInputData>();
+
+	public FileInputData(final Collection<File> inputFiles) {
+		for (final File inputFile : inputFiles) {
+			addSingleInputData(inputFile);
+		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.extra.client.core.model.IFileInputdata#getHashCode()
-	 */
-	@Override
-	public String getHashCode() {
-		return hashCode;
+	public FileInputData(final List<String> inputContents) {
+		for (final String inputContent : inputContents) {
+			addSingleInputData(inputContent);
+		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	public void addSingleInputData(final ISingleContentInputData singleInputData) {
+		inputDataList.add(singleInputData);
+	}
+
+	/**
+	 * This method is used to test purposes, the input data setted as a string
 	 * 
-	 * @see de.extra.client.core.model.IFileInputdata#getFileName()
+	 * @param inputContent
+	 * @return
 	 */
-	@Override
-	public String getFileName() {
-		return fileName;
+	private boolean addSingleInputData(final String inputContent) {
+		final SingleStringInputData singleFileInputData = new SingleStringInputData(inputContent);
+		return inputDataList.add(singleFileInputData);
 	}
 
 	@Override
 	public String getInputIdentification() {
-		return fileName;
+		return "";
+	}
+
+	@Override
+	public List<ISingleContentInputData> getInputData() {
+		return Collections.unmodifiableList(inputDataList);
+	}
+
+	/**
+	 * Adds a new input file to the input data
+	 * 
+	 * @param inputFile
+	 * @return
+	 */
+	private boolean addSingleInputData(final File inputFile) {
+		final SingleFileInputData singleFileInputData = new SingleFileInputData(inputFile);
+		return inputDataList.add(singleFileInputData);
 	}
 
 	/*
@@ -87,17 +97,22 @@ public class FileInputData extends InputDataContainer implements IFileInputdata 
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
 		builder.append("FileInputData [");
-		if (hashCode != null) {
-			builder.append("hashCode=");
-			builder.append(hashCode);
-			builder.append(", ");
-		}
-		if (fileName != null) {
-			builder.append("fileName=");
-			builder.append(fileName);
+		if (inputDataList != null) {
+			builder.append("inputDataList=");
+			builder.append(inputDataList);
 		}
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public boolean isContentEmpty() {
+		return this.inputDataList.isEmpty();
+	}
+
+	@Override
+	public int getContentSize() {
+		return this.inputDataList.size();
 	}
 
 }

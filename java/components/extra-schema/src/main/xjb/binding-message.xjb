@@ -15,10 +15,16 @@
     
 	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ListOfConfirmationOfReceiptType']">
     	<jxb:class name="ListOfConfirmationOfReceipt"/>
+    	<annox:annotate>
+             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"/>
+        </annox:annotate>        	
 	</jxb:bindings> 
 	
 	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ConfirmationOfReceiptType']">
     	<jxb:class name="ConfirmationOfReceipt"/>
+    	<annox:annotate>
+             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"/>
+        </annox:annotate>    	
 	</jxb:bindings> 
 	
 	<jxb:bindings schemaLocation="../xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ListOfDataRequestType']">
