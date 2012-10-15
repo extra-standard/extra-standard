@@ -24,10 +24,10 @@ import java.util.Date;
  * Bildet den Übergang zwischen zwei Status einer {@link IInputData}-Instanz ab.
  * 
  * @author Thorsten Vogel
- * @version $Id: IInputDataTransition.java 487 2012-09-03 13:07:52Z
+ * @version $Id: IProcessTransition.java 487 2012-09-03 13:07:52Z
  *          thorstenvogel@gmail.com $
  */
-public interface IInputDataTransition extends PersistentEntity {
+public interface IProcessTransition extends PersistentEntity {
 
 	/**
 	 * Aktueller Status.
@@ -62,6 +62,6 @@ public interface IInputDataTransition extends PersistentEntity {
 	 * 
 	 * @return Inputdaten, auf die sich diese Transition bezieht.
 	 */
-	IInputData getInputData();
+	IExecution getExecuton();
 
 }

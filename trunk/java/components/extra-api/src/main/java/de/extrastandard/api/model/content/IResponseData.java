@@ -32,15 +32,15 @@ public interface IResponseData {
 	 * 
 	 * @return all results contained in the response
 	 */
-	Collection<ISingleResponseData> getReponses();
+	Collection<ISingleResponseData> getResponses();
 
 	/**
 	 * returns an {@link SingleResponseData} specified by reguestId
 	 * 
-	 * @param reguestId
+	 * @param requestId
 	 * @return
 	 */
-	ISingleResponseData getResponse(String reguestId);
+	ISingleResponseData getResponse(String requestId);
 
 	/**
 	 * Add a {@link SingleResponseData} to ResponseData

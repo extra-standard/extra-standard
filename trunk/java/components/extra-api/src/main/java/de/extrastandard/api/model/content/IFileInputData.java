@@ -18,23 +18,13 @@
  */
 package de.extrastandard.api.model.content;
 
-import java.io.InputStream;
+import java.util.List;
 
-public interface IFileInputdata extends IInputDataContainer {
+public interface IFileInputData extends IInputDataContainer {
 
 	/**
 	 * @return the inputData as Stream
 	 */
-	public abstract InputStream getInputData();
-
-	/**
-	 * @return the hashCode
-	 */
-	public abstract String getHashCode();
-
-	/**
-	 * @return the fileName
-	 */
-	public abstract String getFileName();
+	List<ISingleContentInputData> getInputData();
 
 }
