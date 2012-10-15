@@ -24,32 +24,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
-import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
+import de.drv.dsrv.extrastandard.namespace.request.Transport;
 import de.extra.client.core.builder.IXmlRootElementBuilder;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap
- *
+ * 
  */
 @Named("requestTransportBuilder")
 public class RequestTransportBuilder implements IXmlRootElementBuilder {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(RequestTransportBuilder.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RequestTransportBuilder.class);
 
-	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:XMLTransport";
+	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:Transport";
 
 	@Override
-	public Object buildXmlFragment(final IInputDataContainer senderData,
-			final IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
 		return buildXmlRootElement(config);
 	}
 
 	@Override
 	public RootElementType buildXmlRootElement(final IExtraProfileConfiguration config) {
-		XMLTransport requestTransport = new XMLTransport();
+		final Transport requestTransport = new Transport();
 		LOG.debug("Create XML Transport");
 		return requestTransport;
 	}

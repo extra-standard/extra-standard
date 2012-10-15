@@ -17,14 +17,20 @@ import de.extra.client.core.model.VersanddatenBean;
  */
 package de.extra.client.core.helper;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.Assert;
 
-import de.drv.dsrv.extrastandard.namespace.request.XMLTransport;
+import de.drv.dsrv.extrastandard.namespace.request.Transport;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
+import de.extrastandard.api.model.content.IFileInputData;
 import de.extrastandard.api.model.content.IInputDataContainer;
+import de.extrastandard.api.model.content.IInputDataPluginDescription;
+import de.extrastandard.api.model.content.ISingleContentInputData;
 
 @Named("requestHelper")
 public class RequestHelper {
@@ -53,25 +59,27 @@ public class RequestHelper {
 	 *            Enthält alle Informationen zum den Versandinformationen
 	 * @return JaxB-Objekt XMLTransport
 	 */
-	public XMLTransport buildRequest(IInputDataContainer versanddatenBean,
-			IExtraProfileConfiguration configBean) {
-		XMLTransport request = new XMLTransport();
+	public Transport buildRequest(final IInputDataContainer versanddatenBean,
+			final IExtraProfileConfiguration configBean) {
+		final Transport request = new Transport();
 
 		request.setProfile(extraProfile);
 
 		// Aufbau des Headers
-		request.setTransportHeader(headerHelper.createHeader(configBean,
-				versanddatenBean.getRequestId()));
-
+		request.setTransportHeader(headerHelper.createHeader(configBean, versanddatenBean.getRequestId()));
+		final IFileInputData fileInputdata = versanddatenBean.cast(IFileInputData.class);
+		final List<ISingleContentInputData> inputDataList = fileInputdata.getInputData();
+		// Es kann nicht in Transport mehrere Datensätze übertragen werden!!
+		Assert.isTrue(inputDataList.size() != 1, "Unexpected InputData size.");
+		final ISingleContentInputData singleInputData = inputDataList.get(0);
 		// Aufbau der TransportPlugins
-		if (versanddatenBean.getPlugins() != null) {
-			request.setTransportPlugIns(pluginHelper
-					.buildPluginContainer(versanddatenBean.getPlugins()));
+		final List<IInputDataPluginDescription> plugins = singleInputData.getPlugins();
+		if (plugins != null && !plugins.isEmpty()) {
+			request.setTransportPlugIns(pluginHelper.buildPluginContainer(plugins));
 		}
 
 		// Aufbau des TransportBodys
-		request.setTransportBody(bodyHelper.buildTransportBody(configBean,
-				versanddatenBean));
+		request.setTransportBody(bodyHelper.buildTransportBody(configBean, singleInputData));
 
 		return request;
 	}

@@ -18,7 +18,11 @@
  */
 package de.extra.client.core.process;
 
-import de.extrastandard.api.model.content.IInputDataContainer;
+import de.extrastandard.api.model.content.IDbQueryInputData;
+import de.extrastandard.api.model.content.IFileInputData;
+import de.extrastandard.api.model.content.ISingleContentInputData;
+import de.extrastandard.api.model.content.ISingleQueryInputData;
+import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
 
 /**
@@ -27,6 +31,33 @@ import de.extrastandard.api.model.execution.IInputData;
  */
 public interface IRequestIdAcquisitionStrategy {
 
-	void setRequestId(IInputData inputData, IInputDataContainer inputDataContainer);
+	/**
+	 * @param inputData
+	 * @param singleContentInputData
+	 */
+	void setRequestId(IInputData inputData, ISingleContentInputData singleContentInputData);
+
+	/**
+	 * If input data include only one element, the element.requestId is taken as
+	 * InputData.requestId.
+	 * 
+	 * Otherwise execution.id set as RequestId the Input Data
+	 * 
+	 * @param fileInputData
+	 * @param execution
+	 */
+	void setRequestId(IFileInputData fileInputData, IExecution execution);
+
+	/**
+	 * @param dbQueryInputData
+	 * @param execution
+	 */
+	void setRequestId(IDbQueryInputData dbQueryInputData, IExecution execution);
+
+	/**
+	 * @param dbInputData
+	 * @param singleQueryInputData
+	 */
+	void setRequestId(IInputData dbInputData, ISingleQueryInputData singleQueryInputData);
 
 }

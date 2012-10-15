@@ -22,7 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -37,7 +37,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.XmlMappingException;
-import org.springframework.util.Assert;
 
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.builder.IExtraRequestBuilder;
@@ -47,10 +46,13 @@ import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraConfigRuntimeException;
 import de.extrastandard.api.exception.ExtraCoreRuntimeException;
 import de.extrastandard.api.exception.ExtraRuntimeException;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
+import de.extrastandard.api.model.content.IFileInputData;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.IResponseData;
-import de.extrastandard.api.model.content.ISingleResponseData;
+import de.extrastandard.api.model.content.ISingleContentInputData;
+import de.extrastandard.api.model.content.ISingleQueryInputData;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.model.execution.IInputData;
@@ -64,7 +66,7 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
 @Named("clientCore")
 public class ClientCore implements ApplicationContextAware {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ClientCore.class);
+	private static final Logger logger = LoggerFactory.getLogger(ClientCore.class);
 
 	ApplicationContext applicationContext;
 
@@ -126,104 +128,133 @@ public class ClientCore implements ApplicationContextAware {
 
 		final PhaseQualifier phaseQualifier = PhaseQualifier.resolveByName(executionPhase);
 
-		final boolean isProcedureStartPhase = executionPersistence.isProcedureStartPhase(executionProcedure,
-				executionPhase);
+		final IInputDataContainer versandDaten = dataPlugin.getData();
 
-		IExecution execution = null;
-		if (isProcedureStartPhase) {
-			execution = executionPersistence.startExecution(executionProcedure, processParameters);
+		logger.info("For Procedure und Phase {} sind {} entityes gefunden.", executionProcedure + " -> "
+				+ executionPhase, versandDaten.getContentSize());
+
+		if (versandDaten.isContentEmpty()) {
+			return applicationContext.getBean("clientProcessResult", ClientProcessResult.class);
 		}
+
+		final IExecution execution = executionPersistence.startExecution(executionProcedure, processParameters,
+				phaseQualifier);
 
 		final IExtraProfileConfiguration configFile = configPlugin.getConfigFile();
 
-		final Iterator<IInputDataContainer> versandDatenIterator = dataPlugin.getData();
+		ClientProcessResult clientProcessResult = null;
 
+		if (versandDaten.isImplementationOf(IFileInputData.class)) {
+			final IFileInputData fileInputData = versandDaten.cast(IFileInputData.class);
+			clientProcessResult = processFileInputData(fileInputData, configFile, execution);
+		} else if (versandDaten.isImplementationOf(IDbQueryInputData.class)) {
+			final IDbQueryInputData dbQueryInputData = versandDaten.cast(IDbQueryInputData.class);
+			clientProcessResult = processDbQueryInputData(dbQueryInputData, configFile, execution);
+		} else {
+			throw new ExtraCoreRuntimeException("Unexpected InputData: " + versandDaten.getClass());
+		}
+		return clientProcessResult;
+	}
+
+	private ClientProcessResult processDbQueryInputData(final IDbQueryInputData dbQueryInputData,
+			final IExtraProfileConfiguration configFile, final IExecution execution) {
 		final ClientProcessResult clientProcessResult = applicationContext.getBean("clientProcessResult",
 				ClientProcessResult.class);
+		try {
 
-		while (versandDatenIterator.hasNext()) {
-			final IInputDataContainer inputDataContainer = versandDatenIterator.next();
-			final String inputIdentification = inputDataContainer.getInputIdentification();
-			IInputData inputData = null;
-			try {
-				if (isProcedureStartPhase) {
-					inputData = execution.startInputData(inputIdentification, null);
-					requestIdAcquisitionStrategy.setRequestId(inputData, inputDataContainer);
-				} else {
-					inputData = executionPersistence.findInputDataByRequestId(inputDataContainer.getRequestId());
-					Assert.notNull(inputData, "Keine Daten sind zu dem Request gefunden. RequestId: "
-							+ inputDataContainer.getRequestId());
-				}
-
-				final IResponseData responseData = processInputData(inputDataContainer, configFile, inputData);
-
-				/**
-				 * TODO Hier ist die Enschränkung. Momentan wird pro Lauf nur
-				 * eine Datei versendent. TODO API nach der ersten Pilotierung
-				 * sollten angepasst werden
-				 * 
-				 */
-				final String requestId = inputDataContainer.getRequestId();
-				final ISingleResponseData singleResponseData = responseData.getResponse(requestId);
-				String responseId = null;
-				if (isProcedureStartPhase && singleResponseData != null) {
-					responseId = singleResponseData.getResponseId();
-					inputData.success(responseId, phaseQualifier);
-				} else {
-					inputData.success(phaseQualifier);
-				}
-				/**
-				 * TODO ENDE
-				 * */
-
-				clientProcessResult.addResult(inputDataContainer, responseData);
-			} catch (final ExtraConfigRuntimeException extraConfigException) {
-				LOG.error("Exception in der Extra-Processing", extraConfigException);
-				clientProcessResult.addException(inputDataContainer, extraConfigException);
-				failed(inputData, extraConfigException);
-			} catch (final ExtraRuntimeException extraRuntimeException) {
-				LOG.error("Exception in der Extra-Processing", extraRuntimeException);
-				clientProcessResult.addException(inputDataContainer, extraRuntimeException);
-				failed(inputData, extraRuntimeException);
-			} catch (final Exception exception) {
-				LOG.error("Exception in der Extra-Processing", exception);
-				clientProcessResult.addException(inputDataContainer, exception);
-				failed(inputData, exception);
+			final List<ISingleQueryInputData> singleQueryInputDataList = dbQueryInputData.getInputData();
+			for (final ISingleQueryInputData singleQueryInputData : singleQueryInputDataList) {
+				final String serverResponseId = singleQueryInputData.getServerResponceId();
+				final String originRequestId = singleQueryInputData.getOriginRequestId();
+				final IInputData dbInputData = execution.startDbQueryInputData(serverResponseId, originRequestId);
+				requestIdAcquisitionStrategy.setRequestId(dbInputData, singleQueryInputData);
 			}
+			requestIdAcquisitionStrategy.setRequestId(dbQueryInputData, execution);
+			final IResponseData responseData = processInputData(dbQueryInputData, configFile, execution);
+
+			clientProcessResult.addResult(dbQueryInputData, responseData);
+			execution.endExecution(responseData);
+
+		} catch (final ExtraConfigRuntimeException extraConfigException) {
+			logger.error("Exception in der Extra-Processing", extraConfigException);
+			clientProcessResult.addException(dbQueryInputData, extraConfigException);
+			failed(execution, extraConfigException);
+		} catch (final ExtraRuntimeException extraRuntimeException) {
+			logger.error("Exception in der Extra-Processing", extraRuntimeException);
+			clientProcessResult.addException(dbQueryInputData, extraRuntimeException);
+			failed(execution, extraRuntimeException);
+		} catch (final Exception exception) {
+			logger.error("Exception in der Extra-Processing", exception);
+			clientProcessResult.addException(dbQueryInputData, exception);
+			failed(execution, exception);
 		}
 		return clientProcessResult;
 
 	}
 
-	private void failed(final IInputData inputData, final ExtraRuntimeException extraRuntimeException) {
-		if (inputData != null) {
-			inputData.failed(extraRuntimeException);
+	private ClientProcessResult processFileInputData(final IFileInputData fileInputData,
+			final IExtraProfileConfiguration configFile, final IExecution execution) {
+		final ClientProcessResult clientProcessResult = applicationContext.getBean("clientProcessResult",
+				ClientProcessResult.class);
+		try {
+
+			for (final ISingleContentInputData singleContentInputData : fileInputData.getInputData()) {
+				final String hashCode = singleContentInputData.getHashCode();
+				final String inputIdentifier = singleContentInputData.getInputIdentifier();
+				final IInputData inputData = execution.startContentInputData(inputIdentifier, hashCode);
+				requestIdAcquisitionStrategy.setRequestId(inputData, singleContentInputData);
+			}
+			requestIdAcquisitionStrategy.setRequestId(fileInputData, execution);
+
+			final IResponseData responseData = processInputData(fileInputData, configFile, execution);
+			clientProcessResult.addResult(fileInputData, responseData);
+
+			execution.endExecution(responseData);
+
+		} catch (final ExtraConfigRuntimeException extraConfigException) {
+			logger.error("Exception in der Extra-Processing", extraConfigException);
+			clientProcessResult.addException(fileInputData, extraConfigException);
+			// failed(inputData, extraConfigException);
+		} catch (final ExtraRuntimeException extraRuntimeException) {
+			logger.error("Exception in der Extra-Processing", extraRuntimeException);
+			clientProcessResult.addException(fileInputData, extraRuntimeException);
+			// failed(inputData, extraRuntimeException);
+		} catch (final Exception exception) {
+			logger.error("Exception in der Extra-Processing", exception);
+			clientProcessResult.addException(fileInputData, exception);
+			// failed(inputData, exception);
+		}
+		return clientProcessResult;
+	}
+
+	private void failed(final IExecution execution, final ExtraRuntimeException extraRuntimeException) {
+		if (execution != null) {
+			execution.failed(extraRuntimeException);
 		}
 
 	}
 
-	private void failed(final IInputData inputData, final Exception exception) {
-		if (inputData != null) {
-			inputData.failed(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION.name(), exception.getMessage());
+	private void failed(final IExecution execution, final Exception exception) {
+		if (execution != null) {
+			execution.failed(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION.name(), exception.getMessage());
 		}
 	}
 
 	private IResponseData processInputData(final IInputDataContainer inputDataContainer,
-			final IExtraProfileConfiguration configFile, final IInputData inputData) {
+			final IExtraProfileConfiguration configFile, final IExecution execution) {
 		try {
 			final RootElementType request = extraMessageBuilder.buildXmlMessage(inputDataContainer, configFile);
+			execution.updateProgress(PersistentStatus.ENVELOPED);
 
 			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			final StreamResult streamResult = new StreamResult(outputStream);
-
 			marshaller.marshal(request, streamResult);
+			logger.debug("Ausgabe: " + outputStream.toString());
+			logger.debug("Übergabe an OutputPlugin");
 
-			LOG.debug("Ausgabe: " + outputStream.toString());
-			LOG.debug("Übergabe an OutputPlugin");
-			inputData.updateProgress(PersistentStatus.ENVELOPED);
 			final InputStream responseAsStream = outputPlugin.outputData(new ByteArrayInputStream(outputStream
 					.toByteArray()));
-			inputData.updateProgress(PersistentStatus.TRANSMITTED);
+			execution.updateProgress(PersistentStatus.TRANSMITTED);
 			final IResponseData responseData = responsePlugin.processResponse(responseAsStream);
 
 			return responseData;

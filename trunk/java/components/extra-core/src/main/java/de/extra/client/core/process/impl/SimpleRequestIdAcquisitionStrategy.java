@@ -18,6 +18,8 @@
  */
 package de.extra.client.core.process.impl;
 
+import java.util.List;
+
 import javax.inject.Named;
 
 import org.apache.commons.lang.StringUtils;
@@ -25,7 +27,12 @@ import org.springframework.util.Assert;
 
 import de.extra.client.core.process.IRequestIdAcquisitionStrategy;
 import de.extrastandard.api.exception.ExtraCoreRuntimeException;
+import de.extrastandard.api.model.content.IDbQueryInputData;
+import de.extrastandard.api.model.content.IFileInputData;
 import de.extrastandard.api.model.content.IInputDataContainer;
+import de.extrastandard.api.model.content.ISingleContentInputData;
+import de.extrastandard.api.model.content.ISingleQueryInputData;
+import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
 
 /**
@@ -49,38 +56,80 @@ public class SimpleRequestIdAcquisitionStrategy implements IRequestIdAcquisition
 	 *      de.extrastandard.api.model.content.IInputDataContainer)
 	 */
 	@Override
-	public void setRequestId(final IInputData inputData, final IInputDataContainer inputDataContainer) {
-		// Should still get more complexity, then distribute to multiple
-		// classes.
+	public void setRequestId(final IInputData inputData, final ISingleContentInputData singleContentInputData) {
 		Assert.notNull(inputData, "Inputdata is null");
-		Assert.notNull(inputDataContainer, "inputDataContainer is null");
-
-		if (StringUtils.isNotEmpty(inputDataContainer.getRequestId())
+		Assert.notNull(singleContentInputData, "inputDataContainer is null");
+		if (StringUtils.isNotEmpty(singleContentInputData.getRequestId())
 				&& StringUtils.isNotEmpty(inputData.getRequestId())) {
 			// RequestId is alredy calculated. No start phase of the Scenario
-			if (!inputDataContainer.getRequestId().equals(inputData.getRequestId())) {
+			if (!singleContentInputData.getRequestId().equals(inputData.getRequestId())) {
 				// Expected RequestId is the same
 				throw new ExtraCoreRuntimeException(
 						"RequestId between different InputData and InputDataContainer. Inputdata RequestId: "
-								+ inputDataContainer.getRequestId() + " inputDataContainer RequestId: "
-								+ inputDataContainer.getRequestId());
+								+ inputData.getRequestId() + " inputDataContainer RequestId: "
+								+ singleContentInputData.getRequestId());
 			}
 		}
-		if (StringUtils.isNotEmpty(inputDataContainer.getRequestId())) {
+		if (StringUtils.isNotEmpty(singleContentInputData.getRequestId())) {
 			// Strategy 1
-			inputData.setRequestId(inputDataContainer.getRequestId());
+			inputData.setRequestId(singleContentInputData.getRequestId());
 		} else if (inputData.getRequestId() == null) {
 			// Strategy 2
 			final String requestId = inputData.calculateRequestId();
 			inputData.setRequestId(requestId);
 			inputData.saveOrUpdate();
-			inputDataContainer.setRequestId(requestId);
-
+			singleContentInputData.setRequestId(requestId);
 		} else if (inputData.getRequestId() != null) {
 			// Strategy 3
-			inputDataContainer.setRequestId(inputData.getRequestId());
+			singleContentInputData.setRequestId(inputData.getRequestId());
 		}
 
+	}
+
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see de.extra.client.core.process.IRequestIdAcquisitionStrategy#setRequestId(de.extrastandard.api.model.content.IFileInputData,
+	 *      de.extrastandard.api.model.execution.IExecution)
+	 */
+	@Override
+	public void setRequestId(final IFileInputData fileInputData, final IExecution execution) {
+		Assert.notNull(fileInputData, "FileInputData is null");
+		Assert.notNull(execution, "Execution is null");
+		Assert.isTrue(!fileInputData.isContentEmpty(), "Content is Empty!!");
+		if (fileInputData.getContentSize() == 1) {
+			final List<ISingleContentInputData> inputDataList = fileInputData.getInputData();
+			final ISingleContentInputData singleContentInputData = inputDataList.get(0);
+			fileInputData.setRequestId(singleContentInputData.getRequestId());
+		} else {
+			final Long executionId = execution.getId();
+			fileInputData.setRequestId(String.valueOf(executionId));
+		}
+	}
+
+	@Override
+	public void setRequestId(final IDbQueryInputData dbQueryInputData, final IExecution execution) {
+		Assert.notNull(dbQueryInputData, "DbQueryInputData is null");
+		Assert.notNull(execution, "Execution is null");
+		Assert.isTrue(!dbQueryInputData.isContentEmpty(), "Content is Empty!!");
+		if (dbQueryInputData.getContentSize() == 1) {
+			final List<ISingleQueryInputData> inputDataList = dbQueryInputData.getInputData();
+			final ISingleQueryInputData singleQueryInputData = inputDataList.get(0);
+			dbQueryInputData.setRequestId(singleQueryInputData.getRequestId());
+		} else {
+			final Long executionId = execution.getId();
+			dbQueryInputData.setRequestId(String.valueOf(executionId));
+		}
+	}
+
+	@Override
+	public void setRequestId(final IInputData inputData, final ISingleQueryInputData singleQueryInputData) {
+		Assert.notNull(inputData, "Inputdata is null");
+		Assert.notNull(singleQueryInputData, "inputDataContainer is null");
+		final String requestId = inputData.calculateRequestId();
+		inputData.setRequestId(requestId);
+		inputData.saveOrUpdate();
+		singleQueryInputData.setRequestId(requestId);
 	}
 
 }

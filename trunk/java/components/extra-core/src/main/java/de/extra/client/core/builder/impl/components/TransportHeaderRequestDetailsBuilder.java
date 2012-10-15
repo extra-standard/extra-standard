@@ -82,10 +82,10 @@ public class TransportHeaderRequestDetailsBuilder implements IXmlComplexTypeBuil
 		requestDetails.setApplication(application);
 
 		// Setting RequestDetails
-		requestId.setClazz("0");
+		// requestId.setClazz("0");
 
-		final String requestID = senderData.getInputIdentification();
-		requestId.setValue(requestID);
+		final String requestIDString = senderData.getRequestId();
+		requestId.setValue(requestIDString);
 		requestDetails.setRequestID(requestId);
 		requestDetails.setTimeStamp(CreateCurrentTimestamp());
 

@@ -43,7 +43,7 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 /**
  * Diese klasse steuer XmlBuilder Anhang konfiguration an und erstellt einen
  * XmlRootElement
- *
+ * 
  * @author Leonid Potap
  * @since 1.0.0
  * @version 1.0.0
@@ -51,23 +51,20 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 @Named("extraRequestBuilder")
 public class ExtraRequestBuilder implements IExtraRequestBuilder {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ExtraRequestBuilder.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ExtraRequestBuilder.class);
 
 	@Inject
 	@Named("messageBuilderLocator")
 	IMessageBuilderLocator messageBuilderLocator;
 
 	@Override
-	public RootElementType buildXmlMessage(final IInputDataContainer senderData,
-			final IExtraProfileConfiguration config) {
+	public RootElementType buildXmlMessage(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
 		Assert.notNull(senderData, "SenderData is null");
 		Assert.notNull(config, "ConfigFileBean is null");
-		String rootElementName = config.getRootElement();
-		IXmlRootElementBuilder rootElementBuilder = messageBuilderLocator
-				.getRootXmlBuilder(rootElementName);
-		RootElementType rootXmlFragment = rootElementBuilder
-				.buildXmlRootElement(config);
+		final String rootElementName = config.getRootElement();
+		final IXmlRootElementBuilder rootElementBuilder = messageBuilderLocator.getRootXmlBuilder(rootElementName);
+		Assert.notNull(rootElementBuilder, "RootElementBuilder is null for ElementType: " + rootElementName);
+		final RootElementType rootXmlFragment = rootElementBuilder.buildXmlRootElement(config);
 
 		buildXmlMessage(rootXmlFragment, rootElementName, config, senderData);
 		return rootXmlFragment;
@@ -78,44 +75,37 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 	 * Fügt ein XML Fragment zu dem ParentXmlFragement. Über die Konfiguration
 	 * wird ein Builder gefunden und die Methode zum bauen der XML Nachricht aufgerufen.
 	 * </pre>
-	 *
+	 * 
 	 * @param parentXmlFragement
 	 * @param parentElementName
 	 * @param config
 	 * @param senderData
 	 */
-	private void buildXmlMessage(final Object parentXmlFragement,
-			final String parentElementName, final IExtraProfileConfiguration config,
-			final IInputDataContainer senderData) {
-		List<String> childElements = config.getChildElements(parentElementName);
-		for (String childElementName : childElements) {
-			IXmlComplexTypeBuilder childElementComplexTypeBuilder = messageBuilderLocator
+	private void buildXmlMessage(final Object parentXmlFragement, final String parentElementName,
+			final IExtraProfileConfiguration config, final IInputDataContainer senderData) {
+		final List<String> childElements = config.getChildElements(parentElementName);
+		for (final String childElementName : childElements) {
+			final IXmlComplexTypeBuilder childElementComplexTypeBuilder = messageBuilderLocator
 					.getXmlComplexTypeBuilder(childElementName, senderData);
 			if (childElementComplexTypeBuilder == null) {
-				throw new UnsupportedOperationException(
-						"MessageBuilder for ElementType not found: "
-								+ childElementName);
+				throw new UnsupportedOperationException("MessageBuilder for ElementType not found: " + childElementName);
 			}
 
-			Object xmlChildElement = childElementComplexTypeBuilder
-					.buildXmlFragment(senderData, config);
-			String fieldName = config.getFieldName(parentElementName,
-					childElementName);
+			final Object xmlChildElement = childElementComplexTypeBuilder.buildXmlFragment(senderData, config);
+			final String fieldName = config.getFieldName(parentElementName, childElementName);
 			setXmlElement(parentXmlFragement, xmlChildElement, fieldName);
-			buildXmlMessage(xmlChildElement, childElementName, config,
-					senderData);
+			buildXmlMessage(xmlChildElement, childElementName, config, senderData);
 		}
 	}
 
 	/**
 	 * Set XMLChildValue in XMLParenObjekt
-	 *
+	 * 
 	 * @param parentXMLElement
 	 * @param childXmlElement
 	 * @param fieldName
 	 */
-	private void setXmlElement(final Object parentXMLElement, final Object childXmlElement,
-			final String fieldName) {
+	private void setXmlElement(final Object parentXMLElement, final Object childXmlElement, final String fieldName) {
 		if (parentXMLElement instanceof AnyPlugInContainerType) {
 			processPlugins(parentXMLElement, childXmlElement);
 		} else {
@@ -125,35 +115,32 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 
 	/**
 	 * Set Fields.
-	 *
+	 * 
 	 * @param parentXMLElement
 	 * @param childXmlElement
 	 * @param propertyName
 	 */
-	private void processField(final Object parentXMLElement, final Object childXmlElement,
-			final String propertyName) {
-		BeanWrapper beanWrapper = new BeanWrapperImpl(parentXMLElement);
-		PropertyValue propertyValue = new PropertyValue(propertyName,
-				childXmlElement);
+	private void processField(final Object parentXMLElement, final Object childXmlElement, final String propertyName) {
+		final BeanWrapper beanWrapper = new BeanWrapperImpl(parentXMLElement);
+		final PropertyValue propertyValue = new PropertyValue(propertyName, childXmlElement);
 		beanWrapper.setPropertyValue(propertyValue);
 		LOG.debug("{}", parentXMLElement);
 	}
 
 	/**
 	 * Bearbeitet Plugins Elements
-	 *
+	 * 
 	 * @param parentXMLElement
 	 * @param childXmlElement
 	 */
 	private void processPlugins(final Object parentXMLElement, final Object childXmlElement) {
 		// Bei dem AnyPlugInContainerType werden die childElements zu einem
 		// List hinzugefügt
-		AnyPlugInContainerType parentAnyPlugInContainerType = (AnyPlugInContainerType) parentXMLElement;
+		final AnyPlugInContainerType parentAnyPlugInContainerType = (AnyPlugInContainerType) parentXMLElement;
 		if (childXmlElement instanceof Collection<?>) {
 			// Es kann sein, dass mehrere Plugins hinzugefügt werden
-			Collection<?> collectionChildXmlElement = (Collection<?>) childXmlElement;
-			parentAnyPlugInContainerType.getAny().addAll(
-					collectionChildXmlElement);
+			final Collection<?> collectionChildXmlElement = (Collection<?>) childXmlElement;
+			parentAnyPlugInContainerType.getAny().addAll(collectionChildXmlElement);
 		} else {
 			parentAnyPlugInContainerType.getAny().add(childXmlElement);
 		}
