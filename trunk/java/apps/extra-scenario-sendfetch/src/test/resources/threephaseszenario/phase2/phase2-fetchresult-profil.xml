@@ -4,19 +4,19 @@
 	xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1"
 	xmlns:xreq="http://www.extra-standard.de/namespace/request/1">
 	<element>
-		<Name>xcpt:XMLTransport</Name>
+		<Name>xcpt:Transport</Name>
 	</element>
 	<element>
 		<Name>req:TransportHeader</Name>
-		<Elternelement>XMLTransport</Elternelement>
+		<Elternelement>Transport</Elternelement>
 	</element>
 	<element>
 		<Name>req:TransportBody</Name>
-		<Elternelement>XMLTransport</Elternelement>
+		<Elternelement>Transport</Elternelement>
 	</element>
 	<element>
 		<Name>req:TransportPlugins</Name>
-		<Elternelement>XMLTransport</Elternelement>
+		<Elternelement>Transport</Elternelement>
 	</element>
 	<element>
 		<Name>xcpt:Sender</Name>
