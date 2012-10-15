@@ -1,6 +1,6 @@
 #summary Einrichtung und Konfiguration der eXTra-Client Auslieferungsversion
 
-= Einleitung =
+= Betriebsanleitung =
 
 Auf dieser Seite wird beschrieben, wie die Auslieferungsversion des eXTra-Clients auf einem Betriebsrechner eingerichtet und konfiguriert werden kann.
 
