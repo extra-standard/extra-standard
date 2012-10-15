@@ -52,8 +52,6 @@ import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.InputDataRepository;
-import de.extrastandard.persistence.repository.ProcedureRepository;
-import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * @author Leonid Potap
@@ -76,27 +74,13 @@ public class InputDataIT {
 	private transient InputDataRepository inputDataRepository;
 
 	@Inject
-	@Named("procedureRepository")
-	private ProcedureRepository procedureRepository;
-
-	@Inject
-	@Named("statusRepository")
-	private StatusRepository statusRepository;
-
-	@Inject
 	@Named("executionPersistenceJPA")
 	private IExecutionPersistence executionPersistence;
-
-	private Procedure procedureSendFetch;
-
-	private Status statusResultexpected;
 
 	@Before
 	public void before() throws Exception {
 
 		persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
-		procedureSendFetch = procedureRepository.findByName(PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME);
-		statusResultexpected = statusRepository.findByName(PersistentStatus.RESULTS_EXPECTED.name());
 	}
 
 	@Test

@@ -35,6 +35,60 @@ import de.extrastandard.api.model.content.IResponseData;
 public interface IExecution extends PersistentEntity {
 
 	/**
+	 * Persistiert eine neue {@link IInputData} Instanz.
+	 * 
+	 * @param inputIdentifier
+	 *            Identifikation der Eingabedaten
+	 * @param hashCode
+	 *            Hashcode der Eingabedaten
+	 * @return Instanz
+	 */
+	IInputData startContentInputData(String inputIdentifier, String hashCode);
+
+	/**
+	 * Startet InputData für eine DB Query
+	 * 
+	 * @param serverResponseId
+	 * @param originRequestId
+	 * @return
+	 */
+	IInputData startDbQueryInputData(String serverResponseId, String originRequestId);
+
+	/**
+	 * Aktualisiert diese Execution mit dem angegebenen Status.
+	 * 
+	 * @param newPersistentStatus
+	 */
+	void updateProgress(PersistentStatus newPersistentStatus);
+
+	/**
+	 * Beendet diese Execution.
+	 * 
+	 * @param responseData
+	 */
+	void endExecution(IResponseData responseData);
+
+	/**
+	 * Marks this instance with the specified error data. This method do not
+	 * throw any exception
+	 * 
+	 * @param errorCode
+	 *            Code des Fehlers.
+	 * @param errorMessage
+	 *            Fehlermeldung.
+	 */
+	void failed(String errorCode, String errorMessage);
+
+	/**
+	 * Marks this instance with the specified error data. This method do not
+	 * throw any exception
+	 * 
+	 * @param exception
+	 *            die den Fehler auslösende Exception.
+	 */
+	void failed(ExtraRuntimeException exception);
+
+	/**
 	 * Parameter für diese Execution.
 	 * 
 	 * @return Parameter dieser Execution
@@ -61,51 +115,6 @@ public interface IExecution extends PersistentEntity {
 	 * @return Endzeitpunkt, oder <code>null</code> falls noch nicht beendet.
 	 */
 	Date getEndTime();
-
-	/**
-	 * Persistiert eine neue {@link IInputData} Instanz.
-	 * 
-	 * @param inputIdentifier
-	 *            Identifikation der Eingabedaten
-	 * @param hashCode
-	 *            Hashcode der Eingabedaten
-	 * @return Instanz
-	 */
-	IInputData startContentInputData(String inputIdentifier, String hashCode);
-
-	/**
-	 * Beendet diese Execution.
-	 * 
-	 * @param responseData
-	 */
-	void endExecution(IResponseData responseData);
-
-	/**
-	 * Aktualisiert diese Execution mit dem angegebenen Status.
-	 * 
-	 * @param newPersistentStatus
-	 */
-	void updateProgress(PersistentStatus newPersistentStatus);
-
-	/**
-	 * Marks this instance with the specified error data. This method do not
-	 * throw any exception
-	 * 
-	 * @param errorCode
-	 *            Code des Fehlers.
-	 * @param errorMessage
-	 *            Fehlermeldung.
-	 */
-	void failed(String errorCode, String errorMessage);
-
-	/**
-	 * Marks this instance with the specified error data. This method do not
-	 * throw any exception
-	 * 
-	 * @param exception
-	 *            die den Fehler auslösende Exception.
-	 */
-	void failed(ExtraRuntimeException exception);
 
 	/**
 	 * Liefert <code>true</code>, falls ein Fehler vorliegt.
@@ -139,16 +148,7 @@ public interface IExecution extends PersistentEntity {
 	String getPhase();
 
 	/**
-	 * Startet InputData für eine DB Query
-	 * 
-	 * @param serverResponseId
-	 * @param originRequestId
-	 * @return
-	 */
-	IInputData startDbQueryInputData(String serverResponseId, String originRequestId);
-
-	/**
-	 * @return
+	 * @return InputDaten der Execution
 	 */
 	Set<IInputData> getInputDataSet();
 

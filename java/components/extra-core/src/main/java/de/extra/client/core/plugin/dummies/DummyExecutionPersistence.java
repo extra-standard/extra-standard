@@ -20,12 +20,6 @@ public class DummyExecutionPersistence implements IExecutionPersistence {
 	}
 
 	@Override
-	public boolean isProcedureStartPhase(final String executionProcedure, final String executionPhase) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public IInputData findInputDataByRequestId(final String requestId) {
 		// TODO Auto-generated method stub
 		return null;

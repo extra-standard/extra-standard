@@ -79,9 +79,6 @@ public class PersistenceSendFetchPhase2IT {
 	@Before
 	public void before() throws Exception {
 
-		statusResultsExpected = statusRepository.findByName(PersistentStatus.RESULTS_EXPECTED.name());
-		statusResultsProcessed = statusRepository.findByName(PersistentStatus.RESULTS_PROCESSED.name());
-		statusReceiptConfirmed = statusRepository.findByName(PersistentStatus.RECEIPT_CONFIRMED.name());
 		statusDone = statusRepository.findByName(PersistentStatus.DONE.name());
 
 		persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();

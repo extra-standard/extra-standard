@@ -32,7 +32,6 @@ import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.MandatorRepository;
-import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * @author Leonid Potap
@@ -44,10 +43,6 @@ public class PersistenceTestSetup {
 	private static final String MANDATOR_TEST = "TEST";
 
 	public static final String PROCEDURE_DATA_MATCH_NAME = "Datenabgleich";
-
-	@Inject
-	@Named("statusRepository")
-	private transient StatusRepository statusRepository;
 
 	@Inject
 	@Named("mandatorRepository")
@@ -65,12 +60,6 @@ public class PersistenceTestSetup {
 		new Status(PersistentStatus.ENVELOPED);
 
 		new Status(PersistentStatus.TRANSMITTED);
-
-		new Status(PersistentStatus.RESULTS_EXPECTED);
-
-		new Status(PersistentStatus.RESULTS_PROCESSED);
-
-		new Status(PersistentStatus.RECEIPT_CONFIRMED);
 
 		new Status(PersistentStatus.FAIL);
 
