@@ -45,7 +45,6 @@ import de.extrastandard.api.model.execution.IProcessTransition;
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
-import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * @author Thorsten Vogel
@@ -63,14 +62,6 @@ public class PersistenceIT {
 	@Inject
 	@Named("executionPersistenceJPA")
 	private ExecutionPersistence executionPersistence;
-
-	@Inject
-	@Named("statusRepository")
-	private transient StatusRepository statusRepository;
-
-	@Inject
-	@Named("persistenceTestSetup")
-	private transient PersistenceTestSetup persistenceTestSetup;
 
 	@Before
 	public void before() throws Exception {

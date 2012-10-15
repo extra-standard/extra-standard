@@ -7,15 +7,4 @@ public interface IProcedureType {
 	 */
 	public abstract String getName();
 
-	/**
-	 * @return the startPhase of the Procedure
-	 */
-	public String getStartPhase();
-
-	/**
-	 * @param phase
-	 * @return true, if phase configured as a start phase of this ProcedureType
-	 */
-	public boolean isProcedureStartPhase(String phase);
-
 }

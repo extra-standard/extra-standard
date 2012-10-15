@@ -44,21 +44,6 @@ public enum PersistentStatus {
 	TRANSMITTED(3L),
 
 	/**
-	 * Status wenn Ergebnisse erwartet werden.
-	 */
-	RESULTS_EXPECTED(4L),
-
-	/**
-	 * Status nach Verarbeitung der Ergebnisse.
-	 */
-	RESULTS_PROCESSED(5L),
-
-	/**
-	 * Status wenn Empfangsbestätigung eingeholt wurde.
-	 */
-	RECEIPT_CONFIRMED(6L),
-
-	/**
 	 * Abgeschlossen.
 	 */
 	DONE(7L),

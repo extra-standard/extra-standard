@@ -109,21 +109,6 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 		return name;
 	}
 
-	/**
-	 * @return the startPhase
-	 */
-	@Override
-	public String getStartPhase() {
-		return startPhase;
-	}
-
-	@Override
-	public boolean isProcedureStartPhase(final String phase) {
-		Assert.notNull(phase, "Phase must be specified");
-		final boolean isStartPhaseOfProcedure = phase.equalsIgnoreCase(this.startPhase);
-		return isStartPhaseOfProcedure;
-	}
-
 	public boolean isProcedureEndPhase(final String phase) {
 		Assert.notNull(phase, "Phase must be specified");
 		final boolean isEndPhaseOfProcedure = phase.equalsIgnoreCase(this.endPhase);

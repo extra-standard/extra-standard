@@ -30,7 +30,6 @@ import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.IProcedure;
-import de.extrastandard.api.model.execution.IProcedureType;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.InputDataRepository;
@@ -75,16 +74,6 @@ public class ExecutionPersistence implements IExecutionPersistence {
 		final IProcedure procedure = procedureRepository.findByName(procedureName);
 		Assert.notNull(procedure, "Procedure not found. Name : " + procedureName);
 		return new Execution(procedure, parameters, phaseQualifier);
-	}
-
-	@Override
-	public boolean isProcedureStartPhase(final String procedureName, final String phase) {
-		Assert.notNull(procedureName, "ProcedureName is null");
-		Assert.notNull(phase, "Phase is null");
-		final IProcedure procedure = procedureRepository.findByName(procedureName);
-		Assert.notNull(procedure, "Procedure is null for Name: " + procedureName);
-		final IProcedureType procedureType = procedure.getProcedureType();
-		return procedureType.isProcedureStartPhase(phase);
 	}
 
 	@Override

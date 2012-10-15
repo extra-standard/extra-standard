@@ -242,29 +242,11 @@ public class InputData extends AbstractEntity implements IInputData {
 	}
 
 	/**
-	 * @param returnText
-	 *            the returnText to set
-	 */
-	@Override
-	public void setReturnText(final String returnText) {
-		this.returnText = returnText;
-	}
-
-	/**
 	 * @return the returnCode
 	 */
 	@Override
 	public String getReturnCode() {
 		return returnCode;
-	}
-
-	/**
-	 * @param returnCode
-	 *            the returnCode to set
-	 */
-	@Override
-	public void setReturnCode(final String returnCode) {
-		this.returnCode = returnCode;
 	}
 
 	/**

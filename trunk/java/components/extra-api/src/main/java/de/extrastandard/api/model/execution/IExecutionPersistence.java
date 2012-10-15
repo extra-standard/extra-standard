@@ -45,14 +45,6 @@ public interface IExecutionPersistence {
 	IExecution startExecution(String procedureName, String parameters, PhaseQualifier phaseQualifier);
 
 	/**
-	 * @param executionProcedure
-	 * @param executionPhase
-	 * @return true, if executionPhase is starting phase of the
-	 *         executionProcedure
-	 */
-	boolean isProcedureStartPhase(String executionProcedure, String executionPhase);
-
-	/**
 	 * @param requestId
 	 * @return
 	 */

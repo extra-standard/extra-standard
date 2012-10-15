@@ -30,13 +30,12 @@ import de.extrastandard.api.model.content.ISingleResponseData;
 public interface IInputData extends PersistentEntity {
 
 	/**
-	 * Markiert diese Instanz als erfolgreich übertragen.
+	 * MarkiertInputData ala Übertragen. Die ResponseDaten werden in den
+	 * InputData festgehalten
 	 * 
-	 * @param responseId
-	 *            ID der Response.
-	 * @param phaseQualifier
+	 * @param singleResponseData
 	 */
-	// void success(PhaseQualifier phaseQualifier);
+	void transmitted(ISingleResponseData singleResponseData);
 
 	/**
 	 * @return requestId, unique identification of this message
@@ -90,31 +89,13 @@ public interface IInputData extends PersistentEntity {
 	String getReturnText();
 
 	/**
-	 * @param returnText
-	 */
-	void setReturnText(String returnText);
-
-	/**
 	 * @return
 	 */
 	String getReturnCode();
 
 	/**
-	 * @param returnCode
-	 */
-	void setReturnCode(String returnCode);
-
-	/**
 	 * @return nextPhase
 	 */
 	IPhaseConnection getNextPhaseConnection();
-
-	/**
-	 * MarkiertInputData ala Übertragen. Die ResponseDaten werden in den
-	 * InputData festgehalten
-	 * 
-	 * @param singleResponseData
-	 */
-	void transmitted(ISingleResponseData singleResponseData);
 
 }
