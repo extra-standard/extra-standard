@@ -44,7 +44,7 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 	/**
 	 * Speichert die Hierarchy des Elements evtl. eine neue Klasse erstellen
 	 */
-	private Map<String, List<String>> elementsHierarchyMap = new HashMap<String, List<String>>();
+	private final Map<String, List<String>> elementsHierarchyMap = new HashMap<String, List<String>>();
 
 	// Paketebene vorhanden
 	private boolean packageLayer = false;
@@ -53,44 +53,23 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 	// Art der Nutzdaten
 	private String contentType;
 
-	/* (non-Javadoc)
-	 * @see de.extra.client.core.model.IExtraProfileConfiguration#getContentType()
-	 */
-	@Override
-	public String getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(String contentType) {
+	public void setContentType(final String contentType) {
 		this.contentType = contentType;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.extra.client.core.model.IExtraProfileConfiguration#isMessageLayer()
-	 */
-	@Override
-	public boolean isMessageLayer() {
-		return messageLayer;
-	}
-
-	public void setMessageLayer(boolean messageLayer) {
+	public void setMessageLayer(final boolean messageLayer) {
 		this.messageLayer = messageLayer;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.extra.client.core.model.IExtraProfileConfiguration#isPackageLayer()
-	 */
-	@Override
-	public boolean isPackageLayer() {
-		return packageLayer;
-	}
-
-	public void setPackageLayer(boolean packageLayer) {
+	public void setPackageLayer(final boolean packageLayer) {
 		this.packageLayer = packageLayer;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.extra.client.core.model.IExtraProfileConfiguration#getRootElement()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.extra.client.core.model.IExtraProfileConfiguration#getRootElement()
 	 */
 	@Override
 	public String getRootElement() {
@@ -100,12 +79,16 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 	/**
 	 * @param parentElement
 	 */
-	public void setRootElement(String rootElement) {
+	public void setRootElement(final String rootElement) {
 		this.rootElement = rootElement;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.extra.client.core.model.IExtraProfileConfiguration#getElementsHierarchyMap()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.extra.client.core.model.IExtraProfileConfiguration#getElementsHierarchyMap
+	 * ()
 	 */
 	@Override
 	public Map<String, List<String>> getElementsHierarchyMap() {
@@ -116,7 +99,7 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 	 * @param elementsHierarchyMap
 	 *            the elementsHierarchyMap to set
 	 */
-	public void addElementsHierarchyMap(String elternElement, String elementName) {
+	public void addElementsHierarchyMap(final String elternElement, final String elementName) {
 		List<String> childs = elementsHierarchyMap.get(elternElement);
 		if (childs == null) {
 			childs = new LinkedList<String>();
@@ -126,31 +109,37 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see de.extra.client.core.model.IExtraProfileConfiguration#getChildElements(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.extra.client.core.model.IExtraProfileConfiguration#getChildElements
+	 * (java.lang.String)
 	 */
 	@Override
-	public List<String> getChildElements(String parentElement) {
-		String preparedParentElement = removePrefix(parentElement);
-		List<String> childSlements = elementsHierarchyMap
-				.get(preparedParentElement);
+	public List<String> getChildElements(final String parentElement) {
+		final String preparedParentElement = removePrefix(parentElement);
+		List<String> childSlements = elementsHierarchyMap.get(preparedParentElement);
 		if (childSlements == null) {
 			childSlements = new ArrayList<String>();
 		}
 		return childSlements;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.extra.client.core.model.IExtraProfileConfiguration#getFieldName(java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.extra.client.core.model.IExtraProfileConfiguration#getFieldName(java
+	 * .lang.String, java.lang.String)
 	 */
 	@Override
-	public String getFieldName(String parentElement, String childElement) {
+	public String getFieldName(final String parentElement, final String childElement) {
 		// Die Implementierung geht davon aus, dass Feldname des Elements dem
 		// childElementName ohne Prefix entspricht.
 		// TODO Den Profiler anschauen.
-		String childElementOhnePrefix = removePrefix(childElement);
-		String childElementFieldName = StringUtils
-				.uncapitalize(childElementOhnePrefix);
+		final String childElementOhnePrefix = removePrefix(childElement);
+		String childElementFieldName = StringUtils.uncapitalize(childElementOhnePrefix);
 		// Noch ein Workaround Plugin -> PlugIn konvertieren
 		childElementFieldName = convertPluginName(childElementFieldName);
 		return childElementFieldName;
@@ -160,12 +149,12 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 	 * @param elemenNameMitPrefix
 	 * @return
 	 */
-	private String removePrefix(String elemenNameMitPrefix) {
+	private String removePrefix(final String elemenNameMitPrefix) {
 		// Workaround. Momentan stimmen die Namem in
 		// request-abholen-DEUEV-profil-konfiguration.xml nicht
 		// überrein
 		// Hier entferne ich prefix vor dem ':'
-		String[] splitArray = StringUtils.split(elemenNameMitPrefix, ":");
+		final String[] splitArray = StringUtils.split(elemenNameMitPrefix, ":");
 		return splitArray[1];
 	}
 
@@ -175,9 +164,8 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 	 * @param fieldName
 	 * @return
 	 */
-	private String convertPluginName(String fieldName) {
-		String plugInConverted = StringUtils.replace(fieldName, "Plugin",
-				"PlugIn");
+	private String convertPluginName(final String fieldName) {
+		final String plugInConverted = StringUtils.replace(fieldName, "Plugin", "PlugIn");
 		return plugInConverted;
 	}
 
@@ -189,12 +177,11 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 	@Override
 	public String toString() {
 		final int maxLen = 10;
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("ConfigFileBean [parentElement=");
 		builder.append(rootElement);
 		builder.append(", elementsHierarchyMap=");
-		builder.append(elementsHierarchyMap != null ? toString(
-				elementsHierarchyMap.entrySet(), maxLen) : null);
+		builder.append(elementsHierarchyMap != null ? toString(elementsHierarchyMap.entrySet(), maxLen) : null);
 		builder.append(", packageLayer=");
 		builder.append(packageLayer);
 		builder.append(", messageLayer=");
@@ -205,12 +192,11 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 		return builder.toString();
 	}
 
-	private String toString(Collection<?> collection, int maxLen) {
-		StringBuilder builder = new StringBuilder();
+	private String toString(final Collection<?> collection, final int maxLen) {
+		final StringBuilder builder = new StringBuilder();
 		builder.append("[");
 		int i = 0;
-		for (Iterator<?> iterator = collection.iterator(); iterator.hasNext()
-				&& i < maxLen; i++) {
+		for (final Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
 			if (i > 0)
 				builder.append(", ");
 			builder.append(iterator.next());
