@@ -21,16 +21,14 @@ package de.extrastandard.api.model.content;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author DSRV
+ * @version $Id$
+ */
 public interface IExtraProfileConfiguration {
 
-	String getContentType();
-
-	boolean isMessageLayer();
-
-	boolean isPackageLayer();
-
 	/**
-	 * @return
+	 * @return rootElement Type
 	 */
 	String getRootElement();
 
@@ -48,6 +46,11 @@ public interface IExtraProfileConfiguration {
 	 */
 	List<String> getChildElements(String parentElement);
 
+	/**
+	 * @param parentElement
+	 * @param childElement
+	 * @return
+	 */
 	String getFieldName(String parentElement, String childElement);
 
 }

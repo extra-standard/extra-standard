@@ -20,6 +20,11 @@ package de.extrastandard.api.model.content;
 
 import java.util.List;
 
+/**
+ * 
+ * @author DSRV
+ * @version $Id$
+ */
 public interface IFileInputData extends IInputDataContainer {
 
 	/**

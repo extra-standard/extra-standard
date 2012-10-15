@@ -20,6 +20,12 @@ package de.extrastandard.api.model.content;
 
 import java.util.List;
 
+/**
+ * Query InputData
+ * 
+ * @author Leonid Potap
+ * @version $Id$ Seit Version 1.0.0
+ */
 public interface IDbQueryInputData extends IInputDataContainer {
 
 	/**

@@ -23,9 +23,6 @@ import de.extrastandard.api.util.IImplementor;
 /**
  * <pre>
  * Beinhaltet die InputDaten für das Extra Klient.
- * In der Phase 1 sind die InputData plugins DataRequestId relevant 
- * In der Phase 2 requestID
- * TODO Refactor
  * </pre>
  * 
  * @author DPRS

@@ -18,5 +18,11 @@
  */
 package de.extrastandard.api.model.content;
 
+/**
+ * MarkerInterface
+ * 
+ * @author Leonid Potap
+ * @version $Id$
+ */
 public interface IInputDataPluginDescription {
 }
