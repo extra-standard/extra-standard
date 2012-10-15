@@ -21,6 +21,8 @@ package de.extrastandard.persistence.model;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import de.extra.client.core.responce.impl.ResponseData;
 import de.extra.client.core.responce.impl.SingleResponseData;
 import de.extrastandard.api.model.content.IResponseData;
@@ -55,6 +57,7 @@ public class PersistenceTestSetup {
 	@Named("executionPersistenceJPA")
 	private ExecutionPersistence executionPersistence;
 
+	@Transactional
 	public void setupInitialDaten() {
 
 		new Status(PersistentStatus.INITIAL);
@@ -77,6 +80,7 @@ public class PersistenceTestSetup {
 
 	}
 
+	@Transactional
 	public void setupProcedureSendFeths() {
 
 		final ProcedureType procedureSendFetch = new ProcedureType("SCENARIO_SEND_FETCH", PhaseQualifier.PHASE1.name(),
@@ -96,6 +100,7 @@ public class PersistenceTestSetup {
 
 	}
 
+	@Transactional
 	public IExecution setUpTestDatenForProcedureSendFetchPhase2() {
 		final IExecution executionForTestPhase2 = executionPersistence.startExecution(
 				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "-c d:/extras/configdir", PhaseQualifier.PHASE1);
@@ -112,6 +117,7 @@ public class PersistenceTestSetup {
 		return executionForTestPhase2;
 	}
 
+	@Transactional
 	public IExecution setUpTestDatenForProcedureSendFetchPhase3() {
 		final IExecution executionForTestPhase3 = executionPersistence.startExecution(
 				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "-c d:/extras/configdir2", PhaseQualifier.PHASE2);

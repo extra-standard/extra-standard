@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -52,20 +51,13 @@ public class InitDataSetup {
 
 	@Test
 	public void setupInitialDaten() throws InterruptedException {
-		setupInitialDatenTransactional();
-		Thread.sleep(3000);
-	}
-
-	@Test
-	@Transactional
-	public void setupInitialDatenTransactional() throws InterruptedException {
 		LOGGER.info("setupInitialDaten");
 		persistenceTestSetup.setupInitialDaten();
 		persistenceTestSetup.setupProcedureSendFeths();
 		// persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
 		// persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase3();
-		// Thread.sleep(30000);
+		Thread.sleep(3000);
 		LOGGER.info("setupInitialDaten abgeschlossen");
+		Thread.sleep(3000);
 	}
-
 }
