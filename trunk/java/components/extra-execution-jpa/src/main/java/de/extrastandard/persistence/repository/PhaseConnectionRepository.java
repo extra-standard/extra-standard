@@ -18,17 +18,27 @@
  */
 package de.extrastandard.persistence.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import de.extrastandard.persistence.model.ProcessTransition;
+import de.extrastandard.persistence.model.InputData;
+import de.extrastandard.persistence.model.PhaseConnection;
 
 /**
- * Repository für ProcessTransition.
- *
+ * Repository für Mandanten.
+ * 
  * @author Thorsten Vogel
- * @version $Id: InputDataTransitionRepository.java 508 2012-09-04 09:35:41Z thorstenvogel@gmail.com $
+ * @version $Id: MandatorRepository.java 508 2012-09-04 09:35:41Z
+ *          thorstenvogel@gmail.com $
  */
-@Repository("inputDataTransitionRepository")
-public interface InputDataTransitionRepository extends JpaRepository<ProcessTransition, Long> {
+@Repository("phaseConnectionRepository")
+public interface PhaseConnectionRepository extends JpaRepository<PhaseConnection, Long> {
+
+	@Query("FROM PhaseConnection WHERE targetInputData = :targetInputData")
+	List<PhaseConnection> findByTargetInputData(@Param("targetInputData") InputData inputData);
+
 }

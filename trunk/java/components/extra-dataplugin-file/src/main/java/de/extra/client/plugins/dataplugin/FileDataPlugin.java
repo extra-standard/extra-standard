@@ -19,9 +19,7 @@
 package de.extra.client.plugins.dataplugin;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Iterator;
+import java.util.Collection;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.extra.client.core.model.inputdata.impl.FileInputData;
+import de.extra.client.core.model.inputdata.impl.InputDataContainer;
 import de.extra.client.plugins.dataplugin.helper.DataPluginHelper;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.observer.ITransportObserver;
@@ -45,11 +44,7 @@ import de.extrastandard.api.plugin.IDataPlugin;
 @Named("fileDataPlugin")
 public class FileDataPlugin implements IDataPlugin {
 
-	private static final Logger LOG = LoggerFactory.getLogger(FileDataPlugin.class);
-
-	// @Inject
-	// @Named("dataPluginController")
-	// private IDataPluginController dataPluginController;
+	private static final Logger logger = LoggerFactory.getLogger(FileDataPlugin.class);
 
 	@Value("${plugins.dataplugin.fileDataPlugin.inputVerzeichnis}")
 	private File inputDirectory;
@@ -63,37 +58,12 @@ public class FileDataPlugin implements IDataPlugin {
 	private ITransportObserver transportObserver;
 
 	@Override
-	public Iterator<IInputDataContainer> getData() {
-		final Iterator<File> iterator = FileUtils.iterateFiles(inputDirectory, TrueFileFilter.INSTANCE, null);
-		return new Iterator<IInputDataContainer>() {
+	public IInputDataContainer getData() {
+		final Collection<File> inputFiles = FileUtils.listFiles(inputDirectory, TrueFileFilter.INSTANCE, null);
+		final InputDataContainer inputDataContainer = new FileInputData(inputFiles);
+		logger.info("FileDataPlugin finisched for Directory: {}. Found {} files", inputDirectory, inputFiles.size());
+		return inputDataContainer;
 
-			@Override
-			public boolean hasNext() {
-				return iterator.hasNext();
-			}
-
-			@Override
-			public IInputDataContainer next() {
-				final File inputFile = iterator.next();
-
-				FileInputStream inputData;
-				try {
-					inputData = new FileInputStream(inputFile);
-				} catch (final FileNotFoundException e) {
-					// TODO exception reinbauen
-					throw new IllegalStateException(e);
-				}
-
-				// TODO HashCode Setzen?
-				final FileInputData inputDataContainer = new FileInputData(inputFile.getName(), inputData, null);
-				transportObserver.requestDataReceived(inputFile.getAbsolutePath(), inputFile.length());
-				return inputDataContainer;
-			}
-
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-		};
 	}
+
 }

@@ -24,7 +24,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 
 import junit.framework.Assert;
 
@@ -37,6 +37,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import de.extra.client.core.model.inputdata.impl.DBQueryInputData;
 import de.extrastandard.api.model.content.IInputDataContainer;
+import de.extrastandard.api.model.content.ISingleQueryInputData;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.PhaseQualifier;
@@ -80,17 +81,14 @@ public class DBQueryDataPluginTest {
 
 	@Test
 	public final void testGetData() {
-		final Iterator<IInputDataContainer> data = dbQueryDataPlugin.getData();
-		while (data.hasNext()) {
-			final IInputDataContainer inputDataContainer = data.next();
-			Assert.assertTrue(inputDataContainer.isImplementationOf(DBQueryInputData.class));
-			final DBQueryInputData dbQueryInputData = inputDataContainer.cast(DBQueryInputData.class);
-
-			Assert.assertEquals(REQUEST_23, dbQueryInputData.getRequestId());
-			Assert.assertEquals(String.valueOf(ID_23), dbQueryInputData.getDbInputDataId());
-			Assert.assertEquals(RESPONSE_23, dbQueryInputData.getServerResponceId());
-		}
-
+		final IInputDataContainer inputDataContainer = dbQueryDataPlugin.getData();
+		Assert.assertTrue(inputDataContainer.isImplementationOf(DBQueryInputData.class));
+		final DBQueryInputData dbQueryInputData = inputDataContainer.cast(DBQueryInputData.class);
+		final List<ISingleQueryInputData> singleQueryInputDatas = dbQueryInputData.getInputData();
+		Assert.assertEquals(1, singleQueryInputDatas.size());
+		final ISingleQueryInputData singleQueryInputData = singleQueryInputDatas.get(0);
+		Assert.assertEquals(RESPONSE_23, singleQueryInputData.getServerResponceId());
+		Assert.assertEquals(REQUEST_23, singleQueryInputData.getOriginRequestId());
 	}
 
 }

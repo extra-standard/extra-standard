@@ -20,6 +20,7 @@ package de.extrastandard.persistence.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -38,16 +39,27 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
+import de.extrastandard.api.exception.ExtraRuntimeException;
+import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.IPhaseConnection;
 import de.extrastandard.api.model.execution.IProcedure;
+import de.extrastandard.api.model.execution.IProcessTransition;
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
+import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.ExecutionRepository;
+import de.extrastandard.persistence.repository.InputDataRepository;
+import de.extrastandard.persistence.repository.PhaseConnectionRepository;
 import de.extrastandard.persistence.repository.ProcedureRepository;
 import de.extrastandard.persistence.repository.StatusRepository;
 
@@ -65,6 +77,8 @@ public class Execution extends AbstractEntity implements IExecution {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final Logger logger = LoggerFactory.getLogger(InputData.class);
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "execution_entity_seq_gen")
 	@SequenceGenerator(name = "execution_entity_seq_gen", sequenceName = "seq_execution_id")
@@ -79,16 +93,25 @@ public class Execution extends AbstractEntity implements IExecution {
 	@Column(name = "parameters")
 	private String parameters;
 
+	@Column(name = "phase")
+	private String phase;
+
+	@Column(name = "error_code")
+	private String errorCode;
+
+	@Column(name = "error_message")
+	private String errorMessage;
+
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "procedure_id")
 	private Procedure procedure;
 
 	@ManyToOne
-	@JoinColumn(name = "status_id")
-	private Status status;
+	@JoinColumn(name = "last_transition_id")
+	private ProcessTransition lastTransition;
 
 	@OneToMany(mappedBy = "execution", fetch = FetchType.LAZY)
-	private Set<InputData> inputDataSet = new HashSet<InputData>();
+	private final Set<InputData> inputDataSet = new HashSet<InputData>();
 
 	@Inject
 	@Named("executionRepository")
@@ -105,6 +128,16 @@ public class Execution extends AbstractEntity implements IExecution {
 	@Transient
 	private transient ProcedureRepository procedureRepository;
 
+	@Inject
+	@Named("inputDataRepository")
+	@Transient
+	private transient InputDataRepository inputDataRepository;
+
+	@Inject
+	@Named("phaseConnectionRepository")
+	@Transient
+	private transient PhaseConnectionRepository phaseConnectionRepository;
+
 	/**
 	 *
 	 */
@@ -117,13 +150,67 @@ public class Execution extends AbstractEntity implements IExecution {
 	 * @param parameters
 	 *            Parameter, mit denen die Execution gestartet wurde.
 	 */
-	public Execution(final IProcedure procedure, final String parameters) {
+	public Execution(final IProcedure procedure, final String parameters, final PhaseQualifier phaseQualifier) {
 		Assert.notNull(procedure, "Procedure is null");
+		Assert.notNull(phaseQualifier, "PhaseQualifier is null");
 		this.parameters = parameters;
+		this.phase = phaseQualifier.getName();
 		this.startTime = new Date();
-		this.status = statusRepository.findByName(PersistentStatus.INITIAL.name());
 		this.procedure = procedureRepository.findByName(procedure.getName());
 		saveOrUpdate();
+		final ProcessTransition transition = new ProcessTransition(this);
+		this.lastTransition = transition;
+		saveOrUpdate();
+	}
+
+	/**
+	 * @see de.extrastandard.api.model.execution.IInputData#updateProgress(de.extrastandard.api.model.execution.IStatus,
+	 *      java.lang.String)
+	 */
+	@Override
+	@Transactional
+	public void updateProgress(final PersistentStatus newPersistentStatusEnum) {
+		Assert.notNull(newPersistentStatusEnum, "newStatus must be specified");
+		final Status newPersistentStatus = statusRepository.findOne(newPersistentStatusEnum.getId());
+
+		final IProcessTransition lastTransition = this.getLastTransition();
+		final IStatus currentStatus = lastTransition.getCurrentStatus();
+
+		final Date lastTransitionDate = this.lastTransition.getTransitionDate();
+		final ProcessTransition transition = new ProcessTransition(this, currentStatus, newPersistentStatus,
+				lastTransitionDate);
+		this.lastTransition = transition;
+		saveOrUpdate();
+	}
+
+	/**
+	 * @see de.extrastandard.api.model.execution.IInputData#failed(java.lang.String,
+	 *      java.lang.String)
+	 */
+	@Override
+	public void failed(final String errorCode, final String errorMessage) {
+		try {
+			this.errorCode = errorCode;
+			this.errorMessage = errorMessage;
+			updateProgress(PersistentStatus.FAIL);
+		} catch (final Exception exception) {
+			logger.error("Exception beim inputData.failed", exception);
+		}
+	}
+
+	/**
+	 * @see de.extrastandard.api.model.execution.IInputData#failed(de.extrastandard.api.exception.ExtraRuntimeException)
+	 */
+	@Override
+	public void failed(final ExtraRuntimeException exception) {
+		try {
+			this.errorCode = exception.getCode().name();
+			this.errorMessage = exception.getMessage();
+			failed(errorCode, errorMessage);
+
+		} catch (final Exception exception2) {
+			logger.error("Exception beim inputData.failed", exception);
+		}
 	}
 
 	/**
@@ -131,9 +218,29 @@ public class Execution extends AbstractEntity implements IExecution {
 	 */
 	@Override
 	@Transactional
-	public void endExecution(final IStatus status) {
+	public void endExecution(final IResponseData responseData) {
+		Assert.notNull(responseData, "ResponseData is null");
 		this.endTime = new Date();
+		updateProgress(PersistentStatus.DONE);
 		saveOrUpdate();
+		// update Inputdata
+		for (final InputData inputData : inputDataSet) {
+			final String requestId = inputData.getRequestId();
+			final ISingleResponseData singleResponseData = responseData.getResponse(requestId);
+			Assert.notNull(singleResponseData, "ISingleResponseData is null for RequestId: " + requestId);
+			inputData.transmitted(singleResponseData);
+			if (!this.procedure.isProcedureEndPhase(this.phase)) {
+				final String nextPhasenQualifier = this.procedure.getNextPhase(this.phase);
+				new PhaseConnection(inputData, nextPhasenQualifier);
+			}
+			// Abgearbeitete PhaseConnection schliessen
+			final List<PhaseConnection> quellePhaseConnections = phaseConnectionRepository
+					.findByTargetInputData(inputData);
+			for (final PhaseConnection quellePhaseConnection : quellePhaseConnections) {
+				quellePhaseConnection.success();
+			}
+
+		}
 	}
 
 	/**
@@ -142,11 +249,22 @@ public class Execution extends AbstractEntity implements IExecution {
 	 */
 	@Override
 	@Transactional
-	public IInputData startInputData(final String inputIdentifier, final String hashCode) {
+	public IInputData startContentInputData(final String inputIdentifier, final String hashCode) {
 		final InputData inputData = new InputData(this, inputIdentifier, hashCode);
 		inputData.setExecution(this);
 		this.inputDataSet.add(inputData);
 		saveOrUpdate();
+		return inputData;
+	}
+
+	@Override
+	public IInputData startDbQueryInputData(final String serverResponseId, final String originRequestId) {
+		final InputData inputData = new InputData(this, serverResponseId);
+		this.inputDataSet.add(inputData);
+		saveOrUpdate();
+		final IInputData originInputData = inputDataRepository.findByRequestId(originRequestId);
+		final IPhaseConnection nextPhaseConnection = originInputData.getNextPhaseConnection();
+		nextPhaseConnection.setTargetInputData(inputData);
 		return inputData;
 	}
 
@@ -183,14 +301,6 @@ public class Execution extends AbstractEntity implements IExecution {
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IExecution#getStatus()
-	 */
-	@Override
-	public IStatus getStatus() {
-		return status;
-	}
-
-	/**
 	 * @see de.extrastandard.api.model.execution.IExecution#getEndTime()
 	 */
 	@Override
@@ -218,16 +328,16 @@ public class Execution extends AbstractEntity implements IExecution {
 		this.procedure = procedure;
 	}
 
-	public void setStatus(final Status status) {
-		this.status = status;
-	}
-
 	public void setEndTime(final Date endTime) {
 		this.endTime = endTime;
 	}
 
-	public void setInputDataSet(final Set<InputData> inputDataSet) {
-		this.inputDataSet = inputDataSet;
+	/**
+	 * @return the inputDataSet
+	 */
+	@Override
+	public HashSet<IInputData> getInputDataSet() {
+		return new HashSet<IInputData>(this.inputDataSet);
 	}
 
 	@Override
@@ -246,10 +356,62 @@ public class Execution extends AbstractEntity implements IExecution {
 		builder.append(startTime);
 		builder.append(", endTime=");
 		builder.append(endTime);
-		builder.append(", status=");
-		builder.append(status);
+		builder.append(", lastTransition=");
+		builder.append(lastTransition);
+		builder.append(", errorCode=");
+		builder.append(errorCode);
+		builder.append(", errorMessage=");
+		builder.append(errorMessage);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	/**
+	 * @return the phase
+	 */
+	@Override
+	public String getPhase() {
+		return phase;
+	}
+
+	/**
+	 * @param phase
+	 *            the phase to set
+	 */
+	public void setPhase(final String phase) {
+		this.phase = phase;
+	}
+
+	/**
+	 * @return the lastTransition
+	 */
+	@Override
+	public ProcessTransition getLastTransition() {
+		return lastTransition;
+	}
+
+	/**
+	 * @return the errorCode
+	 */
+	@Override
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	/**
+	 * @return the errorMessage
+	 */
+	@Override
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	/**
+	 * @see de.extrastandard.api.model.execution.IInputData#hasError()
+	 */
+	@Override
+	public boolean hasError() {
+		return StringUtils.hasText(errorCode) || StringUtils.hasText(errorMessage);
 	}
 
 }

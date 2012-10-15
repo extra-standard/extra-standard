@@ -22,7 +22,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.Transient;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -32,10 +31,12 @@ import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.IProcedureType;
-import de.extrastandard.api.model.execution.IStatus;
+import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.InputDataRepository;
+import de.extrastandard.persistence.repository.PhaseConnectionRepository;
 import de.extrastandard.persistence.repository.ProcedureRepository;
+import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * Einstiegsklasse zum Management von Executions.
@@ -47,34 +48,33 @@ import de.extrastandard.persistence.repository.ProcedureRepository;
 @Named("executionPersistenceJPA")
 public class ExecutionPersistence implements IExecutionPersistence {
 
-	@Transient
 	@Inject
 	@Named("procedureRepository")
 	private transient ProcedureRepository procedureRepository;
 
-	@Transient
 	@Inject
 	@Named("inputDataRepository")
 	private transient InputDataRepository inputDataRepository;
 
-	/**
-	 * @see de.extrastandard.api.model.execution.IExecutionPersistence#startExecution(java.lang.String)
-	 */
-	@Override
-	public IExecution startExecution(final IProcedure procedure, final String parameters) {
-		return new Execution(procedure, parameters);
-	}
+	@Inject
+	@Named("statusRepository")
+	private transient StatusRepository statusRepository;
+
+	@Inject
+	@Named("phaseConnectionRepository")
+	private transient PhaseConnectionRepository phaseConnectionRepository;
 
 	/**
 	 * @see de.extrastandard.api.model.execution.IExecutionPersistence#startExecution(java.lang.String)
 	 */
 	@Override
 	@Transactional
-	public IExecution startExecution(final String procedureName, final String parameters) {
+	public IExecution startExecution(final String procedureName, final String parameters,
+			final PhaseQualifier phaseQualifier) {
 		Assert.notNull(procedureName, "ProcedureName is null");
 		final IProcedure procedure = procedureRepository.findByName(procedureName);
 		Assert.notNull(procedure, "Procedure not found. Name : " + procedureName);
-		return startExecution(procedure, parameters);
+		return new Execution(procedure, parameters, phaseQualifier);
 	}
 
 	@Override
@@ -99,6 +99,7 @@ public class ExecutionPersistence implements IExecutionPersistence {
 	 * @return
 	 */
 	@Override
+	@Transactional
 	public List<IInputData> findInputDataForExecution(final String procedureName, final PhaseQualifier phaseQualifier) {
 		Assert.notNull(procedureName, "ProcedureName is null");
 		Assert.notNull(phaseQualifier, "Phase is null");
@@ -115,12 +116,9 @@ public class ExecutionPersistence implements IExecutionPersistence {
 	public List<IInputData> findInputDataForExecution(final IProcedure procedure, final PhaseQualifier phaseQualifier) {
 		Assert.notNull(procedure, "Procedure is null");
 		Assert.notNull(phaseQualifier, "Phase is null");
-		final IProcedureType procedureType = procedure.getProcedureType();
-		final IStatus phaseStartStatus = procedureType.getPhaseStartStatus(phaseQualifier);
-		Assert.notNull(phaseStartStatus, "PhaseStartStatus is not found for Procedure: " + procedure.getName()
-				+ " und Phase: " + phaseQualifier.getName());
-		final List<IInputData> inputDateList = inputDataRepository
-				.findByProcedureAndStatus(procedure, phaseStartStatus);
+		final Status statusInitial = statusRepository.findOne(PersistentStatus.INITIAL.getId());
+		final List<IInputData> inputDateList = inputDataRepository.findByProcedureAndPhaseQualifierAndStatus(procedure,
+				phaseQualifier.getName(), statusInitial);
 		return inputDateList;
 	}
 
