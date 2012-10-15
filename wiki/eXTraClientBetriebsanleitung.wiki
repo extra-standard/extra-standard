@@ -2,7 +2,7 @@
 
 = Betriebsanleitung =
 
-Auf dieser Seite wird beschrieben, wie die Auslieferungsversion des eXTra-Clients auf einem Betriebsrechner eingerichtet und konfiguriert werden kann. Die Auslieferungsversion des eXTra-Clients besteht aus einem zip-Archiv für den Basisteil. Die einzelnen Fachverfahren werden jeweils in gesonderten zip-Archiven ausgeliefert.
+Auf dieser Seite wird beschrieben, wie die Auslieferungsversion des eXTra-Clients auf einem Betriebsrechner eingerichtet und konfiguriert werden kann. Die Auslieferungsversion des eXTra-Clients besteht aus einem zip-Archiv (z.B. extra-cli-1.0.0.zip). In diesem befindet sich der Basisteil. Die einzelnen Fachverfahren werden jeweils in gesonderten zip-Archiven ausgeliefert.
 
 Der eXTra-Client unterstützt folgende Anwendungsfallszenarien:
  * Fachliche Inputdatei in ein eXTra-konformes Format (XML) wandeln
@@ -11,11 +11,7 @@ Der eXTra-Client unterstützt folgende Anwendungsfallszenarien:
 
 Durch Kombination dieser Anwendungsfälle können komplexere Kommunikationsabläufe realisiert werden (z.B. der Sende-/Holbetrieb). Aufgrund seines modularen Aufbaus und vielfältiger Konfigurationsmöglichkeiten kann der eXTra-Client auch zur Durchführung von Fachverfahren (z.B. Sterbedatenabgleich) eingesetzt werden. Programmänderungen des eXTra-Clients sind nur bei tiefgreifenden Funktionserweiterungen (z.B. Anpassungen an neuen eXTra-Standard) notwendig.
 
-Für den Kommunikationsablauf bietet der eXTra-Client folgende technische Unterstützung:
-====Protokollierung der Kommunikation in einer Datenbank====
-Die Kommunikationsschritte können in einer DB protokolliert werden. So können z.B. Serverantworten die in späteren Schritten benötigt werden (z.B. Response-ID) oder Empfangszertifikate gespeichert werden. 
-====Logging====
-Zur Fehlersuche und Betriebsunterstützung kann der Kommunikationsablauf in verschiedenen Ebenen geloggt werden.
+Der Kommunikationsablauf wird vom eXTra-Client in einer Datenbank protokolliert. Neben den einzelnen Aktionen werden z.B. auch Serverantworten die in späteren Schritten benötigt werden (z.B. Response-ID) oder Empfangszertifikate in der Datenbank abgelegt. Außerdem kann konfigurativ das Logging aktiviert werden (z.B. für die Fehlersuche).
 
 = Anforderungen an den Betriebsrechner =
 Der eXTra-Client wird als Java Anwendung ausgeliefert und benötigt eine Java 6 Laufzeitumgebung. Er ist nicht an ein spezielles Betriebssystem gebunden. Je nach Anwendungsfall bzw. Einsatzgebiet wird evtl. eine Datenbank benötigt. Für den Kommunikationsablauf müssen evtl. bestimmte Externe eXTra-Server erreichbar sein.
@@ -24,13 +20,13 @@ Der eXTra-Client wird als Java Anwendung ausgeliefert und benötigt eine Java 6 
 
 Die Auslieferungsversion besteht aus dem Ausführungs-, dem Konfigurations- und dem Programm-Bereich. Jeder Bereich befindet sich in einem Verzeichnis:
 
-====/bin (Ausführungsbereich)==== 
+==== Ausführungsbereich (Verzeichnis: /bin) ==== 
 Hier befinden sich beispielhaft Batch-Dateien für Windows (eXTra-cli.bat) und Linux. 
 
-====/conf (Konfigurationsbereich)====
+==== Konfigurationsbereich (Verzeichnis: /conf) ====
 Hier werden die Konfigurationsverzeichnisse/-dateien der mitgelieferten Fachverfahren abgelegt.
 
-====/lib (Programmbereich)====
+==== Programmbereich (Verzeichnis: /lib) ====
 Hier stehen sämtliche benötigte Jar-Dateien - sowohl die eXTra-Jar-Dateien als auch die externen Bibliotheken zur Verfügung.
 
 Aufgrund des modularen Aufbaus und der konfigurativen Steuerung des EXTra-Clients können zur Basisversion weitere Fachverfahren hinzugefügt werden. Pro Fachverfahren sollte die Konfiguration in einem Konfigurationsverzeichnisse abgelegt werden (TODO: evtl. Änderungen in der DB notwendig?!). 
@@ -74,15 +70,15 @@ plugins.execution.executionPersistenceJPA.hibernate.database=HSQL
 In dieser Datei können spezielle Einstellungen eingetragen werden, die die Einstellungen aus eXTra-properties-basic.properties ergänzen oder überschreiben.
 
 ==Aufruf der Anwendungsfälle==
-Die Anwendungsfälle können über Batch-Dateien aufgerufen werden. Beispielhaft befindet sich im /bin Verzeichnis der Auslieferungsversion ein Aufruf für Windows und Linux. In diesen Skripten wird eine Umgebungsvariable EXTRA_CLIENT_HOME für den Zugriff auf die eXTra-Client Dateien verwendet.
+Die Fachverfahren können über Batch-Dateien aufgerufen werden. Beispielhaft befindet sich im _/bin_ Verzeichnis der Auslieferungsversion ein Aufruf für Windows und Linux. In diesen Skripten wird eine Umgebungsvariable EXTRA_CLIENT_HOME für den Zugriff auf die eXTra-Client Dateien verwendet.
 
 *Beispiel für einen einfachen Aufruf:*
 
 java -jar extra-cli-1.0.0-SNAPSHOT.jar -l logs -c conf
 
-Aufruf des eXTra-Clients. Das Logging erfolgt in das Verzeichnis logs. Die Konfiguration wird aus dem Verzeichnis conf gelesen.
+Das Logging erfolgt in das Verzeichnis logs. Die Konfiguration wird aus dem Verzeichnis conf gelesen.
 
-Aufrufparameter:
+===Aufrufparameter===
 
 || Parameter || Beispiel || Beschreibung ||
 || -c || -c conf || Konfiguration wird aus dem Verzeichnis _conf_ gelesen *(Pflicht)* ||
