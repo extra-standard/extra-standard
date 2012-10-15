@@ -57,7 +57,7 @@ public class PersistenceSendFetchPhase2IT {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PersistenceSendFetchPhase2IT.class);
 
 	@Inject
-	@Named("executionPersistenceJPA")
+	@Named("executionPersistenceJpa")
 	private IExecutionPersistence executionPersistence;
 
 	@Inject

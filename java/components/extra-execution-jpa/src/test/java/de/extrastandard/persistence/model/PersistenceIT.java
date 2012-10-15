@@ -60,8 +60,8 @@ import de.extrastandard.api.model.execution.PhaseQualifier;
 public class PersistenceIT {
 
 	@Inject
-	@Named("executionPersistenceJPA")
-	private ExecutionPersistence executionPersistence;
+	@Named("executionPersistenceJpa")
+	private ExecutionPersistenceJpa executionPersistence;
 
 	@Before
 	public void before() throws Exception {

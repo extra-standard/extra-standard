@@ -50,7 +50,7 @@ import de.extrastandard.api.plugin.IDataPlugin;
 public class DBQueryDataPlugin implements IDataPlugin {
 
 	@Inject
-	@Named("executionPersistenceJPA")
+	@Named("executionPersistenceJpa")
 	IExecutionPersistence executionPersistence;
 
 	@Value("${core.execution.phase}")
