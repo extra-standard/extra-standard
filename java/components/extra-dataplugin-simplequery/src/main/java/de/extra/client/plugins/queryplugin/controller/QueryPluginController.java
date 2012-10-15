@@ -19,7 +19,6 @@
 package de.extra.client.plugins.queryplugin.controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Named;
@@ -49,14 +48,14 @@ public class QueryPluginController implements IQueryPluginController {
 	 * Controller-Klasse zum Aufbau der Query.
 	 */
 	@Override
-	public Iterator<IInputDataContainer> processQuery() {
+	public IInputDataContainer processQuery() {
 		final List<IInputDataContainer> senderDataBeanList = new ArrayList<IInputDataContainer>();
-		final DBQueryInputData senderDataBean = new DBQueryInputData("0", String.valueOf(startId), "0");
-
+		final DBQueryInputData senderDataBean = new DBQueryInputData();
+		senderDataBean.addSingleDBQueryInputData("23", startId);
+		senderDataBean.setRequestId("requestId");
 		// Erzeugen der Query
 		// Hinzufügen der Bean mit der Query
 		senderDataBeanList.add(senderDataBean);
-
-		return senderDataBeanList.iterator();
+		return senderDataBean;
 	}
 }

@@ -21,9 +21,7 @@ package de.extrastandard.persistence.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -35,9 +33,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.extra.client.core.model.inputdata.impl.SingleStringInputData;
+import de.extra.client.core.responce.impl.ResponseData;
+import de.extra.client.core.responce.impl.SingleResponseData;
+import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ISingleContentInputData;
+import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
-import de.extrastandard.api.model.execution.IInputDataTransition;
+import de.extrastandard.api.model.execution.IProcessTransition;
+import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.StatusRepository;
@@ -55,135 +60,95 @@ import de.extrastandard.persistence.repository.StatusRepository;
 @Transactional
 public class PersistenceIT {
 
-	@Resource(type = ExecutionPersistence.class)
+	@Inject
+	@Named("executionPersistenceJPA")
 	private ExecutionPersistence executionPersistence;
 
 	@Inject
 	@Named("statusRepository")
 	private transient StatusRepository statusRepository;
 
-	private Status statusInital;
-
-	private Status statusEnveloped;
-
-	private Status statusTransmitted;
-
-	private Status statusResultsExpected;
-
-	private Status statusResultsProcessed;
-
-	private Status statusReceiptConfirmed;
-
-	private Status statusDone;
+	@Inject
+	@Named("persistenceTestSetup")
+	private transient PersistenceTestSetup persistenceTestSetup;
 
 	@Before
 	public void before() throws Exception {
-
 		// persistenceTestSetup.setupInitialDaten();
 		// persistenceTestSetup.setupProcedureSendFeths();
-
-		statusInital = statusRepository.findByName(PersistentStatus.INITIAL.name());
-		statusEnveloped = statusRepository.findByName(PersistentStatus.ENVELOPED.name());
-		statusTransmitted = statusRepository.findByName(PersistentStatus.TRANSMITTED.name());
-		statusResultsExpected = statusRepository.findByName(PersistentStatus.RESULTS_EXPECTED.name());
-		statusResultsProcessed = statusRepository.findByName(PersistentStatus.RESULTS_PROCESSED.name());
-		statusReceiptConfirmed = statusRepository.findByName(PersistentStatus.RECEIPT_CONFIRMED.name());
-		statusDone = statusRepository.findByName(PersistentStatus.DONE.name());
-
 	}
 
 	@Test
 	public void testExecutionConstruction() throws Exception {
 		assertNotNull(executionPersistence);
+
+		final String parameter = "-c d:/extras/configdir";
 		final IExecution execution = executionPersistence.startExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "-c d:/extras/configdir");
+				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, parameter, PhaseQualifier.PHASE1);
 
 		assertNotNull(execution.getParameters());
 		assertNotNull(execution.getId());
 		assertNotNull(execution.getStartTime());
+		assertEquals(parameter, execution.getParameters());
+		assertEquals(PhaseQualifier.PHASE1.getName(), execution.getPhase());
 
-		// start input data
-		final IInputData inputData = execution.startInputData("inputIdentifier", "hashCode");
-		assertNotNull(inputData.getId());
-		assertEquals("inputIdentifier", inputData.getInputIdentifier());
-		assertEquals("hashCode", inputData.getHashcode());
-		assertEquals(execution.getId(), inputData.getExecution().getId());
-		assertEquals(statusInital, inputData.getLastTransition().getCurrentStatus());
+		final IProcessTransition lastTransitionInitial = execution.getLastTransition();
+		assertNotNull(lastTransitionInitial);
+		final IStatus currentStatusInitial = lastTransitionInitial.getCurrentStatus();
+		assertNotNull(currentStatusInitial);
+		assertEquals(PersistentStatus.INITIAL.getId(), currentStatusInitial.getId());
+		final IStatus previousStatus = lastTransitionInitial.getPreviousStatus();
+		assertNull(previousStatus);
 
-		// check if transition is created and pertinent
-		final IInputDataTransition firstTransition = inputData.getLastTransition();
-		assertNotNull(firstTransition);
-		assertNotNull(firstTransition.getId());
-		assertNull(firstTransition.getPreviousStatus());
-		assertNotNull(firstTransition.getCurrentStatus());
-		assertEquals(PersistentStatus.INITIAL.toString(), firstTransition.getCurrentStatus().getName());
-		assertNotNull(firstTransition.getInputData());
-		assertEquals(inputData.getId(), firstTransition.getInputData().getId());
+		execution.updateProgress(PersistentStatus.ENVELOPED);
+		final IProcessTransition lastTransitionEnveloped = execution.getLastTransition();
+		assertNotNull(lastTransitionEnveloped);
+		final IStatus currentStatusEnveloped = lastTransitionEnveloped.getCurrentStatus();
+		assertNotNull(currentStatusEnveloped);
+		assertEquals(PersistentStatus.ENVELOPED.getId(), currentStatusEnveloped.getId());
+		final IStatus previousStatusInitial = lastTransitionEnveloped.getPreviousStatus();
+		assertNotNull(previousStatusInitial);
+		assertEquals(PersistentStatus.INITIAL.getId(), previousStatusInitial.getId());
+
+		execution.updateProgress(PersistentStatus.TRANSMITTED);
+		final IProcessTransition lastTransitionTransmitted = execution.getLastTransition();
+		assertNotNull(lastTransitionTransmitted);
+		final IStatus currentStatusTransmitted = lastTransitionTransmitted.getCurrentStatus();
+		assertNotNull(currentStatusTransmitted);
+		assertEquals(PersistentStatus.TRANSMITTED.getId(), currentStatusTransmitted.getId());
+		final IStatus previousStatusEnveloped = lastTransitionTransmitted.getPreviousStatus();
+		assertNotNull(previousStatusEnveloped);
+		assertEquals(PersistentStatus.ENVELOPED.getId(), previousStatusEnveloped.getId());
+
+		final ISingleContentInputData singleContentInputData = new SingleStringInputData("test data");
+		final IInputData inputData = execution.startContentInputData(singleContentInputData.getInputIdentifier(),
+				singleContentInputData.getHashCode());
+		assertNotNull(inputData);
+		assertEquals(singleContentInputData.getHashCode(), inputData.getHashcode());
+		assertEquals(singleContentInputData.getInputIdentifier(), inputData.getInputIdentifier());
+
+		final String requestId = inputData.calculateRequestId();
+		singleContentInputData.setRequestId(requestId);
+		inputData.setRequestId(requestId);
+		assertEquals(singleContentInputData.getRequestId(), inputData.getRequestId());
+
+		final IResponseData responceData = new ResponseData();
+		final ISingleResponseData singleResponseData = new SingleResponseData(requestId, "ReturnCode", "ReturnText",
+				"RESPONSE_ID");
+		responceData.addSingleResponse(singleResponseData);
+		execution.endExecution(responceData);
+		final IProcessTransition lastTransitionDone = execution.getLastTransition();
+		assertNotNull(lastTransitionDone);
+		final IStatus currentStatusDone = lastTransitionDone.getCurrentStatus();
+		assertNotNull(currentStatusDone);
+		assertEquals(PersistentStatus.DONE.getId(), currentStatusDone.getId());
+		final IStatus previousStatusTransmitted = lastTransitionDone.getPreviousStatus();
+		assertNotNull(previousStatusTransmitted);
+		assertEquals(PersistentStatus.TRANSMITTED.getId(), previousStatusTransmitted.getId());
+
+		// TODO IInputData testen
 
 		Thread.sleep(500);
-
-		// update progress Enveloped
-		inputData.updateProgress(PersistentStatus.ENVELOPED);
-
-		final IInputDataTransition envelopedTransition = inputData.getLastTransition();
-
-		assertNotNull(envelopedTransition);
-		assertTrue(!firstTransition.getId().equals(envelopedTransition.getId()));
-		assertEquals(statusInital, envelopedTransition.getPreviousStatus());
-		assertEquals(statusEnveloped, envelopedTransition.getCurrentStatus());
-		assertEquals(statusEnveloped, inputData.getLastTransition().getCurrentStatus());
-
-		// update progress Transmitted
-		inputData.updateProgress(PersistentStatus.TRANSMITTED);
-
-		final IInputDataTransition transmittedTransition = inputData.getLastTransition();
-
-		assertNotNull(transmittedTransition);
-		assertTrue(!envelopedTransition.getId().equals(transmittedTransition.getId()));
-		assertEquals(statusEnveloped, transmittedTransition.getPreviousStatus());
-		assertEquals(statusTransmitted, transmittedTransition.getCurrentStatus());
-		assertEquals(statusTransmitted, inputData.getLastTransition().getCurrentStatus());
-
-	}
-
-	@Test
-	public void testInputDataSuccess() throws Exception {
-		assertNotNull(executionPersistence);
-
-		final IExecution execution = executionPersistence.startExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "-c d:/extras/configdir");
-		final IInputData inputData = execution.startInputData("inputIdentifier", "hashCode");
-		// success Phase 1
-		inputData.success("responseId", PhaseQualifier.PHASE1);
-		final IInputDataTransition resultExcectedTransition = inputData.getLastTransition();
-		assertNotNull(resultExcectedTransition);
-		assertEquals(statusInital, resultExcectedTransition.getPreviousStatus());
-		assertEquals(statusResultsExpected, resultExcectedTransition.getCurrentStatus());
-		assertEquals(statusResultsExpected, inputData.getLastTransition().getCurrentStatus());
-		assertEquals("responseId", inputData.getResponseId());
-
-		// success Phase 2
-		inputData.success("responseId", PhaseQualifier.PHASE2);
-		final IInputDataTransition resultProcessedTransition = inputData.getLastTransition();
-		assertNotNull(resultProcessedTransition);
-		assertEquals(statusResultsExpected, resultProcessedTransition.getPreviousStatus());
-		assertEquals(statusResultsProcessed, resultProcessedTransition.getCurrentStatus());
-		assertEquals(statusResultsProcessed, inputData.getLastTransition().getCurrentStatus());
-		assertEquals("responseId", inputData.getResponseId());
-
-		// success Phase 3
-		inputData.success("responseId", PhaseQualifier.PHASE3);
-		final IInputDataTransition inputDataTransitionDone = inputData.getLastTransition();
-		assertNotNull(inputDataTransitionDone);
-		assertEquals(statusReceiptConfirmed, inputDataTransitionDone.getPreviousStatus());
-		assertEquals(statusDone, inputDataTransitionDone.getCurrentStatus());
-		assertEquals(statusDone, inputData.getLastTransition().getCurrentStatus());
-		assertEquals("responseId", inputData.getResponseId());
-
-	}
-
-	@Test
-	public void testInputDataSucessAnotherTransaction() throws Exception {
 
 	}
 

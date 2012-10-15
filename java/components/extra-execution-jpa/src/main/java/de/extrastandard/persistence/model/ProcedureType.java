@@ -25,8 +25,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -37,11 +35,8 @@ import org.springframework.util.Assert;
 
 import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.IProcedureType;
-import de.extrastandard.api.model.execution.IStatus;
-import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.ProcedurePhaseConfigurationRepository;
 import de.extrastandard.persistence.repository.ProcedureTypeRepository;
-import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * JPA Implementierung von {@link IProcedure}.
@@ -67,9 +62,8 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 	@Column(name = "start_phase")
 	private String startPhase;
 
-	@ManyToOne
-	@JoinColumn(name = "end_status_id")
-	private Status endStatus;
+	@Column(name = "end_phase")
+	private String endPhase;
 
 	@Transient
 	@Inject
@@ -81,11 +75,6 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 	@Named("procedurePhaseConfigurationRepository")
 	private transient ProcedurePhaseConfigurationRepository procedurePhaseConfigurationRepository;
 
-	@Transient
-	@Inject
-	@Named("statusRepository")
-	private transient StatusRepository statusRepository;
-
 	/**
 	 * Default Empty Constructor
 	 */
@@ -94,14 +83,14 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 	}
 
 	/**
-	 * @param mandator
 	 * @param name
+	 * @param mandator
 	 */
-	public ProcedureType(final String name, final IStatus endStatus, final String startPhase) {
+	public ProcedureType(final String name, final String startPhase, final String endPhase) {
 		super();
 		this.name = name;
 		this.startPhase = startPhase;
-		this.endStatus = statusRepository.findByName(endStatus.getName());
+		this.endPhase = endPhase;
 		repository.save(this);
 	}
 
@@ -128,35 +117,6 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 		return startPhase;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.extrastandard.persistence.model.IProcedureType#getPhaseEndStatus(de
-	 * .extrastandard.api.model.execution.PhaseQualifier)
-	 */
-	@Override
-	public IStatus getPhaseEndStatus(final PhaseQualifier phase) {
-		Assert.notNull(phase, "PhaseQualifier must be specified");
-		final ProcedurePhaseConfiguration configuration = procedurePhaseConfigurationRepository
-				.findByPhaseAndProcedureType(phase.toString(), this);
-		final Status phaseEndStatus = configuration.getPhaseEndStatus();
-		return phaseEndStatus;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.extrastandard.persistence.model.IProcedureType#isProcedureEndStatus
-	 * (de.extrastandard.api.model.execution.IStatus)
-	 */
-	@Override
-	public boolean isProcedureEndStatus(final IStatus status) {
-		Assert.notNull(status, "Status must be specified");
-		return this.endStatus.getName().equals(status.getName());
-	}
-
 	@Override
 	public boolean isProcedureStartPhase(final String phase) {
 		Assert.notNull(phase, "Phase must be specified");
@@ -164,17 +124,23 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 		return isStartPhaseOfProcedure;
 	}
 
-	/**
-	 * @see de.extrastandard.api.model.execution.IProcedureType#getPhaseStartStatus(de.extrastandard.api.model.execution.PhaseQualifier)
-	 */
-	@Override
-	public IStatus getPhaseStartStatus(final PhaseQualifier phase) {
+	public boolean isProcedureEndPhase(final String phase) {
 		Assert.notNull(phase, "Phase must be specified");
-		final ProcedurePhaseConfiguration findByPhaseAndProcedureType = procedurePhaseConfigurationRepository
-				.findByPhaseAndProcedureType(phase.getName(), this);
-		final Status phaseStartStatus = findByPhaseAndProcedureType.getPhaseStartStatus();
-		return phaseStartStatus;
+		final boolean isEndPhaseOfProcedure = phase.equalsIgnoreCase(this.endPhase);
+		return isEndPhaseOfProcedure;
+	}
 
+	public String getNextPhase(final String phase) {
+		Assert.notNull(phase, "Phase must be specified");
+		final ProcedurePhaseConfiguration procedurePhaseConfiguration = procedurePhaseConfigurationRepository
+				.findByPhaseAndProcedureType(phase, this);
+		final ProcedurePhaseConfiguration nextPhaseConfiguration = procedurePhaseConfiguration
+				.getNextPhaseConfiguration();
+		String nextPhase = null;
+		if (nextPhaseConfiguration != null) {
+			nextPhase = nextPhaseConfiguration.getPhase();
+		}
+		return nextPhase;
 	}
 
 	/**
@@ -205,9 +171,9 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 			builder.append(name);
 			builder.append(", ");
 		}
-		if (endStatus != null) {
-			builder.append("endStatus=");
-			builder.append(endStatus);
+		if (endPhase != null) {
+			builder.append("endPhase=");
+			builder.append(endPhase);
 		}
 		builder.append("]");
 		return builder.toString();

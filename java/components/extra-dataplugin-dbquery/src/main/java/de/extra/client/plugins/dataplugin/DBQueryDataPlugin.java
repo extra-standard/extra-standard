@@ -19,7 +19,6 @@
 package de.extra.client.plugins.dataplugin;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -60,22 +59,24 @@ public class DBQueryDataPlugin implements IDataPlugin {
 	@Value("${core.execution.procedure}")
 	private String executionProcedure;
 
-	private static final Logger LOG = LoggerFactory.getLogger(DBQueryDataPlugin.class);
+	private static final Logger logger = LoggerFactory.getLogger(DBQueryDataPlugin.class);
 
 	@Override
-	public Iterator<IInputDataContainer> getData() {
+	public IInputDataContainer getData() {
 		final List<IInputDataContainer> senderDataBeanList = new ArrayList<IInputDataContainer>();
 		final PhaseQualifier phaseQualifier = PhaseQualifier.resolveByName(executionPhase);
 		final List<IInputData> inputDataList = executionPersistence.findInputDataForExecution(executionProcedure,
 				phaseQualifier);
+		final DBQueryInputData dbQueryinputData = new DBQueryInputData();
+		senderDataBeanList.add(dbQueryinputData);
+
 		for (final IInputData inputData : inputDataList) {
-
-			final DBQueryInputData senderDataBean = new DBQueryInputData(String.valueOf(inputData.getId()),
-					inputData.getRequestId(), inputData.getResponseId());
-			senderDataBeanList.add(senderDataBean);
+			dbQueryinputData.addSingleDBQueryInputData(String.valueOf(inputData.getRequestId()),
+					inputData.getResponseId());
 		}
-
-		return senderDataBeanList.iterator();
+		logger.info("For Procedury and Phase {} found {} Records.", executionProcedure + "->" + executionPhase,
+				inputDataList.size());
+		return dbQueryinputData;
 	}
 
 	/**

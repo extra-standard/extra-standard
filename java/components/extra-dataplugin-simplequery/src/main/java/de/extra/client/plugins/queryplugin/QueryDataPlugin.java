@@ -18,8 +18,6 @@
  */
 package de.extra.client.plugins.queryplugin;
 
-import java.util.Iterator;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -40,7 +38,7 @@ public class QueryDataPlugin implements IDataPlugin {
 	private IQueryPluginController queryController;
 
 	@Override
-	public Iterator<IInputDataContainer> getData() {
+	public IInputDataContainer getData() {
 		LOG.info("Start des Versands");
 		LOG.debug("Erstelle Query");
 		return queryController.processQuery();

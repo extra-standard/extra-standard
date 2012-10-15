@@ -27,8 +27,8 @@ import org.springframework.stereotype.Repository;
 
 import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.IProcedure;
-import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.persistence.model.InputData;
+import de.extrastandard.persistence.model.Status;
 
 /**
  * Repository für InputData.
@@ -43,7 +43,11 @@ public interface InputDataRepository extends JpaRepository<InputData, Long> {
 	@Query("FROM InputData WHERE requestId = :requestId")
 	IInputData findByRequestId(@Param("requestId") String requestId);
 
-	@Query("select inputdata FROM InputData inputdata WHERE inputdata.lastTransition.currentStatus = :status and inputdata.execution.procedure = :procedure")
-	List<IInputData> findByProcedureAndStatus(@Param("procedure") final IProcedure procedure,
-			@Param("status") IStatus status);
+	@Query("select inputdata FROM InputData inputdata "
+			+ " WHERE inputdata.nextPhaseConnection.nextPhasequalifier = :phaseQualifier "
+			+ " and inputdata.execution.procedure = :procedure "
+			+ " and inputdata.nextPhaseConnection.status = :status")
+	List<IInputData> findByProcedureAndPhaseQualifierAndStatus(@Param("procedure") IProcedure procedure,
+			@Param("phaseQualifier") String phaseQualifier, @Param("status") Status status);
+
 }

@@ -36,24 +36,24 @@ import javax.persistence.Transient;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.util.Assert;
 
-import de.extrastandard.api.model.execution.IInputData;
-import de.extrastandard.api.model.execution.IInputDataTransition;
+import de.extrastandard.api.model.execution.IExecution;
+import de.extrastandard.api.model.execution.IProcessTransition;
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.persistence.repository.InputDataTransitionRepository;
 import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
- * JPA Implementierung von {@link IInputDataTransition}.
+ * JPA Implementierung von {@link IProcessTransition}.
  * 
  * @author Thorsten Vogel
- * @version $Id: InputDataTransition.java 508 2012-09-04 09:35:41Z
+ * @version $Id: ProcessTransition.java 508 2012-09-04 09:35:41Z
  *          thorstenvogel@gmail.com $
  */
 @Configurable(preConstruction = true)
 @Entity
-@Table(name = "INPUT_DATA_TRANSITION")
-public class InputDataTransition extends AbstractEntity implements IInputDataTransition {
+@Table(name = "PROCESS_TRANSITION")
+public class ProcessTransition extends AbstractEntity implements IProcessTransition {
 
 	@Transient
 	@Inject
@@ -82,15 +82,15 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 	private Long duration;
 
 	@ManyToOne
-	@JoinColumn(name = "input_data_id")
-	private InputData inputData;
+	@JoinColumn(name = "execution_id")
+	private Execution execution;
 
 	@Transient
 	@Inject
 	@Named("inputDataTransitionRepository")
 	private transient InputDataTransitionRepository repository;
 
-	public InputDataTransition() {
+	public ProcessTransition() {
 	}
 
 	/**
@@ -100,12 +100,12 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 	 * @param inputData
 	 * @param persistentStatus
 	 */
-	public InputDataTransition(final InputData inputData) {
-		Assert.notNull(inputData, "InputData must be specified");
+	public ProcessTransition(final Execution execution) {
+		Assert.notNull(execution, "Execution must be specified");
 		final Status currentStatus = statusRepository.findByName(PersistentStatus.INITIAL.toString());
 		this.currentStatus = currentStatus;
 		this.transitionDate = new Date();
-		this.inputData = inputData;
+		this.execution = execution;
 		repository.save(this);
 	}
 
@@ -117,7 +117,7 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 	 * @param iCurrentStatus
 	 * @param lastTransitionDate
 	 */
-	public InputDataTransition(final InputData inputData, final IStatus iPreviousStatus, final IStatus iCurrentStatus,
+	public ProcessTransition(final Execution execution, final IStatus iPreviousStatus, final IStatus iCurrentStatus,
 			final Date lastTransitionDate) {
 		Assert.notNull(iPreviousStatus, "CurrentStatus must be specified");
 		Assert.notNull(iCurrentStatus, "PreviousStatus must be specified");
@@ -130,7 +130,7 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 		this.setTransitionDate(transitionDate);
 		final long duration = transitionDate.getTime() - lastTransitionDate.getTime();
 		this.setDuration(duration);
-		this.inputData = inputData;
+		this.execution = execution;
 		repository.save(this);
 	}
 
@@ -143,7 +143,7 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputDataTransition#getCurrentStatus()
+	 * @see de.extrastandard.api.model.execution.IProcessTransition#getCurrentStatus()
 	 */
 	@Override
 	public IStatus getCurrentStatus() {
@@ -151,7 +151,7 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputDataTransition#getPreviousStatus()
+	 * @see de.extrastandard.api.model.execution.IProcessTransition#getPreviousStatus()
 	 */
 	@Override
 	public IStatus getPreviousStatus() {
@@ -159,7 +159,7 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputDataTransition#getTransitionDate()
+	 * @see de.extrastandard.api.model.execution.IProcessTransition#getTransitionDate()
 	 */
 	@Override
 	public Date getTransitionDate() {
@@ -167,19 +167,11 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputDataTransition#getDuration()
+	 * @see de.extrastandard.api.model.execution.IProcessTransition#getDuration()
 	 */
 	@Override
 	public Long getDuration() {
 		return duration;
-	}
-
-	/**
-	 * @see de.extrastandard.api.model.execution.IInputDataTransition#getInputData()
-	 */
-	@Override
-	public IInputData getInputData() {
-		return inputData;
 	}
 
 	public void setCurrentStatus(final Status currentStatus) {
@@ -198,10 +190,6 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 		this.duration = duration;
 	}
 
-	public void setInputData(final InputData inputData) {
-		this.inputData = inputData;
-	}
-
 	@Override
 	public Long getId() {
 		return id;
@@ -210,7 +198,7 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
-		builder.append("InputDataTransition [transitionDate=");
+		builder.append("ProcessTransition [transitionDate=");
 		builder.append(transitionDate);
 		builder.append(", currentStatus=");
 		builder.append(currentStatus);
@@ -218,10 +206,23 @@ public class InputDataTransition extends AbstractEntity implements IInputDataTra
 		builder.append(previousStatus);
 		builder.append(", duration=");
 		builder.append(duration);
-		builder.append(", inputData=");
-		builder.append(inputData);
+		builder.append(", execution=");
+		builder.append(execution);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	/**
+	 * @param execution
+	 *            the execution to set
+	 */
+	public void setExecution(final Execution execution) {
+		this.execution = execution;
+	}
+
+	@Override
+	public IExecution getExecuton() {
+		return execution;
 	}
 
 }

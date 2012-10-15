@@ -21,6 +21,10 @@ package de.extrastandard.persistence.model;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import de.extra.client.core.responce.impl.ResponseData;
+import de.extra.client.core.responce.impl.SingleResponseData;
+import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.PersistentStatus;
@@ -75,18 +79,16 @@ public class PersistenceTestSetup {
 
 	public void setupProcedureSendFeths() {
 
-		final Status statusReceiptConfirmed = statusRepository.findByName(PersistentStatus.RECEIPT_CONFIRMED.name());
+		final ProcedureType procedureSendFetch = new ProcedureType("SCENARIO_SEND_FETCH", PhaseQualifier.PHASE1.name(),
+				PhaseQualifier.PHASE3.name());
 
-		final ProcedureType procedureSendFetch = new ProcedureType("SCENARIO_SEND_FETCH", statusReceiptConfirmed,
-				PhaseQualifier.PHASE1.name());
+		final ProcedurePhaseConfiguration procedurePhaseConfigurationPhase3 = new ProcedurePhaseConfiguration(
+				procedureSendFetch, PhaseQualifier.PHASE3);
 
-		new ProcedurePhaseConfiguration(procedureSendFetch, PhaseQualifier.PHASE1, PersistentStatus.RESULTS_EXPECTED);
+		final ProcedurePhaseConfiguration procedurePhaseConfigurationPhase2 = new ProcedurePhaseConfiguration(
+				procedureSendFetch, PhaseQualifier.PHASE2, procedurePhaseConfigurationPhase3);
 
-		new ProcedurePhaseConfiguration(procedureSendFetch, PhaseQualifier.PHASE2, PersistentStatus.RESULTS_PROCESSED,
-				PersistentStatus.RESULTS_EXPECTED);
-
-		new ProcedurePhaseConfiguration(procedureSendFetch, PhaseQualifier.PHASE3, PersistentStatus.RECEIPT_CONFIRMED,
-				PersistentStatus.RESULTS_PROCESSED);
+		new ProcedurePhaseConfiguration(procedureSendFetch, PhaseQualifier.PHASE1, procedurePhaseConfigurationPhase2);
 
 		final Mandator mandatorTEST = mandatorRepository.findByName(MANDATOR_TEST);
 
@@ -94,29 +96,37 @@ public class PersistenceTestSetup {
 
 	}
 
-	public IInputData setUpTestDatenForProcedureSendFetchPhase2() {
-		final IExecution execution = executionPersistence.startExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "-c /threephaseszenario/phase1");
+	public IExecution setUpTestDatenForProcedureSendFetchPhase2() {
+		final IExecution executionForTestPhase2 = executionPersistence.startExecution(
+				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "-c d:/extras/configdir", PhaseQualifier.PHASE1);
 
-		final IInputData inputData = execution.startInputData("TestDatenScenarioSendFetchPhase1", "hashCodePhase1");
-		final String requestId = inputData.calculateRequestId();
-		inputData.setRequestId(requestId);
-		inputData.saveOrUpdate();
-		inputData.success("ResponseIdScenarioSendFethcPhase1", PhaseQualifier.PHASE1);
-		return inputData;
+		final IInputData inputData = executionForTestPhase2.startContentInputData("inputIdentifier", "hashCode");
+		final String calculatedRequestId = inputData.calculateRequestId();
+		inputData.setRequestId(calculatedRequestId);
+
+		final IResponseData responseData = new ResponseData();
+		final ISingleResponseData singleResponseData = new SingleResponseData(calculatedRequestId, "ReturnCode",
+				"ReturnText", "RESPONSE_ID");
+		responseData.addSingleResponse(singleResponseData);
+		executionForTestPhase2.endExecution(responseData);
+		return executionForTestPhase2;
 	}
 
-	public IInputData setUpTestDatenForProcedureSendFetchPhase3() {
-		final IExecution execution = executionPersistence.startExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "-c /threephaseszenario/phase2");
+	public IExecution setUpTestDatenForProcedureSendFetchPhase3() {
+		final IExecution executionForTestPhase3 = executionPersistence.startExecution(
+				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "-c d:/extras/configdir2", PhaseQualifier.PHASE2);
 
-		final IInputData inputData = execution.startInputData("TestDatenScenarioSendFetchPhase2", "hashCodePhase1");
-		final String requestId = inputData.calculateRequestId();
-		inputData.setRequestId(requestId);
-		inputData.saveOrUpdate();
-		inputData.success("ResponseIdScenarioSendFethcPhase1", PhaseQualifier.PHASE1);
+		final IInputData inputDataForPhase3 = executionForTestPhase3.startContentInputData("inputIdentifierPhase2",
+				"hashCodePhase2");
+		final String calculatedRequestIdForPhase3 = inputDataForPhase3.calculateRequestId();
+		inputDataForPhase3.setRequestId(calculatedRequestIdForPhase3);
 
-		inputData.success("ResponseIdScenarioSendFethcPhase2", PhaseQualifier.PHASE2);
-		return inputData;
+		final IResponseData responseDataForPhase3 = new ResponseData();
+		final ISingleResponseData singleResponseDataForPhase3 = new SingleResponseData(calculatedRequestIdForPhase3,
+				"ReturnCodePhase2", "ReturnTextPhase2", "RESPONSE_ID_PHASE2");
+		responseDataForPhase3.addSingleResponse(singleResponseDataForPhase3);
+		executionForTestPhase3.endExecution(responseDataForPhase3);
+
+		return executionForTestPhase3;
 	}
 }

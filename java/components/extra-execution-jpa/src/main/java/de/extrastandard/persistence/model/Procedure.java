@@ -37,8 +37,6 @@ import org.springframework.util.Assert;
 
 import de.extrastandard.api.model.execution.IMandator;
 import de.extrastandard.api.model.execution.IProcedure;
-import de.extrastandard.api.model.execution.IStatus;
-import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.ProcedureRepository;
 
 /**
@@ -155,25 +153,10 @@ public class Procedure extends AbstractEntity implements IProcedure {
 		return procedureType;
 	}
 
-	/**
-	 * @param phase
-	 * @return liefert end Status dieser Phase
-	 */
 	@Override
-	public IStatus getPhaseEndStatus(final PhaseQualifier phase) {
-		Assert.notNull(phase, "PhaseQualifier must be specified");
-		final IStatus phaseEndStatus = procedureType.getPhaseEndStatus(phase);
-		return phaseEndStatus;
-	}
-
-	/**
-	 * @param status
-	 * @return true, wenn {@link Status} der letzte in diesem Scenario ist
-	 */
-	@Override
-	public boolean isProcedureEndStatus(final IStatus status) {
-		Assert.notNull(status, "Status must be specified");
-		return procedureType.isProcedureEndStatus(status);
+	public boolean isProcedureEndPhase(final String phase) {
+		Assert.notNull(phase, "Phase must be specified");
+		return procedureType.isProcedureEndPhase(phase);
 	}
 
 	/**
@@ -194,6 +177,14 @@ public class Procedure extends AbstractEntity implements IProcedure {
 		builder.append(name);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	/**
+	 * @param phase
+	 * @return nextPhase of the procedure, or null
+	 */
+	public String getNextPhase(final String phase) {
+		return procedureType.getNextPhase(phase);
 	}
 
 }

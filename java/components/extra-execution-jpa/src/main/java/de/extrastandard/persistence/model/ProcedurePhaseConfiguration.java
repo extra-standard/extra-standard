@@ -34,10 +34,8 @@ import javax.persistence.Transient;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.util.Assert;
 
-import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.ProcedurePhaseConfigurationRepository;
-import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * JPA Implementierung von {@link IProcedurePhaseConfiguration}. In dieser
@@ -63,26 +61,17 @@ public class ProcedurePhaseConfiguration extends AbstractEntity {
 	@JoinColumn(name = "procedure_type_id")
 	private ProcedureType procedureType;
 
-	@ManyToOne()
-	@JoinColumn(name = "phase_endstatus_id")
-	private Status phaseEndStatus;
-
-	@ManyToOne()
-	@JoinColumn(name = "phase_startstatus_id")
-	private Status phaseStartStatus;
-
 	@Column(name = "phase")
 	private String phase;
+
+	@ManyToOne()
+	@JoinColumn(name = "next_phase_configuration_id")
+	private ProcedurePhaseConfiguration nextPhaseConfiguration;
 
 	@Transient
 	@Inject
 	@Named("procedurePhaseConfigurationRepository")
 	private transient ProcedurePhaseConfigurationRepository repository;
-
-	@Transient
-	@Inject
-	@Named("statusRepository")
-	private transient StatusRepository statusRepository;
 
 	/**
 	 * Default Constructor
@@ -96,29 +85,25 @@ public class ProcedurePhaseConfiguration extends AbstractEntity {
 	 * @param phaseEndStatus
 	 * @param phase
 	 */
-	public ProcedurePhaseConfiguration(final ProcedureType procedureType, final PhaseQualifier phaseQualifier,
-			final PersistentStatus phaseEndStatus) {
-		this(procedureType, phaseQualifier, phaseEndStatus, null);
+	public ProcedurePhaseConfiguration(final ProcedureType procedureType, final PhaseQualifier phaseQualifier) {
+		this(procedureType, phaseQualifier, null);
 	}
 
 	/**
 	 * @param procedureType
 	 * @param phaseQualifier
-	 * @param phaseEndStatus
-	 * @param phaseStartStatus
+	 * @param nextPhaseConfiguration
 	 */
 	public ProcedurePhaseConfiguration(final ProcedureType procedureType, final PhaseQualifier phaseQualifier,
-			final PersistentStatus phaseEndStatus, final PersistentStatus phaseStartStatus) {
+			final ProcedurePhaseConfiguration nextPhaseConfiguration) {
 		super();
-		Assert.notNull(phaseEndStatus, "PhaseEndStatus must be specified");
 		Assert.notNull(procedureType, "ProcedureType must be specified");
 		Assert.notNull(phaseQualifier, "PhaseQualifier must be specified");
 		this.procedureType = procedureType;
-		this.phaseEndStatus = statusRepository.findOne(phaseEndStatus.getId());
-		if (phaseStartStatus != null) {
-			this.phaseStartStatus = statusRepository.findOne(phaseStartStatus.getId());
-		}
 		this.phase = phaseQualifier.name();
+		if (nextPhaseConfiguration != null) {
+			this.nextPhaseConfiguration = nextPhaseConfiguration;
+		}
 		repository.save(this);
 	}
 
@@ -145,21 +130,6 @@ public class ProcedurePhaseConfiguration extends AbstractEntity {
 	}
 
 	/**
-	 * @return the phaseEndStatus
-	 */
-	public Status getPhaseEndStatus() {
-		return phaseEndStatus;
-	}
-
-	/**
-	 * @param phaseEndStatus
-	 *            the phaseEndStatus to set
-	 */
-	public void setPhaseEndStatus(final Status phaseEndStatus) {
-		this.phaseEndStatus = phaseEndStatus;
-	}
-
-	/**
 	 * @return the phase
 	 */
 	public String getPhase() {
@@ -181,13 +151,6 @@ public class ProcedurePhaseConfiguration extends AbstractEntity {
 		return procedureType;
 	}
 
-	/**
-	 * @return the phaseStartStatus
-	 */
-	public Status getPhaseStartStatus() {
-		return phaseStartStatus;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -207,17 +170,24 @@ public class ProcedurePhaseConfiguration extends AbstractEntity {
 			builder.append(procedureType);
 			builder.append(", ");
 		}
-		if (phaseEndStatus != null) {
-			builder.append("phaseEndStatus=");
-			builder.append(phaseEndStatus);
-			builder.append(", ");
-		}
 		if (phase != null) {
 			builder.append("phase=");
 			builder.append(phase);
 		}
+		if (nextPhaseConfiguration != null) {
+			builder.append("nextPhaseConfiguration=");
+			builder.append(nextPhaseConfiguration);
+			builder.append(", ");
+		}
 		builder.append("]");
 		return builder.toString();
+	}
+
+	/**
+	 * @return the nextPhaseConfiguration
+	 */
+	public ProcedurePhaseConfiguration getNextPhaseConfiguration() {
+		return nextPhaseConfiguration;
 	}
 
 }
