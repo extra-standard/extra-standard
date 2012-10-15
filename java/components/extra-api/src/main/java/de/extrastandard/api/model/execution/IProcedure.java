@@ -44,12 +44,12 @@ public interface IProcedure extends PersistentEntity {
 	/**
 	 * @return the shortKey
 	 */
-	public String getShortKey();
+	String getShortKey();
 
 	/**
 	 * @return the procedureType
 	 */
-	public IProcedureType getProcedureType();
+	IProcedureType getProcedureType();
 
 	/**
 	 * @param phase
