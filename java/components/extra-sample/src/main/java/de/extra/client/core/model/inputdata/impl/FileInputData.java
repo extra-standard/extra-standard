@@ -83,7 +83,7 @@ public class FileInputData extends InputDataContainer implements IFileInputData 
 	 * @param inputFile
 	 * @return
 	 */
-	private boolean addSingleInputData(final File inputFile) {
+	public boolean addSingleInputData(final File inputFile) {
 		final SingleFileInputData singleFileInputData = new SingleFileInputData(inputFile);
 		return inputDataList.add(singleFileInputData);
 	}

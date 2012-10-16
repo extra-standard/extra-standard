@@ -41,6 +41,21 @@ public class QueryDataPlugin implements IDataPlugin {
 	public IInputDataContainer getData() {
 		LOG.info("Start des Versands");
 		LOG.debug("Erstelle Query");
-		return queryController.processQuery();
+		return queryController.getData();
+	}
+
+	@Override
+	public void initInputData() {
+
+	}
+
+	@Override
+	public boolean hasMoreData() {
+		return queryController.hasMoreData();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return queryController.isEmpty();
 	}
 }

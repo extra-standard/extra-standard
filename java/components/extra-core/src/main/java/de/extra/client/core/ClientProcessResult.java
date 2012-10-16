@@ -127,4 +127,22 @@ public class ClientProcessResult {
 		return resultAsString.toString();
 	}
 
+	/**
+	 * Fügt das singleProcessResult dem ProcessResult hinzu
+	 * 
+	 * @param singleProcessResult
+	 */
+	public void addResult(final ClientProcessResult singleProcessResult) {
+		final Map<String, ProcessResult> singleProcessResultResponses = singleProcessResult.getResponseMap();
+		this.responseMap.putAll(singleProcessResultResponses);
+
+	}
+
+	/**
+	 * @return the responseMap
+	 */
+	public Map<String, ProcessResult> getResponseMap() {
+		return responseMap;
+	}
+
 }

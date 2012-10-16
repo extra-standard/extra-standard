@@ -55,7 +55,29 @@ public interface IExecutionPersistence {
 	 * 
 	 * @param executionProcedure
 	 * @param phaseQualifier
+	 * @param inputDataLimit
+	 *            limits the result set
+	 * @return
+	 */
+	List<IInputData> findInputDataForExecution(String executionProcedure, PhaseQualifier phaseQualifier,
+			Integer inputDataLimit);
+
+	/**
+	 * Seeks InputData for further Procesierung depending on the ExecutePhase
+	 * 
+	 * @param executionProcedure
+	 * @param phaseQualifier
 	 * @return
 	 */
 	List<IInputData> findInputDataForExecution(String executionProcedure, PhaseQualifier phaseQualifier);
+
+	/**
+	 * Seeks InputData for further Procesierung depending on the ExecutePhase
+	 * 
+	 * @param executionProcedure
+	 * @param phaseQualifier
+	 * @return
+	 */
+	Long countInputDataForExecution(String executionProcedure, PhaseQualifier phaseQualifier);
+
 }

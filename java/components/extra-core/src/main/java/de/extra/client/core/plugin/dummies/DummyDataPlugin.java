@@ -38,9 +38,31 @@ import de.extrastandard.api.plugin.IDataPlugin;
 @Named("dummyDataPlugin")
 public class DummyDataPlugin implements IDataPlugin {
 
+	private IInputDataContainer inputDataContainer;
+
+	private boolean hasMoreData = false;
+
+	@Override
+	public void initInputData() {
+		inputDataContainer = loadVersanddaten();
+		hasMoreData = true;
+
+	}
+
+	@Override
+	public boolean hasMoreData() {
+		return hasMoreData;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return false;
+	}
+
 	@Override
 	public IInputDataContainer getData() {
-		return loadVersanddaten();
+		hasMoreData = false;
+		return inputDataContainer;
 	}
 
 	/**
@@ -104,4 +126,5 @@ public class DummyDataPlugin implements IDataPlugin {
 		fileInputData.addSingleInputData(singleStringInputData);
 		return fileInputData;
 	}
+
 }

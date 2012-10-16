@@ -36,6 +36,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.extra.client.core.model.inputdata.impl.DBQueryInputData;
 import de.extra.client.core.responce.impl.ResponseData;
@@ -84,7 +85,7 @@ public class InputDataIT {
 	}
 
 	@Test
-	public void testInputDataSucessPhase2AnotherTransaction() throws Exception {
+	public void testInputDataSucessPhase2AnotherTransaction() {
 		final List<IInputData> guelleInputDataList = executionPersistence.findInputDataForExecution(
 				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, PhaseQualifier.PHASE2);
 		Assert.assertTrue("InputData is empty", !guelleInputDataList.isEmpty());
@@ -141,6 +142,34 @@ public class InputDataIT {
 			assertNotNull(quellePhaseConnectionStatus);
 			assertEquals(PersistentStatus.DONE.name(), quellePhaseConnectionStatus.getName());
 		}
-
 	}
+
+	@Test
+	@Transactional
+	public void testFindInputDataForExecutionWithLimit() {
+		final Integer testDataSize = 6;
+		for (Integer counter = 0; counter < testDataSize; counter++) {
+			persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
+		}
+		final Integer inputDataLimit = 5;
+		final List<IInputData> findInputDataForExecution = executionPersistence.findInputDataForExecution(
+				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, PhaseQualifier.PHASE2, inputDataLimit);
+		Assert.assertTrue("Zu viele Daten ausgewählt", findInputDataForExecution.size() <= inputDataLimit);
+	}
+
+	@Test
+	@Transactional
+	public void testCountInputDataForExecution() {
+		final Long countInputDataForExecutionBeforeInsert = executionPersistence.countInputDataForExecution(
+				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, PhaseQualifier.PHASE2);
+		final Integer testDataSize = 12;
+		for (Integer counter = 0; counter < testDataSize; counter++) {
+			persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
+		}
+		final Long countInputDataForExecution = executionPersistence.countInputDataForExecution(
+				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, PhaseQualifier.PHASE2);
+		final Long expectedCount = countInputDataForExecutionBeforeInsert + testDataSize;
+		Assert.assertEquals("Count stimmt nicht", expectedCount, countInputDataForExecution);
+	}
+
 }

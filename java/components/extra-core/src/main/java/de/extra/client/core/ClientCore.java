@@ -126,16 +126,33 @@ public class ClientCore implements ApplicationContextAware {
 	 */
 	public ClientProcessResult process(final String processParameters) {
 
-		final PhaseQualifier phaseQualifier = PhaseQualifier.resolveByName(executionPhase);
+		dataPlugin.initInputData();
 
-		final IInputDataContainer versandDaten = dataPlugin.getData();
-
-		logger.info("For Procedure und Phase {} sind {} entityes gefunden.", executionProcedure + " -> "
-				+ executionPhase, versandDaten.getContentSize());
-
-		if (versandDaten.isContentEmpty()) {
+		if (dataPlugin.isEmpty()) {
 			return applicationContext.getBean("clientProcessResult", ClientProcessResult.class);
 		}
+		final ClientProcessResult totalClientProcessResult = applicationContext.getBean("clientProcessResult",
+				ClientProcessResult.class);
+
+		while (dataPlugin.hasMoreData()) {
+			final IInputDataContainer versandDaten = dataPlugin.getData();
+
+			logger.info("Process Daten: " + versandDaten);
+			final ClientProcessResult singleProcessResult = processInputData(processParameters, versandDaten);
+			totalClientProcessResult.addResult(singleProcessResult);
+		}
+
+		return totalClientProcessResult;
+	}
+
+	/**
+	 * @param processParameters
+	 * @param phaseQualifier
+	 * @param versandDaten
+	 * @return
+	 */
+	private ClientProcessResult processInputData(final String processParameters, final IInputDataContainer versandDaten) {
+		final PhaseQualifier phaseQualifier = PhaseQualifier.resolveByName(executionPhase);
 
 		final IExecution execution = executionPersistence.startExecution(executionProcedure, processParameters,
 				phaseQualifier);

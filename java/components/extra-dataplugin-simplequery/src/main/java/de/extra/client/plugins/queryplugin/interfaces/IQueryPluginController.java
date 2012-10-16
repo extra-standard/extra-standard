@@ -22,6 +22,10 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 public interface IQueryPluginController {
 
-	public IInputDataContainer processQuery();
+	public IInputDataContainer getData();
+
+	public boolean hasMoreData();
+
+	public boolean isEmpty();
 
 }

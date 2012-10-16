@@ -20,6 +20,7 @@ package de.extrastandard.persistence.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -48,6 +49,13 @@ public interface InputDataRepository extends JpaRepository<InputData, Long> {
 			+ " and inputdata.execution.procedure = :procedure "
 			+ " and inputdata.nextPhaseConnection.status = :status")
 	List<IInputData> findByProcedureAndPhaseQualifierAndStatus(@Param("procedure") IProcedure procedure,
-			@Param("phaseQualifier") String phaseQualifier, @Param("status") Status status);
+			@Param("phaseQualifier") String phaseQualifier, @Param("status") Status status, Pageable pageRequest);
+
+	@Query("select count(*) FROM InputData inputdata "
+			+ " WHERE inputdata.nextPhaseConnection.nextPhasequalifier = :phaseQualifier "
+			+ " and inputdata.execution.procedure = :procedure "
+			+ " and inputdata.nextPhaseConnection.status = :status")
+	Long count(@Param("procedure") IProcedure procedure, @Param("phaseQualifier") String phaseQualifier,
+			@Param("status") Status status);
 
 }
