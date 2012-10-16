@@ -20,11 +20,30 @@ package de.extrastandard.api.plugin;
 
 import de.extrastandard.api.model.content.IInputDataContainer;
 
+/**
+ * @author Leonid Potap
+ * @version $Id$
+ */
 public interface IDataPlugin {
 
 	/**
-	 * @return
+	 * @return sehe {@link IInputDataContainer}
 	 */
-	public IInputDataContainer getData();
+	IInputDataContainer getData();
+
+	/**
+	 * liest InputDaten ein
+	 */
+	void initInputData();
+
+	/**
+	 * @return true, wenn weitere Daten vorhanen sind
+	 */
+	boolean hasMoreData();
+
+	/**
+	 * @return true, wenn keine Daten vorhanden sind
+	 */
+	boolean isEmpty();
 
 }

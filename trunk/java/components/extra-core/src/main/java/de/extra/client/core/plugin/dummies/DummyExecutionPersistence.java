@@ -32,4 +32,17 @@ public class DummyExecutionPersistence implements IExecutionPersistence {
 		return null;
 	}
 
+	@Override
+	public List<IInputData> findInputDataForExecution(final String executionProcedure,
+			final PhaseQualifier phaseQualifier, final Integer inputDataLimit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long countInputDataForExecution(final String executionProcedure, final PhaseQualifier phaseQualifier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -19,6 +19,7 @@
 package de.extra.client.plugins.queryplugin.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Named;
@@ -37,6 +38,20 @@ public class QueryPluginController implements IQueryPluginController {
 	@PluginValue(key = "startId")
 	private String startId;
 
+	private final List<IInputDataContainer> senderDataBeanList;
+
+	private final Iterator<IInputDataContainer> iterator;
+
+	public QueryPluginController() {
+		super();
+		senderDataBeanList = new ArrayList<IInputDataContainer>();
+		final DBQueryInputData senderDataBean = new DBQueryInputData();
+		senderDataBean.addSingleDBQueryInputData("23", startId);
+		senderDataBean.setRequestId("requestId");
+		senderDataBeanList.add(senderDataBean);
+		iterator = senderDataBeanList.iterator();
+	}
+
 	/**
 	 * @param startId
 	 */
@@ -48,14 +63,17 @@ public class QueryPluginController implements IQueryPluginController {
 	 * Controller-Klasse zum Aufbau der Query.
 	 */
 	@Override
-	public IInputDataContainer processQuery() {
-		final List<IInputDataContainer> senderDataBeanList = new ArrayList<IInputDataContainer>();
-		final DBQueryInputData senderDataBean = new DBQueryInputData();
-		senderDataBean.addSingleDBQueryInputData("23", startId);
-		senderDataBean.setRequestId("requestId");
-		// Erzeugen der Query
-		// Hinzufügen der Bean mit der Query
-		senderDataBeanList.add(senderDataBean);
-		return senderDataBean;
+	public IInputDataContainer getData() {
+		return iterator.next();
+	}
+
+	@Override
+	public boolean hasMoreData() {
+		return iterator.hasNext();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return false;
 	}
 }

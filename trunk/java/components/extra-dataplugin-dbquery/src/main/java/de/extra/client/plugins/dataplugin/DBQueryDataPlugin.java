@@ -29,6 +29,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.extra.client.core.model.inputdata.impl.DBQueryInputData;
+import de.extrastandard.api.exception.ExceptionCode;
+import de.extrastandard.api.exception.ExtraDataPluginRuntimeException;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.model.execution.IInputData;
@@ -59,15 +61,21 @@ public class DBQueryDataPlugin implements IDataPlugin {
 	@Value("${core.execution.procedure}")
 	private String executionProcedure;
 
+	@Value("${plugins.dataplugin.dbQueryDataPlugin.inputDataLimit}")
+	private Integer inputDataLimit;
+
 	private static final Logger logger = LoggerFactory.getLogger(DBQueryDataPlugin.class);
+
+	private List<IInputData> inputDataList;
 
 	@Override
 	public IInputDataContainer getData() {
-		final List<IInputDataContainer> senderDataBeanList = new ArrayList<IInputDataContainer>();
-		final PhaseQualifier phaseQualifier = PhaseQualifier.resolveByName(executionPhase);
-		final List<IInputData> inputDataList = executionPersistence.findInputDataForExecution(executionProcedure,
-				phaseQualifier);
+		if (inputDataList == null) {
+			throw new ExtraDataPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
+					"DB InputData not instantiited. HasMoreData must be called before.");
+		}
 		final DBQueryInputData dbQueryinputData = new DBQueryInputData();
+		final List<IInputDataContainer> senderDataBeanList = new ArrayList<IInputDataContainer>();
 		senderDataBeanList.add(dbQueryinputData);
 
 		for (final IInputData inputData : inputDataList) {
@@ -76,7 +84,31 @@ public class DBQueryDataPlugin implements IDataPlugin {
 		}
 		logger.info("For Procedury and Phase {} found {} Records.", executionProcedure + "->" + executionPhase,
 				inputDataList.size());
+
 		return dbQueryinputData;
+	}
+
+	@Override
+	public void initInputData() {
+		final PhaseQualifier phaseQualifier = PhaseQualifier.resolveByName(executionPhase);
+		final Long countInputData = executionPersistence.countInputDataForExecution(executionProcedure, phaseQualifier);
+		logger.info("For Procedury and Phase {} found {} Records.", executionProcedure + "->" + executionPhase,
+				countInputData);
+	}
+
+	@Override
+	public boolean hasMoreData() {
+		final PhaseQualifier phaseQualifier = PhaseQualifier.resolveByName(executionPhase);
+		inputDataList = executionPersistence.findInputDataForExecution(executionProcedure, phaseQualifier,
+				inputDataLimit);
+		return !inputDataList.isEmpty();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		final PhaseQualifier phaseQualifier = PhaseQualifier.resolveByName(executionPhase);
+		final Long countInputData = executionPersistence.countInputDataForExecution(executionProcedure, phaseQualifier);
+		return (countInputData == 0);
 	}
 
 	/**
@@ -86,5 +118,4 @@ public class DBQueryDataPlugin implements IDataPlugin {
 	public void setExecutionPhase(final String executionPhase) {
 		this.executionPhase = executionPhase;
 	}
-
 }

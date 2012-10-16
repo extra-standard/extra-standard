@@ -23,6 +23,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -33,7 +35,6 @@ import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.InputDataRepository;
-import de.extrastandard.persistence.repository.PhaseConnectionRepository;
 import de.extrastandard.persistence.repository.ProcedureRepository;
 import de.extrastandard.persistence.repository.StatusRepository;
 
@@ -59,9 +60,7 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 	@Named("statusRepository")
 	private transient StatusRepository statusRepository;
 
-	@Inject
-	@Named("phaseConnectionRepository")
-	private transient PhaseConnectionRepository phaseConnectionRepository;
+	private static final Integer MAX_RESULT_SIZE = 5;
 
 	/**
 	 * @see de.extrastandard.api.model.execution.IExecutionPersistence#startExecution(java.lang.String)
@@ -89,26 +88,48 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 	 */
 	@Override
 	@Transactional
-	public List<IInputData> findInputDataForExecution(final String procedureName, final PhaseQualifier phaseQualifier) {
+	public List<IInputData> findInputDataForExecution(final String procedureName, final PhaseQualifier phaseQualifier,
+			final Integer inputDataLimit) {
 		Assert.notNull(procedureName, "ProcedureName is null");
 		Assert.notNull(phaseQualifier, "Phase is null");
 		final IProcedure procedure = procedureRepository.findByName(procedureName);
-		return findInputDataForExecution(procedure, phaseQualifier);
+		return findInputDataForExecution(procedure, phaseQualifier, inputDataLimit);
 	}
 
 	/**
 	 * Seeks InputData for further Procesierung depending on the ExecutePhase
 	 * 
+	 * @param procedure
+	 *            the Procedure
 	 * @param phaseQualifier
+	 *            the PhaseQuelifier
+	 * @param inputDataLimit
+	 *            limits the result set
 	 * @return
 	 */
-	public List<IInputData> findInputDataForExecution(final IProcedure procedure, final PhaseQualifier phaseQualifier) {
+	public List<IInputData> findInputDataForExecution(final IProcedure procedure, final PhaseQualifier phaseQualifier,
+			final Integer inputDataLimit) {
 		Assert.notNull(procedure, "Procedure is null");
 		Assert.notNull(phaseQualifier, "Phase is null");
 		final Status statusInitial = statusRepository.findOne(PersistentStatus.INITIAL.getId());
+
+		final Pageable pageRequest = new PageRequest(0, inputDataLimit);
 		final List<IInputData> inputDateList = inputDataRepository.findByProcedureAndPhaseQualifierAndStatus(procedure,
-				phaseQualifier.getName(), statusInitial);
+				phaseQualifier.getName(), statusInitial, pageRequest);
 		return inputDateList;
+	}
+
+	@Override
+	public List<IInputData> findInputDataForExecution(final String executionProcedure,
+			final PhaseQualifier phaseQualifier) {
+		return findInputDataForExecution(executionProcedure, phaseQualifier, MAX_RESULT_SIZE);
+	}
+
+	@Override
+	public Long countInputDataForExecution(final String executionProcedure, final PhaseQualifier phaseQualifier) {
+		final Status statusInitial = statusRepository.findOne(PersistentStatus.INITIAL.getId());
+		final IProcedure procedure = procedureRepository.findByName(executionProcedure);
+		return inputDataRepository.count(procedure, phaseQualifier.getName(), statusInitial);
 	}
 
 }
