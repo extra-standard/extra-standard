@@ -52,8 +52,8 @@ public class InitDataSetup {
 	@Test
 	public void setupInitialDaten() throws InterruptedException {
 		LOGGER.info("setupInitialDaten");
-		persistenceTestSetup.setupInitialDaten();
-		persistenceTestSetup.setupProcedureSendFeths();
+		// persistenceTestSetup.setupInitialDaten();
+		// persistenceTestSetup.setupProcedureSendFeths();
 		// persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
 		// persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase3();
 		Thread.sleep(3000);
