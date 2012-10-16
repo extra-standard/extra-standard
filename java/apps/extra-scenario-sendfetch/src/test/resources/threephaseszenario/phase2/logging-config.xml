@@ -13,7 +13,7 @@
 	<logger name="org.hibernate" level="ERROR" />
 	<logger name="org.apache" level="ERROR" />
 
-	<root level="INFO">
+	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
 	</root>
 
