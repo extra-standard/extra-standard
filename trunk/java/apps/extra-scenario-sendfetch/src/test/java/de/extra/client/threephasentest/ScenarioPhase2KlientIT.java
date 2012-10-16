@@ -32,10 +32,12 @@ public class ScenarioPhase2KlientIT {
 
 	private static final String TEST_CONFIG = "/threephaseszenario/phase2";
 
+	private static final String LOG_DIR = "/log";
+
 	@Before
 	public void setUp() throws Exception {
 
-		extraClient = extraClientTestBasic.createExtraKlient(TEST_CONFIG);
+		extraClient = extraClientTestBasic.createExtraKlient(TEST_CONFIG, LOG_DIR);
 	}
 
 	@Test

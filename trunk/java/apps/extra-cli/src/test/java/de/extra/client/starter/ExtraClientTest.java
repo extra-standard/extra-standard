@@ -27,12 +27,14 @@ public class ExtraClientTest {
 
 	private static final String TEST_PATH = "/testconfig";
 
+	private static final String LOG_DIR = "/log";
+
 	private ExtraClient extraClient;
 
 	@Before
 	public void setUp() throws Exception {
 
-		extraClient = extraClientTestBasic.createExtraKlient(TEST_PATH);
+		extraClient = extraClientTestBasic.createExtraKlient(TEST_PATH, LOG_DIR);
 	}
 
 	@Test

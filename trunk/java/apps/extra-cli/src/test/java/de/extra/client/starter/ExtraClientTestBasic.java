@@ -21,6 +21,7 @@ package de.extra.client.starter;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 import de.extra.client.core.ClientProcessResult;
+import de.extra.client.logging.LogFileHandler;
 
 public class ExtraClientTestBasic {
 
@@ -44,9 +46,13 @@ public class ExtraClientTestBasic {
 	 *             , wenn die Konfigurationsverzeichnis nicht vorhanden ist.
 	 * 
 	 */
-	public ExtraClient createExtraKlient(final String path) throws IOException {
+	public ExtraClient createExtraKlient(final String path, final String logDir) throws IOException {
 		org.springframework.util.Assert.notNull(path, "Path is null");
-		final ExtraClient extraClient = new ExtraClient(new ClassPathResource(path).getFile());
+		// initialisiert logging
+		final File configurationDirectory = new ClassPathResource(path).getFile();
+		final File logDirectory = new ClassPathResource(logDir).getFile();
+		new LogFileHandler(logDirectory, configurationDirectory);
+		final ExtraClient extraClient = new ExtraClient(configurationDirectory);
 		return extraClient;
 	}
 
