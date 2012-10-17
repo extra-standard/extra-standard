@@ -18,20 +18,17 @@
  */
 package de.extra.client.core.builder.impl.components;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Named;
 
-import org.apache.commons.codec.binary.Base64InputStream;
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
-import de.extrastandard.api.exception.ExtraCoreRuntimeException;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IFileInputData;
 import de.extrastandard.api.model.content.IInputDataContainer;
@@ -59,15 +56,8 @@ public class TransportBodyFileInputBase64CharSequenceBuilder extends XmlComplexT
 		// Es kann nicht in Transport mehrere Datensätze übertragen werden!!
 		Assert.isTrue(inputDataList.size() == 1, "Unexpected InputData size.");
 		final ISingleContentInputData singleInputData = inputDataList.get(0);
-		final Base64InputStream base64InputStream = new Base64InputStream(singleInputData.getInputDataAsStream());
-		byte[] encodeData = null;
-		try {
-			encodeData = IOUtils.toByteArray(base64InputStream);
-		} catch (final IOException ioException) {
-			throw new ExtraCoreRuntimeException(ioException);
-		}
+		final byte[] encodeData = Base64.encodeBase64(singleInputData.getInputDataAsByteArray());
 		base64CharSequence.setValue(encodeData);
-
 		return base64CharSequence;
 	}
 
