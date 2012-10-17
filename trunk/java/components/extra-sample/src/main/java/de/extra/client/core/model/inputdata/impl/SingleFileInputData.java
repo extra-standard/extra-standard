@@ -154,8 +154,15 @@ public class SingleFileInputData extends Implementor implements ISingleContentIn
 
 	@Override
 	public String getHashCode() {
-		// TODO HahsCOde eines Files berechnen
-		return null;
+		String checkSumCRC32String = null;
+		try {
+			final long checkSumCRC32 = FileUtils.checksumCRC32(inputDataFile);
+			checkSumCRC32String = String.valueOf(checkSumCRC32);
+		} catch (final IOException ioException) {
+			throw new ExtraDataPluginRuntimeException(ioException);
+		}
+
+		return checkSumCRC32String;
 	}
 
 	@Override
