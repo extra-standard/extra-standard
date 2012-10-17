@@ -193,6 +193,13 @@ public class Execution extends AbstractEntity implements IExecution {
 			this.errorCode = errorCode;
 			this.errorMessage = errorMessage;
 			updateProgress(PersistentStatus.FAIL);
+			//InputData bzw. PhasenConnection updaten
+			for (InputData inputData : this.inputDataSet){
+				Set<PhaseConnection> currentPhaseConnectionSet = inputData.getCurrentPhaseConnectionSet();
+				for (PhaseConnection currentPhaseConnection : currentPhaseConnectionSet){
+					currentPhaseConnection.setFailed();
+				}
+			}
 		} catch (final Exception exception) {
 			logger.error("Exception beim inputData.failed", exception);
 		}

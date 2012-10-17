@@ -18,6 +18,9 @@
  */
 package de.extrastandard.persistence.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.Column;
@@ -28,6 +31,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -83,6 +87,16 @@ public class InputData extends AbstractEntity implements IInputData {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "next_phase_connection_id")
 	private PhaseConnection nextPhaseConnection;
+	
+	@OneToMany(mappedBy = "targetInputData", fetch = FetchType.LAZY)
+	private final Set<PhaseConnection> currentPhaseConnectionSet = new HashSet<PhaseConnection>();
+
+	/**
+	 * @return the currentPhaseConnectionSet
+	 */
+	public Set<PhaseConnection> getCurrentPhaseConnectionSet() {
+		return currentPhaseConnectionSet;
+	}
 
 	@Column(name = "response_id")
 	private String responseId;
