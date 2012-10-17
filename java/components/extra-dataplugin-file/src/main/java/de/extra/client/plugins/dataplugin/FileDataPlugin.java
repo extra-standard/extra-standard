@@ -39,7 +39,8 @@ import de.extrastandard.api.plugin.IDataPlugin;
 
 /**
  * @author DPRS
- * @version $Id$
+ * @version $Id: FileDataPlugin.java 765 2012-10-16 13:26:30Z
+ *          potap.rentenservice@gmail.com $
  */
 @Named("fileDataPlugin")
 public class FileDataPlugin implements IDataPlugin {
