@@ -20,10 +20,11 @@ package de.extrastandard.api.exception;
 
 /**
  * @author DPRS
- * @version $Id$
+ * @version $Id: ExceptionCode.java 584 2012-09-17 08:04:42Z
+ *          potap.rentenservice@gmail.com $
  */
 public enum ExceptionCode {
 
-	UNEXPECTED_INTERNAL_EXCEPTION, EXTRA_CONFIGURATION_EXCEPTION // fatal
+	UNEXPECTED_INTERNAL_EXCEPTION, EXTRA_CONFIGURATION_EXCEPTION, EXTRA_ILLEGAL_ACCESS_EXCEPTION // fatal
 
 }
