@@ -78,7 +78,7 @@ public class ExtraRequestFileInputBase64CharSequenceBuilderIT {
 	 * @return
 	 */
 	private IFileInputData createTestDummyFileInputData() {
-		final IFileInputData senderData = new FileInputData(Arrays.asList("235"));
+		final IFileInputData senderData = new FileInputData(Arrays.asList("Extra Test Message 235 ö ä"));
 		return senderData;
 	}
 
