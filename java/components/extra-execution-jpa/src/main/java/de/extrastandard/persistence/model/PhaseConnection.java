@@ -192,4 +192,11 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 		repository.save(this);
 	}
 
+	public void setFailed() {
+		final Status statusFailed = statusRepository.findOne(PersistentStatus.FAIL.getId());
+		this.status = statusFailed;
+		repository.save(this);
+		
+	}
+
 }

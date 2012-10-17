@@ -73,24 +73,22 @@ public class InDBQueryInputData implements ISingleQueryInputData {
 		return serverResponceId;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+
+
+
+
+	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("InDBQueryInputData [");
-		if (originRequestId != null) {
-			builder.append("originRequestId=");
-			builder.append(originRequestId);
-			builder.append(", ");
-		}
-		if (serverResponceId != null) {
-			builder.append("serverResponceId=");
-			builder.append(serverResponceId);
-		}
+		StringBuilder builder = new StringBuilder();
+		builder.append("InDBQueryInputData [originRequestId=");
+		builder.append(originRequestId);
+		builder.append(", serverResponceId=");
+		builder.append(serverResponceId);
+		builder.append(", requestId=");
+		builder.append(requestId);
 		builder.append("]");
 		return builder.toString();
 	}
