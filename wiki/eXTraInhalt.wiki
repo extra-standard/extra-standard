@@ -15,3 +15,4 @@
   * [eXTraSpecIssues Offene Punkte]    
   * [eXTraEntwProzess Entwicklungsprozess]
   * [eXTraClientBetriebsanleitung Betriebsanleitung]
+    * [eXTraClientBetriebLogging Logging]
