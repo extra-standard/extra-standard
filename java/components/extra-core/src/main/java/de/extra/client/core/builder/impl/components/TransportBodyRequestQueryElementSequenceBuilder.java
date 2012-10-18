@@ -80,7 +80,7 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends XmlComplexT
 		dataRequestArgument.getContent().add(jaxbOperand);
 		for (final ISingleQueryInputData singleQueryInputData : dbQueryInputData.getInputData()) {
 			final Operand operand = new Operand();
-			operand.setValue(singleQueryInputData.getServerResponceId());
+			operand.setValue(singleQueryInputData.getSourceResponceId());
 			operandSet.getEQ().add(operand);
 		}
 		query.getArgument().add(dataRequestArgument);

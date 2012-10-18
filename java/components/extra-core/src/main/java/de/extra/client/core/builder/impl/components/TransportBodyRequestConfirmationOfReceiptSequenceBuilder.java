@@ -75,7 +75,7 @@ public class TransportBodyRequestConfirmationOfReceiptSequenceBuilder extends Xm
 		listOfConfirmationOfReceipt.getConfirmationOfReceipt().add(confirmationOfReceipt);
 		for (final ISingleQueryInputData singleDBQueryInputData : singleDBQueryinputDataList) {
 			final Value value = new Value();
-			value.setValue(singleDBQueryInputData.getServerResponceId());
+			value.setValue(singleDBQueryInputData.getSourceResponceId());
 			valueList.add(value);
 		}
 		return listOfConfirmationOfReceipt;
