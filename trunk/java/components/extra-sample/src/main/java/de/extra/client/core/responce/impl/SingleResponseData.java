@@ -38,6 +38,7 @@ public class SingleResponseData implements ISingleResponseData {
 	 * @param requestId
 	 * @param returnCode
 	 * @param returnText
+	 * @param responseId
 	 */
 	public SingleResponseData(final String requestId, final String returnCode, final String returnText,
 			final String responseId) {
@@ -80,6 +81,7 @@ public class SingleResponseData implements ISingleResponseData {
 	/**
 	 * @return the responseId
 	 */
+	@Override
 	public String getResponseId() {
 		return responseId;
 	}

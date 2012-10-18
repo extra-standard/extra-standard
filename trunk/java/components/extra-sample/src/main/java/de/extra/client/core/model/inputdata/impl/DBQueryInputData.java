@@ -41,7 +41,7 @@ public class DBQueryInputData extends InputDataContainer implements IDbQueryInpu
 	}
 
 	/**
-	 * @param originRequestId
+	 * @param sourceRequestId
 	 * @param requestId
 	 * @param serverResponceId
 	 */
@@ -50,13 +50,13 @@ public class DBQueryInputData extends InputDataContainer implements IDbQueryInpu
 	}
 
 	/**
-	 * @param originRequestId
+	 * @param sourceRequestId
 	 * @param requestId
 	 * @param serverResponceId
 	 */
-	public DBQueryInputData(final String requestId) {
+	public DBQueryInputData(final Long dbInputDataId, final String sourceRequestId, final String sourceResponceId) {
 		super();
-		super.setRequestId(requestId);
+		addSingleDBQueryInputData(dbInputDataId, sourceRequestId, sourceResponceId);
 	}
 
 	/*
@@ -66,10 +66,19 @@ public class DBQueryInputData extends InputDataContainer implements IDbQueryInpu
 	 * addSingleDBQueryInputData(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void addSingleDBQueryInputData(final String dbInputDataId, final String serverResponceId) {
-		final InDBQueryInputData singleDBQueryInputData = new InDBQueryInputData(dbInputDataId, serverResponceId);
-		inDBQueryInputDataList.add(singleDBQueryInputData);
+	public void addSingleDBQueryInputData(final Long dbInputDataId, final String sourceRequestId,
+			final String sourceResponceId) {
+		final InDBQueryInputData singleDBQueryInputData = new InDBQueryInputData(dbInputDataId, sourceRequestId,
+				sourceResponceId);
+		addSingleDBQueryInputData(singleDBQueryInputData);
+	}
 
+	/**
+	 * @param singleQueryInputData
+	 */
+	@Override
+	public void addSingleDBQueryInputData(final ISingleQueryInputData singleQueryInputData) {
+		inDBQueryInputDataList.add(singleQueryInputData);
 	}
 
 	/*
