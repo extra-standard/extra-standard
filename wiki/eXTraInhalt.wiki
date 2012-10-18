@@ -16,3 +16,4 @@
   * [eXTraEntwProzess Entwicklungsprozess]
   * [eXTraClientBetriebsanleitung Betriebsanleitung]
     * [eXTraClientBetriebLogging Logging]
+    * [eXTraClientBetriebPlugins Plugins]
