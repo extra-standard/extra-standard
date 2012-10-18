@@ -1,6 +1,0 @@
-#summary Übersicht über die im eXTra-Client angebotenen Plugins
-= Plugins im eXTra-Client =
-
-Der eXTra-Client bietet für verschiedene Aufgabenbereiche unterschiedliche Plugins an. So kann z.B. durch Auswahl eines Plugins gesteuert werden, ob das das erzeugte XML-Dokument im Filesystem abgelegt oder über einen Webservice verschickt wird.
-
-TODO Plugins dokumentieren
