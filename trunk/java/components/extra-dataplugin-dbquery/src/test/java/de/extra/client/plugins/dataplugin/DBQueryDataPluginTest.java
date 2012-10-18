@@ -88,8 +88,8 @@ public class DBQueryDataPluginTest {
 			final List<ISingleQueryInputData> singleQueryInputDatas = dbQueryInputData.getInputData();
 			Assert.assertEquals(1, singleQueryInputDatas.size());
 			final ISingleQueryInputData singleQueryInputData = singleQueryInputDatas.get(0);
-			Assert.assertEquals(RESPONSE_23, singleQueryInputData.getServerResponceId());
-			Assert.assertEquals(REQUEST_23, singleQueryInputData.getOriginRequestId());
+			Assert.assertEquals(RESPONSE_23, singleQueryInputData.getSourceResponceId());
+			Assert.assertEquals(REQUEST_23, singleQueryInputData.getSourceRequestId());
 		}
 
 	}

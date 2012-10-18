@@ -79,7 +79,7 @@ public class DBQueryDataPlugin implements IDataPlugin {
 		senderDataBeanList.add(dbQueryinputData);
 
 		for (final IInputData inputData : inputDataList) {
-			dbQueryinputData.addSingleDBQueryInputData(String.valueOf(inputData.getRequestId()),
+			dbQueryinputData.addSingleDBQueryInputData(inputData.getId(), String.valueOf(inputData.getRequestId()),
 					inputData.getResponseId());
 		}
 		logger.info("For Procedury and Phase {} found {} Records.", executionProcedure + "->" + executionPhase,
