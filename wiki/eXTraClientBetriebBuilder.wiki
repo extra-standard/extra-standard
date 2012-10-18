@@ -1,0 +1,32 @@
+#summary Übersicht über die vorhandenen XML-Builder
+
+= XML-Builder =
+
+Die in der Profil-Datei angegebenen Elemente werden mit Hilfe von _XML-Buildern_ in XML-Abschnitte überführt.
+
+Beispiel:
+
+Profil-Datei
+{{{
+	<element>
+		<Name>xcpt:Sender</Name>
+		<Elternelement>TransportHeader</Elternelement>
+	</element>
+}}}
+
+Properties-Datei
+{{{
+message.builder.header.senderId.class=
+message.builder.header.senderId.value=SENDER-ID
+message.builder.header.senderNameValue=SENDER NAME
+}}}
+
+Erzeugter XML-Abschnitt
+{{{
+        <xcpt:Sender>
+            <xcpt:SenderID>SENDER-ID</xcpt:SenderID>
+            <xcpt:Name>SENDER NAME</xcpt:Name>
+        </xcpt:Sender>
+}}}
+
+TODO Übersicht über alle Builder
