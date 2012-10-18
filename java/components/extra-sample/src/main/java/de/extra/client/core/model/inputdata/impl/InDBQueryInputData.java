@@ -28,15 +28,17 @@ import de.extrastandard.api.model.content.ISingleQueryInputData;
  */
 public class InDBQueryInputData implements ISingleQueryInputData {
 
+	Long sourceIdenrificationId;
+
 	/**
 	 * Ursprung RequestId der Anfrage
 	 */
-	String originRequestId;
+	String sourceRequestId;
 
 	/**
 	 * zurückgegebene Server ResponseId
 	 */
-	String serverResponceId;
+	String sourceResponceId;
 
 	/**
 	 * requestId der Nachfrage
@@ -44,13 +46,16 @@ public class InDBQueryInputData implements ISingleQueryInputData {
 	String requestId;
 
 	/**
-	 * @param originRequestId
-	 * @param serverResponceId
+	 * @param sourceIdentificationId
+	 * @param sourceRequestId
+	 * @param sourceResponceId
 	 */
-	public InDBQueryInputData(final String originRequestId, final String serverResponceId) {
+	public InDBQueryInputData(final Long sourceIdentificationId, final String sourceRequestId,
+			final String sourceResponceId) {
 		super();
-		this.originRequestId = originRequestId;
-		this.serverResponceId = serverResponceId;
+		this.sourceRequestId = sourceRequestId;
+		this.sourceResponceId = sourceResponceId;
+		this.sourceIdenrificationId = sourceIdentificationId;
 	}
 
 	/*
@@ -59,8 +64,8 @@ public class InDBQueryInputData implements ISingleQueryInputData {
 	 * @see de.extra.client.core.model.IDbQueryInputData#getDbInputDataId()
 	 */
 	@Override
-	public String getOriginRequestId() {
-		return originRequestId;
+	public String getSourceRequestId() {
+		return sourceRequestId;
 	}
 
 	/*
@@ -69,28 +74,8 @@ public class InDBQueryInputData implements ISingleQueryInputData {
 	 * @see de.extra.client.core.model.IDbQueryInputData#getServerResponceId()
 	 */
 	@Override
-	public String getServerResponceId() {
-		return serverResponceId;
-	}
-
-
-
-
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("InDBQueryInputData [originRequestId=");
-		builder.append(originRequestId);
-		builder.append(", serverResponceId=");
-		builder.append(serverResponceId);
-		builder.append(", requestId=");
-		builder.append(requestId);
-		builder.append("]");
-		return builder.toString();
+	public String getSourceResponceId() {
+		return sourceResponceId;
 	}
 
 	@Override
@@ -102,6 +87,41 @@ public class InDBQueryInputData implements ISingleQueryInputData {
 	@Override
 	public String getRequestId() {
 		return requestId;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+		builder.append("InDBQueryInputData [");
+		if (sourceIdenrificationId != null) {
+			builder.append("sourceIdenrificationId=");
+			builder.append(sourceIdenrificationId);
+			builder.append(", ");
+		}
+		if (sourceRequestId != null) {
+			builder.append("sourceRequestId=");
+			builder.append(sourceRequestId);
+			builder.append(", ");
+		}
+		if (sourceResponceId != null) {
+			builder.append("sourceResponceId=");
+			builder.append(sourceResponceId);
+		}
+		builder.append("]");
+		return builder.toString();
+	}
+
+	/**
+	 * @return the sourceIdenrificationId
+	 */
+	@Override
+	public Long getSourceIdentificationId() {
+		return sourceIdenrificationId;
 	}
 
 }
