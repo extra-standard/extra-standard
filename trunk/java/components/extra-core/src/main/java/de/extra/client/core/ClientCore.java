@@ -126,6 +126,8 @@ public class ClientCore implements ApplicationContextAware {
 	 */
 	public ClientProcessResult process(final String processParameters) {
 
+		logger.info("Start Process for Procedure {} und Phase {}: ", executionProcedure, executionPhase);
+
 		dataPlugin.initInputData();
 
 		if (dataPlugin.isEmpty()) {
@@ -181,9 +183,7 @@ public class ClientCore implements ApplicationContextAware {
 
 			final List<ISingleQueryInputData> singleQueryInputDataList = dbQueryInputData.getInputData();
 			for (final ISingleQueryInputData singleQueryInputData : singleQueryInputDataList) {
-				final String serverResponseId = singleQueryInputData.getServerResponceId();
-				final String originRequestId = singleQueryInputData.getOriginRequestId();
-				final IInputData dbInputData = execution.startDbQueryInputData(serverResponseId, originRequestId);
+				final IInputData dbInputData = execution.startDbQueryInputData(singleQueryInputData);
 				requestIdAcquisitionStrategy.setRequestId(dbInputData, singleQueryInputData);
 			}
 			requestIdAcquisitionStrategy.setRequestId(dbQueryInputData, execution);

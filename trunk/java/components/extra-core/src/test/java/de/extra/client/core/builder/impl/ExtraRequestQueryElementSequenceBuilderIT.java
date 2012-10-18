@@ -128,9 +128,9 @@ public class ExtraRequestQueryElementSequenceBuilderIT {
 	 */
 	private IDbQueryInputData createTestDummyDBQueryInputData() {
 		final IDbQueryInputData senderData = new DBQueryInputData();
-		senderData.addSingleDBQueryInputData("STERBEDATENABGLEICH-7777777-1-RESPONSE",
+		senderData.addSingleDBQueryInputData(1L, "STERBEDATENABGLEICH-7777777-1-RESPONSE",
 				"STERBEDATENABGLEICH-7777777-1-RESPONSE");
-		senderData.addSingleDBQueryInputData("STERBEDATENABGLEICH-7777778-2-RESPONSE",
+		senderData.addSingleDBQueryInputData(2L, "STERBEDATENABGLEICH-7777778-2-RESPONSE",
 				"STERBEDATENABGLEICH-7777778-2-RESPONSE");
 		senderData.setRequestId("STERBEDATENABGLEICH_8888888");
 		return senderData;

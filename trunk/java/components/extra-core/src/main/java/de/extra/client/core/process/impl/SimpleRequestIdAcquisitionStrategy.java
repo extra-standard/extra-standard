@@ -126,7 +126,9 @@ public class SimpleRequestIdAcquisitionStrategy implements IRequestIdAcquisition
 	public void setRequestId(final IInputData inputData, final ISingleQueryInputData singleQueryInputData) {
 		Assert.notNull(inputData, "Inputdata is null");
 		Assert.notNull(singleQueryInputData, "inputDataContainer is null");
-		final String requestId = inputData.calculateRequestId();
+		// Einzelne Value, die an Server übertragen wird und zur Identifizierung
+		// der Nachrichten dienen kann ist der Ursprung-ResponseId
+		final String requestId = singleQueryInputData.getSourceResponceId();
 		inputData.setRequestId(requestId);
 		inputData.saveOrUpdate();
 		singleQueryInputData.setRequestId(requestId);
