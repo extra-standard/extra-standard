@@ -27,7 +27,6 @@ import javax.inject.Named;
 import de.extra.client.core.annotation.PluginConfigType;
 import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
-import de.extra.client.core.model.inputdata.impl.DBQueryInputData;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
@@ -45,10 +44,6 @@ public class QueryPluginController implements IQueryPluginController {
 	public QueryPluginController() {
 		super();
 		senderDataBeanList = new ArrayList<IInputDataContainer>();
-		final DBQueryInputData senderDataBean = new DBQueryInputData();
-		senderDataBean.addSingleDBQueryInputData("23", startId);
-		senderDataBean.setRequestId("requestId");
-		senderDataBeanList.add(senderDataBean);
 		iterator = senderDataBeanList.iterator();
 	}
 
