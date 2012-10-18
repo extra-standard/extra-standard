@@ -48,10 +48,10 @@ import org.springframework.util.StringUtils;
 
 import de.extrastandard.api.exception.ExtraRuntimeException;
 import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ISingleQueryInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
-import de.extrastandard.api.model.execution.IPhaseConnection;
 import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.IProcessTransition;
 import de.extrastandard.api.model.execution.IStatus;
@@ -193,12 +193,10 @@ public class Execution extends AbstractEntity implements IExecution {
 			this.errorCode = errorCode;
 			this.errorMessage = errorMessage;
 			updateProgress(PersistentStatus.FAIL);
-			//InputData bzw. PhasenConnection updaten
-			for (InputData inputData : this.inputDataSet){
-				Set<PhaseConnection> currentPhaseConnectionSet = inputData.getCurrentPhaseConnectionSet();
-				for (PhaseConnection currentPhaseConnection : currentPhaseConnectionSet){
-					currentPhaseConnection.setFailed();
-				}
+			// InputData bzw. PhasenConnection updaten
+			for (final InputData inputData : this.inputDataSet) {
+				final PhaseConnection currentPhaseConnection = inputData.getCurrentPhaseConnection();
+				currentPhaseConnection.setFailed();
 			}
 		} catch (final Exception exception) {
 			logger.error("Exception beim inputData.failed", exception);
@@ -258,20 +256,16 @@ public class Execution extends AbstractEntity implements IExecution {
 	@Transactional
 	public IInputData startContentInputData(final String inputIdentifier, final String hashCode) {
 		final InputData inputData = new InputData(this, inputIdentifier, hashCode);
-		inputData.setExecution(this);
 		this.inputDataSet.add(inputData);
 		saveOrUpdate();
 		return inputData;
 	}
 
 	@Override
-	public IInputData startDbQueryInputData(final String serverResponseId, final String originRequestId) {
-		final InputData inputData = new InputData(this, serverResponseId);
+	public IInputData startDbQueryInputData(final ISingleQueryInputData singleQueryInputData) {
+		final InputData inputData = new InputData(singleQueryInputData, this);
 		this.inputDataSet.add(inputData);
 		saveOrUpdate();
-		final IInputData originInputData = inputDataRepository.findByRequestId(originRequestId);
-		final IPhaseConnection nextPhaseConnection = originInputData.getNextPhaseConnection();
-		nextPhaseConnection.setTargetInputData(inputData);
 		return inputData;
 	}
 

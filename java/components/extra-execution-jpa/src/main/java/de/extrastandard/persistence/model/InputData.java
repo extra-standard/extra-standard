@@ -18,9 +18,6 @@
  */
 package de.extrastandard.persistence.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.Column;
@@ -31,7 +28,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -39,10 +36,10 @@ import javax.persistence.Transient;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.util.Assert;
 
+import de.extrastandard.api.model.content.ISingleQueryInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
-import de.extrastandard.api.model.execution.IPhaseConnection;
 import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.persistence.repository.InputDataRepository;
 
@@ -84,19 +81,13 @@ public class InputData extends AbstractEntity implements IInputData {
 	@JoinColumn(name = "execution_id")
 	private Execution execution;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "next_phase_connection_id")
 	private PhaseConnection nextPhaseConnection;
-	
-	@OneToMany(mappedBy = "targetInputData", fetch = FetchType.LAZY)
-	private final Set<PhaseConnection> currentPhaseConnectionSet = new HashSet<PhaseConnection>();
 
-	/**
-	 * @return the currentPhaseConnectionSet
-	 */
-	public Set<PhaseConnection> getCurrentPhaseConnectionSet() {
-		return currentPhaseConnectionSet;
-	}
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "current_phase_connection_id")
+	private PhaseConnection currentPhaseConnection;
 
 	@Column(name = "response_id")
 	private String responseId;
@@ -136,13 +127,26 @@ public class InputData extends AbstractEntity implements IInputData {
 		saveOrUpdate();
 	}
 
-	public InputData(final Execution execution, final String serverResponseId) {
-		Assert.notNull(serverResponseId, "ServerResponseId must be specified");
-		// Annahme DBQuery InputData fordert die Daten mit dem vorher von dem
-		// Server erhalteten ResponseId
-		this.requestId = serverResponseId;
+	/**
+	 * @param serverResponseId
+	 * @param sourceRequestId
+	 * @param execution
+	 */
+	public InputData(final ISingleQueryInputData singleQueryInputData, final Execution execution) {
+		Assert.notNull(singleQueryInputData, "ISingleQueryInputData must be specified");
+		Assert.notNull(execution, "Execution must be specified");
+
 		this.execution = execution;
-		saveOrUpdate();
+		final Long sourceIdentificationId = singleQueryInputData.getSourceIdentificationId();
+		Assert.notNull(sourceIdentificationId, "SourceIdentification must be specified");
+		final InputData sourceInputData = repository.findOne(sourceIdentificationId);
+		final PhaseConnection sourceInputNextPhaseConnection = sourceInputData.getNextPhaseConnection();
+		this.currentPhaseConnection = sourceInputNextPhaseConnection;
+		repository.save(this);
+		sourceInputNextPhaseConnection.setTargetInputData(this);
+		final String requestId = this.calculateRequestId();
+		this.requestId = requestId;
+		repository.save(this);
 	}
 
 	/**
@@ -267,8 +271,24 @@ public class InputData extends AbstractEntity implements IInputData {
 	 * @return the nextPhasenConnection
 	 */
 	@Override
-	public IPhaseConnection getNextPhaseConnection() {
+	public PhaseConnection getNextPhaseConnection() {
 		return nextPhaseConnection;
+	}
+
+	/**
+	 * @return the currentPhaseConnectionSet
+	 */
+	@Override
+	public PhaseConnection getCurrentPhaseConnection() {
+		return currentPhaseConnection;
+	}
+
+	/**
+	 * @param currentPhaseConnection
+	 *            the currentPhaseConnection to set
+	 */
+	public void setCurrentPhaseConnection(final PhaseConnection currentPhaseConnection) {
+		this.currentPhaseConnection = currentPhaseConnection;
 	}
 
 	/**

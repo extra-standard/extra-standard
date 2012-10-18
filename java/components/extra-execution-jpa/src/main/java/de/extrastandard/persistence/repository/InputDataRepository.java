@@ -42,7 +42,7 @@ import de.extrastandard.persistence.model.Status;
 public interface InputDataRepository extends JpaRepository<InputData, Long> {
 
 	@Query("FROM InputData WHERE requestId = :requestId")
-	IInputData findByRequestId(@Param("requestId") String requestId);
+	InputData findByRequestId(@Param("requestId") String requestId);
 
 	@Query("select inputdata FROM InputData inputdata "
 			+ " WHERE inputdata.nextPhaseConnection.nextPhasequalifier = :phaseQualifier "
