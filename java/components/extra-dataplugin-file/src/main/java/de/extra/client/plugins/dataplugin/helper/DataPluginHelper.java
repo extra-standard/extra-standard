@@ -44,7 +44,11 @@ import de.extra.client.plugins.dataplugin.auftragssatz.DataSourceInfoType;
 import de.extra.client.plugins.dataplugin.auftragssatz.EncryptionInfoType;
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 
-@Named("dataPluginHelper")
+/**
+ * @deprecated
+ * 
+ * Wird als SpringBean aktuell nicht verwendet
+ */
 public class DataPluginHelper {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DataPluginHelper.class);

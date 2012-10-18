@@ -52,6 +52,9 @@ import de.drv.dsrv.extrastandard.namespace.response.Package;
 import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
 import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
+import de.extra.client.core.annotation.PluginConfigType;
+import de.extra.client.core.annotation.PluginConfiguration;
+import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extra.client.core.responce.impl.ResponseData;
 import de.extra.client.core.responce.impl.SingleResponseData;
@@ -62,6 +65,7 @@ import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
 
 @Named("fileSystemResponseProcessPlugin")
+@PluginConfiguration(pluginBeanName = "fileSystemResponseProcessPlugin", pluginType = PluginConfigType.ResponseProcessPlugins)
 public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FileSystemResponseProcessPlugin.class);
@@ -70,10 +74,12 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 	@Named("eXTrajaxb2Marshaller")
 	private Marshaller marshaller;
 
-	@Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner}")
+	@PluginValue(key="eingangOrdner")
+//	@Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner}")
 	private File eingangOrdner;
 
-	@Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner}")
+	@PluginValue(key="reportOrdner")
+//	@Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner}")
 	private File reportOrdner;
 
 	@Inject
@@ -342,4 +348,33 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			reportOrdner.mkdir();
 		}
 	}
+
+	/**
+	 * @return the eingangOrdner
+	 */
+	public File getEingangOrdner() {
+		return eingangOrdner;
+	}
+
+	/**
+	 * @param eingangOrdner the eingangOrdner to set
+	 */
+	public void setEingangOrdner(File eingangOrdner) {
+		this.eingangOrdner = eingangOrdner;
+	}
+
+	/**
+	 * @return the reportOrdner
+	 */
+	public File getReportOrdner() {
+		return reportOrdner;
+	}
+
+	/**
+	 * @param reportOrdner the reportOrdner to set
+	 */
+	public void setReportOrdner(File reportOrdner) {
+		this.reportOrdner = reportOrdner;
+	}
+	
 }

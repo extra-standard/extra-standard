@@ -31,6 +31,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
+import de.extra.client.core.annotation.PluginConfigType;
+import de.extra.client.core.annotation.PluginConfiguration;
+import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.model.inputdata.impl.FileInputData;
 import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraDataPluginRuntimeException;
@@ -43,14 +46,15 @@ import de.extrastandard.api.plugin.IDataPlugin;
  *          potap.rentenservice@gmail.com $
  */
 @Named("fileDataPlugin")
+@PluginConfiguration(pluginBeanName = "fileDataPlugin", pluginType = PluginConfigType.DataPlugins)
 public class FileDataPlugin implements IDataPlugin {
 
 	private static final Logger logger = LoggerFactory.getLogger(FileDataPlugin.class);
 
-	@Value("${plugins.dataplugin.fileDataPlugin.inputVerzeichnis}")
+	@PluginValue(key="inputVerzeichnis")
 	private File inputDirectory;
 
-	@Value("${plugins.dataplugin.fileDataPlugin.inputDataLimit}")
+	@PluginValue(key="inputDataLimit")
 	private Integer inputDataLimit;
 
 	private Collection<File> inputFiles = new ArrayList<File>();
@@ -104,4 +108,19 @@ public class FileDataPlugin implements IDataPlugin {
 		this.inputDataLimit = inputDataLimit;
 	}
 
+	/**
+	 * @return the inputDirectory
+	 */
+	public File getInputDirectory() {
+		return inputDirectory;
+	}
+
+	/**
+	 * @param inputDirectory the inputDirectory to set
+	 */
+	public void setInputDirectory(File inputDirectory) {
+		this.inputDirectory = inputDirectory;
+	}
+
+	
 }
