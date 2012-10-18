@@ -17,3 +17,4 @@
   * [eXTraClientBetriebsanleitung Betriebsanleitung]
     * [eXTraClientBetriebLogging Logging]
     * [eXTraClientBetriebPlugins Plugins]
+    * [eXTraClientBetriebBuilder XML-Builder]
