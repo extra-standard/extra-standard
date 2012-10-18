@@ -28,6 +28,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -65,7 +66,7 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 	@SequenceGenerator(name = "phase_connection_entity_seq_gen", sequenceName = "seq_phase_connection_id")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "quelle_data_id")
 	private InputData quelleInputData;
 
@@ -196,7 +197,44 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 		final Status statusFailed = statusRepository.findOne(PersistentStatus.FAIL.getId());
 		this.status = statusFailed;
 		repository.save(this);
-		
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+		builder.append("PhaseConnection [");
+		if (id != null) {
+			builder.append("id=");
+			builder.append(id);
+			builder.append(", ");
+		}
+		if (quelleInputData != null) {
+			builder.append("quelleInputData=");
+			builder.append(quelleInputData);
+			builder.append(", ");
+		}
+		if (targetInputData != null) {
+			builder.append("targetInputData=");
+			builder.append(targetInputData);
+			builder.append(", ");
+		}
+		if (nextPhasequalifier != null) {
+			builder.append("nextPhasequalifier=");
+			builder.append(nextPhasequalifier);
+			builder.append(", ");
+		}
+		if (status != null) {
+			builder.append("status=");
+			builder.append(status);
+		}
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

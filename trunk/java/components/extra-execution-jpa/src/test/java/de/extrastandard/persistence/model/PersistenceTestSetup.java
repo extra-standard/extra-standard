@@ -21,6 +21,8 @@ package de.extrastandard.persistence.model;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.extra.client.core.responce.impl.ResponseData;
@@ -39,6 +41,8 @@ import de.extrastandard.persistence.repository.MandatorRepository;
  */
 @Named("persistenceTestSetup")
 public class PersistenceTestSetup {
+
+	private static final Logger logger = LoggerFactory.getLogger(PersistenceTestSetup.class);
 
 	private static final String MANDATOR_TEST = "TEST";
 
@@ -67,10 +71,12 @@ public class PersistenceTestSetup {
 
 		new Mandator(MANDATOR_TEST);
 
+		logger.info("SetupInitialDaten finished");
+
 	}
 
 	@Transactional
-	public void setupProcedureSendFeths() {
+	public void setupprocedureSendFetch() {
 
 		final ProcedureType procedureSendFetch = new ProcedureType("SCENARIO_SEND_FETCH", PhaseQualifier.PHASE1.name(),
 				PhaseQualifier.PHASE3.name());
@@ -87,6 +93,7 @@ public class PersistenceTestSetup {
 
 		new Procedure(mandatorTEST, procedureSendFetch, "Datenabgleich", "SEND_FETH");
 
+		logger.info("setupProcedureSendFeth finished");
 	}
 
 	@Transactional
@@ -100,9 +107,10 @@ public class PersistenceTestSetup {
 
 		final IResponseData responseData = new ResponseData();
 		final ISingleResponseData singleResponseData = new SingleResponseData(calculatedRequestId, "ReturnCode",
-				"ReturnText", "RESPONSE_ID");
+				"ReturnText", "RESPONSE_ID_Phase_1" + calculatedRequestId);
 		responseData.addSingleResponse(singleResponseData);
 		executionForTestPhase2.endExecution(responseData);
+		logger.info("SetupTestDatenForProcedureSendFetchPhase2  finished");
 		return executionForTestPhase2;
 	}
 
@@ -118,9 +126,10 @@ public class PersistenceTestSetup {
 
 		final IResponseData responseDataForPhase3 = new ResponseData();
 		final ISingleResponseData singleResponseDataForPhase3 = new SingleResponseData(calculatedRequestIdForPhase3,
-				"ReturnCodePhase2", "ReturnTextPhase2", "RESPONSE_ID_PHASE2");
+				"ReturnCodePhase2", "ReturnTextPhase2", "RESPONSE_ID_Phase_1" + calculatedRequestIdForPhase3);
 		responseDataForPhase3.addSingleResponse(singleResponseDataForPhase3);
 		executionForTestPhase3.endExecution(responseDataForPhase3);
+		logger.info("SetupTestDatenForProcedureSendFetchPhase3  finished");
 
 		return executionForTestPhase3;
 	}
