@@ -46,6 +46,9 @@ import de.drv.dsrv.extrastandard.namespace.response.Package;
 import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
 import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
+import de.extra.client.core.annotation.PluginConfigType;
+import de.extra.client.core.annotation.PluginConfiguration;
+import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extra.client.core.responce.impl.ResponseData;
 import de.extra.client.core.responce.impl.SingleResponseData;
@@ -67,6 +70,7 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
  * @version $Id$
  */
 @Named("fileSystemResultDataResponseProcessPlugin")
+@PluginConfiguration(pluginBeanName = "fileSystemResultDataResponseProcessPlugin", pluginType = PluginConfigType.ResponseProcessPlugins)
 public class FileSystemResultDataResponseProcessPlugin implements IResponseProcessPlugin {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FileSystemResultDataResponseProcessPlugin.class);
@@ -75,7 +79,8 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 	@Named("eXTrajaxb2Marshaller")
 	private Marshaller marshaller;
 
-	@Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner}")
+	//@Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner}")
+	@PluginValue(key="eingangOrdner")
 	private File eingangOrdner;
 
 	@Inject
@@ -214,6 +219,20 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 		fileName.append("RESPONSE_").append(responseId);
 		fileName.append("_").append(System.currentTimeMillis());
 		return fileName.toString();
+	}
+
+	/**
+	 * @return the eingangOrdner
+	 */
+	public File getEingangOrdner() {
+		return eingangOrdner;
+	}
+
+	/**
+	 * @param eingangOrdner the eingangOrdner to set
+	 */
+	public void setEingangOrdner(File eingangOrdner) {
+		this.eingangOrdner = eingangOrdner;
 	}
 
 }

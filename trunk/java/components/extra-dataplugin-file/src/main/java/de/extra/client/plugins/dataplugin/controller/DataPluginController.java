@@ -35,7 +35,12 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 import de.extrastandard.api.observer.ITransportObserver;
 
-@Named("dataPluginController")
+/**
+ * @deprecated
+ * 
+ * Wird als SpringBean aktuell nicht verwendet
+ */
+//@Named("dataPluginController")
 public class DataPluginController implements IDataPluginController {
 
 	@Inject
