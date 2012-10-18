@@ -82,7 +82,7 @@ public class ExtraClient {
 	 * @return Statuscode
 	 */
 	public ClientProcessResult execute() {
-		LOG.debug("SpringBeans laden");
+		LOG.debug("Load ApplicationContext");
 		ApplicationContext applicationContext = null;
 		final File basicPropsFile = new File(configurationDirectory, PROPERTIES_BASIC_FILENAME);
 		if (!basicPropsFile.exists() || !basicPropsFile.canRead()) {
@@ -115,7 +115,7 @@ public class ExtraClient {
 				}
 			}.createApplicationContext(env);
 
-			LOG.info("Beginn der Verarbeitung");
+			LOG.info("Start Of Processing");
 
 			final ClientCore clientCore = applicationContext.getBean("clientCore", ClientCore.class);
 

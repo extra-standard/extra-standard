@@ -33,28 +33,33 @@ import de.extra.client.logging.LogFileHandler;
 
 /**
  * eXTRa-CLI Startklasse.
- *
+ * 
  * @author DRV
- * @version $Id$
+ * @version $Id: ClientStarter.java 563 2012-09-06 14:15:35Z
+ *          thorstenvogel@gmail.com $
  */
 public class ClientStarter {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ClientStarter.class);
 
+	// TODO KOnstante Definieren. Konfiguration
+	private static final Logger LOG_OPPS = LoggerFactory.getLogger("OPERATION");
+
 	private static final SystemExiter EXITER = new JvmSystemExiter();
 
 	/**
 	 * Main
-	 *
-	 * @param args Kommandozeilenparameter
+	 * 
+	 * @param args
+	 *            Kommandozeilenparameter
 	 */
 	public static void main(final String[] args) {
 		ReturnCode returnCode = ReturnCode.SUCCESS;
 
-		ClientArguments clientArguments = new ClientArguments(args, EXITER);
+		final ClientArguments clientArguments = new ClientArguments(args, EXITER);
 		try {
 			clientArguments.parseArgs();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			clientArguments.printHelpText(e);
 			EXITER.exit(ReturnCode.TECHNICAL);
 		}
@@ -65,25 +70,23 @@ public class ClientStarter {
 		}
 		OpLogger.log.info("Eingabeparameter: " + Arrays.toString(args));
 
-		File configurationDirectory = clientArguments.getConfigDirectory();
+		final File configurationDirectory = clientArguments.getConfigDirectory();
 
 		// initialisiert logging
 		new LogFileHandler(clientArguments.getLogDirectory(), configurationDirectory);
 
 		// config dir zur konfiguration des clients nutzen
-		ExtraClient extraClient = new ExtraClient(configurationDirectory);
+		final ExtraClient extraClient = new ExtraClient(configurationDirectory);
 		try {
-			OpLogger.log.info("Start der Verarbeitung "
-					+ OpLogger.timestampFormat.format(new Date()));
+			OpLogger.log.info("Start der Verarbeitung " + OpLogger.timestampFormat.format(new Date()));
 
-			ClientProcessResult result = extraClient.execute();
+			final ClientProcessResult result = extraClient.execute();
 
-			OpLogger.log.info("Ende der Verarbeitung "
-					+ OpLogger.timestampFormat.format(new Date()));
+			OpLogger.log.info("Ende der Verarbeitung " + OpLogger.timestampFormat.format(new Date()));
 
 			// TODO refactor
-			returnCode = !result.isSuccessful() ? ReturnCode.BUSINESS :
-				(result.hasExceptions() ? ReturnCode.TECHNICAL : ReturnCode.SUCCESS);
+			returnCode = !result.isSuccessful() ? ReturnCode.BUSINESS : (result.hasExceptions() ? ReturnCode.TECHNICAL
+					: ReturnCode.SUCCESS);
 
 			if (returnCode.getCode() != 0) {
 				LOG.error("Fehler bei der Verarbeitung: " + returnCode);
@@ -91,7 +94,7 @@ public class ClientStarter {
 				LOG.info("Verarbeitung erfolgreich");
 			}
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			LOG.error("Fehler bei der Verarbeitung", e);
 			returnCode = ReturnCode.BUSINESS;
 		}
