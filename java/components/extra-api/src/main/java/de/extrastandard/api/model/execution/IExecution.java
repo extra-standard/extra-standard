@@ -23,6 +23,7 @@ import java.util.Set;
 
 import de.extrastandard.api.exception.ExtraRuntimeException;
 import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ISingleQueryInputData;
 
 /**
  * Ein Execution bietet Möglichkeiten zur Protokollierung der zu verarbeitenden
@@ -46,13 +47,12 @@ public interface IExecution extends PersistentEntity {
 	IInputData startContentInputData(String inputIdentifier, String hashCode);
 
 	/**
-	 * Startet InputData für eine DB Query
+	 * Startet InputData für eine {@link ISingleQueryInputData}
 	 * 
-	 * @param serverResponseId
-	 * @param originRequestId
-	 * @return
+	 * @param singleQueryInputData
+	 * @return {@link IInputData}
 	 */
-	IInputData startDbQueryInputData(String serverResponseId, String originRequestId);
+	IInputData startDbQueryInputData(ISingleQueryInputData singleQueryInputData);
 
 	/**
 	 * Aktualisiert diese Execution mit dem angegebenen Status.

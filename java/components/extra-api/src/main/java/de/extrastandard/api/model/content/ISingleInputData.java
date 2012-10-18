@@ -22,7 +22,8 @@ package de.extrastandard.api.model.content;
  * Marker Interface für die inputDaten
  * 
  * @author Leonid Potap
- * @version $Id$
+ * @version $Id: ISingleInputData.java 756 2012-10-15 14:14:40Z
+ *          potap.rentenservice@gmail.com $
  */
 public interface ISingleInputData {
 
