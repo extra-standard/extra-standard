@@ -94,8 +94,13 @@ public interface IInputData extends PersistentEntity {
 	String getReturnCode();
 
 	/**
-	 * @return nextPhase
+	 * @return nextPhase {@link IPhaseConnection)
 	 */
 	IPhaseConnection getNextPhaseConnection();
+
+	/**
+	 * @return currentPhase {@link IPhaseConnection)
+	 */
+	IPhaseConnection getCurrentPhaseConnection();
 
 }

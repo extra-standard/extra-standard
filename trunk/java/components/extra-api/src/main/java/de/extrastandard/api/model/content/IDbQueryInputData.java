@@ -24,7 +24,8 @@ import java.util.List;
  * Query InputData
  * 
  * @author Leonid Potap
- * @version $Id$ Seit Version 1.0.0
+ * @version $Id: IDbQueryInputData.java 756 2012-10-15 14:14:40Z
+ *          potap.rentenservice@gmail.com $ Seit Version 1.0.0
  */
 public interface IDbQueryInputData extends IInputDataContainer {
 
@@ -34,8 +35,14 @@ public interface IDbQueryInputData extends IInputDataContainer {
 	List<ISingleQueryInputData> getInputData();
 
 	/**
-	 * @param originRequestId
-	 * @param serverResponceId
+	 * @param dbInputDataId
+	 * @param sourceRequestId
+	 * @param sourceResponceId
 	 */
-	void addSingleDBQueryInputData(String originRequestId, String serverResponceId);
+	void addSingleDBQueryInputData(Long dbInputDataId, String sourceRequestId, String sourceResponceId);
+
+	/**
+	 * @param singleQueryInputData
+	 */
+	void addSingleDBQueryInputData(ISingleQueryInputData singleQueryInputData);
 }

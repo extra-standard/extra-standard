@@ -23,11 +23,18 @@ public interface ISingleQueryInputData extends ISingleInputData {
 	/**
 	 * @return the dbInputDataId
 	 */
-	public String getOriginRequestId();
+	String getSourceRequestId();
 
 	/**
 	 * @return the serverResponceId
 	 */
-	public String getServerResponceId();
+	String getSourceResponceId();
+
+	/**
+	 * Identification of the Source Input
+	 * 
+	 * @return
+	 */
+	Long getSourceIdentificationId();
 
 }
