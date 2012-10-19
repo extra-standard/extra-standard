@@ -19,3 +19,4 @@
     * [eXTraClientBetriebPlugins Plugins]
     * [eXTraClientBetriebBuilder XML-Builder]
     * [eXTraClientBetriebSonstigeKonfiguration Sonstige Konfiguration]
+    * [eXTraClientBetriebDatenbank Datenbank]
