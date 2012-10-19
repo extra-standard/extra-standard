@@ -52,8 +52,6 @@ public class Procedure extends AbstractEntity implements IProcedure {
 
 	private static final long serialVersionUID = 1L;
 
-	// private
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "procedure_entity_seq_gen")
 	@SequenceGenerator(name = "procedure_entity_seq_gen", sequenceName = "seq_procedure_id")
