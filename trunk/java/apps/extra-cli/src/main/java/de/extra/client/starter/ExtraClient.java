@@ -121,7 +121,7 @@ public class ExtraClient {
 
 			final ClientProcessResult processResult = clientCore.process(configurationDirectory.getAbsolutePath());
 
-			// TODO Auswerten Ergebnisse
+			LOG.info("ExecutionsResults: {}", processResult.printResults());
 
 			return processResult;
 

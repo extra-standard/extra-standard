@@ -28,7 +28,7 @@ import java.util.List;
 public interface IFileInputData extends IInputDataContainer {
 
 	/**
-	 * @return the inputData as Stream
+	 * @return the inputData
 	 */
 	List<ISingleContentInputData> getInputData();
 

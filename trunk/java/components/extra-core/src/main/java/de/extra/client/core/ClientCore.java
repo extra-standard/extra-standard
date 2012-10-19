@@ -130,11 +130,12 @@ public class ClientCore implements ApplicationContextAware {
 
 		dataPlugin.initInputData();
 
-		if (dataPlugin.isEmpty()) {
-			return applicationContext.getBean("clientProcessResult", ClientProcessResult.class);
-		}
 		final ClientProcessResult totalClientProcessResult = applicationContext.getBean("clientProcessResult",
 				ClientProcessResult.class);
+		if (dataPlugin.isEmpty()) {
+			// Return empty Result
+			return totalClientProcessResult;
+		}
 
 		while (dataPlugin.hasMoreData()) {
 			final IInputDataContainer versandDaten = dataPlugin.getData();
@@ -194,15 +195,15 @@ public class ClientCore implements ApplicationContextAware {
 
 		} catch (final ExtraConfigRuntimeException extraConfigException) {
 			logger.error("Exception in der Extra-Processing", extraConfigException);
-			clientProcessResult.addException(dbQueryInputData, extraConfigException);
+			clientProcessResult.addException(extraConfigException);
 			failed(execution, extraConfigException);
 		} catch (final ExtraRuntimeException extraRuntimeException) {
 			logger.error("Exception in der Extra-Processing", extraRuntimeException);
-			clientProcessResult.addException(dbQueryInputData, extraRuntimeException);
+			clientProcessResult.addException(extraRuntimeException);
 			failed(execution, extraRuntimeException);
 		} catch (final Exception exception) {
 			logger.error("Exception in der Extra-Processing", exception);
-			clientProcessResult.addException(dbQueryInputData, exception);
+			clientProcessResult.addException(exception);
 			failed(execution, exception);
 		}
 		return clientProcessResult;
@@ -228,15 +229,15 @@ public class ClientCore implements ApplicationContextAware {
 
 		} catch (final ExtraConfigRuntimeException extraConfigException) {
 			logger.error("Exception in der Extra-Processing", extraConfigException);
-			clientProcessResult.addException(fileInputData, extraConfigException);
+			clientProcessResult.addException(extraConfigException);
 			failed(execution, extraConfigException);
 		} catch (final ExtraRuntimeException extraRuntimeException) {
 			logger.error("Exception in der Extra-Processing", extraRuntimeException);
-			clientProcessResult.addException(fileInputData, extraRuntimeException);
+			clientProcessResult.addException(extraRuntimeException);
 			failed(execution, extraRuntimeException);
 		} catch (final Exception exception) {
 			logger.error("Exception in der Extra-Processing", exception);
-			clientProcessResult.addException(fileInputData, exception);
+			clientProcessResult.addException(exception);
 			failed(execution, exception);
 		}
 		return clientProcessResult;

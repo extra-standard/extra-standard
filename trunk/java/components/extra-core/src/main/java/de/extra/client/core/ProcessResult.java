@@ -3,6 +3,10 @@ package de.extra.client.core;
 import de.extrastandard.api.model.content.IResponseData;
 
 /**
+ * 
+ * Result transmission of a transport. Result can contain several single
+ * responses.
+ * 
  * @author DPRS
  * @version $Id$
  */
