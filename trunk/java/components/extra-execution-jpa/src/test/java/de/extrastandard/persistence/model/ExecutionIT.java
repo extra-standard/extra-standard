@@ -56,6 +56,8 @@ import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.InputDataRepository;
 
 /**
+ * Integration Test for Execution.
+ * 
  * @author Leonid Potap
  * @version $Id$
  */
