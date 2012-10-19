@@ -20,22 +20,18 @@ package de.extrastandard.api.model.execution;
 
 /**
  * Markiert eine persistente Klasse.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: PersistentEntity.java 487 2012-09-03 13:07:52Z
+ *          thorstenvogel@gmail.com $
  */
 public interface PersistentEntity {
 
 	/**
 	 * Liefert die ID dieser Entity.
-	 *
+	 * 
 	 * @return ID dieser Entity
 	 */
 	Long getId();
-
-	/**
-	 * Speichert oder aktualisiert diese Entity.
-	 */
-	void saveOrUpdate();
 
 }

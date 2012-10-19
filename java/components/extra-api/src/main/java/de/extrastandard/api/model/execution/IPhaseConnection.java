@@ -22,34 +22,30 @@ package de.extrastandard.api.model.execution;
  * Inputdaten.
  * 
  * @author Leonid Potap
- * @version $Id$
+ * @version $Id: IPhaseConnection.java 754 2012-10-15 14:06:06Z
+ *          potap.rentenservice@gmail.com $
  */
 public interface IPhaseConnection {
 
 	/**
-	 * @see de.extrastandard.api.model.execution.PersistentEntity#saveOrUpdate()
-	 */
-	public abstract void saveOrUpdate();
-
-	/**
 	 * @return the quelleInputData
 	 */
-	public abstract IInputData getQuelleInputData();
+	IInputData getQuelleInputData();
 
 	/**
 	 * @return the targetInputData
 	 */
-	public abstract IInputData getTargetInputData();
+	IInputData getTargetInputData();
 
 	/**
 	 * @return the nextPhasequalifier
 	 */
-	public abstract String getNextPhasequalifier();
+	String getNextPhasequalifier();
 
 	/**
 	 * @return the status
 	 */
-	public abstract IStatus getStatus();
+	IStatus getStatus();
 
 	/**
 	 * @param targetInputData
