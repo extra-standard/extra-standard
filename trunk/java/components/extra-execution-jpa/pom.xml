@@ -103,6 +103,24 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>com.googlecode.flyway</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>1.7</version>
+				<configuration>
+					<driver>org.hsqldb.jdbcDriver</driver>
+					<url>jdbc:hsqldb:file:target/test-classes/test-hsqldb/eXTra-persistence</url>
+					<user>sa</user>
+					<password></password>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.hsqldb</groupId>
+						<artifactId>hsqldb</artifactId>
+						<version>${org.hsqldb.hsqldb.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 		</plugins>
 
 		<pluginManagement>
