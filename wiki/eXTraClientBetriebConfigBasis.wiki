@@ -2,19 +2,28 @@
 
 =Beschreibung eXTra-properties-basic.properties=
 Diese Konfigurationsdatei besteht aus Attribut-Werte Paaren (Java-properties Format). In jeder Zeile wird der Wert für ein Attribut angegeben. Die Datei kann in folgende Bereiche aufgeteilt werden:
- * Fachverfahren
+
+=== Fachverfahren ===
    * Informationen für das durchzuführende Fachverfahren 
    * Beispiel: 	core.execution.procedure=Datenabgleich
    * Das Verfahren ‚Datenabgleich’ soll durchgeführt werden
- * Profiling
+
+=== Profiling ===
    * Zu verwendende Profiling-Datei, Beispiel: plugins.configplugin.defaultConfigPlugin.profilOrdner=conf/profil.xml
- * Auswahl der Plugins 
+
+=== Auswahl der Plugins === 
    * Angabe der Plugins die bei der Ausführung verwendet werden sollen. (Auflistung und Beschreibung der vorhandenen Plugins: TODO).
- * Auswahl der _Builder_ (Bausteine zur Erstellung des eXTra-XML-Dokuments)
+
+=== Auswahl der XML-Builder (Bausteine zur Erstellung des eXTra-XML-Dokuments)
    * Jedes in der Profilierungsdatei angegebene Element wird von einem _Builder_ in einen XML-Abschnitt überführt.
    * Für bestimmte Elemente können verschiedene Builder gewählt werden.
    * z.B. _builder.xcpt.ElementSequence=transportBodyRequestConfirmationOfReceiptSequenceBuilder_
    * siehe Dokumentation vorhandene Builder'
- * Konfiguration der Plugins
+
+=== Konfiguration der Plugins ===
    * Die einzelnen Plugins benötigen unterschiedliche Konfigurationsparameter. So benötigt z.B. das ‚executionPersistenceJpa’ Plugin eine DB-Verbindung. 
    * Beispiel: plugins.execution.executionPersistenceJPA.hibernate.database=HSQL
+
+=== Konfiguration der XML-Builder ===
+
+== Beispiel einer extra-properties-basic.properties Datei ==
