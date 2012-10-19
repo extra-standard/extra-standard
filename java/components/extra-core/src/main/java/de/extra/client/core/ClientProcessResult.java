@@ -18,9 +18,9 @@
  */
 package de.extra.client.core;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,20 +42,21 @@ import de.extrastandard.api.model.content.ISingleResponseData;
 @Named("clientProcessResult")
 public class ClientProcessResult {
 
+	// TODO Systemunabhängigen Formatter
+	private static final String NEW_LINE = "\r\n";
+
 	@Inject
 	@Named("extraReturnCodeAnalyser")
 	private IExtraReturnCodeAnalyser returnCodeAnalyser;
 
-	private final Map<String, ProcessResult> responseMap = new HashMap<String, ProcessResult>();
+	private final List<ProcessResult> responses = new ArrayList<ProcessResult>();
 
 	public void addResult(final IInputDataContainer dataContainer, final IResponseData responseData) {
-		final String inputIdentification = dataContainer.getInputIdentification();
-		responseMap.put(inputIdentification, new ProcessResult(responseData));
+		responses.add(new ProcessResult(responseData));
 	}
 
-	public void addException(final IInputDataContainer dataContainer, final Exception exception) {
-		final String requestId = dataContainer.getInputIdentification();
-		responseMap.put(requestId, new ProcessResult(exception));
+	public void addException(final Exception exception) {
+		responses.add(new ProcessResult(exception));
 	}
 
 	/**
@@ -65,10 +66,8 @@ public class ClientProcessResult {
 	 * @return
 	 */
 	public boolean isSuccessful() {
-		final Set<String> keySet = responseMap.keySet();
 		boolean hasErrors = false;
-		for (final String key : keySet) {
-			final ProcessResult result = responseMap.get(key);
+		for (final ProcessResult result : responses) {
 			final IResponseData responseData = result.getResponseData();
 			if (responseData != null && responseData.getResponses() != null) {
 				for (final ISingleResponseData iResponseData : responseData.getResponses()) {
@@ -87,9 +86,8 @@ public class ClientProcessResult {
 	}
 
 	public boolean hasExceptions() {
-		final Set<String> keySet = responseMap.keySet();
-		for (final String key : keySet) {
-			final ProcessResult result = responseMap.get(key);
+
+		for (final ProcessResult result : responses) {
 			if (result.getException() != null) {
 				return true;
 			}
@@ -97,13 +95,14 @@ public class ClientProcessResult {
 		return false;
 	}
 
+	private boolean isSuccessful(final ISingleResponseData iResponseData) {
+		return returnCodeAnalyser.isReturnCodeSuccessful(iResponseData.getReturnCode());
+	}
+
 	public String exceptionsToString() {
 		final StringBuilder stringBuilder = new StringBuilder();
-		final Set<String> keySet = responseMap.keySet();
-		for (final String key : keySet) {
-			final ProcessResult result = responseMap.get(key);
+		for (final ProcessResult result : responses) {
 			if (result.getException() != null) {
-				stringBuilder.append("ExceptionKey: ").append(key);
 				stringBuilder.append(" Exception Message: ").append(result.getException().getMessage());
 				stringBuilder.append(" For Results: ").append(result.getResponseData());
 
@@ -116,16 +115,59 @@ public class ClientProcessResult {
 	 * @return Aufbereitete Liste mit ReturnCodes zu jeder empfangener Nachricht
 	 */
 	public String printResults() {
-		final StringBuilder resultAsString = new StringBuilder();
-		final Set<String> keySet = responseMap.keySet();
-		for (final String key : keySet) {
-			final ProcessResult result = responseMap.get(key);
-			resultAsString.append("Result Identifikation: ").append(key);
-			resultAsString.append("Result Identifikation: ").append(result);
+		final StringBuilder successResultAsString = new StringBuilder();
+		final StringBuilder failedResultAsString = new StringBuilder();
+		int succesfulResultsCount = 0;
+		int failedResultsCount = 0;
 
+		for (final ProcessResult result : responses) {
+			if (result.getException() != null) {
+				failedResultsCount++;
+				failedResultAsString.append(" Exception: ").append(result.getException().getMessage());
+			} else {
+				final IResponseData responseData = result.getResponseData();
+				for (final ISingleResponseData singleResponseData : responseData.getResponses()) {
+					final StringBuilder singleResponseDataResult = new StringBuilder();
+					singleResponseDataResult.append(" Request : ").append(singleResponseData.getRequestId());
+					singleResponseDataResult.append(" Received Response: ").append(singleResponseData.getResponseId());
+					singleResponseDataResult.append(" With ReturnCode: ").append(singleResponseData.getReturnCode());
+					singleResponseDataResult.append(" and ReturnText: ").append(singleResponseData.getReturnText());
+					singleResponseDataResult.append(NEW_LINE);
+					if (isSuccessful(singleResponseData)) {
+						succesfulResultsCount++;
+						successResultAsString.append(singleResponseDataResult);
+					} else {
+						failedResultsCount++;
+						failedResultAsString.append(singleResponseDataResult);
+					}
+				}
+			}
+		}
+		final StringBuilder resultAsString = new StringBuilder(NEW_LINE);
+		resultAsString.append("Anzahl verarbeitetn Saetze : ").append(responses.size());
+		resultAsString.append(NEW_LINE);
+		resultAsString.append("Davon erfolgreich : ").append(succesfulResultsCount);
+		resultAsString.append(NEW_LINE);
+		resultAsString.append("Davon fehlerhaft : ").append(failedResultsCount);
+		resultAsString.append(NEW_LINE);
+		resultAsString.append("Erfolgreich verarbeite Datensätze: ").append(NEW_LINE);
+		resultAsString.append(successResultAsString);
+		resultAsString.append("Fehlerhafte Datensätze: ").append(NEW_LINE);
+		if (failedResultsCount != 0) {
+			resultAsString.append(failedResultAsString);
 		}
 		return resultAsString.toString();
 	}
+
+	// davon erfolgreich 368
+	// davon fehlerhaft 1
+	// davon ueberlesen 0
+	// davon verworfen 1
+	//
+	// Ausgabe der fehlerhaften Verarbeitungen :
+	// IfObZahlungsBereitstellungVO: zahlvorgang:XZlvoGenericVO [sid_xzlvo=1868]
+	// kalenderIDOfZahlvorgang:10270 zahlpaketTypSIDOfZahlforgang:123 ::
+	// Unerwartete LeistungszweigEnum: BR ::
 
 	/**
 	 * Fügt das singleProcessResult dem ProcessResult hinzu
@@ -133,16 +175,33 @@ public class ClientProcessResult {
 	 * @param singleProcessResult
 	 */
 	public void addResult(final ClientProcessResult singleProcessResult) {
-		final Map<String, ProcessResult> singleProcessResultResponses = singleProcessResult.getResponseMap();
-		this.responseMap.putAll(singleProcessResultResponses);
+		final List<ProcessResult> singleProcessResultResponses = singleProcessResult.getResponses();
+		this.responses.addAll(singleProcessResultResponses);
 
 	}
 
 	/**
 	 * @return the responseMap
 	 */
-	public Map<String, ProcessResult> getResponseMap() {
-		return responseMap;
+	public List<ProcessResult> getResponses() {
+		return Collections.unmodifiableList(responses);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+		builder.append("ClientProcessResult [");
+		if (responses != null) {
+			builder.append("responseMap=");
+			builder.append(responses);
+		}
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

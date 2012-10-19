@@ -68,11 +68,6 @@ public class FileInputData extends InputDataContainer implements IFileInputData 
 	}
 
 	@Override
-	public String getInputIdentification() {
-		return "";
-	}
-
-	@Override
 	public List<ISingleContentInputData> getInputData() {
 		return Collections.unmodifiableList(inputDataList);
 	}

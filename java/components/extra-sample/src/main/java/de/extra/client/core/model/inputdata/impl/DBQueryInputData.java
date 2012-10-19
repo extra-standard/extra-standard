@@ -84,18 +84,6 @@ public class DBQueryInputData extends InputDataContainer implements IDbQueryInpu
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * de.extrastandard.api.model.content.IInputDataContainer#getInputIdentification
-	 * ()
-	 */
-	@Override
-	public String getInputIdentification() {
-		return getRequestId();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

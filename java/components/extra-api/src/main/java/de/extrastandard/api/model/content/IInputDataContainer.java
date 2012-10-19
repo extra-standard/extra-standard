@@ -26,17 +26,10 @@ import de.extrastandard.api.util.IImplementor;
  * </pre>
  * 
  * @author DPRS
- * @version $Id$
+ * @version $Id: IInputDataContainer.java 756 2012-10-15 14:14:40Z
+ *          potap.rentenservice@gmail.com $
  */
 public interface IInputDataContainer extends IImplementor {
-
-	/**
-	 * Liefert eine Identifizierung der InputDaten In der Phase 1 DataRequestId
-	 * In derPhase 2 responseId
-	 * 
-	 * @return
-	 */
-	String getInputIdentification();
 
 	/**
 	 * Liefert RequestId, für die eindeutige Identifizierung in der XmlMessage
