@@ -216,9 +216,7 @@ public class ClientCore implements ApplicationContextAware {
 		try {
 
 			for (final ISingleContentInputData singleContentInputData : fileInputData.getInputData()) {
-				final String hashCode = singleContentInputData.getHashCode();
-				final String inputIdentifier = singleContentInputData.getInputIdentifier();
-				final IInputData inputData = execution.startContentInputData(inputIdentifier, hashCode);
+				final IInputData inputData = execution.startContentInputData(singleContentInputData);
 				requestIdAcquisitionStrategy.setRequestId(inputData, singleContentInputData);
 			}
 			requestIdAcquisitionStrategy.setRequestId(fileInputData, execution);
@@ -231,15 +229,15 @@ public class ClientCore implements ApplicationContextAware {
 		} catch (final ExtraConfigRuntimeException extraConfigException) {
 			logger.error("Exception in der Extra-Processing", extraConfigException);
 			clientProcessResult.addException(fileInputData, extraConfigException);
-			// failed(inputData, extraConfigException);
+			failed(execution, extraConfigException);
 		} catch (final ExtraRuntimeException extraRuntimeException) {
 			logger.error("Exception in der Extra-Processing", extraRuntimeException);
 			clientProcessResult.addException(fileInputData, extraRuntimeException);
-			// failed(inputData, extraRuntimeException);
+			failed(execution, extraRuntimeException);
 		} catch (final Exception exception) {
 			logger.error("Exception in der Extra-Processing", exception);
 			clientProcessResult.addException(fileInputData, exception);
-			// failed(inputData, exception);
+			failed(execution, exception);
 		}
 		return clientProcessResult;
 	}

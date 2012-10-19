@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.extra.client.core.model.inputdata.impl.SingleStringInputData;
 import de.extra.client.core.responce.impl.ResponseData;
 import de.extra.client.core.responce.impl.SingleResponseData;
 import de.extrastandard.api.model.content.IResponseData;
@@ -78,8 +79,7 @@ public class PersistenceTestSetup {
 	@Transactional
 	public void setupprocedureSendFetch() {
 
-		final ProcedureType procedureSendFetch = new ProcedureType("SCENARIO_SEND_FETCH", PhaseQualifier.PHASE1.name(),
-				PhaseQualifier.PHASE3.name());
+		final ProcedureType procedureSendFetch = new ProcedureType("SCENARIO_SEND_FETCH");
 
 		final ProcedurePhaseConfiguration procedurePhaseConfigurationPhase3 = new ProcedurePhaseConfiguration(
 				procedureSendFetch, PhaseQualifier.PHASE3);
@@ -101,7 +101,8 @@ public class PersistenceTestSetup {
 		final IExecution executionForTestPhase2 = executionPersistence.startExecution(
 				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "-c d:/extras/configdir", PhaseQualifier.PHASE1);
 
-		final IInputData inputData = executionForTestPhase2.startContentInputData("inputIdentifier", "hashCode");
+		final IInputData inputData = executionForTestPhase2.startContentInputData(new SingleStringInputData(
+				"TestStringInoutData"));
 		final String calculatedRequestId = inputData.calculateRequestId();
 		inputData.setRequestId(calculatedRequestId);
 
@@ -119,8 +120,8 @@ public class PersistenceTestSetup {
 		final IExecution executionForTestPhase3 = executionPersistence.startExecution(
 				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "-c d:/extras/configdir2", PhaseQualifier.PHASE2);
 
-		final IInputData inputDataForPhase3 = executionForTestPhase3.startContentInputData("inputIdentifierPhase2",
-				"hashCodePhase2");
+		final IInputData inputDataForPhase3 = executionForTestPhase3.startContentInputData(new SingleStringInputData(
+				"TestStringInoutData"));
 		final String calculatedRequestIdForPhase3 = inputDataForPhase3.calculateRequestId();
 		inputDataForPhase3.setRequestId(calculatedRequestIdForPhase3);
 

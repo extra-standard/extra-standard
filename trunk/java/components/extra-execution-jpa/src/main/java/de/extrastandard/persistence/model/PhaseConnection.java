@@ -34,7 +34,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.transaction.annotation.Transactional;
 
 import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.IPhaseConnection;
@@ -110,18 +109,6 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 		this.status = persistentStatusInitial;
 		repository.save(this);
 		quelleInputData.setNextPhaseConnection(this);
-		quelleInputData.saveOrUpdate();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.extrastandard.persistence.model.IPhaseConnection#saveOrUpdate()
-	 */
-	@Override
-	@Transactional
-	public void saveOrUpdate() {
-		repository.save(this);
 	}
 
 	@Override

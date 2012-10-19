@@ -31,7 +31,6 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.transaction.annotation.Transactional;
 
 import de.extrastandard.api.model.execution.IMandator;
 import de.extrastandard.persistence.repository.MandatorRepository;
@@ -70,15 +69,6 @@ public class Mandator extends AbstractEntity implements IMandator {
 	public Mandator(final String name) {
 		super();
 		this.name = name;
-		repository.save(this);
-	}
-
-	/**
-	 * @see de.extrastandard.api.model.execution.PersistentEntity#saveOrUpdate()
-	 */
-	@Override
-	@Transactional
-	public void saveOrUpdate() {
 		repository.save(this);
 	}
 
