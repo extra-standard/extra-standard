@@ -22,7 +22,7 @@ Die Ablage der eigentlichen Nutzdaten ist z.Z. unklar. Insgesamt können fünf A
       * `Data.ElementSequence`
       * `Data.AnyXML`
 
-Es ist nicht klar definiert, wo die Daten zu extrahieren sind.
+Es ist nicht klar definiert, wo die Daten zu extrahieren sind. Hier ist zu großer Interpretationsraum vorhanden.
 
 
 == b) Verarbeitung großer Datenmengen ==           
