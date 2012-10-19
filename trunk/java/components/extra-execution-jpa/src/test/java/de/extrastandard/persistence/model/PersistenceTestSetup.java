@@ -37,13 +37,16 @@ import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.MandatorRepository;
 
 /**
+ * Setup the persistence.
+ * 
  * @author Leonid Potap
  * @version $Id$
  */
 @Named("persistenceTestSetup")
 public class PersistenceTestSetup {
 
-	private static final Logger logger = LoggerFactory.getLogger(PersistenceTestSetup.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(PersistenceTestSetup.class);
 
 	private static final String MANDATOR_TEST = "TEST";
 
@@ -59,7 +62,6 @@ public class PersistenceTestSetup {
 
 	@Transactional
 	public void setupInitialDaten() {
-
 		new Status(PersistentStatus.INITIAL);
 
 		new Status(PersistentStatus.ENVELOPED);
@@ -73,42 +75,48 @@ public class PersistenceTestSetup {
 		new Mandator(MANDATOR_TEST);
 
 		logger.info("SetupInitialDaten finished");
-
 	}
 
 	@Transactional
 	public void setupprocedureSendFetch() {
-
-		final ProcedureType procedureSendFetch = new ProcedureType("SCENARIO_SEND_FETCH");
+		final ProcedureType procedureSendFetch = new ProcedureType(
+				"SCENARIO_SEND_FETCH");
 
 		final ProcedurePhaseConfiguration procedurePhaseConfigurationPhase3 = new ProcedurePhaseConfiguration(
 				procedureSendFetch, PhaseQualifier.PHASE3);
 
 		final ProcedurePhaseConfiguration procedurePhaseConfigurationPhase2 = new ProcedurePhaseConfiguration(
-				procedureSendFetch, PhaseQualifier.PHASE2, procedurePhaseConfigurationPhase3);
+				procedureSendFetch, PhaseQualifier.PHASE2,
+				procedurePhaseConfigurationPhase3);
 
-		new ProcedurePhaseConfiguration(procedureSendFetch, PhaseQualifier.PHASE1, procedurePhaseConfigurationPhase2);
+		new ProcedurePhaseConfiguration(procedureSendFetch,
+				PhaseQualifier.PHASE1, procedurePhaseConfigurationPhase2);
 
-		final Mandator mandatorTEST = mandatorRepository.findByName(MANDATOR_TEST);
+		final Mandator mandatorTEST = mandatorRepository
+				.findByName(MANDATOR_TEST);
 
-		new Procedure(mandatorTEST, procedureSendFetch, "Datenabgleich", "SEND_FETH");
+		new Procedure(mandatorTEST, procedureSendFetch, "Datenabgleich",
+				"SEND_FETH");
 
 		logger.info("setupProcedureSendFeth finished");
 	}
 
 	@Transactional
 	public IExecution setUpTestDatenForProcedureSendFetchPhase2() {
-		final IExecution executionForTestPhase2 = executionPersistence.startExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "-c d:/extras/configdir", PhaseQualifier.PHASE1);
+		final IExecution executionForTestPhase2 = executionPersistence
+				.startExecution(PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
+						"-c d:/extras/configdir", PhaseQualifier.PHASE1);
 
-		final IInputData inputData = executionForTestPhase2.startContentInputData(new SingleStringInputData(
-				"TestStringInoutData"));
+		final IInputData inputData = executionForTestPhase2
+				.startContentInputData(new SingleStringInputData(
+						"TestStringInoutData"));
 		final String calculatedRequestId = inputData.calculateRequestId();
 		inputData.setRequestId(calculatedRequestId);
 
 		final IResponseData responseData = new ResponseData();
-		final ISingleResponseData singleResponseData = new SingleResponseData(calculatedRequestId, "ReturnCode",
-				"ReturnText", "RESPONSE_ID_Phase_1" + calculatedRequestId);
+		final ISingleResponseData singleResponseData = new SingleResponseData(
+				calculatedRequestId, "ReturnCode", "ReturnText",
+				"RESPONSE_ID_Phase_1" + calculatedRequestId);
 		responseData.addSingleResponse(singleResponseData);
 		executionForTestPhase2.endExecution(responseData);
 		logger.info("SetupTestDatenForProcedureSendFetchPhase2  finished");
@@ -117,17 +125,22 @@ public class PersistenceTestSetup {
 
 	@Transactional
 	public IExecution setUpTestDatenForProcedureSendFetchPhase3() {
-		final IExecution executionForTestPhase3 = executionPersistence.startExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "-c d:/extras/configdir2", PhaseQualifier.PHASE2);
+		final IExecution executionForTestPhase3 = executionPersistence
+				.startExecution(PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
+						"-c d:/extras/configdir2", PhaseQualifier.PHASE2);
 
-		final IInputData inputDataForPhase3 = executionForTestPhase3.startContentInputData(new SingleStringInputData(
-				"TestStringInoutData"));
-		final String calculatedRequestIdForPhase3 = inputDataForPhase3.calculateRequestId();
+		final IInputData inputDataForPhase3 = executionForTestPhase3
+				.startContentInputData(new SingleStringInputData(
+						"TestStringInoutData"));
+		final String calculatedRequestIdForPhase3 = inputDataForPhase3
+				.calculateRequestId();
 		inputDataForPhase3.setRequestId(calculatedRequestIdForPhase3);
 
 		final IResponseData responseDataForPhase3 = new ResponseData();
-		final ISingleResponseData singleResponseDataForPhase3 = new SingleResponseData(calculatedRequestIdForPhase3,
-				"ReturnCodePhase2", "ReturnTextPhase2", "RESPONSE_ID_Phase_1" + calculatedRequestIdForPhase3);
+		final ISingleResponseData singleResponseDataForPhase3 = new SingleResponseData(
+				calculatedRequestIdForPhase3, "ReturnCodePhase2",
+				"ReturnTextPhase2", "RESPONSE_ID_Phase_1"
+						+ calculatedRequestIdForPhase3);
 		responseDataForPhase3.addSingleResponse(singleResponseDataForPhase3);
 		executionForTestPhase3.endExecution(responseDataForPhase3);
 		logger.info("SetupTestDatenForProcedureSendFetchPhase3  finished");

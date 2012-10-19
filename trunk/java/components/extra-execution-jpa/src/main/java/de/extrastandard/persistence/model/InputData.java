@@ -120,10 +120,13 @@ public class InputData extends AbstractEntity implements IInputData {
 	 * @param qualifier
 	 *            Qualifizierung
 	 */
-	public InputData(final ISingleContentInputData singleContentInputData, final Execution execution) {
-		Assert.notNull(singleContentInputData, "SingleContentInputData must be specified");
+	public InputData(final ISingleContentInputData singleContentInputData,
+			final Execution execution) {
+		Assert.notNull(singleContentInputData,
+				"SingleContentInputData must be specified");
 		final String hashCode = singleContentInputData.getHashCode();
-		final String inputIdentifier = singleContentInputData.getInputIdentifier();
+		final String inputIdentifier = singleContentInputData
+				.getInputIdentifier();
 		Assert.notNull(inputIdentifier, "inputIdentifier must be specified");
 		Assert.notNull(hashCode, "inputIdentifier must be specified");
 		this.inputIdentifier = inputIdentifier;
@@ -137,15 +140,21 @@ public class InputData extends AbstractEntity implements IInputData {
 	 * @param sourceRequestId
 	 * @param execution
 	 */
-	public InputData(final ISingleQueryInputData singleQueryInputData, final Execution execution) {
-		Assert.notNull(singleQueryInputData, "ISingleQueryInputData must be specified");
+	public InputData(final ISingleQueryInputData singleQueryInputData,
+			final Execution execution) {
+		Assert.notNull(singleQueryInputData,
+				"ISingleQueryInputData must be specified");
 		Assert.notNull(execution, "Execution must be specified");
 
 		this.execution = execution;
-		final Long sourceIdentificationId = singleQueryInputData.getSourceIdentificationId();
-		Assert.notNull(sourceIdentificationId, "SourceIdentification must be specified");
-		final InputData sourceInputData = repository.findOne(sourceIdentificationId);
-		final PhaseConnection sourceInputNextPhaseConnection = sourceInputData.getNextPhaseConnection();
+		final Long sourceIdentificationId = singleQueryInputData
+				.getSourceIdentificationId();
+		Assert.notNull(sourceIdentificationId,
+				"SourceIdentification must be specified");
+		final InputData sourceInputData = repository
+				.findOne(sourceIdentificationId);
+		final PhaseConnection sourceInputNextPhaseConnection = sourceInputData
+				.getNextPhaseConnection();
 		this.currentPhaseConnection = sourceInputNextPhaseConnection;
 		repository.save(this);
 		sourceInputNextPhaseConnection.setTargetInputData(this);
@@ -284,7 +293,8 @@ public class InputData extends AbstractEntity implements IInputData {
 	 * @param currentPhaseConnection
 	 *            the currentPhaseConnection to set
 	 */
-	public void setCurrentPhaseConnection(final PhaseConnection currentPhaseConnection) {
+	public void setCurrentPhaseConnection(
+			final PhaseConnection currentPhaseConnection) {
 		this.currentPhaseConnection = currentPhaseConnection;
 	}
 

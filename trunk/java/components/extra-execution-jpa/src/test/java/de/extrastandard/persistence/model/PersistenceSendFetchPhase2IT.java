@@ -42,17 +42,17 @@ import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 
 /**
+ * Integrationtest for PersistenceSendFetchPhase2IT.
+ * 
  * @author Leonid Potap
  * @version $Id$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring-persistence-jpa.xml", "/spring-ittest-hsqldb-propertyplaceholder.xml" })
+@ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
+		"/spring-ittest-hsqldb-propertyplaceholder.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
 public class PersistenceSendFetchPhase2IT {
-
-	// private static final Logger LOGGER =
-	// LoggerFactory.getLogger(PersistenceSendFetchPhase2IT.class);
 
 	@Inject
 	@Named("executionPersistenceJpa")
@@ -64,42 +64,49 @@ public class PersistenceSendFetchPhase2IT {
 
 	@Before
 	public void before() throws Exception {
-
 		persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
-
 		persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase3();
-
 	}
 
 	@Test
-	public void testGetInputDataForExecutionByScenarionDataMatchAndPhase2() throws Exception {
-		// success Phase 1
-		final List<IInputData> inputDataForExecutionPhase2 = executionPersistence.findInputDataForExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, PhaseQualifier.PHASE2);
-		assertFalse("Keine Daten für die Phase2 gefunden", inputDataForExecutionPhase2.isEmpty());
+	public void testGetInputDataForExecutionByScenarionDataMatchAndPhase2()
+			throws Exception {
+		// Success Phase 1
+		final List<IInputData> inputDataForExecutionPhase2 = executionPersistence
+				.findInputDataForExecution(
+						PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
+						PhaseQualifier.PHASE2);
+		assertFalse("Keine Daten für die Phase2 gefunden",
+				inputDataForExecutionPhase2.isEmpty());
 		for (final IInputData inputData : inputDataForExecutionPhase2) {
-			final IPhaseConnection nextPhasenConnection = inputData.getNextPhaseConnection();
+			final IPhaseConnection nextPhasenConnection = inputData
+					.getNextPhaseConnection();
 			final IStatus status = nextPhasenConnection.getStatus();
 			assertEquals(PersistentStatus.INITIAL.getId(), status.getId());
-			final String nextPhasequalifier = nextPhasenConnection.getNextPhasequalifier();
+			final String nextPhasequalifier = nextPhasenConnection
+					.getNextPhasequalifier();
 			assertEquals(PhaseQualifier.PHASE2.getName(), nextPhasequalifier);
 		}
 	}
 
 	@Test
-	public void testGetInputDataForExecutionByScenarionDataMatchAndPhase3() throws Exception {
-		// success Phase 2
-		final List<IInputData> inputDataForExecutionPhase3 = executionPersistence.findInputDataForExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, PhaseQualifier.PHASE3);
-		assertFalse("Keine Daten für die Phase2 gefunden", inputDataForExecutionPhase3.isEmpty());
+	public void testGetInputDataForExecutionByScenarionDataMatchAndPhase3()
+			throws Exception {
+		// Success Phase 2
+		final List<IInputData> inputDataForExecutionPhase3 = executionPersistence
+				.findInputDataForExecution(
+						PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
+						PhaseQualifier.PHASE3);
+		assertFalse("Keine Daten für die Phase2 gefunden",
+				inputDataForExecutionPhase3.isEmpty());
 		for (final IInputData inputData : inputDataForExecutionPhase3) {
-			final IPhaseConnection nextPhasenConnection = inputData.getNextPhaseConnection();
+			final IPhaseConnection nextPhasenConnection = inputData
+					.getNextPhaseConnection();
 			final IStatus status = nextPhasenConnection.getStatus();
 			assertEquals(PersistentStatus.INITIAL.getId(), status.getId());
-			final String nextPhasequalifier = nextPhasenConnection.getNextPhasequalifier();
+			final String nextPhasequalifier = nextPhasenConnection
+					.getNextPhasequalifier();
 			assertEquals(PhaseQualifier.PHASE3.getName(), nextPhasequalifier);
 		}
-
 	}
-
 }

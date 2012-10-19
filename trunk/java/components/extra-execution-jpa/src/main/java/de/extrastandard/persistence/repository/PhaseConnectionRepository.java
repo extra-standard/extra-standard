@@ -36,9 +36,11 @@ import de.extrastandard.persistence.model.PhaseConnection;
  *          thorstenvogel@gmail.com $
  */
 @Repository("phaseConnectionRepository")
-public interface PhaseConnectionRepository extends JpaRepository<PhaseConnection, Long> {
+public interface PhaseConnectionRepository extends
+		JpaRepository<PhaseConnection, Long> {
 
 	@Query("FROM PhaseConnection WHERE targetInputData = :targetInputData")
-	List<PhaseConnection> findByTargetInputData(@Param("targetInputData") InputData inputData);
+	List<PhaseConnection> findByTargetInputData(
+			@Param("targetInputData") InputData inputData);
 
 }

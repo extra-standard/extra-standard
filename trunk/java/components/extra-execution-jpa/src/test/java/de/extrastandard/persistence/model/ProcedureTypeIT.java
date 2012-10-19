@@ -36,7 +36,8 @@ import de.extrastandard.persistence.repository.ProcedureRepository;
  * @version $Id$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring-persistence-jpa.xml", "/spring-ittest-hsqldb-propertyplaceholder.xml" })
+@ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
+		"/spring-ittest-hsqldb-propertyplaceholder.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 public class ProcedureTypeIT {
 
@@ -48,9 +49,16 @@ public class ProcedureTypeIT {
 	public void testIsProcedureEndPhase() {
 		final Procedure procedureSendFetch = procedureRepository
 				.findByName(PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME);
-		Assert.notNull(procedureSendFetch, "Procedure not found: " + PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME);
-		Assert.isTrue(procedureSendFetch.isProcedureEndPhase(PhaseQualifier.PHASE3.getName()), "Unexpected EndPhase.");
-		Assert.isTrue(!procedureSendFetch.isProcedureEndPhase(PhaseQualifier.PHASE2.getName()), "Unexpected EndPhase.");
-		Assert.isTrue(!procedureSendFetch.isProcedureEndPhase(PhaseQualifier.PHASE1.getName()), "Unexpected EndPhase.");
+		Assert.notNull(procedureSendFetch, "Procedure not found: "
+				+ PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME);
+		Assert.isTrue(procedureSendFetch
+				.isProcedureEndPhase(PhaseQualifier.PHASE3.getName()),
+				"Unexpected EndPhase.");
+		Assert.isTrue(!procedureSendFetch
+				.isProcedureEndPhase(PhaseQualifier.PHASE2.getName()),
+				"Unexpected EndPhase.");
+		Assert.isTrue(!procedureSendFetch
+				.isProcedureEndPhase(PhaseQualifier.PHASE1.getName()),
+				"Unexpected EndPhase.");
 	}
 }

@@ -30,6 +30,7 @@ import de.extrastandard.persistence.model.ProcedureType;
  * @version $Id $
  */
 @Repository("procedureTypeRepository")
-public interface ProcedureTypeRepository extends JpaRepository<ProcedureType, Long> {
+public interface ProcedureTypeRepository extends
+		JpaRepository<ProcedureType, Long> {
 
 }

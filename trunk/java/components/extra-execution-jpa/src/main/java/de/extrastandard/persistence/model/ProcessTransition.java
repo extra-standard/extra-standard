@@ -53,7 +53,8 @@ import de.extrastandard.persistence.repository.StatusRepository;
 @Configurable(preConstruction = true)
 @Entity
 @Table(name = "PROCESS_TRANSITION")
-public class ProcessTransition extends AbstractEntity implements IProcessTransition {
+public class ProcessTransition extends AbstractEntity implements
+		IProcessTransition {
 
 	@Transient
 	@Inject
@@ -102,7 +103,8 @@ public class ProcessTransition extends AbstractEntity implements IProcessTransit
 	 */
 	public ProcessTransition(final Execution execution) {
 		Assert.notNull(execution, "Execution must be specified");
-		final Status currentStatus = statusRepository.findByName(PersistentStatus.INITIAL.toString());
+		final Status currentStatus = statusRepository
+				.findByName(PersistentStatus.INITIAL.toString());
 		this.currentStatus = currentStatus;
 		this.transitionDate = new Date();
 		this.execution = execution;
@@ -117,18 +119,23 @@ public class ProcessTransition extends AbstractEntity implements IProcessTransit
 	 * @param iCurrentStatus
 	 * @param lastTransitionDate
 	 */
-	public ProcessTransition(final Execution execution, final IStatus iPreviousStatus, final IStatus iCurrentStatus,
+	public ProcessTransition(final Execution execution,
+			final IStatus iPreviousStatus, final IStatus iCurrentStatus,
 			final Date lastTransitionDate) {
 		Assert.notNull(iPreviousStatus, "CurrentStatus must be specified");
 		Assert.notNull(iCurrentStatus, "PreviousStatus must be specified");
-		Assert.notNull(lastTransitionDate, "LastTransitionDate must be specified");
-		final Status previousStatus = statusRepository.findByName(iPreviousStatus.getName());
+		Assert.notNull(lastTransitionDate,
+				"LastTransitionDate must be specified");
+		final Status previousStatus = statusRepository
+				.findByName(iPreviousStatus.getName());
 		this.setPreviousStatus(previousStatus);
-		final Status currentStatus = statusRepository.findByName(iCurrentStatus.getName());
+		final Status currentStatus = statusRepository.findByName(iCurrentStatus
+				.getName());
 		this.setCurrentStatus(currentStatus);
 		final Date transitionDate = new Date();
 		this.setTransitionDate(transitionDate);
-		final long duration = transitionDate.getTime() - lastTransitionDate.getTime();
+		final long duration = transitionDate.getTime()
+				- lastTransitionDate.getTime();
 		this.setDuration(duration);
 		this.execution = execution;
 		repository.save(this);

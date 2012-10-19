@@ -27,9 +27,10 @@ import de.extrastandard.persistence.model.Status;
 
 /**
  * Repository für Status.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id: StatusRepository.java 508 2012-09-04 09:35:41Z thorstenvogel@gmail.com $
+ * @version $Id: StatusRepository.java 508 2012-09-04 09:35:41Z
+ *          thorstenvogel@gmail.com $
  */
 @Repository("statusRepository")
 public interface StatusRepository extends JpaRepository<Status, Long> {

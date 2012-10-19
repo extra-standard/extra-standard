@@ -61,7 +61,6 @@ public class InputDataIT {
 
 	@Before
 	public void before() throws Exception {
-
 		persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
 	}
 

@@ -48,14 +48,17 @@ public interface InputDataRepository extends JpaRepository<InputData, Long> {
 			+ " WHERE inputdata.nextPhaseConnection.nextPhasequalifier = :phaseQualifier "
 			+ " and inputdata.execution.procedure = :procedure "
 			+ " and inputdata.nextPhaseConnection.status = :status")
-	List<IInputData> findByProcedureAndPhaseQualifierAndStatus(@Param("procedure") IProcedure procedure,
-			@Param("phaseQualifier") String phaseQualifier, @Param("status") Status status, Pageable pageRequest);
+	List<IInputData> findByProcedureAndPhaseQualifierAndStatus(
+			@Param("procedure") IProcedure procedure,
+			@Param("phaseQualifier") String phaseQualifier,
+			@Param("status") Status status, Pageable pageRequest);
 
 	@Query("select count(*) FROM InputData inputdata "
 			+ " WHERE inputdata.nextPhaseConnection.nextPhasequalifier = :phaseQualifier "
 			+ " and inputdata.execution.procedure = :procedure "
 			+ " and inputdata.nextPhaseConnection.status = :status")
-	Long count(@Param("procedure") IProcedure procedure, @Param("phaseQualifier") String phaseQualifier,
+	Long count(@Param("procedure") IProcedure procedure,
+			@Param("phaseQualifier") String phaseQualifier,
 			@Param("status") Status status);
 
 }

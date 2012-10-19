@@ -25,10 +25,12 @@ import de.extrastandard.persistence.model.ProcessTransition;
 
 /**
  * Repository für ProcessTransition.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id: InputDataTransitionRepository.java 508 2012-09-04 09:35:41Z thorstenvogel@gmail.com $
+ * @version $Id: InputDataTransitionRepository.java 508 2012-09-04 09:35:41Z
+ *          thorstenvogel@gmail.com $
  */
 @Repository("inputDataTransitionRepository")
-public interface InputDataTransitionRepository extends JpaRepository<ProcessTransition, Long> {
+public interface InputDataTransitionRepository extends
+		JpaRepository<ProcessTransition, Long> {
 }

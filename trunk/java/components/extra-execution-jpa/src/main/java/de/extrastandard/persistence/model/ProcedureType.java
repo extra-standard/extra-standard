@@ -104,7 +104,8 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 		Assert.notNull(phase, "Phase must be specified");
 		final ProcedurePhaseConfiguration procedurePhaseConfiguration = procedurePhaseConfigurationRepository
 				.findByPhaseAndProcedureType(phase, this);
-		final boolean isEndPhaseOfProcedure = (procedurePhaseConfiguration.getNextPhaseConfiguration() == null);
+		final boolean isEndPhaseOfProcedure = (procedurePhaseConfiguration
+				.getNextPhaseConfiguration() == null);
 		return isEndPhaseOfProcedure;
 	}
 
