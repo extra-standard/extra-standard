@@ -14,7 +14,7 @@ Durch Kombination dieser Anwendungsfälle können komplexere Kommunikationsablä
 Der Kommunikationsablauf wird vom eXTra-Client in einer Datenbank protokolliert. Neben den einzelnen Aktionen werden z.B. auch Serverantworten die in späteren Schritten benötigt werden (z.B. Response-ID) oder Empfangszertifikate in der Datenbank abgelegt. Außerdem kann konfigurativ das Logging aktiviert werden (z.B. für die Fehlersuche).
 
 = Anforderungen an den Betriebsrechner =
-Der eXTra-Client wird als Java Anwendung ausgeliefert und benötigt eine Java 6 Laufzeitumgebung. Er ist nicht an ein spezielles Betriebssystem gebunden. Je nach Anwendungsfall bzw. Einsatzgebiet wird evtl. eine Datenbank benötigt. Für den Kommunikationsablauf müssen evtl. bestimmte Externe eXTra-Server erreichbar sein.
+Der eXTra-Client wird als Java Anwendung ausgeliefert und benötigt eine Java 6 Laufzeitumgebung. Er ist nicht an ein spezielles Betriebssystem gebunden. Für die Protokollierung des Kommuninkationsablaufes wird eine Datenbank benötigt (siehe [eXTraClientBetriebDatenbank Datenbank]). Für den Kommunikationsablauf müssen evtl. bestimmte Externe eXTra-Server erreichbar sein.
 
 = Bestandteile der Auslieferungsversion =
 
@@ -36,14 +36,14 @@ Die Bereitstellung einer Version erfolgt in diesen Schritten:
  * Auspacken der Auslieferungsversion in einem Verzeichnis auf dem Betriebsrechner
  * Konfigurationsverzeicnisse/-dateien der Fachverfahren im conf Ordner ablegen 
  * Konfigurationsdateien an die Umgebung des Betriebsrechners anpassen (z.B. Verzeichnisse für Input und Output).
- * Eventuell notwendige Infrastruktur (z.B. eine Datenbank) einrichten, initialisieren oder updaten (z.B. über mitgeliefertes SQL-Skript).
+ * eXTra-Client Datenbank einrichten, initialisieren oder updaten (z.B. über mitgeliefertes SQL-Skript).
  * Batch-Dateien für den Aufruf der Fachverfahren im Ordner _bin_ erstellen bzw. anpassen
 
 Genauere Informationen zur Einrichtung eines Fachverfahrens befinden sich in der Dokumentation des jeweiligen Fachverfahrens.
 
 ==Konfiguration==
-Alle Konfigurationsdateien für einen Anwendungsfall befinden sich üblicherweise in einem Verzeichnis (z.B. conf). Dieses Verzeichnis wird beim Aufruf als Parameter übergeben. 
-Folgende Dateien bilden die Konfigurationsdaten für einen Anwendungsfall:
+Alle Konfigurationsdateien für einen Anwendungsfall befinden sich üblicherweise in einem Verzeichnis (z.B. conf). Dieses Verzeichnis wird beim Aufruf des eXTra-Clients als Parameter übergeben. 
+Folgende Dateien bilden die Konfigurationsdaten für ein Fachverfahren:
 
 || *Datei* || *Beschreibung* ||
 || [eXTraClientBetriebConfigBasis extra-properties-basic.properties] || Zentrale Konfigurationsdatei. Besteht aus Attribut-Werte Paaren (Java-properties Format). In dieser Datei werden z.B. das Fachverfahren, die Plugins und die XML-Builder konfiguriert. ||
@@ -51,7 +51,7 @@ Folgende Dateien bilden die Konfigurationsdaten für einen Anwendungsfall:
 || [eXTraClientBetriebLogging logging-config.xml] || Logging Einstellungen (z.B. Name der Logfiles und Loglevel) ||
 || [eXTraClientBetriebConfigProfile ‚profile.xml’] || eXTra-Profil Datei (siehe eXTra Standard). In der Profil-Date sind die Elemente des Extra-Standards aufgeführt, die zur Kommunikation zwischen Client und Server verwendet werden sollen (Der Name ist frei wählbar.)||
 
-==Aufruf der Anwendungsfälle==
+==Aufruf der Fachverfahren==
 Die Fachverfahren können über Batch-Dateien aufgerufen werden. Beispielhaft befindet sich im _/bin_ Verzeichnis der Auslieferungsversion ein Aufruf für Windows und Linux. In diesen Skripten wird eine Umgebungsvariable EXTRA_CLIENT_HOME für den Zugriff auf die eXTra-Client Dateien verwendet.
 
 *Beispiel für einen einfachen Aufruf:*
