@@ -15,6 +15,7 @@
   * [eXTraSpecIssues Offene Punkte]    
   * [eXTraEntwProzess Entwicklungsprozess]
   * [eXTraClientBetriebsanleitung Betriebsanleitung]
+    * [eXTraClientBetriebKonfigurationsdateien Konfigurationsdateien]
     * [eXTraClientBetriebPlugins Plugins]
     * [eXTraClientBetriebBuilder XML-Builder]
     * [eXTraClientBetriebSonstigeKonfiguration Sonstige Konfiguration]
