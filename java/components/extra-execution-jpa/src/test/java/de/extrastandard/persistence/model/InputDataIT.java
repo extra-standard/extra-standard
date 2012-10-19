@@ -22,7 +22,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.Transient;
 
 import junit.framework.Assert;
 
@@ -37,14 +36,16 @@ import org.springframework.transaction.annotation.Transactional;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.PhaseQualifier;
-import de.extrastandard.persistence.repository.InputDataRepository;
 
 /**
+ * Integration Test for InputData.
+ * 
  * @author Leonid Potap
  * @version $Id$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring-persistence-jpa.xml", "/spring-ittest-hsqldb-propertyplaceholder.xml" })
+@ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
+		"/spring-ittest-hsqldb-propertyplaceholder.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 // @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
 // "/spring-ittest-oracle-propertyplaceholder.xml" })
@@ -53,11 +54,6 @@ public class InputDataIT {
 	@Inject
 	@Named("persistenceTestSetup")
 	private PersistenceTestSetup persistenceTestSetup;
-
-	@Transient
-	@Inject
-	@Named("inputDataRepository")
-	private transient InputDataRepository inputDataRepository;
 
 	@Inject
 	@Named("executionPersistenceJpa")
@@ -77,24 +73,33 @@ public class InputDataIT {
 			persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
 		}
 		final Integer inputDataLimit = 5;
-		final List<IInputData> findInputDataForExecution = executionPersistence.findInputDataForExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, PhaseQualifier.PHASE2, inputDataLimit);
-		Assert.assertTrue("Zu viele Daten ausgewählt", findInputDataForExecution.size() <= inputDataLimit);
+		final List<IInputData> findInputDataForExecution = executionPersistence
+				.findInputDataForExecution(
+						PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
+						PhaseQualifier.PHASE2, inputDataLimit);
+		Assert.assertTrue("Zu viele Daten ausgewählt",
+				findInputDataForExecution.size() <= inputDataLimit);
 	}
 
 	@Test
 	@Transactional
 	public void testCountInputDataForExecution() {
-		final Long countInputDataForExecutionBeforeInsert = executionPersistence.countInputDataForExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, PhaseQualifier.PHASE2);
+		final Long countInputDataForExecutionBeforeInsert = executionPersistence
+				.countInputDataForExecution(
+						PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
+						PhaseQualifier.PHASE2);
 		final Integer testDataSize = 12;
 		for (Integer counter = 0; counter < testDataSize; counter++) {
 			persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
 		}
-		final Long countInputDataForExecution = executionPersistence.countInputDataForExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, PhaseQualifier.PHASE2);
-		final Long expectedCount = countInputDataForExecutionBeforeInsert + testDataSize;
-		Assert.assertEquals("Count stimmt nicht", expectedCount, countInputDataForExecution);
+		final Long countInputDataForExecution = executionPersistence
+				.countInputDataForExecution(
+						PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
+						PhaseQualifier.PHASE2);
+		final Long expectedCount = countInputDataForExecutionBeforeInsert
+				+ testDataSize;
+		Assert.assertEquals("Count stimmt nicht", expectedCount,
+				countInputDataForExecution);
 	}
 
 }
