@@ -499,7 +499,7 @@
 				<artifactId>maven-antrun-plugin</artifactId>
 				<version>1.7</version>
 				<configuration>
-					<tasks>
+					<target>
 						<tstamp>
 							<format pattern="yyyyMMdd" property="TODAY" />
 						</tstamp>
@@ -510,7 +510,7 @@
 							message="V${project.version}${line.separator}" />
 						<echo append="true" file="${basedir}/target/version.txt"
 							message="${TODAY}${line.separator}" />
-					</tasks>
+					</target>
 				</configuration>
 				<executions>
 					<execution>
