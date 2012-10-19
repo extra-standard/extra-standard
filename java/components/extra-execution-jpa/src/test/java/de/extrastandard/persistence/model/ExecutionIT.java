@@ -60,7 +60,8 @@ import de.extrastandard.persistence.repository.InputDataRepository;
  * @version $Id$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring-persistence-jpa.xml", "/spring-ittest-hsqldb-propertyplaceholder.xml" })
+@ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
+		"/spring-ittest-hsqldb-propertyplaceholder.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 // @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
 // "/spring-ittest-oracle-propertyplaceholder.xml" })
@@ -87,11 +88,14 @@ public class ExecutionIT {
 
 	@Test
 	public void testFailedPhase2() {
-		final List<IInputData> sourceInputDataList = executionPersistence.findInputDataForExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, PhaseQualifier.PHASE2);
+		final List<IInputData> sourceInputDataList = executionPersistence
+				.findInputDataForExecution(
+						PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
+						PhaseQualifier.PHASE2);
 		Assert.assertTrue("InputData is empty", !sourceInputDataList.isEmpty());
 		final IExecution execution = executionPersistence.startExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "Test", PhaseQualifier.PHASE2);
+				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "Test",
+				PhaseQualifier.PHASE2);
 		final IResponseData responseData = new ResponseData();
 		final IDbQueryInputData dbQueryInputData = new DBQueryInputData();
 
@@ -106,13 +110,16 @@ public class ExecutionIT {
 			final String inputDataReturnCode = returnCode + sourceInputDataId;
 			final String inputDataReturnText = returnText + sourceInputDataId;
 			final String inputDataResponseId = responseId + sourceInputDataId;
-			final ISingleResponseData singleResponseData = new SingleResponseData(inputDataRequestId,
-					inputDataReturnCode, inputDataReturnText, inputDataResponseId);
+			final ISingleResponseData singleResponseData = new SingleResponseData(
+					inputDataRequestId, inputDataReturnCode,
+					inputDataReturnText, inputDataResponseId);
 			responseData.addSingleResponse(singleResponseData);
-			final ISingleQueryInputData singleQueryInputData = new InDBQueryInputData(sourceInputDataId,
-					iSourcenputData.getRequestId(), iSourcenputData.getResponseId());
+			final ISingleQueryInputData singleQueryInputData = new InDBQueryInputData(
+					sourceInputDataId, iSourcenputData.getRequestId(),
+					iSourcenputData.getResponseId());
 			dbQueryInputData.addSingleDBQueryInputData(singleQueryInputData);
-			final IInputData newDbQueryInputData = execution.startDbQueryInputData(singleQueryInputData);
+			final IInputData newDbQueryInputData = execution
+					.startDbQueryInputData(singleQueryInputData);
 
 			newDbQueryInputData.setRequestId(singleResponseData.getRequestId());
 		}
@@ -121,39 +128,52 @@ public class ExecutionIT {
 		final String errorText = "ERROR_TEXT";
 		execution.failed(errorCode, errorText);
 
-		assertEquals("Unexpected ErrorCode", errorCode, execution.getErrorCode());
-		assertEquals("Unexpected ErrorMessage", errorText, execution.getErrorMessage());
+		assertEquals("Unexpected ErrorCode", errorCode,
+				execution.getErrorCode());
+		assertEquals("Unexpected ErrorMessage", errorText,
+				execution.getErrorMessage());
 		final IProcessTransition lastTransition = execution.getLastTransition();
 		assertNotNull(lastTransition);
 		final IStatus currentStatus = lastTransition.getCurrentStatus();
 		assertNotNull(currentStatus);
-		assertEquals("Unexpected Status", PersistentStatus.FAIL.name(), currentStatus.getName());
+		assertEquals("Unexpected Status", PersistentStatus.FAIL.name(),
+				currentStatus.getName());
 		final Set<IInputData> inputDataSet = execution.getInputDataSet();
 		for (final IInputData iInputData : inputDataSet) {
-			final IPhaseConnection currentPhaseConnection = iInputData.getCurrentPhaseConnection();
+			final IPhaseConnection currentPhaseConnection = iInputData
+					.getCurrentPhaseConnection();
 			final IStatus status = currentPhaseConnection.getStatus();
-			assertEquals("Unexpected Status", PersistentStatus.FAIL.name(), status.getName());
+			assertEquals("Unexpected Status", PersistentStatus.FAIL.name(),
+					status.getName());
 		}
 		for (final IInputData iquelleInputData : sourceInputDataList) {
 			// refresh
-			final InputData quelleInputData = inputDataRepository.findOne(iquelleInputData.getId());
+			final InputData quelleInputData = inputDataRepository
+					.findOne(iquelleInputData.getId());
 			// prüfen PhaseConnection
-			final IPhaseConnection quellePhaseConnection = quelleInputData.getNextPhaseConnection();
-			final IInputData targetInputData = quellePhaseConnection.getTargetInputData();
+			final IPhaseConnection quellePhaseConnection = quelleInputData
+					.getNextPhaseConnection();
+			final IInputData targetInputData = quellePhaseConnection
+					.getTargetInputData();
 			assertNotNull(targetInputData);
-			final IStatus quellePhaseConnectionStatus = quellePhaseConnection.getStatus();
+			final IStatus quellePhaseConnectionStatus = quellePhaseConnection
+					.getStatus();
 			assertNotNull(quellePhaseConnectionStatus);
-			assertEquals(PersistentStatus.FAIL.name(), quellePhaseConnectionStatus.getName());
+			assertEquals(PersistentStatus.FAIL.name(),
+					quellePhaseConnectionStatus.getName());
 		}
 	}
 
 	@Test
 	public void testInputDataSucessPhase2AnotherTransaction() {
-		final List<IInputData> sourceInputDataList = executionPersistence.findInputDataForExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, PhaseQualifier.PHASE2);
+		final List<IInputData> sourceInputDataList = executionPersistence
+				.findInputDataForExecution(
+						PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
+						PhaseQualifier.PHASE2);
 		Assert.assertTrue("InputData is empty", !sourceInputDataList.isEmpty());
 		final IExecution execution = executionPersistence.startExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "Test", PhaseQualifier.PHASE2);
+				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "Test",
+				PhaseQualifier.PHASE2);
 		final IResponseData responseData = new ResponseData();
 		final IDbQueryInputData dbQueryInputData = new DBQueryInputData();
 
@@ -168,13 +188,16 @@ public class ExecutionIT {
 			final String inputDataReturnCode = returnCode + sourceInputDataId;
 			final String inputDataReturnText = returnText + sourceInputDataId;
 			final String inputDataResponseId = responseId + sourceInputDataId;
-			final ISingleResponseData singleResponseData = new SingleResponseData(inputDataRequestId,
-					inputDataReturnCode, inputDataReturnText, inputDataResponseId);
+			final ISingleResponseData singleResponseData = new SingleResponseData(
+					inputDataRequestId, inputDataReturnCode,
+					inputDataReturnText, inputDataResponseId);
 			responseData.addSingleResponse(singleResponseData);
-			final ISingleQueryInputData singleQueryInputData = new InDBQueryInputData(sourceInputDataId,
-					iSourceInputData.getRequestId(), iSourceInputData.getResponseId());
+			final ISingleQueryInputData singleQueryInputData = new InDBQueryInputData(
+					sourceInputDataId, iSourceInputData.getRequestId(),
+					iSourceInputData.getResponseId());
 			dbQueryInputData.addSingleDBQueryInputData(singleQueryInputData);
-			final IInputData newDbQueryInputData = execution.startDbQueryInputData(singleQueryInputData);
+			final IInputData newDbQueryInputData = execution
+					.startDbQueryInputData(singleQueryInputData);
 
 			newDbQueryInputData.setRequestId(singleResponseData.getRequestId());
 		}
@@ -189,21 +212,27 @@ public class ExecutionIT {
 		final Set<IInputData> inputDataSet = execution.getInputDataSet();
 		for (final IInputData iInputData : inputDataSet) {
 			final String requestId = iInputData.getRequestId();
-			final ISingleResponseData response = responseData.getResponse(requestId);
+			final ISingleResponseData response = responseData
+					.getResponse(requestId);
 			assertEquals(response.getResponseId(), iInputData.getResponseId());
 			assertEquals(response.getReturnCode(), iInputData.getReturnCode());
 			assertEquals(response.getReturnText(), iInputData.getReturnText());
 		}
 		for (final IInputData iquelleInputData : sourceInputDataList) {
 			// refresh
-			final InputData quelleInputData = inputDataRepository.findOne(iquelleInputData.getId());
+			final InputData quelleInputData = inputDataRepository
+					.findOne(iquelleInputData.getId());
 			// prüfen PhaseConnection
-			final IPhaseConnection quellePhaseConnection = quelleInputData.getNextPhaseConnection();
-			final IInputData targetInputData = quellePhaseConnection.getTargetInputData();
+			final IPhaseConnection quellePhaseConnection = quelleInputData
+					.getNextPhaseConnection();
+			final IInputData targetInputData = quellePhaseConnection
+					.getTargetInputData();
 			assertNotNull(targetInputData);
-			final IStatus quellePhaseConnectionStatus = quellePhaseConnection.getStatus();
+			final IStatus quellePhaseConnectionStatus = quellePhaseConnection
+					.getStatus();
 			assertNotNull(quellePhaseConnectionStatus);
-			assertEquals(PersistentStatus.DONE.name(), quellePhaseConnectionStatus.getName());
+			assertEquals(PersistentStatus.DONE.name(),
+					quellePhaseConnectionStatus.getName());
 		}
 	}
 }

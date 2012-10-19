@@ -89,7 +89,8 @@ public class Procedure extends AbstractEntity implements IProcedure {
 	 * @param mandator
 	 * @param name
 	 */
-	public Procedure(final Mandator mandator, final ProcedureType procedureType, final String name,
+	public Procedure(final Mandator mandator,
+			final ProcedureType procedureType, final String name,
 			final String shortKey) {
 		super();
 		this.mandator = mandator;

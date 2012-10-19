@@ -77,7 +77,8 @@ public class Execution extends AbstractEntity implements IExecution {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger logger = LoggerFactory.getLogger(InputData.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(InputData.class);
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "execution_entity_seq_gen")
@@ -145,7 +146,8 @@ public class Execution extends AbstractEntity implements IExecution {
 	 * @param parameters
 	 *            Parameter, mit denen die Execution gestartet wurde.
 	 */
-	public Execution(final IProcedure procedure, final String parameters, final PhaseQualifier phaseQualifier) {
+	public Execution(final IProcedure procedure, final String parameters,
+			final PhaseQualifier phaseQualifier) {
 		Assert.notNull(procedure, "Procedure is null");
 		Assert.notNull(phaseQualifier, "PhaseQualifier is null");
 		this.parameters = parameters;
@@ -166,14 +168,15 @@ public class Execution extends AbstractEntity implements IExecution {
 	@Transactional
 	public void updateProgress(final PersistentStatus newPersistentStatusEnum) {
 		Assert.notNull(newPersistentStatusEnum, "newStatus must be specified");
-		final Status newPersistentStatus = statusRepository.findOne(newPersistentStatusEnum.getId());
+		final Status newPersistentStatus = statusRepository
+				.findOne(newPersistentStatusEnum.getId());
 
 		final IProcessTransition lastTransition = this.getLastTransition();
 		final IStatus currentStatus = lastTransition.getCurrentStatus();
 
 		final Date lastTransitionDate = this.lastTransition.getTransitionDate();
-		final ProcessTransition transition = new ProcessTransition(this, currentStatus, newPersistentStatus,
-				lastTransitionDate);
+		final ProcessTransition transition = new ProcessTransition(this,
+				currentStatus, newPersistentStatus, lastTransitionDate);
 		this.lastTransition = transition;
 		repository.save(this);
 	}
@@ -190,7 +193,8 @@ public class Execution extends AbstractEntity implements IExecution {
 			updateProgress(PersistentStatus.FAIL);
 			// InputData bzw. PhasenConnection updaten
 			for (final InputData inputData : this.inputDataSet) {
-				final PhaseConnection currentPhaseConnection = inputData.getCurrentPhaseConnection();
+				final PhaseConnection currentPhaseConnection = inputData
+						.getCurrentPhaseConnection();
 				currentPhaseConnection.setFailed();
 			}
 		} catch (final Exception exception) {
@@ -226,11 +230,14 @@ public class Execution extends AbstractEntity implements IExecution {
 		// update Inputdata
 		for (final InputData inputData : inputDataSet) {
 			final String requestId = inputData.getRequestId();
-			final ISingleResponseData singleResponseData = responseData.getResponse(requestId);
-			Assert.notNull(singleResponseData, "ISingleResponseData is null for RequestId: " + requestId);
+			final ISingleResponseData singleResponseData = responseData
+					.getResponse(requestId);
+			Assert.notNull(singleResponseData,
+					"ISingleResponseData is null for RequestId: " + requestId);
 			inputData.transmitted(singleResponseData);
 			if (!this.procedure.isProcedureEndPhase(this.phase)) {
-				final String nextPhasenQualifier = this.procedure.getNextPhase(this.phase);
+				final String nextPhasenQualifier = this.procedure
+						.getNextPhase(this.phase);
 				new PhaseConnection(inputData, nextPhasenQualifier);
 			}
 			// Abgearbeitete PhaseConnection schliessen
@@ -249,7 +256,8 @@ public class Execution extends AbstractEntity implements IExecution {
 	 */
 	@Override
 	@Transactional
-	public IInputData startContentInputData(final ISingleContentInputData singleContentInputData) {
+	public IInputData startContentInputData(
+			final ISingleContentInputData singleContentInputData) {
 		final InputData inputData = new InputData(singleContentInputData, this);
 		this.inputDataSet.add(inputData);
 		repository.save(this);
@@ -257,7 +265,8 @@ public class Execution extends AbstractEntity implements IExecution {
 	}
 
 	@Override
-	public IInputData startDbQueryInputData(final ISingleQueryInputData singleQueryInputData) {
+	public IInputData startDbQueryInputData(
+			final ISingleQueryInputData singleQueryInputData) {
 		final InputData inputData = new InputData(singleQueryInputData, this);
 		this.inputDataSet.add(inputData);
 		repository.save(this);
@@ -399,7 +408,8 @@ public class Execution extends AbstractEntity implements IExecution {
 	 */
 	@Override
 	public boolean hasError() {
-		return StringUtils.hasText(errorCode) || StringUtils.hasText(errorMessage);
+		return StringUtils.hasText(errorCode)
+				|| StringUtils.hasText(errorMessage);
 	}
 
 }

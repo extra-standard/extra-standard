@@ -101,11 +101,13 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 	public PhaseConnection() {
 	}
 
-	public PhaseConnection(final InputData quelleInputData, final String nextPhasenQualifier) {
+	public PhaseConnection(final InputData quelleInputData,
+			final String nextPhasenQualifier) {
 		super();
 		this.quelleInputData = quelleInputData;
 		this.nextPhasequalifier = nextPhasenQualifier;
-		final Status persistentStatusInitial = statusRepository.findOne(PersistentStatus.INITIAL.getId());
+		final Status persistentStatusInitial = statusRepository
+				.findOne(PersistentStatus.INITIAL.getId());
 		this.status = persistentStatusInitial;
 		repository.save(this);
 		quelleInputData.setNextPhaseConnection(this);
@@ -166,7 +168,8 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 	 */
 	@Override
 	public void setTargetInputData(final IInputData iTargetInputData) {
-		final InputData targetInputData = inputDataRepository.findOne(iTargetInputData.getId());
+		final InputData targetInputData = inputDataRepository
+				.findOne(iTargetInputData.getId());
 		this.targetInputData = targetInputData;
 		repository.save(this);
 	}
@@ -175,13 +178,15 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 	 * Markiert PhaseConnction as abgearbeitet. Status is DONE
 	 */
 	public void success() {
-		final Status statusDone = statusRepository.findOne(PersistentStatus.DONE.getId());
+		final Status statusDone = statusRepository
+				.findOne(PersistentStatus.DONE.getId());
 		this.status = statusDone;
 		repository.save(this);
 	}
 
 	public void setFailed() {
-		final Status statusFailed = statusRepository.findOne(PersistentStatus.FAIL.getId());
+		final Status statusFailed = statusRepository
+				.findOne(PersistentStatus.FAIL.getId());
 		this.status = statusFailed;
 		repository.save(this);
 

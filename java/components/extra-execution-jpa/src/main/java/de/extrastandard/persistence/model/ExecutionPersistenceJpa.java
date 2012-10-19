@@ -67,11 +67,13 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 	 */
 	@Override
 	@Transactional
-	public IExecution startExecution(final String procedureName, final String parameters,
-			final PhaseQualifier phaseQualifier) {
+	public IExecution startExecution(final String procedureName,
+			final String parameters, final PhaseQualifier phaseQualifier) {
 		Assert.notNull(procedureName, "ProcedureName is null");
-		final IProcedure procedure = procedureRepository.findByName(procedureName);
-		Assert.notNull(procedure, "Procedure not found. Name : " + procedureName);
+		final IProcedure procedure = procedureRepository
+				.findByName(procedureName);
+		Assert.notNull(procedure, "Procedure not found. Name : "
+				+ procedureName);
 		return new Execution(procedure, parameters, phaseQualifier);
 	}
 
@@ -88,12 +90,15 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 	 */
 	@Override
 	@Transactional
-	public List<IInputData> findInputDataForExecution(final String procedureName, final PhaseQualifier phaseQualifier,
+	public List<IInputData> findInputDataForExecution(
+			final String procedureName, final PhaseQualifier phaseQualifier,
 			final Integer inputDataLimit) {
 		Assert.notNull(procedureName, "ProcedureName is null");
 		Assert.notNull(phaseQualifier, "Phase is null");
-		final IProcedure procedure = procedureRepository.findByName(procedureName);
-		return findInputDataForExecution(procedure, phaseQualifier, inputDataLimit);
+		final IProcedure procedure = procedureRepository
+				.findByName(procedureName);
+		return findInputDataForExecution(procedure, phaseQualifier,
+				inputDataLimit);
 	}
 
 	/**
@@ -107,29 +112,37 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 	 *            limits the result set
 	 * @return
 	 */
-	public List<IInputData> findInputDataForExecution(final IProcedure procedure, final PhaseQualifier phaseQualifier,
+	public List<IInputData> findInputDataForExecution(
+			final IProcedure procedure, final PhaseQualifier phaseQualifier,
 			final Integer inputDataLimit) {
 		Assert.notNull(procedure, "Procedure is null");
 		Assert.notNull(phaseQualifier, "Phase is null");
-		final Status statusInitial = statusRepository.findOne(PersistentStatus.INITIAL.getId());
+		final Status statusInitial = statusRepository
+				.findOne(PersistentStatus.INITIAL.getId());
 
 		final Pageable pageRequest = new PageRequest(0, inputDataLimit);
-		final List<IInputData> inputDateList = inputDataRepository.findByProcedureAndPhaseQualifierAndStatus(procedure,
-				phaseQualifier.getName(), statusInitial, pageRequest);
+		final List<IInputData> inputDateList = inputDataRepository
+				.findByProcedureAndPhaseQualifierAndStatus(procedure,
+						phaseQualifier.getName(), statusInitial, pageRequest);
 		return inputDateList;
 	}
 
 	@Override
-	public List<IInputData> findInputDataForExecution(final String executionProcedure,
-			final PhaseQualifier phaseQualifier) {
-		return findInputDataForExecution(executionProcedure, phaseQualifier, MAX_RESULT_SIZE);
+	public List<IInputData> findInputDataForExecution(
+			final String executionProcedure, final PhaseQualifier phaseQualifier) {
+		return findInputDataForExecution(executionProcedure, phaseQualifier,
+				MAX_RESULT_SIZE);
 	}
 
 	@Override
-	public Long countInputDataForExecution(final String executionProcedure, final PhaseQualifier phaseQualifier) {
-		final Status statusInitial = statusRepository.findOne(PersistentStatus.INITIAL.getId());
-		final IProcedure procedure = procedureRepository.findByName(executionProcedure);
-		return inputDataRepository.count(procedure, phaseQualifier.getName(), statusInitial);
+	public Long countInputDataForExecution(final String executionProcedure,
+			final PhaseQualifier phaseQualifier) {
+		final Status statusInitial = statusRepository
+				.findOne(PersistentStatus.INITIAL.getId());
+		final IProcedure procedure = procedureRepository
+				.findByName(executionProcedure);
+		return inputDataRepository.count(procedure, phaseQualifier.getName(),
+				statusInitial);
 	}
 
 }

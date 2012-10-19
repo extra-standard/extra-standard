@@ -25,9 +25,10 @@ import de.extrastandard.persistence.model.Execution;
 
 /**
  * Repository für Executions.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id: ExecutionRepository.java 508 2012-09-04 09:35:41Z thorstenvogel@gmail.com $
+ * @version $Id: ExecutionRepository.java 508 2012-09-04 09:35:41Z
+ *          thorstenvogel@gmail.com $
  */
 @Repository("executionRepository")
 public interface ExecutionRepository extends JpaRepository<Execution, Long> {

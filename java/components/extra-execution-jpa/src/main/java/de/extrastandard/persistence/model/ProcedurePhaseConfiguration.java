@@ -85,7 +85,8 @@ public class ProcedurePhaseConfiguration extends AbstractEntity {
 	 * @param phaseEndStatus
 	 * @param phase
 	 */
-	public ProcedurePhaseConfiguration(final ProcedureType procedureType, final PhaseQualifier phaseQualifier) {
+	public ProcedurePhaseConfiguration(final ProcedureType procedureType,
+			final PhaseQualifier phaseQualifier) {
 		this(procedureType, phaseQualifier, null);
 	}
 
@@ -94,7 +95,8 @@ public class ProcedurePhaseConfiguration extends AbstractEntity {
 	 * @param phaseQualifier
 	 * @param nextPhaseConfiguration
 	 */
-	public ProcedurePhaseConfiguration(final ProcedureType procedureType, final PhaseQualifier phaseQualifier,
+	public ProcedurePhaseConfiguration(final ProcedureType procedureType,
+			final PhaseQualifier phaseQualifier,
 			final ProcedurePhaseConfiguration nextPhaseConfiguration) {
 		super();
 		Assert.notNull(procedureType, "ProcedureType must be specified");

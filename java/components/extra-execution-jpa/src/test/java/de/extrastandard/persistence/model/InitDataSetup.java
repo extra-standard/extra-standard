@@ -31,7 +31,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 /**
  * Eine provisorische Lösung, um die Testdaten in die HSQLDB on StartUP
- * hinzufügen
+ * hinzufügen.
  * 
  * @author Leonid Potap
  * @version $Id$
@@ -43,7 +43,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @Named("initDataSetup")
 public class InitDataSetup {
 
-	private static final Logger LOGGER = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(InitDataSetup.class);
 
 	@Inject
@@ -52,13 +52,13 @@ public class InitDataSetup {
 
 	@Test
 	public void setupInitialDaten() throws InterruptedException {
-		LOGGER.info("setupInitialDaten");
+		logger.info("setupInitialDaten");
 		persistenceTestSetup.setupInitialDaten();
 		persistenceTestSetup.setupprocedureSendFetch();
 		persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
 		persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase3();
 		Thread.sleep(3000);
-		LOGGER.info("setupInitialDaten abgeschlossen");
+		logger.info("setupInitialDaten abgeschlossen");
 		Thread.sleep(3000);
 	}
 }

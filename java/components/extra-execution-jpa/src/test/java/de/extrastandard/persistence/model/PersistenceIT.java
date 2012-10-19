@@ -52,7 +52,8 @@ import de.extrastandard.api.model.execution.PhaseQualifier;
  *          thorstenvogel@gmail.com $
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring-persistence-jpa.xml", "/spring-ittest-hsqldb-propertyplaceholder.xml" })
+@ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
+		"/spring-ittest-hsqldb-propertyplaceholder.xml" })
 // @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
 // "/spring-ittest-oracle-propertyplaceholder.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
@@ -75,7 +76,8 @@ public class PersistenceIT {
 
 		final String parameter = "-c d:/extras/configdir";
 		final IExecution execution = executionPersistence.startExecution(
-				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, parameter, PhaseQualifier.PHASE1);
+				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, parameter,
+				PhaseQualifier.PHASE1);
 
 		assertNotNull(execution.getParameters());
 		assertNotNull(execution.getId());
@@ -83,58 +85,80 @@ public class PersistenceIT {
 		assertEquals(parameter, execution.getParameters());
 		assertEquals(PhaseQualifier.PHASE1.getName(), execution.getPhase());
 
-		final IProcessTransition lastTransitionInitial = execution.getLastTransition();
+		final IProcessTransition lastTransitionInitial = execution
+				.getLastTransition();
 		assertNotNull(lastTransitionInitial);
-		final IStatus currentStatusInitial = lastTransitionInitial.getCurrentStatus();
+		final IStatus currentStatusInitial = lastTransitionInitial
+				.getCurrentStatus();
 		assertNotNull(currentStatusInitial);
-		assertEquals(PersistentStatus.INITIAL.getId(), currentStatusInitial.getId());
-		final IStatus previousStatus = lastTransitionInitial.getPreviousStatus();
+		assertEquals(PersistentStatus.INITIAL.getId(),
+				currentStatusInitial.getId());
+		final IStatus previousStatus = lastTransitionInitial
+				.getPreviousStatus();
 		assertNull(previousStatus);
 
 		execution.updateProgress(PersistentStatus.ENVELOPED);
-		final IProcessTransition lastTransitionEnveloped = execution.getLastTransition();
+		final IProcessTransition lastTransitionEnveloped = execution
+				.getLastTransition();
 		assertNotNull(lastTransitionEnveloped);
-		final IStatus currentStatusEnveloped = lastTransitionEnveloped.getCurrentStatus();
+		final IStatus currentStatusEnveloped = lastTransitionEnveloped
+				.getCurrentStatus();
 		assertNotNull(currentStatusEnveloped);
-		assertEquals(PersistentStatus.ENVELOPED.getId(), currentStatusEnveloped.getId());
-		final IStatus previousStatusInitial = lastTransitionEnveloped.getPreviousStatus();
+		assertEquals(PersistentStatus.ENVELOPED.getId(),
+				currentStatusEnveloped.getId());
+		final IStatus previousStatusInitial = lastTransitionEnveloped
+				.getPreviousStatus();
 		assertNotNull(previousStatusInitial);
-		assertEquals(PersistentStatus.INITIAL.getId(), previousStatusInitial.getId());
+		assertEquals(PersistentStatus.INITIAL.getId(),
+				previousStatusInitial.getId());
 
 		execution.updateProgress(PersistentStatus.TRANSMITTED);
-		final IProcessTransition lastTransitionTransmitted = execution.getLastTransition();
+		final IProcessTransition lastTransitionTransmitted = execution
+				.getLastTransition();
 		assertNotNull(lastTransitionTransmitted);
-		final IStatus currentStatusTransmitted = lastTransitionTransmitted.getCurrentStatus();
+		final IStatus currentStatusTransmitted = lastTransitionTransmitted
+				.getCurrentStatus();
 		assertNotNull(currentStatusTransmitted);
-		assertEquals(PersistentStatus.TRANSMITTED.getId(), currentStatusTransmitted.getId());
-		final IStatus previousStatusEnveloped = lastTransitionTransmitted.getPreviousStatus();
+		assertEquals(PersistentStatus.TRANSMITTED.getId(),
+				currentStatusTransmitted.getId());
+		final IStatus previousStatusEnveloped = lastTransitionTransmitted
+				.getPreviousStatus();
 		assertNotNull(previousStatusEnveloped);
-		assertEquals(PersistentStatus.ENVELOPED.getId(), previousStatusEnveloped.getId());
+		assertEquals(PersistentStatus.ENVELOPED.getId(),
+				previousStatusEnveloped.getId());
 
-		final ISingleContentInputData singleContentInputData = new SingleStringInputData("test data");
-		final IInputData inputData = execution.startContentInputData(singleContentInputData);
+		final ISingleContentInputData singleContentInputData = new SingleStringInputData(
+				"test data");
+		final IInputData inputData = execution
+				.startContentInputData(singleContentInputData);
 		assertNotNull(inputData);
-		assertEquals(singleContentInputData.getHashCode(), inputData.getHashcode());
-		assertEquals(singleContentInputData.getInputIdentifier(), inputData.getInputIdentifier());
+		assertEquals(singleContentInputData.getHashCode(),
+				inputData.getHashcode());
+		assertEquals(singleContentInputData.getInputIdentifier(),
+				inputData.getInputIdentifier());
 
 		final String requestId = inputData.calculateRequestId();
 		singleContentInputData.setRequestId(requestId);
 		inputData.setRequestId(requestId);
-		assertEquals(singleContentInputData.getRequestId(), inputData.getRequestId());
+		assertEquals(singleContentInputData.getRequestId(),
+				inputData.getRequestId());
 
 		final IResponseData responceData = new ResponseData();
-		final ISingleResponseData singleResponseData = new SingleResponseData(requestId, "ReturnCode", "ReturnText",
-				"RESPONSE_ID");
+		final ISingleResponseData singleResponseData = new SingleResponseData(
+				requestId, "ReturnCode", "ReturnText", "RESPONSE_ID");
 		responceData.addSingleResponse(singleResponseData);
 		execution.endExecution(responceData);
-		final IProcessTransition lastTransitionDone = execution.getLastTransition();
+		final IProcessTransition lastTransitionDone = execution
+				.getLastTransition();
 		assertNotNull(lastTransitionDone);
 		final IStatus currentStatusDone = lastTransitionDone.getCurrentStatus();
 		assertNotNull(currentStatusDone);
 		assertEquals(PersistentStatus.DONE.getId(), currentStatusDone.getId());
-		final IStatus previousStatusTransmitted = lastTransitionDone.getPreviousStatus();
+		final IStatus previousStatusTransmitted = lastTransitionDone
+				.getPreviousStatus();
 		assertNotNull(previousStatusTransmitted);
-		assertEquals(PersistentStatus.TRANSMITTED.getId(), previousStatusTransmitted.getId());
+		assertEquals(PersistentStatus.TRANSMITTED.getId(),
+				previousStatusTransmitted.getId());
 
 		// TODO IInputData testen
 
