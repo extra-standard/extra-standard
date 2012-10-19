@@ -18,6 +18,7 @@
     * [eXTraClientBetriebKonfigurationsdateien Konfigurationsdateien]
       * [eXTraClientBetriebConfigBasis extra-properties-basic]
       * [eXTraClientBetriebConfigUser extra-properties-user]
+      * [eXTraClientBetriebConfigProfile profile.xml]
     * [eXTraClientBetriebPlugins Plugins]
     * [eXTraClientBetriebBuilder XML-Builder]
     * [eXTraClientBetriebSonstigeKonfiguration Sonstige Konfiguration]
