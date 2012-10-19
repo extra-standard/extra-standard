@@ -61,10 +61,8 @@ import de.extrastandard.persistence.repository.InputDataRepository;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
-		"/spring-ittest-hsqldb-propertyplaceholder.xml" })
+		"/spring-ittest.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
-// @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
-// "/spring-ittest-oracle-propertyplaceholder.xml" })
 public class ExecutionIT {
 
 	@Inject

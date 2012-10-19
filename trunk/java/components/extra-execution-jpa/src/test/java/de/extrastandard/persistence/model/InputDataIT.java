@@ -45,10 +45,8 @@ import de.extrastandard.api.model.execution.PhaseQualifier;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
-		"/spring-ittest-hsqldb-propertyplaceholder.xml" })
+		"/spring-ittest.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
-// @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
-// "/spring-ittest-oracle-propertyplaceholder.xml" })
 public class InputDataIT {
 
 	@Inject

@@ -38,7 +38,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
-		"/spring-ittest-hsqldb-propertyplaceholder.xml" })
+		"/spring-ittest.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 @Named("initDataSetup")
 public class InitDataSetup {
