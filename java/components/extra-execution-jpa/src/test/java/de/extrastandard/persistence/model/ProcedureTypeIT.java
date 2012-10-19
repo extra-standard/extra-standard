@@ -32,6 +32,8 @@ import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.ProcedureRepository;
 
 /**
+ * Integration Test for Procedures.
+ * 
  * @author Leonid Potap
  * @version $Id$
  */

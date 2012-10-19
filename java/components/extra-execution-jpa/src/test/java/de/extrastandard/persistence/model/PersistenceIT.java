@@ -47,6 +47,8 @@ import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 
 /**
+ * Integration Test for Persistence.
+ * 
  * @author Thorsten Vogel
  * @version $Id: PersistenceTest.java 562 2012-09-06 14:12:43Z
  *          thorstenvogel@gmail.com $
