@@ -46,29 +46,11 @@ Alle Konfigurationsdateien für einen Anwendungsfall befinden sich üblicherweis
 Folgende Dateien bilden die Konfigurationsdaten für einen Anwendungsfall:
 
 || *Datei* || *Beschreibung* ||
-|| eXTra-properties-basic.properties || Zentrale Konfigurationsdatei ||
+|| eXTra-properties-basic.properties || Zentrale Konfigurationsdatei. Besteht aus Attribut-Werte Paaren (Java-properties Format). In dieser Datei werden z.B. das Fachverfahren, die Plugins und die XML-Builder konfiguriert. ||
 || eXTra-properties-user.properties || Ergänzende/überschreibende Einstellungen ||
 || logging-config.xml || Logging Einstellungen (z.B. Name der Logfiles und Loglevel) ||
 || ‚profile.xml’ || eXTra-Profil Datei (siehe eXTra Standard). In der Profil-Date sind die Elemente des Extra-Standards aufgeführt, die zur Kommunikation zwischen Client und Server verwendet werden sollen (Der Name ist frei wählbar.) Siehe: Aufbau der Profil-Datei. (TODO)||
 
-==Beschreibung eXTra-properties-basic.properties==
-Diese Konfigurationsdatei besteht aus Attribut-Werte Paaren (Java-properties Format). In jeder Zeile wird der Wert für ein Attribut angegeben. Die Datei kann in folgende Bereiche aufgeteilt werden:
- * Fachverfahren
-   * Informationen für das durchzuführende Fachverfahren 
-   * Beispiel: 	core.execution.procedure=Datenabgleich
-   * Das Verfahren ‚Datenabgleich’ soll durchgeführt werden
- * Profiling
-   * Zu verwendende Profiling-Datei, Beispiel: plugins.configplugin.defaultConfigPlugin.profilOrdner=conf/profil.xml
- * Auswahl der Plugins 
-   * Angabe der Plugins die bei der Ausführung verwendet werden sollen. (Auflistung und Beschreibung der vorhandenen Plugins: TODO).
- * Auswahl der _Builder_ (Bausteine zur Erstellung des eXTra-XML-Dokuments)
-   * Jedes in der Profilierungsdatei angegebene Element wird von einem _Builder_ in einen XML-Abschnitt überführt.
-   * Für bestimmte Elemente können verschiedene Builder gewählt werden.
-   * z.B. _builder.xcpt.ElementSequence=transportBodyRequestConfirmationOfReceiptSequenceBuilder_
-   * siehe Dokumentation vorhandene Builder'
- * Konfiguration der Plugins
-   * Die einzelnen Plugins benötigen unterschiedliche Konfigurationsparameter. So benötigt z.B. das ‚executionPersistenceJpa’ Plugin eine DB-Verbindung. 
-   * Beispiel: plugins.execution.executionPersistenceJPA.hibernate.database=HSQL
 
 ==Beschreibung eXTra-properties-user.properties==
 In dieser Datei können spezielle Einstellungen eingetragen werden, die die Einstellungen aus eXTra-properties-basic.properties ergänzen oder überschreiben.
