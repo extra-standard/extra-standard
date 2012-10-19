@@ -30,7 +30,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 /**
- * 
  * Eine provisorische Lösung, um die Testdaten in die HSQLDB on StartUP
  * hinzufügen
  * 
@@ -38,12 +37,14 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
  * @version $Id$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring-persistence-jpa.xml", "/spring-ittest-hsqldb-propertyplaceholder.xml" })
+@ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
+		"/spring-ittest-hsqldb-propertyplaceholder.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 @Named("initDataSetup")
 public class InitDataSetup {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(InitDataSetup.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(InitDataSetup.class);
 
 	@Inject
 	@Named("persistenceTestSetup")
