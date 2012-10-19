@@ -1,0 +1,3 @@
+#summary zentrale Konfigurationsdatei extra-properties-basic.properties
+
+= extra-properties-basic.properties =
