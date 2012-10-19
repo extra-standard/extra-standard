@@ -1,3 +1,4 @@
 #summary Konfigurationsdatei extra-properties-user.properties
 
-= extra-properties-user.properties =
+= Beschreibung extra-properties-user.properties =
+In dieser Datei können spezielle Einstellungen eingetragen werden, die die Einstellungen aus eXTra-properties-basic.properties ergänzen oder überschreiben.
