@@ -16,6 +16,7 @@
   * [eXTraEntwProzess Entwicklungsprozess]
   * [eXTraClientBetriebsanleitung Betriebsanleitung]
     * [eXTraClientBetriebKonfigurationsdateien Konfigurationsdateien]
+      * [eXTraClientBetriebConfigBasis extra-properties-basic]
     * [eXTraClientBetriebPlugins Plugins]
     * [eXTraClientBetriebBuilder XML-Builder]
     * [eXTraClientBetriebSonstigeKonfiguration Sonstige Konfiguration]
