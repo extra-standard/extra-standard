@@ -23,6 +23,7 @@ import java.util.Set;
 
 import de.extrastandard.api.exception.ExtraRuntimeException;
 import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ISingleContentInputData;
 import de.extrastandard.api.model.content.ISingleQueryInputData;
 
 /**
@@ -36,33 +37,32 @@ import de.extrastandard.api.model.content.ISingleQueryInputData;
 public interface IExecution extends PersistentEntity {
 
 	/**
-	 * Persistiert eine neue {@link IInputData} Instanz.
+	 * Persists a new @ link} IInputData instance for a
+	 * {@link ISingleContentInputData}.
 	 * 
-	 * @param inputIdentifier
-	 *            Identifikation der Eingabedaten
-	 * @param hashCode
-	 *            Hashcode der Eingabedaten
-	 * @return Instanz
+	 * @param singleContentInputData
+	 * @return
 	 */
-	IInputData startContentInputData(String inputIdentifier, String hashCode);
+	IInputData startContentInputData(ISingleContentInputData singleContentInputData);
 
 	/**
-	 * Startet InputData für eine {@link ISingleQueryInputData}
+	 * Persists a new @ link} IInputData instance for a
+	 * {@link ISingleQueryInputData}.
 	 * 
 	 * @param singleQueryInputData
-	 * @return {@link IInputData}
+	 * @return {@link IInputData}Instanz
 	 */
 	IInputData startDbQueryInputData(ISingleQueryInputData singleQueryInputData);
 
 	/**
-	 * Aktualisiert diese Execution mit dem angegebenen Status.
+	 * Updates this execution with the specified status.
 	 * 
 	 * @param newPersistentStatus
 	 */
 	void updateProgress(PersistentStatus newPersistentStatus);
 
 	/**
-	 * Beendet diese Execution.
+	 * Ends this execution.
 	 * 
 	 * @param responseData
 	 */
@@ -70,7 +70,7 @@ public interface IExecution extends PersistentEntity {
 
 	/**
 	 * Marks this instance with the specified error data. This method do not
-	 * throw any exception
+	 * throw any exception.
 	 * 
 	 * @param errorCode
 	 *            Code des Fehlers.
@@ -81,7 +81,7 @@ public interface IExecution extends PersistentEntity {
 
 	/**
 	 * Marks this instance with the specified error data. This method do not
-	 * throw any exception
+	 * throw any exception.
 	 * 
 	 * @param exception
 	 *            die den Fehler auslösende Exception.
