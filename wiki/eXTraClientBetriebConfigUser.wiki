@@ -1,0 +1,3 @@
+#summary Konfigurationsdatei extra-properties-user.properties
+
+= extra-properties-user.properties =
