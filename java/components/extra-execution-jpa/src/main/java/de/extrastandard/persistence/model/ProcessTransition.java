@@ -135,14 +135,6 @@ public class ProcessTransition extends AbstractEntity implements IProcessTransit
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.PersistentEntity#saveOrUpdate()
-	 */
-	@Override
-	public void saveOrUpdate() {
-		repository.save(this);
-	}
-
-	/**
 	 * @see de.extrastandard.api.model.execution.IProcessTransition#getCurrentStatus()
 	 */
 	@Override

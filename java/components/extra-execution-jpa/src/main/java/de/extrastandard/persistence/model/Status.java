@@ -27,7 +27,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.transaction.annotation.Transactional;
 
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
@@ -64,15 +63,6 @@ public class Status extends AbstractEntity implements IStatus {
 	public Status(final PersistentStatus persistentStatus) {
 		this.name = persistentStatus.toString();
 		this.id = persistentStatus.getId();
-		repository.save(this);
-	}
-
-	/**
-	 * @see de.extrastandard.api.model.execution.PersistentEntity#saveOrUpdate()
-	 */
-	@Override
-	@Transactional
-	public void saveOrUpdate() {
 		repository.save(this);
 	}
 

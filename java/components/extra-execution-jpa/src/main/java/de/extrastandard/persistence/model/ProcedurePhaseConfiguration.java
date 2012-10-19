@@ -123,12 +123,6 @@ public class ProcedurePhaseConfiguration extends AbstractEntity {
 		this.id = id;
 	}
 
-	@Override
-	public void saveOrUpdate() {
-		repository.save(this);
-
-	}
-
 	/**
 	 * @return the phase
 	 */

@@ -32,7 +32,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import de.extrastandard.api.model.execution.IMandator;
@@ -157,15 +156,6 @@ public class Procedure extends AbstractEntity implements IProcedure {
 	public boolean isProcedureEndPhase(final String phase) {
 		Assert.notNull(phase, "Phase must be specified");
 		return procedureType.isProcedureEndPhase(phase);
-	}
-
-	/**
-	 * @see de.extrastandard.api.model.execution.PersistentEntity#saveOrUpdate()
-	 */
-	@Override
-	@Transactional
-	public void saveOrUpdate() {
-		repository.save(this);
 	}
 
 	@Override

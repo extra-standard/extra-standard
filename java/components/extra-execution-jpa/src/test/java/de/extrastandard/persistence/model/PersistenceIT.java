@@ -112,8 +112,7 @@ public class PersistenceIT {
 		assertEquals(PersistentStatus.ENVELOPED.getId(), previousStatusEnveloped.getId());
 
 		final ISingleContentInputData singleContentInputData = new SingleStringInputData("test data");
-		final IInputData inputData = execution.startContentInputData(singleContentInputData.getInputIdentifier(),
-				singleContentInputData.getHashCode());
+		final IInputData inputData = execution.startContentInputData(singleContentInputData);
 		assertNotNull(inputData);
 		assertEquals(singleContentInputData.getHashCode(), inputData.getHashcode());
 		assertEquals(singleContentInputData.getInputIdentifier(), inputData.getInputIdentifier());

@@ -48,6 +48,7 @@ import org.springframework.util.StringUtils;
 
 import de.extrastandard.api.exception.ExtraRuntimeException;
 import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ISingleContentInputData;
 import de.extrastandard.api.model.content.ISingleQueryInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
@@ -58,7 +59,6 @@ import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.ExecutionRepository;
-import de.extrastandard.persistence.repository.InputDataRepository;
 import de.extrastandard.persistence.repository.PhaseConnectionRepository;
 import de.extrastandard.persistence.repository.ProcedureRepository;
 import de.extrastandard.persistence.repository.StatusRepository;
@@ -129,11 +129,6 @@ public class Execution extends AbstractEntity implements IExecution {
 	private transient ProcedureRepository procedureRepository;
 
 	@Inject
-	@Named("inputDataRepository")
-	@Transient
-	private transient InputDataRepository inputDataRepository;
-
-	@Inject
 	@Named("phaseConnectionRepository")
 	@Transient
 	private transient PhaseConnectionRepository phaseConnectionRepository;
@@ -157,10 +152,10 @@ public class Execution extends AbstractEntity implements IExecution {
 		this.phase = phaseQualifier.getName();
 		this.startTime = new Date();
 		this.procedure = procedureRepository.findByName(procedure.getName());
-		saveOrUpdate();
+		repository.save(this);
 		final ProcessTransition transition = new ProcessTransition(this);
 		this.lastTransition = transition;
-		saveOrUpdate();
+		repository.save(this);
 	}
 
 	/**
@@ -180,7 +175,7 @@ public class Execution extends AbstractEntity implements IExecution {
 		final ProcessTransition transition = new ProcessTransition(this, currentStatus, newPersistentStatus,
 				lastTransitionDate);
 		this.lastTransition = transition;
-		saveOrUpdate();
+		repository.save(this);
 	}
 
 	/**
@@ -227,7 +222,7 @@ public class Execution extends AbstractEntity implements IExecution {
 		Assert.notNull(responseData, "ResponseData is null");
 		this.endTime = new Date();
 		updateProgress(PersistentStatus.DONE);
-		saveOrUpdate();
+		repository.save(this);
 		// update Inputdata
 		for (final InputData inputData : inputDataSet) {
 			final String requestId = inputData.getRequestId();
@@ -254,10 +249,10 @@ public class Execution extends AbstractEntity implements IExecution {
 	 */
 	@Override
 	@Transactional
-	public IInputData startContentInputData(final String inputIdentifier, final String hashCode) {
-		final InputData inputData = new InputData(this, inputIdentifier, hashCode);
+	public IInputData startContentInputData(final ISingleContentInputData singleContentInputData) {
+		final InputData inputData = new InputData(singleContentInputData, this);
 		this.inputDataSet.add(inputData);
-		saveOrUpdate();
+		repository.save(this);
 		return inputData;
 	}
 
@@ -265,16 +260,8 @@ public class Execution extends AbstractEntity implements IExecution {
 	public IInputData startDbQueryInputData(final ISingleQueryInputData singleQueryInputData) {
 		final InputData inputData = new InputData(singleQueryInputData, this);
 		this.inputDataSet.add(inputData);
-		saveOrUpdate();
-		return inputData;
-	}
-
-	/**
-	 * @see de.extrastandard.api.model.execution.PersistentEntity#saveOrUpdate()
-	 */
-	@Override
-	public void saveOrUpdate() {
 		repository.save(this);
+		return inputData;
 	}
 
 	/**

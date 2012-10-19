@@ -29,8 +29,6 @@ import javax.inject.Named;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -42,7 +40,6 @@ import de.extrastandard.api.model.execution.IPhaseConnection;
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
-import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * @author Leonid Potap
@@ -54,7 +51,8 @@ import de.extrastandard.persistence.repository.StatusRepository;
 @Transactional
 public class PersistenceSendFetchPhase2IT {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(PersistenceSendFetchPhase2IT.class);
+	// private static final Logger LOGGER =
+	// LoggerFactory.getLogger(PersistenceSendFetchPhase2IT.class);
 
 	@Inject
 	@Named("executionPersistenceJpa")
@@ -64,63 +62,12 @@ public class PersistenceSendFetchPhase2IT {
 	@Named("persistenceTestSetup")
 	private PersistenceTestSetup persistenceTestSetup;
 
-	@Inject
-	@Named("statusRepository")
-	private transient StatusRepository statusRepository;
-
-	private Status statusResultsExpected;
-
-	private Status statusResultsProcessed;
-
-	private Status statusReceiptConfirmed;
-
-	private Status statusDone;
-
 	@Before
 	public void before() throws Exception {
-
-		statusDone = statusRepository.findByName(PersistentStatus.DONE.name());
 
 		persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
 
 		persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase3();
-
-		// final IExecution executionForTestPhase2 =
-		// executionPersistence.startExecution(
-		// PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
-		// "-c d:/extras/configdir", PhaseQualifier.PHASE1);
-		//
-		// final IInputData inputData =
-		// executionForTestPhase2.startContentInputData("inputIdentifier",
-		// "hashCode");
-		// final String calculatedRequestId = inputData.calculateRequestId();
-		// inputData.setRequestId(calculatedRequestId);
-		//
-		// final IResponseData responseData = new ResponseData();
-		// final ISingleResponseData singleResponseData = new
-		// SingleResponseData(calculatedRequestId, "ReturnCode",
-		// "ReturnText", "RESPONSE_ID");
-		// responseData.addSingleResponse(singleResponseData);
-		// executionForTestPhase2.endExecution(responseData);
-		//
-		// final IExecution executionForTestPhase3 =
-		// executionPersistence.startExecution(
-		// PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
-		// "-c d:/extras/configdir2", PhaseQualifier.PHASE2);
-		//
-		// final IInputData inputDataForPhase3 =
-		// executionForTestPhase3.startContentInputData("inputIdentifierPhase2",
-		// "hashCodePhase2");
-		// final String calculatedRequestIdForPhase3 =
-		// inputDataForPhase3.calculateRequestId();
-		// inputDataForPhase3.setRequestId(calculatedRequestIdForPhase3);
-		//
-		// final IResponseData responseDataForPhase3 = new ResponseData();
-		// final ISingleResponseData singleResponseDataForPhase3 = new
-		// SingleResponseData(calculatedRequestIdForPhase3,
-		// "ReturnCodePhase2", "ReturnTextPhase2", "RESPONSE_ID_PHASE2");
-		// responseDataForPhase3.addSingleResponse(singleResponseDataForPhase3);
-		// executionForTestPhase3.endExecution(responseDataForPhase3);
 
 	}
 
@@ -136,7 +83,6 @@ public class PersistenceSendFetchPhase2IT {
 			assertEquals(PersistentStatus.INITIAL.getId(), status.getId());
 			final String nextPhasequalifier = nextPhasenConnection.getNextPhasequalifier();
 			assertEquals(PhaseQualifier.PHASE2.getName(), nextPhasequalifier);
-
 		}
 	}
 
@@ -152,8 +98,8 @@ public class PersistenceSendFetchPhase2IT {
 			assertEquals(PersistentStatus.INITIAL.getId(), status.getId());
 			final String nextPhasequalifier = nextPhasenConnection.getNextPhasequalifier();
 			assertEquals(PhaseQualifier.PHASE3.getName(), nextPhasequalifier);
-
 		}
+
 	}
 
 }

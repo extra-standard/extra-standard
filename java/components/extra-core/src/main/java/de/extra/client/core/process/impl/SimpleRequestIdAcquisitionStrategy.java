@@ -77,7 +77,6 @@ public class SimpleRequestIdAcquisitionStrategy implements IRequestIdAcquisition
 			// Strategy 2
 			final String requestId = inputData.calculateRequestId();
 			inputData.setRequestId(requestId);
-			inputData.saveOrUpdate();
 			singleContentInputData.setRequestId(requestId);
 		} else if (inputData.getRequestId() != null) {
 			// Strategy 3
@@ -130,7 +129,6 @@ public class SimpleRequestIdAcquisitionStrategy implements IRequestIdAcquisition
 		// der Nachrichten dienen kann ist der Ursprung-ResponseId
 		final String requestId = singleQueryInputData.getSourceResponceId();
 		inputData.setRequestId(requestId);
-		inputData.saveOrUpdate();
 		singleQueryInputData.setRequestId(requestId);
 	}
 

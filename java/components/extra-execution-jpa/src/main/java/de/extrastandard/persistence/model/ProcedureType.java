@@ -30,7 +30,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import de.extrastandard.api.model.execution.IProcedure;
@@ -59,12 +58,6 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 	@Column(name = "name")
 	private String name;
 
-	@Column(name = "start_phase")
-	private String startPhase;
-
-	@Column(name = "end_phase")
-	private String endPhase;
-
 	@Transient
 	@Inject
 	@Named("procedureTypeRepository")
@@ -86,11 +79,9 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 	 * @param name
 	 * @param mandator
 	 */
-	public ProcedureType(final String name, final String startPhase, final String endPhase) {
+	public ProcedureType(final String name) {
 		super();
 		this.name = name;
-		this.startPhase = startPhase;
-		this.endPhase = endPhase;
 		repository.save(this);
 	}
 
@@ -111,7 +102,9 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 
 	public boolean isProcedureEndPhase(final String phase) {
 		Assert.notNull(phase, "Phase must be specified");
-		final boolean isEndPhaseOfProcedure = phase.equalsIgnoreCase(this.endPhase);
+		final ProcedurePhaseConfiguration procedurePhaseConfiguration = procedurePhaseConfigurationRepository
+				.findByPhaseAndProcedureType(phase, this);
+		final boolean isEndPhaseOfProcedure = (procedurePhaseConfiguration.getNextPhaseConfiguration() == null);
 		return isEndPhaseOfProcedure;
 	}
 
@@ -126,15 +119,6 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 			nextPhase = nextPhaseConfiguration.getPhase();
 		}
 		return nextPhase;
-	}
-
-	/**
-	 * @see de.extrastandard.api.model.execution.PersistentEntity#saveOrUpdate()
-	 */
-	@Override
-	@Transactional
-	public void saveOrUpdate() {
-		repository.save(this);
 	}
 
 	/*
@@ -155,10 +139,6 @@ public class ProcedureType extends AbstractEntity implements IProcedureType {
 			builder.append("name=");
 			builder.append(name);
 			builder.append(", ");
-		}
-		if (endPhase != null) {
-			builder.append("endPhase=");
-			builder.append(endPhase);
 		}
 		builder.append("]");
 		return builder.toString();

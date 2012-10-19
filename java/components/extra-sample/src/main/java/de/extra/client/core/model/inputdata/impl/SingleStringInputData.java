@@ -94,7 +94,7 @@ public class SingleStringInputData extends Implementor implements ISingleContent
 
 	@Override
 	public String getHashCode() {
-		return null;
+		return String.valueOf(content.hashCode());
 	}
 
 	@Override

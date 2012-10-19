@@ -36,6 +36,7 @@ import javax.persistence.Transient;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.util.Assert;
 
+import de.extrastandard.api.model.content.ISingleContentInputData;
 import de.extrastandard.api.model.content.ISingleQueryInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
@@ -119,12 +120,16 @@ public class InputData extends AbstractEntity implements IInputData {
 	 * @param qualifier
 	 *            Qualifizierung
 	 */
-	public InputData(final Execution execution, final String inputIdentifier, final String hashCode) {
+	public InputData(final ISingleContentInputData singleContentInputData, final Execution execution) {
+		Assert.notNull(singleContentInputData, "SingleContentInputData must be specified");
+		final String hashCode = singleContentInputData.getHashCode();
+		final String inputIdentifier = singleContentInputData.getInputIdentifier();
 		Assert.notNull(inputIdentifier, "inputIdentifier must be specified");
+		Assert.notNull(hashCode, "inputIdentifier must be specified");
 		this.inputIdentifier = inputIdentifier;
 		this.hashcode = hashCode;
 		this.execution = execution;
-		saveOrUpdate();
+		repository.save(this);
 	}
 
 	/**
@@ -147,15 +152,6 @@ public class InputData extends AbstractEntity implements IInputData {
 		final String requestId = this.calculateRequestId();
 		this.requestId = requestId;
 		repository.save(this);
-	}
-
-	/**
-	 * @see de.extrastandard.api.model.execution.PersistentEntity#saveOrUpdate()
-	 */
-	@Override
-	public void saveOrUpdate() {
-		repository.save(this);
-
 	}
 
 	/**
@@ -234,6 +230,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	@Override
 	public void setRequestId(final String requestId) {
 		this.requestId = requestId;
+		repository.save(this);
 	}
 
 	@Override
@@ -297,6 +294,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	 */
 	public void setNextPhaseConnection(final PhaseConnection nextPhaseConnection) {
 		this.nextPhaseConnection = nextPhaseConnection;
+		repository.save(this);
 	}
 
 	@Override
