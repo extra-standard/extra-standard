@@ -1,4 +1,4 @@
-# connection pool settings
+# Connection pool settings
 plugins.execution.executionPersistenceJpa.db.pool.maxIdle=10
 plugins.execution.executionPersistenceJpa.db.pool.maxActive=100
 plugins.execution.executionPersistenceJpa.db.pool.maxWait=1000
@@ -9,6 +9,3 @@ plugins.execution.executionPersistenceJpa.db.pool.timeBetweenEvictionRunsMillis=
 plugins.execution.executionPersistenceJpa.db.pool.minEvictableIdleTimeMillis=1800000
 plugins.execution.executionPersistenceJpa.db.pool.numTestsPerEvictionRun=5
 plugins.execution.executionPersistenceJpa.db.pool.defaultAutoCommit=false
-
-
-

@@ -37,7 +37,7 @@ import de.extrastandard.persistence.repository.ProcedureRepository;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
-		"/spring-ittest-hsqldb-propertyplaceholder.xml" })
+		"/spring-ittest.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 public class ProcedureTypeIT {
 
