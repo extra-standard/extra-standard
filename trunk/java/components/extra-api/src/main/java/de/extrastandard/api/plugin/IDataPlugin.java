@@ -26,24 +26,19 @@ import de.extrastandard.api.model.content.IInputDataContainer;
  */
 public interface IDataPlugin {
 
-	/**
-	 * @return sehe {@link IInputDataContainer}
-	 */
-	IInputDataContainer getData();
+    /**
+     * @return sehe {@link IInputDataContainer}
+     */
+    IInputDataContainer getData();
 
-	/**
-	 * liest InputDaten ein
-	 */
-	void initInputData();
+    /**
+     * @return true, wenn weitere Daten vorhanen sind
+     */
+    boolean hasMoreData();
 
-	/**
-	 * @return true, wenn weitere Daten vorhanen sind
-	 */
-	boolean hasMoreData();
-
-	/**
-	 * @return true, wenn keine Daten vorhanden sind
-	 */
-	boolean isEmpty();
+    /**
+     * @return true, wenn keine Daten vorhanden sind
+     */
+    boolean isEmpty();
 
 }
