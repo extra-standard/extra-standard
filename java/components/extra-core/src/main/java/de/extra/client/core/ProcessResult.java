@@ -1,5 +1,6 @@
 package de.extra.client.core;
 
+import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.IResponseData;
 
 /**
@@ -8,61 +9,83 @@ import de.extrastandard.api.model.content.IResponseData;
  * responses.
  * 
  * @author DPRS
- * @version $Id$
+ * @version $Id: ProcessResult.java 841 2012-10-19 15:32:38Z
+ *          potap.rentenservice@gmail.com $
  */
 public class ProcessResult {
 
-	private final IResponseData responseData;
+    /**
+     * ResponseData for the given IInputData
+     */
+    private final IResponseData responseData;
 
-	private final Exception exception;
+    /**
+     * InputData
+     */
+    private final IInputDataContainer dataContainer;
 
-	public ProcessResult(final IResponseData responseData, final Exception exception) {
-		this.responseData = responseData;
-		this.exception = exception;
+    /**
+     * Eception
+     */
+    private final Exception exception;
+
+    public ProcessResult(final IResponseData responseData,
+	    final IInputDataContainer dataContainer, final Exception exception) {
+	this.responseData = responseData;
+	this.dataContainer = dataContainer;
+	this.exception = exception;
+    }
+
+    public ProcessResult(final IResponseData responseData,
+	    final IInputDataContainer dataContainer) {
+	this(responseData, dataContainer, null);
+    }
+
+    public ProcessResult(final Exception exception) {
+	this(null, null, exception);
+    }
+
+    /**
+     * @return the dataContainer
+     */
+    public IInputDataContainer getDataContainer() {
+	return dataContainer;
+    }
+
+    /**
+     * @return the responseDatas
+     */
+    public IResponseData getResponseData() {
+	return responseData;
+    }
+
+    /**
+     * @return the exception
+     */
+    public Exception getException() {
+	return exception;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+	final StringBuilder builder = new StringBuilder();
+	builder.append("ProcessResult [");
+	if (responseData != null) {
+	    builder.append("responseData=");
+	    builder.append(responseData);
+	    builder.append(", ");
 	}
-
-	public ProcessResult(final IResponseData responseData) {
-		this(responseData, null);
+	if (exception != null) {
+	    builder.append("exception=");
+	    builder.append(exception);
 	}
-
-	public ProcessResult(final Exception exception) {
-		this(null, exception);
-	}
-
-	/**
-	 * @return the responseDatas
-	 */
-	public IResponseData getResponseData() {
-		return responseData;
-	}
-
-	/**
-	 * @return the exception
-	 */
-	public Exception getException() {
-		return exception;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("ProcessResult [");
-		if (responseData != null) {
-			builder.append("responseData=");
-			builder.append(responseData);
-			builder.append(", ");
-		}
-		if (exception != null) {
-			builder.append("exception=");
-			builder.append(exception);
-		}
-		builder.append("]");
-		return builder.toString();
-	}
+	builder.append("]");
+	return builder.toString();
+    }
 
 }

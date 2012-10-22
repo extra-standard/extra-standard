@@ -38,140 +38,148 @@ import de.extrastandard.api.model.content.ISingleContentInputData;
  * @author DPRS
  * @version $Id$
  */
-public class SingleFileInputData extends Implementor implements ISingleContentInputData {
+public class SingleFileInputData extends Implementor implements
+	ISingleContentInputData {
 
-	private static final Charset ENCODING_UTF_8 = Charsets.UTF_8;
+    private static final Charset ENCODING_UTF_8 = Charsets.UTF_8;
 
-	private final File inputDataFile;
+    private static final String INPUT_DATA_TYPE = "FILE_INPUT_DATA";
+    private final File inputDataFile;
 
-	private String requestId;
+    private String requestId;
 
-	private List<IInputDataPluginDescription> plugins = new ArrayList<IInputDataPluginDescription>();
+    private List<IInputDataPluginDescription> plugins = new ArrayList<IInputDataPluginDescription>();
 
-	public SingleFileInputData(final File inputDataFile) {
-		this(inputDataFile, new ArrayList<IInputDataPluginDescription>());
+    public SingleFileInputData(final File inputDataFile) {
+	this(inputDataFile, new ArrayList<IInputDataPluginDescription>());
+    }
+
+    public SingleFileInputData(final File inputFile,
+	    final List<IInputDataPluginDescription> pluginListe) {
+	this.inputDataFile = inputFile;
+	this.plugins = pluginListe;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.extra.client.core.model.ISenderDataBean#getPlugins()
+     */
+    @Override
+    public List<IInputDataPluginDescription> getPlugins() {
+	return plugins;
+    }
+
+    /**
+     * @param plugins
+     *            the plugins to set
+     */
+    public void addPlugin(final IInputDataPluginDescription plugin) {
+	plugins.add(plugin);
+    }
+
+    public void setPlugins(final List<IInputDataPluginDescription> pluginListe) {
+	this.plugins = pluginListe;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.extra.client.core.model.IFileInputdata#getFileName()
+     */
+    public String getFileName() {
+	return inputDataFile.getName();
+    }
+
+    @Override
+    public InputStream getInputDataAsStream() {
+	try {
+	    // TODO wie schliesse bzw. lasse ich den Stream schliessen
+	    return FileUtils.openInputStream(inputDataFile);
+	} catch (final IOException ioException) {
+	    throw new ExtraDataPluginRuntimeException(ioException);
+	}
+    }
+
+    @Override
+    public String getInputDataAsString() {
+	return getInputDataAsString(ENCODING_UTF_8);
+    }
+
+    @Override
+    public String getInputDataAsString(final Charset encoding) {
+	try {
+	    return FileUtils.readFileToString(inputDataFile, encoding);
+	} catch (final IOException ioException) {
+	    throw new ExtraDataPluginRuntimeException(ioException);
+	}
+    }
+
+    @Override
+    public byte[] getInputDataAsByteArray() {
+	try {
+	    return FileUtils.readFileToByteArray(inputDataFile);
+	} catch (final IOException ioException) {
+	    throw new ExtraDataPluginRuntimeException(ioException);
+	}
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+	final StringBuilder builder = new StringBuilder();
+	builder.append("SingleFileInputData [");
+	if (getFileName() != null) {
+	    builder.append("fileName=");
+	    builder.append(getFileName());
+	}
+	builder.append("]");
+	return builder.toString();
+    }
+
+    @Override
+    public void setRequestId(final String requestId) {
+	this.requestId = requestId;
+
+    }
+
+    /**
+     * @return the requestId
+     */
+    @Override
+    public String getRequestId() {
+	return requestId;
+    }
+
+    @Override
+    public String getHashCode() {
+	String checkSumCRC32String = null;
+	try {
+	    final long checkSumCRC32 = FileUtils.checksumCRC32(inputDataFile);
+	    checkSumCRC32String = String.valueOf(checkSumCRC32);
+	} catch (final IOException ioException) {
+	    throw new ExtraDataPluginRuntimeException(ioException);
 	}
 
-	public SingleFileInputData(final File inputFile, final List<IInputDataPluginDescription> pluginListe) {
-		this.inputDataFile = inputFile;
-		this.plugins = pluginListe;
+	return checkSumCRC32String;
+    }
+
+    @Override
+    public String getInputIdentifier() {
+	try {
+	    return inputDataFile.getCanonicalPath();
+	} catch (final IOException ioException) {
+	    throw new ExtraDataPluginRuntimeException(ioException);
 	}
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.extra.client.core.model.ISenderDataBean#getPlugins()
-	 */
-	@Override
-	public List<IInputDataPluginDescription> getPlugins() {
-		return plugins;
-	}
-
-	/**
-	 * @param plugins
-	 *            the plugins to set
-	 */
-	public void addPlugin(final IInputDataPluginDescription plugin) {
-		plugins.add(plugin);
-	}
-
-	public void setPlugins(final List<IInputDataPluginDescription> pluginListe) {
-		this.plugins = pluginListe;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.extra.client.core.model.IFileInputdata#getFileName()
-	 */
-	public String getFileName() {
-		return inputDataFile.getName();
-	}
-
-	@Override
-	public InputStream getInputDataAsStream() {
-		try {
-			// TODO wie schliesse bzw. lasse ich den Stream schliessen
-			return FileUtils.openInputStream(inputDataFile);
-		} catch (final IOException ioException) {
-			throw new ExtraDataPluginRuntimeException(ioException);
-		}
-	}
-
-	@Override
-	public String getInputDataAsString() {
-		return getInputDataAsString(ENCODING_UTF_8);
-	}
-
-	@Override
-	public String getInputDataAsString(final Charset encoding) {
-		try {
-			return FileUtils.readFileToString(inputDataFile, encoding);
-		} catch (final IOException ioException) {
-			throw new ExtraDataPluginRuntimeException(ioException);
-		}
-	}
-
-	@Override
-	public byte[] getInputDataAsByteArray() {
-		try {
-			return FileUtils.readFileToByteArray(inputDataFile);
-		} catch (final IOException ioException) {
-			throw new ExtraDataPluginRuntimeException(ioException);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("SingleFileInputData [");
-		if (getFileName() != null) {
-			builder.append("fileName=");
-			builder.append(getFileName());
-		}
-		builder.append("]");
-		return builder.toString();
-	}
-
-	@Override
-	public void setRequestId(final String requestId) {
-		this.requestId = requestId;
-
-	}
-
-	/**
-	 * @return the requestId
-	 */
-	@Override
-	public String getRequestId() {
-		return requestId;
-	}
-
-	@Override
-	public String getHashCode() {
-		String checkSumCRC32String = null;
-		try {
-			final long checkSumCRC32 = FileUtils.checksumCRC32(inputDataFile);
-			checkSumCRC32String = String.valueOf(checkSumCRC32);
-		} catch (final IOException ioException) {
-			throw new ExtraDataPluginRuntimeException(ioException);
-		}
-
-		return checkSumCRC32String;
-	}
-
-	@Override
-	public String getInputIdentifier() {
-		try {
-			return inputDataFile.getCanonicalPath();
-		} catch (final IOException ioException) {
-			throw new ExtraDataPluginRuntimeException(ioException);
-		}
-	}
+    @Override
+    public String getInputDataType() {
+	return INPUT_DATA_TYPE;
+    }
 
 }

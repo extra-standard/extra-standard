@@ -30,6 +30,7 @@ import org.springframework.context.annotation.Scope;
 import de.extra.client.core.util.IExtraReturnCodeAnalyser;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.IResponseData;
+import de.extrastandard.api.model.content.ISingleInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
 
 /**
@@ -53,7 +54,7 @@ public class ClientProcessResult {
 
     public void addResult(final IInputDataContainer dataContainer,
 	    final IResponseData responseData) {
-	responses.add(new ProcessResult(responseData));
+	responses.add(new ProcessResult(responseData, dataContainer));
     }
 
     public void addException(final Exception exception) {
@@ -124,6 +125,7 @@ public class ClientProcessResult {
     public String printResults() {
 	final StringBuilder successResultAsString = new StringBuilder();
 	final StringBuilder failedResultAsString = new StringBuilder();
+	int processedResultsCount = 0;
 	int succesfulResultsCount = 0;
 	int failedResultsCount = 0;
 
@@ -134,31 +136,43 @@ public class ClientProcessResult {
 			result.getException().getMessage());
 	    } else {
 		final IResponseData responseData = result.getResponseData();
-		for (final ISingleResponseData singleResponseData : responseData
-			.getResponses()) {
-		    final StringBuilder singleResponseDataResult = new StringBuilder();
-		    singleResponseDataResult.append(" Request : ").append(
+		final IInputDataContainer dataContainer = result
+			.getDataContainer();
+		final List<ISingleInputData> inputdataContent = dataContainer
+			.getContent();
+		for (final ISingleInputData singleInputData : inputdataContent) {
+		    processedResultsCount++;
+		    final String requestId = singleInputData.getRequestId();
+		    final ISingleResponseData singleResponseData = responseData
+			    .getResponse(requestId);
+
+		    final StringBuilder singleDataResult = new StringBuilder();
+		    singleDataResult.append(" InputData Type : ")
+			    .append(singleInputData.getInputDataType())
+			    .append(" Identifier : ")
+			    .append(singleInputData.getInputIdentifier());
+		    singleDataResult.append(" Request : ").append(
 			    singleResponseData.getRequestId());
-		    singleResponseDataResult.append(" Received Response: ")
-			    .append(singleResponseData.getResponseId());
-		    singleResponseDataResult.append(" With ReturnCode: ")
-			    .append(singleResponseData.getReturnCode());
-		    singleResponseDataResult.append(" and ReturnText: ")
-			    .append(singleResponseData.getReturnText());
-		    singleResponseDataResult.append(NEW_LINE);
+		    singleDataResult.append(" Received Response: ").append(
+			    singleResponseData.getResponseId());
+		    singleDataResult.append(" With ReturnCode: ").append(
+			    singleResponseData.getReturnCode());
+		    singleDataResult.append(" and ReturnText: ").append(
+			    singleResponseData.getReturnText());
+		    singleDataResult.append(NEW_LINE);
 		    if (isSuccessful(singleResponseData)) {
 			succesfulResultsCount++;
-			successResultAsString.append(singleResponseDataResult);
+			successResultAsString.append(singleDataResult);
 		    } else {
 			failedResultsCount++;
-			failedResultAsString.append(singleResponseDataResult);
+			failedResultAsString.append(singleDataResult);
 		    }
 		}
 	    }
 	}
 	final StringBuilder resultAsString = new StringBuilder(NEW_LINE);
 	resultAsString.append("Anzahl verarbeitetn Saetze : ").append(
-		responses.size());
+		processedResultsCount);
 	resultAsString.append(NEW_LINE);
 	resultAsString.append("Davon erfolgreich : ").append(
 		succesfulResultsCount);
@@ -168,8 +182,8 @@ public class ClientProcessResult {
 	resultAsString.append("Erfolgreich verarbeite Datensätze: ").append(
 		NEW_LINE);
 	resultAsString.append(successResultAsString);
-	resultAsString.append("Fehlerhafte Datensätze: ").append(NEW_LINE);
 	if (failedResultsCount != 0) {
+	    resultAsString.append("Fehlerhafte Datensätze: ").append(NEW_LINE);
 	    resultAsString.append(failedResultAsString);
 	}
 	return resultAsString.toString();

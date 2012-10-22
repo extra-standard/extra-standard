@@ -18,6 +18,8 @@
  */
 package de.extrastandard.api.model.content;
 
+import java.util.List;
+
 import de.extrastandard.api.util.IImplementor;
 
 /**
@@ -31,27 +33,32 @@ import de.extrastandard.api.util.IImplementor;
  */
 public interface IInputDataContainer extends IImplementor {
 
-	/**
-	 * Liefert RequestId, für die eindeutige Identifizierung in der XmlMessage
-	 * 
-	 * @return
-	 */
-	String getRequestId();
+    /**
+     * Liefert RequestId, für die eindeutige Identifizierung in der XmlMessage
+     * 
+     * @return
+     */
+    String getRequestId();
 
-	/**
-	 * @param requestId
-	 *            Setzt RequestId für die eindeutige Identifizierung in der
-	 *            XmlMesage
-	 */
-	void setRequestId(final String requestId);
+    /**
+     * @param requestId
+     *            Setzt RequestId für die eindeutige Identifizierung in der
+     *            XmlMesage
+     */
+    void setRequestId(final String requestId);
 
-	/**
-	 * @return true, if containers is empty
-	 */
-	boolean isContentEmpty();
+    /**
+     * @return true, if containers is empty
+     */
+    boolean isContentEmpty();
 
-	/**
-	 * @return contentSize
-	 */
-	int getContentSize();
+    /**
+     * @return contentSize
+     */
+    int getContentSize();
+
+    /**
+     * @return content
+     */
+    List<ISingleInputData> getContent();
 }
