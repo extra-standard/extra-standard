@@ -22,16 +22,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.inject.Named;
-
-import de.extra.client.core.annotation.PluginConfigType;
-import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
-@Named("queryPluginController")
-@PluginConfiguration(pluginBeanName = "queryDataPlugin", pluginType = PluginConfigType.DataPlugins)
+/**
+ * @deprecated
+ *
+ * Wird nicht mehr verwendet.
+ *
+ */
+//@Named("queryPluginController")
+//@PluginConfiguration(pluginBeanName = "queryDataPlugin", pluginType = PluginConfigType.DataPlugins)
 public class QueryPluginController implements IQueryPluginController {
 
 	@PluginValue(key = "startId")
