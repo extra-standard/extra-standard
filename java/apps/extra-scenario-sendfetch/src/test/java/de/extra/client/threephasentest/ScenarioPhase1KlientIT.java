@@ -26,23 +26,23 @@ import de.extra.client.starter.ExtraClientTestBasic;
 
 public class ScenarioPhase1KlientIT {
 
-    private final ExtraClientTestBasic extraClientTestBasic = new ExtraClientTestBasic();
+	private final ExtraClientTestBasic extraClientTestBasic = new ExtraClientTestBasic();
 
-    private ExtraClient extraClient;
+	private ExtraClient extraClient;
 
-    private static final String TEST_CONFIG = "/threephaseszenario/phase1";
+	private static final String TEST_CONFIG = "/threephaseszenario/phase1";
 
-    private static final String LOG_DIR = "/log";
+	private static final String LOG_DIR = "/log";
 
-    @Before
-    public void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-	extraClient = extraClientTestBasic.createExtraKlient(TEST_CONFIG,
-		LOG_DIR);
-    }
+		extraClient = extraClientTestBasic.createExtraKlient(TEST_CONFIG,
+				LOG_DIR);
+	}
 
-    @Test
-    public void testExecute() throws Exception {
-	extraClientTestBasic.testExecute(extraClient);
-    }
+	@Test
+	public void testExecute() throws Exception {
+		extraClientTestBasic.testExecute(extraClient);
+	}
 }
