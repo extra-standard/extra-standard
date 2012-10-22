@@ -20,13 +20,11 @@ package de.extra.client.starter;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.extra.client.core.ClientProcessResult;
-import de.extra.client.core.observer.OpLogger;
 import de.extra.client.exit.JvmSystemExiter;
 import de.extra.client.exit.SystemExiter;
 import de.extra.client.logging.LogFileHandler;
@@ -40,64 +38,68 @@ import de.extra.client.logging.LogFileHandler;
  */
 public class ClientStarter {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ClientStarter.class);
+    private static final Logger LOG = LoggerFactory
+	    .getLogger(ClientStarter.class);
 
-	// TODO KOnstante Definieren. Konfiguration
-	private static final Logger LOG_OPPS = LoggerFactory.getLogger("OPERATION");
+    private static final Logger opperation_logger = LoggerFactory
+	    .getLogger("de.extra.client.operation");
 
-	private static final SystemExiter EXITER = new JvmSystemExiter();
+    // TODO KOnstante Definieren. Konfiguration
 
-	/**
-	 * Main
-	 * 
-	 * @param args
-	 *            Kommandozeilenparameter
-	 */
-	public static void main(final String[] args) {
-		ReturnCode returnCode = ReturnCode.SUCCESS;
+    private static final SystemExiter EXITER = new JvmSystemExiter();
 
-		final ClientArguments clientArguments = new ClientArguments(args, EXITER);
-		try {
-			clientArguments.parseArgs();
-		} catch (final Exception e) {
-			clientArguments.printHelpText(e);
-			EXITER.exit(ReturnCode.TECHNICAL);
-		}
+    /**
+     * Main
+     * 
+     * @param args
+     *            Kommandozeilenparameter
+     */
+    public static void main(final String[] args) {
+	ReturnCode returnCode = ReturnCode.SUCCESS;
 
-		if (clientArguments.isShowHelp()) {
-			clientArguments.printHelpText(null);
-			EXITER.exit(returnCode);
-		}
-		OpLogger.log.info("Eingabeparameter: " + Arrays.toString(args));
-
-		final File configurationDirectory = clientArguments.getConfigDirectory();
-
-		// initialisiert logging
-		new LogFileHandler(clientArguments.getLogDirectory(), configurationDirectory);
-
-		// config dir zur konfiguration des clients nutzen
-		final ExtraClient extraClient = new ExtraClient(configurationDirectory);
-		try {
-			OpLogger.log.info("Start der Verarbeitung " + OpLogger.timestampFormat.format(new Date()));
-
-			final ClientProcessResult result = extraClient.execute();
-
-			OpLogger.log.info("Ende der Verarbeitung " + OpLogger.timestampFormat.format(new Date()));
-
-			// TODO refactor
-			returnCode = !result.isSuccessful() ? ReturnCode.BUSINESS : (result.hasExceptions() ? ReturnCode.TECHNICAL
-					: ReturnCode.SUCCESS);
-
-			if (returnCode.getCode() != 0) {
-				LOG.error("Fehler bei der Verarbeitung: " + returnCode);
-			} else {
-				LOG.info("Verarbeitung erfolgreich");
-			}
-
-		} catch (final Exception e) {
-			LOG.error("Fehler bei der Verarbeitung", e);
-			returnCode = ReturnCode.BUSINESS;
-		}
-		EXITER.exit(returnCode);
+	final ClientArguments clientArguments = new ClientArguments(args,
+		EXITER);
+	try {
+	    clientArguments.parseArgs();
+	} catch (final Exception e) {
+	    clientArguments.printHelpText(e);
+	    EXITER.exit(ReturnCode.TECHNICAL);
 	}
+
+	if (clientArguments.isShowHelp()) {
+	    clientArguments.printHelpText(null);
+	    EXITER.exit(returnCode);
+	}
+	opperation_logger.info("Eingabeparameter: " + Arrays.toString(args));
+
+	final File configurationDirectory = clientArguments
+		.getConfigDirectory();
+
+	// initialisiert logging
+	new LogFileHandler(clientArguments.getLogDirectory(),
+		configurationDirectory);
+
+	// config dir zur konfiguration des clients nutzen
+	final ExtraClient extraClient = new ExtraClient(configurationDirectory);
+	try {
+
+	    final ClientProcessResult result = extraClient.execute();
+
+	    // TODO refactor
+	    returnCode = !result.isSuccessful() ? ReturnCode.BUSINESS : (result
+		    .hasExceptions() ? ReturnCode.TECHNICAL
+		    : ReturnCode.SUCCESS);
+
+	    if (returnCode.getCode() != 0) {
+		LOG.error("Fehler bei der Verarbeitung: " + returnCode);
+	    } else {
+		LOG.info("Verarbeitung erfolgreich");
+	    }
+
+	} catch (final Exception e) {
+	    LOG.error("Fehler bei der Verarbeitung", e);
+	    returnCode = ReturnCode.BUSINESS;
+	}
+	EXITER.exit(returnCode);
+    }
 }

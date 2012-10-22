@@ -20,13 +20,11 @@ package de.extra.client.starter;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -40,7 +38,7 @@ import de.extrastandard.api.exception.ExtraConfigRuntimeException;
 
 /**
  * 
- * @author Leonid Potab
+ * @author Leonid Potap
  * @author Thorsten Vogel
  * @version $Id: ExtraClient.java 538 2012-09-05 09:48:23Z
  *          thorstenvogel@gmail.com $
@@ -49,6 +47,9 @@ public class ExtraClient {
 
     private static final Logger LOG = LoggerFactory
 	    .getLogger(ExtraClient.class);
+
+    private static final Logger opperation_logger = LoggerFactory
+	    .getLogger("de.extra.client.operation");
 
     /**
      * Name der grundlegenden Konfiguration
@@ -85,6 +86,7 @@ public class ExtraClient {
      * @return Statuscode
      */
     public ClientProcessResult execute() {
+	opperation_logger.info("Start Of Processing.");
 	LOG.debug("Load ApplicationContext");
 	ApplicationContext applicationContext = null;
 	final File basicPropsFile = new File(configurationDirectory,
@@ -127,16 +129,14 @@ public class ExtraClient {
 		}
 	    }.createApplicationContext(env);
 
-	    LOG.info("Start Of Processing. Starttime {}",
-		    DateFormatUtils.ISO_DATE_FORMAT.format(new Date()));
-
 	    final ClientCore clientCore = applicationContext.getBean(
 		    "clientCore", ClientCore.class);
 
 	    final ClientProcessResult processResult = clientCore
 		    .process(configurationDirectory.getAbsolutePath());
 
-	    LOG.info("ExecutionsResults: {}", processResult.printResults());
+	    opperation_logger.info("ExecutionsResults: {}",
+		    processResult.printResults());
 
 	    return processResult;
 
