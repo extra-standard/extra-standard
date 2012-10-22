@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.extrastandard.api.model.content.IDbQueryInputData;
+import de.extrastandard.api.model.content.ISingleInputData;
 import de.extrastandard.api.model.content.ISingleQueryInputData;
 
 /**
@@ -31,81 +32,92 @@ import de.extrastandard.api.model.content.ISingleQueryInputData;
  * @author DPRS
  * @version $Id$
  */
-public class DBQueryInputData extends InputDataContainer implements IDbQueryInputData {
+public class DBQueryInputData extends InputDataContainer implements
+	IDbQueryInputData {
 
-	private final List<ISingleQueryInputData> inDBQueryInputDataList = new ArrayList<ISingleQueryInputData>();
+    private final List<ISingleQueryInputData> inDBQueryInputDataList = new ArrayList<ISingleQueryInputData>();
 
-	@Override
-	public List<ISingleQueryInputData> getInputData() {
-		return Collections.unmodifiableList(inDBQueryInputDataList);
+    @Override
+    public List<ISingleQueryInputData> getInputData() {
+	return Collections.unmodifiableList(inDBQueryInputDataList);
+    }
+
+    /**
+     * @param sourceRequestId
+     * @param requestId
+     * @param serverResponceId
+     */
+    public DBQueryInputData() {
+	super();
+    }
+
+    /**
+     * @param sourceRequestId
+     * @param requestId
+     * @param serverResponceId
+     */
+    public DBQueryInputData(final Long dbInputDataId,
+	    final String sourceRequestId, final String sourceResponceId) {
+	super();
+	addSingleDBQueryInputData(dbInputDataId, sourceRequestId,
+		sourceResponceId);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.extrastandard.api.model.content.IDbQueryInputData#
+     * addSingleDBQueryInputData(java.lang.String, java.lang.String)
+     */
+    @Override
+    public void addSingleDBQueryInputData(final Long dbInputDataId,
+	    final String sourceRequestId, final String sourceResponceId) {
+	final InDBQueryInputData singleDBQueryInputData = new InDBQueryInputData(
+		dbInputDataId, sourceRequestId, sourceResponceId);
+	addSingleDBQueryInputData(singleDBQueryInputData);
+    }
+
+    /**
+     * @param singleQueryInputData
+     */
+    @Override
+    public void addSingleDBQueryInputData(
+	    final ISingleQueryInputData singleQueryInputData) {
+	inDBQueryInputDataList.add(singleQueryInputData);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+	final StringBuilder builder = new StringBuilder();
+	builder.append("DBQueryInputData [");
+	if (inDBQueryInputDataList != null) {
+	    builder.append("QueryInputDataList=");
+	    builder.append(inDBQueryInputDataList);
 	}
+	builder.append("]");
+	return builder.toString();
+    }
 
-	/**
-	 * @param sourceRequestId
-	 * @param requestId
-	 * @param serverResponceId
-	 */
-	public DBQueryInputData() {
-		super();
-	}
+    @Override
+    public boolean isContentEmpty() {
+	return inDBQueryInputDataList.isEmpty();
+    }
 
-	/**
-	 * @param sourceRequestId
-	 * @param requestId
-	 * @param serverResponceId
-	 */
-	public DBQueryInputData(final Long dbInputDataId, final String sourceRequestId, final String sourceResponceId) {
-		super();
-		addSingleDBQueryInputData(dbInputDataId, sourceRequestId, sourceResponceId);
-	}
+    @Override
+    public int getContentSize() {
+	return inDBQueryInputDataList.size();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.extrastandard.api.model.content.IDbQueryInputData#
-	 * addSingleDBQueryInputData(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void addSingleDBQueryInputData(final Long dbInputDataId, final String sourceRequestId,
-			final String sourceResponceId) {
-		final InDBQueryInputData singleDBQueryInputData = new InDBQueryInputData(dbInputDataId, sourceRequestId,
-				sourceResponceId);
-		addSingleDBQueryInputData(singleDBQueryInputData);
-	}
-
-	/**
-	 * @param singleQueryInputData
-	 */
-	@Override
-	public void addSingleDBQueryInputData(final ISingleQueryInputData singleQueryInputData) {
-		inDBQueryInputDataList.add(singleQueryInputData);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("DBQueryInputData [");
-		if (inDBQueryInputDataList != null) {
-			builder.append("QueryInputDataList=");
-			builder.append(inDBQueryInputDataList);
-		}
-		builder.append("]");
-		return builder.toString();
-	}
-
-	@Override
-	public boolean isContentEmpty() {
-		return inDBQueryInputDataList.isEmpty();
-	}
-
-	@Override
-	public int getContentSize() {
-		return inDBQueryInputDataList.size();
-	}
+    @Override
+    public List<ISingleInputData> getContent() {
+	final List<ISingleInputData> content = new ArrayList<ISingleInputData>(
+		inDBQueryInputDataList);
+	return content;
+    }
 
 }

@@ -28,100 +28,111 @@ import de.extrastandard.api.model.content.ISingleQueryInputData;
  */
 public class InDBQueryInputData implements ISingleQueryInputData {
 
-	Long sourceIdenrificationId;
+    private static final String INPUT_DATA_TYPE = "DB_QUERY";
 
-	/**
-	 * Ursprung RequestId der Anfrage
-	 */
-	String sourceRequestId;
+    Long sourceIdenrificationId;
 
-	/**
-	 * zurückgegebene Server ResponseId
-	 */
-	String sourceResponceId;
+    /**
+     * Ursprung RequestId der Anfrage
+     */
+    String sourceRequestId;
 
-	/**
-	 * requestId der Nachfrage
-	 */
-	String requestId;
+    /**
+     * zurückgegebene Server ResponseId
+     */
+    String sourceResponceId;
 
-	/**
-	 * @param sourceIdentificationId
-	 * @param sourceRequestId
-	 * @param sourceResponceId
-	 */
-	public InDBQueryInputData(final Long sourceIdentificationId, final String sourceRequestId,
-			final String sourceResponceId) {
-		super();
-		this.sourceRequestId = sourceRequestId;
-		this.sourceResponceId = sourceResponceId;
-		this.sourceIdenrificationId = sourceIdentificationId;
+    /**
+     * requestId der Nachfrage
+     */
+    String requestId;
+
+    /**
+     * @param sourceIdentificationId
+     * @param sourceRequestId
+     * @param sourceResponceId
+     */
+    public InDBQueryInputData(final Long sourceIdentificationId,
+	    final String sourceRequestId, final String sourceResponceId) {
+	super();
+	this.sourceRequestId = sourceRequestId;
+	this.sourceResponceId = sourceResponceId;
+	this.sourceIdenrificationId = sourceIdentificationId;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.extra.client.core.model.IDbQueryInputData#getDbInputDataId()
+     */
+    @Override
+    public String getSourceRequestId() {
+	return sourceRequestId;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.extra.client.core.model.IDbQueryInputData#getServerResponceId()
+     */
+    @Override
+    public String getSourceResponceId() {
+	return sourceResponceId;
+    }
+
+    @Override
+    public void setRequestId(final String requestId) {
+	this.requestId = requestId;
+
+    }
+
+    @Override
+    public String getRequestId() {
+	return requestId;
+    }
+
+    /**
+     * @return the sourceIdenrificationId
+     */
+    @Override
+    public Long getSourceIdentificationId() {
+	return sourceIdenrificationId;
+    }
+
+    @Override
+    public String getInputIdentifier() {
+	return requestId;
+    }
+
+    @Override
+    public String getInputDataType() {
+	return INPUT_DATA_TYPE;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+	final StringBuilder builder = new StringBuilder();
+	builder.append("InDBQueryInputData [");
+	if (sourceIdenrificationId != null) {
+	    builder.append("sourceIdenrificationId=");
+	    builder.append(sourceIdenrificationId);
+	    builder.append(", ");
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.extra.client.core.model.IDbQueryInputData#getDbInputDataId()
-	 */
-	@Override
-	public String getSourceRequestId() {
-		return sourceRequestId;
+	if (sourceRequestId != null) {
+	    builder.append("sourceRequestId=");
+	    builder.append(sourceRequestId);
+	    builder.append(", ");
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.extra.client.core.model.IDbQueryInputData#getServerResponceId()
-	 */
-	@Override
-	public String getSourceResponceId() {
-		return sourceResponceId;
+	if (sourceResponceId != null) {
+	    builder.append("sourceResponceId=");
+	    builder.append(sourceResponceId);
 	}
-
-	@Override
-	public void setRequestId(final String requestId) {
-		this.requestId = requestId;
-
-	}
-
-	@Override
-	public String getRequestId() {
-		return requestId;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("InDBQueryInputData [");
-		if (sourceIdenrificationId != null) {
-			builder.append("sourceIdenrificationId=");
-			builder.append(sourceIdenrificationId);
-			builder.append(", ");
-		}
-		if (sourceRequestId != null) {
-			builder.append("sourceRequestId=");
-			builder.append(sourceRequestId);
-			builder.append(", ");
-		}
-		if (sourceResponceId != null) {
-			builder.append("sourceResponceId=");
-			builder.append(sourceResponceId);
-		}
-		builder.append("]");
-		return builder.toString();
-	}
-
-	/**
-	 * @return the sourceIdenrificationId
-	 */
-	@Override
-	public Long getSourceIdentificationId() {
-		return sourceIdenrificationId;
-	}
-
+	builder.append("]");
+	return builder.toString();
+    }
 }
