@@ -7,12 +7,12 @@ Die in der Profil-Datei angegebenen Elemente werden mit Hilfe von _XML-Buildern_
 Beispiel:
 
 Profil-Datei
-{{{
-	<element>
-		<Name>xcpt:Sender</Name>
-		<Elternelement>TransportHeader</Elternelement>
-	</element>
-}}}
+<code language="xml">
+<element>
+  <Name>xcpt:Sender</Name>
+  <Elternelement>TransportHeader</Elternelement>
+</element>
+</code>
 
 Properties-Datei
 {{{
@@ -22,12 +22,12 @@ message.builder.header.senderNameValue=SENDER NAME
 }}}
 
 Erzeugter XML-Abschnitt
-{{{
-        <xcpt:Sender>
-            <xcpt:SenderID>SENDER-ID</xcpt:SenderID>
-            <xcpt:Name>SENDER NAME</xcpt:Name>
-        </xcpt:Sender>
-}}}
+<code language="xml">
+<xcpt:Sender>
+  <xcpt:SenderID>SENDER-ID</xcpt:SenderID>
+  <xcpt:Name>SENDER NAME</xcpt:Name>
+</xcpt:Sender>
+</code>
 
 == Übersicht über alle XML-Builder ==
 || *Name* || *XML-Element* || *Klasse* ||
