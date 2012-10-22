@@ -29,8 +29,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.extra.client.core.model.inputdata.impl.DBQueryInputData;
-import de.extrastandard.api.exception.ExceptionCode;
-import de.extrastandard.api.exception.ExtraDataPluginRuntimeException;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.model.execution.IInputData;
@@ -51,71 +49,71 @@ import de.extrastandard.api.plugin.IDataPlugin;
 @Named("dbQueryDataPlugin")
 public class DBQueryDataPlugin implements IDataPlugin {
 
-	@Inject
-	@Named("executionPersistenceJpa")
-	IExecutionPersistence executionPersistence;
+    @Inject
+    @Named("executionPersistenceJpa")
+    IExecutionPersistence executionPersistence;
 
-	@Value("${core.execution.phase}")
-	private String executionPhase;
+    @Value("${core.execution.phase}")
+    private String executionPhase;
 
-	@Value("${core.execution.procedure}")
-	private String executionProcedure;
+    @Value("${core.execution.procedure}")
+    private String executionProcedure;
 
-	@Value("${plugins.dataplugin.dbQueryDataPlugin.inputDataLimit}")
-	private Integer inputDataLimit;
+    @Value("${plugins.dataplugin.dbQueryDataPlugin.inputDataLimit}")
+    private Integer inputDataLimit;
 
-	private static final Logger logger = LoggerFactory.getLogger(DBQueryDataPlugin.class);
+    private static final Logger logger = LoggerFactory
+	    .getLogger(DBQueryDataPlugin.class);
 
-	private List<IInputData> inputDataList;
+    private List<IInputData> inputDataList;
 
-	@Override
-	public IInputDataContainer getData() {
-		if (inputDataList == null) {
-			throw new ExtraDataPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
-					"DB InputData not instantiited. HasMoreData must be called before.");
-		}
-		final DBQueryInputData dbQueryinputData = new DBQueryInputData();
-		final List<IInputDataContainer> senderDataBeanList = new ArrayList<IInputDataContainer>();
-		senderDataBeanList.add(dbQueryinputData);
+    @Override
+    public IInputDataContainer getData() {
+	if (inputDataList == null) {
+	    synchronized (inputDataList) {
+		hasMoreData();
+	    }
 
-		for (final IInputData inputData : inputDataList) {
-			dbQueryinputData.addSingleDBQueryInputData(inputData.getId(), String.valueOf(inputData.getRequestId()),
-					inputData.getResponseId());
-		}
-		logger.info("For Procedury and Phase {} found {} Records.", executionProcedure + "->" + executionPhase,
-				inputDataList.size());
-
-		return dbQueryinputData;
 	}
+	final DBQueryInputData dbQueryinputData = new DBQueryInputData();
+	final List<IInputDataContainer> senderDataBeanList = new ArrayList<IInputDataContainer>();
+	senderDataBeanList.add(dbQueryinputData);
 
-	@Override
-	public void initInputData() {
-		final PhaseQualifier phaseQualifier = PhaseQualifier.resolveByName(executionPhase);
-		final Long countInputData = executionPersistence.countInputDataForExecution(executionProcedure, phaseQualifier);
-		logger.info("For Procedury and Phase {} found {} Records.", executionProcedure + "->" + executionPhase,
-				countInputData);
+	for (final IInputData inputData : inputDataList) {
+	    dbQueryinputData.addSingleDBQueryInputData(inputData.getId(),
+		    String.valueOf(inputData.getRequestId()),
+		    inputData.getResponseId());
 	}
+	logger.info("For Procedury and Phase {} found {} Records.",
+		executionProcedure + "->" + executionPhase,
+		inputDataList.size());
 
-	@Override
-	public boolean hasMoreData() {
-		final PhaseQualifier phaseQualifier = PhaseQualifier.resolveByName(executionPhase);
-		inputDataList = executionPersistence.findInputDataForExecution(executionProcedure, phaseQualifier,
-				inputDataLimit);
-		return !inputDataList.isEmpty();
-	}
+	return dbQueryinputData;
+    }
 
-	@Override
-	public boolean isEmpty() {
-		final PhaseQualifier phaseQualifier = PhaseQualifier.resolveByName(executionPhase);
-		final Long countInputData = executionPersistence.countInputDataForExecution(executionProcedure, phaseQualifier);
-		return (countInputData == 0);
-	}
+    @Override
+    public synchronized boolean hasMoreData() {
+	final PhaseQualifier phaseQualifier = PhaseQualifier
+		.resolveByName(executionPhase);
+	inputDataList = executionPersistence.findInputDataForExecution(
+		executionProcedure, phaseQualifier, inputDataLimit);
+	return !inputDataList.isEmpty();
+    }
 
-	/**
-	 * @param executionPhase
-	 *            the executionPhase to set
-	 */
-	public void setExecutionPhase(final String executionPhase) {
-		this.executionPhase = executionPhase;
-	}
+    @Override
+    public boolean isEmpty() {
+	final PhaseQualifier phaseQualifier = PhaseQualifier
+		.resolveByName(executionPhase);
+	final Long countInputData = executionPersistence
+		.countInputDataForExecution(executionProcedure, phaseQualifier);
+	return (countInputData == 0);
+    }
+
+    /**
+     * @param executionPhase
+     *            the executionPhase to set
+     */
+    public void setExecutionPhase(final String executionPhase) {
+	this.executionPhase = executionPhase;
+    }
 }

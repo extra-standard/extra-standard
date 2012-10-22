@@ -20,11 +20,13 @@ package de.extra.client.starter;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -45,89 +47,102 @@ import de.extrastandard.api.exception.ExtraConfigRuntimeException;
  */
 public class ExtraClient {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ExtraClient.class);
+    private static final Logger LOG = LoggerFactory
+	    .getLogger(ExtraClient.class);
 
-	/**
-	 * Name der grundlegenden Konfiguration
-	 */
-	public static final String PROPERTIES_BASIC_FILENAME = "extra-properties-basic.properties";
+    /**
+     * Name der grundlegenden Konfiguration
+     */
+    public static final String PROPERTIES_BASIC_FILENAME = "extra-properties-basic.properties";
 
-	/**
-	 * Dateiname der Benutzerkonfiguration
-	 */
-	public static final String PROPERTIES_USER_FILENAME = "extra-properties-user.properties";
+    /**
+     * Dateiname der Benutzerkonfiguration
+     */
+    public static final String PROPERTIES_USER_FILENAME = "extra-properties-user.properties";
 
-	/**
-	 * Pfad und Dateiname der Spring Konfiguration
-	 */
-	private static String SPRING_XML_FILE_PATH = "spring-cli.xml";
+    /**
+     * Pfad und Dateiname der Spring Konfiguration
+     */
+    private static String SPRING_XML_FILE_PATH = "spring-cli.xml";
 
-	private final File configurationDirectory;
+    private final File configurationDirectory;
 
-	/**
-	 * Erzeugt einen ExtraClient. Die Konfiguration wird aus den Dateien
-	 * {@link #PROPERTIES_BASIC_FILENAME} und {@link #PROPERTIES_USER_FILENAME}
-	 * ausgelesen.
-	 * 
-	 * @param configurationDirectory
-	 *            Konfigurationsverzeichnis
-	 */
-	public ExtraClient(final File configurationDirectory) {
-		this.configurationDirectory = configurationDirectory;
+    /**
+     * Erzeugt einen ExtraClient. Die Konfiguration wird aus den Dateien
+     * {@link #PROPERTIES_BASIC_FILENAME} und {@link #PROPERTIES_USER_FILENAME}
+     * ausgelesen.
+     * 
+     * @param configurationDirectory
+     *            Konfigurationsverzeichnis
+     */
+    public ExtraClient(final File configurationDirectory) {
+	this.configurationDirectory = configurationDirectory;
+    }
+
+    /**
+     * Startmethode zum Aufruf aus dem startenden Programm.
+     * 
+     * @return Statuscode
+     */
+    public ClientProcessResult execute() {
+	LOG.debug("Load ApplicationContext");
+	ApplicationContext applicationContext = null;
+	final File basicPropsFile = new File(configurationDirectory,
+		PROPERTIES_BASIC_FILENAME);
+	if (!basicPropsFile.exists() || !basicPropsFile.canRead()) {
+	    throw new ExtraConfigRuntimeException(
+		    ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, String.format(
+			    "Konfiguration nicht gefunden: %s",
+			    PROPERTIES_BASIC_FILENAME));
 	}
-
-	/**
-	 * Startmethode zum Aufruf aus dem startenden Programm.
-	 * 
-	 * @return Statuscode
-	 */
-	public ClientProcessResult execute() {
-		LOG.debug("Load ApplicationContext");
-		ApplicationContext applicationContext = null;
-		final File basicPropsFile = new File(configurationDirectory, PROPERTIES_BASIC_FILENAME);
-		if (!basicPropsFile.exists() || !basicPropsFile.canRead()) {
-			throw new ExtraConfigRuntimeException(ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, String.format(
-					"Konfiguration nicht gefunden: %s", PROPERTIES_BASIC_FILENAME));
-		}
-		final File userPropsFile = new File(configurationDirectory, PROPERTIES_USER_FILENAME);
-		if (!userPropsFile.exists() || !userPropsFile.canRead()) {
-			throw new ExtraConfigRuntimeException(ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, String.format(
-					"Konfiguration nicht gefunden: %s", PROPERTIES_USER_FILENAME));
-		}
-		try {
-			final Properties basicProperties = new Properties();
-			final FileInputStream basicPropsStream = new FileInputStream(basicPropsFile);
-			basicProperties.load(basicPropsStream);
-			IOUtils.closeQuietly(basicPropsStream);
-
-			final Properties userProperties = new Properties();
-			final FileInputStream userPropsStream = new FileInputStream(userPropsFile);
-			basicProperties.load(userPropsStream);
-			IOUtils.closeQuietly(userPropsStream);
-
-			final Map<String, Object> env = new HashMap<String, Object>();
-			env.put("_extern_extra-properties-basic", basicProperties);
-			env.put("_extern_extra-properties-user", userProperties);
-			applicationContext = new ApplicationContextStarter<AbstractApplicationContext>() {
-				@Override
-				protected AbstractApplicationContext createUninitializedContext() {
-					return new ClassPathXmlApplicationContext(new String[] { SPRING_XML_FILE_PATH }, false);
-				}
-			}.createApplicationContext(env);
-
-			LOG.info("Start Of Processing");
-
-			final ClientCore clientCore = applicationContext.getBean("clientCore", ClientCore.class);
-
-			final ClientProcessResult processResult = clientCore.process(configurationDirectory.getAbsolutePath());
-
-			LOG.info("ExecutionsResults: {}", processResult.printResults());
-
-			return processResult;
-
-		} catch (final Exception e) {
-			LOG.error("Fehler beim Start", e);
-			throw new ExtraConfigRuntimeException(e);
-		}
+	final File userPropsFile = new File(configurationDirectory,
+		PROPERTIES_USER_FILENAME);
+	if (!userPropsFile.exists() || !userPropsFile.canRead()) {
+	    throw new ExtraConfigRuntimeException(
+		    ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, String.format(
+			    "Konfiguration nicht gefunden: %s",
+			    PROPERTIES_USER_FILENAME));
 	}
+	try {
+	    final Properties basicProperties = new Properties();
+	    final FileInputStream basicPropsStream = new FileInputStream(
+		    basicPropsFile);
+	    basicProperties.load(basicPropsStream);
+	    IOUtils.closeQuietly(basicPropsStream);
+
+	    final Properties userProperties = new Properties();
+	    final FileInputStream userPropsStream = new FileInputStream(
+		    userPropsFile);
+	    basicProperties.load(userPropsStream);
+	    IOUtils.closeQuietly(userPropsStream);
+
+	    final Map<String, Object> env = new HashMap<String, Object>();
+	    env.put("_extern_extra-properties-basic", basicProperties);
+	    env.put("_extern_extra-properties-user", userProperties);
+	    applicationContext = new ApplicationContextStarter<AbstractApplicationContext>() {
+		@Override
+		protected AbstractApplicationContext createUninitializedContext() {
+		    return new ClassPathXmlApplicationContext(
+			    new String[] { SPRING_XML_FILE_PATH }, false);
+		}
+	    }.createApplicationContext(env);
+
+	    LOG.info("Start Of Processing. Starttime {}",
+		    DateFormatUtils.ISO_DATE_FORMAT.format(new Date()));
+
+	    final ClientCore clientCore = applicationContext.getBean(
+		    "clientCore", ClientCore.class);
+
+	    final ClientProcessResult processResult = clientCore
+		    .process(configurationDirectory.getAbsolutePath());
+
+	    LOG.info("ExecutionsResults: {}", processResult.printResults());
+
+	    return processResult;
+
+	} catch (final Exception e) {
+	    LOG.error("Fehler beim Start", e);
+	    throw new ExtraConfigRuntimeException(e);
+	}
+    }
 }

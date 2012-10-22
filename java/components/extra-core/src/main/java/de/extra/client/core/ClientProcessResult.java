@@ -42,166 +42,173 @@ import de.extrastandard.api.model.content.ISingleResponseData;
 @Named("clientProcessResult")
 public class ClientProcessResult {
 
-	// TODO Systemunabhängigen Formatter
-	private static final String NEW_LINE = "\r\n";
+    // TODO Systemunabhängigen Formatter
+    private static final String NEW_LINE = "\r\n";
 
-	@Inject
-	@Named("extraReturnCodeAnalyser")
-	private IExtraReturnCodeAnalyser returnCodeAnalyser;
+    @Inject
+    @Named("extraReturnCodeAnalyser")
+    private IExtraReturnCodeAnalyser returnCodeAnalyser;
 
-	private final List<ProcessResult> responses = new ArrayList<ProcessResult>();
+    private final List<ProcessResult> responses = new ArrayList<ProcessResult>();
 
-	public void addResult(final IInputDataContainer dataContainer, final IResponseData responseData) {
-		responses.add(new ProcessResult(responseData));
-	}
+    public void addResult(final IInputDataContainer dataContainer,
+	    final IResponseData responseData) {
+	responses.add(new ProcessResult(responseData));
+    }
 
-	public void addException(final Exception exception) {
-		responses.add(new ProcessResult(exception));
-	}
+    public void addException(final Exception exception) {
+	responses.add(new ProcessResult(exception));
+    }
 
-	/**
-	 * Liefert true, wenn die Verarbeitung aller Dateien ohne Fehler
-	 * abgeschlossen wurde.
-	 * 
-	 * @return
-	 */
-	public boolean isSuccessful() {
-		boolean hasErrors = false;
-		for (final ProcessResult result : responses) {
-			final IResponseData responseData = result.getResponseData();
-			if (responseData != null && responseData.getResponses() != null) {
-				for (final ISingleResponseData iResponseData : responseData.getResponses()) {
-					if (!returnCodeAnalyser.isReturnCodeSuccessful(iResponseData.getReturnCode())) {
-						hasErrors = true;
-						// TODO refactor
-						break;
-					}
-				}
-			} else if (result.getException() != null) {
-				// TODO possibly recoverable exceptions?
-				return false;
-			}
+    /**
+     * Liefert true, wenn die Verarbeitung aller Dateien ohne Fehler
+     * abgeschlossen wurde.
+     * 
+     * @return
+     */
+    public boolean isSuccessful() {
+	boolean hasErrors = false;
+	for (final ProcessResult result : responses) {
+	    final IResponseData responseData = result.getResponseData();
+	    if (responseData != null && responseData.getResponses() != null) {
+		for (final ISingleResponseData iResponseData : responseData
+			.getResponses()) {
+		    if (!returnCodeAnalyser
+			    .isReturnCodeSuccessful(iResponseData
+				    .getReturnCode())) {
+			hasErrors = true;
+			// TODO refactor
+			break;
+		    }
 		}
-		return !hasErrors;
-	}
-
-	public boolean hasExceptions() {
-
-		for (final ProcessResult result : responses) {
-			if (result.getException() != null) {
-				return true;
-			}
-		}
+	    } else if (result.getException() != null) {
+		// TODO possibly recoverable exceptions?
 		return false;
+	    }
 	}
+	return !hasErrors;
+    }
 
-	private boolean isSuccessful(final ISingleResponseData iResponseData) {
-		return returnCodeAnalyser.isReturnCodeSuccessful(iResponseData.getReturnCode());
+    public boolean hasExceptions() {
+
+	for (final ProcessResult result : responses) {
+	    if (result.getException() != null) {
+		return true;
+	    }
 	}
+	return false;
+    }
 
-	public String exceptionsToString() {
-		final StringBuilder stringBuilder = new StringBuilder();
-		for (final ProcessResult result : responses) {
-			if (result.getException() != null) {
-				stringBuilder.append(" Exception Message: ").append(result.getException().getMessage());
-				stringBuilder.append(" For Results: ").append(result.getResponseData());
+    private boolean isSuccessful(final ISingleResponseData iResponseData) {
+	return returnCodeAnalyser.isReturnCodeSuccessful(iResponseData
+		.getReturnCode());
+    }
 
-			}
+    public String exceptionsToString() {
+	final StringBuilder stringBuilder = new StringBuilder();
+	for (final ProcessResult result : responses) {
+	    if (result.getException() != null) {
+		stringBuilder.append(" Exception Message: ").append(
+			result.getException().getMessage());
+		stringBuilder.append(" For Results: ").append(
+			result.getResponseData());
+
+	    }
+	}
+	return stringBuilder.toString();
+    }
+
+    /**
+     * @return Aufbereitete Liste mit ReturnCodes zu jeder empfangener Nachricht
+     */
+    public String printResults() {
+	final StringBuilder successResultAsString = new StringBuilder();
+	final StringBuilder failedResultAsString = new StringBuilder();
+	int succesfulResultsCount = 0;
+	int failedResultsCount = 0;
+
+	for (final ProcessResult result : responses) {
+	    if (result.getException() != null) {
+		failedResultsCount++;
+		failedResultAsString.append(" Exception: ").append(
+			result.getException().getMessage());
+	    } else {
+		final IResponseData responseData = result.getResponseData();
+		for (final ISingleResponseData singleResponseData : responseData
+			.getResponses()) {
+		    final StringBuilder singleResponseDataResult = new StringBuilder();
+		    singleResponseDataResult.append(" Request : ").append(
+			    singleResponseData.getRequestId());
+		    singleResponseDataResult.append(" Received Response: ")
+			    .append(singleResponseData.getResponseId());
+		    singleResponseDataResult.append(" With ReturnCode: ")
+			    .append(singleResponseData.getReturnCode());
+		    singleResponseDataResult.append(" and ReturnText: ")
+			    .append(singleResponseData.getReturnText());
+		    singleResponseDataResult.append(NEW_LINE);
+		    if (isSuccessful(singleResponseData)) {
+			succesfulResultsCount++;
+			successResultAsString.append(singleResponseDataResult);
+		    } else {
+			failedResultsCount++;
+			failedResultAsString.append(singleResponseDataResult);
+		    }
 		}
-		return stringBuilder.toString();
+	    }
 	}
-
-	/**
-	 * @return Aufbereitete Liste mit ReturnCodes zu jeder empfangener Nachricht
-	 */
-	public String printResults() {
-		final StringBuilder successResultAsString = new StringBuilder();
-		final StringBuilder failedResultAsString = new StringBuilder();
-		int succesfulResultsCount = 0;
-		int failedResultsCount = 0;
-
-		for (final ProcessResult result : responses) {
-			if (result.getException() != null) {
-				failedResultsCount++;
-				failedResultAsString.append(" Exception: ").append(result.getException().getMessage());
-			} else {
-				final IResponseData responseData = result.getResponseData();
-				for (final ISingleResponseData singleResponseData : responseData.getResponses()) {
-					final StringBuilder singleResponseDataResult = new StringBuilder();
-					singleResponseDataResult.append(" Request : ").append(singleResponseData.getRequestId());
-					singleResponseDataResult.append(" Received Response: ").append(singleResponseData.getResponseId());
-					singleResponseDataResult.append(" With ReturnCode: ").append(singleResponseData.getReturnCode());
-					singleResponseDataResult.append(" and ReturnText: ").append(singleResponseData.getReturnText());
-					singleResponseDataResult.append(NEW_LINE);
-					if (isSuccessful(singleResponseData)) {
-						succesfulResultsCount++;
-						successResultAsString.append(singleResponseDataResult);
-					} else {
-						failedResultsCount++;
-						failedResultAsString.append(singleResponseDataResult);
-					}
-				}
-			}
-		}
-		final StringBuilder resultAsString = new StringBuilder(NEW_LINE);
-		resultAsString.append("Anzahl verarbeitetn Saetze : ").append(responses.size());
-		resultAsString.append(NEW_LINE);
-		resultAsString.append("Davon erfolgreich : ").append(succesfulResultsCount);
-		resultAsString.append(NEW_LINE);
-		resultAsString.append("Davon fehlerhaft : ").append(failedResultsCount);
-		resultAsString.append(NEW_LINE);
-		resultAsString.append("Erfolgreich verarbeite Datensätze: ").append(NEW_LINE);
-		resultAsString.append(successResultAsString);
-		resultAsString.append("Fehlerhafte Datensätze: ").append(NEW_LINE);
-		if (failedResultsCount != 0) {
-			resultAsString.append(failedResultAsString);
-		}
-		return resultAsString.toString();
+	final StringBuilder resultAsString = new StringBuilder(NEW_LINE);
+	resultAsString.append("Anzahl verarbeitetn Saetze : ").append(
+		responses.size());
+	resultAsString.append(NEW_LINE);
+	resultAsString.append("Davon erfolgreich : ").append(
+		succesfulResultsCount);
+	resultAsString.append(NEW_LINE);
+	resultAsString.append("Davon fehlerhaft : ").append(failedResultsCount);
+	resultAsString.append(NEW_LINE);
+	resultAsString.append("Erfolgreich verarbeite Datensätze: ").append(
+		NEW_LINE);
+	resultAsString.append(successResultAsString);
+	resultAsString.append("Fehlerhafte Datensätze: ").append(NEW_LINE);
+	if (failedResultsCount != 0) {
+	    resultAsString.append(failedResultAsString);
 	}
+	return resultAsString.toString();
+    }
 
-	// davon erfolgreich 368
-	// davon fehlerhaft 1
-	// davon ueberlesen 0
-	// davon verworfen 1
-	//
-	// Ausgabe der fehlerhaften Verarbeitungen :
-	// IfObZahlungsBereitstellungVO: zahlvorgang:XZlvoGenericVO [sid_xzlvo=1868]
-	// kalenderIDOfZahlvorgang:10270 zahlpaketTypSIDOfZahlforgang:123 ::
-	// Unerwartete LeistungszweigEnum: BR ::
+    /**
+     * Fügt das singleProcessResult dem ProcessResult hinzu
+     * 
+     * @param singleProcessResult
+     */
+    public void addResult(final ClientProcessResult singleProcessResult) {
+	final List<ProcessResult> singleProcessResultResponses = singleProcessResult
+		.getResponses();
+	this.responses.addAll(singleProcessResultResponses);
 
-	/**
-	 * Fügt das singleProcessResult dem ProcessResult hinzu
-	 * 
-	 * @param singleProcessResult
-	 */
-	public void addResult(final ClientProcessResult singleProcessResult) {
-		final List<ProcessResult> singleProcessResultResponses = singleProcessResult.getResponses();
-		this.responses.addAll(singleProcessResultResponses);
+    }
 
+    /**
+     * @return the responseMap
+     */
+    public List<ProcessResult> getResponses() {
+	return Collections.unmodifiableList(responses);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+	final StringBuilder builder = new StringBuilder();
+	builder.append("ClientProcessResult [");
+	if (responses != null) {
+	    builder.append("responseMap=");
+	    builder.append(responses);
 	}
-
-	/**
-	 * @return the responseMap
-	 */
-	public List<ProcessResult> getResponses() {
-		return Collections.unmodifiableList(responses);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("ClientProcessResult [");
-		if (responses != null) {
-			builder.append("responseMap=");
-			builder.append(responses);
-		}
-		builder.append("]");
-		return builder.toString();
-	}
+	builder.append("]");
+	return builder.toString();
+    }
 
 }

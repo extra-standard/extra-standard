@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Named;
 
@@ -29,14 +30,11 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 
 import de.extra.client.core.annotation.PluginConfigType;
 import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.model.inputdata.impl.FileInputData;
-import de.extrastandard.api.exception.ExceptionCode;
-import de.extrastandard.api.exception.ExtraDataPluginRuntimeException;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.plugin.IDataPlugin;
 
@@ -49,78 +47,82 @@ import de.extrastandard.api.plugin.IDataPlugin;
 @PluginConfiguration(pluginBeanName = "fileDataPlugin", pluginType = PluginConfigType.DataPlugins)
 public class FileDataPlugin implements IDataPlugin {
 
-	private static final Logger logger = LoggerFactory.getLogger(FileDataPlugin.class);
+    private static final Logger logger = LoggerFactory
+	    .getLogger(FileDataPlugin.class);
 
-	@PluginValue(key="inputVerzeichnis")
-	private File inputDirectory;
+    @PluginValue(key = "inputVerzeichnis")
+    private File inputDirectory;
 
-	@PluginValue(key="inputDataLimit")
-	private Integer inputDataLimit;
+    @PluginValue(key = "inputDataLimit")
+    private Integer inputDataLimit;
 
-	private Collection<File> inputFiles = new ArrayList<File>();
+    private final AtomicBoolean isResultPrepared = new AtomicBoolean(false);
 
-	private Iterator<File> inputFilesIterator;
+    private Collection<File> inputFiles = new ArrayList<File>();
 
-	@Override
-	public void initInputData() {
-		inputFiles = FileUtils.listFiles(inputDirectory, TrueFileFilter.INSTANCE, null);
-		inputFilesIterator = inputFiles.iterator();
-		logger.info("FileData Plugin instanziiert for Directory: {}. Found {} files", inputDirectory, inputFiles.size());
+    private Iterator<File> inputFilesIterator;
+
+    private synchronized void initInputData() {
+	inputFiles = FileUtils.listFiles(inputDirectory,
+		TrueFileFilter.INSTANCE, null);
+	inputFilesIterator = inputFiles.iterator();
+	logger.info(
+		"FileData Plugin instanziiert for Directory: {}. Found {} files",
+		inputDirectory, inputFiles.size());
+	isResultPrepared.getAndSet(true);
+    }
+
+    @Override
+    public boolean hasMoreData() {
+	if (!isResultPrepared.get()) {
+	    initInputData();
 	}
+	return inputFilesIterator.hasNext();
+    }
 
-	@Override
-	public boolean hasMoreData() {
-		if (inputFiles == null) {
-			throw new ExtraDataPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
-					"InputData not instanziiert");
-		}
-		return inputFilesIterator.hasNext();
+    @Override
+    public IInputDataContainer getData() {
+	if (!isResultPrepared.get()) {
+	    initInputData();
 	}
-
-	@Override
-	public IInputDataContainer getData() {
-		if (inputFiles == null) {
-			throw new ExtraDataPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
-					"InputData not instanziiert");
-		}
-		final FileInputData inputDataContainer = new FileInputData();
-		for (Integer counter = 0; inputFilesIterator.hasNext() && counter < inputDataLimit; counter++) {
-			final File inputFile = inputFilesIterator.next();
-			inputDataContainer.addSingleInputData(inputFile);
-		}
-		return inputDataContainer;
+	final FileInputData inputDataContainer = new FileInputData();
+	for (Integer counter = 0; inputFilesIterator.hasNext()
+		&& counter < inputDataLimit; counter++) {
+	    final File inputFile = inputFilesIterator.next();
+	    inputDataContainer.addSingleInputData(inputFile);
 	}
+	return inputDataContainer;
+    }
 
-	@Override
-	public boolean isEmpty() {
-		if (inputFiles == null) {
-			throw new ExtraDataPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
-					"InputData not instanziiert");
-		}
-		return inputFiles.isEmpty();
+    @Override
+    public boolean isEmpty() {
+	if (!isResultPrepared.get()) {
+	    initInputData();
 	}
+	return inputFiles.isEmpty();
+    }
 
-	/**
-	 * @param inputDataLimit
-	 *            the inputDataLimit to set
-	 */
-	public void setInputDataLimit(final Integer inputDataLimit) {
-		this.inputDataLimit = inputDataLimit;
-	}
+    /**
+     * @param inputDataLimit
+     *            the inputDataLimit to set
+     */
+    public void setInputDataLimit(final Integer inputDataLimit) {
+	this.inputDataLimit = inputDataLimit;
+    }
 
-	/**
-	 * @return the inputDirectory
-	 */
-	public File getInputDirectory() {
-		return inputDirectory;
-	}
+    /**
+     * @return the inputDirectory
+     */
+    public File getInputDirectory() {
+	return inputDirectory;
+    }
 
-	/**
-	 * @param inputDirectory the inputDirectory to set
-	 */
-	public void setInputDirectory(File inputDirectory) {
-		this.inputDirectory = inputDirectory;
-	}
+    /**
+     * @param inputDirectory
+     *            the inputDirectory to set
+     */
+    public void setInputDirectory(final File inputDirectory) {
+	this.inputDirectory = inputDirectory;
+    }
 
-	
 }
