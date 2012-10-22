@@ -28,7 +28,13 @@ import de.extra.client.plugins.queryplugin.interfaces.IQueryPluginController;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.plugin.IDataPlugin;
 
-@Named("queryDataPlugin")
+/**
+ * @deprecated
+ *
+ * Wird nicht mehr verwendet.
+ *
+ */
+//@Named("queryDataPlugin")
 public class QueryDataPlugin implements IDataPlugin {
 
     private static final Logger LOG = LoggerFactory
