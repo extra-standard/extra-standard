@@ -26,7 +26,29 @@
 	<description>eXTra Outputplugin für Webservices</description>
 
 	<dependencies>
+	
+	<!-- (23.10.12) wegen jaxb-Versions-Problemen herausgenommen!  -->
+		<dependency>
+			<groupId>de.extrastandard</groupId>
+			<artifactId>extra-sample</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jaxb-xjc</artifactId>
+					<groupId>com.sun.xml.bind</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jaxb-impl</artifactId>
+					<groupId>com.sun.xml.bind</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>		
+	
 
+	 
+	 
+	 
+	 
 		<dependency>
 			<groupId>de.extrastandard</groupId>
 			<artifactId>extra-api</artifactId>
@@ -103,12 +125,21 @@
 		<plugins>
 			<plugin>
 				<!-- TODO: test mit neuem Plugin und Java 6 -->
-				<!-- <groupId>org.jvnet.jax-ws-commons</groupId> -->
-				<!-- <artifactId>jaxws-maven-plugin</artifactId> -->
-				<!-- <version>2.2</version> -->
+				<!-- 23.10.12 Test fehlgeschlagen! -->
+				<!-- Grund 1: jaxb Versions-Probleme  -->
+				<!-- Grund 2: m2eConnector (execution goal) -->
+				
+
+				<groupId>org.jvnet.jax-ws-commons</groupId>
+				<artifactId>jaxws-maven-plugin</artifactId>
+				<version>2.2</version>
+
+				<!-- 
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
 				<version>1.11</version>
+				-->
+				 
 				<executions>
 					<execution>
 						<id>gen-extra-wsdl-artifacts</id>
@@ -152,6 +183,25 @@
 										</artifactId>
 										<versionRange>
 											[1.11,)
+										</versionRange>
+										<goals>
+											<goal>wsimport</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.jvnet.jax-ws-commons
+										</groupId>
+										<artifactId>
+											jaxws-maven-plugin
+										</artifactId>
+										<versionRange>
+											[2.2,)
 										</versionRange>
 										<goals>
 											<goal>wsimport</goal>
