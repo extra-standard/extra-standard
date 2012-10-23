@@ -195,7 +195,9 @@ public class Execution extends AbstractEntity implements IExecution {
 			for (final InputData inputData : this.inputDataSet) {
 				final PhaseConnection currentPhaseConnection = inputData
 						.getCurrentPhaseConnection();
-				currentPhaseConnection.setFailed();
+				if (currentPhaseConnection != null) {
+					currentPhaseConnection.setFailed();
+				}
 			}
 		} catch (final Exception exception) {
 			logger.error("Exception beim inputData.failed", exception);
