@@ -33,11 +33,16 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 
 import de.extrastandard.api.plugin.IOutputPlugin;
 
+// TODO (23.10.12) Annotation @PluginConfiguration einbinden (aktuell auskommentiert)
+// Problem: Property webservice.endpoint.url kann nicht aufgeloest werden!
+
 /**
  * @author Thorsten Vogel
  * @version $Id$
  */
 @Named("wsOutputPlugin")
+// @PluginConfiguration(pluginBeanName = "wsOutputPlugin", pluginType =
+// PluginConfigType.OutputPlugins)
 public class WsOutputPlugin implements IOutputPlugin {
 
 	private static final Logger logger = LoggerFactory
