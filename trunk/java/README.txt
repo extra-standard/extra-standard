@@ -11,3 +11,8 @@ components
 ----------------------------------
 Sämtliche Komponenten von eXTra, die in den Anwendungen Verwendung finden, werden
 hier verwaltet.
+
+
+procedures
+----------------------------------
+Sämtliche Fachverfahren für eXTra werden hier verwaltet.
