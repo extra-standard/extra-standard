@@ -32,7 +32,7 @@ public class ScenarioPhase2KlientIT {
 
 	private static final String TEST_CONFIG = "/threephaseszenario/phase2";
 
-	private static final String LOG_DIR = "/log";
+	private static final String LOG_DIR = "/logs";
 
 	@Before
 	public void setUp() throws Exception {

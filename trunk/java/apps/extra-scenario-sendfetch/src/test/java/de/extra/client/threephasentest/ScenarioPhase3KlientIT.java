@@ -26,8 +26,9 @@ import de.extra.client.starter.ExtraClientTestBasic;
 
 /**
  * Phase 3: Bestätigung der erfolgreich abgeholten Rückmeldungen
+ * 
  * @author r52gma
- *
+ * 
  */
 public class ScenarioPhase3KlientIT {
 
@@ -37,7 +38,7 @@ public class ScenarioPhase3KlientIT {
 
 	private static final String TEST_CONFIG = "/threephaseszenario/phase3";
 
-	private static final String LOG_DIR = "/log";
+	private static final String LOG_DIR = "/logs";
 
 	@Before
 	public void setUp() throws Exception {
