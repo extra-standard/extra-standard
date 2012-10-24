@@ -149,6 +149,7 @@
 										</versionRange>
 										<goals>
 											<goal>compile</goal>
+											<goal>test-compile</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
