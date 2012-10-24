@@ -28,24 +28,22 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.Marshaller;
-import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
 
+import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
 import de.drv.dsrv.extrastandard.namespace.response.Message;
 import de.drv.dsrv.extrastandard.namespace.response.Package;
+import de.drv.dsrv.extrastandard.namespace.response.Transport;
 import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
-import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.core.annotation.PluginConfigType;
 import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
@@ -71,25 +69,27 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
  */
 @Named("fileSystemResultDataResponseProcessPlugin")
 @PluginConfiguration(pluginBeanName = "fileSystemResultDataResponseProcessPlugin", pluginType = PluginConfigType.ResponseProcessPlugins)
-public class FileSystemResultDataResponseProcessPlugin implements IResponseProcessPlugin {
+public class FileSystemResultDataResponseProcessPlugin implements
+		IResponseProcessPlugin {
 
-	private static final Logger LOG = LoggerFactory.getLogger(FileSystemResultDataResponseProcessPlugin.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(FileSystemResultDataResponseProcessPlugin.class);
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
 	private Marshaller marshaller;
 
-	//@Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner}")
-	@PluginValue(key="eingangOrdner")
+	@Inject
+	@Named("extraUnmarschaller")
+	private IExtraUnmarschaller extraUnmarschaller;
+
+	// @Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner}")
+	@PluginValue(key = "eingangOrdner")
 	private File eingangOrdner;
 
 	@Inject
 	@Named("transportObserver")
 	private ITransportObserver transportObserver;
-
-	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Unmarshaller unmarshaller;
 
 	@Inject
 	@Named("transportInfoBuilder")
@@ -107,46 +107,55 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 		final IResponseData responseData = new ResponseData();
 		try {
 
-			de.drv.dsrv.extrastandard.namespace.response.XMLTransport extraResponse;
-
-			extraResponse = (de.drv.dsrv.extrastandard.namespace.response.XMLTransport) unmarshaller
-					.unmarshal(new StreamSource(responseAsStream));
+			final de.drv.dsrv.extrastandard.namespace.response.Transport extraResponse = extraUnmarschaller
+					.unmarshal(
+							responseAsStream,
+							de.drv.dsrv.extrastandard.namespace.response.Transport.class);
 
 			printResult(extraResponse);
 
-			final TransportHeader transportHeader = extraResponse.getTransportHeader();
-			final ITransportInfo transportInfo = transportInfoBuilder.createTransportInfo(transportHeader);
+			final TransportHeader transportHeader = extraResponse
+					.getTransportHeader();
+			final ITransportInfo transportInfo = transportInfoBuilder
+					.createTransportInfo(transportHeader);
 			transportObserver.responseFilled(transportInfo);
 
-			final ResponseDetailsType responseDetails = transportHeader.getResponseDetails();
-			final RequestDetailsType requestDetails = transportHeader.getRequestDetails();
+			final ResponseDetailsType responseDetails = transportHeader
+					.getResponseDetails();
+			final RequestDetailsType requestDetails = transportHeader
+					.getRequestDetails();
 			if (isBodyEmpty(extraResponse.getTransportBody())) {
-				throw new ExtraResponseProcessPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
+				throw new ExtraResponseProcessPluginRuntimeException(
+						ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
 						"Keine Daten vorhanden. Body Element ist leer");
 			}
 
-			final String responseId = responseDetails.getResponseID().getValue();
+			final String responseId = responseDetails.getResponseID()
+					.getValue();
 
 			// TODO Valiedierung
-			final byte[] responseBody = extraResponse.getTransportBody().getData().getBase64CharSequence().getValue();
+			final byte[] responseBody = extraResponse.getTransportBody()
+					.getData().getBase64CharSequence().getValue();
 
 			final byte[] decodedData = Base64.decodeBase64(responseBody);
 
 			saveBodyToFilesystem(responseId, decodedData);
 
-			final ISingleResponseData singleResponseData = new SingleResponseData(requestDetails.getRequestID()
-					.getValue(), "RETURNCODE", "RETURNTEXT", responseId);
+			final ISingleResponseData singleResponseData = new SingleResponseData(
+					requestDetails.getRequestID().getValue(), "RETURNCODE",
+					"RETURNTEXT", responseId);
 			responseData.addSingleResponse(singleResponseData);
 
 		} catch (final XmlMappingException xmlMappingException) {
-			throw new ExtraResponseProcessPluginRuntimeException(xmlMappingException);
+			throw new ExtraResponseProcessPluginRuntimeException(
+					xmlMappingException);
 		} catch (final IOException ioException) {
 			throw new ExtraResponseProcessPluginRuntimeException(ioException);
 		}
 		return responseData;
 	}
 
-	private void printResult(final XMLTransport extraResponse) {
+	private void printResult(final Transport extraResponse) {
 		try {
 			final Writer writer = new StringWriter();
 			final StreamResult streamResult = new StreamResult(writer);
@@ -154,7 +163,8 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 			marshaller.marshal(extraResponse, streamResult);
 			LOG.debug("ExtraResponse: " + writer.toString());
 		} catch (final XmlMappingException xmlException) {
-			LOG.debug("XmlMappingException beim Lesen des Results ", xmlException);
+			LOG.debug("XmlMappingException beim Lesen des Results ",
+					xmlException);
 		} catch (final IOException ioException) {
 			LOG.debug("IOException beim Lesen des Results ", ioException);
 		}
@@ -167,7 +177,8 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 		if (transportBody == null) {
 			isEmpty = true;
 		} else {
-			if (transportBody.getData() == null && transportBody.getEncryptedData() == null) {
+			if (transportBody.getData() == null
+					&& transportBody.getEncryptedData() == null) {
 
 				isEmpty = true;
 			}
@@ -189,7 +200,8 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 	 * @param responseBody
 	 * @return
 	 */
-	private void saveBodyToFilesystem(final String responseId, final byte[] responseBody) {
+	private void saveBodyToFilesystem(final String responseId,
+			final byte[] responseBody) {
 		try {
 
 			final String dateiName = buildFilename(responseId);
@@ -198,12 +210,14 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 
 			FileUtils.writeByteArrayToFile(responseFile, responseBody);
 
-			transportObserver.responseDataForwarded(responseFile.getAbsolutePath(), responseBody.length);
+			transportObserver.responseDataForwarded(
+					responseFile.getAbsolutePath(), responseBody.length);
 
 			LOG.info("Response gespeichert in File: '" + dateiName + "'");
 
 		} catch (final IOException ioException) {
-			throw new ExtraResponseProcessPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
+			throw new ExtraResponseProcessPluginRuntimeException(
+					ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
 					"Fehler beim schreiben der Antwort", ioException);
 		}
 	}
@@ -229,9 +243,10 @@ public class FileSystemResultDataResponseProcessPlugin implements IResponseProce
 	}
 
 	/**
-	 * @param eingangOrdner the eingangOrdner to set
+	 * @param eingangOrdner
+	 *            the eingangOrdner to set
 	 */
-	public void setEingangOrdner(File eingangOrdner) {
+	public void setEingangOrdner(final File eingangOrdner) {
 		this.eingangOrdner = eingangOrdner;
 	}
 

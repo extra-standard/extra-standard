@@ -13,12 +13,21 @@
         </jxb:schemaBindings>
     </jxb:bindings>
 
+<!--  
   	<jxb:bindings schemaLocation="../xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='TransportResponseType']">
     	<jxb:class name="XMLTransport"/>
     	<annox:annotate>
              <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"/>
          </annox:annotate>
 	</jxb:bindings> 
+	-->
+	<jxb:bindings schemaLocation="../xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='TransportResponseType']">
+    	<jxb:class name="Transport"/>
+    	<annox:annotate>
+             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name = "Transport"/>
+         </annox:annotate>
+	</jxb:bindings> 
+	
   	<jxb:bindings schemaLocation="../xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='TransportResponseHeaderType']">
     	<jxb:class name="TransportHeader"/>
 	</jxb:bindings> 

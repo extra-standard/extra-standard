@@ -26,20 +26,19 @@ import java.io.Writer;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.Marshaller;
-import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.util.Assert;
 
+import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
+import de.drv.dsrv.extrastandard.namespace.response.Transport;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
-import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extra.client.core.responce.impl.ResponseData;
 import de.extra.client.core.responce.impl.SingleResponseData;
@@ -61,13 +60,19 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
  * @version $Id$
  */
 @Named("acknowledgePhase1ResponseProcessPlugin")
-public class AcknowledgePhase1ResponseProcessPlugin implements IResponseProcessPlugin {
+public class AcknowledgePhase1ResponseProcessPlugin implements
+		IResponseProcessPlugin {
 
-	private static final Logger LOG = LoggerFactory.getLogger(AcknowledgePhase1ResponseProcessPlugin.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(AcknowledgePhase1ResponseProcessPlugin.class);
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
 	private Marshaller marshaller;
+
+	@Inject
+	@Named("extraUnmarschaller")
+	private IExtraUnmarschaller extraUnmarschaller;
 
 	// @Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner}")
 	// private File eingangOrdner;
@@ -78,10 +83,6 @@ public class AcknowledgePhase1ResponseProcessPlugin implements IResponseProcessP
 	@Inject
 	@Named("transportObserver")
 	private ITransportObserver transportObserver;
-
-	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Unmarshaller unmarshaller;
 
 	@Inject
 	@Named("transportInfoBuilder")
@@ -99,56 +100,69 @@ public class AcknowledgePhase1ResponseProcessPlugin implements IResponseProcessP
 		final IResponseData responseData = new ResponseData();
 		try {
 
-			final XMLTransport extraResponse = (de.drv.dsrv.extrastandard.namespace.response.XMLTransport) unmarshaller
-					.unmarshal(new StreamSource(responseAsStream));
+			final Transport extraResponse = extraUnmarschaller.unmarshal(
+					responseAsStream, Transport.class);
 
 			printResult(extraResponse);
 
 			// TODO Validierungsmodul
-			final TransportHeader transportHeader = extraResponse.getTransportHeader();
-			Assert.notNull(transportHeader, "Transportheader in der Acknowledge sind leer");
-			final ITransportInfo transportInfo = transportInfoBuilder.createTransportInfo(transportHeader);
+			final TransportHeader transportHeader = extraResponse
+					.getTransportHeader();
+			Assert.notNull(transportHeader,
+					"Transportheader in der Acknowledge sind leer");
+			final ITransportInfo transportInfo = transportInfoBuilder
+					.createTransportInfo(transportHeader);
 
 			transportObserver.responseFilled(transportInfo);
 
-			final ResponseDetailsType responseDetails = transportHeader.getResponseDetails();
-			Assert.notNull(responseDetails, "ResponseDetailsType in der Acknowledge ist leer");
-			final RequestDetailsType requestDetails = transportHeader.getRequestDetails();
-			Assert.notNull(transportHeader, "RequestDetailsType in der Acknowledge ist leer");
-			final ClassifiableIDType classifiableResponseIDType = responseDetails.getResponseID();
-			Assert.notNull(classifiableResponseIDType, "ResponseID in der Acknowledge ist leer");
+			final ResponseDetailsType responseDetails = transportHeader
+					.getResponseDetails();
+			Assert.notNull(responseDetails,
+					"ResponseDetailsType in der Acknowledge ist leer");
+			final RequestDetailsType requestDetails = transportHeader
+					.getRequestDetails();
+			Assert.notNull(transportHeader,
+					"RequestDetailsType in der Acknowledge ist leer");
+			final ClassifiableIDType classifiableResponseIDType = responseDetails
+					.getResponseID();
+			Assert.notNull(classifiableResponseIDType,
+					"ResponseID in der Acknowledge ist leer");
 			final String responseId = classifiableResponseIDType.getValue();
 
 			// final ReportType report = responseDetails.getReport();
 
-			final ClassifiableIDType classifiableRequestIDType = requestDetails.getRequestID();
-			Assert.notNull(classifiableRequestIDType, "RequestIDType  in der Acknowledge ist leer");
+			final ClassifiableIDType classifiableRequestIDType = requestDetails
+					.getRequestID();
+			Assert.notNull(classifiableRequestIDType,
+					"RequestIDType  in der Acknowledge ist leer");
 			final String requestId = classifiableRequestIDType.getValue();
 
 			// TODO Ergebnisse der Übertragung abfragen
-			final ISingleResponseData singleResponseData = new SingleResponseData(requestId, "C00", "RETURNTEXT",
-					responseId);
+			final ISingleResponseData singleResponseData = new SingleResponseData(
+					requestId, "C00", "RETURNTEXT", responseId);
 			responseData.addSingleResponse(singleResponseData);
 
 		} catch (final XmlMappingException xmlMappingException) {
-			throw new ExtraResponseProcessPluginRuntimeException(xmlMappingException);
+			throw new ExtraResponseProcessPluginRuntimeException(
+					xmlMappingException);
 		} catch (final IOException ioException) {
 			throw new ExtraResponseProcessPluginRuntimeException(ioException);
 		}
 		return responseData;
 	}
 
-	private void printResult(final XMLTransport extraResponse) {
+	private void printResult(final Transport extraResponse) {
 		try {
 			final Writer writer = new StringWriter();
 			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(extraResponse, streamResult);
-			LOG.debug("ExtraResponse: " + writer.toString());
+			logger.debug("ExtraResponse: " + writer.toString());
 		} catch (final XmlMappingException xmlException) {
-			LOG.debug("XmlMappingException beim Lesen des Results ", xmlException);
+			logger.debug("XmlMappingException beim Lesen des Results ",
+					xmlException);
 		} catch (final IOException ioException) {
-			LOG.debug("IOException beim Lesen des Results ", ioException);
+			logger.debug("IOException beim Lesen des Results ", ioException);
 		}
 
 	}

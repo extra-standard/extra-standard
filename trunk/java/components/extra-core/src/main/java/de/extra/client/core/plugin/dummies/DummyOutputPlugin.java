@@ -39,8 +39,8 @@ import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
+import de.drv.dsrv.extrastandard.namespace.response.Transport;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
-import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extrastandard.api.observer.ITransportInfo;
 import de.extrastandard.api.observer.ITransportObserver;
@@ -53,7 +53,8 @@ public class DummyOutputPlugin implements IOutputPlugin {
 	// || flagCode.getValue().equalsIgnoreCase("I000")
 	// || flagCode.getValue().equalsIgnoreCase("E98"))
 
-	private static final Logger LOG = LoggerFactory.getLogger(DummyOutputPlugin.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(DummyOutputPlugin.class);
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -80,14 +81,15 @@ public class DummyOutputPlugin implements IOutputPlugin {
 		InputStream responseAsinputStream = null;
 		try {
 			LOG.info("request={}", request);
-			final XMLTransport response = createExtraResponse(request);
+			final Transport response = createExtraResponse(request);
 
 			final Writer writer = new StringWriter();
 			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(response, streamResult);
 
-			responseAsinputStream = new ByteArrayInputStream(writer.toString().getBytes());
+			responseAsinputStream = new ByteArrayInputStream(writer.toString()
+					.getBytes());
 			return responseAsinputStream;
 		} catch (final IOException ioException) {
 			// Hier kommt eine ExtraTechnischeRuntimeException
@@ -97,9 +99,10 @@ public class DummyOutputPlugin implements IOutputPlugin {
 
 	}
 
-	private XMLTransport createExtraResponse(final InputStream request) {
-		final String requestId = dummyOutputPluginUtil.extractRequestId(request);
-		final XMLTransport response = new XMLTransport();
+	private Transport createExtraResponse(final InputStream request) {
+		final String requestId = dummyOutputPluginUtil
+				.extractRequestId(request);
+		final Transport response = new Transport();
 		final TransportHeader transportHeader = new TransportHeader();
 		final ResponseDetailsType responseDetailsType = new ResponseDetailsType();
 		final ClassifiableIDType idType = new ClassifiableIDType();
@@ -122,7 +125,8 @@ public class DummyOutputPlugin implements IOutputPlugin {
 
 		final de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader = new de.drv.dsrv.extrastandard.namespace.request.TransportHeader();
 		requestHeader.setRequestDetails(requestDetailsType);
-		final ITransportInfo transportInfo = transportInfoBuilder.createTransportInfo(requestHeader);
+		final ITransportInfo transportInfo = transportInfoBuilder
+				.createTransportInfo(requestHeader);
 		transportObserver.requestFilled(transportInfo);
 		transportObserver.requestForwarded("dummy, keine Weiterleitung", 0);
 

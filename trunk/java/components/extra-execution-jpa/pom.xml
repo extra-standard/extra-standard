@@ -103,6 +103,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- 
 			<plugin>
 				<groupId>com.googlecode.flyway</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
@@ -124,8 +125,9 @@
 						<version>10.2.0.4.0</version> </dependency> -->
 				</dependencies>
 			</plugin>
+			-->
 		</plugins>
-
+	
 		<pluginManagement>
 			<plugins>
 				<!--This plugin's configuration is used to store Eclipse m2e settings 

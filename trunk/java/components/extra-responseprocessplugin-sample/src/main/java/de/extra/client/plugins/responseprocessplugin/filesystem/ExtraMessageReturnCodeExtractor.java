@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.extrastandard.namespace.components.FlagCodeType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
-import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
+import de.drv.dsrv.extrastandard.namespace.response.Transport;
 
 public class ExtraMessageReturnCodeExtractor {
 
@@ -35,19 +35,20 @@ public class ExtraMessageReturnCodeExtractor {
 
 	/**
 	 * Liefert FlagCode aus der Nachricht
+	 * 
 	 * @param extraResponse
 	 * @return
 	 */
-	public FlagCodeType getReturnCode(final XMLTransport extraResponse){
-//		TODO Allgemeine Lösung
+	public FlagCodeType getReturnCode(final Transport extraResponse) {
+		// TODO Allgemeine Lösung
 		List<FlagType> flagList = new ArrayList<FlagType>();
 
 		flagList = extraResponse.getTransportHeader().getResponseDetails()
 				.getReport().getFlag();
 
-		FlagType flag = flagList.get(0);
+		final FlagType flag = flagList.get(0);
 
-		FlagCodeType flagCode = flag.getCode();
+		final FlagCodeType flagCode = flag.getCode();
 
 		if (flagCode.getValue().equalsIgnoreCase("C00")
 				|| flagCode.getValue().equalsIgnoreCase("I000")
