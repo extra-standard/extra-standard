@@ -23,12 +23,16 @@
 			<filtered>true</filtered>
 		</fileSet>
 		<fileSet>
-			<directory>src/main/conf</directory>
+			<directory>src/test/resources/threephaseszenario</directory>
 			<outputDirectory>/conf</outputDirectory>
 		</fileSet>
 		<fileSet>
-			<directory>src/main/processDirectories</directory>
-			<outputDirectory>/processDirectories</outputDirectory>
+			<directory>src/test/resources/testDirectories</directory>
+			<outputDirectory>/work</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>src/main/logs</directory>
+			<outputDirectory>/logs</outputDirectory>
 		</fileSet>
 	</fileSets>
 </assembly> 
