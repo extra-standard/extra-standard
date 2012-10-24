@@ -23,7 +23,7 @@
 			<filtered>true</filtered>
 		</fileSet>
 		<fileSet>
-			<directory>src/test/resources/threephaseszenario</directory>
+			<directory>src/main/conf</directory>
 			<outputDirectory>/conf</outputDirectory>
 		</fileSet>
 		<fileSet>
