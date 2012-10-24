@@ -10,14 +10,6 @@
 	<includeBaseDirectory>true</includeBaseDirectory>
 	<fileSets>
 		<fileSet>
-			<directory>target</directory>
-			<outputDirectory>/</outputDirectory>
-			<useDefaultExcludes>true</useDefaultExcludes>
-			<includes>
-				<include>version.txt</include>
-			</includes>
-		</fileSet>
-		<fileSet>
 			<directory>src/main/bin</directory>
 			<outputDirectory>/bin</outputDirectory>
 			<filtered>true</filtered>
@@ -35,4 +27,10 @@
 			<outputDirectory>/logs</outputDirectory>
 		</fileSet>
 	</fileSets>
+	<files>
+		<file>
+			<source>README.txt</source>
+			<outputDirectory>/</outputDirectory>
+		</file>
+	</files>
 </assembly> 
