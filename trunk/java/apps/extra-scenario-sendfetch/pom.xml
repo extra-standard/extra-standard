@@ -15,7 +15,6 @@
 	<name>extra-scenario-sendfetch</name>
 	<description>TODO</description>
 
-
 	<dependencies>
 		<dependency>
 			<groupId>de.extrastandard</groupId>
