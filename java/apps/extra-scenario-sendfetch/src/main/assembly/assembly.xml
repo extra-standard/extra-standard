@@ -27,7 +27,7 @@
 			<outputDirectory>/conf</outputDirectory>
 		</fileSet>
 		<fileSet>
-			<directory>src/test/resources/testDirectories</directory>
+			<directory>src/test/resources/testdirectories</directory>
 			<outputDirectory>/work</outputDirectory>
 		</fileSet>
 		<fileSet>
