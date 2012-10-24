@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.threephasentest;
+package de.extrastandard.procedures.sa;
 
 import org.junit.Before;
 import org.junit.Test;
