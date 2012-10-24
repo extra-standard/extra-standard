@@ -29,7 +29,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
@@ -37,10 +36,10 @@ import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.Marshaller;
-import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.util.Assert;
 
+import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
@@ -51,9 +50,9 @@ import de.drv.dsrv.extrastandard.namespace.response.Message;
 import de.drv.dsrv.extrastandard.namespace.response.Package;
 import de.drv.dsrv.extrastandard.namespace.response.PackageBody;
 import de.drv.dsrv.extrastandard.namespace.response.PackageHeader;
+import de.drv.dsrv.extrastandard.namespace.response.Transport;
 import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
-import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.core.annotation.PluginConfigType;
 import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
@@ -79,9 +78,11 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
  */
 @Named("fileSystemResultPackageDataResponseProcessPlugin")
 @PluginConfiguration(pluginBeanName = "fileSystemResultPackageDataResponseProcessPlugin", pluginType = PluginConfigType.ResponseProcessPlugins)
-public class FileSystemResultPackageDataResponseProcessPlugin implements IResponseProcessPlugin {
+public class FileSystemResultPackageDataResponseProcessPlugin implements
+		IResponseProcessPlugin {
 
-	private static final Logger LOG = LoggerFactory.getLogger(FileSystemResultPackageDataResponseProcessPlugin.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(FileSystemResultPackageDataResponseProcessPlugin.class);
 
 	@PluginValue(key = "eingangOrdner")
 	@NotNull
@@ -96,12 +97,12 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements IRespon
 	private Marshaller marshaller;
 
 	@Inject
-	@Named("transportObserver")
-	private ITransportObserver transportObserver;
+	@Named("extraUnmarschaller")
+	private IExtraUnmarschaller extraUnmarschaller;
 
 	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Unmarshaller unmarshaller;
+	@Named("transportObserver")
+	private ITransportObserver transportObserver;
 
 	/**
 	 * Erwartet Ergebnisse als Daten in den Felder
@@ -115,67 +116,91 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements IRespon
 		final IResponseData responseData = new ResponseData();
 		try {
 
-			de.drv.dsrv.extrastandard.namespace.response.XMLTransport extraResponse;
+			de.drv.dsrv.extrastandard.namespace.response.Transport extraResponse;
 
-			extraResponse = (de.drv.dsrv.extrastandard.namespace.response.XMLTransport) unmarshaller
-					.unmarshal(new StreamSource(responseAsStream));
+			extraResponse = extraUnmarschaller
+					.unmarshal(
+							responseAsStream,
+							de.drv.dsrv.extrastandard.namespace.response.Transport.class);
 
 			printResult(extraResponse);
 
-			final TransportHeader transportHeader = extraResponse.getTransportHeader();
-			final ITransportInfo transportInfo = transportInfoBuilder.createTransportInfo(transportHeader);
+			final TransportHeader transportHeader = extraResponse
+					.getTransportHeader();
+			final ITransportInfo transportInfo = transportInfoBuilder
+					.createTransportInfo(transportHeader);
 			transportObserver.responseFilled(transportInfo);
 
-			final ResponseDetailsType responseDetails = transportHeader.getResponseDetails();
-			final RequestDetailsType requestDetails = transportHeader.getRequestDetails();
+			final ResponseDetailsType responseDetails = transportHeader
+					.getResponseDetails();
+			final RequestDetailsType requestDetails = transportHeader
+					.getRequestDetails();
 			if (isBodyEmpty(extraResponse.getTransportBody())) {
-				throw new ExtraResponseProcessPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
+				throw new ExtraResponseProcessPluginRuntimeException(
+						ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
 						"Keine Daten vorhanden. Body Element ist leer");
 			}
 
-			final String responseId = responseDetails.getResponseID().getValue();
+			final String responseId = responseDetails.getResponseID()
+					.getValue();
 
 			// TODO Valiedierung
-			final ISingleResponseData singleResponseData = new SingleResponseData(requestDetails.getRequestID()
-					.getValue(), "RETURNCODE", "RETURNTEXT", responseId);
+			final ISingleResponseData singleResponseData = new SingleResponseData(
+					requestDetails.getRequestID().getValue(), "RETURNCODE",
+					"RETURNTEXT", responseId);
 			responseData.addSingleResponse(singleResponseData);
 
-			final TransportBody transportBody = extraResponse.getTransportBody();
+			final TransportBody transportBody = extraResponse
+					.getTransportBody();
 			Assert.notNull(transportBody, "TransportBody is null");
 			final List<Package> packages = transportBody.getPackage();
 			Assert.notEmpty(packages, "TransportBody.Package() is empty");
 			for (final Package transportBodyPackage : packages) {
-				final PackageBody packageBody = transportBodyPackage.getPackageBody();
+				final PackageBody packageBody = transportBodyPackage
+						.getPackageBody();
 				Assert.notNull(packageBody, "PackageBody is null");
 				final DataType data = packageBody.getData();
 				Assert.notNull(data, "PackageBody.data is null");
-				final Base64CharSequenceType base64CharSequence = data.getBase64CharSequence();
-				Assert.notNull(base64CharSequence, "Base64CharSequenceType.data is null");
+				final Base64CharSequenceType base64CharSequence = data
+						.getBase64CharSequence();
+				Assert.notNull(base64CharSequence,
+						"Base64CharSequenceType.data is null");
 				final byte[] packageBodyData = base64CharSequence.getValue();
-				final byte[] decodedpackageBodyData = Base64.decodeBase64(packageBodyData);
-				final PackageHeader packageHeader = transportBodyPackage.getPackageHeader();
+				final byte[] decodedpackageBodyData = Base64
+						.decodeBase64(packageBodyData);
+				final PackageHeader packageHeader = transportBodyPackage
+						.getPackageHeader();
 
-				final ResponseDetailsType packageHeaderResponseDetails = packageHeader.getResponseDetails();
-				final String packageHeaderResponseId = packageHeaderResponseDetails.getResponseID().getValue();
-				saveBodyToFilesystem(packageHeaderResponseId, decodedpackageBodyData);
+				final ResponseDetailsType packageHeaderResponseDetails = packageHeader
+						.getResponseDetails();
+				final String packageHeaderResponseId = packageHeaderResponseDetails
+						.getResponseID().getValue();
+				saveBodyToFilesystem(packageHeaderResponseId,
+						decodedpackageBodyData);
 				final ISingleResponseData singlePackageResponseData = extractResponseDetail(packageHeader);
 				responseData.addSingleResponse(singlePackageResponseData);
 			}
 
 		} catch (final XmlMappingException xmlMappingException) {
-			throw new ExtraResponseProcessPluginRuntimeException(xmlMappingException);
+			throw new ExtraResponseProcessPluginRuntimeException(
+					xmlMappingException);
 		} catch (final IOException ioException) {
 			throw new ExtraResponseProcessPluginRuntimeException(ioException);
 		}
 		return responseData;
 	}
 
-	private ISingleResponseData extractResponseDetail(final PackageHeader packageHeader) {
+	private ISingleResponseData extractResponseDetail(
+			final PackageHeader packageHeader) {
 		Assert.notNull(packageHeader, "PackageHeader.data is null");
-		final RequestDetailsType packageHeaderRequestDetails = packageHeader.getRequestDetails();
-		final String packageHeaderRequestId = packageHeaderRequestDetails.getRequestID().getValue();
-		final ResponseDetailsType packageHeaderResponseDetails = packageHeader.getResponseDetails();
-		final String packageHeaderResponseId = packageHeaderResponseDetails.getResponseID().getValue();
+		final RequestDetailsType packageHeaderRequestDetails = packageHeader
+				.getRequestDetails();
+		final String packageHeaderRequestId = packageHeaderRequestDetails
+				.getRequestID().getValue();
+		final ResponseDetailsType packageHeaderResponseDetails = packageHeader
+				.getResponseDetails();
+		final String packageHeaderResponseId = packageHeaderResponseDetails
+				.getResponseID().getValue();
 		final ReportType report = packageHeaderResponseDetails.getReport();
 		String reportCode = null;
 		String reportText = null;
@@ -189,12 +214,13 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements IRespon
 				}
 			}
 		}
-		final ISingleResponseData singleResponseData = new SingleResponseData(packageHeaderRequestId, reportCode,
-				reportText, packageHeaderResponseId);
+		final ISingleResponseData singleResponseData = new SingleResponseData(
+				packageHeaderRequestId, reportCode, reportText,
+				packageHeaderResponseId);
 		return singleResponseData;
 	}
 
-	private void printResult(final XMLTransport extraResponse) {
+	private void printResult(final Transport extraResponse) {
 		try {
 			final Writer writer = new StringWriter();
 			final StreamResult streamResult = new StreamResult(writer);
@@ -202,7 +228,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements IRespon
 			marshaller.marshal(extraResponse, streamResult);
 			LOG.debug("ExtraResponse: " + writer.toString());
 		} catch (final XmlMappingException xmlException) {
-			LOG.debug("XmlMappingException beim Lesen des Results ", xmlException);
+			LOG.debug("XmlMappingException beim Lesen des Results ",
+					xmlException);
 		} catch (final IOException ioException) {
 			LOG.debug("IOException beim Lesen des Results ", ioException);
 		}
@@ -215,7 +242,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements IRespon
 		if (transportBody == null) {
 			isEmpty = true;
 		} else {
-			if (transportBody.getData() == null && transportBody.getEncryptedData() == null) {
+			if (transportBody.getData() == null
+					&& transportBody.getEncryptedData() == null) {
 
 				isEmpty = true;
 			}
@@ -237,7 +265,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements IRespon
 	 * @param responseBody
 	 * @return
 	 */
-	private void saveBodyToFilesystem(final String responseId, final byte[] responseBody) {
+	private void saveBodyToFilesystem(final String responseId,
+			final byte[] responseBody) {
 		try {
 
 			final String dateiName = buildFilename(responseId);
@@ -246,12 +275,14 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements IRespon
 
 			FileUtils.writeByteArrayToFile(responseFile, responseBody);
 
-			transportObserver.responseDataForwarded(responseFile.getAbsolutePath(), responseBody.length);
+			transportObserver.responseDataForwarded(
+					responseFile.getAbsolutePath(), responseBody.length);
 
 			LOG.info("Response gespeichert in File: '" + dateiName + "'");
 
 		} catch (final IOException ioException) {
-			throw new ExtraResponseProcessPluginRuntimeException(ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
+			throw new ExtraResponseProcessPluginRuntimeException(
+					ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
 					"Fehler beim schreiben der Antwort", ioException);
 		}
 	}

@@ -45,8 +45,15 @@ import de.extrastandard.api.exception.ExtraConfigRuntimeException;
  */
 public class ExtraClient {
 
-	private static final Logger LOG = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(ExtraClient.class);
+
+	/**
+	 * Pfad und Dateiname der Spring Konfiguration
+	 */
+	private static String SPRING_XML_FILE_PATH = "spring-cli.xml";
+
+	private final File configurationDirectory;
 
 	private static final Logger opperation_logger = LoggerFactory
 			.getLogger("de.extra.client.operation");
@@ -60,13 +67,6 @@ public class ExtraClient {
 	 * Dateiname der Benutzerkonfiguration
 	 */
 	public static final String PROPERTIES_USER_FILENAME = "extra-properties-user.properties";
-
-	/**
-	 * Pfad und Dateiname der Spring Konfiguration
-	 */
-	private static String SPRING_XML_FILE_PATH = "spring-cli.xml";
-
-	private final File configurationDirectory;
 
 	/**
 	 * Erzeugt einen ExtraClient. Die Konfiguration wird aus den Dateien
@@ -87,9 +87,9 @@ public class ExtraClient {
 	 */
 	public ClientProcessResult execute() {
 		opperation_logger.info("Start Of Processing.");
-		LOG.debug("Load ApplicationContext");
+		logger.debug("Load ApplicationContext");
 		try {
-			ApplicationContext applicationContext = createApplicationContext();
+			final ApplicationContext applicationContext = createApplicationContext();
 
 			final ClientCore clientCore = applicationContext.getBean(
 					"clientCore", ClientCore.class);
@@ -102,10 +102,10 @@ public class ExtraClient {
 
 			return processResult;
 
-		} catch (ExtraConfigRuntimeException ec) {
+		} catch (final ExtraConfigRuntimeException ec) {
 			throw ec;
 		} catch (final Exception e) {
-			LOG.error("Fehler beim Start", e);
+			logger.error("Fehler beim Start", e);
 			throw new ExtraConfigRuntimeException(e);
 		}
 	}

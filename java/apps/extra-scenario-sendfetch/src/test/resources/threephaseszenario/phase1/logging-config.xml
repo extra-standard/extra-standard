@@ -5,7 +5,7 @@
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<Pattern>%date{ISO8601,Europe/Berlin}: [%level{6}]: %logger{10} %msg%n</Pattern>
+			<Pattern>%date{dd.MM.yyyy HH:mm:ss,Europe/Berlin} %r ms [%level{6}] %logger{10} %m%n</Pattern>
 		</encoder>
 	</appender>
 

@@ -26,7 +26,7 @@
 
 	<bean id="eXTrajaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
 		<property name="contextPath"
-			value="de.drv.dsrv.extrastandard.namespace.response:de.drv.dsrv.extrastandard.namespace.plugins:de.drv.dsrv.extrastandard.namespace.messages:de.drv.dsrv.extrastandard.namespace.error" />
+			value="de.drv.dsrv.extrastandard.namespace.request:de.drv.dsrv.extrastandard.namespace.response:de.drv.dsrv.extrastandard.namespace.plugins:de.drv.dsrv.extrastandard.namespace.messages:de.drv.dsrv.extrastandard.namespace.error" />
 		<property name="marshallerProperties">
 			<map>
 				<entry key="jaxb.encoding">

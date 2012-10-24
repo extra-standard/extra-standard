@@ -61,7 +61,6 @@ import de.drv.dsrv.extrastandard.namespace.response.PackageBody;
 import de.drv.dsrv.extrastandard.namespace.response.PackageHeader;
 import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
-import de.drv.dsrv.extrastandard.namespace.response.XMLTransport;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extrastandard.api.exception.ExtraOutputPluginRuntimeException;
 import de.extrastandard.api.observer.ITransportInfo;
@@ -78,7 +77,8 @@ import de.extrastandard.api.plugin.IOutputPlugin;
 @Named("dummyQueryDataResponceOutputPlugin")
 public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 
-	private static final Logger LOG = LoggerFactory.getLogger(DummyQueryDataResponceOutputPlugin.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(DummyQueryDataResponceOutputPlugin.class);
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -105,14 +105,15 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 		InputStream responseAsinputStream = null;
 		try {
 			LOG.info("request={}", request);
-			final XMLTransport response = createExtraResponse(request);
+			final de.drv.dsrv.extrastandard.namespace.response.Transport response = createExtraResponse(request);
 
 			final Writer writer = new StringWriter();
 			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(response, streamResult);
 
-			responseAsinputStream = new ByteArrayInputStream(writer.toString().getBytes());
+			responseAsinputStream = new ByteArrayInputStream(writer.toString()
+					.getBytes());
 			return responseAsinputStream;
 		} catch (final IOException ioException) {
 			// Hier kommt eine ExtraTechnischeRuntimeException
@@ -122,14 +123,16 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 
 	}
 
-	private XMLTransport createExtraResponse(final InputStream request) {
+	private de.drv.dsrv.extrastandard.namespace.response.Transport createExtraResponse(
+			final InputStream request) {
 		try {
 
-			final Transport requestXml = (Transport) unmarshaller.unmarshal(new StreamSource(request));
+			final Transport requestXml = extractRequest(request);
 
 			// Ich gehe davon aus, dass requestId ein Mandatory Feld ist
-			final String requestId = requestXml.getTransportHeader().getRequestDetails().getRequestID().getValue();
-			final XMLTransport response = new XMLTransport();
+			final String requestId = requestXml.getTransportHeader()
+					.getRequestDetails().getRequestID().getValue();
+			final de.drv.dsrv.extrastandard.namespace.response.Transport response = new de.drv.dsrv.extrastandard.namespace.response.Transport();
 			final TransportHeader transportHeader = new TransportHeader();
 			final ResponseDetailsType responseDetailsType = new ResponseDetailsType();
 			final ClassifiableIDType idType = new ClassifiableIDType();
@@ -146,7 +149,8 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 			response.setTransportHeader(transportHeader);
 			final de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader = new de.drv.dsrv.extrastandard.namespace.request.TransportHeader();
 			requestHeader.setRequestDetails(requestDetailsType);
-			final ITransportInfo transportInfo = transportInfoBuilder.createTransportInfo(requestHeader);
+			final ITransportInfo transportInfo = transportInfoBuilder
+					.createTransportInfo(requestHeader);
 			final TransportBody transportBody = new TransportBody();
 			response.setTransportBody(transportBody);
 			final List<String> queryArguments = getQueryArguments(requestXml);
@@ -160,13 +164,15 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 				final ClassifiableIDType packageHeaderResponseDetailsIdType = new ClassifiableIDType();
 				packageHeaderResponseDetailsIdType.setValue(queryArgument);
 				final ResponseDetailsType packageResponseDetailsType = new ResponseDetailsType();
-				packageResponseDetailsType.setResponseID(packageHeaderResponseDetailsIdType);
+				packageResponseDetailsType
+						.setResponseID(packageHeaderResponseDetailsIdType);
 				packageHeader.setResponseDetails(packageResponseDetailsType);
 				// Dummy RequestId
 				final ClassifiableIDType packageHeaderRequestIdType = new ClassifiableIDType();
 				packageHeaderRequestIdType.setValue(queryArgument);
 				final RequestDetailsType headerRequestDetailsType = new RequestDetailsType();
-				headerRequestDetailsType.setRequestID(packageHeaderRequestIdType);
+				headerRequestDetailsType
+						.setRequestID(packageHeaderRequestIdType);
 				packageHeader.setRequestDetails(headerRequestDetailsType);
 
 				final ReportType packageReportType = createPositiveReportType();
@@ -208,8 +214,10 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 	private PackageBody createDummyBodyResponse(final String queryArgument) {
 		final PackageBody packageBody = new PackageBody();
 		final DataType value = new DataType();
-		final String stringValue = "DUMMY Response for Query Argument:" + queryArgument;
-		final byte[] decodeBase64Value = Base64.encodeBase64(stringValue.getBytes());
+		final String stringValue = "DUMMY Response for Query Argument:"
+				+ queryArgument;
+		final byte[] decodeBase64Value = Base64.encodeBase64(stringValue
+				.getBytes());
 
 		final Base64CharSequenceType base64CharSequenceType = new Base64CharSequenceType();
 		base64CharSequenceType.setValue(decodeBase64Value);
@@ -224,7 +232,8 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 	 * @return
 	 */
 	private List<String> getQueryArguments(final Transport requestXml) {
-		final de.drv.dsrv.extrastandard.namespace.request.TransportBody transportBody = requestXml.getTransportBody();
+		final de.drv.dsrv.extrastandard.namespace.request.TransportBody transportBody = requestXml
+				.getTransportBody();
 		Assert.notNull(transportBody, "TransportBody is null");
 		final DataType data = transportBody.getData();
 		Assert.notNull(data, "TransportData is null");
@@ -232,27 +241,37 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 		Assert.notNull(elementSequence, "TransportData.elementSequence is null");
 		final List<Object> any = elementSequence.getAny();
 		Assert.notNull(any, "ElementSequence is empty is null");
-		Assert.isTrue(any.size() == 1, "ElementSequense beinhaltet mehr als ein Element");
+		Assert.isTrue(any.size() == 1,
+				"ElementSequense beinhaltet mehr als ein Element");
 		final Object dataRequestObject = any.get(0);
-		Assert.isAssignable(DataRequest.class, dataRequestObject.getClass(), "Unexpectede ElementSequence entry"
-				+ dataRequestObject.getClass() + " Expected DataRequest.");
+		Assert.isAssignable(
+				DataRequest.class,
+				dataRequestObject.getClass(),
+				"Unexpectede ElementSequence entry"
+						+ dataRequestObject.getClass()
+						+ " Expected DataRequest.");
 		final DataRequest dataRequest = (DataRequest) dataRequestObject;
 		final DataRequestQuery query = dataRequest.getQuery();
 		Assert.notNull(query, "Query is null");
 		final List<DataRequestArgument> argument = query.getArgument();
 		Assert.notNull(argument, "DataRequestArgument List is null");
-		Assert.isTrue(argument.size() == 1, "DataRequestArgument List beinhaltet mehr als ein Element");
+		Assert.isTrue(argument.size() == 1,
+				"DataRequestArgument List beinhaltet mehr als ein Element");
 		final DataRequestArgument dataRequestArgument = argument.get(0);
 		Assert.notNull(dataRequestArgument, "DataRequestArgument is null");
-		final List<JAXBElement<?>> dataRequestArgumentContent = dataRequestArgument.getContent();
-		Assert.notNull(dataRequestArgumentContent, "DataRequestArgument.content is null");
+		final List<JAXBElement<?>> dataRequestArgumentContent = dataRequestArgument
+				.getContent();
+		Assert.notNull(dataRequestArgumentContent,
+				"DataRequestArgument.content is null");
 		Assert.isTrue(dataRequestArgumentContent.size() == 1,
 				"DataRequestArgument.content  beinhaltet mehr als ein Element");
 		final JAXBElement<?> jaxbElement = dataRequestArgumentContent.get(0);
 
 		final Object operandSetObject = jaxbElement.getValue();
 		Assert.isAssignable(OperandSet.class, operandSetObject.getClass(),
-				"Unexpectede dataRequestArgumentContent entry" + dataRequestObject.getClass() + " Expected OperandSet.");
+				"Unexpectede dataRequestArgumentContent entry"
+						+ dataRequestObject.getClass()
+						+ " Expected OperandSet.");
 		final OperandSet operandSet = (OperandSet) operandSetObject;
 		final List<Operand> operandEQ = operandSet.getEQ();
 		Assert.notNull(operandEQ, "operandEQ is null");
@@ -263,5 +282,23 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 			queryArgumentList.add(operandValue);
 		}
 		return queryArgumentList;
+	}
+
+	/**
+	 * @param responseAsStream
+	 * @return
+	 * @throws IOException
+	 */
+	private Transport extractRequest(final InputStream requestAsStream)
+			throws IOException {
+		final Object responseObject = unmarshaller.unmarshal(new StreamSource(
+				requestAsStream));
+		Assert.notNull(responseObject, "Response is null");
+		Assert.isAssignable(JAXBElement.class, responseObject.getClass(),
+				"ResponseObject not JAXBElement<Transport>");
+		// TODO Wie funktioniert es besser?
+		final JAXBElement<Transport> jaxbElementResponse = (JAXBElement<Transport>) responseObject;
+		final Transport extraResponse = jaxbElementResponse.getValue();
+		return extraResponse;
 	}
 }

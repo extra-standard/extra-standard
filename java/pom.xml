@@ -31,8 +31,8 @@
 	<modules>
 		<module>components/extra-parent</module>
 		<module>components/extra-api</module>
-		<module>components/extra-sample</module>
 		<module>components/extra-schema</module>
+		<module>components/extra-sample</module>
 		<module>components/extra-configplugin-default</module>
 		<module>components/extra-dataplugin-file</module>
 		<module>components/extra-dataplugin-simplequery</module>

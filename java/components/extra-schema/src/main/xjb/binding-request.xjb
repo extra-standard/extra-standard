@@ -23,7 +23,7 @@
   	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestType']">
     	<jxb:class name="Transport"/>
     	 <annox:annotate>
-             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"/>
+             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="Transport"/>
          </annox:annotate>
 	</jxb:bindings> 	
 	
