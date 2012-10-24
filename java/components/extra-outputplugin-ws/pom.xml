@@ -129,16 +129,16 @@
 				<!-- Grund 1: jaxb Versions-Probleme  -->
 				<!-- Grund 2: m2eConnector (execution goal) -->
 				
-
+<!--
 				<groupId>org.jvnet.jax-ws-commons</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
 				<version>2.2</version>
-
-				<!-- 
+-->
+				 
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
 				<version>1.11</version>
-				-->
+				
 				 
 				<executions>
 					<execution>
