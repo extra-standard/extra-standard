@@ -6,8 +6,8 @@ Insert into STATUS (ID, NAME) Values (7, 'DONE');
 
 Insert into MANDATOR (ID, NAME) Values (seq_mandator_id.nextval, 'TEST');
    
-Insert into PROCEDURE_TYPE (ID, NAME, START_PHASE, END_PHASE)
- Values (seq_procedure_type_id.nextval, 'SCENARIO_SEND_FETCH', 'PHASE1', 'PHASE3');
+Insert into PROCEDURE_TYPE (ID, NAME)
+ Values (seq_procedure_type_id.nextval, 'SCENARIO_SEND_FETCH');
    
 Insert into PROCEDURE_PHASE_CONFIGURATION (ID, PHASE, PROCEDURE_TYPE_ID)
  Values
