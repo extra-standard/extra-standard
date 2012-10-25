@@ -31,6 +31,11 @@
 	<logger name="org.springframework" level="ERROR" />
 	<logger name="org.hibernate" level="ERROR" />
 	<logger name="org.apache" level="ERROR" />
+	
+	<logger name="de.extra.client.core.annotation" level="INFO" />
+	<logger name="de.extra.client.core.builder" level="INFO" />
+	
+	
 
 	<logger name="de.extra.client.operation" level="INFO">
 		<appender-ref ref="OPERATION_FILE" />
