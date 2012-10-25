@@ -20,6 +20,7 @@ package de.extra.client.plugins.configplugin.controller;
 
 import java.io.File;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.bind.JAXBContext;
@@ -41,15 +42,23 @@ public class ConfigPluginController {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(ConfigPluginController.class);
 
-	private File profileFile;
+	@Inject
+	@Named("_configurationDirectory")
+	private File configurationDirectory;
+
+	@Value("${plugins.configplugin.defaultConfigPlugin.profilFileName}")
+	private String profileFileName;
 
 	@Inject
 	@Named("profilHelper")
 	private ProfilHelper profilHelper;
 
-	@Value("${plugins.configplugin.defaultConfigPlugin.profilOrdner}")
-	public void setProfileFile(final File profileFile) {
-		this.profileFile = profileFile;
+	private File profileFile;
+
+	@PostConstruct
+	public void initProfileFile() {
+		this.profileFile = new File(configurationDirectory.getAbsolutePath(),
+				profileFileName);
 	}
 
 
@@ -74,11 +83,11 @@ public class ConfigPluginController {
 		/*
 		 * Auskommentiert, da RequestId über den Auftragssatz der Nutzdatei
 		 * mitgeliefert wird
-		 *
+		 * 
 		 * String requestId = profilHelper.generateReqId();
-		 *
+		 * 
 		 * logger.info("RequestId: " + requestId);
-		 *
+		 * 
 		 * cfb.setRequestId(requestId);
 		 */
 

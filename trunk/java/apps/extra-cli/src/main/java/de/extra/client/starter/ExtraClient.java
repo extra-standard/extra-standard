@@ -149,6 +149,7 @@ public class ExtraClient {
 		final Map<String, Object> env = new HashMap<String, Object>();
 		env.put("_extern_extra-properties-basic", basicProperties);
 		env.put("_extern_extra-properties-user", userProperties);
+		env.put("_configurationDirectory", configurationDirectory);
 		applicationContext = new ApplicationContextStarter<AbstractApplicationContext>() {
 			@Override
 			protected AbstractApplicationContext createUninitializedContext() {
