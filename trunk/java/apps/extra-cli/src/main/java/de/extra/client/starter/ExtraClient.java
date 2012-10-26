@@ -48,25 +48,28 @@ public class ExtraClient {
 	private static final Logger logger = LoggerFactory
 			.getLogger(ExtraClient.class);
 
-	/**
-	 * Pfad und Dateiname der Spring Konfiguration
-	 */
-	private static String SPRING_XML_FILE_PATH = "spring-cli.xml";
-
-	private final File configurationDirectory;
-
 	private static final Logger opperation_logger = LoggerFactory
 			.getLogger("de.extra.client.operation");
 
 	/**
 	 * Name der grundlegenden Konfiguration
 	 */
-	public static final String PROPERTIES_BASIC_FILENAME = "extra-properties-basic.properties";
+	private static final String PROPERTIES_BASIC_FILENAME = "extra-properties-basic.properties";
 
 	/**
 	 * Dateiname der Benutzerkonfiguration
 	 */
-	public static final String PROPERTIES_USER_FILENAME = "extra-properties-user.properties";
+	private static final String PROPERTIES_USER_FILENAME = "extra-properties-user.properties";
+
+
+	/**
+	 * Pfad und Dateiname der Spring Konfiguration
+	 */
+	private static final String SPRING_XML_FILE_PATH = "spring-cli.xml";
+
+	private final File configurationDirectory;
+
+
 
 	/**
 	 * Erzeugt einen ExtraClient. Die Konfiguration wird aus den Dateien
@@ -102,8 +105,6 @@ public class ExtraClient {
 
 			return processResult;
 
-		} catch (final ExtraConfigRuntimeException ec) {
-			throw ec;
 		} catch (final Exception e) {
 			logger.error("Fehler beim Start", e);
 			throw new ExtraConfigRuntimeException(e);
