@@ -28,6 +28,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.util.Assert;
@@ -45,7 +46,7 @@ import de.extrastandard.persistence.repository.ProcedureTypeRepository;
  */
 @Configurable(preConstruction = true)
 @Entity
-@Table(name = "PROCEDURE_TYPE")
+@Table(name = "PROCEDURE_TYPE", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class ProcedureType extends AbstractEntity implements IProcedureType {
 
 	private static final long serialVersionUID = 1L;
