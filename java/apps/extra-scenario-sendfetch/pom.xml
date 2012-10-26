@@ -107,7 +107,7 @@
 											tofile="${project.basedir}/src/test/resources/conf/phase1/phase1-sent-profil.xml" />
 										<copy
 											file="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties_example"
-											tofile="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties" />
+											tofile="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties" overwrite="false"/>
 										<!--  Phase 2 -->
 										<copy
 											file="${project.basedir}/src/main/conf/phase2/extra-properties-basic.properties"
@@ -120,7 +120,7 @@
 											tofile="${project.basedir}/src/test/resources/conf/phase2/phase2-fetchresult-profil.xml" />
 										<copy
 											file="${project.basedir}/src/test/resources/conf/phase2/extra-properties-user.properties_example"
-											tofile="${project.basedir}/src/test/resources/conf/phase2/extra-properties-user.properties" />
+											tofile="${project.basedir}/src/test/resources/conf/phase2/extra-properties-user.properties" overwrite="false"/>
 										<!--  Phase 3 -->
 										<copy
 											file="${project.basedir}/src/main/conf/phase3/extra-properties-basic.properties"
@@ -133,7 +133,7 @@
 											tofile="${project.basedir}/src/test/resources/conf/phase3/phase3-confirmation-profil.xml" />
 										<copy
 											file="${project.basedir}/src/test/resources/conf/phase3/extra-properties-user.properties_example"
-											tofile="${project.basedir}/src/test/resources/conf/phase3/extra-properties-user.properties" />
+											tofile="${project.basedir}/src/test/resources/conf/phase3/extra-properties-user.properties" overwrite="false"/>
 									</target>
 								</configuration>
 							</execution>
