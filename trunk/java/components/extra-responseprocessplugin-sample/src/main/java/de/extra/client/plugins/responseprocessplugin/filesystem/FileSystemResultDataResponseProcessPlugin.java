@@ -37,6 +37,7 @@ import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.XmlMappingException;
 
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
+import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
 import de.drv.dsrv.extrastandard.namespace.response.Message;
@@ -49,6 +50,7 @@ import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extra.client.core.responce.impl.ResponseData;
+import de.extra.client.core.responce.impl.SingleReportData;
 import de.extra.client.core.responce.impl.SingleResponseData;
 import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraResponseProcessPluginRuntimeException;
@@ -83,7 +85,6 @@ public class FileSystemResultDataResponseProcessPlugin implements
 	@Named("extraUnmarschaller")
 	private IExtraUnmarschaller extraUnmarschaller;
 
-	// @Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner}")
 	@PluginValue(key = "eingangOrdner")
 	private File eingangOrdner;
 
@@ -94,6 +95,10 @@ public class FileSystemResultDataResponseProcessPlugin implements
 	@Inject
 	@Named("transportInfoBuilder")
 	private TransportInfoBuilder transportInfoBuilder;
+
+	@Inject
+	@Named("extraMessageReturnDataExtractor")
+	private ExtraMessageReturnDataExtractor returnCodeExtractor;
 
 	/*
 	 * (non-Javadoc)
@@ -141,9 +146,13 @@ public class FileSystemResultDataResponseProcessPlugin implements
 
 			saveBodyToFilesystem(responseId, decodedData);
 
+			final ReportType report = responseDetails.getReport();
+			final SingleReportData reportData = returnCodeExtractor
+					.extractReportData(report);
 			final ISingleResponseData singleResponseData = new SingleResponseData(
-					requestDetails.getRequestID().getValue(), "RETURNCODE",
-					"RETURNTEXT", responseId);
+					requestDetails.getRequestID().getValue(),
+					reportData.getReturnCode(), reportData.getReturnText(),
+					responseId);
 			responseData.addSingleResponse(singleResponseData);
 
 		} catch (final XmlMappingException xmlMappingException) {

@@ -58,6 +58,7 @@ import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extra.client.core.responce.impl.ResponseData;
+import de.extra.client.core.responce.impl.SingleReportData;
 import de.extra.client.core.responce.impl.SingleResponseData;
 import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraResponseProcessPluginRuntimeException;
@@ -104,6 +105,10 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 	@Named("transportObserver")
 	private ITransportObserver transportObserver;
 
+	@Inject
+	@Named("extraMessageReturnDataExtractor")
+	private ExtraMessageReturnDataExtractor returnCodeExtractor;
+
 	/**
 	 * Erwartet Ergebnisse als Daten in den Felder
 	 * TransportBody.Package.PackageBody in dem Data-Fragment
@@ -144,10 +149,14 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 			final String responseId = responseDetails.getResponseID()
 					.getValue();
 
-			// TODO Valiedierung
+			final ReportType report = responseDetails.getReport();
+			final SingleReportData reportData = returnCodeExtractor
+					.extractReportData(report);
+
 			final ISingleResponseData singleResponseData = new SingleResponseData(
-					requestDetails.getRequestID().getValue(), "RETURNCODE",
-					"RETURNTEXT", responseId);
+					requestDetails.getRequestID().getValue(),
+					reportData.getReturnCode(), reportData.getReturnText(),
+					responseId);
 			responseData.addSingleResponse(singleResponseData);
 
 			final TransportBody transportBody = extraResponse

@@ -35,12 +35,14 @@ import org.springframework.util.Assert;
 
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
+import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
 import de.drv.dsrv.extrastandard.namespace.response.Transport;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extra.client.core.responce.impl.ResponseData;
+import de.extra.client.core.responce.impl.SingleReportData;
 import de.extra.client.core.responce.impl.SingleResponseData;
 import de.extrastandard.api.exception.ExtraResponseProcessPluginRuntimeException;
 import de.extrastandard.api.model.content.IResponseData;
@@ -74,12 +76,6 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 	@Named("extraUnmarschaller")
 	private IExtraUnmarschaller extraUnmarschaller;
 
-	// @Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner}")
-	// private File eingangOrdner;
-	//
-	// @Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner}")
-	// private File reportOrdner;
-
 	@Inject
 	@Named("transportObserver")
 	private ITransportObserver transportObserver;
@@ -87,6 +83,10 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 	@Inject
 	@Named("transportInfoBuilder")
 	private TransportInfoBuilder transportInfoBuilder;
+
+	@Inject
+	@Named("extraMessageReturnDataExtractor")
+	private ExtraMessageReturnDataExtractor returnCodeExtractor;
 
 	/*
 	 * (non-Javadoc)
@@ -129,17 +129,18 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 					"ResponseID in der Acknowledge ist leer");
 			final String responseId = classifiableResponseIDType.getValue();
 
-			// final ReportType report = responseDetails.getReport();
-
 			final ClassifiableIDType classifiableRequestIDType = requestDetails
 					.getRequestID();
 			Assert.notNull(classifiableRequestIDType,
 					"RequestIDType  in der Acknowledge ist leer");
 			final String requestId = classifiableRequestIDType.getValue();
 
-			// TODO Ergebnisse der Übertragung abfragen
+			final ReportType report = responseDetails.getReport();
+			final SingleReportData reportData = returnCodeExtractor
+					.extractReportData(report);
 			final ISingleResponseData singleResponseData = new SingleResponseData(
-					requestId, "C00", "RETURNTEXT", responseId);
+					requestId, reportData.getReturnCode(),
+					reportData.getReturnText(), responseId);
 			responseData.addSingleResponse(singleResponseData);
 
 		} catch (final XmlMappingException xmlMappingException) {
