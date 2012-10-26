@@ -28,4 +28,4 @@ http://code.google.com/p/extra-standard/wiki/eXTraArchitekturAnwendungCli
 
 Für den Betrieb des extra-cli Programms steht folgende Seite 
 als Information zur Verfügung:
-http://code.google.com/p/extra-standard/wiki/eXTraArchitekturAnwendungCli
+http://code.google.com/p/extra-standard/wiki/eXTraClientBetriebsanleitung

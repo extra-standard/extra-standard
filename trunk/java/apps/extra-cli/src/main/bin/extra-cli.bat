@@ -64,11 +64,11 @@ set _JAVA="%JRE_HOME%\bin\java"
 set HEAP_MS=-Xms512m
 set HEAP_MX=-Xmx1024m
 if "%JAVA_OPTS%" == "" set JAVA_OPTS=%HEAP_MS% %HEAP_MX%
-if not "%LOGFILEPATH%" == "" set LOGFILEPATH=%~dp0\..\logs
+if "%LOGFILEPATH%" == "" set LOGFILEPATH=..\logs
 
 rem java aufruf
 rem im Aufruf wird beispielhaft die Konfiguration im Verzeichnis 'conf' erwartet und Logausgaben ins Verzeichnis 'logs' geschrieben (Syntax siehe Betriebshandbuch)
-%_JAVA% %JAVA_OPTS% -jar %JAR_FILE% -l logs %* -c conf
+%_JAVA% %JAVA_OPTS% -classpath %EXTRA_CLIENT_HOME%\lib\* de.extra.client.starter.ClientStarter -l %LOGFILEPATH% %* -c ..\conf\phase3
 goto end
 
 :exit
