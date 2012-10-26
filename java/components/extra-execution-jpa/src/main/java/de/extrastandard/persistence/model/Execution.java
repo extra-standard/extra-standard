@@ -48,8 +48,7 @@ import org.springframework.util.StringUtils;
 
 import de.extrastandard.api.exception.ExtraRuntimeException;
 import de.extrastandard.api.model.content.IResponseData;
-import de.extrastandard.api.model.content.ISingleContentInputData;
-import de.extrastandard.api.model.content.ISingleQueryInputData;
+import de.extrastandard.api.model.content.ISingleInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
@@ -252,24 +251,36 @@ public class Execution extends AbstractEntity implements IExecution {
 		}
 	}
 
-	/**
-	 * @see de.extrastandard.api.model.execution.IExecution#startInputData(de.extrastandard.persistence.api.IInputType,
-	 *      java.lang.String, java.lang.String)
-	 */
-	@Override
-	@Transactional
-	public IInputData startContentInputData(
-			final ISingleContentInputData singleContentInputData) {
-		final InputData inputData = new InputData(singleContentInputData, this);
-		this.inputDataSet.add(inputData);
-		repository.save(this);
-		return inputData;
-	}
+	// /**
+	// * @see
+	// de.extrastandard.api.model.execution.IExecution#startInputData(de.extrastandard.persistence.api.IInputType,
+	// * java.lang.String, java.lang.String)
+	// */
+	// @Override
+	// @Transactional
+	// public IInputData startContentInputData(
+	// final ISingleContentInputData singleContentInputData) {
+	// final InputData inputData = new InputData(singleContentInputData, this);
+	// this.inputDataSet.add(inputData);
+	// repository.save(this);
+	// return inputData;
+	// }
+	//
+	// @Override
+	// public IInputData startDbQueryInputData(
+	// final ISingleQueryInputData singleQueryInputData) {
+	// final InputData inputData = new InputData(singleQueryInputData, this);
+	// this.inputDataSet.add(inputData);
+	// repository.save(this);
+	// return inputData;
+	// }
 
-	@Override
-	public IInputData startDbQueryInputData(
-			final ISingleQueryInputData singleQueryInputData) {
-		final InputData inputData = new InputData(singleQueryInputData, this);
+	/**
+	 * @param singleInputData
+	 * @return
+	 */
+	public IInputData startInputData(final ISingleInputData singleInputData) {
+		final InputData inputData = new InputData(singleInputData, this);
 		this.inputDataSet.add(inputData);
 		repository.save(this);
 		return inputData;

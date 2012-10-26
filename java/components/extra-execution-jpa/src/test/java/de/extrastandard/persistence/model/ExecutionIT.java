@@ -119,7 +119,7 @@ public class ExecutionIT {
 					iSourcenputData.getResponseId());
 			dbQueryInputData.addSingleDBQueryInputData(singleQueryInputData);
 			final IInputData newDbQueryInputData = execution
-					.startDbQueryInputData(singleQueryInputData);
+					.startInputData(singleQueryInputData);
 
 			newDbQueryInputData.setRequestId(singleResponseData.getRequestId());
 		}
@@ -197,7 +197,7 @@ public class ExecutionIT {
 					iSourceInputData.getResponseId());
 			dbQueryInputData.addSingleDBQueryInputData(singleQueryInputData);
 			final IInputData newDbQueryInputData = execution
-					.startDbQueryInputData(singleQueryInputData);
+					.startInputData(singleQueryInputData);
 
 			newDbQueryInputData.setRequestId(singleResponseData.getRequestId());
 		}

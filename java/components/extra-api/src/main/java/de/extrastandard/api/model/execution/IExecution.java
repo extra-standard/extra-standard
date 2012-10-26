@@ -23,8 +23,7 @@ import java.util.Set;
 
 import de.extrastandard.api.exception.ExtraRuntimeException;
 import de.extrastandard.api.model.content.IResponseData;
-import de.extrastandard.api.model.content.ISingleContentInputData;
-import de.extrastandard.api.model.content.ISingleQueryInputData;
+import de.extrastandard.api.model.content.ISingleInputData;
 
 /**
  * Ein Execution bietet Möglichkeiten zur Protokollierung der zu verarbeitenden
@@ -36,23 +35,34 @@ import de.extrastandard.api.model.content.ISingleQueryInputData;
  */
 public interface IExecution extends PersistentEntity {
 
-	/**
-	 * Persists a new @ link} IInputData instance for a
-	 * {@link ISingleContentInputData}.
-	 * 
-	 * @param singleContentInputData
-	 * @return
-	 */
-	IInputData startContentInputData(ISingleContentInputData singleContentInputData);
+	// /**
+	// * Persists a new @ link} IInputData instance for a
+	// * {@link ISingleContentInputData}.
+	// *
+	// * @param singleContentInputData
+	// * @return
+	// */
+	// IInputData startContentInputData(
+	// ISingleContentInputData singleContentInputData);
+	//
+	// /**
+	// * Persists a new @ link} IInputData instance for a
+	// * {@link ISingleQueryInputData}.
+	// *
+	// * @param singleQueryInputData
+	// * @return {@link IInputData}Instanz
+	// */
+	// IInputData startDbQueryInputData(ISingleQueryInputData
+	// singleQueryInputData);
 
 	/**
-	 * Persists a new @ link} IInputData instance for a
-	 * {@link ISingleQueryInputData}.
+	 * * Persists a new @ link} IInputData instance for a
+	 * {@link ISingleInputData}.
 	 * 
-	 * @param singleQueryInputData
-	 * @return {@link IInputData}Instanz
+	 * @param singleInputData
+	 * @return
 	 */
-	IInputData startDbQueryInputData(ISingleQueryInputData singleQueryInputData);
+	IInputData startInputData(final ISingleInputData singleInputData);
 
 	/**
 	 * Updates this execution with the specified status.

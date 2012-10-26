@@ -10,4 +10,9 @@
 	<util:properties id="_extern_extra-properties-basic" location="classpath:/testconfig/extra-properties-basic.properties" />
 	<util:properties id="_extern_extra-properties-user"  location="classpath:/testconfig/extra-properties-user.properties"/>
 
+	<bean id="_configurationDirectory" class="java.io.File" >
+		
+		<constructor-arg value="${_configurationDirectory}"></constructor-arg>
+	</bean>  
+	
 </beans>
