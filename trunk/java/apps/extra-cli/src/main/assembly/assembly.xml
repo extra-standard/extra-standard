@@ -22,10 +22,6 @@
 			<outputDirectory>/bin</outputDirectory>
 			<filtered>true</filtered>
 		</fileSet>
-		<fileSet>
-			<directory>src/main/conf</directory>
-			<outputDirectory>/conf</outputDirectory>
-		</fileSet>
 	</fileSets>
 	<files>
 		<file>
