@@ -96,10 +96,6 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 	@Named("transportInfoBuilder")
 	private TransportInfoBuilder transportInfoBuilder;
 
-	@Inject
-	@Named("dummyOutputPluginUtil")
-	private DummyOutputPluginUtil dummyOutputPluginUtil;
-
 	@Override
 	public InputStream outputData(final InputStream request) {
 		InputStream responseAsinputStream = null;
