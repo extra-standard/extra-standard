@@ -21,17 +21,52 @@ package de.extra.client.plugins.responseprocessplugin.filesystem;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Named;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 import de.drv.dsrv.extrastandard.namespace.components.FlagCodeType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
+import de.drv.dsrv.extrastandard.namespace.components.ReportType;
+import de.drv.dsrv.extrastandard.namespace.components.TextType;
 import de.drv.dsrv.extrastandard.namespace.response.Transport;
+import de.extra.client.core.responce.impl.SingleReportData;
 
-public class ExtraMessageReturnCodeExtractor {
+@Named("extraMessageReturnDataExtractor")
+public class ExtraMessageReturnDataExtractor {
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(ExtraMessageReturnCodeExtractor.class);
+			.getLogger(ExtraMessageReturnDataExtractor.class);
+
+	/**
+	 * Liefert ReportDaten. Vorraussetzung ist gibt genau ein FlagType in dem
+	 * FlagList
+	 * 
+	 * Eine Default Implementirung für die vorab Version
+	 * 
+	 * @param report
+	 * @return
+	 */
+	public SingleReportData extractReportData(final ReportType report) {
+		Assert.notNull(report, "Report in der Acknowledge ist leer");
+		final List<FlagType> flagList = report.getFlag();
+		Assert.notNull(flagList, "Report Flag ist null");
+		Assert.isTrue(flagList.size() == 1, "FlagType is empty or has ");
+		final FlagType flagType = flagList.get(0);
+		Assert.notNull(flagType, "FlagType ist null");
+
+		final FlagCodeType flagCodeType = flagType.getCode();
+		Assert.notNull(flagCodeType, "FlagCode ist null");
+		final String returnCode = flagCodeType.getValue();
+		final TextType text = flagType.getText();
+		String returnText = null;
+		if (text != null) {
+			returnText = text.getValue();
+		}
+		return new SingleReportData(returnText, returnCode);
+	}
 
 	/**
 	 * Liefert FlagCode aus der Nachricht

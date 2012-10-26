@@ -55,7 +55,9 @@ import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extra.client.core.responce.impl.ResponseData;
+import de.extra.client.core.responce.impl.SingleReportData;
 import de.extra.client.core.responce.impl.SingleResponseData;
+import de.extrastandard.api.exception.ExtraResponseProcessPluginRuntimeException;
 import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.observer.ITransportInfo;
@@ -78,11 +80,9 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 	private IExtraUnmarschaller extraUnmarschaller;
 
 	@PluginValue(key = "eingangOrdner")
-	// @Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner}")
 	private File eingangOrdner;
 
 	@PluginValue(key = "reportOrdner")
-	// @Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner}")
 	private File reportOrdner;
 
 	@Inject
@@ -92,6 +92,10 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 	@Inject
 	@Named("transportInfoBuilder")
 	private TransportInfoBuilder transportInfoBuilder;
+
+	@Inject
+	@Named("extraMessageReturnDataExtractor")
+	private ExtraMessageReturnDataExtractor returnCodeExtractor;
 
 	/*
 	 * (non-Javadoc)
@@ -140,9 +144,13 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 						LOG.debug("Speicheren des Body auf Filesystem erfolgreich");
 					}
 
+					final ReportType report = responseDetails.getReport();
+					final SingleReportData reportData = returnCodeExtractor
+							.extractReportData(report);
 					final ISingleResponseData singleResponseData = new SingleResponseData(
-							requestDetails.getRequestID().getValue(), "C00",
-							"RETURNTEXT", responseId);
+							requestDetails.getRequestID().getValue(),
+							reportData.getReturnCode(),
+							reportData.getReturnText(), responseId);
 					responseData.addSingleResponse(singleResponseData);
 
 				} else {
@@ -198,11 +206,10 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			}
 
 		} catch (final XmlMappingException xmlMappingException) {
-			// TODO Exceptionhandling
-			throw new IllegalStateException(xmlMappingException);
+			throw new ExtraResponseProcessPluginRuntimeException(
+					xmlMappingException);
 		} catch (final IOException ioException) {
-			// TODO Auto-generated catch block
-			throw new IllegalStateException(ioException);
+			throw new ExtraResponseProcessPluginRuntimeException(ioException);
 		}
 		return responseData;
 	}
@@ -275,8 +282,8 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 				try {
 					fw.close();
 				} catch (final IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					LOG.warn("Exception beim Schliessen von dem FileWriter {}",
+							e.getLocalizedMessage());
 				}
 			}
 		}

@@ -35,11 +35,13 @@ import org.springframework.util.Assert;
 
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
+import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
 import de.drv.dsrv.extrastandard.namespace.response.Transport;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
+import de.extra.client.core.responce.impl.SingleReportData;
 import de.extra.client.core.responce.impl.SingleResponseData;
 import de.extra.client.core.responce.impl.SingleResponseDataForMultipleRequest;
 import de.extrastandard.api.exception.ExtraResponseProcessPluginRuntimeException;
@@ -70,11 +72,9 @@ public class AcknowledgeSingleResponseDataResponseProcessPlugin implements
 	@Named("extraUnmarschaller")
 	private IExtraUnmarschaller extraUnmarschaller;
 
-	// @Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner}")
-	// private File eingangOrdner;
-	//
-	// @Value("${plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner}")
-	// private File reportOrdner;
+	@Inject
+	@Named("extraMessageReturnDataExtractor")
+	private ExtraMessageReturnDataExtractor returnCodeExtractor;
 
 	@Inject
 	@Named("transportObserver")
@@ -132,9 +132,12 @@ public class AcknowledgeSingleResponseDataResponseProcessPlugin implements
 					"RequestIDType  in der Acknowledge ist leer");
 			final String requestId = classifiableRequestIDType.getValue();
 
-			// TODO Ergebnisse der Übertragung abfragen
+			final ReportType report = responseDetails.getReport();
+			final SingleReportData reportData = returnCodeExtractor
+					.extractReportData(report);
 			final ISingleResponseData singleResponseData = new SingleResponseData(
-					requestId, "C00", "RETURNTEXT", responseId);
+					requestId, reportData.getReturnCode(),
+					reportData.getReturnText(), responseId);
 			final IResponseData responseData = new SingleResponseDataForMultipleRequest(
 					singleResponseData);
 			return responseData;
