@@ -111,65 +111,75 @@ public class InputData extends AbstractEntity implements IInputData {
 	public InputData() {
 	}
 
-	/**
-	 * Erzeugt eine neue IInputData-Instanz und legt gleichzeitig eine neue
-	 * Transition an.
-	 * 
-	 * @param inputIdentifier
-	 *            Identifier
-	 * @param hashCode
-	 *            Hashcode der Daten
-	 * @param qualifier
-	 *            Qualifizierung
-	 */
-	public InputData(final ISingleContentInputData singleContentInputData,
-			final Execution execution) {
-		Assert.notNull(singleContentInputData,
-				"SingleContentInputData must be specified");
-		final String hashCode = singleContentInputData.getHashCode();
-		final String inputIdentifier = singleContentInputData
-				.getInputIdentifier();
-		Assert.notNull(inputIdentifier, "inputIdentifier must be specified");
-		Assert.notNull(hashCode, "inputIdentifier must be specified");
-		this.inputIdentifier = inputIdentifier;
-		this.hashcode = hashCode;
-		this.execution = execution;
-		repository.save(this);
-	}
+	// /**
+	// * Erzeugt eine neue IInputData-Instanz und legt gleichzeitig eine neue
+	// * Transition an.
+	// *
+	// * @param inputIdentifier
+	// * Identifier
+	// * @param hashCode
+	// * Hashcode der Daten
+	// * @param qualifier
+	// * Qualifizierung
+	// */
+	// public InputData(final ISingleContentInputData singleContentInputData,
+	// final Execution execution) {
+	// Assert.notNull(singleContentInputData,
+	// "SingleContentInputData must be specified");
+	// final String hashCode = singleContentInputData.getHashCode();
+	// final String inputIdentifier = singleContentInputData
+	// .getInputIdentifier();
+	// Assert.notNull(inputIdentifier, "inputIdentifier must be specified");
+	// Assert.notNull(hashCode, "inputIdentifier must be specified");
+	// this.inputIdentifier = inputIdentifier;
+	// this.hashcode = hashCode;
+	// this.execution = execution;
+	// repository.save(this);
+	// }
+	//
+	// /**
+	// * @param serverResponseId
+	// * @param sourceRequestId
+	// * @param execution
+	// */
+	// public InputData(final ISingleQueryInputData singleQueryInputData,
+	// final Execution execution) {
+	// Assert.notNull(singleQueryInputData,
+	// "ISingleQueryInputData must be specified");
+	// Assert.notNull(execution, "Execution must be specified");
+	//
+	// this.execution = execution;
+	// final Long sourceIdentificationId = singleQueryInputData
+	// .getSourceIdentificationId();
+	// Assert.notNull(sourceIdentificationId,
+	// "SourceIdentification must be specified");
+	// final InputData sourceInputData = repository
+	// .findOne(sourceIdentificationId);
+	// final PhaseConnection sourceInputNextPhaseConnection = sourceInputData
+	// .getNextPhaseConnection();
+	// this.currentPhaseConnection = sourceInputNextPhaseConnection;
+	// repository.save(this);
+	// sourceInputNextPhaseConnection.setTargetInputData(this);
+	// final String requestId = this.calculateRequestId();
+	// this.requestId = requestId;
+	// this.inputIdentifier = singleQueryInputData.getInputIdentifier();
+	// repository.save(this);
+	// }
 
 	/**
-	 * @param serverResponseId
-	 * @param sourceRequestId
+	 * Erzeugt eine neue IInputData-Instanz.
+	 * 
+	 * @param singleInputData
 	 * @param execution
 	 */
-	public InputData(final ISingleQueryInputData singleQueryInputData,
-			final Execution execution) {
-		Assert.notNull(singleQueryInputData,
-				"ISingleQueryInputData must be specified");
-		Assert.notNull(execution, "Execution must be specified");
-
-		this.execution = execution;
-		final Long sourceIdentificationId = singleQueryInputData
-				.getSourceIdentificationId();
-		Assert.notNull(sourceIdentificationId,
-				"SourceIdentification must be specified");
-		final InputData sourceInputData = repository
-				.findOne(sourceIdentificationId);
-		final PhaseConnection sourceInputNextPhaseConnection = sourceInputData
-				.getNextPhaseConnection();
-		this.currentPhaseConnection = sourceInputNextPhaseConnection;
-		repository.save(this);
-		sourceInputNextPhaseConnection.setTargetInputData(this);
-		final String requestId = this.calculateRequestId();
-		this.requestId = requestId;
-		repository.save(this);
-	}
-
 	public InputData(final ISingleInputData singleInputData,
 			final Execution execution) {
 		Assert.notNull(singleInputData, "ISingleInputData must be specified");
 		Assert.notNull(execution, "Execution must be specified");
 		this.execution = execution;
+		final String inputIdentifier = singleInputData.getInputIdentifier();
+		Assert.notNull(inputIdentifier, "inputIdentifier must be specified");
+		this.inputIdentifier = inputIdentifier;
 		if (ISingleQueryInputData.class.isAssignableFrom(singleInputData
 				.getClass())) {
 			final ISingleQueryInputData singleQueryInputData = ISingleQueryInputData.class
@@ -212,11 +222,7 @@ public class InputData extends AbstractEntity implements IInputData {
 			final ISingleContentInputData singleContentInputData) {
 
 		final String hashCode = singleContentInputData.getHashCode();
-		final String inputIdentifier = singleContentInputData
-				.getInputIdentifier();
-		Assert.notNull(inputIdentifier, "inputIdentifier must be specified");
 		Assert.notNull(hashCode, "inputIdentifier must be specified");
-		this.inputIdentifier = inputIdentifier;
 		this.hashcode = hashCode;
 		repository.save(this);
 
