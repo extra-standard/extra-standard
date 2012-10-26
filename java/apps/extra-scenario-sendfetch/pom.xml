@@ -80,6 +80,68 @@
 							</execution>
 						</executions>
 					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.7</version>
+						<executions>
+							<execution>
+								<id>copy-files-test-properties</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<!-- Konfiguration fuer Unit-Tests uebernehmen -->
+								<configuration>
+									<target>
+										<!--  Phase 1 -->
+										<copy
+											file="${project.basedir}/src/main/conf/phase1/extra-properties-basic.properties"
+											tofile="${project.basedir}/src/test/resources/conf/phase1/extra-properties-basic.properties" />
+										<copy
+											file="${project.basedir}/src/main/conf/phase1/logging-config.xml"
+											tofile="${project.basedir}/src/test/resources/conf/phase1/logging-config.xml" />
+										<copy
+											file="${project.basedir}/src/main/conf/phase1/phase1-sent-profil.xml"
+											tofile="${project.basedir}/src/test/resources/conf/phase1/phase1-sent-profil.xml" />
+										<copy
+											file="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties_example"
+											tofile="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties" />
+										<!--  Phase 2 -->
+										<copy
+											file="${project.basedir}/src/main/conf/phase2/extra-properties-basic.properties"
+											tofile="${project.basedir}/src/test/resources/conf/phase2/extra-properties-basic.properties" />
+										<copy
+											file="${project.basedir}/src/main/conf/phase2/logging-config.xml"
+											tofile="${project.basedir}/src/test/resources/conf/phase2/logging-config.xml" />
+										<copy
+											file="${project.basedir}/src/main/conf/phase2/phase2-fetchresult-profil.xml"
+											tofile="${project.basedir}/src/test/resources/conf/phase2/phase2-fetchresult-profil.xml" />
+										<copy
+											file="${project.basedir}/src/test/resources/conf/phase2/extra-properties-user.properties_example"
+											tofile="${project.basedir}/src/test/resources/conf/phase2/extra-properties-user.properties" />
+										<!--  Phase 3 -->
+										<copy
+											file="${project.basedir}/src/main/conf/phase3/extra-properties-basic.properties"
+											tofile="${project.basedir}/src/test/resources/conf/phase3/extra-properties-basic.properties" />
+										<copy
+											file="${project.basedir}/src/main/conf/phase3/logging-config.xml"
+											tofile="${project.basedir}/src/test/resources/conf/phase3/logging-config.xml" />
+										<copy
+											file="${project.basedir}/src/main/conf/phase3/phase3-confirmation-profil.xml"
+											tofile="${project.basedir}/src/test/resources/conf/phase3/phase3-confirmation-profil.xml" />
+										<copy
+											file="${project.basedir}/src/test/resources/conf/phase3/extra-properties-user.properties_example"
+											tofile="${project.basedir}/src/test/resources/conf/phase3/extra-properties-user.properties" />
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+
+
 				</plugins>
 			</build>
 		</profile>

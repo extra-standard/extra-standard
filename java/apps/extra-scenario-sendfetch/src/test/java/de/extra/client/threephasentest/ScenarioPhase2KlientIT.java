@@ -30,7 +30,7 @@ public class ScenarioPhase2KlientIT {
 
 	private ExtraClient extraClient;
 
-	private static final String TEST_CONFIG = "/threephaseszenario/phase2";
+	private static final String TEST_CONFIG = "/conf/phase2";
 
 	private static final String LOG_DIR = "/logs";
 
