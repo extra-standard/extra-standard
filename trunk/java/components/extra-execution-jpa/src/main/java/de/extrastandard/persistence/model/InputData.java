@@ -36,7 +36,9 @@ import javax.persistence.Transient;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.util.Assert;
 
+import de.extrastandard.api.exception.ExtraCoreRuntimeException;
 import de.extrastandard.api.model.content.ISingleContentInputData;
+import de.extrastandard.api.model.content.ISingleInputData;
 import de.extrastandard.api.model.content.ISingleQueryInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
@@ -161,6 +163,63 @@ public class InputData extends AbstractEntity implements IInputData {
 		final String requestId = this.calculateRequestId();
 		this.requestId = requestId;
 		repository.save(this);
+	}
+
+	public InputData(final ISingleInputData singleInputData,
+			final Execution execution) {
+		Assert.notNull(singleInputData, "ISingleInputData must be specified");
+		Assert.notNull(execution, "Execution must be specified");
+		this.execution = execution;
+		if (ISingleQueryInputData.class.isAssignableFrom(singleInputData
+				.getClass())) {
+			final ISingleQueryInputData singleQueryInputData = ISingleQueryInputData.class
+					.cast(singleInputData);
+			fillInputData(singleQueryInputData);
+		} else if (ISingleContentInputData.class
+				.isAssignableFrom(singleInputData.getClass())) {
+			final ISingleContentInputData singleContentInputData = ISingleContentInputData.class
+					.cast(singleInputData);
+			fillInputData(singleContentInputData);
+		} else {
+			throw new ExtraCoreRuntimeException("Unexpected inputdata: "
+					+ singleInputData.getClass());
+		}
+	}
+
+	/**
+	 * 
+	 * @param singleQueryInputData
+	 * @param execution
+	 */
+	private void fillInputData(final ISingleQueryInputData singleQueryInputData) {
+		final Long sourceIdentificationId = singleQueryInputData
+				.getSourceIdentificationId();
+		Assert.notNull(sourceIdentificationId,
+				"SourceIdentification must be specified");
+		final InputData sourceInputData = repository
+				.findOne(sourceIdentificationId);
+		final PhaseConnection sourceInputNextPhaseConnection = sourceInputData
+				.getNextPhaseConnection();
+		this.currentPhaseConnection = sourceInputNextPhaseConnection;
+		repository.save(this);
+		sourceInputNextPhaseConnection.setTargetInputData(this);
+		final String requestId = this.calculateRequestId();
+		this.requestId = requestId;
+		repository.save(this);
+	}
+
+	private void fillInputData(
+			final ISingleContentInputData singleContentInputData) {
+
+		final String hashCode = singleContentInputData.getHashCode();
+		final String inputIdentifier = singleContentInputData
+				.getInputIdentifier();
+		Assert.notNull(inputIdentifier, "inputIdentifier must be specified");
+		Assert.notNull(hashCode, "inputIdentifier must be specified");
+		this.inputIdentifier = inputIdentifier;
+		this.hashcode = hashCode;
+		repository.save(this);
+
 	}
 
 	/**

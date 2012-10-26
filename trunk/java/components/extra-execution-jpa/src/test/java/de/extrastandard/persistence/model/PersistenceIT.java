@@ -130,7 +130,7 @@ public class PersistenceIT {
 		final ISingleContentInputData singleContentInputData = new SingleStringInputData(
 				"test data");
 		final IInputData inputData = execution
-				.startContentInputData(singleContentInputData);
+				.startInputData(singleContentInputData);
 		assertNotNull(inputData);
 		assertEquals(singleContentInputData.getHashCode(),
 				inputData.getHashcode());

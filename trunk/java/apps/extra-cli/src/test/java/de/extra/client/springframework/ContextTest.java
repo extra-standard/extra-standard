@@ -27,7 +27,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * Um den eigentlichen Context zu starten werden die Konfigurationsbeans
  * benötigt, die in der Datei spring-properties.xml definiert sind. Daher ist
  * diese Datei zusätzlich anzugeben.
- *
+ * 
  * @author Thorsten Vogel
  * @version $Id$
  */

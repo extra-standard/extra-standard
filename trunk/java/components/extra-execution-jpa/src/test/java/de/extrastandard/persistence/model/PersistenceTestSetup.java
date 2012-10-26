@@ -108,8 +108,7 @@ public class PersistenceTestSetup {
 						"-c d:/extras/configdir", PhaseQualifier.PHASE1);
 
 		final IInputData inputData = executionForTestPhase2
-				.startContentInputData(new SingleStringInputData(
-						"TestStringInoutData"));
+				.startInputData(new SingleStringInputData("TestStringInoutData"));
 		final String calculatedRequestId = inputData.calculateRequestId();
 		inputData.setRequestId(calculatedRequestId);
 
@@ -130,8 +129,7 @@ public class PersistenceTestSetup {
 						"-c d:/extras/configdir2", PhaseQualifier.PHASE2);
 
 		final IInputData inputDataForPhase3 = executionForTestPhase3
-				.startContentInputData(new SingleStringInputData(
-						"TestStringInoutData"));
+				.startInputData(new SingleStringInputData("TestStringInoutData"));
 		final String calculatedRequestIdForPhase3 = inputDataForPhase3
 				.calculateRequestId();
 		inputDataForPhase3.setRequestId(calculatedRequestIdForPhase3);

@@ -199,7 +199,7 @@ public class ClientCore implements ApplicationContextAware {
 					.getInputData();
 			for (final ISingleQueryInputData singleQueryInputData : singleQueryInputDataList) {
 				final IInputData dbInputData = execution
-						.startDbQueryInputData(singleQueryInputData);
+						.startInputData(singleQueryInputData);
 				requestIdAcquisitionStrategy.setRequestId(dbInputData,
 						singleQueryInputData);
 			}
@@ -241,7 +241,7 @@ public class ClientCore implements ApplicationContextAware {
 			for (final ISingleContentInputData singleContentInputData : fileInputData
 					.getInputData()) {
 				final IInputData inputData = execution
-						.startContentInputData(singleContentInputData);
+						.startInputData(singleContentInputData);
 				requestIdAcquisitionStrategy.setRequestId(inputData,
 						singleContentInputData);
 			}
