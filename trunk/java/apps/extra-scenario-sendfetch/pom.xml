@@ -21,7 +21,7 @@
 			<artifactId>extra-cli</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>de.extrastandard</groupId>
 			<artifactId>extra-cli</artifactId>
@@ -29,20 +29,20 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>de.extrastandard</groupId>
 			<artifactId>extra-execution-jpa</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 			<scope>test</scope>
 			<type>test-jar</type>
-		</dependency>			
-	
+		</dependency>
+
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<scope>test</scope>
-		</dependency>		
+		</dependency>
 	</dependencies>
 
 	<profiles>
@@ -95,7 +95,7 @@
 								<!-- Konfiguration fuer Unit-Tests uebernehmen -->
 								<configuration>
 									<target>
-										<!--  Phase 1 -->
+										<!-- Phase 1 -->
 										<copy
 											file="${project.basedir}/src/main/conf/phase1/extra-properties-basic.properties"
 											tofile="${project.basedir}/src/test/resources/conf/phase1/extra-properties-basic.properties" />
@@ -107,8 +107,9 @@
 											tofile="${project.basedir}/src/test/resources/conf/phase1/phase1-sent-profil.xml" />
 										<copy
 											file="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties_example"
-											tofile="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties" overwrite="false"/>
-										<!--  Phase 2 -->
+											tofile="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties"
+											overwrite="false" />
+										<!-- Phase 2 -->
 										<copy
 											file="${project.basedir}/src/main/conf/phase2/extra-properties-basic.properties"
 											tofile="${project.basedir}/src/test/resources/conf/phase2/extra-properties-basic.properties" />
@@ -120,8 +121,9 @@
 											tofile="${project.basedir}/src/test/resources/conf/phase2/phase2-fetchresult-profil.xml" />
 										<copy
 											file="${project.basedir}/src/test/resources/conf/phase2/extra-properties-user.properties_example"
-											tofile="${project.basedir}/src/test/resources/conf/phase2/extra-properties-user.properties" overwrite="false"/>
-										<!--  Phase 3 -->
+											tofile="${project.basedir}/src/test/resources/conf/phase2/extra-properties-user.properties"
+											overwrite="false" />
+										<!-- Phase 3 -->
 										<copy
 											file="${project.basedir}/src/main/conf/phase3/extra-properties-basic.properties"
 											tofile="${project.basedir}/src/test/resources/conf/phase3/extra-properties-basic.properties" />
@@ -133,15 +135,31 @@
 											tofile="${project.basedir}/src/test/resources/conf/phase3/phase3-confirmation-profil.xml" />
 										<copy
 											file="${project.basedir}/src/test/resources/conf/phase3/extra-properties-user.properties_example"
-											tofile="${project.basedir}/src/test/resources/conf/phase3/extra-properties-user.properties" overwrite="false"/>
+											tofile="${project.basedir}/src/test/resources/conf/phase3/extra-properties-user.properties"
+											overwrite="false" />
 									</target>
 								</configuration>
 							</execution>
 						</executions>
 					</plugin>
-
-
-
+					<plugin>
+						<groupId>com.googlecode.flyway</groupId>
+						<artifactId>flyway-maven-plugin</artifactId>
+						<version>1.7</version>
+						<configuration>
+							<driver>oracle.jdbc.OracleDriver</driver>
+							<url>jdbc:oracle:thin:@localhost:1521:xe</url>
+							<user>extracl</user>
+							<password>extracl</password>
+						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>com.oracle</groupId>
+								<artifactId>ojdbc14</artifactId>
+								<version>10.2.0.4.0</version>
+							</dependency>
+						</dependencies>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
