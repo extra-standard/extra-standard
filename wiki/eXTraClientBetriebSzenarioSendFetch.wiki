@@ -31,12 +31,10 @@ Ergebnisdateien werden hier abgelegt.
 /logs
 Ausgabeort für Logdateien die während der Programmausführung erzeugt werden.
 
---------------------------------
-Ausführbare Version erstellen
---------------------------------
+== Ausführbare Version erstellen ==
 
-- eXTra Client (Archiv: extra-cli-1.0.0-SNAPSHOT.zip) auspacken, z.B. D:\extra-client
-- Parallel dazu, in einem Verzeichnis (z.B. fachverfahren) dieses Archiv (extra-scenario-sendfetch-1.0.0-SNAPSHOT.zip) auspacken
+ * eXTra Client (Archiv: extra-cli-1.0.0-SNAPSHOT.zip) auspacken, z.B. D:\extra-client
+ * Parallel dazu, in einem Verzeichnis (z.B. fachverfahren) dieses Archiv (extra-scenario-sendfetch-1.0.0-SNAPSHOT.zip) auspacken
 Folgende Struktur ergibt sich:
 
 D:
@@ -56,17 +54,6 @@ D:
       - reports
       - responses
       
-- Die eXTra Client Datenbank muss angelegt und initial befüllt werden (siehe WIKI: https://code.google.com/p/extra-standard/wiki/eXTraEinfuehrung?tm=6)
-- Die DB-Verbindung muss in den Dateien 'extra-properties-user.properties' (in den Verzeichnissen conf/phase1, conf/phase2, conf/phase3) angegeben werden.
-- Aufruf des eXTra Clients: Im Verzeichnis 'extra-scenario-sendfetch/bin' befindet sich für jede Phase eine ausführbare Batchdatei.   
-
---------------------------------
-Zusatzinformationen
---------------------------------
-Für die Anwendungsarchitektur des extra-cli Programms steht folgende Seite 
-als Information zur Verfügung:
-http://code.google.com/p/extra-standard/wiki/eXTraArchitekturAnwendung
-
-Für den Betrieb des extra-cli Programms steht folgende Seite 
-als Information zur Verfügung:
-http://code.google.com/p/extra-standard/wiki/eXTraClientBetriebsanleitung
+ * Die eXTra Client Datenbank muss angelegt und initial befüllt werden (siehe WIKI: https://code.google.com/p/extra-standard/wiki/eXTraEinfuehrung?tm=6)
+ * Die DB-Verbindung muss in den Dateien 'extra-properties-user.properties' (in den Verzeichnissen conf/phase1, conf/phase2, conf/phase3) angegeben werden.
+ * Aufruf des eXTra Clients: Im Verzeichnis 'extra-scenario-sendfetch/bin' befindet sich für jede Phase eine ausführbare Batchdatei.   
