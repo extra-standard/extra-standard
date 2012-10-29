@@ -15,7 +15,6 @@ In dem Archiv 'extra-scenario-sendfetch-... .zip' befinden sich alle benötigten
 || /work/reports || Ausgabeverzeichnis für Reports. ||
 || /work/responses || Ergebnisdateien werden hier abgelegt. ||
 || /logs || Ausgabeort für Logdateien die während der Programmausführung erzeugt werden. ||
-|| || ||
 
 
 
