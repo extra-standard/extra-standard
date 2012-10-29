@@ -27,7 +27,7 @@
         <xcpt:Data>
             <xcpt:ElementSequence>
                 <xmsg:dataRequest>
-			<xmsg:Query> 
+						<xmsg:Query> 
 	                        <xmsg:Argument property="http://www.extra-standard.de/property/ResponseID"> 
 	                                <xmsg:GT>10000</xmsg:GT> 
 	                        </xmsg:Argument> 
