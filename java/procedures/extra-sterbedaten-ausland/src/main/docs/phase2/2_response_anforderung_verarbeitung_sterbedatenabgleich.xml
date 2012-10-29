@@ -8,13 +8,13 @@
 			<xcpt:ReceiverID>66667777</xcpt:ReceiverID>
 		</xcpt:Receiver>
 		<xcpt:RequestDetails>
-			<xcpt:RequestID class="0">12345698</xcpt:RequestID>
+			<xcpt:RequestID class="0">1111111</xcpt:RequestID>
 			<xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
 			<xcpt:Application>
 				<xcpt:Product>Software</xcpt:Product>
 				<xcpt:Manufacturer>Hersteller</xcpt:Manufacturer>
 			</xcpt:Application>
-			<xcpt:Procedure>http://www.extra-standard.de/procedures/DEUEV/</xcpt:Procedure>
+			<xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbedatenausl</xcpt:Procedure>
 			<xcpt:DataType>http://www.extra-standard.de/datatype/DataRequest</xcpt:DataType>
 			<xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
 		</xcpt:RequestDetails>
@@ -40,18 +40,18 @@
 			<xcpt:ReceiverID>66667777</xcpt:ReceiverID>
 		</xcpt:Receiver>
 				<xcpt:RequestDetails>
-					<xcpt:RequestID class="0">STERBEDATENABGLEICH-7777777-1-RESPONSE</xcpt:RequestID>
+					<xcpt:RequestID class="0">1111111</xcpt:RequestID>
 					<xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
 					<xcpt:Application>
 						<xcpt:Product>Software</xcpt:Product>
 						<xcpt:Manufacturer>Hersteller</xcpt:Manufacturer>
 					</xcpt:Application>
-					<xcpt:Procedure>http://www.extra-standard.de/procedures/DEUEV/</xcpt:Procedure>
+					<xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbedatenausl</xcpt:Procedure>
 					<xcpt:DataType>http://www.extra-standard.de/datatype/DataRequest</xcpt:DataType>
-					<xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
-				</xcpt:RequestDetails>
+					<xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>				</xcpt:RequestDetails>
+				</xcpt:RequestDetails>					
 				<xcpt:ResponseDetails>
-					<xcpt:ResponseID class="0">STERBEDATENABGLEICH-7777777-1-RESPONSE-DATENRESPONSE</xcpt:ResponseID>
+					<xcpt:ResponseID class="0">11111121</xcpt:ResponseID>
 					<xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
 					<xcpt:Report highestWeight="http://www.extra-standard.de/weight/INFO">
 				<xcpt:Flag weight="http://www.extra-standard.de/weight/INFO">
@@ -78,21 +78,21 @@
 			<xcpt:ReceiverID>66667777</xcpt:ReceiverID>
 		</xcpt:Receiver>
 				<xcpt:RequestDetails>
-					<xcpt:RequestID class="0">STERBEDATENABGLEICH-7777778-2-RESPONSE</xcpt:RequestID>
+					<xcpt:RequestID class="0">1111111</xcpt:RequestID>
 					<xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
 					<xcpt:Application>
 						<xcpt:Product>Software</xcpt:Product>
 						<xcpt:Manufacturer>Hersteller</xcpt:Manufacturer>
 					</xcpt:Application>
-					<xcpt:Procedure>http://www.extra-standard.de/procedures/DEUEV/</xcpt:Procedure>
+					<xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbedatenausl</xcpt:Procedure>
 					<xcpt:DataType>http://www.extra-standard.de/datatype/DataRequest</xcpt:DataType>
-					<xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
-				</xcpt:RequestDetails>
+					<xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>				</xcpt:RequestDetails>
+				</xcpt:RequestDetails>	
 				<xcpt:ResponseDetails>
-					<xcpt:ResponseID class="0">STERBEDATENABGLEICH-7777778-2-RESPONSE-DATENABGLEICH</xcpt:ResponseID>
+					<xcpt:ResponseID class="0">11111122</xcpt:ResponseID>
 					<xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
 					<xcpt:Report highestWeight="http://www.extra-standard.de/weight/INFO">
-				<xcpt:Flag weight="http://www.extra-standard.de/weight/INFO">
+						<xcpt:Flag weight="http://www.extra-standard.de/weight/INFO">
 							<xcpt:Code>000</xcpt:Code>
 							<xcpt:Text>Daten wurden erfolgreich verarbeitet</xcpt:Text>
 						</xcpt:Flag>

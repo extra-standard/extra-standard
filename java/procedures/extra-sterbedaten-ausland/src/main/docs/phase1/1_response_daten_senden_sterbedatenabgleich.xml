@@ -8,18 +8,18 @@
 			<xcpt:ReceiverID>66667777</xcpt:ReceiverID>
 		</xcpt:Receiver>
 		<xcpt:RequestDetails>
-			<xcpt:RequestID>STERBEDATENABGLEICH-7777777</xcpt:RequestID>
+			<xcpt:RequestID>11111121</xcpt:RequestID>
 			<xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
 			<xcpt:Application>
 				<xcpt:Product>Software</xcpt:Product>
 				<xcpt:Manufacturer>Hersteller</xcpt:Manufacturer>
 			</xcpt:Application>
-			<xcpt:Procedure>http://www.extra-standard.de/procedures/DEUEV</xcpt:Procedure>
-			<xcpt:DataType>http://www.extra-standard.de/datatypes/Sofortmeldung</xcpt:DataType>
+			<xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbedatenausl</xcpt:Procedure>
+			<xcpt:DataType>http://www.extra-standard.de/datatypes/DataSend</xcpt:DataType>
 			<xcpt:Scenario>http://wwwxextra-standardxde/scenario/request-with-acknowledgement</xcpt:Scenario>
 		</xcpt:RequestDetails>
 		<xcpt:ResponseDetails>
-			<xcpt:ResponseID>STERBEDATENABGLEICH-7777777-1-RESPONSE</xcpt:ResponseID>
+			<xcpt:ResponseID>11111131</xcpt:ResponseID>
 			<xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
 			<xcpt:Report highestWeight="http://wwwxextra-standardxde/weight/INFO">
 				<xcpt:Flag weight="http://wwwxextra-standardxde/weight/INFO">

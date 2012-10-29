@@ -17,7 +17,7 @@
                 <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
                 <xcpt:RegistrationID/>
             </xcpt:Application>
-            <xcpt:Procedure>http://www.extra-standard.de/procedures/DataSendFetch</xcpt:Procedure>
+            <xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbedatenausl</xcpt:Procedure>
             <xcpt:DataType>http://www.extra-standard.de/datatypes/DataSend</xcpt:DataType>
             <xcpt:Scenario>http://wwwxextra-standardxde/scenario/request-with-acknowledgement</xcpt:Scenario>
         </xcpt:RequestDetails>
