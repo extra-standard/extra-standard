@@ -29,8 +29,8 @@
                 <xmsg:listOfConfirmationOfReceipt>
                     <xmsg:ConfirmationOfReceipt>
                         <xmsg:PropertySet name="http://www.extra-standard.de/property/ResponseID">
-                            <xmsg:Value>STERBEDATENABGLEICH-7777778-2-RESPONSE-DATENABGLEICH</xmsg:Value>
-                            <xmsg:Value>STERBEDATENABGLEICH-7777778-2-RESPONSE-DATENABGLEICH</xmsg:Value>
+                            <xmsg:Value>11111121</xmsg:Value>
+                            <xmsg:Value>11111122</xmsg:Value>
                         </xmsg:PropertySet>
                     </xmsg:ConfirmationOfReceipt>
                 </xmsg:listOfConfirmationOfReceipt>

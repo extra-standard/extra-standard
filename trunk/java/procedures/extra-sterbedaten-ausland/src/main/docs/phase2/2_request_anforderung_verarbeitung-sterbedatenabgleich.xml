@@ -17,7 +17,7 @@
                 <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
                 <xcpt:RegistrationID/>
             </xcpt:Application>
-            <xcpt:Procedure>http://www.extra-standard.de/procedures/DataSendFetch</xcpt:Procedure>
+            <xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbedatenausl</xcpt:Procedure>
             <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
             <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
         </xcpt:RequestDetails>
@@ -27,14 +27,14 @@
         <xcpt:Data>
             <xcpt:ElementSequence>
                 <xmsg:dataRequest>
-                    <xmsg:Query>
-                        <xmsg:Argument property="http://www.extra-standard.de/property/ResponseID" type="xs:string" event="http://www.extra-standard.de/event/RequestData" xmlns="">
-                            <xmsg:IN>
-                                <xmsg:EQ>STERBEDATENABGLEICH-7777777-1-RESPONSE</xmsg:EQ>
-                                <xmsg:EQ>STERBEDATENABGLEICH-7777778-2-RESPONSE</xmsg:EQ>
-                            </xmsg:IN>
-                        </xmsg:Argument>
-                    </xmsg:Query>
+			<xmsg:Query> 
+	                        <xmsg:Argument property="http://www.extra-standard.de/property/ResponseID"> 
+	                                <xmsg:GT>10000</xmsg:GT> 
+	                        </xmsg:Argument> 
+	                        <xmsg:Argument property="http://www.extra-standard.de/property/Procedure"> 
+	                                <xmsg:EQ>STDAUSL</xmsg:EQ> 
+	                        </xmsg:Argument> 
+                       </xmsg:Query> 
                     <xmsg:Control/>
                 </xmsg:dataRequest>
             </xcpt:ElementSequence>
