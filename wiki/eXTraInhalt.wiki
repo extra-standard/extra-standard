@@ -22,5 +22,6 @@
     * [eXTraClientBetriebSonstigeKonfiguration Sonstige Konfiguration]
     * [eXTraClientBetriebLogging Logging]
     * [eXTraClientBetriebDatenbank Datenbank]
+    * [eXTraClientBetriebSendFetch Szenario Send-Fetch]
   * [eXTraSpecIssues Offene Punkte]    
   * [eXTraEntwProzess Entwicklungsprozess]
