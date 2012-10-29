@@ -11,31 +11,29 @@ Der eXTra-Client unterstützt folgende Anwendungsfallszenarien:
 
 Durch Kombination dieser Anwendungsfälle können komplexere Kommunikationsabläufe realisiert werden (z.B. der Sende-/Holbetrieb). Aufgrund seines modularen Aufbaus und vielfältiger Konfigurationsmöglichkeiten kann der eXTra-Client auch zur Durchführung von Fachverfahren (z.B. Sterbedatenabgleich) eingesetzt werden. Programmänderungen des eXTra-Clients sind nur bei tiefgreifenden Funktionserweiterungen (z.B. Anpassungen an neuen eXTra-Standard) notwendig.
 
-Der Kommunikationsablauf wird vom eXTra-Client in einer Datenbank protokolliert. Neben den einzelnen Aktionen werden z.B. auch Serverantworten die in späteren Schritten benötigt werden (z.B. Response-ID) oder Empfangszertifikate in der Datenbank abgelegt. Außerdem kann konfigurativ das Logging aktiviert werden (z.B. für die Fehlersuche).
+Der Kommunikationsablauf wird vom eXTra-Client in einer Datenbank protokolliert. Neben den einzelnen Aktionen werden z.B. auch Serverantworten die in späteren Schritten benötigt werden (z.B. Response-ID) oder Empfangszertifikate in der Datenbank abgelegt. Außerdem kann konfigurativ das Logging aktiviert werden (z.B. für die Fehlersuche). [TODO] Skripte zum Aufbau der Datenbank befinden sich in der Auslieferungsversion.
 
 = Anforderungen an den Betriebsrechner =
 Der eXTra-Client wird als Java Anwendung ausgeliefert und benötigt eine Java 6 Laufzeitumgebung. Er ist nicht an ein spezielles Betriebssystem gebunden. Für die Protokollierung des Kommuninkationsablaufes wird eine Datenbank benötigt (siehe [eXTraClientBetriebDatenbank Datenbank]). Für den Kommunikationsablauf müssen evtl. bestimmte Externe eXTra-Server erreichbar sein.
 
 = Bestandteile der Auslieferungsversion =
 
-Die Auslieferungsversion besteht aus dem Ausführungs-, dem Konfigurations- und dem Programm-Bereich. Jeder Bereich befindet sich in einem Verzeichnis:
+Die Auslieferungsversion besteht aus dem Programm-Bereich und einem exemplarischen Ausführungs-Bereich. Jeder Bereich befindet sich in einem Verzeichnis:
 
 ==== Ausführungsbereich (Verzeichnis: /bin) ==== 
 Hier befinden sich beispielhaft Batch-Dateien für Windows (eXTra-cli.bat) und Linux. 
 
-==== Konfigurationsbereich (Verzeichnis: /conf) ====
-Hier werden die Konfigurationsverzeichnisse/-dateien der mitgelieferten Fachverfahren abgelegt.
-
 ==== Programmbereich (Verzeichnis: /lib) ====
-Hier stehen sämtliche benötigte Jar-Dateien - sowohl die eXTra-Jar-Dateien als auch die externen Bibliotheken zur Verfügung.
+Hier stehen sämtliche benötigte Jar-Dateien - sowohl die eXTra-Jar-Dateien als auch die externen Bibliotheken zur Verfügung. Für eine Datenbindung Anbindung werden spezielle JDBC-Treiber benötigt (z.B. Oracle JDBC). Diese werden nicht mitgeliefert und müssen hier abgelegt werden.
 
-Aufgrund des modularen Aufbaus und der konfigurativen Steuerung des EXTra-Clients können zur Basisversion weitere Fachverfahren hinzugefügt werden. Pro Fachverfahren sollte die Konfiguration in einem Konfigurationsverzeichnisse abgelegt werden (TODO: evtl. Änderungen in der DB notwendig?!). 
+Aufgrund des modularen Aufbaus und der konfigurativen Steuerung des EXTra-Clients können zur Basisversion weitere Fachverfahren hinzugefügt werden. Pro Fachverfahren sollte die Konfiguration in einem Konfigurationsverzeichnisse abgelegt werden. Jedem Fachverfahren ist ein DB-Skript für die Initialisierung zugewiesen. 
 
 = Installation/Bereitstellung einer Version =
 Die Bereitstellung einer Version erfolgt in diesen Schritten:
  * Auspacken der Auslieferungsversion in einem Verzeichnis auf dem Betriebsrechner
- * Konfigurationsverzeicnisse/-dateien der Fachverfahren im conf Ordner ablegen 
- * Konfigurationsdateien an die Umgebung des Betriebsrechners anpassen (z.B. Verzeichnisse für Input und Output).
+ * DB-Treiber in den lib-Ordner Kopieren
+ * Fachverfahren in einem eigenen Ordner ablegen. 
+ * Konfigurationsdateien des Fachverfahrens an die Umgebung des Betriebsrechners anpassen (z.B. Verzeichnisse für Input und Output).
  * eXTra-Client Datenbank einrichten, initialisieren oder updaten (z.B. über mitgeliefertes SQL-Skript).
  * Batch-Dateien für den Aufruf der Fachverfahren im Ordner _bin_ erstellen bzw. anpassen
 
