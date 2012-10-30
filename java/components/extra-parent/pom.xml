@@ -116,7 +116,7 @@
 
 	<ciManagement>
 		<system>CloudBees</system>
-		<url>https://codecrowd.ci.cloudbees.com/job/extra-modules</url>
+		<url>https://extra-standard.ci.cloudbees.com</url>
 	</ciManagement>
 
 	<issueManagement>
