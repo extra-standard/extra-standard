@@ -15,4 +15,11 @@
   * OracleXE oder Oracle 11
 
 = Installationsanleitung =
-TODO
+
+Die Auslieferung besteht aus diesen Archiven:
+
+|| *Archiv* || *Beschreibung* ||
+|| extra-cli-1.0.0-M1.zip || eXTra-Client ||
+|| extra-scenario-sendfetch-1.0.0-M1.zip || Technisches Referenzverfahren 'Send-Fetch'. Dieses dient als exemplarisches Einsatzbeispiel des eXTra-Clients ||
+
+Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird beschrieben wie eine Installation des eXTra-Clients und des Technischem Referenzverfahren 'Send-Fetch' durchgeführt werden kann.
