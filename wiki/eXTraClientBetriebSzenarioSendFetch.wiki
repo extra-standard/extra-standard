@@ -33,6 +33,7 @@ D:\eXTra
       - phase1
       - phase2
       - phase3
+    - docs
     - logs
     - sql
     - work
@@ -48,6 +49,7 @@ Im folgenden werden die Verzeichnisse des Verfahrens Send-Fetch beschrieben (unt
 || /bin || Hier befinden sich ausführbare Batch-Dateien (Windows) für die Phasen 1 bis 3 (phase1.bat, phase2.bat, phase3.bat). ||
 || /conf || Die Konfigurationsdateien sind für jede Phase in einem eigenen Verzeichnis abgelegt (/conf/phase1, /conf/phase2, /conf/phase3). ||
 || /logs || Ausgabeort für Logdateien die während der Programmausführung erzeugt werden. ||
+|| /docs || Exemplarisch sind hier für jede Phase die XML-Kommunikationsdokumente abgelegt. ||
 || /sql || Datenbankskripte, mit denen die Initial-Datenbankbefüllung für das Szenario Send-Fetch erzeugt wird. ||
 || /work/input || In diesem Verzeichnis werden Eingabedateien erwartet. ||
 || /work/reports || Ausgabeverzeichnis für Reports. ||
