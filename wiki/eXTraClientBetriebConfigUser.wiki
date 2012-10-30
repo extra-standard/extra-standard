@@ -1,4 +1,25 @@
 #summary Konfigurationsdatei extra-properties-user.properties
 
 = Beschreibung extra-properties-user.properties =
-In dieser Datei können spezielle Einstellungen eingetragen werden, die die Einstellungen aus eXTra-properties-basic.properties ergänzen oder überschreiben.
+In dieser Datei können spezielle Einstellungen eingetragen werden, die die Einstellungen aus eXTra-properties-basic.properties ergänzen oder überschreiben. Üblicherweise werden hier Umgebungsspezifische Einstellungen hinterlegt (z.B. Datenbankzugang).
+
+== Beispiel ==
+
+{{{
+# Ablage-Ordner
+plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=../work/responses
+plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner=../work/reports
+plugins.dataplugin.fileDataPlugin.inputVerzeichnis=../work/input
+
+#Datenbank Connection Properties
+# Oracle XE
+plugins.execution.executionPersistenceJpa.hibernate.generateDdl=false
+plugins.execution.executionPersistenceJpa.hibernate.database=ORACLE
+plugins.execution.executionPersistenceJpa.database.driver_class=oracle.jdbc.OracleDriver
+plugins.execution.executionPersistenceJpa.database.connect_url=jdbc:oracle:thin:@localhost:1521:xe
+plugins.execution.executionPersistenceJpa.database.username=extracli
+plugins.execution.executionPersistenceJpa.database.password=extracli
+
+# Webservices (eXTra Server)
+webservice.endpoint.url=http://localhost:8088/mockextraSOAP
+}}}
