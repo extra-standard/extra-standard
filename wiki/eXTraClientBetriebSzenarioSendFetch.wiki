@@ -87,7 +87,7 @@ Im Verzeichnis 'extra-scenario-sendfetch/bin' befindet sich für jede Phase eine
 
 === Anpassungen ===
 
-Für jede Phase des Szenario-Send-Fetch gibt es ein eigenes Konfigurationsverzeichnis in dem Anpassungen vorgenommen werden können. In jedem dieser Konfigurationsverzeichnis (conf/phase1, ...) befinden sich diese Dateien:
+Für jede Phase des Szenario-Send-Fetch gibt es ein eigenes Konfigurationsverzeichnis in dem Anpassungen vorgenommen werden können. So kann z.B. konfigurativ ein eXTra-Server eingetragen werden, der über einen Webservice aufgerufen wird. In jedem dieser Konfigurationsverzeichnis (conf/phase1, ...) befinden sich diese Dateien:
 
 || *Datei* || *Beschreibung* ||
 || extra-properties-basic.properties || Allgemeine Konfigurationseinstellungen ||
