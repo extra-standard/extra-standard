@@ -2,6 +2,8 @@
 
 Das Szenario Send-Fetch ist ein technisches Referenzverfahren, das exemplarisch die Arbeit mit dem eXTra-Client verdeutlichen soll. Dieses Szenario kann als Ausgangspunkt für die Realisierung von Fachverfahren verwendet werden. Für die Ausführung wird eine Version des eXTra Clients benoetigt.  
 
+Im folgenden wird beschrieben, wie das Szenario Send-Fetch auf einem Windows-Rechner eingerichtet werden kann (Anpassung an andere Betriebssysteme (z.B. Linux) mit überschaubarem Aufwand möglich).
+
 == Auslieferungs-Archiv ==
 Dieses Szenario wird in dem Format ausgeliefert, in dem auch normale Fachverfahren ausgeliefert werden.
 In dem Archiv 'extra-scenario-sendfetch-... .zip' befinden sich alle benötigten Dateien.
@@ -29,8 +31,6 @@ In jedem dieser Konfigurationsverzeichnis (conf/phase...) befinden sich diese Da
 || phase...profil.xml || eXTra Profil-Datei ||
 
 == Ausführbare Version erstellen ==
-
-Im folgenden wird beschrieben, wie das Szenario Send-Fetch auf einem Windows-Rechner eingerichtet erden kann (Anpassung an andere Betriebssysteme (z.B. Linux) mit überschaubarem Aufwand möglich)
 
 || *Schritt* || *Datei/Ordner* || *Aktion* ||
 || 1 || D:\eXTra, D:\eXTra\Fachverfahren || Verzeichnisse anlegen ||
@@ -63,12 +63,14 @@ D:
       - responses
 }}}
       
- * Die eXTra Client Datenbank muss angelegt und initial befüllt werden (siehe WIKI: https://code.google.com/p/extra-standard/wiki/eXTraEinfuehrung?tm=6). Dazu müssen folgende Skripte auf der DB ausgeführt werden:
+ * Die eXTra Client Datenbank muss angelegt und initial befüllt werden (siehe WIKI: https://code.google.com/p/extra-standard/wiki/eXTraEinfuehrung?tm=6). Dazu müssen folgende Skripte auf der DB ausgeführt werden (Aktuell wird nur Oracle unterstützt):
 
 || *Skript* || *Beschreibung* ||
-|| extra-client\sql\V1__1_0_0_createInitialDatabase.sql || Initiale Datenbankerzeugung ||
-|| extra-client\sql\V2__1_0_0_createInitialData.sql || Initiale Datenbefüllung ||
+|| extra-client \ sql \ V1__1_0_0_createInitialDatabase.sql || Initiale Datenbankerzeugung ||
+|| extra-client \ sql \ V2__1_0_0_createInitialData.sql || Initiale Datenbefüllung ||
+|| extra-scenario-sendfetch \ sql \ V3__1_0_0_createInitialData.sql || Initiale Datenbefüllung für das Szenario Send-Fetch ||
 
+Die Skripte können mit einem DB-Administrierungswerkzeug oder mit Flyway (http://code.google.com/p/flyway/) ausgeführt werden.
 
  * Die DB-Verbindung muss in den Dateien 'extra-properties-user.properties' (in den Verzeichnissen conf/phase1, conf/phase2, conf/phase3) angegeben werden.
  * Aufruf des eXTra Clients: Im Verzeichnis 'extra-scenario-sendfetch/bin' befindet sich für jede Phase eine ausführbare Batchdatei.   
