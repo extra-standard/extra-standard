@@ -56,7 +56,7 @@ Quelle: http://itextpdf.com/
 
 ===	de.drv.dsrv.xtt.gui ===
 
-Hauptelement in diesem Package ist die JFrame-Klasse XsdCreator, die alle relevanten Ein- und Ausgabe-Elemente besitzt (siehe Abbildung 1: Oberfläche XSD Profiling Tool). Daneben gibt es noch die beiden JDialog-Klassen About und HelpDialog.
+Hauptelement in diesem Package ist die JFrame-Klasse !XsdCreator, die alle relevanten Ein- und Ausgabe-Elemente besitzt (siehe Abbildung 1: Oberfläche XSD Profiling Tool). Daneben gibt es noch die beiden JDialog-Klassen About und HelpDialog.
 Hauptelement zur Darstellung und Anpassung des XML-Schemas ist ein JTree-Objekt mit Checkboxen. Für die Darstellung und Eingabeverarbeitung sind die Klassen CheckBoxNodeEditor und CheckBoxNodeRenderer verantwortlich.
 Für die Datenhaltung des JTrees ist ein eigenes TreeModel im folgenden Package implementiert.
 
