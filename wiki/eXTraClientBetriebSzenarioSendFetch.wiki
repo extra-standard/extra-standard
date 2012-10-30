@@ -1,4 +1,4 @@
-#summary Zeigt exemplarisch die Arbeit mit dem eXTra-Client
+#summary Technisches Referenzverfahren, das exemplarisch die Arbeit mit dem eXTra-Client verdeutlicht
 
 <h1>eXTRa Szenario Send-Fetch (Sende-Hole Betrieb)</h1>
 
@@ -7,13 +7,6 @@ Das Szenario Send-Fetch ist ein technisches Referenzverfahren, das exemplarisch 
 Im folgenden wird beschrieben, wie das Szenario Send-Fetch auf einem Windows-Rechner eingerichtet werden kann (Anpassung an andere Betriebssysteme (z.B. Linux) mit überschaubarem Aufwand möglich). Folgende Schritte müssen durchgeführt werden:
 
 <wiki:toc max_depth="2" />
-
-[auslieferungsarchive_auspacken#Auslieferungsarchive auspacken]
-
- # [Auslieferungsarchive auspacken#auslieferungsarchive_auspacken]
- # [Datenbank anlegen#datenbank_anlegen]
- # [Datenbankverbindung eintragen#datenbankverbindung_eintragen]
- # [Auslieferungsarchive auspacken#auslieferungsarchive_auspacken]
 
 == Auslieferungsarchive auspacken ==
 
@@ -71,12 +64,13 @@ Die Skripte können mit einem DB-Administrierungswerkzeug oder mit Flyway (http:
 
 == Datenbankverbindung eintragen ==
 
+Für jede Phase muss die Datenbankverbindung in der Datei _conf/phase.../extra-properties-user.properties_ eingestellt werden. Es müssen die JDBC Verbindungsparameter eingetragen werden. Voreingestellt ist eine lokale Oracle Express Datenbank.
+
 == Szenario durchführen ==
 
- * Die DB-Verbindung muss in den Dateien 'extra-properties-user.properties' (in den Verzeichnissen conf/phase1, conf/phase2, conf/phase3) angegeben werden.
- * Aufruf des eXTra Clients: Im Verzeichnis 'extra-scenario-sendfetch/bin' befindet sich für jede Phase eine ausführbare Batchdatei.
+Im Verzeichnis 'extra-scenario-sendfetch/bin' befindet sich für jede Phase eine ausführbare Batchdatei. Im Verzeichnis 'logs' wird für jede Ausführung ein Ausführungsprotokoll erzeugt.
 
-== Anpassungen ==
+=== Anpassungen ===
 
 Für jede Phase des Szenario-Send-Fetch gibt es ein eigenes Konfigurationsverzeichnis in dem Anpassungen vorgenommen werden können. In jedem dieser Konfigurationsverzeichnis (conf/phase1, ...) befinden sich diese Dateien:
 
