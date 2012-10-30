@@ -11,7 +11,7 @@ plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=../w
 plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner=../work/reports
 plugins.dataplugin.fileDataPlugin.inputVerzeichnis=../work/input
 
-#Datenbank Connection Properties
+# Datenbank Connection Properties
 # Oracle XE
 plugins.execution.executionPersistenceJpa.hibernate.generateDdl=false
 plugins.execution.executionPersistenceJpa.hibernate.database=ORACLE
