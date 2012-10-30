@@ -26,4 +26,4 @@
   * [eXTraSpecIssues Offene Punkte]    
   * [eXTraEntwProzess Entwicklungsprozess]
   * [eXTraClientReleases Releases]
-    * [eXTraClientRelease100M1 Version 1.0.0-M1]
+    * [releases/eXTraClientRelease100M1 Version 1.0.0-M1]
