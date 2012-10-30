@@ -2,17 +2,19 @@
 
 Das Szenario Send-Fetch ist ein technisches Referenzverfahren, das exemplarisch die Arbeit mit dem eXTra-Client verdeutlichen soll. Dieses Szenario kann als Ausgangspunkt für die Realisierung von Fachverfahren verwendet werden. Für die Ausführung wird eine Version des eXTra Clients benoetigt.  
 
-Im folgenden wird beschrieben, wie das Szenario Send-Fetch auf einem Windows-Rechner eingerichtet werden kann (Anpassung an andere Betriebssysteme (z.B. Linux) mit überschaubarem Aufwand möglich).
+Im folgenden wird beschrieben, wie das Szenario Send-Fetch auf einem Windows-Rechner eingerichtet werden kann (Anpassung an andere Betriebssysteme (z.B. Linux) mit überschaubarem Aufwand möglich). Folgende Schritte müssen durchgeführt werden:
 
-== Ausführbare Version erstellen ==
+ # [Auslieferungsarchive auspacken|Auslieferungsarchive_auspacken]
+
+== Auslieferungsarchive auspacken ==
 
 Im ersten Schritt müssen die beiden Auslieferungsarchive (extra-cli-1.0.0-M1.zip, extra-scenario-sendfetch-1.0.0-M1.zip) ausgepackt werden:
 
 || *Schritt* || *Datei/Ordner* || *Aktion* ||
 || 1 || D:\eXTra  || Verzeichnis anlegen ||
-|| 2 || D:\eXTra\Fachverfahren || Verzeichnis anlegen ||
+|| 2 || D:\eXTra\fachverfahren || Verzeichnis anlegen ||
 || 3 || extra-cli-1.0.0-M1.zip || Auspacken in: D:\eXTra ||
-|| 4 || extra-scenario-sendfetch-1.0.0-M1.zip || Auspacken in: D:\eXTra ||
+|| 4 || extra-scenario-sendfetch-1.0.0-M1.zip || Auspacken in: D:\eXTra\fachverfahren ||
 Folgende Struktur ergibt sich:
 
 {{{
