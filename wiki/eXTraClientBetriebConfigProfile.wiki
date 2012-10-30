@@ -1,3 +1,5 @@
 #summary Beschreibt die Profilierungs-Datei
 
 = Profilierungs-Datei =
+
+Profilierungsdatei des Kommunikationsverfahrens.
