@@ -1,3 +1,5 @@
 #summary Überblick über die Konfigurationsdateien des eXTra-Clients
 
 = Konfigurationsdateien =
+
+Auf Unterseiten werden die Konfigurationsdateien beschrieben.
