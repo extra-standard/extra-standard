@@ -3,4 +3,4 @@
 == Übersicht ==
 
 || *Version* || *Datum* || *Kurzeschreibung* ||
-|| 1.0.0-M1 || || || 
+|| 1.0.0-M1 || 30.10.2012 || Erstes Milestone-Release || 
