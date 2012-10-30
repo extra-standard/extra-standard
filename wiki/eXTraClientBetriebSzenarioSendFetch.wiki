@@ -30,6 +30,14 @@ In jedem dieser Konfigurationsverzeichnis (conf/phase...) befinden sich diese Da
 
 == Ausführbare Version erstellen ==
 
+Im folgenden wird beschrieben, wie das Szenario Send-Fetch auf einem Windows-Rechner eingerichtet erden kann (Anpassung an andere Betriebssysteme (z.B. Linux) mit überschaubarem Aufwand möglich)
+
+|| *Schritt* || *Datei/Ordner* || *Aktion* ||
+|| 1 || D:\eXTra, D:\eXTra\Fachverfahren || Verzeichnisse anlegen ||
+|| 1 || extra-cli-1.0.0-M1.zip || Auspacken in: D:\eXTra ||
+|| 
+
+ 
  * eXTra Client (Archiv: extra-cli-1.0.0-SNAPSHOT.zip) auspacken, z.B. D:\extra-client
  * Parallel dazu, in einem Verzeichnis (z.B. fachverfahren) dieses Archiv (extra-scenario-sendfetch-1.0.0-SNAPSHOT.zip) auspacken
 Folgende Struktur ergibt sich:
@@ -39,6 +47,7 @@ D:
 - extra-client
   - bin
   - lib
+  - sql
 - fachverfahren
   - extra-scenario-sendfetch
     - bin
@@ -47,12 +56,19 @@ D:
       - phase2
       - phase3
     - logs
+    - sql
     - work
       - input
       - reports
       - responses
 }}}
       
- * Die eXTra Client Datenbank muss angelegt und initial befüllt werden (siehe WIKI: https://code.google.com/p/extra-standard/wiki/eXTraEinfuehrung?tm=6)
+ * Die eXTra Client Datenbank muss angelegt und initial befüllt werden (siehe WIKI: https://code.google.com/p/extra-standard/wiki/eXTraEinfuehrung?tm=6). Dazu müssen folgende Skripte auf der DB ausgeführt werden:
+
+|| *Skript* || *Beschreibung* ||
+|| extra-client\sql\V1__1_0_0_createInitialDatabase.sql || Initiale Datenbankerzeugung ||
+|| extra-client\sql\V2__1_0_0_createInitialData.sql || Initiale Datenbefüllung ||
+
+
  * Die DB-Verbindung muss in den Dateien 'extra-properties-user.properties' (in den Verzeichnissen conf/phase1, conf/phase2, conf/phase3) angegeben werden.
  * Aufruf des eXTra Clients: Im Verzeichnis 'extra-scenario-sendfetch/bin' befindet sich für jede Phase eine ausführbare Batchdatei.   
