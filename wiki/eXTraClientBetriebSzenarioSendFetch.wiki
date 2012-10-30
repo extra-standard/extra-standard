@@ -1,5 +1,6 @@
-= eXTRa Szenario Send-Fetch (Sende-Hole Betrieb)=
-
+{{{<h1>}}}
+eXTRa Szenario Send-Fetch (Sende-Hole Betrieb)
+{{{</h1>}}}
 Das Szenario Send-Fetch ist ein technisches Referenzverfahren, das exemplarisch die Arbeit mit dem eXTra-Client verdeutlichen soll. Dieses Szenario kann als Ausgangspunkt für die Realisierung von Fachverfahren verwendet werden. Für die Ausführung wird eine Version des eXTra Clients benoetigt.  
 
 Im folgenden wird beschrieben, wie das Szenario Send-Fetch auf einem Windows-Rechner eingerichtet werden kann (Anpassung an andere Betriebssysteme (z.B. Linux) mit überschaubarem Aufwand möglich). Folgende Schritte müssen durchgeführt werden:
