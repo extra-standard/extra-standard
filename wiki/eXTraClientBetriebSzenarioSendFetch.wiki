@@ -4,6 +4,8 @@ Das Szenario Send-Fetch ist ein technisches Referenzverfahren, das exemplarisch 
 
 Im folgenden wird beschrieben, wie das Szenario Send-Fetch auf einem Windows-Rechner eingerichtet werden kann (Anpassung an andere Betriebssysteme (z.B. Linux) mit überschaubarem Aufwand möglich). Folgende Schritte müssen durchgeführt werden:
 
+<wiki:toc max_depth="1" />
+
 [auslieferungsarchive_auspacken#Auslieferungsarchive auspacken]
 
  # [Auslieferungsarchive auspacken#auslieferungsarchive_auspacken]
