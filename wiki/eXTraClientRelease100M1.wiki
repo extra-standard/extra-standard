@@ -12,7 +12,7 @@
   * Unterstützte Szenarien: Sende-/Holbetrieb mit drei Phasen
 
 = Datenbank-Unterstützung =
-  * OracleXE oder Oracle 11
+  * Oracle XE oder Oracle 11
 
 = Installationsanleitung =
 
