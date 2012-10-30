@@ -4,7 +4,17 @@
 
 Zur Analyse und Fehlersuche kann konfigurativ ein Logging aktiviert werden. In den Logausgaben stehen z.B. Informationen über die verwendeten Plugins.
 
-TODO: Beschreibung der Logger
+|| *Logger* || *Beschreibung* ||
+|| de.extra.client.operation || Protokolliert den Kommunikationsablauf ||
+|| de.extra.client.core.annotation || Informationen über Konfigurationseinstellungen ||
+|| de.extra.client.core.builder || Erstellung von XML-Dokumenten ||
+|| de.extra.client.logging || Ausführung des eXTra-Clients ||
+|| org.springframework || ||
+|| org.hibernate || ||
+|| org.apache|| ||
+
+
+Für jeden Logger kann ein Log-Level angegeben werden (_ERROR, WARN, INFO, DEBUG_). Das Logging erfolgt unter Verwendung des [Logback Frameworks|http://logback.qos.ch/] 
 
 Beispiel einer Logdatei:
 
