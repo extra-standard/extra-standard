@@ -4,7 +4,10 @@ Das Szenario Send-Fetch ist ein technisches Referenzverfahren, das exemplarisch 
 
 Im folgenden wird beschrieben, wie das Szenario Send-Fetch auf einem Windows-Rechner eingerichtet werden kann (Anpassung an andere Betriebssysteme (z.B. Linux) mit überschaubarem Aufwand möglich). Folgende Schritte müssen durchgeführt werden:
 
- # [Auslieferungsarchive auspacken|Auslieferungsarchive_auspacken]
+ # [Auslieferungsarchive auspacken#Auslieferungsarchive_auspacken]
+ # [Datenbank anlegen#Datenbank_anlegen]
+ # [Datenbankverbindung eintragen#Datenbankverbindung_eintragen]
+ # [Auslieferungsarchive auspacken#Auslieferungsarchive_auspacken]
 
 == Auslieferungsarchive auspacken ==
 
@@ -38,8 +41,9 @@ D:\eXTra
       - responses
 }}}
 
-== Verzeichnisbeschreibung ==
+=== Verzeichnisbeschreibung ===
 
+Im folgenden werden die Verzeichnisse des Verfahrens Send-Fetch beschrieben (unter fachverfahren/extra-scenario-sendfetch):
 || *Verzeichnis* || *Beschreibung* ||
 || /bin || Hier befinden sich ausführbare Batch-Dateien (Windows) für die Phasen 1 bis 3 (phase1.bat, phase2.bat, phase3.bat). ||
 || /conf || Die Konfigurationsdateien sind für jede Phase in einem eigenen Verzeichnis abgelegt (/conf/phase1, /conf/phase2, /conf/phase3). ||
@@ -47,7 +51,9 @@ D:\eXTra
 || /work/reports || Ausgabeverzeichnis für Reports. ||
 || /work/responses || Ergebnisdateien werden hier abgelegt. ||
 || /logs || Ausgabeort für Logdateien die während der Programmausführung erzeugt werden. ||
+|| /sql || Datenbankskripte, mit denen die Initial-Datenbankbefüllung für das Szenario Send-Fetch erzeugt wird. ||
 
+== Datenbank anlegen ==
  * Die eXTra Client Datenbank muss angelegt und initial befüllt werden (siehe WIKI: https://code.google.com/p/extra-standard/wiki/eXTraEinfuehrung?tm=6). Dazu müssen folgende Skripte auf der DB ausgeführt werden (Aktuell wird nur Oracle unterstützt):
 
 || *Skript* || *Beschreibung* ||
@@ -56,6 +62,10 @@ D:\eXTra
 || extra-scenario-sendfetch \ sql \ V3__1_0_0_createInitialData.sql || Initiale Datenbefüllung für das Szenario Send-Fetch ||
 
 Die Skripte können mit einem DB-Administrierungswerkzeug oder mit Flyway (http://code.google.com/p/flyway/) ausgeführt werden.
+
+== Datenbankverbindung eintragen ==
+
+== Szenario durchführen ==
 
  * Die DB-Verbindung muss in den Dateien 'extra-properties-user.properties' (in den Verzeichnissen conf/phase1, conf/phase2, conf/phase3) angegeben werden.
  * Aufruf des eXTra Clients: Im Verzeichnis 'extra-scenario-sendfetch/bin' befindet sich für jede Phase eine ausführbare Batchdatei.
