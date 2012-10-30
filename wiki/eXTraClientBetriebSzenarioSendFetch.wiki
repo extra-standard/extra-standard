@@ -48,18 +48,19 @@ Im folgenden werden die Verzeichnisse des Verfahrens Send-Fetch beschrieben (unt
 || *Verzeichnis* || *Beschreibung* ||
 || /bin || Hier befinden sich ausführbare Batch-Dateien (Windows) für die Phasen 1 bis 3 (phase1.bat, phase2.bat, phase3.bat). ||
 || /conf || Die Konfigurationsdateien sind für jede Phase in einem eigenen Verzeichnis abgelegt (/conf/phase1, /conf/phase2, /conf/phase3). ||
-|| /logs || Ausgabeort für Logdateien die während der Programmausführung erzeugt werden. ||
 || /docs || Exemplarisch sind hier für jede Phase die XML-Kommunikationsdokumente abgelegt. ||
+|| /logs || Ausgabeort für Logdateien die während der Programmausführung erzeugt werden. ||
 || /sql || Datenbankskripte, mit denen die Initial-Datenbankbefüllung für das Szenario Send-Fetch erzeugt wird. ||
 || /work/input || In diesem Verzeichnis werden Eingabedateien erwartet. ||
 || /work/reports || Ausgabeverzeichnis für Reports. ||
 || /work/responses || Ergebnisdateien werden hier abgelegt. ||
 
 == Datenbank anlegen ==
-Die eXTra Client Datenbank muss angelegt und initial befüllt werden (siehe WIKI: https://code.google.com/p/extra-standard/wiki/eXTraEinfuehrung?tm=6). Dazu müssen folgende Skripte auf der DB in dieser Reihenfolge ausgeführt werden (Aktuell wird nur Oracle unterstützt):
+Im ersten Schritt muss die eXTra-Client Datenbank angelegt werden. Aktuell wird nur Oracle unterstützt. In den Konfigurationsdateien wird eine lokale Oracle Datenbank mit _Username/Passwort = extracli_ erwartet (anpassbar).
+Mit folgenden SQL-Skripten wird diese Datenbank initial aufgebaut und befüllt:
 
 || *Skript* || *Beschreibung* ||
-|| extra-client \ sql \ V1__1_0_0_createInitialDatabase.sql || Initiale Datenbankerzeugung ||
+|| extra-client \ sql \ V1__1_0_0_createInitialDatabase.sql || Initiale Datenbankerzeugung (Tabellen)||
 || extra-client \ sql \ V2__1_0_0_createInitialData.sql || Initiale Datenbefüllung ||
 || extra-scenario-sendfetch \ sql \ V3__1_0_0_createInitialData.sql || Initiale Datenbefüllung für das Szenario Send-Fetch ||
 
