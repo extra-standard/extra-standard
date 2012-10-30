@@ -4,4 +4,6 @@
 
 Für den Betrieb benötigt der eXTra Client eine Datenbank. In dieser Datenbank werden für jedes Fachverfahren die Kommunikationsabläufe protokolliert. Z.B. werden für mehrphasige Fachverfahren wie z.B. dem 3 Phasigen Sende-Hole Betrieb für jede Phase die Ergebnisse protokolliert. So wird z.B. hinterlegt, ob die Phase erfolgreich war und welche Antwort vom Server geliefert wurde. Diese Antwort (z.B. eine Response-ID) kann in der nächsten Phase als Anfrageparameter dienen.
  
-TODO
+Eine Beschreibung findet sich hier: [eXTraPersistence]
+
+Informationen zur Erstellung finden sich in: [eXTraClientBetriebSzenarioSendFetch]
