@@ -19,7 +19,8 @@
 Die Auslieferung besteht aus diesen Archiven:
 
 || *Archiv* || *Beschreibung* ||
-|| extra-cli-1.0.0-M1.zip || eXTra-Client ||
-|| extra-scenario-sendfetch-1.0.0-M1.zip || Technisches Referenzverfahren 'Send-Fetch'. Dieses dient als exemplarisches Einsatzbeispiel des eXTra-Clients ||
+|| extra-cli-1.0.0-M1.zip || Ausführbarer Basisbereich des eXTra-Clients. ||
+|| extra-scenario-sendfetch-1.0.0-M1.zip || Technisches Referenzverfahren 'Send-Fetch'. Dieses dient als exemplarisches Einsatzbeispiel des eXTra-Clients. Aufbauend auf diesem 'Muster' können weitere Fachverfahren entwickelt werden. ||
 
-Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird beschrieben wie eine Installation des eXTra-Clients und des Technischem Referenzverfahren 'Send-Fetch' durchgeführt werden kann.
+Jedes Fachverfahren wird in einem gesonderten Archiv ausgeliefert.
+Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird beschrieben wie eine Installation des eXTra-Clients und des Technischem Referenzverfahrens 'Send-Fetch' durchgeführt werden kann.
