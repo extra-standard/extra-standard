@@ -1,7 +1,7 @@
 #summary zentrale Konfigurationsdatei extra-properties-basic.properties
 
 =Beschreibung eXTra-properties-basic.properties=
-Diese Konfigurationsdatei besteht aus Attribut-Werte Paaren (Java-properties Format). In jeder Zeile wird der Wert für ein Attribut angegeben. Die Datei kann in folgende Bereiche aufgeteilt werden:
+In dieser Konfigurationsdatei ist die Basiskonfiguration des Fachverfahrens untergebracht. Im Normalfall sollte man diese nicht ändern müssen. Die Konfigurationsdatei besteht aus Attribut-Werte Paaren (Java-properties Format). In jeder Zeile wird der Wert für ein Attribut angegeben. Die Datei kann in folgende Bereiche aufgeteilt werden:
 
 === Fachverfahren ===
    * Informationen für das durchzuführende Fachverfahren 
@@ -27,3 +27,5 @@ Diese Konfigurationsdatei besteht aus Attribut-Werte Paaren (Java-properties For
 === Konfiguration der XML-Builder ===
 
 == Beispiel einer extra-properties-basic.properties Datei ==
+
+Siehe reales Beispiel im Szenario Send-Fetch ([eXTraClientBetriebSzenarioSendFetch]).
