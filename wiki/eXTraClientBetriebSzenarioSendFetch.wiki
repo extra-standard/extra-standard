@@ -8,19 +8,6 @@ Im folgenden wird beschrieben, wie das Szenario Send-Fetch auf einem Windows-Rec
 Dieses Szenario wird in dem Format ausgeliefert, in dem auch normale Fachverfahren ausgeliefert werden.
 In dem Archiv 'extra-scenario-sendfetch-... .zip' befinden sich alle benötigten Dateien.
 
-== Verzeichnisbeschreibung ==
-
-|| *Verzeichnis* || *Beschreibung* ||
-|| /bin || Hier befinden sich ausführbare Batch-Dateien (Windows) für die Phasen 1 bis 3 (phase1.bat, phase2.bat, phase3.bat). ||
-|| /conf || Die Konfigurationsdateien sind für jede Phase in einem eigenen Verzeichnis abgelegt (/conf/phase1, /conf/phase2, /conf/phase3). ||
-|| /work/input || In diesem Verzeichnis werden Eingabedateien erwartet. ||
-|| /work/reports || Ausgabeverzeichnis für Reports. ||
-|| /work/responses || Ergebnisdateien werden hier abgelegt. ||
-|| /logs || Ausgabeort für Logdateien die während der Programmausführung erzeugt werden. ||
-
-
-
-
 
 In jedem dieser Konfigurationsverzeichnis (conf/phase...) befinden sich diese Dateien:
 
@@ -32,18 +19,17 @@ In jedem dieser Konfigurationsverzeichnis (conf/phase...) befinden sich diese Da
 
 == Ausführbare Version erstellen ==
 
-|| *Schritt* || *Datei/Ordner* || *Aktion* ||
-|| 1 || D:\eXTra, D:\eXTra\Fachverfahren || Verzeichnisse anlegen ||
-|| 1 || extra-cli-1.0.0-M1.zip || Auspacken in: D:\eXTra ||
-|| 
+Im ersten Schritt müssen die beiden Auslieferungsarchive (extra-cli-1.0.0-M1.zip, extra-scenario-sendfetch-1.0.0-M1.zip) ausgepackt werden:
 
- 
- * eXTra Client (Archiv: extra-cli-1.0.0-SNAPSHOT.zip) auspacken, z.B. D:\extra-client
- * Parallel dazu, in einem Verzeichnis (z.B. fachverfahren) dieses Archiv (extra-scenario-sendfetch-1.0.0-SNAPSHOT.zip) auspacken
+|| *Schritt* || *Datei/Ordner* || *Aktion* ||
+|| 1 || D:\eXTra  || Verzeichnis anlegen ||
+|| 2 || D:\eXTra\Fachverfahren || Verzeichnis anlegen ||
+|| 3 || extra-cli-1.0.0-M1.zip || Auspacken in: D:\eXTra ||
+|| 4 || extra-scenario-sendfetch-1.0.0-M1.zip || Auspacken in: D:\eXTra ||
 Folgende Struktur ergibt sich:
 
 {{{
-D:
+D:\eXTra
 - extra-client
   - bin
   - lib
@@ -62,7 +48,19 @@ D:
       - reports
       - responses
 }}}
-      
+
+== Verzeichnisbeschreibung ==
+
+|| *Verzeichnis* || *Beschreibung* ||
+|| /bin || Hier befinden sich ausführbare Batch-Dateien (Windows) für die Phasen 1 bis 3 (phase1.bat, phase2.bat, phase3.bat). ||
+|| /conf || Die Konfigurationsdateien sind für jede Phase in einem eigenen Verzeichnis abgelegt (/conf/phase1, /conf/phase2, /conf/phase3). ||
+|| /work/input || In diesem Verzeichnis werden Eingabedateien erwartet. ||
+|| /work/reports || Ausgabeverzeichnis für Reports. ||
+|| /work/responses || Ergebnisdateien werden hier abgelegt. ||
+|| /logs || Ausgabeort für Logdateien die während der Programmausführung erzeugt werden. ||
+
+
+
  * Die eXTra Client Datenbank muss angelegt und initial befüllt werden (siehe WIKI: https://code.google.com/p/extra-standard/wiki/eXTraEinfuehrung?tm=6). Dazu müssen folgende Skripte auf der DB ausgeführt werden (Aktuell wird nur Oracle unterstützt):
 
 || *Skript* || *Beschreibung* ||
