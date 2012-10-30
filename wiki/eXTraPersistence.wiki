@@ -10,7 +10,7 @@
 
 In der Dokumentation  http://www.extra-standard.de/upload/pdf/Anl-3-Spektrum_Szenarien_eXTra-in-Betrieb_20110619.pdf sind mehrstufige 
 Austauschvarianten beschrieben. 
-Für die bessere Unterstützung diesen Szenarien ist einen persistnence-modul entwickelt.
+Für die bessere Unterstützung diesen Szenarien ist ein Persistenz-Modul entwickelt worden.
 
 
 = Domänenmodell=
