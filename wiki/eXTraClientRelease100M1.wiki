@@ -10,5 +10,5 @@
   * Unterstützte Nachrichtentypen: xxx
   * Unterstützte Szenarien: Sende-/Holbetrieb mit drei Phasen
 
-= Datenbank-Unterstützung
+= Datenbank-Unterstützung =
   * OracleXE oder Oracle 11
