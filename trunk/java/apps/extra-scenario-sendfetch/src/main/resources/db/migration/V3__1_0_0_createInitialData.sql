@@ -40,6 +40,6 @@ Insert into PROCEDURE_PHASE_CONFIGURATION
 Insert into PROCEDURE
    (ID, NAME, SHORT_KEY, MANDATOR_ID, PROCEDURE_TYPE_ID)
  Values
-   (seq_procedure_id.nextval, 'Datenabgleich', 'SEND_FETH', 
+   (seq_procedure_id.nextval, 'Datenabgleich', 'SEND_FETCH', 
    (select id from MANDATOR where name = 'TEST'),
     (select id from PROCEDURE_TYPE where name = 'SCENARIO_SEND_FETCH'));
