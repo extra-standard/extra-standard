@@ -22,7 +22,6 @@ Betrieblich wichtige Ereignisse können aber in Plugins oder anderen Komponenten
 
 Plugins lassen sich einen konkreten {{{transportObserver}}} injizieren und melden alle seiner Schnittstelle definierten Ereignisse. Potentiell lässt sich dieses Vorgehen zu einem vollständigen Observable/Observer-Mechanismus im {{{core}}} ausbauen, in dem sich auch andere Observer zur Benachrichtigung bei wichtigen Ereignissen registrieren können.
 
-TODO: UML-Darstellung
 
 = Argumente =
 
