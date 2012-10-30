@@ -65,7 +65,18 @@ Die Skripte können mit einem DB-Administrierungswerkzeug oder mit Flyway (http:
 
 == Datenbankverbindung eintragen ==
 
-Für jede Phase muss die Datenbankverbindung in der Datei _conf/phase.../extra-properties-user.properties_ eingestellt werden. Es müssen die JDBC Verbindungsparameter eingetragen werden. Voreingestellt ist eine lokale Oracle Express Datenbank.
+Für jede Phase muss die Datenbankverbindung in der Datei _conf/phase.../extra-properties-user.properties_ eingestellt werden. Es müssen die JDBC Verbindungsparameter eingetragen werden. Voreingestellt ist eine lokale Oracle Express Datenbank:
+
+{{{
+plugins.execution.executionPersistenceJpa.hibernate.generateDdl=false
+plugins.execution.executionPersistenceJpa.hibernate.database=ORACLE
+plugins.execution.executionPersistenceJpa.database.driver_class=oracle.jdbc.OracleDriver
+plugins.execution.executionPersistenceJpa.database.connect_url=jdbc:oracle:thin:@localhost:1521:xe
+plugins.execution.executionPersistenceJpa.database.username=extracli
+plugins.execution.executionPersistenceJpa.database.password=extracli
+}}}
+
+Zusätzlich muss im Verzeichnis _extra-client/lib_ der Oracle JDBC Treiber (z.B. ojdbc14-10.2.0.4.0.jar) abgelegt werden (dieser Treiber befindet sich nicht in der Auslieferung). 
 
 == Szenario durchführen ==
 
