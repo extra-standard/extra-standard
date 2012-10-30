@@ -17,6 +17,7 @@ Im ersten Schritt müssen die beiden Auslieferungsarchive (extra-cli-1.0.0-M1.zi
 || 2 || D:\eXTra\fachverfahren || Verzeichnis anlegen ||
 || 3 || extra-cli-1.0.0-M1.zip || Auspacken in: D:\eXTra ||
 || 4 || extra-scenario-sendfetch-1.0.0-M1.zip || Auspacken in: D:\eXTra\fachverfahren ||
+
 Folgende Struktur ergibt sich:
 
 {{{
