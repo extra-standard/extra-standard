@@ -24,7 +24,7 @@ import org.junit.Test;
 import de.extra.client.starter.ExtraClient;
 import de.extra.client.starter.ExtraClientTestBasic;
 
-public class ScenarioIT {
+public class ScenarioBroken {
 
 	private final ExtraClientTestBasic extraClientTestBasic = new ExtraClientTestBasic();
 
