@@ -53,8 +53,3 @@ Beispiele von Plugins:
  * Plugin _*!DataSource*_
  * Plugin _*!DataTransform*_
  * Plugin _*Contacts*_
-
-
-= eXTra-Lifecycle =
-
-Noch zu definieren.
