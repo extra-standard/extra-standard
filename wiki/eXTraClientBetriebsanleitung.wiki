@@ -13,7 +13,7 @@ Durch Kombination dieser Anwendungsfälle können komplexere Kommunikationsablä
 
 Der Kommunikationsablauf wird vom eXTra-Client in einer Datenbank protokolliert. Neben den einzelnen Aktionen werden z.B. auch Serverantworten die in späteren Schritten benötigt werden (z.B. Response-ID) oder Empfangszertifikate in der Datenbank abgelegt. Außerdem kann konfigurativ das Logging aktiviert werden (z.B. für die Fehlersuche). Die Skripte zum Aufbau der Datenbank befinden sich in der Auslieferungsversion.
 
-Auf der Seite [eXTraBetriebSzenarioSendFetch] wird exemplarisch die Installation des eXTra-Clients mit einem technischen Referenzverfahren beschrieben.
+Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird exemplarisch die Installation des eXTra-Clients mit einem technischen Referenzverfahren beschrieben.
 
 = Anforderungen an den Betriebsrechner =
 Der eXTra-Client wird als Java Anwendung ausgeliefert und benötigt eine Java 6 Laufzeitumgebung. Er ist nicht an ein spezielles Betriebssystem gebunden. Für die Protokollierung des Kommuninkationsablaufes wird eine Datenbank benötigt (siehe [eXTraClientBetriebDatenbank Datenbank]). Für den Kommunikationsablauf müssen evtl. bestimmte Externe eXTra-Server erreichbar sein.
@@ -42,7 +42,7 @@ Die Bereitstellung einer Version erfolgt in diesen Schritten:
  * eXTra-Client Datenbank einrichten, initialisieren oder updaten (z.B. über mitgeliefertes SQL-Skript).
  * Batch-Dateien für den Aufruf der Fachverfahren im Ordner _bin_ erstellen bzw. anpassen
 
-Genauere Informationen zur Einrichtung eines Fachverfahrens befinden sich in der Dokumentation des jeweiligen Fachverfahrens. Beispiel siehe [eXTraBetriebSzenarioSendFetch].
+Genauere Informationen zur Einrichtung eines Fachverfahrens befinden sich in der Dokumentation des jeweiligen Fachverfahrens. Beispiel siehe [eXTraClientBetriebSzenarioSendFetch].
 
 ==Konfiguration==
 Alle Konfigurationsdateien für einen Anwendungsfall befinden sich üblicherweise in einem Verzeichnis (z.B. conf). Dieses Verzeichnis wird beim Aufruf des eXTra-Clients als Parameter übergeben. 
