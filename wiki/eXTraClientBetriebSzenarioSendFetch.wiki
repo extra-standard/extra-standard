@@ -4,19 +4,6 @@ Das Szenario Send-Fetch ist ein technisches Referenzverfahren, das exemplarisch 
 
 Im folgenden wird beschrieben, wie das Szenario Send-Fetch auf einem Windows-Rechner eingerichtet werden kann (Anpassung an andere Betriebssysteme (z.B. Linux) mit überschaubarem Aufwand möglich).
 
-== Auslieferungs-Archiv ==
-Dieses Szenario wird in dem Format ausgeliefert, in dem auch normale Fachverfahren ausgeliefert werden.
-In dem Archiv 'extra-scenario-sendfetch-... .zip' befinden sich alle benötigten Dateien.
-
-
-In jedem dieser Konfigurationsverzeichnis (conf/phase...) befinden sich diese Dateien:
-
-|| *Datei* || *Beschreibung* ||
-|| extra-properties-basic.properties || Allgemeine Konfigurationseinstellungen ||
-|| extra-properties-user.properties || Spezifische Einstellungen (Datenbankverbindung, Eingabedateien, ...)||
-|| logging-config.xml || Logging Konfiguration ||
-|| phase...profil.xml || eXTra Profil-Datei ||
-
 == Ausführbare Version erstellen ==
 
 Im ersten Schritt müssen die beiden Auslieferungsarchive (extra-cli-1.0.0-M1.zip, extra-scenario-sendfetch-1.0.0-M1.zip) ausgepackt werden:
@@ -59,8 +46,6 @@ D:\eXTra
 || /work/responses || Ergebnisdateien werden hier abgelegt. ||
 || /logs || Ausgabeort für Logdateien die während der Programmausführung erzeugt werden. ||
 
-
-
  * Die eXTra Client Datenbank muss angelegt und initial befüllt werden (siehe WIKI: https://code.google.com/p/extra-standard/wiki/eXTraEinfuehrung?tm=6). Dazu müssen folgende Skripte auf der DB ausgeführt werden (Aktuell wird nur Oracle unterstützt):
 
 || *Skript* || *Beschreibung* ||
@@ -71,4 +56,14 @@ D:\eXTra
 Die Skripte können mit einem DB-Administrierungswerkzeug oder mit Flyway (http://code.google.com/p/flyway/) ausgeführt werden.
 
  * Die DB-Verbindung muss in den Dateien 'extra-properties-user.properties' (in den Verzeichnissen conf/phase1, conf/phase2, conf/phase3) angegeben werden.
- * Aufruf des eXTra Clients: Im Verzeichnis 'extra-scenario-sendfetch/bin' befindet sich für jede Phase eine ausführbare Batchdatei.   
+ * Aufruf des eXTra Clients: Im Verzeichnis 'extra-scenario-sendfetch/bin' befindet sich für jede Phase eine ausführbare Batchdatei.
+
+== Anpassungen ==
+
+Für jede Phase des Szenario-Send-Fetch gibt es ein eigenes Konfigurationsverzeichnis in dem Anpassungen vorgenommen werden können. In jedem dieser Konfigurationsverzeichnis (conf/phase1, ...) befinden sich diese Dateien:
+
+|| *Datei* || *Beschreibung* ||
+|| extra-properties-basic.properties || Allgemeine Konfigurationseinstellungen ||
+|| extra-properties-user.properties || Spezifische Einstellungen (Datenbankverbindung, Eingabedateien, ...)||
+|| logging-config.xml || Logging Konfiguration ||
+|| phase...profil.xml || eXTra Profil-Datei ||
