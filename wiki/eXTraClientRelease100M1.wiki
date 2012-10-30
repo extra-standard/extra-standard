@@ -7,3 +7,5 @@
 
 = Konformität zur eXTra-Spezifikation =
   * Unterstützte Spezifikationsversion: 1.3
+  * Unterstützte Nachrichtentypen: xxx
+  * Unterstützte Szenarien: Sende-/Holbetrieb mit drei Phasen
