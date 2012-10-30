@@ -23,4 +23,4 @@ Die Auslieferung besteht aus diesen Archiven:
 || extra-scenario-sendfetch-1.0.0-M1.zip || Technisches Referenzverfahren 'Send-Fetch'. Dieses dient als exemplarisches Einsatzbeispiel des eXTra-Clients. Aufbauend auf diesem 'Muster' können weitere Fachverfahren entwickelt werden. ||
 
 Jedes Fachverfahren wird in einem gesonderten Archiv ausgeliefert.
-Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird beschrieben wie eine Installation des eXTra-Clients und des Technischem Referenzverfahrens 'Send-Fetch' durchgeführt werden kann.
+Auf der Seite [Szenario Send Fetch|eXTraClientBetriebSzenarioSendFetch] wird beschrieben wie eine Installation des eXTra-Clients und des Technischem Referenzverfahrens 'Send-Fetch' durchgeführt werden kann.
