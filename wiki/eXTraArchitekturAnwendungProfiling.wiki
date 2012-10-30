@@ -56,13 +56,13 @@ Quelle: http://itextpdf.com/
 
 ===	de.drv.dsrv.xtt.gui ===
 
-Hauptelement in diesem Package ist die JFrame-Klasse !XsdCreator, die alle relevanten Ein- und Ausgabe-Elemente besitzt (siehe Abbildung 1: Oberfläche XSD Profiling Tool). Daneben gibt es noch die beiden JDialog-Klassen About und HelpDialog.
-Hauptelement zur Darstellung und Anpassung des XML-Schemas ist ein JTree-Objekt mit Checkboxen. Für die Darstellung und Eingabeverarbeitung sind die Klassen CheckBoxNodeEditor und CheckBoxNodeRenderer verantwortlich.
-Für die Datenhaltung des JTrees ist ein eigenes TreeModel im folgenden Package implementiert.
+Hauptelement in diesem Package ist die JFrame-Klasse !XsdCreator, die alle relevanten Ein- und Ausgabe-Elemente besitzt (siehe Abbildung 1: Oberfläche XSD Profiling Tool). Daneben gibt es noch die beiden JDialog-Klassen About und !HelpDialog.
+Hauptelement zur Darstellung und Anpassung des XML-Schemas ist ein JTree-Objekt mit Checkboxen. Für die Darstellung und Eingabeverarbeitung sind die Klassen !CheckBoxNodeEditor und !CheckBoxNodeRenderer verantwortlich.
+Für die Datenhaltung des !JTrees ist ein eigenes !TreeModel im folgenden Package implementiert.
 
 
 ===	de.drv.dsrv.xtt.gui.model ===
-Die Klasse ProfilingTreeModel implementiert ein TreeModel für die Repräsentation eines XML-Schemas im JTree. Dabei repräsentieren die Knoten jeweils ein Schemaelement. Alle für die Profilierung der Schemaelemente relevanten Informationen werden in den einzelnen Knoten gespeichert, wie die Kardinalitäten, Anmerkungen zum Element, ob das Element optional ist usw.
+Die Klasse !ProfilingTreeModel implementiert ein !TreeModel für die Repräsentation eines XML-Schemas im JTree. Dabei repräsentieren die Knoten jeweils ein Schemaelement. Alle für die Profilierung der Schemaelemente relevanten Informationen werden in den einzelnen Knoten gespeichert, wie die Kardinalitäten, Anmerkungen zum Element, ob das Element optional ist usw.
 
 
 ===	de.drv.dsrv.xtt.tester ===
@@ -72,25 +72,25 @@ Die Klasse Main ist eine Konsolenanwendung zum automatisierten Testen der Profil
 
 ===	de.drv.dsrv.xtt.util ===
 
-Dieses Package enthält die zentralen Logikklassen ExtraTailoring und XsdCreatorCtrl mit deren Implementierungen (ExtraTailoringImpl, XsdCreatorCtrlImpl) und Exception-Klassen (ExtraTailoringException, XsdCreatorCtrlException, ValidationException).
-ExtraTailoring erzeugt aus einem vorgegebenen TreeModel eine Profilkonfiguration im XML-Format und generiert für eine gegebene Profilkonfiguration das entsprechende profilierte XML-Schema.
-XsdCreatorCtrl ist eine Controller-Klasse mit der Steuerung der Ein- und Ausgaben der Benutzeroberfläche.
+Dieses Package enthält die zentralen Logikklassen !ExtraTailoring und !XsdCreatorCtrl mit deren Implementierungen (!ExtraTailoringImpl, !XsdCreatorCtrlImpl) und Exception-Klassen (!ExtraTailoringException, !XsdCreatorCtrlException, !ValidationException).
+!ExtraTailoring erzeugt aus einem vorgegebenen !TreeModel eine Profilkonfiguration im XML-Format und generiert für eine gegebene Profilkonfiguration das entsprechende profilierte XML-Schema.
+!XsdCreatorCtrl ist eine Controller-Klasse mit der Steuerung der Ein- und Ausgaben der Benutzeroberfläche.
 
 
 === de.drv.dsrv.xtt.util.pdf ===
 
-PdfCreator bzw. die Implementierung PdfCreatorImpl ist zuständig für die Erzeugung einer PDF-Dokumentation für ein XML-Schema.
+!PdfCreator bzw. die Implementierung !PdfCreatorImpl ist zuständig für die Erzeugung einer PDF-Dokumentation für ein XML-Schema.
 
 
 ===	de.drv.dsrv.xtt.util.schema ===
 
-Dieses Package enthält alle Klassen zum Parsen und Erzeugen von XML-Schemadateien. Zentrale Klasse ist MySchemaWriter mit den Funktionen zum Serialisieren eines XML-Schemas.
+Dieses Package enthält alle Klassen zum Parsen und Erzeugen von XML-Schemadateien. Zentrale Klasse ist !MySchemaWriter mit den Funktionen zum Serialisieren eines XML-Schemas.
 
 
 ===	de.drv.dsrv.xtt.gui.util.tools ===
 
 Die Klasse Configurator ist für den Zugriff auf die Einstellungen, die in den properties-Dateien gespeichert sind, verantwortlich und enthält einige Package übergreifende Hilfsfunktionen.
-Für das Lesen, Schreiben und Validieren von XML-Dateien enthält die Klasse XsdXmlHelper alle notwendigen Funktionen.
+Für das Lesen, Schreiben und Validieren von XML-Dateien enthält die Klasse !XsdXmlHelper alle notwendigen Funktionen.
 
 
 = Konfiguration und Anpassung =
