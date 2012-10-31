@@ -35,7 +35,6 @@
 	<name>extra-modules</name>
 	
 	<modules>
-		<module>components/extra-parent</module>
 		<module>components/extra-api</module>
 		<module>components/extra-schema</module>
 		<module>components/extra-sample</module>
