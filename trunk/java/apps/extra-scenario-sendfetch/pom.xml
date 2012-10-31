@@ -34,7 +34,7 @@
 	<artifactId>extra-scenario-sendfetch</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>extra-scenario-sendfetch</name>
-	<description>TODO</description>
+	<description>eXTra Szenario Send-Fetch (Sende-Hole Betrieb)</description>
 
 	<dependencies>
 		<dependency>
