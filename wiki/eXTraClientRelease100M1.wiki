@@ -1,6 +1,6 @@
 #summary eXTra CLI 1.0.0-M1
 
-= eXTra Client CLI Version 1.0.0-M1 =
+= eXTra Client CLI und Fachverfahren Scenario Send Fetch Version 1.0.0-M1 =
 
 *Inhaltsverzeichnis*
 <wiki:toc max_depth="1" />
