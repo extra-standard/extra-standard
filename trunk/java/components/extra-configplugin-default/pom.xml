@@ -25,27 +25,25 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>de.extrastandard</groupId>
+		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<groupId>de.extrastandard</groupId>
 	<artifactId>extra-configplugin-default</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>extra-configplugin-default</name>
-	<description>TODO</description>
-
+	<description>Config Plugin Default Implementation</description>
 
 	<dependencies>
 		<dependency>
-			<groupId>de.extrastandard</groupId>
+			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-api</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
-			<groupId>de.extrastandard</groupId>
+			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-sample</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
@@ -54,7 +52,6 @@
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
 		</dependency>
-
 
 		<dependency>
 			<groupId>org.springframework</groupId>

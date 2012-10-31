@@ -25,43 +25,34 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>de.extrastandard</groupId>
+		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<groupId>de.extrastandard</groupId>
 	<artifactId>extra-core</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>extra-core</name>
-	<description>eXTRa Core</description>
+	<description>eXTra Core Components</description>
 
 	<dependencies>
-
 		<dependency>
-			<groupId>de.extrastandard</groupId>
+			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-schema</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
-			<groupId>de.extrastandard</groupId>
+			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-api</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
-			<groupId>de.extrastandard</groupId>
+			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-sample</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
-		
-
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-		</dependency>
-		
 
 		<dependency>
 			<groupId>javax.enterprise</groupId>
@@ -115,8 +106,8 @@
 		</dependency>
 		
 		<dependency>
-		  <groupId>javax.validation</groupId>
-		  <artifactId>validation-api</artifactId>
+		  	<groupId>javax.validation</groupId>
+		  	<artifactId>validation-api</artifactId>
 		</dependency>	
 		
          <dependency>
@@ -136,7 +127,6 @@
 			<artifactId>mockito-core</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -164,4 +154,5 @@
 			</plugin>
 		</plugins>
 	</build>
+	
 </project>
