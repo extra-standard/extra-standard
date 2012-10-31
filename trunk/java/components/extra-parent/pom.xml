@@ -19,12 +19,11 @@
 	<groupId>de.extrastandard</groupId>
 	<artifactId>extra-parent</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-
 	<packaging>pom</packaging>
 
 	<name>extra-parent</name>
 	<description>Extra Parent-POM</description>
-	<url>http://code.google.com/p/extra-standard/</url>
+	<url>http://code.google.com/p/extra-standard</url>
 
 	<inceptionYear>2012</inceptionYear>
 
