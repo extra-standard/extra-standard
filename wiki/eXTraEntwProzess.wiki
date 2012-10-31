@@ -25,8 +25,8 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
    
 = Bauen von Quellcode mit Hilfe von Maven =
   * Ausschecken von SVN unter: *trunk/java*
-  * Im Ordner _java_ befindet sich eine Maven-Datei namens _pom.xml_. In dieser Datei werden sämtliche Module von eXTra mit der richtigen Reihenfolge beschrieben.
-  * Danach kann in diesem Ordner _java_ der Maven-Befehl wie beispielsweise _clean package_ ausgeführt werden. Damit werden sämtliche Module in der richtigen Reihenfolge gebaut.
+  * *Parent-POM-Projekt:* Im Ordner _java/components/extra-parent_ steht das Parent-POM-Projekt zur Verfügung. Dieses Projekt muss zuerst gebaut werden: _mvn clean install_
+  * *Modul-Projekte:* Im Ordner _java_ befindet sich eine Maven-Datei namens _pom.xml_. In dieser Datei werden sämtliche Module von eXTra mit der richtigen Reihenfolge beschrieben. Danach kann in diesem Ordner _java_ der Maven-Befehl wie beispielsweise _clean package_ ausgeführt werden. Damit werden sämtliche Module in der richtigen Reihenfolge gebaut.
 
 = Import von Maven-Projekten ins Eclipse-Workspace =
   * Im Prinzip können die Maven-Projekte, die vorher aus SVN ausgescheckt wurden, in Eclipse einfach als Maven-Projekt importiert werden. Zu beachten, dass das Plugin m2e vorher installiert werden muss.
