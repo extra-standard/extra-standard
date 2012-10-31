@@ -25,7 +25,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-		<groupId>de.extrastandard</groupId>
+		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
@@ -34,6 +34,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>extra-modules</name>
+	<description>eXTra Modules</description>
 	
 	<modules>
 		<module>components/extra-api</module>
