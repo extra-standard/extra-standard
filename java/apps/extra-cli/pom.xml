@@ -35,7 +35,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>extra-cli</name>
-	<description>eXTRa Command Line Interface</description>
+	<description>eXTra Command Line Interface</description>
 
 	<properties>
 		<program.name>extra-client</program.name>

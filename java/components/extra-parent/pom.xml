@@ -30,7 +30,7 @@
 	<packaging>pom</packaging>
 
 	<name>extra-parent</name>
-	<description>Extra Parent-POM</description>
+	<description>eXTra Parent-POM</description>
 	<url>http://code.google.com/p/extra-standard</url>
 
 	<inceptionYear>2012</inceptionYear>

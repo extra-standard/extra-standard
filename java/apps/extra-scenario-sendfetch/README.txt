@@ -1,5 +1,5 @@
 ----------------------------------------------
-eXTRa Szenario Send-Fetch (Sende-Hole Betrieb)
+eXTra Szenario Send-Fetch (Sende-Hole Betrieb)
 Version: 0.8
 ----------------------------------------------
 
