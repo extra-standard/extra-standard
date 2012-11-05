@@ -1,6 +1,6 @@
 #Beschreibt eXTra Data Plugin 
 
-= Hier wird die Funktionsweise des DataPlugin beschrieben =
+= Hier wird die Funktionsweise des Data-Plugins beschrieben =
 
 
 = Architektur und API (application programming interface ) =
