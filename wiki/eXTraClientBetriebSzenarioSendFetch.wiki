@@ -1,6 +1,6 @@
 #summary Technisches Referenzverfahren, das exemplarisch die Arbeit mit dem eXTra-Client verdeutlicht
 
-<h1>eXTRa Szenario Send-Fetch (Sende-Hole Betrieb)</h1>
+<h1>eXTra Szenario Send-Fetch (Sende-Hole Betrieb)</h1>
 
 Das Szenario Send-Fetch ist ein technisches Referenzverfahren, das exemplarisch die Arbeit mit dem eXTra-Client verdeutlichen soll. Dieses Szenario kann als Ausgangspunkt für die Realisierung von Fachverfahren verwendet werden. Für die Ausführung wird eine Version des eXTra Clients benoetigt.  
 
