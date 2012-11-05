@@ -13,9 +13,9 @@ http://extra-standard.googlecode.com/svn/wiki/images/input-plugin-data.png
 
 Hier sind 2 Arten der  Inputdaten abgebildet. 
 
-  * Content Input Data
-  * DB Query Input Data
+  * !ContentInputData
+  * !DBQueryInputData
 
 Content Input Data bildet reinen Nutzdaten sowie dazugehörigen Steuerungsinformationen wie Plugins und !RequestId.
 
-Bei der DBQuery InputData handelt es sich um die Query zur Abruf der Daten
+Bei der DBQuery !InputData handelt es sich um die Query zur Abruf der Daten
