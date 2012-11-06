@@ -44,6 +44,28 @@ import de.extrastandard.api.model.execution.IInputData;
 public class SimpleRequestIdAcquisitionStrategy implements
 		IRequestIdAcquisitionStrategy {
 
+	@Override
+	public void setRequestId(IInputData dbInputData,
+			ISingleInputData singleInputData) {
+		Assert.notNull(dbInputData, "Inputdata is null");
+		Assert.notNull(singleInputData, "inputDataContainer is null");
+
+		if (ISingleContentInputData.class.isAssignableFrom(singleInputData
+				.getClass())) {
+			ISingleContentInputData singleContentInputData = ISingleContentInputData.class
+					.cast(singleInputData);
+			setRequestIdForContentInputData(dbInputData, singleContentInputData);
+		} else if (ISingleQueryInputData.class.isAssignableFrom(singleInputData
+				.getClass())) {
+			ISingleQueryInputData iSingleQueryInputData = ISingleQueryInputData.class
+					.cast(singleInputData);
+			setRequestIdForQueryInpuData(dbInputData, iSingleQueryInputData);
+		} else {
+			throw new ExtraCoreRuntimeException("Unexpected Data Type"
+					+ singleInputData.getClass());
+		}
+
+	}
 	/**
 	 * <pre>
 	 * A distinction is made between 3 Strategies
@@ -55,8 +77,7 @@ public class SimpleRequestIdAcquisitionStrategy implements
 	 * @see de.extra.client.core.process.IRequestIdAcquisitionStrategy#setRequestId(de.extrastandard.api.model.execution.IInputData,
 	 *      de.extrastandard.api.model.content.IInputDataContainer)
 	 */
-	@Override
-	public void setRequestId(final IInputData inputData,
+	private void setRequestIdForContentInputData(final IInputData inputData,
 			final ISingleContentInputData singleContentInputData) {
 		Assert.notNull(inputData, "Inputdata is null");
 		Assert.notNull(singleContentInputData, "inputDataContainer is null");
@@ -88,6 +109,18 @@ public class SimpleRequestIdAcquisitionStrategy implements
 
 	}
 
+	private void setRequestIdForQueryInpuData(final IInputData inputData,
+			final ISingleQueryInputData singleQueryInputData) {
+		Assert.notNull(inputData, "Inputdata is null");
+		Assert.notNull(singleQueryInputData, "inputDataContainer is null");
+		// Einzelne Value, die an Server übertragen wird und zur Identifizierung
+		// der Nachrichten dienen kann ist der Ursprung-ResponseId
+		final String requestId = singleQueryInputData.getSourceResponceId();
+		inputData.setRequestId(requestId);
+		singleQueryInputData.setRequestId(requestId);
+	}
+
+
 	@Override
 	public void setRequestId(final IInputDataContainer iInputDataContainer,
 			final IExecution execution) {
@@ -106,16 +139,5 @@ public class SimpleRequestIdAcquisitionStrategy implements
 		}
 	}
 
-	@Override
-	public void setRequestId(final IInputData inputData,
-			final ISingleQueryInputData singleQueryInputData) {
-		Assert.notNull(inputData, "Inputdata is null");
-		Assert.notNull(singleQueryInputData, "inputDataContainer is null");
-		// Einzelne Value, die an Server übertragen wird und zur Identifizierung
-		// der Nachrichten dienen kann ist der Ursprung-ResponseId
-		final String requestId = singleQueryInputData.getSourceResponceId();
-		inputData.setRequestId(requestId);
-		singleQueryInputData.setRequestId(requestId);
-	}
 
 }

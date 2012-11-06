@@ -45,4 +45,11 @@ public class DummyExecutionPersistence implements IExecutionPersistence {
 		return null;
 	}
 
+	@Override
+	public Long maxResponseIdForExecution(String procedureName,
+			PhaseQualifier phaseQualifier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

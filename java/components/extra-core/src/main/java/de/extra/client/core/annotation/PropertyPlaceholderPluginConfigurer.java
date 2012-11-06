@@ -155,7 +155,6 @@ public class PropertyPlaceholderPluginConfigurer extends PropertyPlaceholderConf
 					key.append(".").append(xmlTypeKey);
 					key.append(".").append(plugInBeanName);
 					key.append(".").append(initialKey);
-
 				} else {
 					throw new BeanCreationException(clazz.getName(),
 							" unexpected AnnotationType. Use PluginConfigType.Builder for IXmlComplexTypeBuilder");

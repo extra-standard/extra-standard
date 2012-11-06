@@ -33,16 +33,4 @@ public interface IDbQueryInputData extends IInputDataContainer {
 	 * @return
 	 */
 	List<ISingleQueryInputData> getInputData();
-
-	/**
-	 * @param dbInputDataId
-	 * @param sourceRequestId
-	 * @param sourceResponceId
-	 */
-	void addSingleDBQueryInputData(Long dbInputDataId, String sourceRequestId, String sourceResponceId);
-
-	/**
-	 * @param singleQueryInputData
-	 */
-	void addSingleDBQueryInputData(ISingleQueryInputData singleQueryInputData);
 }

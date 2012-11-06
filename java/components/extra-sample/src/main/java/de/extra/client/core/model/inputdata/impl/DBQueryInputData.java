@@ -69,7 +69,6 @@ public class DBQueryInputData extends InputDataContainer implements
      * @see de.extrastandard.api.model.content.IDbQueryInputData#
      * addSingleDBQueryInputData(java.lang.String, java.lang.String)
      */
-    @Override
     public void addSingleDBQueryInputData(final Long dbInputDataId,
 	    final String sourceRequestId, final String sourceResponceId) {
 	final InDBQueryInputData singleDBQueryInputData = new InDBQueryInputData(
@@ -80,7 +79,6 @@ public class DBQueryInputData extends InputDataContainer implements
     /**
      * @param singleQueryInputData
      */
-    @Override
     public void addSingleDBQueryInputData(
 	    final ISingleQueryInputData singleQueryInputData) {
 	inDBQueryInputDataList.add(singleQueryInputData);

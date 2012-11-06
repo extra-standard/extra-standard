@@ -19,8 +19,7 @@
 package de.extra.client.core.process;
 
 import de.extrastandard.api.model.content.IInputDataContainer;
-import de.extrastandard.api.model.content.ISingleContentInputData;
-import de.extrastandard.api.model.content.ISingleQueryInputData;
+import de.extrastandard.api.model.content.ISingleInputData;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
 
@@ -31,13 +30,10 @@ import de.extrastandard.api.model.execution.IInputData;
 public interface IRequestIdAcquisitionStrategy {
 
 	/**
-	 * 
-	 * 
-	 * @param inputData
-	 * @param singleContentInputData
+	 * @param dbInputData
+	 * @param singleQueryInputData
 	 */
-	void setRequestId(IInputData inputData,
-			ISingleContentInputData singleContentInputData);
+	void setRequestId(IInputData dbInputData, ISingleInputData singleInputData);
 
 	/**
 	 * Set RequestId for InputDataContainer and Execution
@@ -51,11 +47,5 @@ public interface IRequestIdAcquisitionStrategy {
 	void setRequestId(IInputDataContainer iInputDataContainer,
 			IExecution execution);
 
-	/**
-	 * @param dbInputData
-	 * @param singleQueryInputData
-	 */
-	void setRequestId(IInputData dbInputData,
-			ISingleQueryInputData singleQueryInputData);
 
 }

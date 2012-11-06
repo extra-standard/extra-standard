@@ -127,7 +127,7 @@ public class ExtraRequestQueryElementSequenceBuilderIT {
 	 * @return
 	 */
 	private IDbQueryInputData createTestDummyDBQueryInputData() {
-		final IDbQueryInputData senderData = new DBQueryInputData();
+		final DBQueryInputData senderData = new DBQueryInputData();
 		senderData.addSingleDBQueryInputData(1L, "STERBEDATENABGLEICH-7777777-1-RESPONSE",
 				"STERBEDATENABGLEICH-7777777-1-RESPONSE");
 		senderData.addSingleDBQueryInputData(2L, "STERBEDATENABGLEICH-7777778-2-RESPONSE",

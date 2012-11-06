@@ -61,4 +61,28 @@ public interface InputDataRepository extends JpaRepository<InputData, Long> {
 			@Param("phaseQualifier") String phaseQualifier,
 			@Param("status") Status status);
 
+//	select max (INPUT_DATA.RESPONSE_ID) from INPUT_DATA , PROCEDURE, EXECUTION
+//	where INPUT_DATA.EXECUTION_ID = EXECUTION.ID
+//	and EXECUTION.PROCEDURE_ID = PROCEDURE.ID
+//	and EXECUTION.PHASE = 'SterbedatenabgleichDataFetchPhase1'
+//	and PROCEDURE.NAME = 'SterbedatenabgleichDataFetch'
+	
+	// TODO Reicht das?? Status??
+	// Oder Minimum mit Status Offen??
+	
+	/**
+	 * Für die übergebene Procedure und Phase wird die maximale Response-ID
+	 * eines Input_Data Elements ermittelt.
+	 * 
+	 * @param procedure
+	 * @param phaseQualifier
+	 * @return
+	 */
+	@Query("select max(inp.responseId) from InputData inp "
+			+ " WHERE inp.execution.procedure =:procedure "
+			+ " and inp.execution.phase = :phaseQualifier ")
+	Long maxResponseIdForProcedureAndPhase(
+			@Param("procedure") IProcedure procedure,
+			@Param("phaseQualifier") String phaseQualifier);
+
 }

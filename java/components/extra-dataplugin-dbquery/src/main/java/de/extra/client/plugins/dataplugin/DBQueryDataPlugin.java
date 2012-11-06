@@ -49,71 +49,71 @@ import de.extrastandard.api.plugin.IDataPlugin;
 @Named("dbQueryDataPlugin")
 public class DBQueryDataPlugin implements IDataPlugin {
 
-    @Inject
-    @Named("executionPersistenceJpa")
-    IExecutionPersistence executionPersistence;
+	@Inject
+	@Named("executionPersistenceJpa")
+	IExecutionPersistence executionPersistence;
 
-    @Value("${core.execution.phase}")
-    private String executionPhase;
+	@Value("${core.execution.phase}")
+	private String executionPhase;
 
-    @Value("${core.execution.procedure}")
-    private String executionProcedure;
+	@Value("${core.execution.procedure}")
+	private String executionProcedure;
 
-    @Value("${plugins.dataplugin.dbQueryDataPlugin.inputDataLimit}")
-    private Integer inputDataLimit;
+	@Value("${plugins.dataplugin.dbQueryDataPlugin.inputDataLimit}")
+	private Integer inputDataLimit;
 
-    private static final Logger logger = LoggerFactory
-	    .getLogger(DBQueryDataPlugin.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(DBQueryDataPlugin.class);
 
-    private List<IInputData> inputDataList;
+	private List<IInputData> inputDataList;
 
-    @Override
-    public IInputDataContainer getData() {
-	if (inputDataList == null) {
-	    synchronized (inputDataList) {
-		hasMoreData();
-	    }
+	@Override
+	public IInputDataContainer getData() {
+		if (inputDataList == null) {
+			synchronized (inputDataList) {
+				hasMoreData();
+			}
 
+		}
+		final DBQueryInputData dbQueryinputData = new DBQueryInputData();
+		final List<IInputDataContainer> senderDataBeanList = new ArrayList<IInputDataContainer>();
+		senderDataBeanList.add(dbQueryinputData);
+
+		for (final IInputData inputData : inputDataList) {
+			dbQueryinputData.addSingleDBQueryInputData(inputData.getId(),
+					String.valueOf(inputData.getRequestId()),
+					inputData.getResponseId());
+		}
+		logger.info("For Procedury and Phase {} found {} Records.",
+				executionProcedure + "->" + executionPhase,
+				inputDataList.size());
+
+		return dbQueryinputData;
 	}
-	final DBQueryInputData dbQueryinputData = new DBQueryInputData();
-	final List<IInputDataContainer> senderDataBeanList = new ArrayList<IInputDataContainer>();
-	senderDataBeanList.add(dbQueryinputData);
 
-	for (final IInputData inputData : inputDataList) {
-	    dbQueryinputData.addSingleDBQueryInputData(inputData.getId(),
-		    String.valueOf(inputData.getRequestId()),
-		    inputData.getResponseId());
+	@Override
+	public synchronized boolean hasMoreData() {
+		final PhaseQualifier phaseQualifier = PhaseQualifier
+				.resolveByName(executionPhase);
+		inputDataList = executionPersistence.findInputDataForExecution(
+				executionProcedure, phaseQualifier, inputDataLimit);
+		return !inputDataList.isEmpty();
 	}
-	logger.info("For Procedury and Phase {} found {} Records.",
-		executionProcedure + "->" + executionPhase,
-		inputDataList.size());
 
-	return dbQueryinputData;
-    }
+	@Override
+	public boolean isEmpty() {
+		final PhaseQualifier phaseQualifier = PhaseQualifier
+				.resolveByName(executionPhase);
+		final Long countInputData = executionPersistence
+				.countInputDataForExecution(executionProcedure, phaseQualifier);
+		return (countInputData == 0);
+	}
 
-    @Override
-    public synchronized boolean hasMoreData() {
-	final PhaseQualifier phaseQualifier = PhaseQualifier
-		.resolveByName(executionPhase);
-	inputDataList = executionPersistence.findInputDataForExecution(
-		executionProcedure, phaseQualifier, inputDataLimit);
-	return !inputDataList.isEmpty();
-    }
-
-    @Override
-    public boolean isEmpty() {
-	final PhaseQualifier phaseQualifier = PhaseQualifier
-		.resolveByName(executionPhase);
-	final Long countInputData = executionPersistence
-		.countInputDataForExecution(executionProcedure, phaseQualifier);
-	return (countInputData == 0);
-    }
-
-    /**
-     * @param executionPhase
-     *            the executionPhase to set
-     */
-    public void setExecutionPhase(final String executionPhase) {
-	this.executionPhase = executionPhase;
-    }
+	/**
+	 * @param executionPhase
+	 *            the executionPhase to set
+	 */
+	public void setExecutionPhase(final String executionPhase) {
+		this.executionPhase = executionPhase;
+	}
 }

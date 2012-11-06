@@ -134,7 +134,7 @@ public class ExtraRequestBuilderTest {
 	 * @return
 	 */
 	private IDbQueryInputData createTestDummyDBQueryInputData() {
-		final IDbQueryInputData senderData = new DBQueryInputData();
+		final DBQueryInputData senderData = new DBQueryInputData();
 		senderData.addSingleDBQueryInputData(1L, "sourceRequestId 1", "sourceResponseId 1");
 		senderData.addSingleDBQueryInputData(2L, "sourceRequestId 2 ", "sourceResponseId 2");
 		senderData.setRequestId("requestId");
