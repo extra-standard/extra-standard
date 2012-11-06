@@ -10,8 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
-import de.extra.client.core.model.inputdata.impl.DBQueryMaxResponseIdInputData;
+import de.extra.client.core.model.inputdata.impl.DBSingleQueryInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataContainer;
+import de.extrastandard.api.model.content.QueryArgumentType;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.api.plugin.IDataPlugin;
@@ -21,7 +22,8 @@ import de.extrastandard.api.plugin.IDataPlugin;
  * @since 1.0.0-M2
  * 
  */
-public class DBMaxQueryDataPlugin implements IDataPlugin {
+@Named("dbMaxResponseIdQueryDataPlugin")
+public class DBMaxResponseIdQueryDataPlugin implements IDataPlugin {
 
 	@Inject
 	@Named("executionPersistenceJpa")
@@ -36,43 +38,46 @@ public class DBMaxQueryDataPlugin implements IDataPlugin {
 	private static final Logger logger = LoggerFactory
 			.getLogger(DBQueryDataPlugin.class);
 
-	DBQueryMaxResponseIdInputData dbQueryMaxResponseIdInputData = null;
+	DBSingleQueryInputDataContainer dbQueryMaxResponseIdInputData = null;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see de.extrastandard.api.plugin.IDataPlugin#getData()
 	 */
 	@Override
-	public IInputDataContainer getData() {
+	public synchronized IInputDataContainer getData() {
 		if (dbQueryMaxResponseIdInputData == null) {
-			synchronized (dbQueryMaxResponseIdInputData) {
-				hasMoreData();
-			}
+			final PhaseQualifier phaseQualifier = PhaseQualifier
+					.resolveByName(executionPhase);
+			Long maxResponseId = executionPersistence
+					.maxResponseIdForExecution(executionProcedure,
+							phaseQualifier);
+			dbQueryMaxResponseIdInputData = new DBSingleQueryInputDataContainer(
+					String.valueOf(maxResponseId),
+					QueryArgumentType.GREATER_THEN);
 
+			logger.info("For Procedury and Phase {} MaxResponseId: {}",
+					executionProcedure + "->" + executionPhase,
+					String.valueOf(maxResponseId));
 		}
 
 		return dbQueryMaxResponseIdInputData;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see de.extrastandard.api.plugin.IDataPlugin#hasMoreData()
 	 */
 	@Override
 	public boolean hasMoreData() {
-		final PhaseQualifier phaseQualifier = PhaseQualifier
-				.resolveByName(executionPhase);
-		Long maxResponseId = executionPersistence.maxResponseIdForExecution(
-				executionProcedure, phaseQualifier);
-		dbQueryMaxResponseIdInputData = new DBQueryMaxResponseIdInputData(
-				maxResponseId);
-
-		logger.info("For Procedury and Phase {} MaxResponseId: {}",
-				executionProcedure + "->" + executionPhase,
-				String.valueOf(maxResponseId));
-
-		return true;
+		return (dbQueryMaxResponseIdInputData == null);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see de.extrastandard.api.plugin.IDataPlugin#isEmpty()
 	 */
 	@Override

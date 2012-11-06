@@ -18,25 +18,8 @@
  */
 package de.extrastandard.api.model.content;
 
-/**
- * Enum für die Queryes Entspricht dem Element xmsg:Query Argument
- * 
- * @author Leonid Potap
- * @version $Id: QueryArgumentType.java 756 2012-10-15 14:14:40Z
- *          potap.rentenservice@gmail.com $
- */
-public enum QueryArgumentType {
-	EQUAL("EQ"), GREATER_THEN("GT"), GREATER_EQUAL("GE"), LOWER_EQUAL("LE"), LOWER_THEN(
-			"LT");
+public interface IDbSingleQueryInputData extends ISingleInputData {
+	String getArgument();
 
-	String type;
-
-	private QueryArgumentType(final String type) {
-		this.type = type;
-	}
-
-	public String getType() {
-		return type;
-	}
-
+	QueryArgumentType getQueryArgumentType();
 }

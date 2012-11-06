@@ -27,6 +27,7 @@ import org.springframework.util.Assert;
 
 import de.extra.client.core.process.IRequestIdAcquisitionStrategy;
 import de.extrastandard.api.exception.ExtraCoreRuntimeException;
+import de.extrastandard.api.model.content.IDbSingleQueryInputData;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.ISingleContentInputData;
 import de.extrastandard.api.model.content.ISingleInputData;
@@ -60,6 +61,13 @@ public class SimpleRequestIdAcquisitionStrategy implements
 			ISingleQueryInputData iSingleQueryInputData = ISingleQueryInputData.class
 					.cast(singleInputData);
 			setRequestIdForQueryInpuData(dbInputData, iSingleQueryInputData);
+			// TODO MAXRESP (06.11.12)
+		} else if (IDbSingleQueryInputData.class
+				.isAssignableFrom(singleInputData.getClass())) {
+			IDbSingleQueryInputData singleQueryInputData = IDbSingleQueryInputData.class
+					.cast(singleInputData);
+			setRequestIdForSingleQueryInputData(dbInputData,
+					singleQueryInputData);
 		} else {
 			throw new ExtraCoreRuntimeException("Unexpected Data Type"
 					+ singleInputData.getClass());
@@ -115,11 +123,19 @@ public class SimpleRequestIdAcquisitionStrategy implements
 		Assert.notNull(singleQueryInputData, "inputDataContainer is null");
 		// Einzelne Value, die an Server übertragen wird und zur Identifizierung
 		// der Nachrichten dienen kann ist der Ursprung-ResponseId
+
 		final String requestId = singleQueryInputData.getSourceResponceId();
 		inputData.setRequestId(requestId);
 		singleQueryInputData.setRequestId(requestId);
 	}
 
+	// TODO MAXRESP (06.11.12)
+	private void setRequestIdForSingleQueryInputData(
+			final IInputData inputData,
+			final IDbSingleQueryInputData singleQueryInputData) {
+		Assert.notNull(inputData, "Inputdata is null");
+		Assert.notNull(singleQueryInputData, "inputDataContainer is null");
+	}
 
 	@Override
 	public void setRequestId(final IInputDataContainer iInputDataContainer,

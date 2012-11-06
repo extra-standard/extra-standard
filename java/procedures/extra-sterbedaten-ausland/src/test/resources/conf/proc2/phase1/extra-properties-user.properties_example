@@ -1,6 +1,7 @@
 # Ablage-Ordner
-plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=classpath:work/responses
-plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner=classpath:work/reports
+plugins.responseprocessplugin.fileSystemResultPackageDataResponseProcessPlugin.eingangOrdner=classpath:work/responses
+#plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=classpath:work/responses
+#plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner=classpath:work/reports
 plugins.dataplugin.fileDataPlugin.inputVerzeichnis=classpath:work/input
 
 #Datenbank Connection Properties

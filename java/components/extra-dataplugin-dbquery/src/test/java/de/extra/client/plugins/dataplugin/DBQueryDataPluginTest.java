@@ -35,7 +35,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import de.extra.client.core.model.inputdata.impl.DBQueryInputData;
+import de.extra.client.core.model.inputdata.impl.DBMultiQueryInputData;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.ISingleQueryInputData;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
@@ -83,8 +83,8 @@ public class DBQueryDataPluginTest {
 	public final void testGetData() {
 		while (dbQueryDataPlugin.hasMoreData()) {
 			final IInputDataContainer inputDataContainer = dbQueryDataPlugin.getData();
-			Assert.assertTrue(inputDataContainer.isImplementationOf(DBQueryInputData.class));
-			final DBQueryInputData dbQueryInputData = inputDataContainer.cast(DBQueryInputData.class);
+			Assert.assertTrue(inputDataContainer.isImplementationOf(DBMultiQueryInputData.class));
+			final DBMultiQueryInputData dbQueryInputData = inputDataContainer.cast(DBMultiQueryInputData.class);
 			final List<ISingleQueryInputData> singleQueryInputDatas = dbQueryInputData.getInputData();
 			Assert.assertEquals(1, singleQueryInputDatas.size());
 			final ISingleQueryInputData singleQueryInputData = singleQueryInputDatas.get(0);

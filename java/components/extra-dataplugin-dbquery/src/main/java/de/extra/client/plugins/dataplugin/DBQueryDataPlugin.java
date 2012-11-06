@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
-import de.extra.client.core.model.inputdata.impl.DBQueryInputData;
+import de.extra.client.core.model.inputdata.impl.DBMultiQueryInputData;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.model.execution.IInputData;
@@ -75,7 +75,7 @@ public class DBQueryDataPlugin implements IDataPlugin {
 			}
 
 		}
-		final DBQueryInputData dbQueryinputData = new DBQueryInputData();
+		final DBMultiQueryInputData dbQueryinputData = new DBMultiQueryInputData();
 		final List<IInputDataContainer> senderDataBeanList = new ArrayList<IInputDataContainer>();
 		senderDataBeanList.add(dbQueryinputData);
 
