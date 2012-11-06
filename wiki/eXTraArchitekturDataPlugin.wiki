@@ -10,7 +10,7 @@ Im folgenden Diagramm ist eine technische Zusammensetzung der Dataobjekten zusam
 
 http://extra-standard.googlecode.com/svn/wiki/images/input-plugin-data.png
 
-Hier sind 2 Arten der  Inputdaten abgebildet. 
+Hier sind 2 Arten der  Inputdaten abgebildet:
 
   * !ContentInputData
   * DBQueryInputData
