@@ -1,1 +1,0 @@
--- Initialdaten DB fuer Sterbedaten Ausland

@@ -107,6 +107,70 @@
 							</execution>
 						</executions>
 					</plugin>
+										
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.7</version>
+						<executions>
+							<execution>
+								<id>copy-files-test-properties</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<!-- Konfiguration fuer Unit-Tests uebernehmen -->
+								<configuration>
+									<target>
+										<!-- Procedure 1 -->
+										<!-- Phase 1 -->
+										<copy
+											file="${project.basedir}/src/main/conf/proc1/phase1/extra-properties-basic.properties"
+											tofile="${project.basedir}/src/test/resources/conf/proc1/phase1/extra-properties-basic.properties" />
+										<copy
+											file="${project.basedir}/src/main/conf/proc1/phase1/logging-config.xml"
+											tofile="${project.basedir}/src/test/resources/conf/proc1/phase1/logging-config.xml" />
+										<copy
+											file="${project.basedir}/src/main/conf/proc1/phase1/phase1-sent-profil.xml"
+											tofile="${project.basedir}/src/test/resources/conf/proc1/phase1/phase1-sent-profil.xml" />
+										<copy
+											file="${project.basedir}/src/test/resources/conf/proc1/phase1/extra-properties-user.properties_example"
+											tofile="${project.basedir}/src/test/resources/conf/proc1/phase1/extra-properties-user.properties"
+											overwrite="false" />
+										<!-- Procedure 2 -->
+										<!-- Phase 1 -->
+										<copy
+											file="${project.basedir}/src/main/conf/proc2/phase1/extra-properties-basic.properties"
+											tofile="${project.basedir}/src/test/resources/conf/proc2/phase1/extra-properties-basic.properties" />
+										<copy
+											file="${project.basedir}/src/main/conf/proc2/phase1/logging-config.xml"
+											tofile="${project.basedir}/src/test/resources/conf/proc2/phase1/logging-config.xml" />
+										<copy
+											file="${project.basedir}/src/main/conf/proc2/phase1/phase1-fetchresult-profil.xml"
+											tofile="${project.basedir}/src/test/resources/conf/proc2/phase1/phase1-fetchresult-profil.xml" />
+										<copy
+											file="${project.basedir}/src/test/resources/conf/proc2/phase1/extra-properties-user.properties_example"
+											tofile="${project.basedir}/src/test/resources/conf/proc2/phase1/extra-properties-user.properties"
+											overwrite="false" />
+										<!-- Phase 2 -->
+										<copy
+											file="${project.basedir}/src/main/conf/proc2/phase2/extra-properties-basic.properties"
+											tofile="${project.basedir}/src/test/resources/conf/proc2/phase2/extra-properties-basic.properties" />
+										<copy
+											file="${project.basedir}/src/main/conf/proc2/phase2/logging-config.xml"
+											tofile="${project.basedir}/src/test/resources/conf/proc2/phase2/logging-config.xml" />
+										<copy
+											file="${project.basedir}/src/main/conf/proc2/phase2/phase2-confirmation-profil.xml"
+											tofile="${project.basedir}/src/test/resources/conf/proc2/phase2/phase2-confirmation-profil.xml" />
+										<copy
+											file="${project.basedir}/src/test/resources/conf/proc2/phase2/extra-properties-user.properties_example"
+											tofile="${project.basedir}/src/test/resources/conf/proc2/phase2/extra-properties-user.properties"
+											overwrite="false" />
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
