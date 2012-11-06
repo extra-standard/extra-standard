@@ -75,7 +75,7 @@ public class ExtraRequestListOfConfirmationOfReceiptBuilderIT {
 	 * @return
 	 */
 	private IDbQueryInputData createTestDummyDBQueryInputData() {
-		final IDbQueryInputData senderData = new DBQueryInputData();
+		final DBQueryInputData senderData = new DBQueryInputData();
 		senderData.addSingleDBQueryInputData(1L, "STERBEDATENABGLEICH-7777778-2-RESPONSE-DATENABGLEICH",
 				"STERBEDATENABGLEICH-7777778-2-RESPONSE-DATENABGLEICH");
 		senderData.addSingleDBQueryInputData(2L, "STERBEDATENABGLEICH-7777778-2-RESPONSE-DATENABGLEICH",

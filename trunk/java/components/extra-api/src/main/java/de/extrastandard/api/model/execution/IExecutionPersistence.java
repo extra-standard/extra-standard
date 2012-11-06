@@ -80,4 +80,7 @@ public interface IExecutionPersistence {
 	 */
 	Long countInputDataForExecution(String executionProcedure, PhaseQualifier phaseQualifier);
 
+	// Max Query (Sterbedatenabgleich)
+	Long maxResponseIdForExecution(String procedureName,
+			PhaseQualifier phaseQualifier);
 }

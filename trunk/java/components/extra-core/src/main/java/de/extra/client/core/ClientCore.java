@@ -22,7 +22,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -46,13 +45,10 @@ import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraConfigRuntimeException;
 import de.extrastandard.api.exception.ExtraCoreRuntimeException;
 import de.extrastandard.api.exception.ExtraRuntimeException;
-import de.extrastandard.api.model.content.IDbQueryInputData;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
-import de.extrastandard.api.model.content.IFileInputData;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.IResponseData;
-import de.extrastandard.api.model.content.ISingleContentInputData;
-import de.extrastandard.api.model.content.ISingleQueryInputData;
+import de.extrastandard.api.model.content.ISingleInputData;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.model.execution.IInputData;
@@ -168,88 +164,23 @@ public class ClientCore implements ApplicationContextAware {
 		final IExtraProfileConfiguration configFile = configPlugin
 				.getConfigFile();
 
-		ClientProcessResult clientProcessResult = null;
-
-		if (versandDaten.isImplementationOf(IFileInputData.class)) {
-			final IFileInputData fileInputData = versandDaten
-					.cast(IFileInputData.class);
-			clientProcessResult = processFileInputData(fileInputData,
-					configFile, execution);
-		} else if (versandDaten.isImplementationOf(IDbQueryInputData.class)) {
-			final IDbQueryInputData dbQueryInputData = versandDaten
-					.cast(IDbQueryInputData.class);
-			clientProcessResult = processDbQueryInputData(dbQueryInputData,
-					configFile, execution);
-		} else {
-			throw new ExtraCoreRuntimeException("Unexpected InputData: "
-					+ versandDaten.getClass());
-		}
-		return clientProcessResult;
-	}
-
-	private ClientProcessResult processDbQueryInputData(
-			final IDbQueryInputData dbQueryInputData,
-			final IExtraProfileConfiguration configFile,
-			final IExecution execution) {
 		final ClientProcessResult clientProcessResult = applicationContext
 				.getBean("clientProcessResult", ClientProcessResult.class);
 		try {
 
-			final List<ISingleQueryInputData> singleQueryInputDataList = dbQueryInputData
-					.getInputData();
-			for (final ISingleQueryInputData singleQueryInputData : singleQueryInputDataList) {
-				final IInputData dbInputData = execution
-						.startInputData(singleQueryInputData);
-				requestIdAcquisitionStrategy.setRequestId(dbInputData,
-						singleQueryInputData);
-			}
-			requestIdAcquisitionStrategy.setRequestId(dbQueryInputData,
-					execution);
-			final IResponseData responseData = processInputData(
-					dbQueryInputData, configFile, execution);
-
-			clientProcessResult.addResult(dbQueryInputData, responseData);
-			execution.endExecution(responseData);
-
-		} catch (final ExtraConfigRuntimeException extraConfigException) {
-			logger.error("Exception in der Extra-Processing",
-					extraConfigException);
-			clientProcessResult.addException(extraConfigException);
-			failed(execution, extraConfigException);
-		} catch (final ExtraRuntimeException extraRuntimeException) {
-			logger.error("Exception in der Extra-Processing",
-					extraRuntimeException);
-			clientProcessResult.addException(extraRuntimeException);
-			failed(execution, extraRuntimeException);
-		} catch (final Exception exception) {
-			logger.error("Exception in der Extra-Processing", exception);
-			clientProcessResult.addException(exception);
-			failed(execution, exception);
-		}
-		return clientProcessResult;
-
-	}
-
-	private ClientProcessResult processFileInputData(
-			final IFileInputData fileInputData,
-			final IExtraProfileConfiguration configFile,
-			final IExecution execution) {
-		final ClientProcessResult clientProcessResult = applicationContext
-				.getBean("clientProcessResult", ClientProcessResult.class);
-		try {
-
-			for (final ISingleContentInputData singleContentInputData : fileInputData
-					.getInputData()) {
+			for (final ISingleInputData singleContentInputData : versandDaten
+					.getContent()) {
 				final IInputData inputData = execution
 						.startInputData(singleContentInputData);
+
 				requestIdAcquisitionStrategy.setRequestId(inputData,
 						singleContentInputData);
 			}
-			requestIdAcquisitionStrategy.setRequestId(fileInputData, execution);
+			requestIdAcquisitionStrategy.setRequestId(versandDaten, execution);
 
-			final IResponseData responseData = processInputData(fileInputData,
+			final IResponseData responseData = processInputData(versandDaten,
 					configFile, execution);
-			clientProcessResult.addResult(fileInputData, responseData);
+			clientProcessResult.addResult(versandDaten, responseData);
 
 			execution.endExecution(responseData);
 
@@ -269,6 +200,7 @@ public class ClientCore implements ApplicationContextAware {
 			failed(execution, exception);
 		}
 		return clientProcessResult;
+
 	}
 
 	private void failed(final IExecution execution,

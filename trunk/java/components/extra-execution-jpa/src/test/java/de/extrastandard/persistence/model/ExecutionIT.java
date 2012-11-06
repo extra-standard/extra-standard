@@ -41,7 +41,6 @@ import de.extra.client.core.model.inputdata.impl.DBQueryInputData;
 import de.extra.client.core.model.inputdata.impl.InDBQueryInputData;
 import de.extra.client.core.responce.impl.ResponseData;
 import de.extra.client.core.responce.impl.SingleResponseData;
-import de.extrastandard.api.model.content.IDbQueryInputData;
 import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.model.content.ISingleQueryInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
@@ -97,7 +96,7 @@ public class ExecutionIT {
 				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "Test",
 				PhaseQualifier.PHASE2);
 		final IResponseData responseData = new ResponseData();
-		final IDbQueryInputData dbQueryInputData = new DBQueryInputData();
+		final DBQueryInputData dbQueryInputData = new DBQueryInputData();
 
 		final String testRequestId = "TEST_1_REQUEST_ID";
 		final String returnCode = "return code phase 2";
@@ -175,7 +174,7 @@ public class ExecutionIT {
 				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "Test",
 				PhaseQualifier.PHASE2);
 		final IResponseData responseData = new ResponseData();
-		final IDbQueryInputData dbQueryInputData = new DBQueryInputData();
+		final DBQueryInputData dbQueryInputData = new DBQueryInputData();
 
 		final String testRequestId = "TEST_REQUEST_ID";
 		final String returnCode = "return code phase 2";
