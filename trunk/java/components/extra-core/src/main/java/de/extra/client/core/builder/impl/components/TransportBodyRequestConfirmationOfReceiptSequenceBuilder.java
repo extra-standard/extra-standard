@@ -30,7 +30,7 @@ import de.drv.dsrv.extrastandard.namespace.messages.ListOfConfirmationOfReceipt;
 import de.drv.dsrv.extrastandard.namespace.messages.PropertySet;
 import de.drv.dsrv.extrastandard.namespace.messages.Value;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
-import de.extra.client.core.model.inputdata.impl.DBQueryInputData;
+import de.extra.client.core.model.inputdata.impl.DBMultiQueryInputData;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.ISingleQueryInputData;
@@ -64,7 +64,7 @@ public class TransportBodyRequestConfirmationOfReceiptSequenceBuilder extends Xm
 	}
 
 	private ListOfConfirmationOfReceipt createConfirmationOfReceipt(final IInputDataContainer senderData) {
-		final DBQueryInputData dbQueryInputData = senderData.cast(DBQueryInputData.class);
+		final DBMultiQueryInputData dbQueryInputData = senderData.cast(DBMultiQueryInputData.class);
 		final ListOfConfirmationOfReceipt listOfConfirmationOfReceipt = new ListOfConfirmationOfReceipt();
 		final List<ISingleQueryInputData> singleDBQueryinputDataList = dbQueryInputData.getInputData();
 		final ListOfConfirmationOfReceipt.ConfirmationOfReceipt confirmationOfReceipt = new ListOfConfirmationOfReceipt.ConfirmationOfReceipt();

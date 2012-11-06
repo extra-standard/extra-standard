@@ -37,6 +37,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.util.Assert;
 
 import de.extrastandard.api.exception.ExtraCoreRuntimeException;
+import de.extrastandard.api.model.content.IDbSingleQueryInputData;
 import de.extrastandard.api.model.content.ISingleContentInputData;
 import de.extrastandard.api.model.content.ISingleInputData;
 import de.extrastandard.api.model.content.ISingleQueryInputData;
@@ -190,6 +191,13 @@ public class InputData extends AbstractEntity implements IInputData {
 			final ISingleContentInputData singleContentInputData = ISingleContentInputData.class
 					.cast(singleInputData);
 			fillInputData(singleContentInputData);
+		} 
+		// TODO MAXRESP (06.11.12)
+		else if (IDbSingleQueryInputData.class
+				.isAssignableFrom(singleInputData.getClass())) {
+			final IDbSingleQueryInputData maxResponseIdQueryInputData = IDbSingleQueryInputData.class
+					.cast(singleInputData);
+			fillInputData(maxResponseIdQueryInputData);
 		} else {
 			throw new ExtraCoreRuntimeException("Unexpected inputdata: "
 					+ singleInputData.getClass());
@@ -226,6 +234,16 @@ public class InputData extends AbstractEntity implements IInputData {
 		this.hashcode = hashCode;
 		repository.save(this);
 
+	}
+
+	// TODO MAXRESP (06.11.12)
+	private void fillInputData(
+			final IDbSingleQueryInputData singleQueryInputData) {
+
+		final String hashCode = String.valueOf(singleQueryInputData
+				.hashCode());
+		this.hashcode = hashCode;
+		repository.save(this);
 	}
 
 	/**

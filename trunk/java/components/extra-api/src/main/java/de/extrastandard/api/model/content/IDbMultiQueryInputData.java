@@ -27,7 +27,7 @@ import java.util.List;
  * @version $Id: IDbQueryInputData.java 756 2012-10-15 14:14:40Z
  *          potap.rentenservice@gmail.com $ Seit Version 1.0.0
  */
-public interface IDbQueryInputData extends IInputDataContainer {
+public interface IDbMultiQueryInputData extends IInputDataContainer {
 
 	/**
 	 * @return
