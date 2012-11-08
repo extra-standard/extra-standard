@@ -18,6 +18,9 @@ import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.api.plugin.IDataPlugin;
 
 /**
+ * Ermittelt für eine Serveranfrage die maximale Response-Id für eine Procedure
+ * und Phase. (Anwendungsfall: Sterbedaten-Abgleich: Procedure 2, Phase 1)
+ * 
  * @author r52gma
  * @since 1.0.0-M2
  * 
@@ -50,7 +53,7 @@ public class DBMaxResponseIdQueryDataPlugin implements IDataPlugin {
 		if (dbQueryMaxResponseIdInputData == null) {
 			final PhaseQualifier phaseQualifier = PhaseQualifier
 					.resolveByName(executionPhase);
-			Long maxResponseId = executionPersistence
+			String maxResponseId = executionPersistence
 					.maxResponseIdForExecution(executionProcedure,
 							phaseQualifier);
 			dbQueryMaxResponseIdInputData = new DBSingleQueryInputDataContainer(

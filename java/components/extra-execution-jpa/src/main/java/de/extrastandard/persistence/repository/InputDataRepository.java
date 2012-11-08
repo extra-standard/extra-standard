@@ -70,6 +70,8 @@ public interface InputDataRepository extends JpaRepository<InputData, Long> {
 	// TODO Reicht das?? Status??
 	// Oder Minimum mit Status Offen??
 	
+	// FIXME inp.ResponseId ist kein numerisches Feld!
+	// Vorerst inp.Id statt inp.responseId genommen
 	/**
 	 * Für die übergebene Procedure und Phase wird die maximale Response-ID
 	 * eines Input_Data Elements ermittelt.
@@ -81,7 +83,7 @@ public interface InputDataRepository extends JpaRepository<InputData, Long> {
 	@Query("select max(inp.responseId) from InputData inp "
 			+ " WHERE inp.execution.procedure =:procedure "
 			+ " and inp.execution.phase = :phaseQualifier ")
-	Long maxResponseIdForProcedureAndPhase(
+	String maxResponseIdForProcedureAndPhase(
 			@Param("procedure") IProcedure procedure,
 			@Param("phaseQualifier") String phaseQualifier);
 

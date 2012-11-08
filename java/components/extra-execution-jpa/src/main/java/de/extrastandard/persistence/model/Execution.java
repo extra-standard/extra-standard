@@ -55,6 +55,7 @@ import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.IProcessTransition;
 import de.extrastandard.api.model.execution.IStatus;
+import de.extrastandard.api.model.execution.InputDataQualifier;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.ExecutionRepository;
@@ -229,25 +230,87 @@ public class Execution extends AbstractEntity implements IExecution {
 		updateProgress(PersistentStatus.DONE);
 		repository.save(this);
 		// update Inputdata
+		// (08.11.12) verschiedene InputData Typen/Qualifizierungen
+		// (QUERY_UNIQUE, QUERY_CRITERIA, ...) werden unterstützt
 		for (final InputData inputData : inputDataSet) {
-			final String requestId = inputData.getRequestId();
-			final ISingleResponseData singleResponseData = responseData
-					.getResponse(requestId);
-			Assert.notNull(singleResponseData,
-					"ISingleResponseData is null for RequestId: " + requestId);
-			inputData.transmitted(singleResponseData);
-			if (!this.procedure.isProcedureEndPhase(this.phase)) {
-				final String nextPhasenQualifier = this.procedure
-						.getNextPhase(this.phase);
-				new PhaseConnection(inputData, nextPhasenQualifier);
+			if (InputDataQualifier.QUERY_CRITERIA.getName().equals(
+					inputData.getInputDataQualifier())) {
+				processResponseDataForCriteriaQuery(inputData, responseData);
+			} else {
+				processResponseDataForOtherContent(inputData, responseData);
 			}
-			// Abgearbeitete PhaseConnection schliessen
-			final List<PhaseConnection> quellePhaseConnections = phaseConnectionRepository
-					.findByTargetInputData(inputData);
-			for (final PhaseConnection quellePhaseConnection : quellePhaseConnections) {
-				quellePhaseConnection.success();
-			}
+		}
+	}
 
+	/**
+	 * Verarbeitet das Server-Ergebnis (ResponseData) für eine Criteria-Query
+	 * (z.B. 'alle Dok. mit ID > 7'). Jedem Ergebnissatz (ISingleResponseData)
+	 * wird ein InputData-Objekt zugeordnet.
+	 * 
+	 * @since 1.0.0-M2
+	 * @param inputData
+	 * @param responseData
+	 */
+	private void processResponseDataForCriteriaQuery(InputData inputData,
+			final IResponseData responseData) {
+		final String requestId = inputData.getRequestId();
+		int nummerResponse = 1;
+		// für jede Response muss ein InputData Objekt angelegt werden
+		for (ISingleResponseData singleResponseData : responseData
+				.getResponses()) {
+			if (nummerResponse == 1) {
+				// vorhandenes InputData Objekt nehmen
+				inputData.transmitted(singleResponseData);
+				processPhaseConnectionForInputData(inputData);
+			} else {
+				// neues InputData Objekt erzeugen
+				InputData inputDataForResponse = new InputData(inputData,
+						singleResponseData);
+				processPhaseConnectionForInputData(inputDataForResponse);
+			}
+			nummerResponse++;
+		}
+	}
+
+	// TODO Namen ändern (OtherContent)!
+	/**
+	 * Verarbeitet das Server-Ergebnis (ResponseData) für eine Query (z.B. 'Dok.
+	 * mit ID = 7').
+	 * 
+	 * @since 1.0.0-M2
+	 * @param inputData
+	 * @param responseData
+	 */
+	private void processResponseDataForOtherContent(InputData inputData,
+			final IResponseData responseData) {
+		final String requestId = inputData.getRequestId();
+		final ISingleResponseData singleResponseData = responseData
+				.getResponse(requestId);
+		Assert.notNull(singleResponseData,
+				"ISingleResponseData is null for RequestId: " + requestId);
+		inputData.transmitted(singleResponseData);
+		processPhaseConnectionForInputData(inputData);
+	}
+
+	/**
+	 * Für das übergebene InputData Objekt wird die zugeordnete PhaseConection
+	 * geschlossen und eine Nachfolge-PhaseConnection vorbereitet (falls die
+	 * aktuelle Phase keine Endphase ist)
+	 * 
+	 * @param inputData
+	 */
+	private void processPhaseConnectionForInputData(InputData inputData) {
+		if (!this.procedure.isProcedureEndPhase(this.phase)) {
+			final String nextPhasenQualifier = this.procedure
+					.getNextPhase(this.phase);
+			new PhaseConnection(inputData, nextPhasenQualifier);
+		}
+
+		// Abgearbeitete PhaseConnection schliessen
+		final List<PhaseConnection> quellePhaseConnections = phaseConnectionRepository
+				.findByTargetInputData(inputData);
+		for (final PhaseConnection quellePhaseConnection : quellePhaseConnections) {
+			quellePhaseConnection.success();
 		}
 	}
 

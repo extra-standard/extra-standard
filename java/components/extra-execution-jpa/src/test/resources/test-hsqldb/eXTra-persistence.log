@@ -2,3 +2,4 @@
 DISCONNECT
 /*C5*/SET SCHEMA PUBLIC
 ROLLBACK
+alter table INPUT_DATA add column input_data_qualifier varchar(255)
