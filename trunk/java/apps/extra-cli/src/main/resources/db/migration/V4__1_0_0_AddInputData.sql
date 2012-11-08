@@ -1,0 +1,1 @@
+ALTER TABLE INPUT_DATA ADD (input_data_qualifier VARCHAR2 (100))

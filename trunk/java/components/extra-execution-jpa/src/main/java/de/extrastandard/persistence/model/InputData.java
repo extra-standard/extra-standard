@@ -45,6 +45,7 @@ import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.IProcedure;
+import de.extrastandard.api.model.execution.InputDataQualifier;
 import de.extrastandard.persistence.repository.InputDataRepository;
 
 /**
@@ -98,6 +99,12 @@ public class InputData extends AbstractEntity implements IInputData {
 
 	@Column(name = "request_id")
 	private String requestId;
+
+	// 1.0.0-M2 (07.11.12)
+	// TODO als Enum definieren?!
+	/** Art der Anfrage (Query, ...) */
+	@Column(name = "input_data_qualifier")
+	private String inputDataQualifier;
 
 	@Transient
 	@Inject
@@ -205,6 +212,35 @@ public class InputData extends AbstractEntity implements IInputData {
 	}
 
 	/**
+	 * Dieser Konstruktor wird verwendet, um einer 1 zu n Abfrage (z.B. 'alle
+	 * Dokumente mit ID > 7') mehr als ein Response-Ergebnis zuordnen zu können.
+	 * Aus dem Ursprungs InputData-Objekt und dem Response-Objekt wird ein
+	 * weiteres InputData Objekt erzeugt.
+	 * 
+	 * @param criteriaInputData
+	 * @param singleResponseData
+	 */
+	public InputData(InputData criteriaInputData,
+			ISingleResponseData singleResponseData) {
+		// Datenübernahme aus InputData
+		this.currentPhaseConnection = criteriaInputData.currentPhaseConnection;
+		this.execution = criteriaInputData.execution;
+		this.inputDataQualifier = criteriaInputData.inputDataQualifier;
+		this.inputIdentifier = criteriaInputData.inputIdentifier;
+		this.nextPhaseConnection = criteriaInputData.nextPhaseConnection;
+		// Datenübernahme aus ISingleResponseData
+		this.requestId = singleResponseData.getRequestId();
+		this.responseId = singleResponseData.getResponseId();
+		this.returnCode = singleResponseData.getReturnCode();
+		this.returnText = singleResponseData.getReturnText();
+		
+		// TODO hashCode Berechnung!?
+		this.hashcode = String.valueOf(this.requestId.hashCode() * 31
+				+ this.responseId.hashCode() * 33);
+		repository.save(this);
+	}
+
+	/**
 	 * 
 	 * @param singleQueryInputData
 	 * @param execution
@@ -223,6 +259,8 @@ public class InputData extends AbstractEntity implements IInputData {
 		sourceInputNextPhaseConnection.setTargetInputData(this);
 		final String requestId = this.calculateRequestId();
 		this.requestId = requestId;
+		// (08.11.12) verschiedene Qualifizierungen (Query, Criteria, ...)
+		this.inputDataQualifier = InputDataQualifier.QUERY_UNIQUE.getName();
 		repository.save(this);
 	}
 
@@ -232,17 +270,30 @@ public class InputData extends AbstractEntity implements IInputData {
 		final String hashCode = singleContentInputData.getHashCode();
 		Assert.notNull(hashCode, "inputIdentifier must be specified");
 		this.hashcode = hashCode;
+		// (08.11.12) verschiedene Qualifizierungen (Query, Criteria, ...)
+		this.inputDataQualifier = InputDataQualifier.CONTENT.getName();
+
 		repository.save(this);
 
 	}
 
 	// TODO MAXRESP (06.11.12)
+	/**
+	 * Initialisiert die Daten für einen Query-Criteria-Request (z.B.
+	 * 'GreaterThen 2')
+	 * 
+	 * @param singleQueryInputData
+	 */
 	private void fillInputData(
 			final IDbSingleQueryInputData singleQueryInputData) {
 
 		final String hashCode = String.valueOf(singleQueryInputData
 				.hashCode());
 		this.hashcode = hashCode;
+		final String requestId = this.calculateRequestId();
+		// (08.11.12) verschiedene Qualifizierungen (Query, Criteria, ...)
+		this.inputDataQualifier = InputDataQualifier.QUERY_CRITERIA.getName();
+
 		repository.save(this);
 	}
 
@@ -388,6 +439,21 @@ public class InputData extends AbstractEntity implements IInputData {
 	public void setNextPhaseConnection(final PhaseConnection nextPhaseConnection) {
 		this.nextPhaseConnection = nextPhaseConnection;
 		repository.save(this);
+	}
+
+	/**
+	 * @return the inputDataQualifier
+	 */
+	public String getInputDataQualifier() {
+		return inputDataQualifier;
+	}
+
+	/**
+	 * @param inputDataQualifier
+	 *            the inputDataQualifier to set
+	 */
+	public void setInputDataQualifier(String inputDataQualifier) {
+		this.inputDataQualifier = inputDataQualifier;
 	}
 
 	@Override

@@ -263,20 +263,44 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 				"DataRequestArgument.content  beinhaltet mehr als ein Element");
 		final JAXBElement<?> jaxbElement = dataRequestArgumentContent.get(0);
 
+		// TODO MAXRESP (06.11.12)
+		boolean assignableOperand = false;
 		final Object operandSetObject = jaxbElement.getValue();
-		Assert.isAssignable(OperandSet.class, operandSetObject.getClass(),
-				"Unexpectede dataRequestArgumentContent entry"
-						+ dataRequestObject.getClass()
-						+ " Expected OperandSet.");
-		final OperandSet operandSet = (OperandSet) operandSetObject;
-		final List<Operand> operandEQ = operandSet.getEQ();
-		Assert.notNull(operandEQ, "operandEQ is null");
-		Assert.notEmpty(operandEQ, "operandEQ is empty");
 		final List<String> queryArgumentList = new ArrayList<String>();
-		for (final Operand operand : operandEQ) {
-			final String operandValue = operand.getValue();
-			queryArgumentList.add(operandValue);
+		// OperandSet oder Operand?
+		if (operandSetObject.getClass().isAssignableFrom(OperandSet.class)) {
+			assignableOperand = true;
+			final OperandSet operandSet = (OperandSet) operandSetObject;
+			final List<Operand> operandEQ = operandSet.getEQ();
+			Assert.notNull(operandEQ, "operandEQ is null");
+			Assert.notEmpty(operandEQ, "operandEQ is empty");
+			for (final Operand operand : operandEQ) {
+				final String operandValue = operand.getValue();
+				queryArgumentList.add(operandValue);
+			}
+		} else if (operandSetObject.getClass().isAssignableFrom(Operand.class)) {
+			// Für Fachverfahren 'Sterbedaten Abgleich'!
+			// Als OperandValue wird die maximale ResponseId erwartet (z.B. 31)
+			// Als Dummy Server Antwort werden drei aufeinanderfolgende ID'S
+			// (z.B. 32,33,34) generiert
+			assignableOperand = true;
+			final Operand operand = (Operand) operandSetObject;
+			String operandValue = operand.getValue();
+			try {
+				long operandValueAsLong = Long.parseLong(operandValue);
+				for (long respId = operandValueAsLong + 1; respId <= operandValueAsLong + 3; respId++) {
+					queryArgumentList.add(String.valueOf(respId));
+				}
+			} catch (NumberFormatException ex) {
+				// Anderes Fachverfahren?
+				queryArgumentList.add(operandValue);
+			}
 		}
+
+		Assert.isTrue(assignableOperand,
+				"Unexpected dataRequestArgumentContent entry"
+						+ dataRequestObject.getClass()
+						+ " Expected OperandSet or Operand.");
 		return queryArgumentList;
 	}
 
