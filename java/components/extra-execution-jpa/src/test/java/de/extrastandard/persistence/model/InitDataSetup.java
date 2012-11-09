@@ -31,7 +31,16 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 /**
  * Eine provisorische Lösung, um die Testdaten in die HSQLDB on StartUP
- * hinzufügen.
+ * einzufügen. Folgende Schritte sind für den Aufbau einer HSQL-DB notwendig:
+ * <ul>
+ * <li>In 'extra-persistence-user.properties' diesen Eintrag setzen:
+ * 'plugins.execution.executionPersistenceJpa.hibernate.generateDdl=true'.</li>
+ * <li>In der Methode 'setupInitialDaten()' den entsprechenden Bereich zur
+ * Datenerzeugung auskommentieren.</li>
+ * <li>'setupInitialDaten()' als Test ausführen und anschließend den Bereich
+ * wieder einkommentieren</li>
+ * </ul>
+ * 
  * 
  * @author Leonid Potap
  * @version $Id$
@@ -50,6 +59,10 @@ public class InitDataSetup {
 	@Named("persistenceTestSetup")
 	private PersistenceTestSetup persistenceTestSetup;
 
+	@Inject
+	@Named("persistenceSterbedatenTestSetup")
+	private PersistenceSterbedatenTestSetup persistenceSterbedatenTestSetup;
+
 	@Test
 	public void setupInitialDaten() throws InterruptedException {
 		logger.info("setupInitialDaten");
@@ -57,6 +70,12 @@ public class InitDataSetup {
 		// persistenceTestSetup.setupprocedureSendFetch();
 		// persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
 		// persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase3();
+
+		// -- Sterbedaten --
+		// persistenceSterbedatenTestSetup.setupInitialDaten();
+		// persistenceSterbedatenTestSetup.setupProcedureSterbedatenAus1();
+		// persistenceSterbedatenTestSetup.setupProcedureSterbedatenAus2();
+
 		Thread.sleep(3000);
 		logger.info("setupInitialDaten abgeschlossen");
 		Thread.sleep(3000);
