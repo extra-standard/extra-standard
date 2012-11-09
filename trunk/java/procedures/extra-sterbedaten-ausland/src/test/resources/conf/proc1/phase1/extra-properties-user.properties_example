@@ -9,7 +9,7 @@ plugins.dataplugin.fileDataPlugin.inputVerzeichnis=classpath:work/input
 plugins.execution.executionPersistenceJpa.hibernate.generateDdl=false
 plugins.execution.executionPersistenceJpa.hibernate.database=HSQL
 plugins.execution.executionPersistenceJpa.database.driver_class=org.hsqldb.jdbcDriver
-plugins.execution.executionPersistenceJpa.database.connect_url=jdbc:hsqldb:file:../db/test-hsqldb/eXTra-persistence
+plugins.execution.executionPersistenceJpa.database.connect_url=jdbc:hsqldb:res:/test-hsqldb/eXTra-persistence
 plugins.execution.executionPersistenceJpa.database.username=sa
 plugins.execution.executionPersistenceJpa.database.password=
 

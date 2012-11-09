@@ -40,28 +40,31 @@ public class PersistenceSterbedatenTestSetup {
 	private static final Logger logger = LoggerFactory
 			.getLogger(PersistenceSterbedatenTestSetup.class);
 
-	private static final String MANDATOR_TEST = "DRV";
+	static final String MANDATOR_TEST = "DRV";
 
-	private static final String PROCTYPE_STERBEDATENAUS1_SHORTKEY = "STERBEDATENAUS1";
-	private static final String PROC_STERBEDATENAUS1_NAME = "Sterbedaten Ausland 1";
-	private static final String PROC_STERBEDATENAUS1_KEY = "PROC_STERBEDATENAUS1";
+	static final String PROCTYPE_STERBEDATENAUS1 = "STERBEDATENAUS1";
+	static final String PROC_STERBEDATENAUS1_NAME = "Sterbedaten Ausland 1";
+	static final String PROC_STERBEDATENAUS1_KEY = "PROC_STERBEDATENAUS1";
 
-	private static final String PROCTYPE_STERBEDATENAUS2 = "STERBEDATENAUS2";
-	private static final String PROC_STERBEDATENAUS2_NAME = "Sterbedaten Ausland 2";
-	private static final String PROC_STERBEDATENAUS2_KEY = "PROC_STERBEDATENAUS2";
+	static final String PROCTYPE_STERBEDATENAUS2 = "STERBEDATENAUS2";
+	static final String PROC_STERBEDATENAUS2_NAME = "Sterbedaten Ausland 2";
+	static final String PROC_STERBEDATENAUS2_KEY = "PROC_STERBEDATENAUS2";
 
 	@Inject
 	@Named("mandatorRepository")
 	private transient MandatorRepository mandatorRepository;
 
-	// @Inject
-	// @Named("executionPersistenceJpa")
-	// private ExecutionPersistenceJpa executionPersistence;
+	@Transactional
+	public void setupInitialDaten() {
+		new Mandator(MANDATOR_TEST);
+
+		logger.info("SetupInitialDaten finished");
+	}
 
 	@Transactional
 	public void setupProcedureSterbedatenAus1() {
 		final ProcedureType procedureSterbedaten1 = new ProcedureType(
-				PROCTYPE_STERBEDATENAUS1_SHORTKEY);
+				PROCTYPE_STERBEDATENAUS1);
 
 		new ProcedurePhaseConfiguration(procedureSterbedaten1,
 				PhaseQualifier.PHASE1);
