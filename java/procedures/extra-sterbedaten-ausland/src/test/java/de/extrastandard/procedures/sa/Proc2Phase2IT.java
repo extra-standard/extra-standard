@@ -32,7 +32,7 @@ public class Proc2Phase2IT {
 
 	private static final String TEST_CONFIG = "/conf/proc2/phase2";
 
-	private static final String LOG_DIR = "/log";
+	private static final String LOG_DIR = "/logs";
 
 	@Before
 	public void setUp() throws Exception {
