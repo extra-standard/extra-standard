@@ -5,7 +5,7 @@
 
 = Einführung =
 
-Mit dem RequestBuilder ist eine Komponente entstanden, der eine modulare eXTra-Nachrichtenaufbau realisiert.  
+Mit dem !RequestBuilder ist eine Komponente entstanden, der eine modulare eXTra-Nachrichtenaufbau realisiert.  
 
 Die 3 wesentlichen Elemente werden bei der Aufbereitung einer Nachricht berücksichtigt:
 
@@ -18,7 +18,7 @@ Die zu übertragende dynamischen Daten werden in InputDataContainer durch DataPl
 Die anwendungsspezifische Builder Konfiguration gibt an, wie die Inputdaten in eine eXTra Nachricht verpackt werden.
 
 
-= eXTra-RequestBuilder Interfaces =
+= eXTra-!RequestBuilder Interfaces =
 
 http://extra-standard.googlecode.com/svn/wiki/images/extra-requestbuilder-interfaces.png
 
@@ -26,6 +26,6 @@ http://extra-standard.googlecode.com/svn/wiki/images/extra-requestbuilder-interf
 
 
 
-= eXTra-RequestBuilder Nachrichtenaustasch  =
+= eXTra-!RequestBuilder Nachrichtenaustausch  =
 
 http://extra-standard.googlecode.com/svn/wiki/images/extra-nachrichtenaustausch-requestbuilder.png
