@@ -15,15 +15,15 @@ rem See the License for the specific language governing permissions and
 rem limitations under the License.
 
 rem ---------------------------------------------------------------------------
-rem Fachverfahren sendFetch (PHASE 1)
-rem eXTra Startscript. Voraussetzung ist die Setzung der Umgebungsvariable 
+rem Fachverfahren sendFetch (PHASE 3)
+rem eXTra Startscript. Vorraussetzung ist die Setzung der Umgebungsvariable 
 rem EXTRA_CLIENT_HOME.
 rem
 rem version: $Id$
 rem ---------------------------------------------------------------------------
 
 rem if "%EXTRA_CLIENT_HOME%" == "" goto env_undefined
-if "%EXTRA_CLIENT_HOME%" == "" set EXTRA_CLIENT_HOME="..\..\..\extra-client"
+if "%EXTRA_CLIENT_HOME%" == "" set EXTRA_CLIENT_HOME="..\..\..\..\extra-client"
 
 :logo
 echo         ____  ______________              
@@ -66,11 +66,11 @@ set _JAVA="%JRE_HOME%\bin\java"
 set HEAP_MS=-Xms512m
 set HEAP_MX=-Xmx1024m
 if "%JAVA_OPTS%" == "" set JAVA_OPTS=%HEAP_MS% %HEAP_MX%
-if "%LOGFILEPATH%" == "" set LOGFILEPATH=..\logs
+if "%LOGFILEPATH%" == "" set LOGFILEPATH=..\..\logs
 
 rem java aufruf
 rem im Aufruf wird beispielhaft die Konfiguration im Verzeichnis 'conf' erwartet und Logausgaben ins Verzeichnis 'logs' geschrieben (Syntax siehe Betriebshandbuch)
-%_JAVA% %JAVA_OPTS% -classpath %EXTRA_CLIENT_HOME%\lib\* de.extra.client.starter.ClientStarter -l %LOGFILEPATH% %* -c ..\conf\proc1\phase1
+%_JAVA% %JAVA_OPTS% -classpath %EXTRA_CLIENT_HOME%\lib\* de.extra.client.starter.ClientStarter -l %LOGFILEPATH% %* -c ..\..\conf\proc2\phase2
 goto end
 
 :exit
