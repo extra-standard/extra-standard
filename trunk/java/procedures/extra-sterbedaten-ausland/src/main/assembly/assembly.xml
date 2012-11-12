@@ -27,6 +27,10 @@
 			<outputDirectory>/docs</outputDirectory>
 		</fileSet>
 		<fileSet>
+			<directory>src/test/resources/work</directory>
+			<outputDirectory>/work</outputDirectory>
+		</fileSet>
+		<fileSet>
 			<directory>src/main/resources/db/migration</directory>
 			<outputDirectory>/sql</outputDirectory>
 			<filtered>false</filtered>
