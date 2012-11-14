@@ -35,26 +35,6 @@ import de.extrastandard.api.model.content.ISingleInputData;
  */
 public interface IExecution extends PersistentEntity {
 
-	// /**
-	// * Persists a new @ link} IInputData instance for a
-	// * {@link ISingleContentInputData}.
-	// *
-	// * @param singleContentInputData
-	// * @return
-	// */
-	// IInputData startContentInputData(
-	// ISingleContentInputData singleContentInputData);
-	//
-	// /**
-	// * Persists a new @ link} IInputData instance for a
-	// * {@link ISingleQueryInputData}.
-	// *
-	// * @param singleQueryInputData
-	// * @return {@link IInputData}Instanz
-	// */
-	// IInputData startDbQueryInputData(ISingleQueryInputData
-	// singleQueryInputData);
-
 	/**
 	 * * Persists a new @ link} IInputData instance for a
 	 * {@link ISingleInputData}.
