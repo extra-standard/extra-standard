@@ -34,6 +34,9 @@ public class SingleResponseData implements ISingleResponseData {
 
 	private final String responseId;
 
+	/** Zeigt an, ob die Server-Verarbeitung erfolgreich war */
+	private final Boolean successful;
+
 	/**
 	 * @param requestId
 	 * @param returnCode
@@ -41,11 +44,13 @@ public class SingleResponseData implements ISingleResponseData {
 	 * @param responseId
 	 */
 	public SingleResponseData(final String requestId, final String returnCode, final String returnText,
-			final String responseId) {
+ final String responseId,
+			final Boolean successful) {
 		this.requestId = requestId;
 		this.returnCode = returnCode;
 		this.returnText = returnText;
 		this.responseId = responseId;
+		this.successful = successful;
 	}
 
 	/*
@@ -86,6 +91,14 @@ public class SingleResponseData implements ISingleResponseData {
 		return responseId;
 	}
 
+	/**
+	 * @return the successful
+	 */
+	@Override
+	public Boolean isSuccessful() {
+		return successful;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -113,6 +126,10 @@ public class SingleResponseData implements ISingleResponseData {
 		if (responseId != null) {
 			builder.append("responseId=");
 			builder.append(responseId);
+		}
+		if (successful != null) {
+			builder.append("successful=");
+			builder.append(successful);
 		}
 		builder.append("]");
 		return builder.toString();

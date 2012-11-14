@@ -50,6 +50,7 @@ import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.observer.ITransportInfo;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
+import de.extrastandard.api.util.IExtraReturnCodeAnalyser;
 
 /**
  * Erwartet nur ein Response in Transport, der für alle Requests gilt
@@ -83,6 +84,10 @@ public class AcknowledgeSingleResponseDataResponseProcessPlugin implements
 	@Inject
 	@Named("transportInfoBuilder")
 	private TransportInfoBuilder transportInfoBuilder;
+
+	@Inject
+	@Named("extraReturnCodeAnalyser")
+	private IExtraReturnCodeAnalyser extraReturnCodeAnalyser;
 
 	/*
 	 * (non-Javadoc)
@@ -135,9 +140,13 @@ public class AcknowledgeSingleResponseDataResponseProcessPlugin implements
 			final ReportType report = responseDetails.getReport();
 			final SingleReportData reportData = returnCodeExtractor
 					.extractReportData(report);
+			final String returnCode = reportData.getReturnCode();
+			final boolean returnCodeSuccessful = extraReturnCodeAnalyser
+					.isReturnCodeSuccessful(returnCode);
 			final ISingleResponseData singleResponseData = new SingleResponseData(
-					requestId, reportData.getReturnCode(),
-					reportData.getReturnText(), responseId);
+					requestId, returnCode,
+					reportData.getReturnText(), responseId,
+					returnCodeSuccessful);
 			final IResponseData responseData = new SingleResponseDataForMultipleRequest(
 					singleResponseData);
 			return responseData;

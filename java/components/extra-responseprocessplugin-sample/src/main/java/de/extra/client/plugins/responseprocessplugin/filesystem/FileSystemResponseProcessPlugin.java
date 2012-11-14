@@ -63,6 +63,7 @@ import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.observer.ITransportInfo;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
+import de.extrastandard.api.util.IExtraReturnCodeAnalyser;
 
 @Named("fileSystemResponseProcessPlugin")
 @PluginConfiguration(pluginBeanName = "fileSystemResponseProcessPlugin", pluginType = PluginConfigType.ResponseProcessPlugins)
@@ -96,6 +97,10 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 	@Inject
 	@Named("extraMessageReturnDataExtractor")
 	private ExtraMessageReturnDataExtractor returnCodeExtractor;
+
+	@Inject
+	@Named("extraReturnCodeAnalyser")
+	private IExtraReturnCodeAnalyser extraReturnCodeAnalyser;
 
 	/*
 	 * (non-Javadoc)
@@ -147,10 +152,14 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 					final ReportType report = responseDetails.getReport();
 					final SingleReportData reportData = returnCodeExtractor
 							.extractReportData(report);
+					final String returnCode = reportData.getReturnCode();
+					final boolean returnCodeSuccessful = extraReturnCodeAnalyser
+							.isReturnCodeSuccessful(returnCode);
 					final ISingleResponseData singleResponseData = new SingleResponseData(
 							requestDetails.getRequestID().getValue(),
-							reportData.getReturnCode(),
-							reportData.getReturnText(), responseId);
+							returnCode,
+							reportData.getReturnText(), responseId,
+							returnCodeSuccessful);
 					responseData.addSingleResponse(singleResponseData);
 
 				} else {
@@ -200,7 +209,7 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 				saveReportToFilesystem(report, responseId, requestId);
 
 				final ISingleResponseData singleResponseData = new SingleResponseData(
-						requestId, "C00", "RETURNTEXT", responseId);
+						requestId, "C00", "RETURNTEXT", responseId, true);
 				responseData.addSingleResponse(singleResponseData);
 				LOG.info("Body leer");
 			}

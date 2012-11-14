@@ -46,7 +46,9 @@ import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.InputDataQualifier;
+import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.persistence.repository.InputDataRepository;
+import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * JPA Implementierung von {@link IInputData}.
@@ -106,10 +108,21 @@ public class InputData extends AbstractEntity implements IInputData {
 	@Column(name = "input_data_qualifier")
 	private String inputDataQualifier;
 
+	// 1.0.0-M2 (14.11.12)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "status_id")
+	/** Anhand des Status erkennt man ob die letzte Serververarbeitung erfolgreich verlaufen ist */
+	private Status status;
+
 	@Transient
 	@Inject
 	@Named("inputDataRepository")
 	private transient InputDataRepository repository;
+
+	@Inject
+	@Named("statusRepository")
+	@Transient
+	private transient StatusRepository statusRepository;
 
 	/**
 	 * Dieser Konstruktur wird ausschliesslich durch das ORM Tool genutzt.
@@ -209,6 +222,9 @@ public class InputData extends AbstractEntity implements IInputData {
 			throw new ExtraCoreRuntimeException("Unexpected inputdata: "
 					+ singleInputData.getClass());
 		}
+		// TODO MW Status InputData?!
+		this.status = statusRepository
+				.findOne(PersistentStatus.INITIAL.getId());
 	}
 
 	/**
@@ -228,11 +244,9 @@ public class InputData extends AbstractEntity implements IInputData {
 		this.inputDataQualifier = criteriaInputData.inputDataQualifier;
 		this.inputIdentifier = criteriaInputData.inputIdentifier;
 		this.nextPhaseConnection = criteriaInputData.nextPhaseConnection;
-		// Datenübernahme aus ISingleResponseData
 		this.requestId = singleResponseData.getRequestId();
-		this.responseId = singleResponseData.getResponseId();
-		this.returnCode = singleResponseData.getReturnCode();
-		this.returnText = singleResponseData.getReturnText();
+		// Datenübernahme aus ISingleResponseData
+		transmitted(singleResponseData);
 		
 		// TODO hashCode Berechnung!?
 		this.hashcode = String.valueOf(this.requestId.hashCode() * 31
@@ -456,13 +470,29 @@ public class InputData extends AbstractEntity implements IInputData {
 		this.inputDataQualifier = inputDataQualifier;
 	}
 
+	/**
+	 * @return the status
+	 */
+	public Status getStatus() {
+		return status;
+	}
+
+	/** Zeigt an, ob die Kommunikation erfolgreich abgeschlossen ist */
+	public boolean isSuccessful() {
+		return (status != null && status.getId().equals(
+				PersistentStatus.DONE.getId()));
+	}
+
 	@Override
 	public void transmitted(final ISingleResponseData singleResponseData) {
 		this.responseId = singleResponseData.getResponseId();
 		this.returnCode = singleResponseData.getReturnCode();
 		this.returnText = singleResponseData.getReturnText();
-		repository.save(this);
-
+		
+		// TODO MW Status InputData?!
+		PersistentStatus persistentStatus = singleResponseData.isSuccessful() ? PersistentStatus.DONE
+				: PersistentStatus.FAIL;
+		this.status = statusRepository.findOne(persistentStatus.getId());
 	}
 
 }

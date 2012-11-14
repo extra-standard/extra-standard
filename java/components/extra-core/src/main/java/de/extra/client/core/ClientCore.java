@@ -58,6 +58,7 @@ import de.extrastandard.api.plugin.IConfigPlugin;
 import de.extrastandard.api.plugin.IDataPlugin;
 import de.extrastandard.api.plugin.IOutputPlugin;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
+import de.extrastandard.api.util.IExtraReturnCodeAnalyser;
 
 @Named("clientCore")
 public class ClientCore implements ApplicationContextAware {
@@ -98,6 +99,11 @@ public class ClientCore implements ApplicationContextAware {
 	private IResponseProcessPlugin responsePlugin;
 
 	private IExecutionPersistence executionPersistence;
+
+	// TODO MW extraReturnCodeAnalyser als Plugin verwenden!
+	@Inject
+	@Named("extraReturnCodeAnalyser")
+	private IExtraReturnCodeAnalyser returnCodeAnalyser;
 
 	@PostConstruct
 	public void init() {
@@ -238,6 +244,7 @@ public class ClientCore implements ApplicationContextAware {
 					.outputData(new ByteArrayInputStream(outputStream
 							.toByteArray()));
 			execution.updateProgress(PersistentStatus.TRANSMITTED);
+			// TODO MW
 			final IResponseData responseData = responsePlugin
 					.processResponse(responseAsStream);
 

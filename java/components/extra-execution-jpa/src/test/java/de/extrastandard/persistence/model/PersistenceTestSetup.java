@@ -113,9 +113,10 @@ public class PersistenceTestSetup {
 		inputData.setRequestId(calculatedRequestId);
 
 		final IResponseData responseData = new ResponseData();
+		final Boolean successful = true;
 		final ISingleResponseData singleResponseData = new SingleResponseData(
 				calculatedRequestId, "ReturnCode", "ReturnText",
-				"RESPONSE_ID_Phase_1" + calculatedRequestId);
+				"RESPONSE_ID_Phase_1" + calculatedRequestId, true);
 		responseData.addSingleResponse(singleResponseData);
 		executionForTestPhase2.endExecution(responseData);
 		logger.info("SetupTestDatenForProcedureSendFetchPhase2  finished");
@@ -135,10 +136,11 @@ public class PersistenceTestSetup {
 		inputDataForPhase3.setRequestId(calculatedRequestIdForPhase3);
 
 		final IResponseData responseDataForPhase3 = new ResponseData();
+		final Boolean successful = true;
 		final ISingleResponseData singleResponseDataForPhase3 = new SingleResponseData(
 				calculatedRequestIdForPhase3, "ReturnCodePhase2",
 				"ReturnTextPhase2", "RESPONSE_ID_Phase_1"
-						+ calculatedRequestIdForPhase3);
+						+ calculatedRequestIdForPhase3, successful);
 		responseDataForPhase3.addSingleResponse(singleResponseDataForPhase3);
 		executionForTestPhase3.endExecution(responseDataForPhase3);
 		logger.info("SetupTestDatenForProcedureSendFetchPhase3  finished");

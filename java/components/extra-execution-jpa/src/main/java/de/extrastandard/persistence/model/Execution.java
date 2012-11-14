@@ -254,7 +254,8 @@ public class Execution extends AbstractEntity implements IExecution {
 		for (ISingleResponseData singleResponseData : responseData
 				.getResponse(requestId)) {
 			if (nummerResponse == 1) {
-				// vorhandenes InputData Objekt nehmen
+				// vorhandenes InputData Objekt nehmen und Kommunikationsdaten
+				// aktualisieren
 				inputData.transmitted(singleResponseData);
 				processPhaseConnectionForInputData(inputData);
 			} else {
@@ -275,7 +276,11 @@ public class Execution extends AbstractEntity implements IExecution {
 	 * @param inputData
 	 */
 	private void processPhaseConnectionForInputData(InputData inputData) {
-		if (!this.procedure.isProcedureEndPhase(this.phase)) {
+		// (14.11.12) Nur bei erfolgreicher Verarbeitung darf die nächste Phase
+		// vorbereitet werden!
+
+		if (inputData.isSuccessful()
+				&& !this.procedure.isProcedureEndPhase(this.phase)) {
 			final String nextPhasenQualifier = this.procedure
 					.getNextPhase(this.phase);
 			new PhaseConnection(inputData, nextPhasenQualifier);
@@ -285,7 +290,12 @@ public class Execution extends AbstractEntity implements IExecution {
 		final List<PhaseConnection> quellePhaseConnections = phaseConnectionRepository
 				.findByTargetInputData(inputData);
 		for (final PhaseConnection quellePhaseConnection : quellePhaseConnections) {
-			quellePhaseConnection.success();
+			// Erfolgreiche Verarbeitung?
+			if (inputData.isSuccessful()) {
+				quellePhaseConnection.success();
+			} else {
+				quellePhaseConnection.setFailed();
+			}
 		}
 	}
 

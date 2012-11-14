@@ -158,6 +158,9 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 				.maxResponseIdForProcedureAndPhase(procedure,
 				phaseQualifier.getName());
 
+		if (maxResponseId == null) {
+			return "0";
+		}
 		return String.valueOf(maxResponseId);
 	}
 

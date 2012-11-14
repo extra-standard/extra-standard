@@ -23,12 +23,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import de.extra.client.core.util.IExtraReturnCodeAnalyser;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.model.content.ISingleInputData;
@@ -46,10 +44,6 @@ public class ClientProcessResult {
 
 	// TODO Systemunabhängigen Formatter
 	private static final String NEW_LINE = "\r\n";
-
-	@Inject
-	@Named("extraReturnCodeAnalyser")
-	private IExtraReturnCodeAnalyser returnCodeAnalyser;
 
 	private final List<ProcessResult> responses = new ArrayList<ProcessResult>();
 
@@ -75,11 +69,8 @@ public class ClientProcessResult {
 			if (responseData != null && responseData.getResponses() != null) {
 				for (final ISingleResponseData iResponseData : responseData
 						.getResponses()) {
-					if (!returnCodeAnalyser
-							.isReturnCodeSuccessful(iResponseData
-									.getReturnCode())) {
+					if (!iResponseData.isSuccessful()) {
 						hasErrors = true;
-						// TODO refactor
 						break;
 					}
 				}
@@ -99,11 +90,6 @@ public class ClientProcessResult {
 			}
 		}
 		return false;
-	}
-
-	private boolean isSuccessful(final ISingleResponseData iResponseData) {
-		return returnCodeAnalyser.isReturnCodeSuccessful(iResponseData
-				.getReturnCode());
 	}
 
 	public String exceptionsToString() {
@@ -163,7 +149,7 @@ public class ClientProcessResult {
 						singleDataResult.append(" and ReturnText: ").append(
 								singleResponseData.getReturnText());
 						singleDataResult.append(NEW_LINE);
-						if (isSuccessful(singleResponseData)) {
+						if (singleResponseData.isSuccessful()) {
 							succesfulResultsCount++;
 							successResultAsString.append(singleDataResult);
 						} else {

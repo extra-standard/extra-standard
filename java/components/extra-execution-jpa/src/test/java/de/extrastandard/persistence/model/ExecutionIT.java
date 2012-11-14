@@ -111,9 +111,10 @@ public class ExecutionIT {
 			final String inputDataReturnCode = returnCode + sourceInputDataId;
 			final String inputDataReturnText = returnText + sourceInputDataId;
 			final String inputDataResponseId = responseId + sourceInputDataId;
+			final Boolean successful = true;
 			final ISingleResponseData singleResponseData = new SingleResponseData(
 					inputDataRequestId, inputDataReturnCode,
-					inputDataReturnText, inputDataResponseId);
+					inputDataReturnText, inputDataResponseId, successful);
 			responseData.addSingleResponse(singleResponseData);
 			final ISingleQueryInputData singleQueryInputData = new InDBQueryInputData(
 					sourceInputDataId, iSourcenputData.getRequestId(),
@@ -189,9 +190,10 @@ public class ExecutionIT {
 			final String inputDataReturnCode = returnCode + sourceInputDataId;
 			final String inputDataReturnText = returnText + sourceInputDataId;
 			final String inputDataResponseId = responseId + sourceInputDataId;
+			final Boolean successful = true;
 			final ISingleResponseData singleResponseData = new SingleResponseData(
 					inputDataRequestId, inputDataReturnCode,
-					inputDataReturnText, inputDataResponseId);
+					inputDataReturnText, inputDataResponseId, successful);
 			responseData.addSingleResponse(singleResponseData);
 			final ISingleQueryInputData singleQueryInputData = new InDBQueryInputData(
 					sourceInputDataId, iSourceInputData.getRequestId(),

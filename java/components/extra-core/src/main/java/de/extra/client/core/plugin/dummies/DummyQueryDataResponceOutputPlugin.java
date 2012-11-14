@@ -165,7 +165,9 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 				packageHeader.setResponseDetails(packageResponseDetailsType);
 				// Dummy RequestId
 				final ClassifiableIDType packageHeaderRequestIdType = new ClassifiableIDType();
-				packageHeaderRequestIdType.setValue(queryArgument);
+				// (14.11.12) Die Request-Id der Anfage wird verwendet (nicht
+				// queryArgument)
+				packageHeaderRequestIdType.setValue(requestId);
 				final RequestDetailsType headerRequestDetailsType = new RequestDetailsType();
 				headerRequestDetailsType
 						.setRequestID(packageHeaderRequestIdType);
