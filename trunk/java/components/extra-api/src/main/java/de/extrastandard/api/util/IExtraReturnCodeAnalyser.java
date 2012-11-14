@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extra.client.core.util;
+package de.extrastandard.api.util;
 
 /**
  * @author Leonid Potap

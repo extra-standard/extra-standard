@@ -138,8 +138,9 @@ public class PersistenceSterbedatenBroken {
 				inputData.getRequestId());
 
 		final IResponseData responceData = new ResponseData();
+		final Boolean successful = true;
 		final ISingleResponseData singleResponseData = new SingleResponseData(
-				requestId, "ReturnCode", "ReturnText", "RESPONSE_ID");
+				requestId, "ReturnCode", "ReturnText", "RESPONSE_ID", false);
 		responceData.addSingleResponse(singleResponseData);
 		execution.endExecution(responceData);
 		final IProcessTransition lastTransitionDone = execution

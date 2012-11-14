@@ -67,6 +67,7 @@ import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.observer.ITransportInfo;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
+import de.extrastandard.api.util.IExtraReturnCodeAnalyser;
 
 /**
  * 
@@ -108,6 +109,10 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 	@Inject
 	@Named("extraMessageReturnDataExtractor")
 	private ExtraMessageReturnDataExtractor returnCodeExtractor;
+
+	@Inject
+	@Named("extraReturnCodeAnalyser")
+	private IExtraReturnCodeAnalyser extraReturnCodeAnalyser;
 
 	/**
 	 * Erwartet Ergebnisse als Daten in den Felder
@@ -153,10 +158,13 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 			final SingleReportData reportData = returnCodeExtractor
 					.extractReportData(report);
 
+			final String returnCode = reportData.getReturnCode();
+			final boolean returnCodeSuccessful = extraReturnCodeAnalyser
+					.isReturnCodeSuccessful(returnCode);
 			final ISingleResponseData singleResponseData = new SingleResponseData(
-					requestDetails.getRequestID().getValue(),
-					reportData.getReturnCode(), reportData.getReturnText(),
-					responseId);
+					requestDetails.getRequestID().getValue(), returnCode,
+					reportData.getReturnText(), responseId,
+					returnCodeSuccessful);
 			// Evtl. In Fehlerfall zurückzugeben. ExceptionHandling vereinbaren
 			// responseData.addSingleResponse(singleResponseData);
 
@@ -187,7 +195,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 						.getResponseID().getValue();
 				saveBodyToFilesystem(packageHeaderResponseId,
 						decodedpackageBodyData);
-				final ISingleResponseData singlePackageResponseData = extractResponseDetail(packageHeader);
+				final ISingleResponseData singlePackageResponseData = extractResponseDetail(
+						packageHeader, extraReturnCodeAnalyser);
 				responseData.addSingleResponse(singlePackageResponseData);
 			}
 			logger.info("ReponseData processed. {}", responseData);
@@ -202,7 +211,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 	}
 
 	private ISingleResponseData extractResponseDetail(
-			final PackageHeader packageHeader) {
+			final PackageHeader packageHeader,
+			IExtraReturnCodeAnalyser extraReturnCodeAnalyser) {
 		Assert.notNull(packageHeader, "PackageHeader.data is null");
 		final RequestDetailsType packageHeaderRequestDetails = packageHeader
 				.getRequestDetails();
@@ -215,6 +225,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 		final ReportType report = packageHeaderResponseDetails.getReport();
 		String reportCode = null;
 		String reportText = null;
+		Boolean successful = null;
 		if (report != null) {
 			final List<FlagType> flag = report.getFlag();
 			if (flag != null && !flag.isEmpty()) {
@@ -222,12 +233,14 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 				if (flagType != null) {
 					reportCode = flagType.getCode().getValue();
 					reportText = flagType.getText().getValue();
+					successful = extraReturnCodeAnalyser
+							.isReturnCodeSuccessful(reportCode);
 				}
 			}
 		}
 		final ISingleResponseData singleResponseData = new SingleResponseData(
 				packageHeaderRequestId, reportCode, reportText,
-				packageHeaderResponseId);
+				packageHeaderResponseId, successful);
 		return singleResponseData;
 	}
 

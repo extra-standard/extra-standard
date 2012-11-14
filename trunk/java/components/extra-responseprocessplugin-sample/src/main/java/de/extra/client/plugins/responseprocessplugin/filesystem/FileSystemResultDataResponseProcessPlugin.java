@@ -59,6 +59,7 @@ import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.observer.ITransportInfo;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
+import de.extrastandard.api.util.IExtraReturnCodeAnalyser;
 
 /**
  * 
@@ -99,6 +100,10 @@ public class FileSystemResultDataResponseProcessPlugin implements
 	@Inject
 	@Named("extraMessageReturnDataExtractor")
 	private ExtraMessageReturnDataExtractor returnCodeExtractor;
+
+	@Inject
+	@Named("extraReturnCodeAnalyser")
+	private IExtraReturnCodeAnalyser extraReturnCodeAnalyser;
 
 	/*
 	 * (non-Javadoc)
@@ -149,10 +154,13 @@ public class FileSystemResultDataResponseProcessPlugin implements
 			final ReportType report = responseDetails.getReport();
 			final SingleReportData reportData = returnCodeExtractor
 					.extractReportData(report);
+			final String returnCode = reportData.getReturnCode();
+			final boolean returnCodeSuccessful = extraReturnCodeAnalyser
+					.isReturnCodeSuccessful(returnCode);
 			final ISingleResponseData singleResponseData = new SingleResponseData(
-					requestDetails.getRequestID().getValue(),
-					reportData.getReturnCode(), reportData.getReturnText(),
-					responseId);
+					requestDetails.getRequestID().getValue(), returnCode,
+					reportData.getReturnText(),
+					responseId, returnCodeSuccessful);
 			responseData.addSingleResponse(singleResponseData);
 
 		} catch (final XmlMappingException xmlMappingException) {

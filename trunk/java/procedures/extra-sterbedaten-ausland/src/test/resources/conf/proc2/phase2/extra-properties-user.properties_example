@@ -21,5 +21,8 @@ plugins.execution.executionPersistenceJpa.database.password=
 #plugins.execution.executionPersistenceJpa.database.username=extracli
 #plugins.execution.executionPersistenceJpa.database.password=extracli
 
+# Webservices-Plugin abklemmen (für interne Tests)
+plugins.outputplugin=dummyOutputPlugin
+
 # Webservices (eXTra Server)
-webservice.endpoint.url=http://localhost:8088/mockextraSOAP
+webservice.endpoint.url=http://localhost:8088/mockExtraServiceSterbedatenaus2Phase2

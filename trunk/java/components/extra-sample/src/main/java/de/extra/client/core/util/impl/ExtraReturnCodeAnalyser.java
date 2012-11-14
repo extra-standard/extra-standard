@@ -24,7 +24,7 @@ import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import de.extra.client.core.util.IExtraReturnCodeAnalyser;
+import de.extrastandard.api.util.IExtraReturnCodeAnalyser;
 
 /**
  * @author Leonid Potap
@@ -37,7 +37,7 @@ public class ExtraReturnCodeAnalyser implements IExtraReturnCodeAnalyser {
 	private List<String> positiveReturnCodeList;
 
 	/**
-	 * @see de.extra.client.core.util.IExtraReturnCodeAnalyser#isReturnCodeSuccessful
+	 * @see de.extrastandard.api.util.IExtraReturnCodeAnalyser#isReturnCodeSuccessful
 	 *      (java.lang.String)
 	 */
 	@Override

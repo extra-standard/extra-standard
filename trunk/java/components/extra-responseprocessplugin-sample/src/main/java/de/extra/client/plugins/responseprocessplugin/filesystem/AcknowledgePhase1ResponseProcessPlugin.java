@@ -50,6 +50,7 @@ import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.observer.ITransportInfo;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
+import de.extrastandard.api.util.IExtraReturnCodeAnalyser;
 
 /**
  * Verarbeitet eine Acknowledge (Scenario request-with-acknowledge ) auf den
@@ -59,7 +60,8 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
  * Nachricht - 1 Datensatz) TransportBody
  * 
  * @author DPRS
- * @version $Id$
+ * @version $Id: AcknowledgePhase1ResponseProcessPlugin.java 897 2012-10-26
+ *          09:58:23Z potap.rentenservice@gmail.com $
  */
 @Named("acknowledgePhase1ResponseProcessPlugin")
 public class AcknowledgePhase1ResponseProcessPlugin implements
@@ -87,6 +89,10 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 	@Inject
 	@Named("extraMessageReturnDataExtractor")
 	private ExtraMessageReturnDataExtractor returnCodeExtractor;
+
+	@Inject
+	@Named("extraReturnCodeAnalyser")
+	private IExtraReturnCodeAnalyser extraReturnCodeAnalyser;
 
 	/*
 	 * (non-Javadoc)
@@ -138,9 +144,12 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 			final ReportType report = responseDetails.getReport();
 			final SingleReportData reportData = returnCodeExtractor
 					.extractReportData(report);
+			final String returnCode = reportData.getReturnCode();
+			final boolean returnCodeSuccessful = extraReturnCodeAnalyser
+					.isReturnCodeSuccessful(returnCode);
 			final ISingleResponseData singleResponseData = new SingleResponseData(
-					requestId, reportData.getReturnCode(),
-					reportData.getReturnText(), responseId);
+					requestId, returnCode, reportData.getReturnText(),
+					responseId, returnCodeSuccessful);
 			responseData.addSingleResponse(singleResponseData);
 
 		} catch (final XmlMappingException xmlMappingException) {

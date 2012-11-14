@@ -23,7 +23,8 @@ package de.extrastandard.api.model.content;
  * zurück.
  * 
  * @author Leonid Potap
- * @version $Id$
+ * @version $Id: ISingleResponseData.java 756 2012-10-15 14:14:40Z
+ *          potap.rentenservice@gmail.com $
  */
 public interface ISingleResponseData {
 
@@ -49,4 +50,10 @@ public interface ISingleResponseData {
 	 */
 	String getReturnText();
 
+	/**
+	 * Zeigt an, ob die Server-Verarbeitung erfolgreich war.
+	 * 
+	 * @return
+	 */
+	Boolean isSuccessful();
 }
