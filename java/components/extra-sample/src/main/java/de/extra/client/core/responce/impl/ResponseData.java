@@ -18,9 +18,12 @@
  */
 package de.extra.client.core.responce.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.util.Assert;
 
 import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.model.content.ISingleResponseData;
@@ -33,7 +36,7 @@ import de.extrastandard.api.model.content.ISingleResponseData;
  */
 public class ResponseData implements IResponseData {
 
-	private final Map<String, ISingleResponseData> responseDatenMap = new HashMap<String, ISingleResponseData>();
+	private final Map<String, Collection<ISingleResponseData>> responseDatenMap = new HashMap<String, Collection<ISingleResponseData>>();
 
 	/*
 	 * (non-Javadoc)
@@ -42,7 +45,13 @@ public class ResponseData implements IResponseData {
 	 */
 	@Override
 	public Collection<ISingleResponseData> getResponses() {
-		return responseDatenMap.values();
+		Collection<ISingleResponseData> allResponsesList = new ArrayList<ISingleResponseData>();
+		
+		for (Collection<ISingleResponseData> reponseDatalist : responseDatenMap
+				.values()) {
+			allResponsesList.addAll(reponseDatalist);
+		}
+		return allResponsesList;
 	}
 
 	/*
@@ -53,7 +62,7 @@ public class ResponseData implements IResponseData {
 	 * .String)
 	 */
 	@Override
-	public ISingleResponseData getResponse(final String reguestId) {
+	public Collection<ISingleResponseData> getResponse(final String reguestId) {
 		return responseDatenMap.get(reguestId);
 	}
 
@@ -64,8 +73,18 @@ public class ResponseData implements IResponseData {
 	 */
 	@Override
 	public void addSingleResponse(final ISingleResponseData singleResponseData) {
-		responseDatenMap.put(singleResponseData.getRequestId(),
-				singleResponseData);
+		Assert.notNull(singleResponseData, "Response is null");
+		String requestId = singleResponseData.getRequestId();
+		Assert.notNull(requestId, "requestId is null");
+
+		Collection<ISingleResponseData> singleResponsesList = responseDatenMap
+				.get(requestId);
+		if (singleResponsesList == null) {
+			singleResponsesList = new ArrayList<ISingleResponseData>();
+		}
+		singleResponsesList.add(singleResponseData);
+		responseDatenMap.put(requestId, singleResponsesList);
+
 	}
 
 	/*

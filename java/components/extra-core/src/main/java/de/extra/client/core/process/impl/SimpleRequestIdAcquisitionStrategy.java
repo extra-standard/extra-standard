@@ -135,6 +135,9 @@ public class SimpleRequestIdAcquisitionStrategy implements
 			final IDbSingleQueryInputData singleQueryInputData) {
 		Assert.notNull(inputData, "Inputdata is null");
 		Assert.notNull(singleQueryInputData, "inputDataContainer is null");
+		String inputIdentifier = singleQueryInputData.getInputIdentifier();
+		singleQueryInputData.setRequestId(inputIdentifier);
+		inputData.setRequestId(inputIdentifier);
 	}
 
 	@Override

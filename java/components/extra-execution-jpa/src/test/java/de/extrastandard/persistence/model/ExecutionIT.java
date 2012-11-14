@@ -21,6 +21,7 @@ package de.extrastandard.persistence.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +31,7 @@ import javax.persistence.Transient;
 
 import junit.framework.Assert;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -211,8 +213,12 @@ public class ExecutionIT {
 		final Set<IInputData> inputDataSet = execution.getInputDataSet();
 		for (final IInputData iInputData : inputDataSet) {
 			final String requestId = iInputData.getRequestId();
-			final ISingleResponseData response = responseData
+			final Collection<ISingleResponseData> responses = responseData
 					.getResponse(requestId);
+			assertEquals("Unexpected Reponse", 1, responses.size());
+			ISingleResponseData response = (ISingleResponseData) CollectionUtils
+					.get(responses, 0);
+
 			assertEquals(response.getResponseId(), iInputData.getResponseId());
 			assertEquals(response.getReturnCode(), iInputData.getReturnCode());
 			assertEquals(response.getReturnText(), iInputData.getReturnText());

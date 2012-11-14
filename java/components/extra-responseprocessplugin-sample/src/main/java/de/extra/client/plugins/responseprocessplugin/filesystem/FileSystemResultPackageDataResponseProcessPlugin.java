@@ -82,7 +82,7 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
 public class FileSystemResultPackageDataResponseProcessPlugin implements
 		IResponseProcessPlugin {
 
-	private static final Logger LOG = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(FileSystemResultPackageDataResponseProcessPlugin.class);
 
 	@PluginValue(key = "eingangOrdner")
@@ -157,7 +157,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 					requestDetails.getRequestID().getValue(),
 					reportData.getReturnCode(), reportData.getReturnText(),
 					responseId);
-			responseData.addSingleResponse(singleResponseData);
+			// Evtl. In Fehlerfall zurückzugeben. ExceptionHandling vereinbaren
+			// responseData.addSingleResponse(singleResponseData);
 
 			final TransportBody transportBody = extraResponse
 					.getTransportBody();
@@ -189,14 +190,15 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 				final ISingleResponseData singlePackageResponseData = extractResponseDetail(packageHeader);
 				responseData.addSingleResponse(singlePackageResponseData);
 			}
-
+			logger.info("ReponseData processed. {}", responseData);
+			return responseData;
 		} catch (final XmlMappingException xmlMappingException) {
 			throw new ExtraResponseProcessPluginRuntimeException(
 					xmlMappingException);
 		} catch (final IOException ioException) {
 			throw new ExtraResponseProcessPluginRuntimeException(ioException);
 		}
-		return responseData;
+
 	}
 
 	private ISingleResponseData extractResponseDetail(
@@ -235,12 +237,12 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(extraResponse, streamResult);
-			LOG.debug("ExtraResponse: " + writer.toString());
+			logger.debug("ExtraResponse: " + writer.toString());
 		} catch (final XmlMappingException xmlException) {
-			LOG.debug("XmlMappingException beim Lesen des Results ",
+			logger.debug("XmlMappingException beim Lesen des Results ",
 					xmlException);
 		} catch (final IOException ioException) {
-			LOG.debug("IOException beim Lesen des Results ", ioException);
+			logger.debug("IOException beim Lesen des Results ", ioException);
 		}
 
 	}
@@ -287,7 +289,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 			transportObserver.responseDataForwarded(
 					responseFile.getAbsolutePath(), responseBody.length);
 
-			LOG.info("Response gespeichert in File: '" + dateiName + "'");
+			logger.info("Response gespeichert in File: '" + dateiName + "'");
 
 		} catch (final IOException ioException) {
 			throw new ExtraResponseProcessPluginRuntimeException(

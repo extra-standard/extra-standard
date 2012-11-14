@@ -47,8 +47,10 @@ public class SingleResponseDataForMultipleRequest implements IResponseData {
 	 * .String)
 	 */
 	@Override
-	public ISingleResponseData getResponse(final String reguestId) {
-		return singleResponseData;
+	public Collection<ISingleResponseData> getResponse(final String reguestId) {
+		ArrayList<ISingleResponseData> responseList = new ArrayList<ISingleResponseData>();
+		responseList.add(singleResponseData);
+		return responseList;
 	}
 
 	/**

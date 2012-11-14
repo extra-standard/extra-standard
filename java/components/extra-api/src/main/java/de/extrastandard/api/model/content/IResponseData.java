@@ -40,7 +40,7 @@ public interface IResponseData {
 	 * @param requestId
 	 * @return
 	 */
-	ISingleResponseData getResponse(String requestId);
+	Collection<ISingleResponseData> getResponse(String requestId);
 
 	/**
 	 * Add a {@link SingleResponseData} to ResponseData
