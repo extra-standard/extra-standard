@@ -19,9 +19,7 @@ public class DBSingleQueryInputData implements
 		super();
 		this.argument = aArgument;
 		this.queryArgumentType = queryArgumentType;
-
 		// TODO MAXRESP (06.11.12)
-		requestId = argument;
 		inputIdentifier = queryArgumentType.getType() + ": " + argument;
 	}
 

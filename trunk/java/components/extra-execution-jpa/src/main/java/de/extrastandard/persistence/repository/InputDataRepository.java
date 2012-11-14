@@ -80,10 +80,10 @@ public interface InputDataRepository extends JpaRepository<InputData, Long> {
 	 * @param phaseQualifier
 	 * @return
 	 */
-	@Query("select max(inp.responseId) from InputData inp "
+	@Query("select max(cast (inp.responseId as int)) from InputData inp "
 			+ " WHERE inp.execution.procedure =:procedure "
 			+ " and inp.execution.phase = :phaseQualifier ")
-	String maxResponseIdForProcedureAndPhase(
+	Integer maxResponseIdForProcedureAndPhase(
 			@Param("procedure") IProcedure procedure,
 			@Param("phaseQualifier") String phaseQualifier);
 

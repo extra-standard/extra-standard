@@ -55,7 +55,6 @@ import de.extrastandard.api.model.execution.IInputData;
 import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.IProcessTransition;
 import de.extrastandard.api.model.execution.IStatus;
-import de.extrastandard.api.model.execution.InputDataQualifier;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.ExecutionRepository;
@@ -233,12 +232,8 @@ public class Execution extends AbstractEntity implements IExecution {
 		// (08.11.12) verschiedene InputData Typen/Qualifizierungen
 		// (QUERY_UNIQUE, QUERY_CRITERIA, ...) werden unterstützt
 		for (final InputData inputData : inputDataSet) {
-			if (InputDataQualifier.QUERY_CRITERIA.getName().equals(
-					inputData.getInputDataQualifier())) {
-				processResponseDataForCriteriaQuery(inputData, responseData);
-			} else {
-				processResponseDataForOtherContent(inputData, responseData);
-			}
+			processResponseData(inputData, responseData);
+
 		}
 	}
 
@@ -251,13 +246,13 @@ public class Execution extends AbstractEntity implements IExecution {
 	 * @param inputData
 	 * @param responseData
 	 */
-	private void processResponseDataForCriteriaQuery(InputData inputData,
+	private void processResponseData(InputData inputData,
 			final IResponseData responseData) {
 		final String requestId = inputData.getRequestId();
 		int nummerResponse = 1;
 		// für jede Response muss ein InputData Objekt angelegt werden
 		for (ISingleResponseData singleResponseData : responseData
-				.getResponses()) {
+				.getResponse(requestId)) {
 			if (nummerResponse == 1) {
 				// vorhandenes InputData Objekt nehmen
 				inputData.transmitted(singleResponseData);
@@ -270,26 +265,6 @@ public class Execution extends AbstractEntity implements IExecution {
 			}
 			nummerResponse++;
 		}
-	}
-
-	// TODO Namen ändern (OtherContent)!
-	/**
-	 * Verarbeitet das Server-Ergebnis (ResponseData) für eine Query (z.B. 'Dok.
-	 * mit ID = 7').
-	 * 
-	 * @since 1.0.0-M2
-	 * @param inputData
-	 * @param responseData
-	 */
-	private void processResponseDataForOtherContent(InputData inputData,
-			final IResponseData responseData) {
-		final String requestId = inputData.getRequestId();
-		final ISingleResponseData singleResponseData = responseData
-				.getResponse(requestId);
-		Assert.notNull(singleResponseData,
-				"ISingleResponseData is null for RequestId: " + requestId);
-		inputData.transmitted(singleResponseData);
-		processPhaseConnectionForInputData(inputData);
 	}
 
 	/**
