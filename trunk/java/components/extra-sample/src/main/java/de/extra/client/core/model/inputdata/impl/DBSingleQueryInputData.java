@@ -13,13 +13,16 @@ public class DBSingleQueryInputData implements IDbSingleQueryInputData {
 	private String requestId;
 	private String inputIdentifier;
 
+	private String procedureName;
+
 	public DBSingleQueryInputData(String aArgument,
-			QueryArgumentType queryArgumentType) {
+			QueryArgumentType queryArgumentType, String aProcedureName) {
 		super();
 		this.argument = aArgument;
 		this.queryArgumentType = queryArgumentType;
 		// TODO MAXRESP (06.11.12)
 		inputIdentifier = queryArgumentType.getType() + ": " + argument;
+		procedureName = aProcedureName;
 	}
 
 	@Override
@@ -50,6 +53,11 @@ public class DBSingleQueryInputData implements IDbSingleQueryInputData {
 	@Override
 	public QueryArgumentType getQueryArgumentType() {
 		return queryArgumentType;
+	}
+
+	@Override
+	public String getProcedureName() {
+		return procedureName;
 	}
 
 }
