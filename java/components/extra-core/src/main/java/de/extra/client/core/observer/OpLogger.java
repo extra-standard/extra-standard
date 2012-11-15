@@ -12,7 +12,7 @@ import de.extrastandard.api.observer.ITransportObserver;
 
 /**
  * Betriebslogger.
- *
+ * 
  * Kapselt betriebliches Logging.
  */
 @Named("transportObserver")
@@ -33,7 +33,8 @@ public class OpLogger implements ITransportObserver {
 	public static final Logger log = LoggerFactory.getLogger("operations");
 
 	/**
-	 * @see de.extrastandard.api.observer.ITransportObserver#requestDataReceived(java.lang.String, long)
+	 * @see de.extrastandard.api.observer.ITransportObserver#requestDataReceived(java.lang.String,
+	 *      long)
 	 */
 	@Override
 	public void requestDataReceived(final String unitName, final long size) {

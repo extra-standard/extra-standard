@@ -30,10 +30,11 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap
- *
+ * 
  */
 @Named("dataSourceInputDataPluginsBuilder")
-public class DataSourceInputDataPluginsBuilder extends XmlComplexTypeBuilderAbstr {
+public class DataSourceInputDataPluginsBuilder extends
+		XmlComplexTypeBuilderAbstr {
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(DataSourceInputDataPluginsBuilder.class);
@@ -42,12 +43,13 @@ public class DataSourceInputDataPluginsBuilder extends XmlComplexTypeBuilderAbst
 
 	/**
 	 * Erstellt die SenderInformationen im Kontext von Header (non-Javadoc)
-	 *
+	 * 
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
 	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */
 	@Override
-	public Object buildXmlFragment(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		// Transportplugins erstellen
 		// TODO Als erste Lösung Plugins über Konfiguration auswerden.
 		// Es besteht die Möglichkeit Plugins über SenderDataBean auszuwerten

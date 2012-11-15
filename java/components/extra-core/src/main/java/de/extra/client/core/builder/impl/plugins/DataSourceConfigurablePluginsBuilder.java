@@ -40,9 +40,11 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 @Named("dataSourceConfigurablePluginsBuilder")
 @PluginConfiguration(pluginBeanName = "dataSourceConfigurablePluginsBuilder", pluginType = PluginConfigType.Builder)
-public class DataSourceConfigurablePluginsBuilder extends XmlComplexTypeBuilderAbstr {
+public class DataSourceConfigurablePluginsBuilder extends
+		XmlComplexTypeBuilderAbstr {
 
-	private static final Logger LOG = LoggerFactory.getLogger(DataSourceConfigurablePluginsBuilder.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(DataSourceConfigurablePluginsBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:DataSource";
 
@@ -65,7 +67,8 @@ public class DataSourceConfigurablePluginsBuilder extends XmlComplexTypeBuilderA
 	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */
 	@Override
-	public Object buildXmlFragment(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		final DataSource dataSource = new DataSource();
 		final DataContainerType dataContainerType = new DataContainerType();
 		dataContainerType.setType(type);

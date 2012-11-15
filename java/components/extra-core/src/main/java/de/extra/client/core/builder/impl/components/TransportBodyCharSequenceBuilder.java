@@ -40,22 +40,29 @@ import de.extrastandard.api.model.content.ISingleContentInputData;
  * 
  */
 @Named("transportBodyCharSequenceBuilder")
-public class TransportBodyCharSequenceBuilder extends XmlComplexTypeBuilderAbstr {
+public class TransportBodyCharSequenceBuilder extends
+		XmlComplexTypeBuilderAbstr {
 
-	private static Logger logger = LoggerFactory.getLogger(TransportBodyCharSequenceBuilder.class);
+	private static Logger logger = LoggerFactory
+			.getLogger(TransportBodyCharSequenceBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:CharSequence";
 
 	@Override
-	public Object buildXmlFragment(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		logger.debug("CharSequenceType aufbauen");
 		final CharSequenceType charSequence = new CharSequenceType();
-		final IFileInputData fileInputdata = senderData.cast(IFileInputData.class);
-		final List<ISingleContentInputData> inputDataList = fileInputdata.getInputData();
+		final IFileInputData fileInputdata = senderData
+				.cast(IFileInputData.class);
+		final List<ISingleContentInputData> inputDataList = fileInputdata
+				.getInputData();
 		// Es kann nicht in Transport mehrere Datensätze übertragen werden!!
 		Assert.isTrue(inputDataList.size() != 1, "Unexpected InputData size.");
-		final ISingleContentInputData singleFileInputData = inputDataList.get(0);
-		final String inpurDataString = singleFileInputData.getInputDataAsString();
+		final ISingleContentInputData singleFileInputData = inputDataList
+				.get(0);
+		final String inpurDataString = singleFileInputData
+				.getInputDataAsString();
 
 		charSequence.setValue(inpurDataString);
 

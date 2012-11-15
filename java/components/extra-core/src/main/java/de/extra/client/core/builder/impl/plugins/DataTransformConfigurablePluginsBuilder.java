@@ -42,7 +42,7 @@ public class DataTransformConfigurablePluginsBuilder extends
 
 	/**
 	 * Erstellt die SenderInformationen im Kontext von Header (non-Javadoc)
-	 *
+	 * 
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
 	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */

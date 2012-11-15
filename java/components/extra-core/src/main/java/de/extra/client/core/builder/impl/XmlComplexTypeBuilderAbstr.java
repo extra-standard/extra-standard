@@ -25,13 +25,16 @@ import de.extra.client.core.builder.IXmlComplexTypeBuilder;
  * @author Leonid Potap
  * 
  */
-public abstract class XmlComplexTypeBuilderAbstr implements IXmlComplexTypeBuilder {
+public abstract class XmlComplexTypeBuilderAbstr implements
+		IXmlComplexTypeBuilder {
 
 	@Override
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("XmlComplexTypeBuilder : ").append(this.getClass());
-		stringBuilder.append("Identity: ").append(System.identityHashCode(this));
+		stringBuilder.append("XmlComplexTypeBuilder : ")
+				.append(this.getClass());
+		stringBuilder.append("Identity: ")
+				.append(System.identityHashCode(this));
 		stringBuilder.append(" for  XMLMessage: ").append(getXmlType());
 		return stringBuilder.toString();
 	}

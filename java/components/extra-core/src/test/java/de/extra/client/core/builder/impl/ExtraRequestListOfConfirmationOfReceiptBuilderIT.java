@@ -65,9 +65,11 @@ public class ExtraRequestListOfConfirmationOfReceiptBuilderIT {
 	public final void testBuildElementSequenseDataWithListOfConfirmationOfReceipt() {
 		final IDbMultiQueryInputData senderData = createTestDummyDBQueryInputData();
 		final IExtraProfileConfiguration config = createConfigFileBeanForElementSequenceWithListOfConfirmationOfReceipt();
-		final RootElementType elementType = extraRequestBuilder.buildXmlMessage(senderData, config);
+		final RootElementType elementType = extraRequestBuilder
+				.buildXmlMessage(senderData, config);
 		assertNotNull(elementType);
-		final String messageAsString = extraRequestBuilderITBasic.getResultAsString(elementType);
+		final String messageAsString = extraRequestBuilderITBasic
+				.getResultAsString(elementType);
 		logger.debug("ExtraResponse: " + messageAsString);
 	}
 
@@ -76,9 +78,11 @@ public class ExtraRequestListOfConfirmationOfReceiptBuilderIT {
 	 */
 	private IDbMultiQueryInputData createTestDummyDBQueryInputData() {
 		final DBMultiQueryInputData senderData = new DBMultiQueryInputData();
-		senderData.addSingleDBQueryInputData(1L, "STERBEDATENABGLEICH-7777778-2-RESPONSE-DATENABGLEICH",
+		senderData.addSingleDBQueryInputData(1L,
+				"STERBEDATENABGLEICH-7777778-2-RESPONSE-DATENABGLEICH",
 				"STERBEDATENABGLEICH-7777778-2-RESPONSE-DATENABGLEICH");
-		senderData.addSingleDBQueryInputData(2L, "STERBEDATENABGLEICH-7777778-2-RESPONSE-DATENABGLEICH",
+		senderData.addSingleDBQueryInputData(2L,
+				"STERBEDATENABGLEICH-7777778-2-RESPONSE-DATENABGLEICH",
 				"STERBEDATENABGLEICH-7777778-2-RESPONSE-DATENABGLEICH");
 		senderData.setRequestId("STERBEDATENABGLEICH-7777779-CONFIRMATION");
 		return senderData;

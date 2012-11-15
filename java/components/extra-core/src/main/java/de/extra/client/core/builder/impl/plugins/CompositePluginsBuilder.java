@@ -32,7 +32,7 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 /**
  * @author Leonid Potap Composite Builder wird angewendet, wenn mehrere Plugins
  *         nacheinander ausgeführt werden.
- *
+ * 
  */
 public class CompositePluginsBuilder extends XmlComplexTypeBuilderAbstr {
 
@@ -46,7 +46,7 @@ public class CompositePluginsBuilder extends XmlComplexTypeBuilderAbstr {
 	/**
 	 * Construktor. CompositePluginBuilder kann nur mit einem List von Builder
 	 * instanziert werden.
-	 *
+	 * 
 	 * @param delegatedPluginslist
 	 */
 	public CompositePluginsBuilder(
@@ -57,7 +57,7 @@ public class CompositePluginsBuilder extends XmlComplexTypeBuilderAbstr {
 	/**
 	 * Erstellt die Plugins Fragment, in dem mehrere Konfgurierten Plugins
 	 * nacheinander aufgerufen werden (non-Javadoc)
-	 *
+	 * 
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
 	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */

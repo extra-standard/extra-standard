@@ -43,6 +43,7 @@ public interface IXmlComplexTypeBuilder {
 	 * @param config
 	 * @return
 	 */
-	Object buildXmlFragment(IInputDataContainer senderData, IExtraProfileConfiguration config);
+	Object buildXmlFragment(IInputDataContainer senderData,
+			IExtraProfileConfiguration config);
 
 }

@@ -46,7 +46,8 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
 @Named("pluginsLocatorManager")
 public class PluginsLocatorManager implements IPluginsLocatorManager {
 
-	private static final Logger LOG = LoggerFactory.getLogger(PluginsLocatorManager.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(PluginsLocatorManager.class);
 
 	@Inject
 	@Named("extraValidator")
@@ -96,7 +97,8 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	public IDataPlugin getConfiguredDataPlugin() {
 		LOG.debug(dataPlugBeanName);
 		final IDataPlugin idataPlugin = dataPluginMap.get(dataPlugBeanName);
-		Assert.notNull(idataPlugin, "DataPlugin not found for BeanName: " + dataPlugBeanName);
+		Assert.notNull(idataPlugin, "DataPlugin not found for BeanName: "
+				+ dataPlugBeanName);
 		LOG.debug("DataPlugInClass: " + idataPlugin.getClass());
 		validator.validate(idataPlugin);
 		return idataPlugin;
@@ -111,8 +113,10 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	@Override
 	public IOutputPlugin getConfiguredOutputPlugin() {
 		LOG.debug(outputPluginBeanName);
-		final IOutputPlugin ioutputPlugin = outputPluginMap.get(outputPluginBeanName);
-		Assert.notNull(ioutputPlugin, "OutputPlugin not found for BeanName: " + outputPluginBeanName);
+		final IOutputPlugin ioutputPlugin = outputPluginMap
+				.get(outputPluginBeanName);
+		Assert.notNull(ioutputPlugin, "OutputPlugin not found for BeanName: "
+				+ outputPluginBeanName);
 		LOG.debug("OutpuPlugInClass: " + ioutputPlugin.getClass());
 		validator.validate(ioutputPlugin);
 		return ioutputPlugin;
@@ -127,8 +131,10 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	@Override
 	public IConfigPlugin getConfiguredConfigPlugin() {
 		LOG.debug(configPluginBeanName);
-		final IConfigPlugin iConfigPlugin = configPluginMap.get(configPluginBeanName);
-		Assert.notNull(iConfigPlugin, "ConfigPlugin not found for BeanName: " + configPluginBeanName);
+		final IConfigPlugin iConfigPlugin = configPluginMap
+				.get(configPluginBeanName);
+		Assert.notNull(iConfigPlugin, "ConfigPlugin not found for BeanName: "
+				+ configPluginBeanName);
 		LOG.debug("ConfiPlugInClasse: " + iConfigPlugin.getClass());
 		validator.validate(iConfigPlugin);
 		return iConfigPlugin;
@@ -143,8 +149,11 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	@Override
 	public IResponseProcessPlugin getConfiguredResponsePlugin() {
 		LOG.debug(responsePluginBeanName);
-		final IResponseProcessPlugin iResponsePlugin = responsePluginMap.get(responsePluginBeanName);
-		Assert.notNull(iResponsePlugin, "ResponsePlugin not found for BeanName: " + responsePluginBeanName);
+		final IResponseProcessPlugin iResponsePlugin = responsePluginMap
+				.get(responsePluginBeanName);
+		Assert.notNull(iResponsePlugin,
+				"ResponsePlugin not found for BeanName: "
+						+ responsePluginBeanName);
 		LOG.debug("responsePluginClass: " + iResponsePlugin.getClass());
 		validator.validate(iResponsePlugin);
 		return iResponsePlugin;
@@ -153,9 +162,13 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	@Override
 	public IExecutionPersistence getConfiguredExecutionPesistence() {
 		LOG.debug(executionBeanName);
-		final IExecutionPersistence iExecutionPersistence = executionPersistenceMap.get(executionBeanName);
-		Assert.notNull(iExecutionPersistence, "ExecutionPersistence not found for BeanName: " + executionBeanName);
-		LOG.debug("ExecutionPersistenceClass: " + iExecutionPersistence.getClass());
+		final IExecutionPersistence iExecutionPersistence = executionPersistenceMap
+				.get(executionBeanName);
+		Assert.notNull(iExecutionPersistence,
+				"ExecutionPersistence not found for BeanName: "
+						+ executionBeanName);
+		LOG.debug("ExecutionPersistenceClass: "
+				+ iExecutionPersistence.getClass());
 		validator.validate(iExecutionPersistence);
 		return iExecutionPersistence;
 	}

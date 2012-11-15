@@ -34,7 +34,8 @@ import de.extrastandard.api.model.content.IInputDataPluginDescription;
 public class DataSourcePluginHelper extends PluginHelperBase {
 
 	@Override
-	public AbstractPlugInType getPluginElement(IInputDataPluginDescription plugindatenBean) {
+	public AbstractPlugInType getPluginElement(
+			IInputDataPluginDescription plugindatenBean) {
 		DataSourcePluginDescription dataSourcePluginBean = (DataSourcePluginDescription) plugindatenBean;
 
 		DataSource dataSource = new DataSource();

@@ -20,7 +20,8 @@ import de.extrastandard.api.exception.ExtraConfigRuntimeException;
 @Named("extraRequestBuilderITBasic")
 public class ExtraRequestBuilderITBasic {
 
-	private static final Logger logger = LoggerFactory.getLogger(ExtraRequestBuilderITBasic.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(ExtraRequestBuilderITBasic.class);
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -34,7 +35,8 @@ public class ExtraRequestBuilderITBasic {
 			marshaller.marshal(xmlTransport, streamResult);
 			return writer.toString();
 		} catch (final XmlMappingException xmlException) {
-			logger.debug("XmlMappingException beim Lesen des Results ", xmlException);
+			logger.debug("XmlMappingException beim Lesen des Results ",
+					xmlException);
 			throw xmlException;
 		} catch (final IOException ioException) {
 			logger.debug("IOException beim Lesen des Results ", ioException);
@@ -42,7 +44,8 @@ public class ExtraRequestBuilderITBasic {
 		}
 	}
 
-	public ExtraProfileConfiguration createTransportBodyWithDataConfigFileBean(final String rootElement) {
+	public ExtraProfileConfiguration createTransportBodyWithDataConfigFileBean(
+			final String rootElement) {
 		final ExtraProfileConfiguration config = new ExtraProfileConfiguration();
 		config.setRootElement(rootElement);
 		config.addElementsHierarchyMap("Transport", "req:TransportBody");

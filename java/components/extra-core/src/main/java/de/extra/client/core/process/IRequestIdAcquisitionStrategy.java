@@ -47,5 +47,4 @@ public interface IRequestIdAcquisitionStrategy {
 	void setRequestId(IInputDataContainer iInputDataContainer,
 			IExecution execution);
 
-
 }
