@@ -74,6 +74,7 @@ public class SimpleRequestIdAcquisitionStrategy implements
 		}
 
 	}
+
 	/**
 	 * <pre>
 	 * A distinction is made between 3 Strategies
@@ -157,6 +158,5 @@ public class SimpleRequestIdAcquisitionStrategy implements
 			iInputDataContainer.setRequestId(String.valueOf(executionId));
 		}
 	}
-
 
 }

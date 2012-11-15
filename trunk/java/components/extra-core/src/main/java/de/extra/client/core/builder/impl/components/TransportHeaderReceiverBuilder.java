@@ -39,7 +39,8 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 @Named("transportHeaderReceiverBuilder")
 public class TransportHeaderReceiverBuilder implements IXmlComplexTypeBuilder {
 
-	private static final Logger LOG = LoggerFactory.getLogger(TransportHeaderReceiverBuilder.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(TransportHeaderReceiverBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:Receiver";
 
@@ -57,7 +58,8 @@ public class TransportHeaderReceiverBuilder implements IXmlComplexTypeBuilder {
 	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */
 	@Override
-	public Object buildXmlFragment(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		// Objects für Receiverinformation
 		final ReceiverType receiver = new ReceiverType();
 		final ClassifiableIDType receiverId = new ClassifiableIDType();
@@ -77,7 +79,8 @@ public class TransportHeaderReceiverBuilder implements IXmlComplexTypeBuilder {
 	@Override
 	public String toString() {
 		final StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("XmlComplexTypeBuilder : ").append(this.getClass());
+		stringBuilder.append("XmlComplexTypeBuilder : ")
+				.append(this.getClass());
 		stringBuilder.append(" for  XMLMessage: ").append(getXmlType());
 		return stringBuilder.toString();
 	}

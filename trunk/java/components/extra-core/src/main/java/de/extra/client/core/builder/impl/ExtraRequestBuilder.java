@@ -51,20 +51,27 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 @Named("extraRequestBuilder")
 public class ExtraRequestBuilder implements IExtraRequestBuilder {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ExtraRequestBuilder.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(ExtraRequestBuilder.class);
 
 	@Inject
 	@Named("messageBuilderLocator")
 	IMessageBuilderLocator messageBuilderLocator;
 
 	@Override
-	public RootElementType buildXmlMessage(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
+	public RootElementType buildXmlMessage(
+			final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		Assert.notNull(senderData, "SenderData is null");
 		Assert.notNull(config, "ConfigFileBean is null");
 		final String rootElementName = config.getRootElement();
-		final IXmlRootElementBuilder rootElementBuilder = messageBuilderLocator.getRootXmlBuilder(rootElementName);
-		Assert.notNull(rootElementBuilder, "RootElementBuilder is null for ElementType: " + rootElementName);
-		final RootElementType rootXmlFragment = rootElementBuilder.buildXmlRootElement(config);
+		final IXmlRootElementBuilder rootElementBuilder = messageBuilderLocator
+				.getRootXmlBuilder(rootElementName);
+		Assert.notNull(rootElementBuilder,
+				"RootElementBuilder is null for ElementType: "
+						+ rootElementName);
+		final RootElementType rootXmlFragment = rootElementBuilder
+				.buildXmlRootElement(config);
 
 		buildXmlMessage(rootXmlFragment, rootElementName, config, senderData);
 		return rootXmlFragment;
@@ -81,20 +88,28 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 	 * @param config
 	 * @param senderData
 	 */
-	private void buildXmlMessage(final Object parentXmlFragement, final String parentElementName,
-			final IExtraProfileConfiguration config, final IInputDataContainer senderData) {
-		final List<String> childElements = config.getChildElements(parentElementName);
+	private void buildXmlMessage(final Object parentXmlFragement,
+			final String parentElementName,
+			final IExtraProfileConfiguration config,
+			final IInputDataContainer senderData) {
+		final List<String> childElements = config
+				.getChildElements(parentElementName);
 		for (final String childElementName : childElements) {
 			final IXmlComplexTypeBuilder childElementComplexTypeBuilder = messageBuilderLocator
 					.getXmlComplexTypeBuilder(childElementName, senderData);
 			if (childElementComplexTypeBuilder == null) {
-				throw new UnsupportedOperationException("MessageBuilder for ElementType not found: " + childElementName);
+				throw new UnsupportedOperationException(
+						"MessageBuilder for ElementType not found: "
+								+ childElementName);
 			}
 
-			final Object xmlChildElement = childElementComplexTypeBuilder.buildXmlFragment(senderData, config);
-			final String fieldName = config.getFieldName(parentElementName, childElementName);
+			final Object xmlChildElement = childElementComplexTypeBuilder
+					.buildXmlFragment(senderData, config);
+			final String fieldName = config.getFieldName(parentElementName,
+					childElementName);
 			setXmlElement(parentXmlFragement, xmlChildElement, fieldName);
-			buildXmlMessage(xmlChildElement, childElementName, config, senderData);
+			buildXmlMessage(xmlChildElement, childElementName, config,
+					senderData);
 		}
 	}
 
@@ -105,7 +120,8 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 	 * @param childXmlElement
 	 * @param fieldName
 	 */
-	private void setXmlElement(final Object parentXMLElement, final Object childXmlElement, final String fieldName) {
+	private void setXmlElement(final Object parentXMLElement,
+			final Object childXmlElement, final String fieldName) {
 		if (parentXMLElement instanceof AnyPlugInContainerType) {
 			processPlugins(parentXMLElement, childXmlElement);
 		} else {
@@ -120,9 +136,11 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 	 * @param childXmlElement
 	 * @param propertyName
 	 */
-	private void processField(final Object parentXMLElement, final Object childXmlElement, final String propertyName) {
+	private void processField(final Object parentXMLElement,
+			final Object childXmlElement, final String propertyName) {
 		final BeanWrapper beanWrapper = new BeanWrapperImpl(parentXMLElement);
-		final PropertyValue propertyValue = new PropertyValue(propertyName, childXmlElement);
+		final PropertyValue propertyValue = new PropertyValue(propertyName,
+				childXmlElement);
 		beanWrapper.setPropertyValue(propertyValue);
 		LOG.debug("{}", parentXMLElement);
 	}
@@ -133,14 +151,16 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 	 * @param parentXMLElement
 	 * @param childXmlElement
 	 */
-	private void processPlugins(final Object parentXMLElement, final Object childXmlElement) {
+	private void processPlugins(final Object parentXMLElement,
+			final Object childXmlElement) {
 		// Bei dem AnyPlugInContainerType werden die childElements zu einem
 		// List hinzugefügt
 		final AnyPlugInContainerType parentAnyPlugInContainerType = (AnyPlugInContainerType) parentXMLElement;
 		if (childXmlElement instanceof Collection<?>) {
 			// Es kann sein, dass mehrere Plugins hinzugefügt werden
 			final Collection<?> collectionChildXmlElement = (Collection<?>) childXmlElement;
-			parentAnyPlugInContainerType.getAny().addAll(collectionChildXmlElement);
+			parentAnyPlugInContainerType.getAny().addAll(
+					collectionChildXmlElement);
 		} else {
 			parentAnyPlugInContainerType.getAny().add(childXmlElement);
 		}

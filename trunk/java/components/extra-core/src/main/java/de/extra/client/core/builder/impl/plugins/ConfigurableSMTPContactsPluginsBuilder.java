@@ -41,9 +41,11 @@ import de.extrastandard.api.model.content.IInputDataContainer;
  */
 @Named("configurableSMTPContactsPluginsBuilder")
 @PluginConfiguration(pluginBeanName = "configurableSMTPContactsPluginsBuilder", pluginType = PluginConfigType.Builder)
-public class ConfigurableSMTPContactsPluginsBuilder extends XmlComplexTypeBuilderAbstr {
+public class ConfigurableSMTPContactsPluginsBuilder extends
+		XmlComplexTypeBuilderAbstr {
 
-	private static Logger logger = LoggerFactory.getLogger(ConfigurableSMTPContactsPluginsBuilder.class);
+	private static Logger logger = LoggerFactory
+			.getLogger(ConfigurableSMTPContactsPluginsBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xplg:Contacts";
 
@@ -57,7 +59,8 @@ public class ConfigurableSMTPContactsPluginsBuilder extends XmlComplexTypeBuilde
 	 * 
 	 */
 	@Override
-	public Object buildXmlFragment(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		final ContactType contactType = new ContactType();
 		final EndpointType endpointType = new EndpointType();
 		endpointType.setType(EndpointTypeType.SMTP);

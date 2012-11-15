@@ -60,6 +60,7 @@ public class DummyOutputPlugin implements IOutputPlugin {
 	@Named("eXTrajaxb2Marshaller")
 	private Marshaller marshaller;
 
+	@SuppressWarnings("unused")
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
 	private Unmarshaller unmarshaller;

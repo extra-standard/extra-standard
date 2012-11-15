@@ -38,105 +38,105 @@ import de.extrastandard.api.plugin.IDataPlugin;
 @Named("dummyDataPlugin")
 public class DummyDataPlugin implements IDataPlugin {
 
-    private IInputDataContainer inputDataContainer;
+	private IInputDataContainer inputDataContainer;
 
-    private boolean hasMoreData = false;
+	private boolean hasMoreData = false;
 
-    private synchronized void initInputData() {
-	inputDataContainer = loadVersanddaten();
-	hasMoreData = true;
+	private synchronized void initInputData() {
+		inputDataContainer = loadVersanddaten();
+		hasMoreData = true;
 
-    }
-
-    @Override
-    public boolean hasMoreData() {
-	if (inputDataContainer == null) {
-	    synchronized (inputDataContainer) {
-		initInputData();
-	    }
 	}
-	return hasMoreData;
-    }
 
-    @Override
-    public boolean isEmpty() {
-	return false;
-    }
-
-    @Override
-    public IInputDataContainer getData() {
-	if (inputDataContainer == null) {
-	    synchronized (inputDataContainer) {
-		initInputData();
-	    }
+	@Override
+	public boolean hasMoreData() {
+		if (inputDataContainer == null) {
+			synchronized (inputDataContainer) {
+				initInputData();
+			}
+		}
+		return hasMoreData;
 	}
-	hasMoreData = false;
-	return inputDataContainer;
-    }
 
-    /**
-     * Dummy-Klasse mit statischen Werten.
-     * 
-     * @return Versanddatenbean
-     */
-    private InputDataContainer loadVersanddaten() {
+	@Override
+	public boolean isEmpty() {
+		return false;
+	}
 
-	final String nutzdaten = "Testdaten";
+	@Override
+	public IInputDataContainer getData() {
+		if (inputDataContainer == null) {
+			synchronized (inputDataContainer) {
+				initInputData();
+			}
+		}
+		hasMoreData = false;
+		return inputDataContainer;
+	}
 
-	final FileInputData fileInputData = new FileInputData();
+	/**
+	 * Dummy-Klasse mit statischen Werten.
+	 * 
+	 * @return Versanddatenbean
+	 */
+	private InputDataContainer loadVersanddaten() {
 
-	final CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
-	final EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();
-	final DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
+		final String nutzdaten = "Testdaten";
 
-	// Compression-Infos setzen
-	compressionPlugin.setOrder(1);
-	compressionPlugin
-		.setCompAlgoId("http://www.extra-standard.de/transforms/compression/NONE");
-	compressionPlugin.setCompAlgoVers("1.0");
-	compressionPlugin.setCompAlgoName("KKS");
+		final FileInputData fileInputData = new FileInputData();
 
-	compressionPlugin.setCompSpecUrl("http://www.datentausch.de");
-	compressionPlugin.setCompSpecName("KKS");
-	compressionPlugin.setCompSpecVers("1.0");
+		final CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
+		final EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();
+		final DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
 
-	compressionPlugin.setCompInput(200);
-	compressionPlugin.setCompOutput(100);
+		// Compression-Infos setzen
+		compressionPlugin.setOrder(1);
+		compressionPlugin
+				.setCompAlgoId("http://www.extra-standard.de/transforms/compression/NONE");
+		compressionPlugin.setCompAlgoVers("1.0");
+		compressionPlugin.setCompAlgoName("KKS");
 
-	// Encryption-Infos setzen
-	encryptionPlugin.setOrder(2);
-	encryptionPlugin
-		.setEncAlgoId("http://www.extra-standard.de/transforms/encryption/PKCS7");
-	encryptionPlugin.setEncAlgoVers("1.3");
-	encryptionPlugin.setEncAlgoName("KKS");
+		compressionPlugin.setCompSpecUrl("http://www.datentausch.de");
+		compressionPlugin.setCompSpecName("KKS");
+		compressionPlugin.setCompSpecVers("1.0");
 
-	encryptionPlugin.setEncSpecUrl("http://www.datentausch.de");
-	encryptionPlugin.setEncSpecName("KKS");
-	encryptionPlugin.setEncSpecVers("1.5.1");
+		compressionPlugin.setCompInput(200);
+		compressionPlugin.setCompOutput(100);
 
-	encryptionPlugin.setEncInput(100);
-	encryptionPlugin.setEncOutput(200);
+		// Encryption-Infos setzen
+		encryptionPlugin.setOrder(2);
+		encryptionPlugin
+				.setEncAlgoId("http://www.extra-standard.de/transforms/encryption/PKCS7");
+		encryptionPlugin.setEncAlgoVers("1.3");
+		encryptionPlugin.setEncAlgoName("KKS");
 
-	// DataSource-Infos setzen
-	dataSourcePlugin.setDsType("http://extra-standard.de/container/FILE");
-	dataSourcePlugin.setDsName("EDUA0000003");
+		encryptionPlugin.setEncSpecUrl("http://www.datentausch.de");
+		encryptionPlugin.setEncSpecName("KKS");
+		encryptionPlugin.setEncSpecVers("1.5.1");
 
-	final Calendar cal = new GregorianCalendar();
-	cal.set(Calendar.YEAR, 2012);
-	cal.set(Calendar.MONTH, 12);
-	cal.set(Calendar.DATE, 01);
-	dataSourcePlugin.setDsCreated(cal.getTime());
-	dataSourcePlugin.setDsEncoding("I8");
+		encryptionPlugin.setEncInput(100);
+		encryptionPlugin.setEncOutput(200);
 
-	final List<IInputDataPluginDescription> pluginList = new ArrayList<IInputDataPluginDescription>();
+		// DataSource-Infos setzen
+		dataSourcePlugin.setDsType("http://extra-standard.de/container/FILE");
+		dataSourcePlugin.setDsName("EDUA0000003");
 
-	pluginList.add(compressionPlugin);
-	pluginList.add(encryptionPlugin);
-	pluginList.add(dataSourcePlugin);
-	final SingleStringInputData singleStringInputData = new SingleStringInputData(
-		nutzdaten, pluginList);
-	fileInputData.addSingleInputData(singleStringInputData);
-	return fileInputData;
-    }
+		final Calendar cal = new GregorianCalendar();
+		cal.set(Calendar.YEAR, 2012);
+		cal.set(Calendar.MONTH, 12);
+		cal.set(Calendar.DATE, 01);
+		dataSourcePlugin.setDsCreated(cal.getTime());
+		dataSourcePlugin.setDsEncoding("I8");
+
+		final List<IInputDataPluginDescription> pluginList = new ArrayList<IInputDataPluginDescription>();
+
+		pluginList.add(compressionPlugin);
+		pluginList.add(encryptionPlugin);
+		pluginList.add(dataSourcePlugin);
+		final SingleStringInputData singleStringInputData = new SingleStringInputData(
+				nutzdaten, pluginList);
+		fileInputData.addSingleInputData(singleStringInputData);
+		return fileInputData;
+	}
 
 }

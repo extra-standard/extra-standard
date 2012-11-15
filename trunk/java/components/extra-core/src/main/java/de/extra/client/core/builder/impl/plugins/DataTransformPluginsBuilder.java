@@ -30,7 +30,7 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap
- *
+ * 
  */
 @Named("dataTransformPluginsBuilder")
 public class DataTransformPluginsBuilder extends XmlComplexTypeBuilderAbstr {
@@ -42,7 +42,7 @@ public class DataTransformPluginsBuilder extends XmlComplexTypeBuilderAbstr {
 
 	/**
 	 * Erstellt die SenderInformationen im Kontext von Header (non-Javadoc)
-	 *
+	 * 
 	 * @see de.extra.client.core.builder.IXmlComplexTypeBuilder#buildXmlFragment(de.extra.client.core.model.SenderDataBean,
 	 *      de.extra.client.core.model.ExtraProfileConfiguration)
 	 */

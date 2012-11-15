@@ -33,6 +33,7 @@ public interface IExtraRequestBuilder {
 	 * 
 	 * @return eine XML Message
 	 */
-	RootElementType buildXmlMessage(IInputDataContainer senderData, IExtraProfileConfiguration config);
+	RootElementType buildXmlMessage(IInputDataContainer senderData,
+			IExtraProfileConfiguration config);
 
 }

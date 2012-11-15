@@ -48,7 +48,8 @@ import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 		"/builder/spring-ittest-query-elementsequencebuilder-properties.xml" })
 public class ExtraRequestQueryElementSequenceBuilderIT {
 
-	private static final Logger logger = LoggerFactory.getLogger(ExtraRequestQueryElementSequenceBuilderIT.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(ExtraRequestQueryElementSequenceBuilderIT.class);
 
 	private final String requiredXmlType = "xcpt:Transport";
 
@@ -64,9 +65,11 @@ public class ExtraRequestQueryElementSequenceBuilderIT {
 	public final void testBuildElementSequenseDataXmlMessage() {
 		final IDbMultiQueryInputData senderData = createTestDummyDBQueryInputData();
 		final IExtraProfileConfiguration config = createConfigFileBeanForElementSequenseData();
-		final RootElementType elementType = extraRequestBuilder.buildXmlMessage(senderData, config);
+		final RootElementType elementType = extraRequestBuilder
+				.buildXmlMessage(senderData, config);
 		assertNotNull(elementType);
-		final String messageAsString = extraRequestBuilderITBasic.getResultAsString(elementType);
+		final String messageAsString = extraRequestBuilderITBasic
+				.getResultAsString(elementType);
 		logger.debug("ExtraResponse: " + messageAsString);
 		// final String expectedMessage = buildExpectedMessage();
 		// TODO Timestamp ist anders ??
@@ -119,7 +122,9 @@ public class ExtraRequestQueryElementSequenceBuilderIT {
 				+ "                    <xmsg:Control/>\r\n"
 				+ "                </xmsg:dataRequest>\r\n"
 				+ "            </xcpt:ElementSequence>\r\n"
-				+ "        </xcpt:Data>\r\n" + "    </ns6:TransportBody>\r\n" + "</ns6:xmlTransport>";
+				+ "        </xcpt:Data>\r\n"
+				+ "    </ns6:TransportBody>\r\n"
+				+ "</ns6:xmlTransport>";
 		return expectedMessage;
 	}
 
@@ -128,9 +133,11 @@ public class ExtraRequestQueryElementSequenceBuilderIT {
 	 */
 	private IDbMultiQueryInputData createTestDummyDBQueryInputData() {
 		final DBMultiQueryInputData senderData = new DBMultiQueryInputData();
-		senderData.addSingleDBQueryInputData(1L, "STERBEDATENABGLEICH-7777777-1-RESPONSE",
+		senderData.addSingleDBQueryInputData(1L,
+				"STERBEDATENABGLEICH-7777777-1-RESPONSE",
 				"STERBEDATENABGLEICH-7777777-1-RESPONSE");
-		senderData.addSingleDBQueryInputData(2L, "STERBEDATENABGLEICH-7777778-2-RESPONSE",
+		senderData.addSingleDBQueryInputData(2L,
+				"STERBEDATENABGLEICH-7777778-2-RESPONSE",
 				"STERBEDATENABGLEICH-7777778-2-RESPONSE");
 		senderData.setRequestId("STERBEDATENABGLEICH_8888888");
 		return senderData;

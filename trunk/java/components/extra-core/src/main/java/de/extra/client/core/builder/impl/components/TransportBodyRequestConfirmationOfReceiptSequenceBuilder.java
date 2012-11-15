@@ -40,7 +40,8 @@ import de.extrastandard.api.model.content.ISingleQueryInputData;
  * 
  */
 @Named("transportBodyRequestConfirmationOfReceiptSequenceBuilder")
-public class TransportBodyRequestConfirmationOfReceiptSequenceBuilder extends XmlComplexTypeBuilderAbstr {
+public class TransportBodyRequestConfirmationOfReceiptSequenceBuilder extends
+		XmlComplexTypeBuilderAbstr {
 
 	/**
 	 * TODO Constanten fehlen?
@@ -53,7 +54,8 @@ public class TransportBodyRequestConfirmationOfReceiptSequenceBuilder extends Xm
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:ElementSequence";
 
 	@Override
-	public Object buildXmlFragment(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		LOG.debug("xcpt:ElementSequence aufbauen");
 		// TODO DataRequest anders aufbauen. Der sollte über die Nutzdaten zu
 		// ziehen sein.
@@ -63,16 +65,20 @@ public class TransportBodyRequestConfirmationOfReceiptSequenceBuilder extends Xm
 		return elementSequence;
 	}
 
-	private ListOfConfirmationOfReceipt createConfirmationOfReceipt(final IInputDataContainer senderData) {
-		final DBMultiQueryInputData dbQueryInputData = senderData.cast(DBMultiQueryInputData.class);
+	private ListOfConfirmationOfReceipt createConfirmationOfReceipt(
+			final IInputDataContainer senderData) {
+		final DBMultiQueryInputData dbQueryInputData = senderData
+				.cast(DBMultiQueryInputData.class);
 		final ListOfConfirmationOfReceipt listOfConfirmationOfReceipt = new ListOfConfirmationOfReceipt();
-		final List<ISingleQueryInputData> singleDBQueryinputDataList = dbQueryInputData.getInputData();
+		final List<ISingleQueryInputData> singleDBQueryinputDataList = dbQueryInputData
+				.getInputData();
 		final ListOfConfirmationOfReceipt.ConfirmationOfReceipt confirmationOfReceipt = new ListOfConfirmationOfReceipt.ConfirmationOfReceipt();
 		final PropertySet valuePropertySet = new PropertySet();
 		valuePropertySet.setName(PROPERTY_NAME_RESPONSE_ID);
 		final List<Value> valueList = valuePropertySet.getValue();
 		confirmationOfReceipt.setPropertySet(valuePropertySet);
-		listOfConfirmationOfReceipt.getConfirmationOfReceipt().add(confirmationOfReceipt);
+		listOfConfirmationOfReceipt.getConfirmationOfReceipt().add(
+				confirmationOfReceipt);
 		for (final ISingleQueryInputData singleDBQueryInputData : singleDBQueryinputDataList) {
 			final Value value = new Value();
 			value.setValue(singleDBQueryInputData.getSourceResponceId());

@@ -36,17 +36,20 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 @Named("requestTransportBuilder")
 public class RequestTransportBuilder implements IXmlRootElementBuilder {
 
-	private static final Logger LOG = LoggerFactory.getLogger(RequestTransportBuilder.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(RequestTransportBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:Transport";
 
 	@Override
-	public Object buildXmlFragment(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		return buildXmlRootElement(config);
 	}
 
 	@Override
-	public RootElementType buildXmlRootElement(final IExtraProfileConfiguration config) {
+	public RootElementType buildXmlRootElement(
+			final IExtraProfileConfiguration config) {
 		final Transport requestTransport = new Transport();
 		LOG.debug("Create XML Transport");
 		return requestTransport;

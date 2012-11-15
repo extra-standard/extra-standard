@@ -41,22 +41,28 @@ import de.extrastandard.api.model.content.ISingleContentInputData;
  * @version $Id$
  */
 @Named("transportBodyFileInputBase64CharSequenceBuilder")
-public class TransportBodyFileInputBase64CharSequenceBuilder extends XmlComplexTypeBuilderAbstr {
+public class TransportBodyFileInputBase64CharSequenceBuilder extends
+		XmlComplexTypeBuilderAbstr {
 
-	private static final Logger LOG = LoggerFactory.getLogger(TransportBodyFileInputBase64CharSequenceBuilder.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(TransportBodyFileInputBase64CharSequenceBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:Base64CharSequence";
 
 	@Override
-	public Object buildXmlFragment(final IInputDataContainer senderData, final IExtraProfileConfiguration config) {
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
 		LOG.debug("Base64CharSequenceType aufbauen");
 		final Base64CharSequenceType base64CharSequence = new Base64CharSequenceType();
-		final IFileInputData fileInputdata = senderData.cast(IFileInputData.class);
-		final List<ISingleContentInputData> inputDataList = fileInputdata.getInputData();
+		final IFileInputData fileInputdata = senderData
+				.cast(IFileInputData.class);
+		final List<ISingleContentInputData> inputDataList = fileInputdata
+				.getInputData();
 		// Es kann nicht in Transport mehrere Datensätze übertragen werden!!
 		Assert.isTrue(inputDataList.size() == 1, "Unexpected InputData size.");
 		final ISingleContentInputData singleInputData = inputDataList.get(0);
-		final byte[] encodeData = Base64.encodeBase64(singleInputData.getInputDataAsByteArray());
+		final byte[] encodeData = Base64.encodeBase64(singleInputData
+				.getInputDataAsByteArray());
 		base64CharSequence.setValue(encodeData);
 		return base64CharSequence;
 	}

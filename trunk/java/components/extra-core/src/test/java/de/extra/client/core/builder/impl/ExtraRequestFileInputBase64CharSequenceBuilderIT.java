@@ -68,9 +68,11 @@ public class ExtraRequestFileInputBase64CharSequenceBuilderIT {
 		final IFileInputData senderData = createTestDummyFileInputData();
 		senderData.setRequestId("STERBEDATENABGLEICH-7777777");
 		final IExtraProfileConfiguration config = createConfigFileBeanForElementSequenceWithListOfConfirmationOfReceipt();
-		final RootElementType elementType = extraRequestBuilder.buildXmlMessage(senderData, config);
+		final RootElementType elementType = extraRequestBuilder
+				.buildXmlMessage(senderData, config);
 		assertNotNull(elementType);
-		final String messageAsString = extraRequestBuilderITBasic.getResultAsString(elementType);
+		final String messageAsString = extraRequestBuilderITBasic
+				.getResultAsString(elementType);
 		logger.debug("ExtraResponse: " + messageAsString);
 	}
 
@@ -78,7 +80,8 @@ public class ExtraRequestFileInputBase64CharSequenceBuilderIT {
 	 * @return
 	 */
 	private IFileInputData createTestDummyFileInputData() {
-		final IFileInputData senderData = new FileInputData(Arrays.asList("Extra Test Message 235 ö ä"));
+		final IFileInputData senderData = new FileInputData(
+				Arrays.asList("Extra Test Message 235 ö ä"));
 		return senderData;
 	}
 

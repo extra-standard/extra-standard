@@ -63,7 +63,8 @@ public class PluginsLocatorManagerTest {
 	public void testGetConfiguratedDataPlugin() {
 		when(dataPluginMap.get(anyString())).thenReturn(dataPlugin);
 
-		final IDataPlugin resultDataPlugin = pluginsLocatorManager.getConfiguredDataPlugin();
+		final IDataPlugin resultDataPlugin = pluginsLocatorManager
+				.getConfiguredDataPlugin();
 		assertNotNull(resultDataPlugin);
 		assertEquals(dataPlugin, resultDataPlugin);
 		verify(dataPluginMap, atLeastOnce()).get(anyString());

@@ -51,17 +51,21 @@ public class ExtraValidator implements IExtraValidator {
 	 */
 	@Override
 	public void validate(final Object iExtraObject) {
-		final Errors errors = new DirectFieldBindingResult(iExtraObject, iExtraObject.getClass().getName());
+		final Errors errors = new DirectFieldBindingResult(iExtraObject,
+				iExtraObject.getClass().getName());
 		// Validierung. Sind alle Elemente vorhanden
 		validator.validate(iExtraObject, errors);
 		if (errors.hasErrors()) {
-			throw new ExtraConfigRuntimeException(ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, convertToString(errors));
+			throw new ExtraConfigRuntimeException(
+					ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION,
+					convertToString(errors));
 		}
 	}
 
 	private String convertToString(final Errors errors) {
 		final List<FieldError> fieldErrors = errors.getFieldErrors();
-		final StringBuilder stringBuilder = new StringBuilder(fieldErrors.size() + " Konfigurationsfehler: ");
+		final StringBuilder stringBuilder = new StringBuilder(
+				fieldErrors.size() + " Konfigurationsfehler: ");
 		final String sep = ";";
 		for (final FieldError fieldError : fieldErrors) {
 			// TODO statt Klassennamen den Konfigurationskey ausgeben

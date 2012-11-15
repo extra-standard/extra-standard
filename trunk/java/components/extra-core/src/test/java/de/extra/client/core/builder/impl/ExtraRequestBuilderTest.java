@@ -76,7 +76,8 @@ public class ExtraRequestBuilderTest {
 		// Builder Anmelden in dem MessageBuilderLocator
 		final IXmlRootElementBuilder xmlRootElementBuilder = new RequestTransportBuilder();
 		final String rootXmlType = xmlRootElementBuilder.getXmlType();
-		when(messageBuilderLocator.getRootXmlBuilder(rootXmlType)).thenReturn(xmlRootElementBuilder);
+		when(messageBuilderLocator.getRootXmlBuilder(rootXmlType)).thenReturn(
+				xmlRootElementBuilder);
 		requiredXmlType = rootXmlType;
 
 		final Map<String, IXmlComplexTypeBuilder> builderMap = new HashMap<String, IXmlComplexTypeBuilder>();
@@ -91,22 +92,34 @@ public class ExtraRequestBuilderTest {
 		final IXmlComplexTypeBuilder transportBodyElementSequenceBuilder = new TransportBodyRequestQueryElementSequenceBuilder();
 		final IXmlComplexTypeBuilder dataSourcePluginsBuilder = new DataSourcePluginsBuilder();
 		final IXmlComplexTypeBuilder transportPluginsBuilder = new TransportPluginsBuilder();
-		builderMap.put(requestTransportHeaderBuilder.getXmlType(), requestTransportHeaderBuilder);
+		builderMap.put(requestTransportHeaderBuilder.getXmlType(),
+				requestTransportHeaderBuilder);
 		builderMap.put(requestTransportBody.getXmlType(), requestTransportBody);
-		builderMap.put(transportHeaderSenderBuilder.getXmlType(), transportHeaderSenderBuilder);
-		builderMap.put(transportHeaderReceiverBuilder.getXmlType(), transportHeaderReceiverBuilder);
-		builderMap.put(transportHeaderTestIndicatorBuilder.getXmlType(), transportHeaderTestIndicatorBuilder);
-		builderMap.put(transportHeaderRequestDetailsBuilder.getXmlType(), transportHeaderRequestDetailsBuilder);
-		builderMap.put(transportBodyDataBuilder.getXmlType(), transportBodyDataBuilder);
-		builderMap.put(transportBodyFileInputBase64CharSequenceBuilder.getXmlType(),
+		builderMap.put(transportHeaderSenderBuilder.getXmlType(),
+				transportHeaderSenderBuilder);
+		builderMap.put(transportHeaderReceiverBuilder.getXmlType(),
+				transportHeaderReceiverBuilder);
+		builderMap.put(transportHeaderTestIndicatorBuilder.getXmlType(),
+				transportHeaderTestIndicatorBuilder);
+		builderMap.put(transportHeaderRequestDetailsBuilder.getXmlType(),
+				transportHeaderRequestDetailsBuilder);
+		builderMap.put(transportBodyDataBuilder.getXmlType(),
+				transportBodyDataBuilder);
+		builderMap.put(
+				transportBodyFileInputBase64CharSequenceBuilder.getXmlType(),
 				transportBodyFileInputBase64CharSequenceBuilder);
-		builderMap.put(transportBodyElementSequenceBuilder.getXmlType(), transportBodyElementSequenceBuilder);
-		builderMap.put(transportPluginsBuilder.getXmlType(), transportPluginsBuilder);
-		builderMap.put(dataSourcePluginsBuilder.getXmlType(), dataSourcePluginsBuilder);
+		builderMap.put(transportBodyElementSequenceBuilder.getXmlType(),
+				transportBodyElementSequenceBuilder);
+		builderMap.put(transportPluginsBuilder.getXmlType(),
+				transportPluginsBuilder);
+		builderMap.put(dataSourcePluginsBuilder.getXmlType(),
+				dataSourcePluginsBuilder);
 		for (final String key : builderMap.keySet()) {
 			when(
-					messageBuilderLocator.getXmlComplexTypeBuilder(Matchers.eq(key),
-							(IInputDataContainer) Matchers.anyObject())).thenReturn(builderMap.get(key));
+					messageBuilderLocator.getXmlComplexTypeBuilder(
+							Matchers.eq(key),
+							(IInputDataContainer) Matchers.anyObject()))
+					.thenReturn(builderMap.get(key));
 		}
 	}
 
@@ -115,7 +128,8 @@ public class ExtraRequestBuilderTest {
 		final IInputDataContainer senderData = createTestDummyDBQueryInputData();
 		senderData.setRequestId("requestId");
 		final IExtraProfileConfiguration config = createSimpleConfigFileBean();
-		final RootElementType elementType = extraRequestBuilder.buildXmlMessage(senderData, config);
+		final RootElementType elementType = extraRequestBuilder
+				.buildXmlMessage(senderData, config);
 		assertNotNull(elementType);
 	}
 
@@ -135,8 +149,10 @@ public class ExtraRequestBuilderTest {
 	 */
 	private IDbMultiQueryInputData createTestDummyDBQueryInputData() {
 		final DBMultiQueryInputData senderData = new DBMultiQueryInputData();
-		senderData.addSingleDBQueryInputData(1L, "sourceRequestId 1", "sourceResponseId 1");
-		senderData.addSingleDBQueryInputData(2L, "sourceRequestId 2 ", "sourceResponseId 2");
+		senderData.addSingleDBQueryInputData(1L, "sourceRequestId 1",
+				"sourceResponseId 1");
+		senderData.addSingleDBQueryInputData(2L, "sourceRequestId 2 ",
+				"sourceResponseId 2");
 		senderData.setRequestId("requestId");
 		return senderData;
 	}

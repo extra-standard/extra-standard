@@ -30,7 +30,7 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @author Leonid Potap
- *
+ * 
  */
 @Named("requestTransportBodyBuilder")
 public class RequestTransportBodyBuilder extends XmlComplexTypeBuilderAbstr {
