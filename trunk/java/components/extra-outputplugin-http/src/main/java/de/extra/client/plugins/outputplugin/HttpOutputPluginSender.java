@@ -47,7 +47,7 @@ public class HttpOutputPluginSender {
 
 	/**
 	 * Verarbeiten des Requests.
-	 *
+	 * 
 	 * @param request
 	 *            eXTra-Request aus der CoreLib
 	 * @return
