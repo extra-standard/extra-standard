@@ -22,14 +22,16 @@ import de.extra.client.starter.ReturnCode;
 
 /**
  * @author DPRS
- * @version $Id$
+ * @version $Id: SystemExiter.java 538 2012-09-05 09:48:23Z
+ *          thorstenvogel@gmail.com $
  */
 public interface SystemExiter {
 
 	/**
 	 * Beendet das System.
-	 *
-	 * @param code {@link ReturnCode}, der zurückgeliefert werden soll.
+	 * 
+	 * @param code
+	 *            {@link ReturnCode}, der zurückgeliefert werden soll.
 	 */
 	void exit(ReturnCode code);
 

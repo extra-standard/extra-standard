@@ -15,7 +15,7 @@ import de.extra.client.exit.SystemExiter;
 
 /**
  * Extra Client Argumentauswertung.
- *
+ * 
  * <p>
  * Argumente werden beim Start des Extra-Clients übergeben (zum Beispiel über
  * die Kommandozeile) und steuern und konfigurieren die Verarbeitung des
@@ -23,12 +23,14 @@ import de.extra.client.exit.SystemExiter;
  * Konfigurationsparametern. Es gibt pro Client-Lauf nur eine Instanz, die
  * einmalig zum Start des Clients gefüllt wird.
  * </p>
- *
+ * 
  * <p>
  * Kapselt die technische Realisierung der Kommandozeilenauswertung.
  * </p>
+ * 
  * @author DPRS
- * @version $Id$
+ * @version $Id: ClientArguments.java 563 2012-09-06 14:15:35Z
+ *          thorstenvogel@gmail.com $
  */
 public class ClientArguments {
 
@@ -41,11 +43,17 @@ public class ClientArguments {
 	public static final String OPTION_NAME_LOGDIR = "logDirectory";
 	public static final String OPTION_NAME_LOGDIR_SHORTCUT = "l";
 
-	private static final Option OPT_HELP = new Option(OPTION_NAME_HELP_SHORTCUT, OPTION_NAME_HELP, false, "Hilfe anzeigen");
+	private static final Option OPT_HELP = new Option(
+			OPTION_NAME_HELP_SHORTCUT, OPTION_NAME_HELP, false,
+			"Hilfe anzeigen");
 
-	private static final Option OPT_CONFIGDIRECTORY = new Option(OPTION_NAME_CONFIGDIR_SHORTCUT, OPTION_NAME_CONFIGDIR, true, "Konfigurationsverzeichnis");
+	private static final Option OPT_CONFIGDIRECTORY = new Option(
+			OPTION_NAME_CONFIGDIR_SHORTCUT, OPTION_NAME_CONFIGDIR, true,
+			"Konfigurationsverzeichnis");
 
-	private static final Option OPT_LOGDIRECTORY = new Option(OPTION_NAME_LOGDIR_SHORTCUT, OPTION_NAME_LOGDIR, true, "Logverzeichnis");
+	private static final Option OPT_LOGDIRECTORY = new Option(
+			OPTION_NAME_LOGDIR_SHORTCUT, OPTION_NAME_LOGDIR, true,
+			"Logverzeichnis");
 
 	public static final Options OPTIONS;
 
@@ -64,17 +72,20 @@ public class ClientArguments {
 	private final String[] args;
 
 	/**
-	 * Wert aus dem ermitteltem Kommandozeilenparameter {@link #OPTION_NAME_CONFIGDIR}.
+	 * Wert aus dem ermitteltem Kommandozeilenparameter
+	 * {@link #OPTION_NAME_CONFIGDIR}.
 	 */
 	private File configDirectory = null;
 
 	/**
-	 * Wert aus dem ermitteltem Kommandozeilenparameter {@link #OPTION_NAME_LOGDIR}.
+	 * Wert aus dem ermitteltem Kommandozeilenparameter
+	 * {@link #OPTION_NAME_LOGDIR}.
 	 */
 	private File logDirectory = null;
 
 	/**
-	 * Gibt an ob ein Hilfetext ausgegeben werden soll Parameter #OPTION_NAME_HELP.
+	 * Gibt an ob ein Hilfetext ausgegeben werden soll Parameter
+	 * #OPTION_NAME_HELP.
 	 */
 	private Boolean showHelp = null;
 
@@ -98,12 +109,15 @@ public class ClientArguments {
 			exiter.exit(ReturnCode.TECHNICAL);
 		}
 
-		this.showHelp = Boolean.valueOf(commandLine.hasOption(OPTION_NAME_HELP));
+		this.showHelp = Boolean
+				.valueOf(commandLine.hasOption(OPTION_NAME_HELP));
 
 		if (commandLine.hasOption(OPTION_NAME_LOGDIR)) {
-			String optionValue = commandLine.getOptionValue(OPTION_NAME_LOGDIR) != null ? commandLine.getOptionValue(OPTION_NAME_LOGDIR).trim() : null;
+			String optionValue = commandLine.getOptionValue(OPTION_NAME_LOGDIR) != null ? commandLine
+					.getOptionValue(OPTION_NAME_LOGDIR).trim() : null;
 			if (!StringUtils.hasText(optionValue)) {
-				throw new IllegalArgumentException("Logverzeichnis muss angegeben werden.");
+				throw new IllegalArgumentException(
+						"Logverzeichnis muss angegeben werden.");
 			}
 			logDirectory = new File(optionValue);
 			checkDirectory(optionValue, logDirectory);
@@ -112,9 +126,12 @@ public class ClientArguments {
 		}
 
 		if (commandLine.hasOption(OPTION_NAME_CONFIGDIR)) {
-			String optionValue = commandLine.getOptionValue(OPTION_NAME_CONFIGDIR) != null ? commandLine.getOptionValue(OPTION_NAME_CONFIGDIR).trim() : null;
+			String optionValue = commandLine
+					.getOptionValue(OPTION_NAME_CONFIGDIR) != null ? commandLine
+					.getOptionValue(OPTION_NAME_CONFIGDIR).trim() : null;
 			if (!StringUtils.hasText(optionValue)) {
-				throw new IllegalArgumentException("Konfigurationsverzeichnis muss angegeben werden.");
+				throw new IllegalArgumentException(
+						"Konfigurationsverzeichnis muss angegeben werden.");
 			}
 			configDirectory = new File(optionValue);
 			checkDirectory(optionValue, configDirectory);
@@ -132,13 +149,16 @@ public class ClientArguments {
 	 */
 	private void checkDirectory(final String optionValue, final File directory) {
 		if (!directory.exists()) {
-			throw new IllegalArgumentException(String.format("Verzeichnis existiert nicht: %s", directory));
+			throw new IllegalArgumentException(String.format(
+					"Verzeichnis existiert nicht: %s", directory));
 		}
 		if (!directory.isDirectory()) {
-			throw new IllegalArgumentException(String.format("Verzeichnis ist kein Verzeichnis: %s", directory));
+			throw new IllegalArgumentException(String.format(
+					"Verzeichnis ist kein Verzeichnis: %s", directory));
 		}
 		if (!directory.canRead()) {
-			throw new IllegalArgumentException(String.format("Verzeichnis nicht zugreifbar: %s", directory));
+			throw new IllegalArgumentException(String.format(
+					"Verzeichnis nicht zugreifbar: %s", directory));
 		}
 	}
 

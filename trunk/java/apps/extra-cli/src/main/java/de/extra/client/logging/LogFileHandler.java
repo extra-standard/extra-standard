@@ -35,44 +35,51 @@ import de.extra.client.starter.ReturnCode;
  */
 public class LogFileHandler {
 
-    private static final String LOGBACK_CONFIG = "logging-config.xml";
+	private static final String LOGBACK_CONFIG = "logging-config.xml";
 
-    private static final Logger LOG = LoggerFactory.getLogger(LogFileHandler.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(LogFileHandler.class);
 
 	private final File logDirectory;
 
 	private final File configurationDirectory;
 
-    /**
+	/**
 	 * @param logDirectory
 	 * @param configurationDirectory
 	 */
-	public LogFileHandler(final File logDirectory, final File configurationDirectory) {
+	public LogFileHandler(final File logDirectory,
+			final File configurationDirectory) {
 		Assert.notNull(logDirectory, "logDirectory darf nicht leer sein.");
-		Assert.notNull(configurationDirectory, "configurationDirectory darf nicht leer sein.");
+		Assert.notNull(configurationDirectory,
+				"configurationDirectory darf nicht leer sein.");
 		this.logDirectory = logDirectory;
 		this.configurationDirectory = configurationDirectory;
 		initializeLogFile();
 	}
 
 	private void initializeLogFile() {
-        LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-        JoranConfigurator configurator = new JoranConfigurator();
-        configurator.setContext(context);
-        context.reset();
-        context.putProperty("logfilepath", logDirectory.getAbsolutePath());
-        // override default configuration
-        try {
-            configurator.doConfigure(new File(configurationDirectory, LOGBACK_CONFIG));
-        } catch (JoranException e) {
-            exitWithError(e.getMessage(), e);
-        }
-        LOG.debug("successfully configured log system, file={}", logDirectory.getAbsolutePath());
-    }
+		LoggerContext context = (LoggerContext) LoggerFactory
+				.getILoggerFactory();
+		JoranConfigurator configurator = new JoranConfigurator();
+		configurator.setContext(context);
+		context.reset();
+		context.putProperty("logfilepath", logDirectory.getAbsolutePath());
+		// override default configuration
+		try {
+			configurator.doConfigure(new File(configurationDirectory,
+					LOGBACK_CONFIG));
+		} catch (JoranException e) {
+			exitWithError(e.getMessage(), e);
+		}
+		LOG.debug("successfully configured log system, file={}",
+				logDirectory.getAbsolutePath());
+	}
 
-    private void exitWithError(final String message, final Throwable exception) {
-        LOG.error("Fehler bei der Konfiguration des Loggingsystems: {}", message, exception);
-        System.exit(ReturnCode.TECHNICAL.getCode());
-    }
+	private void exitWithError(final String message, final Throwable exception) {
+		LOG.error("Fehler bei der Konfiguration des Loggingsystems: {}",
+				message, exception);
+		System.exit(ReturnCode.TECHNICAL.getCode());
+	}
 
 }

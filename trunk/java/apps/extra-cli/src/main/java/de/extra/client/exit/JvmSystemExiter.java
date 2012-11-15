@@ -22,7 +22,8 @@ import de.extra.client.starter.ReturnCode;
 
 /**
  * @author DPRS
- * @version $Id$
+ * @version $Id: JvmSystemExiter.java 538 2012-09-05 09:48:23Z
+ *          thorstenvogel@gmail.com $
  */
 public class JvmSystemExiter implements SystemExiter {
 

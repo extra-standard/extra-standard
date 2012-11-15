@@ -28,15 +28,16 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * Dient dazu, einen Spring-Context mit vordefinierten Beans zu starten.
- *
+ * 
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: ApplicationContextStarter.java 538 2012-09-05 09:48:23Z
+ *          thorstenvogel@gmail.com $
  */
 public abstract class ApplicationContextStarter<C extends ConfigurableApplicationContext> {
 
 	/**
 	 * Callback um einen nicht-initialisierten Spring-Context bereitzustellen.
-	 *
+	 * 
 	 * @return nicht-initialisierter Spring-Context
 	 */
 	protected abstract C createUninitializedContext();
@@ -44,7 +45,7 @@ public abstract class ApplicationContextStarter<C extends ConfigurableApplicatio
 	/**
 	 * Startet einen Spring-Context mit extern definierten Beans. Diese Beans
 	 * werden im Spring-Context als Singleton registriert.
-	 *
+	 * 
 	 * @param preregisteredObjects
 	 *            Map mit den vordefinierten Beans.
 	 * @return iniitalisierter {@link ApplicationContext}
