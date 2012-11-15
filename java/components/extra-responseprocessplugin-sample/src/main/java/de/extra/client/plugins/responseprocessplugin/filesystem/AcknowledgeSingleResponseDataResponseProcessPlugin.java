@@ -144,9 +144,8 @@ public class AcknowledgeSingleResponseDataResponseProcessPlugin implements
 			final boolean returnCodeSuccessful = extraReturnCodeAnalyser
 					.isReturnCodeSuccessful(returnCode);
 			final ISingleResponseData singleResponseData = new SingleResponseData(
-					requestId, returnCode,
-					reportData.getReturnText(), responseId,
-					returnCodeSuccessful);
+					requestId, returnCode, reportData.getReturnText(),
+					responseId, returnCodeSuccessful);
 			final IResponseData responseData = new SingleResponseDataForMultipleRequest(
 					singleResponseData);
 			return responseData;

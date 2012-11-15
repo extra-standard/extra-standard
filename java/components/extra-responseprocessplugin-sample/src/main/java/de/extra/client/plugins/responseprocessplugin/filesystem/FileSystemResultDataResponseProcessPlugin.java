@@ -159,8 +159,8 @@ public class FileSystemResultDataResponseProcessPlugin implements
 					.isReturnCodeSuccessful(returnCode);
 			final ISingleResponseData singleResponseData = new SingleResponseData(
 					requestDetails.getRequestID().getValue(), returnCode,
-					reportData.getReturnText(),
-					responseId, returnCodeSuccessful);
+					reportData.getReturnText(), responseId,
+					returnCodeSuccessful);
 			responseData.addSingleResponse(singleResponseData);
 
 		} catch (final XmlMappingException xmlMappingException) {
