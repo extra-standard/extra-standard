@@ -42,9 +42,9 @@ import org.slf4j.LoggerFactory;
  * AuthSSLX509TrustManager can be used to extend the default
  * {@link X509TrustManager} with additional trust decisions.
  * </p>
- *
+ * 
  * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
- *
+ * 
  *         <p>
  *         DISCLAIMER: HttpClient developers DO NOT actively support this
  *         component. The component is provided as a reference material, which

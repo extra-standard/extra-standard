@@ -29,52 +29,52 @@ import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
 
 @Named("httpOutputPluginConnectConfiguration")
-@PluginConfiguration(pluginBeanName="httpOutputPlugin", pluginType = PluginConfigType.OutputPlugins)
+@PluginConfiguration(pluginBeanName = "httpOutputPlugin", pluginType = PluginConfigType.OutputPlugins)
 public class HttpOutputPluginConnectConfiguration {
 
-	@PluginValue(key="userAgent")
+	@PluginValue(key = "userAgent")
 	private String userAgent;
 
-	@PluginValue(key="sslServer")
-	private boolean sslServer ;
+	@PluginValue(key = "sslServer")
+	private boolean sslServer;
 
-	@PluginValue(key="sslTruststoreLocation")
+	@PluginValue(key = "sslTruststoreLocation")
 	private String sslTruststoreLocation;
 
-	@PluginValue(key="sslTruststorePassword")
+	@PluginValue(key = "sslTruststorePassword")
 	private String sslTruststorePassword;
 
-	@PluginValue(key="sslCertificate")
+	@PluginValue(key = "sslCertificate")
 	private String sslCertificate;
 
-	@PluginValue(key="sslCertificateRefresh")
+	@PluginValue(key = "sslCertificateRefresh")
 	private boolean sslCertificateRefresh = false;
 
-	@PluginValue(key="serverHost")
+	@PluginValue(key = "serverHost")
 	private String serverHost;
 
-	@PluginValue(key="serverPort")
+	@PluginValue(key = "serverPort")
 	private String serverPort;
 
-	@PluginValue(key="serverURL")
+	@PluginValue(key = "serverURL")
 	private String serverURL;
 
-	@PluginValue(key="proxySet")
+	@PluginValue(key = "proxySet")
 	private boolean proxySet = false;
 
-	@PluginValue(key="proxyHost")
+	@PluginValue(key = "proxyHost")
 	private String proxyHost;
 
-	@PluginValue(key="proxyPort")
+	@PluginValue(key = "proxyPort")
 	private String proxyPort;
 
-	@PluginValue(key="proxyAuth")
+	@PluginValue(key = "proxyAuth")
 	private boolean proxyAuth = false;
 
-	@PluginValue(key="proxyUser")
+	@PluginValue(key = "proxyUser")
 	private String proxyUser;
 
-	@PluginValue(key="proxyPwd")
+	@PluginValue(key = "proxyPwd")
 	private String proxyPwd;
 
 	@Inject

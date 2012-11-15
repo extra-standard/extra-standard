@@ -69,7 +69,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 	/**
 	 * ExtrasTransportHttp is an implementation of IExtraTransport and provides
 	 * Communication via http(s) protocol.
-	 *
+	 * 
 	 * @see de.extra.client.transport.IExtraTransport#senden(java.lang.String)
 	 */
 	@Override
@@ -126,7 +126,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 	/**
 	 * Inits ExtraTransportHttp including setup of HttpClient, Proxy,
 	 * Authentication and Truststore.
-	 *
+	 * 
 	 * @param extraConnectData
 	 * @return void
 	 */
@@ -151,7 +151,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	/**
 	 * Creates a LogString for the requested URL.
-	 *
+	 * 
 	 * @param extraConnectData
 	 * @param requestURL
 	 * @return
@@ -208,7 +208,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	/**
 	 * Sets up the HttpClient by setting Parameters.
-	 *
+	 * 
 	 * @param extraConnectData
 	 * @param client
 	 */
@@ -225,7 +225,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	/**
 	 * Sets up Authentication for the client.
-	 *
+	 * 
 	 * @param extraConnectData
 	 * @param client
 	 * @throws ExtraTransportException
@@ -310,7 +310,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	/**
 	 * Sets up a Proxy for the client.
-	 *
+	 * 
 	 * @param extraConnectData
 	 * @param client
 	 */
@@ -361,7 +361,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	/**
 	 * Builds an URLString with "http://" or "https://" (if SSL is used).
-	 *
+	 * 
 	 * @param extraConnectData
 	 * @param urlString
 	 */
@@ -400,7 +400,7 @@ public class ExtraTransportHttp implements IExtraTransport {
 
 	/**
 	 * Sets up the Truststore.
-	 *
+	 * 
 	 * @param extraConnectData
 	 * @return
 	 */

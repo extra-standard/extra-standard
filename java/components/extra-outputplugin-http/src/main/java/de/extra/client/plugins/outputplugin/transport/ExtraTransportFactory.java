@@ -23,13 +23,12 @@ import javax.inject.Named;
 import de.extra.client.core.annotation.PluginConfigType;
 import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
-import de.extra.client.plugins.outputplugin.config.HttpOutputPluginConnectConfiguration;
 
 @Named("extraTransportFactory")
-@PluginConfiguration(pluginBeanName="httpOutputPlugin", pluginType = PluginConfigType.OutputPlugins)
+@PluginConfiguration(pluginBeanName = "httpOutputPlugin", pluginType = PluginConfigType.OutputPlugins)
 public class ExtraTransportFactory {
-	
-	@PluginValue(key="implClassName")
+
+	@PluginValue(key = "implClassName")
 	private String implClassName;
 
 	public void setImplClassName(String implClassName) {
@@ -44,7 +43,6 @@ public class ExtraTransportFactory {
 	public IExtraTransport loadTransportImpl() {
 		IExtraTransport implClass = null;
 		try {
-
 
 			implClass = (IExtraTransport) Class.forName(implClassName)
 					.newInstance();
