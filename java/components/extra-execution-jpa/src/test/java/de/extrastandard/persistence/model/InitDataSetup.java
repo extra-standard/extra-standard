@@ -80,8 +80,7 @@ public class InitDataSetup {
 
 		// -- Sterbedaten --
 		persistenceSterbedatenTestSetup.setupInitialDaten();
-		persistenceSterbedatenTestSetup.setupProcedureSterbedatenAus1();
-		persistenceSterbedatenTestSetup.setupProcedureSterbedatenAus2();
+		persistenceSterbedatenTestSetup.setupProcedureSterbedatenAus();
 
 		Thread.sleep(3000);
 		logger.info("setupInitialDaten abgeschlossen");

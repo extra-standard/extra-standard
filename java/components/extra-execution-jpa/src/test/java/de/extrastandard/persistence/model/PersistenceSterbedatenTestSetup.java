@@ -42,13 +42,9 @@ public class PersistenceSterbedatenTestSetup {
 
 	static final String MANDATOR_TEST = "DRV";
 
-	static final String PROCTYPE_STERBEDATENAUS1 = "STERBEDATENAUS1";
-	static final String PROC_STERBEDATENAUS1_NAME = "Sterbedaten Ausland 1";
-	static final String PROC_STERBEDATENAUS1_KEY = "PROC_STERBEDATENAUS1";
-
-	static final String PROCTYPE_STERBEDATENAUS2 = "STERBEDATENAUS2";
-	static final String PROC_STERBEDATENAUS2_NAME = "Sterbedaten Ausland 2";
-	static final String PROC_STERBEDATENAUS2_KEY = "PROC_STERBEDATENAUS2";
+	static final String PROCTYPE_STERBEDATENAUS = "STERBEDATENAUS";
+	static final String PROC_STERBEDATENAUS_NAME = "Sterbedaten Ausland";
+	static final String PROC_STERBEDATENAUS_KEY = "PROC_STERBEDATENAUS";
 
 	@Inject
 	@Named("mandatorRepository")
@@ -62,41 +58,29 @@ public class PersistenceSterbedatenTestSetup {
 	}
 
 	@Transactional
-	public void setupProcedureSterbedatenAus1() {
-		final ProcedureType procedureSterbedaten1 = new ProcedureType(
-				PROCTYPE_STERBEDATENAUS1);
+	public void setupProcedureSterbedatenAus() {
+		final ProcedureType procedureSterbedaten = new ProcedureType(
+				PROCTYPE_STERBEDATENAUS);
 
-		new ProcedurePhaseConfiguration(procedureSterbedaten1,
+		final ProcedurePhaseConfiguration procedurePhaseConfigurationPhase3 = new ProcedurePhaseConfiguration(
+				procedureSterbedaten, PhaseQualifier.PHASE3);
+
+		// Phase2 hat Phase3 als Nachfolger!
+		new ProcedurePhaseConfiguration(
+				procedureSterbedaten, PhaseQualifier.PHASE2,
+				procedurePhaseConfigurationPhase3);
+
+		// Phase 1 hat keinen Nachfolger!
+		new ProcedurePhaseConfiguration(
+				procedureSterbedaten,
 				PhaseQualifier.PHASE1);
 
 		final Mandator mandatorTEST = mandatorRepository
 				.findByName(MANDATOR_TEST);
 
-		new Procedure(mandatorTEST, procedureSterbedaten1,
-				PROC_STERBEDATENAUS1_NAME, PROC_STERBEDATENAUS1_KEY);
+		new Procedure(mandatorTEST, procedureSterbedaten,
+				PROC_STERBEDATENAUS_NAME, PROC_STERBEDATENAUS_KEY);
 
-		logger.info("setupProcedureSterbedatenAus1 finished");
+		logger.info("setupProcedureSterbedatenAusland finished");
 	}
-
-	@Transactional
-	public void setupProcedureSterbedatenAus2() {
-		final ProcedureType procedureSterbedaten2 = new ProcedureType(
-				PROCTYPE_STERBEDATENAUS2);
-
-		final ProcedurePhaseConfiguration procedurePhaseConfigurationPhase2 = new ProcedurePhaseConfiguration(
-				procedureSterbedaten2, PhaseQualifier.PHASE2);
-
-		new ProcedurePhaseConfiguration(procedureSterbedaten2,
-				PhaseQualifier.PHASE1, procedurePhaseConfigurationPhase2);
-
-		final Mandator mandatorTEST = mandatorRepository
-				.findByName(MANDATOR_TEST);
-
-		new Procedure(mandatorTEST, procedureSterbedaten2,
-				PROC_STERBEDATENAUS2_NAME, PROC_STERBEDATENAUS2_KEY);
-
-		logger.info("setupProcedureSterbedatenAus2 finished");
-	}
-
-	// TODO Testdaten
 }

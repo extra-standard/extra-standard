@@ -61,7 +61,7 @@ public class PersistenceSterbedatenBroken {
 		final String parameter = "-c d:/extras/configdir";
 		// erzeugt eine 'Execution' und eine zugeordnete 'ProcessTransition'
 		final IExecution execution = executionPersistence.startExecution(
-				PersistenceSterbedatenTestSetup.PROC_STERBEDATENAUS1_NAME,
+				PersistenceSterbedatenTestSetup.PROC_STERBEDATENAUS_NAME,
 				parameter, PhaseQualifier.PHASE1);
 
 		// Execution vorhanden?
