@@ -37,3 +37,10 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
   * So sehen die Maven-Module in Jenkins !CloudBees aus: 
    
 http://extra-standard.googlecode.com/svn/wiki/images/jenkins-extra-cloudbees-modules.jpg
+
+= Maven Repository
+
+Sämtliche eXTra-Artefakte werden in folgenden Maven-Repositories deployed:
+  
+  * [https://oss.sonatype.org Sonatype OSS Maven Repository] für Snapshots und Releases
+  * Sämtliche Release-Artefakte werden mit [http://search.maven.org/ Maven Central Repository] synchroniziert
