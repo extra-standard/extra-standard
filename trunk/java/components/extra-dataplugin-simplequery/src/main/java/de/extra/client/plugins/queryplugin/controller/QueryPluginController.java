@@ -28,12 +28,13 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
  * @deprecated
- *
- * Wird nicht mehr verwendet.
- *
+ * 
+ *             Wird nicht mehr verwendet.
+ * 
  */
-//@Named("queryPluginController")
-//@PluginConfiguration(pluginBeanName = "queryDataPlugin", pluginType = PluginConfigType.DataPlugins)
+// @Named("queryPluginController")
+// @PluginConfiguration(pluginBeanName = "queryDataPlugin", pluginType =
+// PluginConfigType.DataPlugins)
 public class QueryPluginController implements IQueryPluginController {
 
 	@PluginValue(key = "startId")
