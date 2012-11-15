@@ -122,49 +122,48 @@
 								<!-- Konfiguration fuer Unit-Tests uebernehmen -->
 								<configuration>
 									<target>
-										<!-- Procedure 1 -->
+										<!-- Procedure Sterbedaten -->
 										<!-- Phase 1 -->
 										<copy
-											file="${project.basedir}/src/main/conf/proc1/phase1/extra-properties-basic.properties"
-											tofile="${project.basedir}/src/test/resources/conf/proc1/phase1/extra-properties-basic.properties" />
+											file="${project.basedir}/src/main/conf/phase1/extra-properties-basic.properties"
+											tofile="${project.basedir}/src/test/resources/conf/phase1/extra-properties-basic.properties" />
 										<copy
-											file="${project.basedir}/src/main/conf/proc1/phase1/logging-config.xml"
-											tofile="${project.basedir}/src/test/resources/conf/proc1/phase1/logging-config.xml" />
+											file="${project.basedir}/src/main/conf/phase1/logging-config.xml"
+											tofile="${project.basedir}/src/test/resources/conf/phase1/logging-config.xml" />
 										<copy
-											file="${project.basedir}/src/main/conf/proc1/phase1/phase1-sent-profil.xml"
-											tofile="${project.basedir}/src/test/resources/conf/proc1/phase1/phase1-sent-profil.xml" />
+											file="${project.basedir}/src/main/conf/phase1/phase1-sent-profil.xml"
+											tofile="${project.basedir}/src/test/resources/conf/phase1/phase1-sent-profil.xml" />
 										<copy
-											file="${project.basedir}/src/test/resources/conf/proc1/phase1/extra-properties-user.properties_example"
-											tofile="${project.basedir}/src/test/resources/conf/proc1/phase1/extra-properties-user.properties"
-											overwrite="false" />
-										<!-- Procedure 2 -->
-										<!-- Phase 1 -->
-										<copy
-											file="${project.basedir}/src/main/conf/proc2/phase1/extra-properties-basic.properties"
-											tofile="${project.basedir}/src/test/resources/conf/proc2/phase1/extra-properties-basic.properties" />
-										<copy
-											file="${project.basedir}/src/main/conf/proc2/phase1/logging-config.xml"
-											tofile="${project.basedir}/src/test/resources/conf/proc2/phase1/logging-config.xml" />
-										<copy
-											file="${project.basedir}/src/main/conf/proc2/phase1/phase1-fetchresult-profil.xml"
-											tofile="${project.basedir}/src/test/resources/conf/proc2/phase1/phase1-fetchresult-profil.xml" />
-										<copy
-											file="${project.basedir}/src/test/resources/conf/proc2/phase1/extra-properties-user.properties_example"
-											tofile="${project.basedir}/src/test/resources/conf/proc2/phase1/extra-properties-user.properties"
+											file="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties_example"
+											tofile="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties"
 											overwrite="false" />
 										<!-- Phase 2 -->
 										<copy
-											file="${project.basedir}/src/main/conf/proc2/phase2/extra-properties-basic.properties"
-											tofile="${project.basedir}/src/test/resources/conf/proc2/phase2/extra-properties-basic.properties" />
+											file="${project.basedir}/src/main/conf/phase2/extra-properties-basic.properties"
+											tofile="${project.basedir}/src/test/resources/conf/phase2/extra-properties-basic.properties" />
 										<copy
-											file="${project.basedir}/src/main/conf/proc2/phase2/logging-config.xml"
-											tofile="${project.basedir}/src/test/resources/conf/proc2/phase2/logging-config.xml" />
+											file="${project.basedir}/src/main/conf/phase2/logging-config.xml"
+											tofile="${project.basedir}/src/test/resources/conf/phase2/logging-config.xml" />
 										<copy
-											file="${project.basedir}/src/main/conf/proc2/phase2/phase2-confirmation-profil.xml"
-											tofile="${project.basedir}/src/test/resources/conf/proc2/phase2/phase2-confirmation-profil.xml" />
+											file="${project.basedir}/src/main/conf/phase2/phase2-fetchresult-profil.xml"
+											tofile="${project.basedir}/src/test/resources/conf/phase2/phase2-fetchresult-profil.xml" />
 										<copy
-											file="${project.basedir}/src/test/resources/conf/proc2/phase2/extra-properties-user.properties_example"
-											tofile="${project.basedir}/src/test/resources/conf/proc2/phase2/extra-properties-user.properties"
+											file="${project.basedir}/src/test/resources/conf/phase2/extra-properties-user.properties_example"
+											tofile="${project.basedir}/src/test/resources/conf/phase2/extra-properties-user.properties"
+											overwrite="false" />
+										<!-- Phase 3 -->
+										<copy
+											file="${project.basedir}/src/main/conf/phase3/extra-properties-basic.properties"
+											tofile="${project.basedir}/src/test/resources/conf/phase3/extra-properties-basic.properties" />
+										<copy
+											file="${project.basedir}/src/main/conf/phase3/logging-config.xml"
+											tofile="${project.basedir}/src/test/resources/conf/phase3/logging-config.xml" />
+										<copy
+											file="${project.basedir}/src/main/conf/phase3/phase3-confirmation-profil.xml"
+											tofile="${project.basedir}/src/test/resources/conf/phase3/phase3-confirmation-profil.xml" />
+										<copy
+											file="${project.basedir}/src/test/resources/conf/phase3/extra-properties-user.properties_example"
+											tofile="${project.basedir}/src/test/resources/conf/phase3/extra-properties-user.properties"
 											overwrite="false" />
 									</target>
 								</configuration>
