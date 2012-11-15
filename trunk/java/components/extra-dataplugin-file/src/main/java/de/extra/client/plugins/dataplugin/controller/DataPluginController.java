@@ -38,9 +38,10 @@ import de.extrastandard.api.observer.ITransportObserver;
 /**
  * @deprecated
  * 
- * Wird als SpringBean aktuell nicht verwendet
+ *             Wird als SpringBean aktuell nicht verwendet
  */
-//@Named("dataPluginController")
+// @Named("dataPluginController")
+@Deprecated
 public class DataPluginController implements IDataPluginController {
 
 	@Inject
@@ -63,18 +64,21 @@ public class DataPluginController implements IDataPluginController {
 		nutzfileList = dataPluginHelper.getNutzfiles();
 
 		// Befüllen der Versanddaten-Liste
-		for (final Iterator<String> iter = nutzfileList.iterator(); iter.hasNext();) {
+		for (final Iterator<String> iter = nutzfileList.iterator(); iter
+				.hasNext();) {
 			final String filename = iter.next();
 
 			final File inputFile = new File(filename);
 			final AuftragssatzType auftragssatz = new AuftragssatzType();
-			final List<IInputDataPluginDescription> pluginListe = dataPluginHelper.extractPluginListe(auftragssatz);
+			final List<IInputDataPluginDescription> pluginListe = dataPluginHelper
+					.extractPluginListe(auftragssatz);
 			// String auftragssatzName = filename + ".auf";
 			// auftragssatz = dataPluginHelper
 			// .unmarshalAuftragssatz(auftragssatzName);
 
 			// Setzen der RequestId
-			final SingleFileInputData simpleFileInputData = new SingleFileInputData(inputFile, pluginListe);
+			final SingleFileInputData simpleFileInputData = new SingleFileInputData(
+					inputFile, pluginListe);
 			simpleFileInputData.setRequestId(auftragssatz.getRequestId());
 			simpleFileInputData.setPlugins(pluginListe);
 			versanddatenBeanList.addSingleInputData(simpleFileInputData);

@@ -47,82 +47,82 @@ import de.extrastandard.api.plugin.IDataPlugin;
 @PluginConfiguration(pluginBeanName = "fileDataPlugin", pluginType = PluginConfigType.DataPlugins)
 public class FileDataPlugin implements IDataPlugin {
 
-    private static final Logger logger = LoggerFactory
-	    .getLogger(FileDataPlugin.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(FileDataPlugin.class);
 
-    @PluginValue(key = "inputVerzeichnis")
-    private File inputDirectory;
+	@PluginValue(key = "inputVerzeichnis")
+	private File inputDirectory;
 
-    @PluginValue(key = "inputDataLimit")
-    private Integer inputDataLimit;
+	@PluginValue(key = "inputDataLimit")
+	private Integer inputDataLimit;
 
-    private final AtomicBoolean isResultPrepared = new AtomicBoolean(false);
+	private final AtomicBoolean isResultPrepared = new AtomicBoolean(false);
 
-    private Collection<File> inputFiles = new ArrayList<File>();
+	private Collection<File> inputFiles = new ArrayList<File>();
 
-    private Iterator<File> inputFilesIterator;
+	private Iterator<File> inputFilesIterator;
 
-    private synchronized void initInputData() {
-	inputFiles = FileUtils.listFiles(inputDirectory,
-		TrueFileFilter.INSTANCE, null);
-	inputFilesIterator = inputFiles.iterator();
-	logger.info(
-		"FileData Plugin instanziiert for Directory: {}. Found {} files",
-		inputDirectory, inputFiles.size());
-	isResultPrepared.getAndSet(true);
-    }
-
-    @Override
-    public boolean hasMoreData() {
-	if (!isResultPrepared.get()) {
-	    initInputData();
+	private synchronized void initInputData() {
+		inputFiles = FileUtils.listFiles(inputDirectory,
+				TrueFileFilter.INSTANCE, null);
+		inputFilesIterator = inputFiles.iterator();
+		logger.info(
+				"FileData Plugin instanziiert for Directory: {}. Found {} files",
+				inputDirectory, inputFiles.size());
+		isResultPrepared.getAndSet(true);
 	}
-	return inputFilesIterator.hasNext();
-    }
 
-    @Override
-    public IInputDataContainer getData() {
-	if (!isResultPrepared.get()) {
-	    initInputData();
+	@Override
+	public boolean hasMoreData() {
+		if (!isResultPrepared.get()) {
+			initInputData();
+		}
+		return inputFilesIterator.hasNext();
 	}
-	final FileInputData inputDataContainer = new FileInputData();
-	for (Integer counter = 0; inputFilesIterator.hasNext()
-		&& counter < inputDataLimit; counter++) {
-	    final File inputFile = inputFilesIterator.next();
-	    inputDataContainer.addSingleInputData(inputFile);
+
+	@Override
+	public IInputDataContainer getData() {
+		if (!isResultPrepared.get()) {
+			initInputData();
+		}
+		final FileInputData inputDataContainer = new FileInputData();
+		for (Integer counter = 0; inputFilesIterator.hasNext()
+				&& counter < inputDataLimit; counter++) {
+			final File inputFile = inputFilesIterator.next();
+			inputDataContainer.addSingleInputData(inputFile);
+		}
+		return inputDataContainer;
 	}
-	return inputDataContainer;
-    }
 
-    @Override
-    public boolean isEmpty() {
-	if (!isResultPrepared.get()) {
-	    initInputData();
+	@Override
+	public boolean isEmpty() {
+		if (!isResultPrepared.get()) {
+			initInputData();
+		}
+		return inputFiles.isEmpty();
 	}
-	return inputFiles.isEmpty();
-    }
 
-    /**
-     * @param inputDataLimit
-     *            the inputDataLimit to set
-     */
-    public void setInputDataLimit(final Integer inputDataLimit) {
-	this.inputDataLimit = inputDataLimit;
-    }
+	/**
+	 * @param inputDataLimit
+	 *            the inputDataLimit to set
+	 */
+	public void setInputDataLimit(final Integer inputDataLimit) {
+		this.inputDataLimit = inputDataLimit;
+	}
 
-    /**
-     * @return the inputDirectory
-     */
-    public File getInputDirectory() {
-	return inputDirectory;
-    }
+	/**
+	 * @return the inputDirectory
+	 */
+	public File getInputDirectory() {
+		return inputDirectory;
+	}
 
-    /**
-     * @param inputDirectory
-     *            the inputDirectory to set
-     */
-    public void setInputDirectory(final File inputDirectory) {
-	this.inputDirectory = inputDirectory;
-    }
+	/**
+	 * @param inputDirectory
+	 *            the inputDirectory to set
+	 */
+	public void setInputDirectory(final File inputDirectory) {
+		this.inputDirectory = inputDirectory;
+	}
 
 }
