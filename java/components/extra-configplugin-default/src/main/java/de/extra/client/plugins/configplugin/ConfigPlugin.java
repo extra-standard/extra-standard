@@ -31,7 +31,8 @@ import de.extrastandard.api.plugin.IConfigPlugin;
 @Named("defaultConfigPlugin")
 public class ConfigPlugin implements IConfigPlugin {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ConfigPlugin.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(ConfigPlugin.class);
 
 	@Inject
 	@Named("configController")

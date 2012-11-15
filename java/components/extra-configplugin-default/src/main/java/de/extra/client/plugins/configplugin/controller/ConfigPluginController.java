@@ -61,10 +61,9 @@ public class ConfigPluginController {
 				profileFileName);
 	}
 
-
 	/**
 	 * Verarbeitung der Konfigurations-Files.
-	 *
+	 * 
 	 * @return ConfigFileBean
 	 */
 	public IExtraProfileConfiguration processConfigFile() {
@@ -96,7 +95,7 @@ public class ConfigPluginController {
 
 	/**
 	 * Unmarshalling der Profildatei.
-	 *
+	 * 
 	 * @param dateiName
 	 *            Vollstaendiger Pfad der Profildatei
 	 * @return JaxB-Element
