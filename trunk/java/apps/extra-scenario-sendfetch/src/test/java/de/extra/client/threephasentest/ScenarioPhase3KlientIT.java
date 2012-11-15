@@ -43,7 +43,8 @@ public class ScenarioPhase3KlientIT {
 	@Before
 	public void setUp() throws Exception {
 
-		extraClient = extraClientTestBasic.createExtraKlient(TEST_CONFIG, LOG_DIR);
+		extraClient = extraClientTestBasic.createExtraKlient(TEST_CONFIG,
+				LOG_DIR);
 	}
 
 	@Test
