@@ -120,7 +120,6 @@ public class PersistenceSterbedatenBroken {
 		assertEquals(PersistentStatus.ENVELOPED.getId(),
 				previousStatusEnveloped.getId());
 
-
 		final ISingleContentInputData singleContentInputData = new SingleStringInputData(
 				"test data");
 		final IInputData inputData = execution

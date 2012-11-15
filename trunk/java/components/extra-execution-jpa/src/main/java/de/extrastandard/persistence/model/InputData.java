@@ -211,10 +211,10 @@ public class InputData extends AbstractEntity implements IInputData {
 			final ISingleContentInputData singleContentInputData = ISingleContentInputData.class
 					.cast(singleInputData);
 			fillInputData(singleContentInputData);
-		} 
+		}
 		// TODO MAXRESP (06.11.12)
-		else if (IDbSingleQueryInputData.class
-				.isAssignableFrom(singleInputData.getClass())) {
+		else if (IDbSingleQueryInputData.class.isAssignableFrom(singleInputData
+				.getClass())) {
 			final IDbSingleQueryInputData maxResponseIdQueryInputData = IDbSingleQueryInputData.class
 					.cast(singleInputData);
 			fillInputData(maxResponseIdQueryInputData);
@@ -247,7 +247,7 @@ public class InputData extends AbstractEntity implements IInputData {
 		this.requestId = singleResponseData.getRequestId();
 		// Datenübernahme aus ISingleResponseData
 		transmitted(singleResponseData);
-		
+
 		// TODO hashCode Berechnung!?
 		this.hashcode = String.valueOf(this.requestId.hashCode() * 31
 				+ this.responseId.hashCode() * 33);
@@ -301,8 +301,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	private void fillInputData(
 			final IDbSingleQueryInputData singleQueryInputData) {
 
-		final String hashCode = String.valueOf(singleQueryInputData
-				.hashCode());
+		final String hashCode = String.valueOf(singleQueryInputData.hashCode());
 		this.hashcode = hashCode;
 		final String requestId = this.calculateRequestId();
 		// (08.11.12) verschiedene Qualifizierungen (Query, Criteria, ...)
@@ -488,7 +487,7 @@ public class InputData extends AbstractEntity implements IInputData {
 		this.responseId = singleResponseData.getResponseId();
 		this.returnCode = singleResponseData.getReturnCode();
 		this.returnText = singleResponseData.getReturnText();
-		
+
 		// TODO MW Status InputData?!
 		PersistentStatus persistentStatus = singleResponseData.isSuccessful() ? PersistentStatus.DONE
 				: PersistentStatus.FAIL;

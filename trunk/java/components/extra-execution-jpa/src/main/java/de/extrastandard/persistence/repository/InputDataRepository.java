@@ -61,15 +61,16 @@ public interface InputDataRepository extends JpaRepository<InputData, Long> {
 			@Param("phaseQualifier") String phaseQualifier,
 			@Param("status") Status status);
 
-//	select max (INPUT_DATA.RESPONSE_ID) from INPUT_DATA , PROCEDURE, EXECUTION
-//	where INPUT_DATA.EXECUTION_ID = EXECUTION.ID
-//	and EXECUTION.PROCEDURE_ID = PROCEDURE.ID
-//	and EXECUTION.PHASE = 'SterbedatenabgleichDataFetchPhase1'
-//	and PROCEDURE.NAME = 'SterbedatenabgleichDataFetch'
-	
+	// select max (INPUT_DATA.RESPONSE_ID) from INPUT_DATA , PROCEDURE,
+	// EXECUTION
+	// where INPUT_DATA.EXECUTION_ID = EXECUTION.ID
+	// and EXECUTION.PROCEDURE_ID = PROCEDURE.ID
+	// and EXECUTION.PHASE = 'SterbedatenabgleichDataFetchPhase1'
+	// and PROCEDURE.NAME = 'SterbedatenabgleichDataFetch'
+
 	// TODO Reicht das?? Status??
 	// Oder Minimum mit Status Offen??
-	
+
 	// FIXME inp.ResponseId ist kein numerisches Feld!
 	// Vorerst inp.Id statt inp.responseId genommen
 	/**
