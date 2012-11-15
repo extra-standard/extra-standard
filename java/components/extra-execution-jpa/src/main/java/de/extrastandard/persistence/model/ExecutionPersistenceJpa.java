@@ -153,10 +153,9 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 		final IProcedure procedure = procedureRepository
 				.findByName(procedureName);
 
-
 		Integer maxResponseId = inputDataRepository
 				.maxResponseIdForProcedureAndPhase(procedure,
-				phaseQualifier.getName());
+						phaseQualifier.getName());
 
 		if (maxResponseId == null) {
 			return "0";
