@@ -113,6 +113,37 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 		return dataRequest;
 	}
 
+	/**
+	 * Erzeugt ein DataRequestArgument für den übergebenen Procedure-Namen. ('EQ
+	 * procedureName')
+	 * 
+	 * @param procedureName
+	 * @return
+	 */
+	private DataRequestArgument createDataRequestArgumentProcedure(
+			String procedureName) {
+		final DataRequestArgument dataRequestArgument = new DataRequestArgument();
+		dataRequestArgument
+				.setProperty("http://www.extra-standard.de/property/Procedure");
+
+		Operand operand = new Operand();
+		operand.setValue(procedureName);
+
+		final String operandAsString = "EQ";
+		QName qname = new QName("xs:string");
+		JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(new QName(
+				"http://www.extra-standard.de/namespace/message/1",
+				operandAsString), Operand.class, operand);
+		jaxbOperand.setValue(operand);
+
+		dataRequestArgument
+				.setProperty("http://www.extra-standard.de/property/Procedure");
+		dataRequestArgument.setType(qname);
+		dataRequestArgument.getContent().add(jaxbOperand);
+
+		return dataRequestArgument;
+	}
+
 	private DataRequest createSingleDataRequest(
 			final IInputDataContainer senderData) {
 		final IDbSingleQueryInputDataContainer dbQueryInputData = senderData
@@ -123,12 +154,14 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 		final DataRequestQuery query = new DataRequestQuery();
 		DataRequestArgument dataRequestArgument = new DataRequestArgument();
 
+		String procedureName = null;
 		for (ISingleInputData singleInputData : dbQueryInputData.getContent()) {
 			if (IDbSingleQueryInputData.class.isAssignableFrom(singleInputData
 					.getClass())) {
 				IDbSingleQueryInputData singleQueryInputData = IDbSingleQueryInputData.class
 						.cast(singleInputData);
 
+				procedureName = singleQueryInputData.getProcedureName();
 				Operand operand = new Operand();
 				operand.setValue(String.valueOf(singleQueryInputData
 						.getArgument()));
@@ -150,7 +183,11 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 		}
 
 		query.getArgument().add(dataRequestArgument);
-		// TODO procedure?!
+		if (procedureName != null) {
+			query.getArgument().add(
+					createDataRequestArgumentProcedure(procedureName));
+		}
+
 		dataRequest.setQuery(query);
 		dataRequest.setControl(controlElement);
 

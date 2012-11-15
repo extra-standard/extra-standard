@@ -58,7 +58,7 @@ public class DBMaxResponseIdQueryDataPlugin implements IDataPlugin {
 							phaseQualifier);
 			dbQueryMaxResponseIdInputData = new DBSingleQueryInputDataContainer(
 					String.valueOf(maxResponseId),
-					QueryArgumentType.GREATER_THEN);
+					QueryArgumentType.GREATER_THEN, executionProcedure);
 
 			logger.info("For Procedury and Phase {} MaxResponseId: {}",
 					executionProcedure + "->" + executionPhase,

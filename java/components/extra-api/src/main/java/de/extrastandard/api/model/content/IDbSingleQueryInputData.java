@@ -22,4 +22,6 @@ public interface IDbSingleQueryInputData extends ISingleInputData {
 	String getArgument();
 
 	QueryArgumentType getQueryArgumentType();
+
+	String getProcedureName();
 }

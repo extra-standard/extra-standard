@@ -18,15 +18,15 @@ public class DBSingleQueryInputDataContainer extends InputDataContainer
 	}
 
 	public DBSingleQueryInputDataContainer(String aArgument,
-			QueryArgumentType aQueryArgumentType) {
+			QueryArgumentType aQueryArgumentType, String aProcedureName) {
 		super();
-		addDBSingleQueryInputData(aArgument, aQueryArgumentType);
+		addDBSingleQueryInputData(aArgument, aQueryArgumentType, aProcedureName);
 	}
 
 	public void addDBSingleQueryInputData(String aArgument,
-			QueryArgumentType aQueryArgumentType) {
+			QueryArgumentType aQueryArgumentType, String aProcedureName) {
 		final IDbSingleQueryInputData singleDBQueryInputData = new DBSingleQueryInputData(
-				aArgument, aQueryArgumentType);
+				aArgument, aQueryArgumentType, aProcedureName);
 		iDbSingleQueryInputDataList.add(singleDBQueryInputData);
 	}
 
