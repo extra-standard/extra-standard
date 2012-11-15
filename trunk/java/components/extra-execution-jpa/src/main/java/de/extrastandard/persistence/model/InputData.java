@@ -493,6 +493,8 @@ public class InputData extends AbstractEntity implements IInputData {
 		PersistentStatus persistentStatus = singleResponseData.isSuccessful() ? PersistentStatus.DONE
 				: PersistentStatus.FAIL;
 		this.status = statusRepository.findOne(persistentStatus.getId());
+
+		repository.save(this);
 	}
 
 }
