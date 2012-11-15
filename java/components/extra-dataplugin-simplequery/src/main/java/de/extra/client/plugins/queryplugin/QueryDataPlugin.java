@@ -30,34 +30,34 @@ import de.extrastandard.api.plugin.IDataPlugin;
 
 /**
  * @deprecated
- *
- * Wird nicht mehr verwendet.
- *
+ * 
+ *             Wird nicht mehr verwendet.
+ * 
  */
-//@Named("queryDataPlugin")
+// @Named("queryDataPlugin")
 public class QueryDataPlugin implements IDataPlugin {
 
-    private static final Logger LOG = LoggerFactory
-	    .getLogger(QueryDataPlugin.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(QueryDataPlugin.class);
 
-    @Inject
-    @Named("queryPluginController")
-    private IQueryPluginController queryController;
+	@Inject
+	@Named("queryPluginController")
+	private IQueryPluginController queryController;
 
-    @Override
-    public IInputDataContainer getData() {
-	LOG.info("Start des Versands");
-	LOG.debug("Erstelle Query");
-	return queryController.getData();
-    }
+	@Override
+	public IInputDataContainer getData() {
+		LOG.info("Start des Versands");
+		LOG.debug("Erstelle Query");
+		return queryController.getData();
+	}
 
-    @Override
-    public boolean hasMoreData() {
-	return queryController.hasMoreData();
-    }
+	@Override
+	public boolean hasMoreData() {
+		return queryController.hasMoreData();
+	}
 
-    @Override
-    public boolean isEmpty() {
-	return queryController.isEmpty();
-    }
+	@Override
+	public boolean isEmpty() {
+		return queryController.isEmpty();
+	}
 }
