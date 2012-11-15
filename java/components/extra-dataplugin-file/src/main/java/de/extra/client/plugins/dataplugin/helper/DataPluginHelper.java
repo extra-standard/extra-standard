@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Named;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -47,11 +46,12 @@ import de.extrastandard.api.model.content.IInputDataPluginDescription;
 /**
  * @deprecated
  * 
- * Wird als SpringBean aktuell nicht verwendet
+ *             Wird als SpringBean aktuell nicht verwendet
  */
 public class DataPluginHelper {
 
-	private static final Logger LOG = LoggerFactory.getLogger(DataPluginHelper.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(DataPluginHelper.class);
 
 	@Value("${plugins.dataplugin.fileDataPlugin.inputVerzeichnis}")
 	private File inputDirectory;
@@ -86,7 +86,8 @@ public class DataPluginHelper {
 				} else {
 					LOG.debug("Auftragssatz gefunden");
 				}
-				LOG.debug("Datei " + files[i].getAbsolutePath() + " (" + files[i].length()
+				LOG.debug("Datei " + files[i].getAbsolutePath() + " ("
+						+ files[i].length()
 						+ "Bytes) zur Arbeitsliste hinzugef�gt.");
 			}
 		}
@@ -147,7 +148,8 @@ public class DataPluginHelper {
 		JAXBElement<?> element = null;
 		try {
 			// Initialisieren des JaxB-Contextes
-			jc = JAXBContext.newInstance("de.extra.client.plugins.dataPlugin.auftragssatz");
+			jc = JAXBContext
+					.newInstance("de.extra.client.plugins.dataPlugin.auftragssatz");
 
 			// Aufruf des Unmarshallers
 			final Unmarshaller u = jc.createUnmarshaller();
@@ -171,7 +173,8 @@ public class DataPluginHelper {
 	 *            Auftragssatz
 	 * @return VersanddatenBean
 	 */
-	public List<IInputDataPluginDescription> extractPluginListe(final AuftragssatzType auftragssatz) {
+	public List<IInputDataPluginDescription> extractPluginListe(
+			final AuftragssatzType auftragssatz) {
 		CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
 		EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();
 		DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
@@ -179,7 +182,8 @@ public class DataPluginHelper {
 		final List<IInputDataPluginDescription> pluginListe = new ArrayList<IInputDataPluginDescription>();
 		if (auftragssatz.getCompressionInfo() != null) {
 
-			compressionPlugin = fuelleCompression(auftragssatz.getCompressionInfo());
+			compressionPlugin = fuelleCompression(auftragssatz
+					.getCompressionInfo());
 			pluginListe.add(compressionPlugin);
 		} else {
 			if (LOG.isDebugEnabled()) {
@@ -188,7 +192,8 @@ public class DataPluginHelper {
 		}
 
 		if (auftragssatz.getEncryptionInfo() != null) {
-			encryptionPlugin = fuelleEncryption(auftragssatz.getEncryptionInfo());
+			encryptionPlugin = fuelleEncryption(auftragssatz
+					.getEncryptionInfo());
 			pluginListe.add(encryptionPlugin);
 		} else {
 			if (LOG.isDebugEnabled()) {
@@ -196,7 +201,8 @@ public class DataPluginHelper {
 			}
 		}
 		if (auftragssatz.getDataSourceInfo() != null) {
-			dataSourcePlugin = fuelleDataSource(auftragssatz.getDataSourceInfo());
+			dataSourcePlugin = fuelleDataSource(auftragssatz
+					.getDataSourceInfo());
 			pluginListe.add(dataSourcePlugin);
 		} else {
 			if (LOG.isDebugEnabled()) {
@@ -212,7 +218,8 @@ public class DataPluginHelper {
 	 * @param compressionInfo
 	 * @return CompressionPluginBean
 	 */
-	private static CompressionPluginDescription fuelleCompression(final CompressionInfoType compressionInfo) {
+	private static CompressionPluginDescription fuelleCompression(
+			final CompressionInfoType compressionInfo) {
 		final CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
 
 		compressionPlugin.setOrder(compressionInfo.getOrder().intValue());
@@ -222,8 +229,10 @@ public class DataPluginHelper {
 		compressionPlugin.setCompSpecUrl(compressionInfo.getSpecUrl());
 		compressionPlugin.setCompSpecName(compressionInfo.getSpecName());
 		compressionPlugin.setCompSpecVers(compressionInfo.getSpecVers());
-		compressionPlugin.setCompInput(compressionInfo.getInputSize().intValue());
-		compressionPlugin.setCompOutput(compressionInfo.getOutputSize().intValue());
+		compressionPlugin.setCompInput(compressionInfo.getInputSize()
+				.intValue());
+		compressionPlugin.setCompOutput(compressionInfo.getOutputSize()
+				.intValue());
 
 		return compressionPlugin;
 	}
@@ -234,7 +243,8 @@ public class DataPluginHelper {
 	 * @param encryptionInfo
 	 * @return EncryptionPluginBean
 	 */
-	private static EncryptionPluginDescription fuelleEncryption(final EncryptionInfoType encryptionInfo) {
+	private static EncryptionPluginDescription fuelleEncryption(
+			final EncryptionInfoType encryptionInfo) {
 		final EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();
 
 		encryptionPlugin.setOrder(encryptionInfo.getOrder().intValue());
@@ -245,7 +255,8 @@ public class DataPluginHelper {
 		encryptionPlugin.setEncSpecName(encryptionInfo.getSpecName());
 		encryptionPlugin.setEncSpecVers(encryptionInfo.getSpecVers());
 		encryptionPlugin.setEncInput(encryptionInfo.getInputSize().intValue());
-		encryptionPlugin.setEncOutput(encryptionInfo.getOutputSize().intValue());
+		encryptionPlugin
+				.setEncOutput(encryptionInfo.getOutputSize().intValue());
 
 		return encryptionPlugin;
 	}
@@ -256,12 +267,14 @@ public class DataPluginHelper {
 	 * @param dataSource
 	 * @return
 	 */
-	private static DataSourcePluginDescription fuelleDataSource(final DataSourceInfoType dataSource) {
+	private static DataSourcePluginDescription fuelleDataSource(
+			final DataSourceInfoType dataSource) {
 		final DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
 
 		dataSourcePlugin.setDsType(dataSource.getDsType());
 		dataSourcePlugin.setDsName(dataSource.getDsName());
-		dataSourcePlugin.setDsCreated(dataSource.getDsCreateDate().toGregorianCalendar().getTime());
+		dataSourcePlugin.setDsCreated(dataSource.getDsCreateDate()
+				.toGregorianCalendar().getTime());
 		dataSourcePlugin.setDsEncoding(dataSource.getDsEncoding());
 
 		return dataSourcePlugin;

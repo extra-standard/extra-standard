@@ -44,70 +44,70 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 @RunWith(MockitoJUnitRunner.class)
 public class FileDataPluginTest {
 
-    // private final static Logger logger =
-    // LoggerFactory.getLogger(FileDataPluginTest.class);
+	// private final static Logger logger =
+	// LoggerFactory.getLogger(FileDataPluginTest.class);
 
-    @InjectMocks
-    FileDataPlugin fileDataPlugin;
+	@InjectMocks
+	FileDataPlugin fileDataPlugin;
 
-    private final Integer inputDataLimit = 2;
+	private final Integer inputDataLimit = 2;
 
-    private static final String TEST_PATH = "testInputData";
+	private static final String TEST_PATH = "testInputData";
 
-    private File inputDirectory;
+	private File inputDirectory;
 
-    /**
-     * @throws java.lang.Exception
-     */
-    @Before
-    public void setUp() throws Exception {
-	fileDataPlugin.setInputDataLimit(inputDataLimit);
-	inputDirectory = new ClassPathResource(TEST_PATH).getFile();
-	ReflectionTestUtils.setField(fileDataPlugin, "inputDirectory",
-		inputDirectory);
-    }
-
-    /**
-     * Test method for
-     * {@link de.extra.client.plugins.dataplugin.FileDataPlugin#initInputData()}
-     * .
-     */
-    @Test
-    public final void testInitData() {
-	Assert.assertFalse("InputData is empty", fileDataPlugin.isEmpty());
-    }
-
-    /**
-     * Test method for
-     * {@link de.extra.client.plugins.dataplugin.FileDataPlugin#hasMoreData()}.
-     */
-    @Test
-    public final void testHasMoreData() {
-	Assert.assertTrue("InputData hasMoreData false",
-		fileDataPlugin.hasMoreData());
-    }
-
-    /**
-     * Test method for
-     * {@link de.extra.client.plugins.dataplugin.FileDataPlugin#getData()}.
-     */
-    @Test
-    public final void testGetData() {
-	int counter = 0;
-	while (fileDataPlugin.hasMoreData()) {
-	    final IInputDataContainer iInputDataContainer = fileDataPlugin
-		    .getData();
-	    Assert.assertFalse(iInputDataContainer.isContentEmpty());
-	    Assert.assertTrue(iInputDataContainer
-		    .isImplementationOf(FileInputData.class));
-	    Assert.assertTrue("iInputDataContainer size größer als Limit",
-		    iInputDataContainer.getContentSize() <= inputDataLimit);
-	    counter = counter + iInputDataContainer.getContentSize();
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+		fileDataPlugin.setInputDataLimit(inputDataLimit);
+		inputDirectory = new ClassPathResource(TEST_PATH).getFile();
+		ReflectionTestUtils.setField(fileDataPlugin, "inputDirectory",
+				inputDirectory);
 	}
-	final Collection<File> listFiles = FileUtils.listFiles(inputDirectory,
-		TrueFileFilter.INSTANCE, null);
 
-	Assert.assertEquals("Number of messages does not match",
-		listFiles.size(), counter);
-    }
+	/**
+	 * Test method for
+	 * {@link de.extra.client.plugins.dataplugin.FileDataPlugin#initInputData()}
+	 * .
+	 */
+	@Test
+	public final void testInitData() {
+		Assert.assertFalse("InputData is empty", fileDataPlugin.isEmpty());
+	}
+
+	/**
+	 * Test method for
+	 * {@link de.extra.client.plugins.dataplugin.FileDataPlugin#hasMoreData()}.
+	 */
+	@Test
+	public final void testHasMoreData() {
+		Assert.assertTrue("InputData hasMoreData false",
+				fileDataPlugin.hasMoreData());
+	}
+
+	/**
+	 * Test method for
+	 * {@link de.extra.client.plugins.dataplugin.FileDataPlugin#getData()}.
+	 */
+	@Test
+	public final void testGetData() {
+		int counter = 0;
+		while (fileDataPlugin.hasMoreData()) {
+			final IInputDataContainer iInputDataContainer = fileDataPlugin
+					.getData();
+			Assert.assertFalse(iInputDataContainer.isContentEmpty());
+			Assert.assertTrue(iInputDataContainer
+					.isImplementationOf(FileInputData.class));
+			Assert.assertTrue("iInputDataContainer size größer als Limit",
+					iInputDataContainer.getContentSize() <= inputDataLimit);
+			counter = counter + iInputDataContainer.getContentSize();
+		}
+		final Collection<File> listFiles = FileUtils.listFiles(inputDirectory,
+				TrueFileFilter.INSTANCE, null);
+
+		Assert.assertEquals("Number of messages does not match",
+				listFiles.size(), counter);
+	}
 }
