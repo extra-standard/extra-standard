@@ -253,8 +253,8 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 		Assert.notNull(query, "Query is null");
 		final List<DataRequestArgument> argument = query.getArgument();
 		Assert.notNull(argument, "DataRequestArgument List is null");
-		Assert.isTrue(argument.size() == 1,
-				"DataRequestArgument List beinhaltet mehr als ein Element");
+		// Assert.isTrue(argument.size() == 1,
+		// "DataRequestArgument List beinhaltet mehr als ein Element");
 		final DataRequestArgument dataRequestArgument = argument.get(0);
 		Assert.notNull(dataRequestArgument, "DataRequestArgument is null");
 		final List<JAXBElement<?>> dataRequestArgumentContent = dataRequestArgument
