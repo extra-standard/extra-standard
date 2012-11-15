@@ -23,9 +23,6 @@ import java.util.List;
 
 import javax.inject.Named;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.drv.dsrv.schema.ElementType;
 import de.extra.client.core.config.impl.ExtraProfileConfiguration;
 import de.extra.client.plugins.configplugin.ConfigConstants;
@@ -34,8 +31,6 @@ import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 @Named("profilHelper")
 public class ProfilHelper {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ProfilHelper.class);
-
 	/**
 	 * Funktion zum befüllen der ConfigFileBean.
 	 * 
@@ -43,34 +38,40 @@ public class ProfilHelper {
 	 *            JaxB-Element der Profildatei
 	 * @return ConfigFileBean
 	 */
-	public IExtraProfileConfiguration configFileBeanLoader(final List<ElementType> profilListe) {
+	public IExtraProfileConfiguration configFileBeanLoader(
+			final List<ElementType> profilListe) {
 		final ExtraProfileConfiguration configFileBean = new ExtraProfileConfiguration();
 
-		for (final Iterator<ElementType> iter = profilListe.iterator(); iter.hasNext();) {
+		for (final Iterator<ElementType> iter = profilListe.iterator(); iter
+				.hasNext();) {
 			final ElementType element = iter.next();
 
 			// Ermitteln der Content-Art
 			if (element.getElternelement() == null) {
 				configFileBean.setRootElement(element.getName());
 			} else {
-				configFileBean.addElementsHierarchyMap(element.getElternelement(), element.getName());
+				configFileBean.addElementsHierarchyMap(
+						element.getElternelement(), element.getName());
 			}
 
 			if (element.getElternelement() != null && element.getName() != null) {
 
-				if (element.getElternelement().equalsIgnoreCase(ConfigConstants.PROFIL_DATA)) {
+				if (element.getElternelement().equalsIgnoreCase(
+						ConfigConstants.PROFIL_DATA)) {
 					// Setzen des Content-Types
 					configFileBean.setContentType(element.getName());
 				}
 
 				// Ueberpruefen ob Package-Element angegeben wurde
-				if (element.getName().equalsIgnoreCase(ConfigConstants.PROFIL_PACKAGE)) {
+				if (element.getName().equalsIgnoreCase(
+						ConfigConstants.PROFIL_PACKAGE)) {
 					// Setzen ob PackageLayer benötigt
 					configFileBean.setPackageLayer(true);
 				}
 
 				// Ueberpruefen ob Message-Element angegeben wurde
-				if (element.getName().equalsIgnoreCase(ConfigConstants.PROFIL_MESSAGE)) {
+				if (element.getName().equalsIgnoreCase(
+						ConfigConstants.PROFIL_MESSAGE)) {
 					// Setzen ob MessageLayer benötigt
 					configFileBean.setMessageLayer(true);
 				}
