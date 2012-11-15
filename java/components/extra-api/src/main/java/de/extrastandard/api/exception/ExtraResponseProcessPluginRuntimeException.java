@@ -20,7 +20,7 @@ package de.extrastandard.api.exception;
 
 /**
  * Process Response Plugin Exception
- *
+ * 
  * @author Leonid Potap
  * @version $Id$
  */
@@ -37,11 +37,13 @@ public class ExtraResponseProcessPluginRuntimeException extends
 		super(code);
 	}
 
-	public ExtraResponseProcessPluginRuntimeException(final ExceptionCode code, final String message) {
+	public ExtraResponseProcessPluginRuntimeException(final ExceptionCode code,
+			final String message) {
 		super(code, message);
 	}
 
-	public ExtraResponseProcessPluginRuntimeException(final ExceptionCode code, final Throwable cause) {
+	public ExtraResponseProcessPluginRuntimeException(final ExceptionCode code,
+			final Throwable cause) {
 		super(code, cause);
 	}
 
@@ -49,7 +51,8 @@ public class ExtraResponseProcessPluginRuntimeException extends
 		super(cause);
 	}
 
-	public ExtraResponseProcessPluginRuntimeException(final ExceptionCode code, final String message, final Throwable cause) {
+	public ExtraResponseProcessPluginRuntimeException(final ExceptionCode code,
+			final String message, final Throwable cause) {
 		super(code, message, cause);
 	}
 

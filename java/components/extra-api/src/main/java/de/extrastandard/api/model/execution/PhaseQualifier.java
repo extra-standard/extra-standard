@@ -48,7 +48,8 @@ public enum PhaseQualifier {
 				return phaseQualifier;
 			}
 		}
-		throw new IllegalArgumentException("PhaseQualifier not found for Name:" + name);
+		throw new IllegalArgumentException("PhaseQualifier not found for Name:"
+				+ name);
 	}
 
 	/**

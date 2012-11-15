@@ -20,7 +20,7 @@ package de.extrastandard.api.model.execution;
 
 /**
  * Status.
- *
+ * 
  * @author Thorsten Vogel
  * @version $Id$
  */
@@ -28,7 +28,7 @@ public interface IStatus extends PersistentEntity {
 
 	/**
 	 * Name dieses Status.
-	 *
+	 * 
 	 * @return Name
 	 */
 	String getName();

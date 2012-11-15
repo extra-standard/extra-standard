@@ -20,7 +20,7 @@ package de.extrastandard.api.exception;
 
 /**
  * Config Exception
- *
+ * 
  * @author Leonid Potap
  * @version $Id$
  */
@@ -36,11 +36,13 @@ public class ExtraConfigRuntimeException extends ExtraRuntimeException {
 		super(code);
 	}
 
-	public ExtraConfigRuntimeException(final ExceptionCode code, final String message) {
+	public ExtraConfigRuntimeException(final ExceptionCode code,
+			final String message) {
 		super(code, message);
 	}
 
-	public ExtraConfigRuntimeException(final ExceptionCode code, final Throwable cause) {
+	public ExtraConfigRuntimeException(final ExceptionCode code,
+			final Throwable cause) {
 		super(code, cause);
 	}
 
@@ -48,7 +50,8 @@ public class ExtraConfigRuntimeException extends ExtraRuntimeException {
 		super(cause);
 	}
 
-	public ExtraConfigRuntimeException(final ExceptionCode code, final String message, final Throwable cause) {
+	public ExtraConfigRuntimeException(final ExceptionCode code,
+			final String message, final Throwable cause) {
 		super(code, message, cause);
 	}
 

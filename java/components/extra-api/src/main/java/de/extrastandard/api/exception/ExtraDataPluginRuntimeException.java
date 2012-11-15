@@ -20,7 +20,7 @@ package de.extrastandard.api.exception;
 
 /**
  * Data Plugin Exception
- *
+ * 
  * @author Leonid Potap
  * @version $Id$
  */
@@ -36,11 +36,13 @@ public class ExtraDataPluginRuntimeException extends ExtraRuntimeException {
 		super(code);
 	}
 
-	public ExtraDataPluginRuntimeException(final ExceptionCode code, final String message) {
+	public ExtraDataPluginRuntimeException(final ExceptionCode code,
+			final String message) {
 		super(code, message);
 	}
 
-	public ExtraDataPluginRuntimeException(final ExceptionCode code, final Throwable cause) {
+	public ExtraDataPluginRuntimeException(final ExceptionCode code,
+			final Throwable cause) {
 		super(code, cause);
 	}
 
@@ -48,7 +50,8 @@ public class ExtraDataPluginRuntimeException extends ExtraRuntimeException {
 		super(cause);
 	}
 
-	public ExtraDataPluginRuntimeException(final ExceptionCode code, final String message, final Throwable cause) {
+	public ExtraDataPluginRuntimeException(final ExceptionCode code,
+			final String message, final Throwable cause) {
 		super(code, message, cause);
 	}
 

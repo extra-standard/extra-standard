@@ -20,7 +20,8 @@ package de.extrastandard.api.util;
 
 /**
  * @author Leonid Potap
- * @version $Id$
+ * @version $Id: IExtraReturnCodeAnalyser.java 1074 2012-11-14 14:29:14Z
+ *          werner.rentenservice@gmail.com $
  */
 public interface IExtraReturnCodeAnalyser {
 
