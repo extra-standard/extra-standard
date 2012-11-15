@@ -157,8 +157,7 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 							.isReturnCodeSuccessful(returnCode);
 					final ISingleResponseData singleResponseData = new SingleResponseData(
 							requestDetails.getRequestID().getValue(),
-							returnCode,
-							reportData.getReturnText(), responseId,
+							returnCode, reportData.getReturnText(), responseId,
 							returnCodeSuccessful);
 					responseData.addSingleResponse(singleResponseData);
 
