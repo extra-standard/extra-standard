@@ -24,13 +24,13 @@ import org.junit.Test;
 import de.extra.client.starter.ExtraClient;
 import de.extra.client.starter.ExtraClientTestBasic;
 
-public class Proc1Phase1IT {
+public class Phase2IT {
 
 	private final ExtraClientTestBasic extraClientTestBasic = new ExtraClientTestBasic();
 
 	private ExtraClient extraClient;
 
-	private static final String TEST_CONFIG = "/conf/proc1/phase1";
+	private static final String TEST_CONFIG = "/conf/phase2";
 
 	private static final String LOG_DIR = "/logs";
 
