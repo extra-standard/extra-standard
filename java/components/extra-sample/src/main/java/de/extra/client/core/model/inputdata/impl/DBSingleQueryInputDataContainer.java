@@ -1,4 +1,3 @@
-
 package de.extra.client.core.model.inputdata.impl;
 
 import java.util.ArrayList;
@@ -9,8 +8,8 @@ import de.extrastandard.api.model.content.IDbSingleQueryInputDataContainer;
 import de.extrastandard.api.model.content.ISingleInputData;
 import de.extrastandard.api.model.content.QueryArgumentType;
 
-public class DBSingleQueryInputDataContainer extends InputDataContainer implements
-		IDbSingleQueryInputDataContainer {
+public class DBSingleQueryInputDataContainer extends InputDataContainer
+		implements IDbSingleQueryInputDataContainer {
 
 	private final List<IDbSingleQueryInputData> iDbSingleQueryInputDataList = new ArrayList<IDbSingleQueryInputData>();
 

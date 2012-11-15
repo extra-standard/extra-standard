@@ -99,7 +99,8 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 	 * @param elementsHierarchyMap
 	 *            the elementsHierarchyMap to set
 	 */
-	public void addElementsHierarchyMap(final String elternElement, final String elementName) {
+	public void addElementsHierarchyMap(final String elternElement,
+			final String elementName) {
 		List<String> childs = elementsHierarchyMap.get(elternElement);
 		if (childs == null) {
 			childs = new LinkedList<String>();
@@ -119,7 +120,8 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 	@Override
 	public List<String> getChildElements(final String parentElement) {
 		final String preparedParentElement = removePrefix(parentElement);
-		List<String> childSlements = elementsHierarchyMap.get(preparedParentElement);
+		List<String> childSlements = elementsHierarchyMap
+				.get(preparedParentElement);
 		if (childSlements == null) {
 			childSlements = new ArrayList<String>();
 		}
@@ -134,12 +136,14 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 	 * .lang.String, java.lang.String)
 	 */
 	@Override
-	public String getFieldName(final String parentElement, final String childElement) {
+	public String getFieldName(final String parentElement,
+			final String childElement) {
 		// Die Implementierung geht davon aus, dass Feldname des Elements dem
 		// childElementName ohne Prefix entspricht.
 		// TODO Den Profiler anschauen.
 		final String childElementOhnePrefix = removePrefix(childElement);
-		String childElementFieldName = StringUtils.uncapitalize(childElementOhnePrefix);
+		String childElementFieldName = StringUtils
+				.uncapitalize(childElementOhnePrefix);
 		// Noch ein Workaround Plugin -> PlugIn konvertieren
 		childElementFieldName = convertPluginName(childElementFieldName);
 		return childElementFieldName;
@@ -165,7 +169,8 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 	 * @return
 	 */
 	private String convertPluginName(final String fieldName) {
-		final String plugInConverted = StringUtils.replace(fieldName, "Plugin", "PlugIn");
+		final String plugInConverted = StringUtils.replace(fieldName, "Plugin",
+				"PlugIn");
 		return plugInConverted;
 	}
 
@@ -181,7 +186,8 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 		builder.append("ConfigFileBean [parentElement=");
 		builder.append(rootElement);
 		builder.append(", elementsHierarchyMap=");
-		builder.append(elementsHierarchyMap != null ? toString(elementsHierarchyMap.entrySet(), maxLen) : null);
+		builder.append(elementsHierarchyMap != null ? toString(
+				elementsHierarchyMap.entrySet(), maxLen) : null);
 		builder.append(", packageLayer=");
 		builder.append(packageLayer);
 		builder.append(", messageLayer=");
@@ -196,7 +202,8 @@ public class ExtraProfileConfiguration implements IExtraProfileConfiguration {
 		final StringBuilder builder = new StringBuilder();
 		builder.append("[");
 		int i = 0;
-		for (final Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
+		for (final Iterator<?> iterator = collection.iterator(); iterator
+				.hasNext() && i < maxLen; i++) {
 			if (i > 0)
 				builder.append(", ");
 			builder.append(iterator.next());

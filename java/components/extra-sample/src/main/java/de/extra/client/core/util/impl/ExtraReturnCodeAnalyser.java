@@ -49,7 +49,8 @@ public class ExtraReturnCodeAnalyser implements IExtraReturnCodeAnalyser {
 	 * @param positivReturnCodes
 	 *            the positivReturnCodes to set
 	 */
-	public void setPositiveReturnCodeList(final List<String> positiveReturnCodeList) {
+	public void setPositiveReturnCodeList(
+			final List<String> positiveReturnCodeList) {
 		this.positiveReturnCodeList = positiveReturnCodeList;
 	}
 

@@ -50,12 +50,14 @@ public abstract class InputDataContainer implements IInputDataContainer {
 	@Override
 	public <X> X cast(final Class<X> iface) {
 		if (iface == null) {
-			throw new IllegalArgumentException("Parameter 'cls' muss angegeben werden");
+			throw new IllegalArgumentException(
+					"Parameter 'cls' muss angegeben werden");
 		}
 		if (iface.isAssignableFrom(this.getClass())) {
 			return iface.cast(this);
 		}
-		throw new ClassCastException("Klasse " + this.getClass() + " kann nicht nach " + iface + " gewandelt werden");
+		throw new ClassCastException("Klasse " + this.getClass()
+				+ " kann nicht nach " + iface + " gewandelt werden");
 	}
 
 	@Override

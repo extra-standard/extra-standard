@@ -43,8 +43,8 @@ public class SingleResponseData implements ISingleResponseData {
 	 * @param returnText
 	 * @param responseId
 	 */
-	public SingleResponseData(final String requestId, final String returnCode, final String returnText,
- final String responseId,
+	public SingleResponseData(final String requestId, final String returnCode,
+			final String returnText, final String responseId,
 			final Boolean successful) {
 		this.requestId = requestId;
 		this.returnCode = returnCode;

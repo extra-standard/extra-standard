@@ -42,12 +42,14 @@ public class TransportInfoBuilder {
 	 * @param procedure
 	 * @param application
 	 */
-	public ITransportInfo createTransportInfo(final TransportHeader requestHeader) {
+	public ITransportInfo createTransportInfo(
+			final TransportHeader requestHeader) {
 		Assert.notNull(requestHeader, "TransportHeader is null");
 
 		final TransportInfo transportInfo = new TransportInfo();
 
-		final RequestDetailsType requestDetails = requestHeader.getRequestDetails();
+		final RequestDetailsType requestDetails = requestHeader
+				.getRequestDetails();
 		Assert.notNull(requestDetails, "RequestDetails is null");
 
 		final ClassifiableIDType requestID = requestDetails.getRequestID();
@@ -80,7 +82,8 @@ public class TransportInfoBuilder {
 
 		final TransportInfo transportInfo = new TransportInfo();
 
-		final RequestDetailsType requestDetails = requestHeader.getRequestDetails();
+		final RequestDetailsType requestDetails = requestHeader
+				.getRequestDetails();
 		Assert.notNull(requestDetails, "RequestDetails is null");
 
 		final ClassifiableIDType requestID = requestDetails.getRequestID();

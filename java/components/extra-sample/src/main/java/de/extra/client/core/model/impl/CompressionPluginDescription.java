@@ -20,7 +20,8 @@ package de.extra.client.core.model.impl;
 
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 
-public class CompressionPluginDescription implements IInputDataPluginDescription {
+public class CompressionPluginDescription implements
+		IInputDataPluginDescription {
 
 	/**
 	 * CompressionAlgorithmId

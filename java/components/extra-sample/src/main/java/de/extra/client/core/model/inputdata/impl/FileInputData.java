@@ -36,88 +36,88 @@ import de.extrastandard.api.model.content.ISingleInputData;
  */
 public class FileInputData extends InputDataContainer implements IFileInputData {
 
-    public FileInputData() {
-    }
-
-    private final List<ISingleContentInputData> inputDataList = new ArrayList<ISingleContentInputData>();
-
-    public FileInputData(final Collection<File> inputFiles) {
-	for (final File inputFile : inputFiles) {
-	    addSingleInputData(inputFile);
+	public FileInputData() {
 	}
-    }
 
-    public FileInputData(final List<String> inputContents) {
-	for (final String inputContent : inputContents) {
-	    addSingleInputData(inputContent);
+	private final List<ISingleContentInputData> inputDataList = new ArrayList<ISingleContentInputData>();
+
+	public FileInputData(final Collection<File> inputFiles) {
+		for (final File inputFile : inputFiles) {
+			addSingleInputData(inputFile);
+		}
 	}
-    }
 
-    public void addSingleInputData(final ISingleContentInputData singleInputData) {
-	inputDataList.add(singleInputData);
-    }
-
-    /**
-     * This method is used to test purposes, the input data setted as a string
-     * 
-     * @param inputContent
-     * @return
-     */
-    private boolean addSingleInputData(final String inputContent) {
-	final SingleStringInputData singleFileInputData = new SingleStringInputData(
-		inputContent);
-	return inputDataList.add(singleFileInputData);
-    }
-
-    @Override
-    public List<ISingleContentInputData> getInputData() {
-	return Collections.unmodifiableList(inputDataList);
-    }
-
-    /**
-     * Adds a new input file to the input data
-     * 
-     * @param inputFile
-     * @return
-     */
-    public boolean addSingleInputData(final File inputFile) {
-	final SingleFileInputData singleFileInputData = new SingleFileInputData(
-		inputFile);
-	return inputDataList.add(singleFileInputData);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-	final StringBuilder builder = new StringBuilder();
-	builder.append("FileInputData [");
-	if (inputDataList != null) {
-	    builder.append("inputDataList=");
-	    builder.append(inputDataList);
+	public FileInputData(final List<String> inputContents) {
+		for (final String inputContent : inputContents) {
+			addSingleInputData(inputContent);
+		}
 	}
-	builder.append("]");
-	return builder.toString();
-    }
 
-    @Override
-    public boolean isContentEmpty() {
-	return this.inputDataList.isEmpty();
-    }
+	public void addSingleInputData(final ISingleContentInputData singleInputData) {
+		inputDataList.add(singleInputData);
+	}
 
-    @Override
-    public int getContentSize() {
-	return this.inputDataList.size();
-    }
+	/**
+	 * This method is used to test purposes, the input data setted as a string
+	 * 
+	 * @param inputContent
+	 * @return
+	 */
+	private boolean addSingleInputData(final String inputContent) {
+		final SingleStringInputData singleFileInputData = new SingleStringInputData(
+				inputContent);
+		return inputDataList.add(singleFileInputData);
+	}
 
-    @Override
-    public List<ISingleInputData> getContent() {
-	final List<ISingleInputData> content = new ArrayList<ISingleInputData>(
-		this.inputDataList);
-	return content;
-    }
+	@Override
+	public List<ISingleContentInputData> getInputData() {
+		return Collections.unmodifiableList(inputDataList);
+	}
+
+	/**
+	 * Adds a new input file to the input data
+	 * 
+	 * @param inputFile
+	 * @return
+	 */
+	public boolean addSingleInputData(final File inputFile) {
+		final SingleFileInputData singleFileInputData = new SingleFileInputData(
+				inputFile);
+		return inputDataList.add(singleFileInputData);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+		builder.append("FileInputData [");
+		if (inputDataList != null) {
+			builder.append("inputDataList=");
+			builder.append(inputDataList);
+		}
+		builder.append("]");
+		return builder.toString();
+	}
+
+	@Override
+	public boolean isContentEmpty() {
+		return this.inputDataList.isEmpty();
+	}
+
+	@Override
+	public int getContentSize() {
+		return this.inputDataList.size();
+	}
+
+	@Override
+	public List<ISingleInputData> getContent() {
+		final List<ISingleInputData> content = new ArrayList<ISingleInputData>(
+				this.inputDataList);
+		return content;
+	}
 
 }
