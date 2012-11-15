@@ -46,7 +46,7 @@ public class ResponseData implements IResponseData {
 	@Override
 	public Collection<ISingleResponseData> getResponses() {
 		Collection<ISingleResponseData> allResponsesList = new ArrayList<ISingleResponseData>();
-		
+
 		for (Collection<ISingleResponseData> reponseDatalist : responseDatenMap
 				.values()) {
 			allResponsesList.addAll(reponseDatalist);

@@ -3,8 +3,7 @@ package de.extra.client.core.model.inputdata.impl;
 import de.extrastandard.api.model.content.IDbSingleQueryInputData;
 import de.extrastandard.api.model.content.QueryArgumentType;
 
-public class DBSingleQueryInputData implements
-		IDbSingleQueryInputData {
+public class DBSingleQueryInputData implements IDbSingleQueryInputData {
 
 	private static final String INPUT_DATA_TYPE = "DB_SINGLE_QUERY_INPUTDATA";
 

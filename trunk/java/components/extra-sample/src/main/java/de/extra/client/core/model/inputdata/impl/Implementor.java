@@ -18,13 +18,15 @@ public class Implementor implements IImplementor {
 	@Override
 	public <X> X cast(final Class<X> clazz) {
 		if (clazz == null) {
-			throw new IllegalArgumentException("Parameter 'cls' muss angegeben werden");
+			throw new IllegalArgumentException(
+					"Parameter 'cls' muss angegeben werden");
 		}
 
 		if (clazz.isAssignableFrom(this.getClass())) {
 			return clazz.cast(this);
 		}
-		throw new ClassCastException("Klasse " + this.getClass() + " kann nicht nach " + clazz + " gewandelt werden");
+		throw new ClassCastException("Klasse " + this.getClass()
+				+ " kann nicht nach " + clazz + " gewandelt werden");
 	}
 
 	@Override

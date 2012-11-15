@@ -22,7 +22,8 @@ public class SingleResponseDataForMultipleRequest implements IResponseData {
 	/**
 	 * @param singleResponseData
 	 */
-	public SingleResponseDataForMultipleRequest(final ISingleResponseData singleResponseData) {
+	public SingleResponseDataForMultipleRequest(
+			final ISingleResponseData singleResponseData) {
 		super();
 		this.singleResponseData = singleResponseData;
 	}
@@ -60,7 +61,8 @@ public class SingleResponseDataForMultipleRequest implements IResponseData {
 	 */
 	@Override
 	public void addSingleResponse(final ISingleResponseData singleResponseData) {
-		throw new ExtraConfigRuntimeException(ExceptionCode.EXTRA_ILLEGAL_ACCESS_EXCEPTION,
+		throw new ExtraConfigRuntimeException(
+				ExceptionCode.EXTRA_ILLEGAL_ACCESS_EXCEPTION,
 				"SingleResponseDataForMultipleRequest.addSingleResponse method is not supported");
 	}
 
