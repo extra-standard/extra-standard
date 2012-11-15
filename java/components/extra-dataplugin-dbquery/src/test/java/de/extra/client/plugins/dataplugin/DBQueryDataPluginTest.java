@@ -75,21 +75,29 @@ public class DBQueryDataPluginTest {
 		when(inputData.getResponseId()).thenReturn(RESPONSE_23);
 		when(inputData.getId()).thenReturn(23L);
 		testDatenList.add(inputData);
-		when(executionPersistence.findInputDataForExecution(anyString(), eq(PhaseQualifier.PHASE2))).thenReturn(
-				testDatenList);
+		when(
+				executionPersistence.findInputDataForExecution(anyString(),
+						eq(PhaseQualifier.PHASE2))).thenReturn(testDatenList);
 	}
 
 	@Test
 	public final void testGetData() {
 		while (dbQueryDataPlugin.hasMoreData()) {
-			final IInputDataContainer inputDataContainer = dbQueryDataPlugin.getData();
-			Assert.assertTrue(inputDataContainer.isImplementationOf(DBMultiQueryInputData.class));
-			final DBMultiQueryInputData dbQueryInputData = inputDataContainer.cast(DBMultiQueryInputData.class);
-			final List<ISingleQueryInputData> singleQueryInputDatas = dbQueryInputData.getInputData();
+			final IInputDataContainer inputDataContainer = dbQueryDataPlugin
+					.getData();
+			Assert.assertTrue(inputDataContainer
+					.isImplementationOf(DBMultiQueryInputData.class));
+			final DBMultiQueryInputData dbQueryInputData = inputDataContainer
+					.cast(DBMultiQueryInputData.class);
+			final List<ISingleQueryInputData> singleQueryInputDatas = dbQueryInputData
+					.getInputData();
 			Assert.assertEquals(1, singleQueryInputDatas.size());
-			final ISingleQueryInputData singleQueryInputData = singleQueryInputDatas.get(0);
-			Assert.assertEquals(RESPONSE_23, singleQueryInputData.getSourceResponceId());
-			Assert.assertEquals(REQUEST_23, singleQueryInputData.getSourceRequestId());
+			final ISingleQueryInputData singleQueryInputData = singleQueryInputDatas
+					.get(0);
+			Assert.assertEquals(RESPONSE_23,
+					singleQueryInputData.getSourceResponceId());
+			Assert.assertEquals(REQUEST_23,
+					singleQueryInputData.getSourceRequestId());
 		}
 
 	}
