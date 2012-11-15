@@ -38,7 +38,8 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
    
 http://extra-standard.googlecode.com/svn/wiki/images/jenkins-extra-cloudbees-modules.jpg
 
-= Maven Repository
+
+= Maven Repository =
 
 Sämtliche eXTra-Artefakte werden in folgenden Maven-Repositories deployed:
   
