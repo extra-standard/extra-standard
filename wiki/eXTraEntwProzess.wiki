@@ -44,4 +44,4 @@ http://extra-standard.googlecode.com/svn/wiki/images/jenkins-extra-cloudbees-mod
 Sämtliche eXTra-Artefakte werden in folgenden Maven-Repositories deployed:
   
   * [https://oss.sonatype.org Sonatype OSS Maven Repository] für Snapshots und Releases
-  * Sämtliche Release-Artefakte werden mit [http://search.maven.org/ Maven Central Repository] synchroniziert
+  * Sämtliche Release-Artefakte werden mit [http://search.maven.org/ Maven Central Repository] synchroniziert.
