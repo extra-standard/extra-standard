@@ -22,7 +22,8 @@ package de.extrastandard.api.model.execution;
  * Scenario.
  * 
  * @author Leonid Potap
- * @version $Id$
+ * @version $Id: IProcedureType.java 754 2012-10-15 14:06:06Z
+ *          potap.rentenservice@gmail.com $
  */
 public interface IProcedureType {
 

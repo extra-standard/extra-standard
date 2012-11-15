@@ -20,7 +20,7 @@ package de.extrastandard.api.exception;
 
 /**
  * Die Parent-Class der unchecked Exceptions in Extra.
- *
+ * 
  * @author Leonid Potap
  * @version $Id$
  */
@@ -53,7 +53,8 @@ public abstract class ExtraRuntimeException extends RuntimeException {
 		this.code = ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION;
 	}
 
-	public ExtraRuntimeException(final ExceptionCode code, final String message, final Throwable cause) {
+	public ExtraRuntimeException(final ExceptionCode code,
+			final String message, final Throwable cause) {
 		super(message, cause);
 		this.code = code;
 	}

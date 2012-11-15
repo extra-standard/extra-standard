@@ -24,7 +24,8 @@ import java.util.Collection;
  * Provides results back to a request / transmission.
  * 
  * @author Leonid Potap
- * @version $Id$
+ * @version $Id: IResponseData.java 1072 2012-11-14 07:14:08Z
+ *          werner.rentenservice@gmail.com $
  */
 public interface IResponseData {
 

@@ -36,7 +36,8 @@ public enum InputDataQualifier {
 		if (name == null) {
 			throw new IllegalArgumentException("Name is null");
 		}
-		for (final InputDataQualifier inputDataQualifier : InputDataQualifier.values()) {
+		for (final InputDataQualifier inputDataQualifier : InputDataQualifier
+				.values()) {
 			if (name.equalsIgnoreCase(inputDataQualifier.name)) {
 				return inputDataQualifier;
 			}

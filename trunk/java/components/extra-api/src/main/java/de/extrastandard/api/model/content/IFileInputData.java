@@ -23,7 +23,8 @@ import java.util.List;
 /**
  * 
  * @author DSRV
- * @version $Id$
+ * @version $Id: IFileInputData.java 841 2012-10-19 15:32:38Z
+ *          potap.rentenservice@gmail.com $
  */
 public interface IFileInputData extends IInputDataContainer {
 

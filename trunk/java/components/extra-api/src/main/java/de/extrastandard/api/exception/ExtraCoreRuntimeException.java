@@ -40,11 +40,13 @@ public class ExtraCoreRuntimeException extends ExtraRuntimeException {
 		super(code);
 	}
 
-	public ExtraCoreRuntimeException(final ExceptionCode code, final String message) {
+	public ExtraCoreRuntimeException(final ExceptionCode code,
+			final String message) {
 		super(code, message);
 	}
 
-	public ExtraCoreRuntimeException(final ExceptionCode code, final Throwable cause) {
+	public ExtraCoreRuntimeException(final ExceptionCode code,
+			final Throwable cause) {
 		super(code, cause);
 	}
 
@@ -52,7 +54,8 @@ public class ExtraCoreRuntimeException extends ExtraRuntimeException {
 		super(cause);
 	}
 
-	public ExtraCoreRuntimeException(final ExceptionCode code, final String message, final Throwable cause) {
+	public ExtraCoreRuntimeException(final ExceptionCode code,
+			final String message, final Throwable cause) {
 		super(code, message, cause);
 	}
 

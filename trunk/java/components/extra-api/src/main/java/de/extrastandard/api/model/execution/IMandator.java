@@ -20,13 +20,14 @@ package de.extrastandard.api.model.execution;
 
 /**
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: IMandator.java 487 2012-09-03 13:07:52Z thorstenvogel@gmail.com
+ *          $
  */
 public interface IMandator extends PersistentEntity {
 
 	/**
 	 * Name des Mandanten.
-	 *
+	 * 
 	 * @return Name des Mandanten.
 	 */
 	String getName();

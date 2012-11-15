@@ -23,7 +23,8 @@ import java.util.Map;
 
 /**
  * @author DSRV
- * @version $Id$
+ * @version $Id: IExtraProfileConfiguration.java 756 2012-10-15 14:14:40Z
+ *          potap.rentenservice@gmail.com $
  */
 public interface IExtraProfileConfiguration {
 

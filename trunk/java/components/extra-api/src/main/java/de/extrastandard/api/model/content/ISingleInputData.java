@@ -27,30 +27,30 @@ package de.extrastandard.api.model.content;
  */
 public interface ISingleInputData {
 
-    /**
-     * Set RequestId for InputData
-     * 
-     * @param requestId
-     */
-    void setRequestId(String requestId);
+	/**
+	 * Set RequestId for InputData
+	 * 
+	 * @param requestId
+	 */
+	void setRequestId(String requestId);
 
-    /**
-     * @return RequestId for InputData
-     */
-    String getRequestId();
+	/**
+	 * @return RequestId for InputData
+	 */
+	String getRequestId();
 
-    /**
-     * Identification of the input data. E.G. File name in the File Request Id
-     * or in the Query
-     * 
-     * @return InputIdentifier
-     */
-    String getInputIdentifier();
+	/**
+	 * Identification of the input data. E.G. File name in the File Request Id
+	 * or in the Query
+	 * 
+	 * @return InputIdentifier
+	 */
+	String getInputIdentifier();
 
-    /**
-     * Type of InputData
-     * 
-     * @return
-     */
-    String getInputDataType();
+	/**
+	 * Type of InputData
+	 * 
+	 * @return
+	 */
+	String getInputDataType();
 }
