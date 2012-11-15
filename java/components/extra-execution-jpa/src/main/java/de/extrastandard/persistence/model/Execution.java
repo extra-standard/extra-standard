@@ -228,12 +228,8 @@ public class Execution extends AbstractEntity implements IExecution {
 		this.endTime = new Date();
 		updateProgress(PersistentStatus.DONE);
 		repository.save(this);
-		// update Inputdata
-		// (08.11.12) verschiedene InputData Typen/Qualifizierungen
-		// (QUERY_UNIQUE, QUERY_CRITERIA, ...) werden unterstützt
 		for (final InputData inputData : inputDataSet) {
 			processResponseData(inputData, responseData);
-
 		}
 	}
 
