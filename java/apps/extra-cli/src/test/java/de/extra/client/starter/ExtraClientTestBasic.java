@@ -33,48 +33,48 @@ import de.extra.client.logging.LogFileHandler;
 
 public class ExtraClientTestBasic {
 
-    private static final Logger LOG = LoggerFactory
-	    .getLogger(ExtraClientTestBasic.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(ExtraClientTestBasic.class);
 
-    /**
-     * Erstellt einen ExtraKlient mit der vorgegebenen Konfiguration Die
-     * Konfigurationsverzeichniss wird in dem Klassenpfad als ClassPathResource
-     * gesucht
-     * 
-     * @param path
-     * @return
-     * @throws IOException
-     *             , wenn die Konfigurationsverzeichnis nicht vorhanden ist.
-     * 
-     */
-    public ExtraClient createExtraKlient(final String path, final String logDir)
-	    throws IOException {
-	org.springframework.util.Assert.notNull(path, "Path is null");
-	// initialisiert logging
-	final File configurationDirectory = new ClassPathResource(path)
-		.getFile();
-	final File logDirectory = new ClassPathResource(logDir).getFile();
-	new LogFileHandler(logDirectory, configurationDirectory);
-	final ExtraClient extraClient = new ExtraClient(configurationDirectory);
-	return extraClient;
-    }
-
-    /**
-     * Führt die Verarbeitung aus und wertet die Fehlermeldungen
-     * 
-     * @param extraClient
-     * @throws Exception
-     */
-    public void testExecute(final ExtraClient extraClient) throws Exception {
-	final ClientProcessResult clientProcessResult = extraClient.execute();
-	if (clientProcessResult.isSuccessful()) {
-	    assertTrue(true);
-	} else {
-	    if (clientProcessResult.hasExceptions()) {
-		LOG.error(clientProcessResult.exceptionsToString());
-	    }
-
-	    fail("Fehler bei der Verarbeitung!");
+	/**
+	 * Erstellt einen ExtraKlient mit der vorgegebenen Konfiguration Die
+	 * Konfigurationsverzeichniss wird in dem Klassenpfad als ClassPathResource
+	 * gesucht
+	 * 
+	 * @param path
+	 * @return
+	 * @throws IOException
+	 *             , wenn die Konfigurationsverzeichnis nicht vorhanden ist.
+	 * 
+	 */
+	public ExtraClient createExtraKlient(final String path, final String logDir)
+			throws IOException {
+		org.springframework.util.Assert.notNull(path, "Path is null");
+		// initialisiert logging
+		final File configurationDirectory = new ClassPathResource(path)
+				.getFile();
+		final File logDirectory = new ClassPathResource(logDir).getFile();
+		new LogFileHandler(logDirectory, configurationDirectory);
+		final ExtraClient extraClient = new ExtraClient(configurationDirectory);
+		return extraClient;
 	}
-    }
+
+	/**
+	 * Führt die Verarbeitung aus und wertet die Fehlermeldungen
+	 * 
+	 * @param extraClient
+	 * @throws Exception
+	 */
+	public void testExecute(final ExtraClient extraClient) throws Exception {
+		final ClientProcessResult clientProcessResult = extraClient.execute();
+		if (clientProcessResult.isSuccessful()) {
+			assertTrue(true);
+		} else {
+			if (clientProcessResult.hasExceptions()) {
+				LOG.error(clientProcessResult.exceptionsToString());
+			}
+
+			fail("Fehler bei der Verarbeitung!");
+		}
+	}
 }

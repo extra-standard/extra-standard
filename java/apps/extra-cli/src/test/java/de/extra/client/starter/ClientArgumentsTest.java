@@ -51,7 +51,8 @@ public class ClientArgumentsTest {
 		final Resource logDir = new ClassPathResource("log");
 		final String[] args = { "-c " + configDir.getFile().getAbsolutePath(),
 				"-l  " + logDir.getFile().getAbsolutePath() };
-		final ClientArguments arguments = new ClientArguments(args, new NotExiter());
+		final ClientArguments arguments = new ClientArguments(args,
+				new NotExiter());
 		arguments.parseArgs();
 		assertNotNull(arguments.getConfigDirectory());
 	}
@@ -62,12 +63,14 @@ public class ClientArgumentsTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testParseNonArgs() {
-		final ClientArguments arguments = new ClientArguments(null, new NotExiter());
+		final ClientArguments arguments = new ClientArguments(null,
+				new NotExiter());
 		arguments.parseArgs();
 	}
 
 	public void testHelp() throws Exception {
-		final ClientArguments arguments = new ClientArguments(new String[] { "-h" }, new NotExiter());
+		final ClientArguments arguments = new ClientArguments(
+				new String[] { "-h" }, new NotExiter());
 		arguments.parseArgs();
 		assertTrue(arguments.isShowHelp());
 	}

@@ -38,68 +38,68 @@ import de.extra.client.logging.LogFileHandler;
  */
 public class ClientStarter {
 
-    private static final Logger LOG = LoggerFactory
-	    .getLogger(ClientStarter.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(ClientStarter.class);
 
-    private static final Logger opperation_logger = LoggerFactory
-	    .getLogger("de.extra.client.operation");
+	private static final Logger opperation_logger = LoggerFactory
+			.getLogger("de.extra.client.operation");
 
-    // TODO KOnstante Definieren. Konfiguration
+	// TODO KOnstante Definieren. Konfiguration
 
-    private static final SystemExiter EXITER = new JvmSystemExiter();
+	private static final SystemExiter EXITER = new JvmSystemExiter();
 
-    /**
-     * Main
-     * 
-     * @param args
-     *            Kommandozeilenparameter
-     */
-    public static void main(final String[] args) {
-	ReturnCode returnCode = ReturnCode.SUCCESS;
+	/**
+	 * Main
+	 * 
+	 * @param args
+	 *            Kommandozeilenparameter
+	 */
+	public static void main(final String[] args) {
+		ReturnCode returnCode = ReturnCode.SUCCESS;
 
-	final ClientArguments clientArguments = new ClientArguments(args,
-		EXITER);
-	try {
-	    clientArguments.parseArgs();
-	} catch (final Exception e) {
-	    clientArguments.printHelpText(e);
-	    EXITER.exit(ReturnCode.TECHNICAL);
+		final ClientArguments clientArguments = new ClientArguments(args,
+				EXITER);
+		try {
+			clientArguments.parseArgs();
+		} catch (final Exception e) {
+			clientArguments.printHelpText(e);
+			EXITER.exit(ReturnCode.TECHNICAL);
+		}
+
+		if (clientArguments.isShowHelp()) {
+			clientArguments.printHelpText(null);
+			EXITER.exit(returnCode);
+		}
+		opperation_logger.info("Eingabeparameter: " + Arrays.toString(args));
+
+		final File configurationDirectory = clientArguments
+				.getConfigDirectory();
+
+		// initialisiert logging
+		new LogFileHandler(clientArguments.getLogDirectory(),
+				configurationDirectory);
+
+		// config dir zur konfiguration des clients nutzen
+		final ExtraClient extraClient = new ExtraClient(configurationDirectory);
+		try {
+
+			final ClientProcessResult result = extraClient.execute();
+
+			// TODO refactor
+			returnCode = !result.isSuccessful() ? ReturnCode.BUSINESS : (result
+					.hasExceptions() ? ReturnCode.TECHNICAL
+					: ReturnCode.SUCCESS);
+
+			if (returnCode.getCode() != 0) {
+				LOG.error("Fehler bei der Verarbeitung: " + returnCode);
+			} else {
+				LOG.info("Verarbeitung erfolgreich");
+			}
+
+		} catch (final Exception e) {
+			LOG.error("Fehler bei der Verarbeitung", e);
+			returnCode = ReturnCode.BUSINESS;
+		}
+		EXITER.exit(returnCode);
 	}
-
-	if (clientArguments.isShowHelp()) {
-	    clientArguments.printHelpText(null);
-	    EXITER.exit(returnCode);
-	}
-	opperation_logger.info("Eingabeparameter: " + Arrays.toString(args));
-
-	final File configurationDirectory = clientArguments
-		.getConfigDirectory();
-
-	// initialisiert logging
-	new LogFileHandler(clientArguments.getLogDirectory(),
-		configurationDirectory);
-
-	// config dir zur konfiguration des clients nutzen
-	final ExtraClient extraClient = new ExtraClient(configurationDirectory);
-	try {
-
-	    final ClientProcessResult result = extraClient.execute();
-
-	    // TODO refactor
-	    returnCode = !result.isSuccessful() ? ReturnCode.BUSINESS : (result
-		    .hasExceptions() ? ReturnCode.TECHNICAL
-		    : ReturnCode.SUCCESS);
-
-	    if (returnCode.getCode() != 0) {
-		LOG.error("Fehler bei der Verarbeitung: " + returnCode);
-	    } else {
-		LOG.info("Verarbeitung erfolgreich");
-	    }
-
-	} catch (final Exception e) {
-	    LOG.error("Fehler bei der Verarbeitung", e);
-	    returnCode = ReturnCode.BUSINESS;
-	}
-	EXITER.exit(returnCode);
-    }
 }

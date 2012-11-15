@@ -61,15 +61,12 @@ public class ExtraClient {
 	 */
 	private static final String PROPERTIES_USER_FILENAME = "extra-properties-user.properties";
 
-
 	/**
 	 * Pfad und Dateiname der Spring Konfiguration
 	 */
 	private static final String SPRING_XML_FILE_PATH = "spring-cli.xml";
 
 	private final File configurationDirectory;
-
-
 
 	/**
 	 * Erzeugt einen ExtraClient. Die Konfiguration wird aus den Dateien

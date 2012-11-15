@@ -34,7 +34,8 @@ public class ExtraClientTest {
 	@Before
 	public void setUp() throws Exception {
 
-		extraClient = extraClientTestBasic.createExtraKlient(TEST_PATH, LOG_DIR);
+		extraClient = extraClientTestBasic
+				.createExtraKlient(TEST_PATH, LOG_DIR);
 	}
 
 	@Test
