@@ -47,6 +47,8 @@ public class WsOutputPlugin implements IOutputPlugin {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(WsOutputPlugin.class);
+	private static final Logger operation_logger = LoggerFactory
+			.getLogger("de.extra.client.operation");
 
 	@Inject
 	@Named("webServiceTemplate")
@@ -60,7 +62,7 @@ public class WsOutputPlugin implements IOutputPlugin {
 		ByteArrayOutputStream temp = new ByteArrayOutputStream();
 
 		logger.debug("sending request");
-
+		operation_logger.info("Webservice Aufruf von: " + webServiceTemplate.getDefaultUri());
 		StreamSource source = new StreamSource(requestAsStream);
 		StreamResult result = new StreamResult(temp);
 		webServiceTemplate.sendSourceAndReceiveToResult(source, result);

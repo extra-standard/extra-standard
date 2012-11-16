@@ -40,6 +40,9 @@ public class ExtraMessageReturnDataExtractor {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(ExtraMessageReturnDataExtractor.class);
 
+	// TODO Systemunabhängigen Formatter
+	static final String NEW_LINE = "\r\n";
+
 	/**
 	 * Liefert ReportDaten. Vorraussetzung ist gibt genau ein FlagType in dem
 	 * FlagList

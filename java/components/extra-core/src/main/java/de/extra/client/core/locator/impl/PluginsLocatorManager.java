@@ -95,11 +95,11 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	 */
 	@Override
 	public IDataPlugin getConfiguredDataPlugin() {
-		LOG.debug(dataPlugBeanName);
+		LOG.debug("DataPlugIn  Name: " + dataPlugBeanName);
 		final IDataPlugin idataPlugin = dataPluginMap.get(dataPlugBeanName);
 		Assert.notNull(idataPlugin, "DataPlugin not found for BeanName: "
 				+ dataPlugBeanName);
-		LOG.debug("DataPlugInClass: " + idataPlugin.getClass());
+		LOG.debug("DataPlugIn Class: " + idataPlugin.getClass());
 		validator.validate(idataPlugin);
 		return idataPlugin;
 	}
@@ -112,12 +112,12 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	 */
 	@Override
 	public IOutputPlugin getConfiguredOutputPlugin() {
-		LOG.debug(outputPluginBeanName);
+		LOG.debug("OutputPlugin  Name: " + outputPluginBeanName);
 		final IOutputPlugin ioutputPlugin = outputPluginMap
 				.get(outputPluginBeanName);
 		Assert.notNull(ioutputPlugin, "OutputPlugin not found for BeanName: "
 				+ outputPluginBeanName);
-		LOG.debug("OutpuPlugInClass: " + ioutputPlugin.getClass());
+		LOG.debug("OutputPlugIn Class: " + ioutputPlugin.getClass());
 		validator.validate(ioutputPlugin);
 		return ioutputPlugin;
 	}
@@ -130,12 +130,12 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	 */
 	@Override
 	public IConfigPlugin getConfiguredConfigPlugin() {
-		LOG.debug(configPluginBeanName);
+		LOG.debug("ConfigPlugin  Name: " + configPluginBeanName);
 		final IConfigPlugin iConfigPlugin = configPluginMap
 				.get(configPluginBeanName);
 		Assert.notNull(iConfigPlugin, "ConfigPlugin not found for BeanName: "
 				+ configPluginBeanName);
-		LOG.debug("ConfiPlugInClasse: " + iConfigPlugin.getClass());
+		LOG.debug("ConfigPlugIn Class: " + iConfigPlugin.getClass());
 		validator.validate(iConfigPlugin);
 		return iConfigPlugin;
 	}
@@ -148,26 +148,26 @@ public class PluginsLocatorManager implements IPluginsLocatorManager {
 	 */
 	@Override
 	public IResponseProcessPlugin getConfiguredResponsePlugin() {
-		LOG.debug(responsePluginBeanName);
+		LOG.debug("ResponsePlugin  Name: " + responsePluginBeanName);
 		final IResponseProcessPlugin iResponsePlugin = responsePluginMap
 				.get(responsePluginBeanName);
 		Assert.notNull(iResponsePlugin,
 				"ResponsePlugin not found for BeanName: "
 						+ responsePluginBeanName);
-		LOG.debug("responsePluginClass: " + iResponsePlugin.getClass());
+		LOG.debug("ResponsePlugin Class: " + iResponsePlugin.getClass());
 		validator.validate(iResponsePlugin);
 		return iResponsePlugin;
 	}
 
 	@Override
 	public IExecutionPersistence getConfiguredExecutionPesistence() {
-		LOG.debug(executionBeanName);
+		LOG.debug("ExecutionPersistence  Name: " + executionBeanName);
 		final IExecutionPersistence iExecutionPersistence = executionPersistenceMap
 				.get(executionBeanName);
 		Assert.notNull(iExecutionPersistence,
 				"ExecutionPersistence not found for BeanName: "
 						+ executionBeanName);
-		LOG.debug("ExecutionPersistenceClass: "
+		LOG.debug("ExecutionPersistence Class: "
 				+ iExecutionPersistence.getClass());
 		validator.validate(iExecutionPersistence);
 		return iExecutionPersistence;

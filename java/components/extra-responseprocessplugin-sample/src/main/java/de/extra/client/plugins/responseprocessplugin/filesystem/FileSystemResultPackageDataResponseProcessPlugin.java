@@ -250,7 +250,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(extraResponse, streamResult);
-			logger.debug("ExtraResponse: " + writer.toString());
+			logger.debug("ExtraResponse: " + ExtraMessageReturnDataExtractor.NEW_LINE + writer.toString());
 		} catch (final XmlMappingException xmlException) {
 			logger.debug("XmlMappingException beim Lesen des Results ",
 					xmlException);

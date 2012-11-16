@@ -162,15 +162,15 @@ public class ClientProcessResult {
 			}
 		}
 		final StringBuilder resultAsString = new StringBuilder(NEW_LINE);
-		resultAsString.append("Anzahl verarbeitetn Saetze : ").append(
+		resultAsString.append("Anzahl verarbeitete Saetze (Serveranfragen): ").append(
 				processedResultsCount);
 		resultAsString.append(NEW_LINE);
-		resultAsString.append("Davon erfolgreich : ").append(
+		resultAsString.append("Anzahl erfolgreiche Serverantworten: ").append(
 				succesfulResultsCount);
 		resultAsString.append(NEW_LINE);
-		resultAsString.append("Davon fehlerhaft : ").append(failedResultsCount);
+		resultAsString.append("Anzahl fehlerhafte Serverantworten: ").append(failedResultsCount);
 		resultAsString.append(NEW_LINE);
-		resultAsString.append("Erfolgreich verarbeite Datensätze: ").append(
+		resultAsString.append("Erfolgreich verarbeitete Datensätze: ").append(
 				NEW_LINE);
 		resultAsString.append(successResultAsString);
 		if (failedResultsCount != 0) {

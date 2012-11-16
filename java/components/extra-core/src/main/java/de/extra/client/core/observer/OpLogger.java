@@ -31,6 +31,8 @@ public class OpLogger implements ITransportObserver {
 
 	/** Logger für das betriebliche Log */
 	public static final Logger log = LoggerFactory.getLogger("operations");
+	/** Trennzeile in Logausgaben */
+	public static final String LOG_TRENNZEILE = "---------------------------------------------";
 
 	/**
 	 * @see de.extrastandard.api.observer.ITransportObserver#requestDataReceived(java.lang.String,

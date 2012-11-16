@@ -228,7 +228,7 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(extraResponse, streamResult);
-			LOG.debug("ExtraResponse: " + writer.toString());
+			LOG.debug("ExtraResponse: " + ExtraMessageReturnDataExtractor.NEW_LINE + writer.toString());
 		} catch (final XmlMappingException xmlException) {
 			LOG.debug("XmlMappingException beim Lesen des Results ",
 					xmlException);
