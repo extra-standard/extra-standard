@@ -23,7 +23,7 @@ rem version: $Id$
 rem ---------------------------------------------------------------------------
 
 rem if "%EXTRA_CLIENT_HOME%" == "" goto env_undefined
-if "%EXTRA_CLIENT_HOME%" == "" set EXTRA_CLIENT_HOME="..\..\extra-client"
+if "%EXTRA_CLIENT_HOME%" == "" set EXTRA_CLIENT_HOME="..\..\..\extra-client"
 
 :logo
 echo         ____  ______________              
