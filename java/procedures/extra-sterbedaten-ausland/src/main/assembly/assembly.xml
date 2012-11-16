@@ -27,6 +27,10 @@
 			<outputDirectory>/docs</outputDirectory>
 		</fileSet>
 		<fileSet>
+			<directory>src/main/soapui</directory>
+			<outputDirectory>/soapui</outputDirectory>
+		</fileSet>
+		<fileSet>
 			<directory>src/test/resources/work</directory>
 			<outputDirectory>/work</outputDirectory>
 		</fileSet>
