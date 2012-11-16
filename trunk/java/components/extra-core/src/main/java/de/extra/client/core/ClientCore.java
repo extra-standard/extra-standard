@@ -40,6 +40,7 @@ import org.springframework.oxm.XmlMappingException;
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.builder.IExtraRequestBuilder;
 import de.extra.client.core.locator.IPluginsLocatorManager;
+import de.extra.client.core.observer.OpLogger;
 import de.extra.client.core.process.IRequestIdAcquisitionStrategy;
 import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraConfigRuntimeException;
@@ -100,13 +101,9 @@ public class ClientCore implements ApplicationContextAware {
 
 	private IExecutionPersistence executionPersistence;
 
-	// TODO MW extraReturnCodeAnalyser als Plugin verwenden!
-	@Inject
-	@Named("extraReturnCodeAnalyser")
-	private IExtraReturnCodeAnalyser returnCodeAnalyser;
-
 	@PostConstruct
 	public void init() {
+		logger.debug("Plugins initialisieren");
 		dataPlugin = pluginsLocatorManager.getConfiguredDataPlugin();
 
 		configPlugin = pluginsLocatorManager.getConfiguredConfigPlugin();
@@ -117,7 +114,7 @@ public class ClientCore implements ApplicationContextAware {
 
 		executionPersistence = pluginsLocatorManager
 				.getConfiguredExecutionPesistence();
-
+		logger.debug(OpLogger.LOG_TRENNZEILE);
 	}
 
 	/**
@@ -143,6 +140,7 @@ public class ClientCore implements ApplicationContextAware {
 		while (dataPlugin.hasMoreData()) {
 			final IInputDataContainer versandDaten = dataPlugin.getData();
 
+			logger.debug(OpLogger.LOG_TRENNZEILE);
 			logger.info("Process Daten: " + versandDaten);
 			final ClientProcessResult singleProcessResult = processInputData(
 					processParameters, versandDaten);

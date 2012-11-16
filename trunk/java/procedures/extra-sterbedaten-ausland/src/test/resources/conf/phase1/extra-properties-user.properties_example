@@ -21,7 +21,7 @@ plugins.execution.executionPersistenceJpa.database.password=
 #plugins.execution.executionPersistenceJpa.database.username=extracli
 #plugins.execution.executionPersistenceJpa.database.password=extracli
 
-# Webservices-Plugin abklemmen (für interne Tests)
+# Webservices-Plugin abklemmen (fuer interne Tests)
 plugins.outputplugin=dummyOutputPlugin
 
 # Webservices (eXTra Server)
