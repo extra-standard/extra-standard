@@ -61,7 +61,6 @@ public class SimpleRequestIdAcquisitionStrategy implements
 			IDbQueryInputData iSingleQueryInputData = IDbQueryInputData.class
 					.cast(singleInputData);
 			setRequestIdForQueryInpuData(dbInputData, iSingleQueryInputData);
-			// TODO MAXRESP (06.11.12)
 		} else if (ICriteriaQueryInputData.class
 				.isAssignableFrom(singleInputData.getClass())) {
 			ICriteriaQueryInputData singleQueryInputData = ICriteriaQueryInputData.class

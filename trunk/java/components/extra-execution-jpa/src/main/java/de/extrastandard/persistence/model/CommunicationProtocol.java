@@ -230,21 +230,24 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 	/**
 	 * Dieser Konstruktor wird verwendet, um einer 1 zu n Abfrage (z.B. 'alle
 	 * Dokumente mit ID > 7') mehr als ein Response-Ergebnis zuordnen zu können.
-	 * Aus dem Ursprungs InputData-Objekt und dem Response-Objekt wird ein
-	 * weiteres InputData Objekt erzeugt.
+	 * Aus dem Ursprungs CommunicationProtocol-Objekt und dem Response-Objekt wird ein
+	 * weiteres CommunicationProtocol Objekt erzeugt (ohne Status und nextPhaseConnection).
 	 * 
 	 * @param criteriaInputData
 	 * @param singleResponseData
 	 */
 	public CommunicationProtocol(CommunicationProtocol criteriaInputData,
 			ISingleResponseData singleResponseData) {
-		// Datenübernahme aus InputData
+		// Datenübernahme aus CommunicationProtocol
 		this.currentPhaseConnection = criteriaInputData.currentPhaseConnection;
 		this.execution = criteriaInputData.execution;
 		this.inputDataQualifier = criteriaInputData.inputDataQualifier;
 		this.inputIdentifier = criteriaInputData.inputIdentifier;
-		this.nextPhaseConnection = criteriaInputData.nextPhaseConnection;
 		this.requestId = singleResponseData.getRequestId();
+
+		// nextPhaseConnection darf nicht uebernommen werden!
+		//this.nextPhaseConnection = criteriaInputData.nextPhaseConnection;
+
 		// Datenübernahme aus ISingleResponseData
 		transmitted(singleResponseData);
 
@@ -360,6 +363,7 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 
 	@Override
 	public String calculateRequestId() {
+		// TODO MW calculateRequestId
 		final IProcedure procedure = execution.getProcedure();
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(procedure.getShortKey()).append("_").append(id);
