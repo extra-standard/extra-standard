@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
-import de.extra.client.core.model.inputdata.impl.DBSingleQueryInputDataContainer;
+import de.extra.client.core.model.inputdata.impl.CriteriaQueryInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.QueryArgumentType;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
@@ -41,7 +41,7 @@ public class DBMaxResponseIdQueryDataPlugin implements IDataPlugin {
 	private static final Logger logger = LoggerFactory
 			.getLogger(DBQueryDataPlugin.class);
 
-	DBSingleQueryInputDataContainer dbQueryMaxResponseIdInputData = null;
+	CriteriaQueryInputDataContainer dbQueryMaxResponseIdInputData = null;
 
 	/*
 	 * (non-Javadoc)
@@ -56,7 +56,7 @@ public class DBMaxResponseIdQueryDataPlugin implements IDataPlugin {
 			String maxResponseId = executionPersistence
 					.maxResponseIdForExecution(executionProcedure,
 							phaseQualifier);
-			dbQueryMaxResponseIdInputData = new DBSingleQueryInputDataContainer(
+			dbQueryMaxResponseIdInputData = new CriteriaQueryInputDataContainer(
 					String.valueOf(maxResponseId),
 					QueryArgumentType.GREATER_THEN, executionProcedure);
 

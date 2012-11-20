@@ -40,7 +40,7 @@ import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.model.content.ISingleContentInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.IProcessTransition;
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
@@ -129,7 +129,7 @@ public class PersistenceIT {
 
 		final ISingleContentInputData singleContentInputData = new SingleStringInputData(
 				"test data");
-		final IInputData inputData = execution
+		final ICommunicationProtocol inputData = execution
 				.startInputData(singleContentInputData);
 		assertNotNull(inputData);
 		assertEquals(singleContentInputData.getHashCode(),

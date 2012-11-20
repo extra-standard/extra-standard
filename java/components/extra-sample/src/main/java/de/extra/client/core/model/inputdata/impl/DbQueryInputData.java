@@ -18,7 +18,7 @@
  */
 package de.extra.client.core.model.inputdata.impl;
 
-import de.extrastandard.api.model.content.ISingleQueryInputData;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 
 /**
  * Identifiziert QueryInputDaten aus der DB
@@ -26,7 +26,7 @@ import de.extrastandard.api.model.content.ISingleQueryInputData;
  * @author DPRS
  * @version $Id$
  */
-public class InDBQueryInputData implements ISingleQueryInputData {
+public class DbQueryInputData implements IDbQueryInputData {
 
 	private static final String INPUT_DATA_TYPE = "DB_QUERY";
 
@@ -52,7 +52,7 @@ public class InDBQueryInputData implements ISingleQueryInputData {
 	 * @param sourceRequestId
 	 * @param sourceResponceId
 	 */
-	public InDBQueryInputData(final Long sourceIdentificationId,
+	public DbQueryInputData(final Long sourceIdentificationId,
 			final String sourceRequestId, final String sourceResponceId) {
 		super();
 		this.sourceRequestId = sourceRequestId;

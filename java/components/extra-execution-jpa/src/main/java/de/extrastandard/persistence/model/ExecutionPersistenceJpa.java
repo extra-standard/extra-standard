@@ -30,11 +30,11 @@ import org.springframework.util.Assert;
 
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
-import de.extrastandard.persistence.repository.InputDataRepository;
+import de.extrastandard.persistence.repository.CommunicationProtocolRepository;
 import de.extrastandard.persistence.repository.ProcedureRepository;
 import de.extrastandard.persistence.repository.StatusRepository;
 
@@ -53,8 +53,8 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 	private transient ProcedureRepository procedureRepository;
 
 	@Inject
-	@Named("inputDataRepository")
-	private transient InputDataRepository inputDataRepository;
+	@Named("communicationProtocolRepository")
+	private transient CommunicationProtocolRepository communicationProtocolRepository;
 
 	@Inject
 	@Named("statusRepository")
@@ -78,8 +78,8 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 	}
 
 	@Override
-	public IInputData findInputDataByRequestId(final String requestId) {
-		return inputDataRepository.findByRequestId(requestId);
+	public ICommunicationProtocol findInputDataByRequestId(final String requestId) {
+		return communicationProtocolRepository.findByRequestId(requestId);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 	 */
 	@Override
 	@Transactional
-	public List<IInputData> findInputDataForExecution(
+	public List<ICommunicationProtocol> findInputDataForExecution(
 			final String procedureName, final PhaseQualifier phaseQualifier,
 			final Integer inputDataLimit) {
 		Assert.notNull(procedureName, "ProcedureName is null");
@@ -112,7 +112,7 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 	 *            limits the result set
 	 * @return
 	 */
-	public List<IInputData> findInputDataForExecution(
+	public List<ICommunicationProtocol> findInputDataForExecution(
 			final IProcedure procedure, final PhaseQualifier phaseQualifier,
 			final Integer inputDataLimit) {
 		Assert.notNull(procedure, "Procedure is null");
@@ -121,14 +121,14 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 				.findOne(PersistentStatus.INITIAL.getId());
 
 		final Pageable pageRequest = new PageRequest(0, inputDataLimit);
-		final List<IInputData> inputDateList = inputDataRepository
+		final List<ICommunicationProtocol> inputDateList = communicationProtocolRepository
 				.findByProcedureAndPhaseQualifierAndStatus(procedure,
 						phaseQualifier.getName(), statusInitial, pageRequest);
 		return inputDateList;
 	}
 
 	@Override
-	public List<IInputData> findInputDataForExecution(
+	public List<ICommunicationProtocol> findInputDataForExecution(
 			final String executionProcedure, final PhaseQualifier phaseQualifier) {
 		return findInputDataForExecution(executionProcedure, phaseQualifier,
 				MAX_RESULT_SIZE);
@@ -141,7 +141,7 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 				.findOne(PersistentStatus.INITIAL.getId());
 		final IProcedure procedure = procedureRepository
 				.findByName(executionProcedure);
-		return inputDataRepository.count(procedure, phaseQualifier.getName(),
+		return communicationProtocolRepository.count(procedure, phaseQualifier.getName(),
 				statusInitial);
 	}
 
@@ -153,7 +153,7 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 		final IProcedure procedure = procedureRepository
 				.findByName(procedureName);
 
-		Integer maxResponseId = inputDataRepository
+		Integer maxResponseId = communicationProtocolRepository
 				.maxResponseIdForProcedureAndPhase(procedure,
 						phaseQualifier.getName());
 

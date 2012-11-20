@@ -26,7 +26,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import de.extra.client.core.model.inputdata.impl.FileInputData;
+import de.extra.client.core.model.inputdata.impl.ContentInputDataContainer;
 import de.extra.client.core.model.inputdata.impl.SingleFileInputData;
 import de.extra.client.plugins.dataplugin.auftragssatz.AuftragssatzType;
 import de.extra.client.plugins.dataplugin.helper.DataPluginHelper;
@@ -57,7 +57,7 @@ public class DataPluginController implements IDataPluginController {
 	 */
 	@Override
 	public IInputDataContainer processData() {
-		final FileInputData versanddatenBeanList = new FileInputData();
+		final ContentInputDataContainer versanddatenBeanList = new ContentInputDataContainer();
 		List<String> nutzfileList = new ArrayList<String>();
 
 		// Ermitteln der Nutzdaten

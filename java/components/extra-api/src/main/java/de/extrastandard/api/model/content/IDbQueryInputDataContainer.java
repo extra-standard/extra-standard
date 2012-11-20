@@ -27,10 +27,10 @@ import java.util.List;
  * @version $Id: IDbQueryInputData.java 756 2012-10-15 14:14:40Z
  *          potap.rentenservice@gmail.com $ Seit Version 1.0.0
  */
-public interface IDbMultiQueryInputData extends IInputDataContainer {
+public interface IDbQueryInputDataContainer extends IInputDataContainer {
 
 	/**
 	 * @return
 	 */
-	List<ISingleQueryInputData> getInputData();
+	List<IDbQueryInputData> getInputData();
 }

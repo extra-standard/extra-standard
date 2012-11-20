@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import de.extrastandard.api.model.content.IFileInputData;
+import de.extrastandard.api.model.content.IContentInputDataContainer;
 import de.extrastandard.api.model.content.ISingleContentInputData;
 import de.extrastandard.api.model.content.ISingleInputData;
 
@@ -34,20 +34,20 @@ import de.extrastandard.api.model.content.ISingleInputData;
  * @author DPRS
  * @version $Id$
  */
-public class FileInputData extends InputDataContainer implements IFileInputData {
+public class ContentInputDataContainer extends InputDataContainer implements IContentInputDataContainer {
 
-	public FileInputData() {
+	public ContentInputDataContainer() {
 	}
 
 	private final List<ISingleContentInputData> inputDataList = new ArrayList<ISingleContentInputData>();
 
-	public FileInputData(final Collection<File> inputFiles) {
+	public ContentInputDataContainer(final Collection<File> inputFiles) {
 		for (final File inputFile : inputFiles) {
 			addSingleInputData(inputFile);
 		}
 	}
 
-	public FileInputData(final List<String> inputContents) {
+	public ContentInputDataContainer(final List<String> inputContents) {
 		for (final String inputContent : inputContents) {
 			addSingleInputData(inputContent);
 		}

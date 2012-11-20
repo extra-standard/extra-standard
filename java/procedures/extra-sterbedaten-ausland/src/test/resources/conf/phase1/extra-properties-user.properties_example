@@ -1,9 +1,21 @@
-# Ablage-Ordner
+# =========================================================
+# == Sterbedatenaustausch Ausland zwischen DSRV und DPRS ==
+# == Test-Benutzerkonfigurationsdatei Phase 1            ==
+# == Bitte Einstellungen anpassen!                       ==
+# ========================================================= 
+
+# =====================================
+# == Ablage-Ordner und Kontakt-Daten ==
+# =====================================
 plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=classpath:work/responses
 plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner=classpath:work/reports
 plugins.dataplugin.fileDataPlugin.inputVerzeichnis=classpath:work/input
 
-#Datenbank Connection Properties
+builder.xplg.Contacts.configurableSMTPContactsPluginsBuilder.emailaddress=test@rentenservice.de
+
+# ==========================
+# == Datenbank-Verbindung ==
+# ==========================
 
 # HSQLDB
 plugins.execution.executionPersistenceJpa.hibernate.generateDdl=false
@@ -21,7 +33,8 @@ plugins.execution.executionPersistenceJpa.database.password=
 #plugins.execution.executionPersistenceJpa.database.username=extracli
 #plugins.execution.executionPersistenceJpa.database.password=extracli
 
-# Webservices-Plugin abklemmen (fuer interne Tests)
+# Fuer interne Tests ist das 'dummyOutputPlugin' voreingestellt 
+# Webservices-Plugin wird verwendet (def. in ...user.prop...), wenn folgende Zeile auskommentiert wird:
 plugins.outputplugin=dummyOutputPlugin
 
 # Webservices (eXTra Server)

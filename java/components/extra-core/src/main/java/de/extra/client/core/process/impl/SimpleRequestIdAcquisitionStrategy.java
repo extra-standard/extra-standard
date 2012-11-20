@@ -27,13 +27,13 @@ import org.springframework.util.Assert;
 
 import de.extra.client.core.process.IRequestIdAcquisitionStrategy;
 import de.extrastandard.api.exception.ExtraCoreRuntimeException;
-import de.extrastandard.api.model.content.IDbSingleQueryInputData;
+import de.extrastandard.api.model.content.ICriteriaQueryInputData;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.ISingleContentInputData;
 import de.extrastandard.api.model.content.ISingleInputData;
-import de.extrastandard.api.model.content.ISingleQueryInputData;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 import de.extrastandard.api.model.execution.IExecution;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 
 /**
  * Initialle implementation for the calculation of the RequestId
@@ -46,7 +46,7 @@ public class SimpleRequestIdAcquisitionStrategy implements
 		IRequestIdAcquisitionStrategy {
 
 	@Override
-	public void setRequestId(IInputData dbInputData,
+	public void setRequestId(ICommunicationProtocol dbInputData,
 			ISingleInputData singleInputData) {
 		Assert.notNull(dbInputData, "Inputdata is null");
 		Assert.notNull(singleInputData, "inputDataContainer is null");
@@ -56,15 +56,15 @@ public class SimpleRequestIdAcquisitionStrategy implements
 			ISingleContentInputData singleContentInputData = ISingleContentInputData.class
 					.cast(singleInputData);
 			setRequestIdForContentInputData(dbInputData, singleContentInputData);
-		} else if (ISingleQueryInputData.class.isAssignableFrom(singleInputData
+		} else if (IDbQueryInputData.class.isAssignableFrom(singleInputData
 				.getClass())) {
-			ISingleQueryInputData iSingleQueryInputData = ISingleQueryInputData.class
+			IDbQueryInputData iSingleQueryInputData = IDbQueryInputData.class
 					.cast(singleInputData);
 			setRequestIdForQueryInpuData(dbInputData, iSingleQueryInputData);
 			// TODO MAXRESP (06.11.12)
-		} else if (IDbSingleQueryInputData.class
+		} else if (ICriteriaQueryInputData.class
 				.isAssignableFrom(singleInputData.getClass())) {
-			IDbSingleQueryInputData singleQueryInputData = IDbSingleQueryInputData.class
+			ICriteriaQueryInputData singleQueryInputData = ICriteriaQueryInputData.class
 					.cast(singleInputData);
 			setRequestIdForSingleQueryInputData(dbInputData,
 					singleQueryInputData);
@@ -79,14 +79,14 @@ public class SimpleRequestIdAcquisitionStrategy implements
 	 * <pre>
 	 * A distinction is made between 3 Strategies
 	 * 1. RequestId the input from outside. Master of RequestId {@link IInputDataContainer}
-	 * 2. RequestId is internally calculated from the execution. Master {@link IInputData}
+	 * 2. RequestId is internally calculated from the execution. Master {@link ICommunicationProtocol}
 	 * 3. Request Id is already calculated in an early execution phase
 	 * </pre>
 	 * 
-	 * @see de.extra.client.core.process.IRequestIdAcquisitionStrategy#setRequestId(de.extrastandard.api.model.execution.IInputData,
+	 * @see de.extra.client.core.process.IRequestIdAcquisitionStrategy#setRequestId(de.extrastandard.api.model.execution.ICommunicationProtocol,
 	 *      de.extrastandard.api.model.content.IInputDataContainer)
 	 */
-	private void setRequestIdForContentInputData(final IInputData inputData,
+	private void setRequestIdForContentInputData(final ICommunicationProtocol inputData,
 			final ISingleContentInputData singleContentInputData) {
 		Assert.notNull(inputData, "Inputdata is null");
 		Assert.notNull(singleContentInputData, "inputDataContainer is null");
@@ -118,8 +118,8 @@ public class SimpleRequestIdAcquisitionStrategy implements
 
 	}
 
-	private void setRequestIdForQueryInpuData(final IInputData inputData,
-			final ISingleQueryInputData singleQueryInputData) {
+	private void setRequestIdForQueryInpuData(final ICommunicationProtocol inputData,
+			final IDbQueryInputData singleQueryInputData) {
 		Assert.notNull(inputData, "Inputdata is null");
 		Assert.notNull(singleQueryInputData, "inputDataContainer is null");
 		// Einzelne Value, die an Server übertragen wird und zur Identifizierung
@@ -132,13 +132,18 @@ public class SimpleRequestIdAcquisitionStrategy implements
 
 	// TODO MAXRESP (06.11.12)
 	private void setRequestIdForSingleQueryInputData(
-			final IInputData inputData,
-			final IDbSingleQueryInputData singleQueryInputData) {
+			final ICommunicationProtocol inputData,
+			final ICriteriaQueryInputData singleQueryInputData) {
 		Assert.notNull(inputData, "Inputdata is null");
 		Assert.notNull(singleQueryInputData, "inputDataContainer is null");
 		String inputIdentifier = singleQueryInputData.getInputIdentifier();
-		singleQueryInputData.setRequestId(inputIdentifier);
-		inputData.setRequestId(inputIdentifier);
+
+		// ??
+//		singleQueryInputData.setRequestId(inputIdentifier);
+//		inputData.setRequestId(inputIdentifier);
+		String requestIdKand = String.valueOf(inputData.getId());
+		singleQueryInputData.setRequestId(requestIdKand);
+		inputData.setRequestId(requestIdKand);
 	}
 
 	@Override

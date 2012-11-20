@@ -35,11 +35,11 @@ import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Configurable;
 
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.IPhaseConnection;
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
-import de.extrastandard.persistence.repository.InputDataRepository;
+import de.extrastandard.persistence.repository.CommunicationProtocolRepository;
 import de.extrastandard.persistence.repository.PhaseConnectionRepository;
 import de.extrastandard.persistence.repository.StatusRepository;
 
@@ -67,11 +67,11 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "quelle_data_id")
-	private InputData quelleInputData;
+	private CommunicationProtocol quelleInputData;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "target_data_id")
-	private InputData targetInputData;
+	private CommunicationProtocol targetInputData;
 
 	@Column(name = "next_phase_qualifier", nullable = false)
 	private String nextPhasequalifier;
@@ -87,8 +87,8 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 
 	@Transient
 	@Inject
-	@Named("inputDataRepository")
-	private transient InputDataRepository inputDataRepository;
+	@Named("communicationProtocolRepository")
+	private transient CommunicationProtocolRepository communicationProtocolRepository;
 
 	@Inject
 	@Named("statusRepository")
@@ -101,7 +101,7 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 	public PhaseConnection() {
 	}
 
-	public PhaseConnection(final InputData quelleInputData,
+	public PhaseConnection(final CommunicationProtocol quelleInputData,
 			final String nextPhasenQualifier) {
 		super();
 		this.quelleInputData = quelleInputData;
@@ -125,7 +125,7 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 	 * de.extrastandard.persistence.model.IPhaseConnection#getQuelleInputData()
 	 */
 	@Override
-	public IInputData getQuelleInputData() {
+	public ICommunicationProtocol getQuelleInputData() {
 		return quelleInputData;
 	}
 
@@ -136,7 +136,7 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 	 * de.extrastandard.persistence.model.IPhaseConnection#getTargetInputData()
 	 */
 	@Override
-	public IInputData getTargetInputData() {
+	public ICommunicationProtocol getTargetInputData() {
 		return targetInputData;
 	}
 
@@ -167,8 +167,8 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 	 *            the targetInputData to set
 	 */
 	@Override
-	public void setTargetInputData(final IInputData iTargetInputData) {
-		final InputData targetInputData = inputDataRepository
+	public void setTargetInputData(final ICommunicationProtocol iTargetInputData) {
+		final CommunicationProtocol targetInputData = communicationProtocolRepository
 				.findOne(iTargetInputData.getId());
 		this.targetInputData = targetInputData;
 		repository.save(this);

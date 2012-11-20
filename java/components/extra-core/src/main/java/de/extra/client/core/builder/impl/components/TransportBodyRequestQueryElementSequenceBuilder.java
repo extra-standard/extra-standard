@@ -33,13 +33,13 @@ import de.drv.dsrv.extrastandard.namespace.messages.DataRequestQuery;
 import de.drv.dsrv.extrastandard.namespace.messages.Operand;
 import de.drv.dsrv.extrastandard.namespace.messages.OperandSet;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
-import de.extrastandard.api.model.content.IDbMultiQueryInputData;
-import de.extrastandard.api.model.content.IDbSingleQueryInputData;
-import de.extrastandard.api.model.content.IDbSingleQueryInputDataContainer;
+import de.extrastandard.api.model.content.IDbQueryInputDataContainer;
+import de.extrastandard.api.model.content.ICriteriaQueryInputData;
+import de.extrastandard.api.model.content.ICriteriaQueryInputDataContainer;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.ISingleInputData;
-import de.extrastandard.api.model.content.ISingleQueryInputData;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 
 /**
  * @author Leonid Potap
@@ -63,7 +63,7 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 
 		// Unterscheidung des Operanden
 		final DataRequest dataRequest;
-		if (IDbSingleQueryInputDataContainer.class.isAssignableFrom(senderData
+		if (ICriteriaQueryInputDataContainer.class.isAssignableFrom(senderData
 				.getClass())) {
 			dataRequest = createSingleDataRequest(senderData);
 		} else {
@@ -78,8 +78,8 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 
 	private DataRequest createMultiDataRequest(
 			final IInputDataContainer senderData) {
-		final IDbMultiQueryInputData dbQueryInputData = senderData
-				.cast(IDbMultiQueryInputData.class);
+		final IDbQueryInputDataContainer dbQueryInputData = senderData
+				.cast(IDbQueryInputDataContainer.class);
 		final DataRequest dataRequest = new DataRequest();
 
 		final Control controlElement = new Control();
@@ -99,7 +99,7 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 		jaxbOperand.setValue(operandSet);
 		// Setzen der Property
 		dataRequestArgument.getContent().add(jaxbOperand);
-		for (final ISingleQueryInputData singleQueryInputData : dbQueryInputData
+		for (final IDbQueryInputData singleQueryInputData : dbQueryInputData
 				.getInputData()) {
 			final Operand operand = new Operand();
 			operand.setValue(singleQueryInputData.getSourceResponceId());
@@ -146,8 +146,8 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 
 	private DataRequest createSingleDataRequest(
 			final IInputDataContainer senderData) {
-		final IDbSingleQueryInputDataContainer dbQueryInputData = senderData
-				.cast(IDbSingleQueryInputDataContainer.class);
+		final ICriteriaQueryInputDataContainer dbQueryInputData = senderData
+				.cast(ICriteriaQueryInputDataContainer.class);
 		final DataRequest dataRequest = new DataRequest();
 
 		final Control controlElement = new Control();
@@ -156,9 +156,9 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 
 		String procedureName = null;
 		for (ISingleInputData singleInputData : dbQueryInputData.getContent()) {
-			if (IDbSingleQueryInputData.class.isAssignableFrom(singleInputData
+			if (ICriteriaQueryInputData.class.isAssignableFrom(singleInputData
 					.getClass())) {
-				IDbSingleQueryInputData singleQueryInputData = IDbSingleQueryInputData.class
+				ICriteriaQueryInputData singleQueryInputData = ICriteriaQueryInputData.class
 						.cast(singleInputData);
 
 				procedureName = singleQueryInputData.getProcedureName();

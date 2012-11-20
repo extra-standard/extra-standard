@@ -49,7 +49,7 @@ public interface IExecutionPersistence {
 	 * @param requestId
 	 * @return
 	 */
-	IInputData findInputDataByRequestId(String requestId);
+	ICommunicationProtocol findInputDataByRequestId(String requestId);
 
 	/**
 	 * Seeks InputData for further Procesierung depending on the ExecutePhase
@@ -60,7 +60,7 @@ public interface IExecutionPersistence {
 	 *            limits the result set
 	 * @return
 	 */
-	List<IInputData> findInputDataForExecution(String executionProcedure,
+	List<ICommunicationProtocol> findInputDataForExecution(String executionProcedure,
 			PhaseQualifier phaseQualifier, Integer inputDataLimit);
 
 	/**
@@ -70,7 +70,7 @@ public interface IExecutionPersistence {
 	 * @param phaseQualifier
 	 * @return
 	 */
-	List<IInputData> findInputDataForExecution(String executionProcedure,
+	List<ICommunicationProtocol> findInputDataForExecution(String executionProcedure,
 			PhaseQualifier phaseQualifier);
 
 	/**

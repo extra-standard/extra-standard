@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.extrastandard.api.model.content.IDbMultiQueryInputData;
+import de.extrastandard.api.model.content.IDbQueryInputDataContainer;
 import de.extrastandard.api.model.content.ISingleInputData;
-import de.extrastandard.api.model.content.ISingleQueryInputData;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 
 /**
  * Identifiziert QueryInputDaten aus der DB
@@ -32,13 +32,13 @@ import de.extrastandard.api.model.content.ISingleQueryInputData;
  * @author DPRS
  * @version $Id$
  */
-public class DBMultiQueryInputData extends InputDataContainer implements
-		IDbMultiQueryInputData {
+public class DbQueryInputDataContainer extends InputDataContainer implements
+		IDbQueryInputDataContainer {
 
-	private final List<ISingleQueryInputData> inDBQueryInputDataList = new ArrayList<ISingleQueryInputData>();
+	private final List<IDbQueryInputData> inDBQueryInputDataList = new ArrayList<IDbQueryInputData>();
 
 	@Override
-	public List<ISingleQueryInputData> getInputData() {
+	public List<IDbQueryInputData> getInputData() {
 		return Collections.unmodifiableList(inDBQueryInputDataList);
 	}
 
@@ -47,7 +47,7 @@ public class DBMultiQueryInputData extends InputDataContainer implements
 	 * @param requestId
 	 * @param serverResponceId
 	 */
-	public DBMultiQueryInputData() {
+	public DbQueryInputDataContainer() {
 		super();
 	}
 
@@ -56,7 +56,7 @@ public class DBMultiQueryInputData extends InputDataContainer implements
 	 * @param requestId
 	 * @param serverResponceId
 	 */
-	public DBMultiQueryInputData(final Long dbInputDataId,
+	public DbQueryInputDataContainer(final Long dbInputDataId,
 			final String sourceRequestId, final String sourceResponceId) {
 		super();
 		addSingleDBQueryInputData(dbInputDataId, sourceRequestId,
@@ -71,7 +71,7 @@ public class DBMultiQueryInputData extends InputDataContainer implements
 	 */
 	public void addSingleDBQueryInputData(final Long dbInputDataId,
 			final String sourceRequestId, final String sourceResponceId) {
-		final InDBQueryInputData singleDBQueryInputData = new InDBQueryInputData(
+		final DbQueryInputData singleDBQueryInputData = new DbQueryInputData(
 				dbInputDataId, sourceRequestId, sourceResponceId);
 		addSingleDBQueryInputData(singleDBQueryInputData);
 	}
@@ -80,7 +80,7 @@ public class DBMultiQueryInputData extends InputDataContainer implements
 	 * @param singleQueryInputData
 	 */
 	public void addSingleDBQueryInputData(
-			final ISingleQueryInputData singleQueryInputData) {
+			final IDbQueryInputData singleQueryInputData) {
 		inDBQueryInputDataList.add(singleQueryInputData);
 	}
 

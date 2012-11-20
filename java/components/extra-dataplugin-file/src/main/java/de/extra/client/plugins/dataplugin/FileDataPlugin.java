@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 import de.extra.client.core.annotation.PluginConfigType;
 import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
-import de.extra.client.core.model.inputdata.impl.FileInputData;
+import de.extra.client.core.model.inputdata.impl.ContentInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.plugin.IDataPlugin;
 
@@ -85,7 +85,7 @@ public class FileDataPlugin implements IDataPlugin {
 		if (!isResultPrepared.get()) {
 			initInputData();
 		}
-		final FileInputData inputDataContainer = new FileInputData();
+		final ContentInputDataContainer inputDataContainer = new ContentInputDataContainer();
 		for (Integer counter = 0; inputFilesIterator.hasNext()
 				&& counter < inputDataLimit; counter++) {
 			final File inputFile = inputFilesIterator.next();

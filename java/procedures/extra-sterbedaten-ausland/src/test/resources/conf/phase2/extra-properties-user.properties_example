@@ -1,10 +1,17 @@
-# Ablage-Ordner
-plugins.responseprocessplugin.fileSystemResultPackageDataResponseProcessPlugin.eingangOrdner=classpath:work/responses
-#plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=classpath:work/responses
-#plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner=classpath:work/reports
-plugins.dataplugin.fileDataPlugin.inputVerzeichnis=classpath:work/input
+# =========================================================
+# == Sterbedatenaustausch Ausland zwischen DSRV und DPRS ==
+# == Test-Benutzerkonfigurationsdatei Phase 2            ==
+# == Bitte Einstellungen anpassen!                       ==
+# ========================================================= 
 
-#Datenbank Connection Properties
+# ===================
+# == Ablage-Ordner ==
+# ===================
+plugins.responseprocessplugin.fileSystemResultPackageDataResponseProcessPlugin.eingangOrdner=classpath:work/responses
+
+# ==========================
+# == Datenbank-Verbindung ==
+# ==========================
 
 # HSQLDB
 plugins.execution.executionPersistenceJpa.hibernate.generateDdl=false
@@ -22,7 +29,8 @@ plugins.execution.executionPersistenceJpa.database.password=
 #plugins.execution.executionPersistenceJpa.database.username=extracli
 #plugins.execution.executionPersistenceJpa.database.password=extracli
 
-# Webservices-Plugin abklemmen (fuer interne Tests)
+# Fuer interne Tests ist das 'dummyOutputPlugin' voreingestellt 
+# Webservices-Plugin wird verwendet (def. in ...user.prop...), wenn folgende Zeile auskommentiert wird:
 plugins.outputplugin=dummyQueryDataResponceOutputPlugin
 
 # Webservices (eXTra Server)

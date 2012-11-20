@@ -48,8 +48,8 @@ import de.extra.client.core.builder.impl.request.RequestTransportBodyBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportHeaderBuilder;
 import de.extra.client.core.config.impl.ExtraProfileConfiguration;
-import de.extra.client.core.model.inputdata.impl.DBMultiQueryInputData;
-import de.extrastandard.api.model.content.IDbMultiQueryInputData;
+import de.extra.client.core.model.inputdata.impl.DbQueryInputDataContainer;
+import de.extrastandard.api.model.content.IDbQueryInputDataContainer;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
@@ -147,8 +147,8 @@ public class ExtraRequestBuilderTest {
 	/**
 	 * @return
 	 */
-	private IDbMultiQueryInputData createTestDummyDBQueryInputData() {
-		final DBMultiQueryInputData senderData = new DBMultiQueryInputData();
+	private IDbQueryInputDataContainer createTestDummyDBQueryInputData() {
+		final DbQueryInputDataContainer senderData = new DbQueryInputDataContainer();
 		senderData.addSingleDBQueryInputData(1L, "sourceRequestId 1",
 				"sourceResponseId 1");
 		senderData.addSingleDBQueryInputData(2L, "sourceRequestId 2 ",

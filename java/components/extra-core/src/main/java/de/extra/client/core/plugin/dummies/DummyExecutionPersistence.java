@@ -6,7 +6,7 @@ import javax.inject.Named;
 
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 
 @Named("dummyExecutionPersistence")
@@ -20,20 +20,20 @@ public class DummyExecutionPersistence implements IExecutionPersistence {
 	}
 
 	@Override
-	public IInputData findInputDataByRequestId(final String requestId) {
+	public ICommunicationProtocol findInputDataByRequestId(final String requestId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<IInputData> findInputDataForExecution(
+	public List<ICommunicationProtocol> findInputDataForExecution(
 			final String executionProcedure, final PhaseQualifier phaseQualifier) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<IInputData> findInputDataForExecution(
+	public List<ICommunicationProtocol> findInputDataForExecution(
 			final String executionProcedure,
 			final PhaseQualifier phaseQualifier, final Integer inputDataLimit) {
 		// TODO Auto-generated method stub

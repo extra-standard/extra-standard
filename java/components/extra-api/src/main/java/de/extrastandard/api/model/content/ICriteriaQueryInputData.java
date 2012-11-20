@@ -18,7 +18,24 @@
  */
 package de.extrastandard.api.model.content;
 
-public interface IDbSingleQueryInputData extends ISingleInputData {
+/**
+ * Criteria-Querys der Form ("<xmsg:GT>10000</xmsg:GT>") werden durch dieses Interface abgebildet.
+ * In dem Beispiel ist '10000' das Argument und 'GT' (Greater Then) der QueryArgumentType.
+ * 
+ * Querys dieser Form sollen realisiert werden:
+ * 
+ * <xmsg:Query>
+ *     <xmsg:Argument property="http://www.extra-standard.de/property/ResponseID">
+ *          <xmsg:GT>10000</xmsg:GT>
+ *     </xmsg:Argument>
+ *     <xmsg:Argument property="http://www.extra-standard.de/property/Procedure">
+ *          <xmsg:EQ>STDAUSL</xmsg:EQ>
+ *     </xmsg:Argument>
+ * </xmsg:Query>
+ * @author r52gma
+ *
+ */
+public interface ICriteriaQueryInputData extends ISingleInputData {
 	String getArgument();
 
 	QueryArgumentType getQueryArgumentType();

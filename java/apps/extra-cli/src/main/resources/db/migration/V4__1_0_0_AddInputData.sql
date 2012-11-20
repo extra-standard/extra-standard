@@ -1,2 +1,0 @@
-ALTER TABLE INPUT_DATA ADD (input_data_qualifier VARCHAR2 (100));
-ALTER TABLE INPUT_DATA ADD (status_id NUMBER (10));

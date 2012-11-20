@@ -28,7 +28,7 @@ import javax.inject.Named;
 import de.extra.client.core.model.impl.CompressionPluginDescription;
 import de.extra.client.core.model.impl.DataSourcePluginDescription;
 import de.extra.client.core.model.impl.EncryptionPluginDescription;
-import de.extra.client.core.model.inputdata.impl.FileInputData;
+import de.extra.client.core.model.inputdata.impl.ContentInputDataContainer;
 import de.extra.client.core.model.inputdata.impl.InputDataContainer;
 import de.extra.client.core.model.inputdata.impl.SingleStringInputData;
 import de.extrastandard.api.model.content.IInputDataContainer;
@@ -83,7 +83,7 @@ public class DummyDataPlugin implements IDataPlugin {
 
 		final String nutzdaten = "Testdaten";
 
-		final FileInputData fileInputData = new FileInputData();
+		final ContentInputDataContainer fileInputData = new ContentInputDataContainer();
 
 		final CompressionPluginDescription compressionPlugin = new CompressionPluginDescription();
 		final EncryptionPluginDescription encryptionPlugin = new EncryptionPluginDescription();

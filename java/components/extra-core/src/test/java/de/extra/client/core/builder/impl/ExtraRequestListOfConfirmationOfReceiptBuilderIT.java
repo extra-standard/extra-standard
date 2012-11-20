@@ -32,8 +32,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.config.impl.ExtraProfileConfiguration;
-import de.extra.client.core.model.inputdata.impl.DBMultiQueryInputData;
-import de.extrastandard.api.model.content.IDbMultiQueryInputData;
+import de.extra.client.core.model.inputdata.impl.DbQueryInputDataContainer;
+import de.extrastandard.api.model.content.IDbQueryInputDataContainer;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 
 /**
@@ -63,7 +63,7 @@ public class ExtraRequestListOfConfirmationOfReceiptBuilderIT {
 
 	@Test
 	public final void testBuildElementSequenseDataWithListOfConfirmationOfReceipt() {
-		final IDbMultiQueryInputData senderData = createTestDummyDBQueryInputData();
+		final IDbQueryInputDataContainer senderData = createTestDummyDBQueryInputData();
 		final IExtraProfileConfiguration config = createConfigFileBeanForElementSequenceWithListOfConfirmationOfReceipt();
 		final RootElementType elementType = extraRequestBuilder
 				.buildXmlMessage(senderData, config);
@@ -76,8 +76,8 @@ public class ExtraRequestListOfConfirmationOfReceiptBuilderIT {
 	/**
 	 * @return
 	 */
-	private IDbMultiQueryInputData createTestDummyDBQueryInputData() {
-		final DBMultiQueryInputData senderData = new DBMultiQueryInputData();
+	private IDbQueryInputDataContainer createTestDummyDBQueryInputData() {
+		final DbQueryInputDataContainer senderData = new DbQueryInputDataContainer();
 		senderData.addSingleDBQueryInputData(1L,
 				"STERBEDATENABGLEICH-7777778-2-RESPONSE-DATENABGLEICH",
 				"STERBEDATENABGLEICH-7777778-2-RESPONSE-DATENABGLEICH");
