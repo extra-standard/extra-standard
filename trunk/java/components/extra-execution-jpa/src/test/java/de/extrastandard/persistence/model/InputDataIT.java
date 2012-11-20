@@ -34,7 +34,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.extrastandard.api.model.execution.IExecutionPersistence;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 
 /**
@@ -70,7 +70,7 @@ public class InputDataIT {
 			persistenceTestSetup.setUpTestDatenForProcedureSendFetchPhase2();
 		}
 		final Integer inputDataLimit = 5;
-		final List<IInputData> findInputDataForExecution = executionPersistence
+		final List<ICommunicationProtocol> findInputDataForExecution = executionPersistence
 				.findInputDataForExecution(
 						PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
 						PhaseQualifier.PHASE2, inputDataLimit);

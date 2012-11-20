@@ -29,7 +29,7 @@ import org.springframework.util.Assert;
 import de.drv.dsrv.extrastandard.namespace.components.CharSequenceType;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
-import de.extrastandard.api.model.content.IFileInputData;
+import de.extrastandard.api.model.content.IContentInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.ISingleContentInputData;
 
@@ -53,8 +53,8 @@ public class TransportBodyCharSequenceBuilder extends
 			final IExtraProfileConfiguration config) {
 		logger.debug("CharSequenceType aufbauen");
 		final CharSequenceType charSequence = new CharSequenceType();
-		final IFileInputData fileInputdata = senderData
-				.cast(IFileInputData.class);
+		final IContentInputDataContainer fileInputdata = senderData
+				.cast(IContentInputDataContainer.class);
 		final List<ISingleContentInputData> inputDataList = fileInputdata
 				.getInputData();
 		// Es kann nicht in Transport mehrere Datensätze übertragen werden!!

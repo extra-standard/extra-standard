@@ -30,7 +30,7 @@ import org.springframework.util.Assert;
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
-import de.extrastandard.api.model.content.IFileInputData;
+import de.extrastandard.api.model.content.IContentInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.ISingleContentInputData;
 
@@ -54,12 +54,13 @@ public class TransportBodyFileInputBase64CharSequenceBuilder extends
 			final IExtraProfileConfiguration config) {
 		LOG.debug("Base64CharSequenceType aufbauen");
 		final Base64CharSequenceType base64CharSequence = new Base64CharSequenceType();
-		final IFileInputData fileInputdata = senderData
-				.cast(IFileInputData.class);
+		final IContentInputDataContainer fileInputdata = senderData
+				.cast(IContentInputDataContainer.class);
 		final List<ISingleContentInputData> inputDataList = fileInputdata
 				.getInputData();
 		// Es kann nicht in Transport mehrere Datensätze übertragen werden!!
-		Assert.isTrue(inputDataList.size() == 1, "Unexpected InputData size.");
+		// (21.11.12) warum nicht?, auskommentiert:
+		//Assert.isTrue(inputDataList.size() == 1, "Unexpected InputData size.");
 		final ISingleContentInputData singleInputData = inputDataList.get(0);
 		final byte[] encodeData = Base64.encodeBase64(singleInputData
 				.getInputDataAsByteArray());

@@ -21,17 +21,18 @@ package de.extrastandard.api.model.execution;
 import de.extrastandard.api.model.content.ISingleResponseData;
 
 /**
- * Inputdaten.
+ * Die Kommunikation zwischen Client und Server wird im CommunicationProtocol festgehalten.
+ * 
  * 
  * @author Thorsten Vogel
- * @version $Id: IInputData.java 562 2012-09-06 14:12:43Z
+ * @version $Id: ICommunicationProtocol.java 562 2012-09-06 14:12:43Z
  *          thorstenvogel@gmail.com $
  */
-public interface IInputData extends PersistentEntity {
+public interface ICommunicationProtocol extends PersistentEntity {
 
 	/**
-	 * MarkiertInputData ala Übertragen. Die ResponseDaten werden in den
-	 * InputData festgehalten
+	 * Markiert CommunicationProtocol als Übertragen. Die ResponseDaten werden in den
+	 * CommunicationProtocol festgehalten
 	 * 
 	 * @param singleResponseData
 	 */

@@ -39,22 +39,22 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import de.extra.client.core.model.inputdata.impl.DBMultiQueryInputData;
-import de.extra.client.core.model.inputdata.impl.InDBQueryInputData;
+import de.extra.client.core.model.inputdata.impl.DbQueryInputDataContainer;
+import de.extra.client.core.model.inputdata.impl.DbQueryInputData;
 import de.extra.client.core.responce.impl.ResponseData;
 import de.extra.client.core.responce.impl.SingleResponseData;
 import de.extrastandard.api.model.content.IResponseData;
-import de.extrastandard.api.model.content.ISingleQueryInputData;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.IPhaseConnection;
 import de.extrastandard.api.model.execution.IProcessTransition;
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
-import de.extrastandard.persistence.repository.InputDataRepository;
+import de.extrastandard.persistence.repository.CommunicationProtocolRepository;
 
 /**
  * Integration Test for Execution.
@@ -74,8 +74,8 @@ public class ExecutionIT {
 
 	@Transient
 	@Inject
-	@Named("inputDataRepository")
-	private transient InputDataRepository inputDataRepository;
+	@Named("communicationProtocolRepository")
+	private transient CommunicationProtocolRepository communicationProtocolRepository;
 
 	@Inject
 	@Named("executionPersistenceJpa")
@@ -89,7 +89,7 @@ public class ExecutionIT {
 
 	@Test
 	public void testFailedPhase2() {
-		final List<IInputData> sourceInputDataList = executionPersistence
+		final List<ICommunicationProtocol> sourceInputDataList = executionPersistence
 				.findInputDataForExecution(
 						PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
 						PhaseQualifier.PHASE2);
@@ -98,14 +98,14 @@ public class ExecutionIT {
 				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "Test",
 				PhaseQualifier.PHASE2);
 		final IResponseData responseData = new ResponseData();
-		final DBMultiQueryInputData dbQueryInputData = new DBMultiQueryInputData();
+		final DbQueryInputDataContainer dbQueryInputData = new DbQueryInputDataContainer();
 
 		final String testRequestId = "TEST_1_REQUEST_ID";
 		final String returnCode = "return code phase 2";
 		final String returnText = "return text phase2";
 		final String responseId = "response id phase 2";
 		// TODO Refactor. Testvorbereitung auslagern
-		for (final IInputData iSourcenputData : sourceInputDataList) {
+		for (final ICommunicationProtocol iSourcenputData : sourceInputDataList) {
 			final Long sourceInputDataId = iSourcenputData.getId();
 			final String inputDataRequestId = testRequestId + sourceInputDataId;
 			final String inputDataReturnCode = returnCode + sourceInputDataId;
@@ -116,11 +116,11 @@ public class ExecutionIT {
 					inputDataRequestId, inputDataReturnCode,
 					inputDataReturnText, inputDataResponseId, successful);
 			responseData.addSingleResponse(singleResponseData);
-			final ISingleQueryInputData singleQueryInputData = new InDBQueryInputData(
+			final IDbQueryInputData singleQueryInputData = new DbQueryInputData(
 					sourceInputDataId, iSourcenputData.getRequestId(),
 					iSourcenputData.getResponseId());
 			dbQueryInputData.addSingleDBQueryInputData(singleQueryInputData);
-			final IInputData newDbQueryInputData = execution
+			final ICommunicationProtocol newDbQueryInputData = execution
 					.startInputData(singleQueryInputData);
 
 			newDbQueryInputData.setRequestId(singleResponseData.getRequestId());
@@ -140,22 +140,22 @@ public class ExecutionIT {
 		assertNotNull(currentStatus);
 		assertEquals("Unexpected Status", PersistentStatus.FAIL.name(),
 				currentStatus.getName());
-		final Set<IInputData> inputDataSet = execution.getInputDataSet();
-		for (final IInputData iInputData : inputDataSet) {
+		final Set<ICommunicationProtocol> inputDataSet = execution.getInputDataSet();
+		for (final ICommunicationProtocol iInputData : inputDataSet) {
 			final IPhaseConnection currentPhaseConnection = iInputData
 					.getCurrentPhaseConnection();
 			final IStatus status = currentPhaseConnection.getStatus();
 			assertEquals("Unexpected Status", PersistentStatus.FAIL.name(),
 					status.getName());
 		}
-		for (final IInputData iquelleInputData : sourceInputDataList) {
+		for (final ICommunicationProtocol iquelleInputData : sourceInputDataList) {
 			// refresh
-			final InputData quelleInputData = inputDataRepository
+			final CommunicationProtocol quelleInputData = communicationProtocolRepository
 					.findOne(iquelleInputData.getId());
 			// prüfen PhaseConnection
 			final IPhaseConnection quellePhaseConnection = quelleInputData
 					.getNextPhaseConnection();
-			final IInputData targetInputData = quellePhaseConnection
+			final ICommunicationProtocol targetInputData = quellePhaseConnection
 					.getTargetInputData();
 			assertNotNull(targetInputData);
 			final IStatus quellePhaseConnectionStatus = quellePhaseConnection
@@ -168,7 +168,7 @@ public class ExecutionIT {
 
 	@Test
 	public void testInputDataSucessPhase2AnotherTransaction() {
-		final List<IInputData> sourceInputDataList = executionPersistence
+		final List<ICommunicationProtocol> sourceInputDataList = executionPersistence
 				.findInputDataForExecution(
 						PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
 						PhaseQualifier.PHASE2);
@@ -177,14 +177,14 @@ public class ExecutionIT {
 				PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME, "Test",
 				PhaseQualifier.PHASE2);
 		final IResponseData responseData = new ResponseData();
-		final DBMultiQueryInputData dbQueryInputData = new DBMultiQueryInputData();
+		final DbQueryInputDataContainer dbQueryInputData = new DbQueryInputDataContainer();
 
 		final String testRequestId = "TEST_REQUEST_ID";
 		final String returnCode = "return code phase 2";
 		final String returnText = "return text phase2";
 		final String responseId = "response id phase 2";
 
-		for (final IInputData iSourceInputData : sourceInputDataList) {
+		for (final ICommunicationProtocol iSourceInputData : sourceInputDataList) {
 			final Long sourceInputDataId = iSourceInputData.getId();
 			final String inputDataRequestId = testRequestId + sourceInputDataId;
 			final String inputDataReturnCode = returnCode + sourceInputDataId;
@@ -195,11 +195,11 @@ public class ExecutionIT {
 					inputDataRequestId, inputDataReturnCode,
 					inputDataReturnText, inputDataResponseId, successful);
 			responseData.addSingleResponse(singleResponseData);
-			final ISingleQueryInputData singleQueryInputData = new InDBQueryInputData(
+			final IDbQueryInputData singleQueryInputData = new DbQueryInputData(
 					sourceInputDataId, iSourceInputData.getRequestId(),
 					iSourceInputData.getResponseId());
 			dbQueryInputData.addSingleDBQueryInputData(singleQueryInputData);
-			final IInputData newDbQueryInputData = execution
+			final ICommunicationProtocol newDbQueryInputData = execution
 					.startInputData(singleQueryInputData);
 
 			newDbQueryInputData.setRequestId(singleResponseData.getRequestId());
@@ -212,8 +212,8 @@ public class ExecutionIT {
 		final IStatus currentStatus = lastTransition.getCurrentStatus();
 		assertNotNull(currentStatus);
 		assertEquals(PersistentStatus.DONE.name(), currentStatus.getName());
-		final Set<IInputData> inputDataSet = execution.getInputDataSet();
-		for (final IInputData iInputData : inputDataSet) {
+		final Set<ICommunicationProtocol> inputDataSet = execution.getInputDataSet();
+		for (final ICommunicationProtocol iInputData : inputDataSet) {
 			final String requestId = iInputData.getRequestId();
 			final Collection<ISingleResponseData> responses = responseData
 					.getResponse(requestId);
@@ -225,14 +225,14 @@ public class ExecutionIT {
 			assertEquals(response.getReturnCode(), iInputData.getReturnCode());
 			assertEquals(response.getReturnText(), iInputData.getReturnText());
 		}
-		for (final IInputData iquelleInputData : sourceInputDataList) {
+		for (final ICommunicationProtocol iquelleInputData : sourceInputDataList) {
 			// refresh
-			final InputData quelleInputData = inputDataRepository
+			final CommunicationProtocol quelleInputData = communicationProtocolRepository
 					.findOne(iquelleInputData.getId());
 			// prüfen PhaseConnection
 			final IPhaseConnection quellePhaseConnection = quelleInputData
 					.getNextPhaseConnection();
-			final IInputData targetInputData = quellePhaseConnection
+			final ICommunicationProtocol targetInputData = quellePhaseConnection
 					.getTargetInputData();
 			assertNotNull(targetInputData);
 			final IStatus quellePhaseConnectionStatus = quellePhaseConnection

@@ -35,7 +35,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.extrastandard.api.model.execution.IExecutionPersistence;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.IPhaseConnection;
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
@@ -72,13 +72,13 @@ public class PersistenceSendFetchPhase2IT {
 	public void testGetInputDataForExecutionByScenarionDataMatchAndPhase2()
 			throws Exception {
 		// Success Phase 1
-		final List<IInputData> inputDataForExecutionPhase2 = executionPersistence
+		final List<ICommunicationProtocol> inputDataForExecutionPhase2 = executionPersistence
 				.findInputDataForExecution(
 						PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
 						PhaseQualifier.PHASE2);
 		assertFalse("Keine Daten für die Phase2 gefunden",
 				inputDataForExecutionPhase2.isEmpty());
-		for (final IInputData inputData : inputDataForExecutionPhase2) {
+		for (final ICommunicationProtocol inputData : inputDataForExecutionPhase2) {
 			final IPhaseConnection nextPhasenConnection = inputData
 					.getNextPhaseConnection();
 			final IStatus status = nextPhasenConnection.getStatus();
@@ -93,13 +93,13 @@ public class PersistenceSendFetchPhase2IT {
 	public void testGetInputDataForExecutionByScenarionDataMatchAndPhase3()
 			throws Exception {
 		// Success Phase 2
-		final List<IInputData> inputDataForExecutionPhase3 = executionPersistence
+		final List<ICommunicationProtocol> inputDataForExecutionPhase3 = executionPersistence
 				.findInputDataForExecution(
 						PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
 						PhaseQualifier.PHASE3);
 		assertFalse("Keine Daten für die Phase2 gefunden",
 				inputDataForExecutionPhase3.isEmpty());
-		for (final IInputData inputData : inputDataForExecutionPhase3) {
+		for (final ICommunicationProtocol inputData : inputDataForExecutionPhase3) {
 			final IPhaseConnection nextPhasenConnection = inputData
 					.getNextPhaseConnection();
 			final IStatus status = nextPhasenConnection.getStatus();

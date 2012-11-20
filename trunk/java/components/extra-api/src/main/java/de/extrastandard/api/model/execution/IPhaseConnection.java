@@ -30,12 +30,12 @@ public interface IPhaseConnection {
 	/**
 	 * @return the quelleInputData
 	 */
-	IInputData getQuelleInputData();
+	ICommunicationProtocol getQuelleInputData();
 
 	/**
 	 * @return the targetInputData
 	 */
-	IInputData getTargetInputData();
+	ICommunicationProtocol getTargetInputData();
 
 	/**
 	 * @return the nextPhasequalifier
@@ -50,6 +50,6 @@ public interface IPhaseConnection {
 	/**
 	 * @param targetInputData
 	 */
-	void setTargetInputData(IInputData targetInputData);
+	void setTargetInputData(ICommunicationProtocol targetInputData);
 
 }

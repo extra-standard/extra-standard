@@ -26,37 +26,37 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.IProcedure;
-import de.extrastandard.persistence.model.InputData;
+import de.extrastandard.persistence.model.CommunicationProtocol;
 import de.extrastandard.persistence.model.Status;
 
 /**
- * Repository für InputData.
+ * Repository für CommunicationProtocol.
  * 
  * @author Thorsten Vogel
- * @version $Id: InputDataRepository.java 508 2012-09-04 09:35:41Z
+ * @version $Id: CommunicationProtocolRepository.java 508 2012-09-04 09:35:41Z
  *          thorstenvogel@gmail.com $
  */
-@Repository("inputDataRepository")
-public interface InputDataRepository extends JpaRepository<InputData, Long> {
+@Repository("communicationProtocolRepository")
+public interface CommunicationProtocolRepository extends JpaRepository<CommunicationProtocol, Long> {
 
-	@Query("FROM InputData WHERE requestId = :requestId")
-	InputData findByRequestId(@Param("requestId") String requestId);
+	@Query("FROM CommunicationProtocol WHERE requestId = :requestId")
+	CommunicationProtocol findByRequestId(@Param("requestId") String requestId);
 
-	@Query("select inputdata FROM InputData inputdata "
-			+ " WHERE inputdata.nextPhaseConnection.nextPhasequalifier = :phaseQualifier "
-			+ " and inputdata.execution.procedure = :procedure "
-			+ " and inputdata.nextPhaseConnection.status = :status")
-	List<IInputData> findByProcedureAndPhaseQualifierAndStatus(
+	@Query("select communicationProtocol FROM CommunicationProtocol communicationProtocol "
+			+ " WHERE communicationProtocol.nextPhaseConnection.nextPhasequalifier = :phaseQualifier "
+			+ " and communicationProtocol.execution.procedure = :procedure "
+			+ " and communicationProtocol.nextPhaseConnection.status = :status")
+	List<ICommunicationProtocol> findByProcedureAndPhaseQualifierAndStatus(
 			@Param("procedure") IProcedure procedure,
 			@Param("phaseQualifier") String phaseQualifier,
 			@Param("status") Status status, Pageable pageRequest);
 
-	@Query("select count(*) FROM InputData inputdata "
-			+ " WHERE inputdata.nextPhaseConnection.nextPhasequalifier = :phaseQualifier "
-			+ " and inputdata.execution.procedure = :procedure "
-			+ " and inputdata.nextPhaseConnection.status = :status")
+	@Query("select count(*) FROM CommunicationProtocol communicationProtocol "
+			+ " WHERE communicationProtocol.nextPhaseConnection.nextPhasequalifier = :phaseQualifier "
+			+ " and communicationProtocol.execution.procedure = :procedure "
+			+ " and communicationProtocol.nextPhaseConnection.status = :status")
 	Long count(@Param("procedure") IProcedure procedure,
 			@Param("phaseQualifier") String phaseQualifier,
 			@Param("status") Status status);
@@ -81,7 +81,7 @@ public interface InputDataRepository extends JpaRepository<InputData, Long> {
 	 * @param phaseQualifier
 	 * @return
 	 */
-	@Query("select max(cast (inp.responseId as int)) from InputData inp "
+	@Query("select max(cast (inp.responseId as int)) from CommunicationProtocol inp "
 			+ " WHERE inp.execution.procedure =:procedure "
 			+ " and inp.execution.phase = :phaseQualifier ")
 	Integer maxResponseIdForProcedureAndPhase(

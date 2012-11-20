@@ -28,10 +28,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
-import de.extra.client.core.model.inputdata.impl.DBMultiQueryInputData;
+import de.extra.client.core.model.inputdata.impl.DbQueryInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.api.plugin.IDataPlugin;
 
@@ -65,7 +65,7 @@ public class DBQueryDataPlugin implements IDataPlugin {
 	private static final Logger logger = LoggerFactory
 			.getLogger(DBQueryDataPlugin.class);
 
-	private List<IInputData> inputDataList;
+	private List<ICommunicationProtocol> inputDataList;
 
 	@Override
 	public IInputDataContainer getData() {
@@ -75,11 +75,11 @@ public class DBQueryDataPlugin implements IDataPlugin {
 			}
 
 		}
-		final DBMultiQueryInputData dbQueryinputData = new DBMultiQueryInputData();
+		final DbQueryInputDataContainer dbQueryinputData = new DbQueryInputDataContainer();
 		final List<IInputDataContainer> senderDataBeanList = new ArrayList<IInputDataContainer>();
 		senderDataBeanList.add(dbQueryinputData);
 
-		for (final IInputData inputData : inputDataList) {
+		for (final ICommunicationProtocol inputData : inputDataList) {
 			dbQueryinputData.addSingleDBQueryInputData(inputData.getId(),
 					String.valueOf(inputData.getRequestId()),
 					inputData.getResponseId());

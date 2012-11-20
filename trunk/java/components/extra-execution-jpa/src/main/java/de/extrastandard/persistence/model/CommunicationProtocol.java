@@ -37,21 +37,21 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.util.Assert;
 
 import de.extrastandard.api.exception.ExtraCoreRuntimeException;
-import de.extrastandard.api.model.content.IDbSingleQueryInputData;
+import de.extrastandard.api.model.content.ICriteriaQueryInputData;
 import de.extrastandard.api.model.content.ISingleContentInputData;
 import de.extrastandard.api.model.content.ISingleInputData;
-import de.extrastandard.api.model.content.ISingleQueryInputData;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.InputDataQualifier;
 import de.extrastandard.api.model.execution.PersistentStatus;
-import de.extrastandard.persistence.repository.InputDataRepository;
+import de.extrastandard.persistence.repository.CommunicationProtocolRepository;
 import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
- * JPA Implementierung von {@link IInputData}.
+ * JPA Implementierung von {@link ICommunicationProtocol}.
  * 
  * @author Thorsten Vogel
  * @version $Id: InputData.java 562 2012-09-06 14:12:43Z thorstenvogel@gmail.com
@@ -59,8 +59,8 @@ import de.extrastandard.persistence.repository.StatusRepository;
  */
 @Configurable(preConstruction = true)
 @Entity
-@Table(name = "INPUT_DATA")
-public class InputData extends AbstractEntity implements IInputData {
+@Table(name = "COMMUNICATION_PROTOCOL")
+public class CommunicationProtocol extends AbstractEntity implements ICommunicationProtocol {
 
 	private static final long serialVersionUID = 1L;
 
@@ -68,8 +68,8 @@ public class InputData extends AbstractEntity implements IInputData {
 	// LoggerFactory.getLogger(InputData.class);
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "input_data_entity_seq_gen")
-	@SequenceGenerator(name = "input_data_entity_seq_gen", sequenceName = "seq_input_data_id")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "communication_protocol_entity_seq_gen")
+	@SequenceGenerator(name = "communication_protocol_entity_seq_gen", sequenceName = "seq_communication_protocol_id")
 	private Long id;
 
 	@Column(name = "input_identifier")
@@ -116,8 +116,8 @@ public class InputData extends AbstractEntity implements IInputData {
 
 	@Transient
 	@Inject
-	@Named("inputDataRepository")
-	private transient InputDataRepository repository;
+	@Named("communicationProtocolRepository")
+	private transient CommunicationProtocolRepository repository;
 
 	@Inject
 	@Named("statusRepository")
@@ -129,7 +129,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	 * Andere Benutzer müssen immer den Konstruktor
 	 * {@link #InputData(String, String, String)} benutzen.
 	 */
-	public InputData() {
+	public CommunicationProtocol() {
 	}
 
 	// /**
@@ -193,7 +193,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	 * @param singleInputData
 	 * @param execution
 	 */
-	public InputData(final ISingleInputData singleInputData,
+	public CommunicationProtocol(final ISingleInputData singleInputData,
 			final Execution execution) {
 		Assert.notNull(singleInputData, "ISingleInputData must be specified");
 		Assert.notNull(execution, "Execution must be specified");
@@ -201,9 +201,9 @@ public class InputData extends AbstractEntity implements IInputData {
 		final String inputIdentifier = singleInputData.getInputIdentifier();
 		Assert.notNull(inputIdentifier, "inputIdentifier must be specified");
 		this.inputIdentifier = inputIdentifier;
-		if (ISingleQueryInputData.class.isAssignableFrom(singleInputData
+		if (IDbQueryInputData.class.isAssignableFrom(singleInputData
 				.getClass())) {
-			final ISingleQueryInputData singleQueryInputData = ISingleQueryInputData.class
+			final IDbQueryInputData singleQueryInputData = IDbQueryInputData.class
 					.cast(singleInputData);
 			fillInputData(singleQueryInputData);
 		} else if (ISingleContentInputData.class
@@ -213,9 +213,9 @@ public class InputData extends AbstractEntity implements IInputData {
 			fillInputData(singleContentInputData);
 		}
 		// TODO MAXRESP (06.11.12)
-		else if (IDbSingleQueryInputData.class.isAssignableFrom(singleInputData
+		else if (ICriteriaQueryInputData.class.isAssignableFrom(singleInputData
 				.getClass())) {
-			final IDbSingleQueryInputData maxResponseIdQueryInputData = IDbSingleQueryInputData.class
+			final ICriteriaQueryInputData maxResponseIdQueryInputData = ICriteriaQueryInputData.class
 					.cast(singleInputData);
 			fillInputData(maxResponseIdQueryInputData);
 		} else {
@@ -236,7 +236,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	 * @param criteriaInputData
 	 * @param singleResponseData
 	 */
-	public InputData(InputData criteriaInputData,
+	public CommunicationProtocol(CommunicationProtocol criteriaInputData,
 			ISingleResponseData singleResponseData) {
 		// Datenübernahme aus InputData
 		this.currentPhaseConnection = criteriaInputData.currentPhaseConnection;
@@ -259,12 +259,12 @@ public class InputData extends AbstractEntity implements IInputData {
 	 * @param singleQueryInputData
 	 * @param execution
 	 */
-	private void fillInputData(final ISingleQueryInputData singleQueryInputData) {
+	private void fillInputData(final IDbQueryInputData singleQueryInputData) {
 		final Long sourceIdentificationId = singleQueryInputData
 				.getSourceIdentificationId();
 		Assert.notNull(sourceIdentificationId,
 				"SourceIdentification must be specified");
-		final InputData sourceInputData = repository
+		final CommunicationProtocol sourceInputData = repository
 				.findOne(sourceIdentificationId);
 		final PhaseConnection sourceInputNextPhaseConnection = sourceInputData
 				.getNextPhaseConnection();
@@ -299,7 +299,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	 * @param singleQueryInputData
 	 */
 	private void fillInputData(
-			final IDbSingleQueryInputData singleQueryInputData) {
+			final ICriteriaQueryInputData singleQueryInputData) {
 
 		final String hashCode = String.valueOf(singleQueryInputData.hashCode());
 		this.hashcode = hashCode;
@@ -311,7 +311,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputData#getInputIdentifier()
+	 * @see de.extrastandard.api.model.execution.ICommunicationProtocol#getInputIdentifier()
 	 */
 	@Override
 	public String getInputIdentifier() {
@@ -319,7 +319,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputData#getHashcode()
+	 * @see de.extrastandard.api.model.execution.ICommunicationProtocol#getHashcode()
 	 */
 	@Override
 	public String getHashcode() {
@@ -327,7 +327,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputData#getResponseId()
+	 * @see de.extrastandard.api.model.execution.ICommunicationProtocol#getResponseId()
 	 */
 	@Override
 	public String getResponseId() {
@@ -335,7 +335,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputData#getExecution()
+	 * @see de.extrastandard.api.model.execution.ICommunicationProtocol#getExecution()
 	 */
 	@Override
 	public IExecution getExecution() {
@@ -392,7 +392,7 @@ public class InputData extends AbstractEntity implements IInputData {
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
-		builder.append("InputData [inputIdentifier=");
+		builder.append("CommunicationProtocol [inputIdentifier=");
 		builder.append(inputIdentifier);
 		builder.append(", hashcode=");
 		builder.append(hashcode);

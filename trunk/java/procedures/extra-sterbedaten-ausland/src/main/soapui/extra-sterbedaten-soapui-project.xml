@@ -1800,265 +1800,122 @@
   <!--Messages-->
   <!--@since 1.0 MS-->
   <xs:element name="ExtraError" type="ExtraErrorType"/>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost/SPoC/execute</con:endpoint><con:endpoint>http://localhost:8088/mockExtraPhase1</con:endpoint><con:endpoint>http://localhost:8088//mockExtraSterbedatenaus2Phase1</con:endpoint><con:endpoint>http://localhost:8088/mockExtraPhase3</con:endpoint><con:endpoint>http://localhost:8088///mockExtraSterbedatenaus1Phase1</con:endpoint><con:endpoint>http://localhost:8088//mockExtraServiceSterbedatenaus2Phase2</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://www.extra-standard.de/namespace/webservice/execute" name="execute" bindingOperationName="execute" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request ExtraMockServiceSendFetch Phase 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8088/mockExtraPhase1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/request/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
-   <soapenv:Header/>
-   <soapenv:Body>
-<ns2:Transport xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1">
-    <ns2:TransportHeader>
-        <xcpt:TestIndicator>http://extra-standard.de/test/NONE</xcpt:TestIndicator>
-        <xcpt:Sender>
-            <xcpt:SenderID class="Betriebsnummer">875624</xcpt:SenderID>
-            <xcpt:Name>Tester 1</xcpt:Name>
-        </xcpt:Sender>
-        <xcpt:Receiver>
-            <xcpt:ReceiverID class="Betriebsnummer">12345678</xcpt:ReceiverID>
-            <xcpt:Name>Tester 2</xcpt:Name>
-        </xcpt:Receiver>
-        <xcpt:RequestDetails>
-            <xcpt:RequestID>SEND_FETH_4</xcpt:RequestID>
-            <xcpt:TimeStamp>2012-10-23T14:22:49</xcpt:TimeStamp>
-            <xcpt:Application>
-                <xcpt:Product>eXTra Klient OpenSource</xcpt:Product>
-                <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
-                <xcpt:RegistrationID/>
-            </xcpt:Application>
-            <xcpt:Procedure>DeliveryServer</xcpt:Procedure>
-            <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
-            <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
-        </xcpt:RequestDetails>
-    </ns2:TransportHeader>
-    <ns2:TransportPlugIns>
-        <xplg:contactType>
-            <xplg:Endpoint type="SMTP">test@rentenservice.de</xplg:Endpoint>
-        </xplg:contactType>
-    </ns2:TransportPlugIns>
-    <ns2:TransportBody>
-        <xcpt:Data>
-            <xcpt:Base64CharSequence>V0ZoWVdDQjBaWE4wSURFPQ==</xcpt:Base64CharSequence>
-        </xcpt:Data>
-    </ns2:TransportBody>
-</ns2:Transport>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Request ExtraMockServiceSendFetch Phase 2"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8088//mockExtraSterbedatenaus2Phase1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns7="http://www.extra-standard.de/namespace/logging/1">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <ns2:Transport xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1">
-    <ns2:TransportHeader>
-        <xcpt:TestIndicator>http://extra-standard.de/test/NONE</xcpt:TestIndicator>
-        <xcpt:Sender>
-            <xcpt:SenderID class="Betriebsnummer">875624</xcpt:SenderID>
-            <xcpt:Name>Tester 1</xcpt:Name>
-        </xcpt:Sender>
-        <xcpt:Receiver>
-            <xcpt:ReceiverID class="Betriebsnummer">12345678</xcpt:ReceiverID>
-            <xcpt:Name>Tester 2</xcpt:Name>
-        </xcpt:Receiver>
-        <xcpt:RequestDetails>
-            <xcpt:RequestID>4</xcpt:RequestID>
-            <xcpt:TimeStamp>2012-10-24T11:24:53</xcpt:TimeStamp>
-            <xcpt:Application>
-                <xcpt:Product>eXTra Klient OpenSource</xcpt:Product>
-                <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
-                <xcpt:RegistrationID/>
-            </xcpt:Application>
-            <xcpt:Procedure>DeliveryServer</xcpt:Procedure>
-            <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
-            <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
-        </xcpt:RequestDetails>
-    </ns2:TransportHeader>
-    <ns2:TransportPlugIns/>
-    <ns2:TransportBody>
-        <xcpt:Data>
-            <xcpt:ElementSequence>
-                <xmsg:dataRequest>
-                    <xmsg:Query>
-                        <xmsg:Argument xmlns="" property="http://www.extra-standard.de/property/ResponseID" type="xs:string" event="http://www.extra-standard.de/event/RequestData">
-                            <xmsg:IN>
-<xmsg:EQ>RESPONSE_ID_Phase_1SEND_FETH_1</xmsg:EQ>
-<xmsg:EQ>RESPONSE_ID_Phase_1SEND_FETH_3</xmsg:EQ>
-                            </xmsg:IN>
-                        </xmsg:Argument>
-                    </xmsg:Query>
-                    <xmsg:Control/>
-                </xmsg:dataRequest>
-            </xcpt:ElementSequence>
-        </xcpt:Data>
-    </ns2:TransportBody>
-</ns2:Transport>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Request ExtraMockServiceSendFetch Phase 3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8088/mockExtraPhase3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns7="http://www.extra-standard.de/namespace/logging/1">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <ns2:Transport xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1">
-	    <ns2:TransportHeader>
-	        <xcpt:TestIndicator>http://extra-standard.de/test/NONE</xcpt:TestIndicator>
-	        <xcpt:Sender>
-	            <xcpt:SenderID>SENDER-ID</xcpt:SenderID>
-	            <xcpt:Name>SENDER NAME</xcpt:Name>
-	        </xcpt:Sender>
-	        <xcpt:Receiver>
-	            <xcpt:ReceiverID>RECEIVER-ID</xcpt:ReceiverID>
-	            <xcpt:Name>RECEIVER NAME</xcpt:Name>
-	        </xcpt:Receiver>
-	        <xcpt:RequestDetails>
-	            <xcpt:RequestID>RESPONSE_ID_Phase_1SEND_FETH_2</xcpt:RequestID>
-	            <xcpt:TimeStamp>2012-10-24T11:34:48</xcpt:TimeStamp>
-	            <xcpt:Application>
-	                <xcpt:Product>eXTra Klient OpenSource</xcpt:Product>
-	                <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
-	                <xcpt:RegistrationID/>
-	            </xcpt:Application>
-	            <xcpt:Procedure>http://www.extra-standard.de/procedures/DataSendFetch</xcpt:Procedure>
-	            <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
-	            <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-acknowledgement</xcpt:Scenario>
-	        </xcpt:RequestDetails>
-	    </ns2:TransportHeader>
-	    <ns2:TransportPlugIns/>
-	    <ns2:TransportBody>
-	        <xcpt:Data>
-	            <xcpt:ElementSequence>
-	                <xmsg:listOfConfirmationOfReceipt>
-	                    <xmsg:ConfirmationOfReceipt>
-	                        <xmsg:PropertySet name="http://www.extra-standard.de/property/ResponseID">
-	                            <xmsg:Value>RESPONSE_ID_Phase_1SEND_FETH_2</xmsg:Value>
-	                        </xmsg:PropertySet>
-	                    </xmsg:ConfirmationOfReceipt>
-	                </xmsg:listOfConfirmationOfReceipt>
-	            </xcpt:ElementSequence>
-	        </xcpt:Data>
-	    </ns2:TransportBody>
-	</ns2:Transport>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Request sterbedatenausl2 Phase1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8088//mockExtraSterbedatenaus2Phase1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns7="http://www.extra-standard.de/namespace/logging/1">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <ns2:Transport xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1">
-    <ns2:TransportHeader>
-        <xcpt:TestIndicator>http://extra-standard.de/test/NONE</xcpt:TestIndicator>
-        <xcpt:Sender>
-            <xcpt:SenderID class="Betriebsnummer">875624</xcpt:SenderID>
-            <xcpt:Name>Tester 1</xcpt:Name>
-        </xcpt:Sender>
-        <xcpt:Receiver>
-            <xcpt:ReceiverID class="Betriebsnummer">12345678</xcpt:ReceiverID>
-            <xcpt:Name>Tester 2</xcpt:Name>
-        </xcpt:Receiver>
-        <xcpt:RequestDetails>
-            <xcpt:RequestID>GT 1</xcpt:RequestID>
-            <xcpt:TimeStamp>2012-10-24T11:24:53</xcpt:TimeStamp>
-            <xcpt:Application>
-                <xcpt:Product>eXTra Klient OpenSource</xcpt:Product>
-                <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
-                <xcpt:RegistrationID/>
-            </xcpt:Application>
-            <xcpt:Procedure>DeliveryServer</xcpt:Procedure>
-            <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
-            <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
-        </xcpt:RequestDetails>
-    </ns2:TransportHeader>
-    <ns2:TransportPlugIns/>
-    <ns2:TransportBody>
-        <xcpt:Data>
-            <xcpt:ElementSequence>
-                <xmsg:dataRequest>
-					<xmsg:Query>
-						<xmsg:Argument property="http://www.extra-standard.de/property/ResponseID">
-							<xmsg:GT>1</xmsg:GT>
-						</xmsg:Argument>
-						<xmsg:Argument property="http://www.extra-standard.de/property/Procedure">
-							<xmsg:EQ>STDAUSL</xmsg:EQ>
-						</xmsg:Argument>
-					</xmsg:Query>
-                    <xmsg:Control/>
-                </xmsg:dataRequest>
-            </xcpt:ElementSequence>
-        </xcpt:Data>
-    </ns2:TransportBody>
-</ns2:Transport>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Request sterbedatenausl1 Phase1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8088///mockExtraSterbedatenaus1Phase1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/request/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
-   <soapenv:Header/>
-   <soapenv:Body>
-<ns2:Transport xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1">
-    <ns2:TransportHeader>
-        <xcpt:TestIndicator>http://extra-standard.de/test/NONE</xcpt:TestIndicator>
-        <xcpt:Sender>
-            <xcpt:SenderID class="Betriebsnummer">875624</xcpt:SenderID>
-            <xcpt:Name>Tester 1</xcpt:Name>
-        </xcpt:Sender>
-        <xcpt:Receiver>
-            <xcpt:ReceiverID class="Betriebsnummer">12345678</xcpt:ReceiverID>
-            <xcpt:Name>Tester 2</xcpt:Name>
-        </xcpt:Receiver>
-        <xcpt:RequestDetails>
-            <xcpt:RequestID>SEND_FETH_4</xcpt:RequestID>
-            <xcpt:TimeStamp>2012-10-23T14:22:49</xcpt:TimeStamp>
-            <xcpt:Application>
-                <xcpt:Product>eXTra Klient OpenSource</xcpt:Product>
-                <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
-                <xcpt:RegistrationID/>
-            </xcpt:Application>
-            <xcpt:Procedure>DeliveryServer</xcpt:Procedure>
-            <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
-            <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
-        </xcpt:RequestDetails>
-    </ns2:TransportHeader>
-    <ns2:TransportPlugIns>
-        <xplg:contactType>
-            <xplg:Endpoint type="SMTP">test@rentenservice.de</xplg:Endpoint>
-        </xplg:contactType>
-    </ns2:TransportPlugIns>
-    <ns2:TransportBody>
-        <xcpt:Data>
-            <xcpt:Base64CharSequence>V0ZoWVdDQjBaWE4wSURFPQ==</xcpt:Base64CharSequence>
-        </xcpt:Data>
-    </ns2:TransportBody>
-</ns2:Transport>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Request Sterbedatenausl 2  Phase 2"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8088//mockExtraServiceSterbedatenaus2Phase2</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns7="http://www.extra-standard.de/namespace/logging/1">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <ns2:Transport xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1">
-	    <ns2:TransportHeader>
-	        <xcpt:TestIndicator>http://extra-standard.de/test/NONE</xcpt:TestIndicator>
-	        <xcpt:Sender>
-	            <xcpt:SenderID>SENDER-ID</xcpt:SenderID>
-	            <xcpt:Name>SENDER NAME</xcpt:Name>
-	        </xcpt:Sender>
-	        <xcpt:Receiver>
-	            <xcpt:ReceiverID>RECEIVER-ID</xcpt:ReceiverID>
-	            <xcpt:Name>RECEIVER NAME</xcpt:Name>
-	        </xcpt:Receiver>
-	        <xcpt:RequestDetails>
-	            <xcpt:RequestID>RESPONSE_ID_Phase_1SEND_FETH_2</xcpt:RequestID>
-	            <xcpt:TimeStamp>2012-10-24T11:34:48</xcpt:TimeStamp>
-	            <xcpt:Application>
-	                <xcpt:Product>eXTra Klient OpenSource</xcpt:Product>
-	                <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
-	                <xcpt:RegistrationID/>
-	            </xcpt:Application>
-	            <xcpt:Procedure>http://www.extra-standard.de/procedures/DataSendFetch</xcpt:Procedure>
-	            <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
-	            <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-acknowledgement</xcpt:Scenario>
-	        </xcpt:RequestDetails>
-	    </ns2:TransportHeader>
-	    <ns2:TransportPlugIns/>
-	    <ns2:TransportBody>
-	        <xcpt:Data>
-	            <xcpt:ElementSequence>
-	                <xmsg:listOfConfirmationOfReceipt>
-	                    <xmsg:ConfirmationOfReceipt>
-	                        <xmsg:PropertySet name="http://www.extra-standard.de/property/ResponseID">
-	                            <xmsg:Value>RESPONSE_ID_Phase_1SEND_FETH_2</xmsg:Value>
-	                        </xmsg:PropertySet>
-	                    </xmsg:ConfirmationOfReceipt>
-	                </xmsg:listOfConfirmationOfReceipt>
-	            </xcpt:ElementSequence>
-	        </xcpt:Data>
-	    </ns2:TransportBody>
-	</ns2:Transport>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite name="extraSOAP TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="execute TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="execute"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>extraSOAP</con:interface><con:operation>execute</con:operation><con:request name="execute"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost/SPoC/execute</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/request/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost/SPoC/execute</con:endpoint><con:endpoint>http://localhost:8088/mockExtraPhase1</con:endpoint><con:endpoint>http://localhost:8088//mockExtraSterbedatenaus2Phase1</con:endpoint><con:endpoint>http://localhost:8088/mockExtraPhase3</con:endpoint><con:endpoint>http://localhost:8088/mockExtraSterbedatenausPhase1</con:endpoint><con:endpoint>/mockExtraSterbedatenausPhase1</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://www.extra-standard.de/namespace/webservice/execute" name="execute" bindingOperationName="execute" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request SterbedatenausPhase3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8088//mockExtraSterbedatenaus2Phase1</con:endpoint><con:request><![CDATA[<ns6:transport xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:ns6="http://www.extra-standard.de/namespace/request/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+   <ns6:TransportHeader>
+      <xcpt:TestIndicator>http://extra-standard.de/test/NONE</xcpt:TestIndicator>
+      <xcpt:Sender>
+         <xcpt:SenderID>ec-1</xcpt:SenderID>
+         <xcpt:Name>eXTra-Client</xcpt:Name>
+      </xcpt:Sender>
+      <xcpt:Receiver>
+         <xcpt:ReceiverID>es-1</xcpt:ReceiverID>
+         <xcpt:Name>eXTra-Server</xcpt:Name>
+      </xcpt:Receiver>
+      <xcpt:RequestDetails>
+         <xcpt:RequestID>STERBEDATENABGLEICH-7777779-CONFIRMATION</xcpt:RequestID>
+         <xcpt:TimeStamp>2012-10-10T11:21:13</xcpt:TimeStamp>
+         <xcpt:Application>
+            <xcpt:Product>eXTra Client OpenSource</xcpt:Product>
+            <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
+            <xcpt:RegistrationID/>
+         </xcpt:Application>
+         <xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbemeldung</xcpt:Procedure>
+         <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
+         <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-acknowledgement</xcpt:Scenario>
+      </xcpt:RequestDetails>
+   </ns6:TransportHeader>
+   <ns6:TransportPlugIns/>
+   <ns6:TransportBody>
+      <xcpt:Data>
+         <xcpt:ElementSequence>
+            <xmsg:listOfConfirmationOfReceipt>
+               <xmsg:ConfirmationOfReceipt>
+                  <xmsg:PropertySet name="http://www.extra-standard.de/property/ResponseID">
+                     <xmsg:Value>10001</xmsg:Value>
+                     <xmsg:Value>10002</xmsg:Value>
+                  </xmsg:PropertySet>
+               </xmsg:ConfirmationOfReceipt>
+            </xmsg:listOfConfirmationOfReceipt>
+         </xcpt:ElementSequence>
+      </xcpt:Data>
+   </ns6:TransportBody>
+</ns6:transport>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Request SterbedatenausPhase2"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8088/mockExtraSterbedatenausPhase1</con:endpoint><con:request><![CDATA[<ns6:transport xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:ns6="http://www.extra-standard.de/namespace/request/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+   <ns6:TransportHeader>
+      <xcpt:TestIndicator>http://extra-standard.de/test/NONE</xcpt:TestIndicator>
+      <xcpt:Sender>
+         <xcpt:SenderID>ec-1</xcpt:SenderID>
+         <xcpt:Name>eXTra-Client</xcpt:Name>
+      </xcpt:Sender>
+      <xcpt:Receiver>
+         <xcpt:ReceiverID>es-1</xcpt:ReceiverID>
+         <xcpt:Name>eXTra-Server</xcpt:Name>
+      </xcpt:Receiver>
+      <xcpt:RequestDetails>
+         <xcpt:RequestID>STERBEDATENABGLEICH_8888888</xcpt:RequestID>
+         <xcpt:TimeStamp>2012-10-10T11:16:13</xcpt:TimeStamp>
+         <xcpt:Application>
+            <xcpt:Product>eXTra Client OpenSource</xcpt:Product>
+            <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
+            <xcpt:RegistrationID/>
+         </xcpt:Application>
+         <xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbemeldung</xcpt:Procedure>
+         <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
+         <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
+      </xcpt:RequestDetails>
+   </ns6:TransportHeader>
+   <ns6:TransportPlugIns/>
+   <ns6:TransportBody>
+      <xcpt:Data>
+         <xcpt:ElementSequence>
+            <xmsg:dataRequest>
+               <xmsg:Query>
+                  <xmsg:Argument property="http://www.extra-standard.de/property/ResponseID">
+                     <xmsg:GT>10000</xmsg:GT>
+                  </xmsg:Argument>
+                  <xmsg:Argument property="http://www.extra-standard.de/property/Procedure">
+                     <xmsg:EQ>STDAUSL</xmsg:EQ>
+                  </xmsg:Argument>
+               </xmsg:Query>
+               <xmsg:Control/>
+            </xmsg:dataRequest>
+         </xcpt:ElementSequence>
+      </xcpt:Data>
+   </ns6:TransportBody>
+</ns6:transport>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Request SterbedatenausPhase1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8088/mockExtraSterbedatenausPhase1</con:endpoint><con:request><![CDATA[<ns6:transport xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:ns6="http://www.extra-standard.de/namespace/request/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+   <ns6:TransportHeader>
+      <xcpt:TestIndicator>http://extra-standard.de/test/NONE</xcpt:TestIndicator>
+      <xcpt:Sender>
+         <xcpt:SenderID>ec-1</xcpt:SenderID>
+         <xcpt:Name>eXTra-Client</xcpt:Name>
+      </xcpt:Sender>
+      <xcpt:Receiver>
+         <xcpt:ReceiverID>es-1</xcpt:ReceiverID>
+         <xcpt:Name>eXTra-Server</xcpt:Name>
+      </xcpt:Receiver>
+      <xcpt:RequestDetails>
+         <xcpt:RequestID>STERBEDATENABGLEICH-7777777</xcpt:RequestID>
+         <xcpt:TimeStamp>2012-10-10T10:52:00</xcpt:TimeStamp>
+         <xcpt:Application>
+            <xcpt:Product>eXTra Client OpenSource</xcpt:Product>
+            <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
+            <xcpt:RegistrationID/>
+         </xcpt:Application>
+         <xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbemeldung</xcpt:Procedure>
+         <xcpt:DataType>http://www.extra-standard.de/datatypes/DataSend</xcpt:DataType>
+         <xcpt:Scenario>http://wwwxextra-standardxde/scenario/request-with-acknowledgement</xcpt:Scenario>
+      </xcpt:RequestDetails>
+   </ns6:TransportHeader>
+   <ns6:TransportPlugIns>
+      <xplg:dataSource>
+         <xplg:DataContainer type="http://extra-standard.de/container/FILE" name="" encoding="UTF-8"/>
+      </xplg:dataSource>
+   </ns6:TransportPlugIns>
+   <ns6:TransportBody>
+      <xcpt:Data>
+         <xcpt:Base64CharSequence>V0ZoWVdDQjBaWE4wSURFPQ==</xcpt:Base64CharSequence>
+      </xcpt:Data>
+   </ns6:TransportBody>
+</ns6:transport>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite name="extraSOAP TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="execute TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="execute"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>extraSOAP</con:interface><con:operation>execute</con:operation><con:request name="execute"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost/SPoC/execute</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/request/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
    <soapenv:Header/>
    <soapenv:Body>
       <ns:Transport version="?" profile="?">
@@ -3821,7 +3678,7 @@
          </ns1:Signatures>
       </ns:Transport>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:wsaConfig action="http://www.extra-standard.de/namespace/webservice/execute"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:mockService port="8088" path="/mockExtraServiceSendFetchPhase1" host="KX7149728" name="ExtraMockServiceSendFetch Phase 1" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse Phase 1" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:wsaConfig action="http://www.extra-standard.de/namespace/webservice/execute"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:mockService port="8088" path="/mockExtraSterbedatenausPhase1" host="KX7149728" name="ExtraMockServiceSterbedatenausPhase1" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse Phase 1 Erfolg" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
 def holder = groovyUtils.getXmlHolder(mockRequest.requestContent)
 def reqRef = String.valueOf(holder.getNodeValue("//xcpt:RequestID"))
 def responseId = reqRef + "_RESP"
@@ -3829,134 +3686,135 @@ context.setProperty("requestId", reqRef)
 context.setProperty("responseId", responseId)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/response/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
    <soapenv:Header/>
    <soapenv:Body>
-		<xres:Transport xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:ns6="http://www.extra-standard.de/namespace/request/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-		   <xres:TransportHeader>
-		      <xcpt:TestIndicator>http://wwwxextra-standardxde/test/NONE</xcpt:TestIndicator>
-		      <xcpt:Sender>
-		         <xcpt:SenderID>12345678</xcpt:SenderID>
-		      </xcpt:Sender>
-		      <xcpt:Receiver>
-		         <xcpt:ReceiverID>66667777</xcpt:ReceiverID>
-		      </xcpt:Receiver>
-		      <xcpt:RequestDetails>
-		         <xcpt:RequestID>${requestId}</xcpt:RequestID>
-		         <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
-		         <xcpt:Application>
-		            <xcpt:Product>Software</xcpt:Product>
-		            <xcpt:Manufacturer>Hersteller</xcpt:Manufacturer>
-		         </xcpt:Application>
-		         <xcpt:Procedure>http://www.extra-standard.de/procedures/DEUEV</xcpt:Procedure>
-		         <xcpt:DataType>http://www.extra-standard.de/datatypes/Sofortmeldung</xcpt:DataType>
-		         <xcpt:Scenario>http://wwwxextra-standardxde/scenario/request-with-acknowledgement</xcpt:Scenario>
-		      </xcpt:RequestDetails>
-		      <xcpt:ResponseDetails>
-		         <xcpt:ResponseID>${responseId}</xcpt:ResponseID>
-		         <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
-		         <xcpt:Report highestWeight="http://wwwxextra-standardxde/weight/INFO">
-		            <xcpt:Flag weight="http://wwwxextra-standardxde/weight/INFO">
-		               <xcpt:Code>C00</xcpt:Code>
-		               <xcpt:Text>Die Nachricht entspricht dem geforderten Aufbau und kann im Fachverfahren verarbeitet werden</xcpt:Text>
-		            </xcpt:Flag>
-		         </xcpt:Report>
-		      </xcpt:ResponseDetails>
-		   </xres:TransportHeader>
-		   <xres:TransportBody/>
-		</xres:Transport>
+      <xres:Transport xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:ns6="http://www.extra-standard.de/namespace/request/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+         <xres:TransportHeader>
+            <xcpt:TestIndicator>http://wwwxextra-standardxde/test/NONE</xcpt:TestIndicator>
+            <xcpt:Sender>
+               <xcpt:ReceiverID>es-1</xcpt:ReceiverID>
+               <xcpt:Name>eXTra-Server</xcpt:Name>
+            </xcpt:Sender>
+            <xcpt:Receiver>
+               <xcpt:SenderID>ec-1</xcpt:SenderID>
+               <xcpt:Name>eXTra-Client</xcpt:Name>
+            </xcpt:Receiver>
+            <xcpt:RequestDetails>
+               <xcpt:RequestID>${requestId}</xcpt:RequestID>
+               <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
+               <xcpt:Application>
+                  <xcpt:Product>eXTra Client OpenSource</xcpt:Product>
+                  <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
+               </xcpt:Application>
+               <xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbemeldung</xcpt:Procedure>
+               <xcpt:DataType>http://www.extra-standard.de/datatypes/DataSend</xcpt:DataType>
+               <xcpt:Scenario>http://wwwxextra-standardxde/scenario/request-with-acknowledgement</xcpt:Scenario>
+            </xcpt:RequestDetails>
+            <xcpt:ResponseDetails>
+               <xcpt:ResponseID>${responseId}</xcpt:ResponseID>
+               <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
+               <xcpt:Report highestWeight="http://wwwxextra-standardxde/weight/INFO">
+                  <xcpt:Flag weight="http://wwwxextra-standardxde/weight/INFO">
+                     <xcpt:Code>C00</xcpt:Code>
+                     <xcpt:Text>Die Nachricht entspricht dem geforderten Aufbau und kann im Fachverfahren verarbeitet werden</xcpt:Text>
+                  </xcpt:Flag>
+               </xcpt:Report>
+            </xcpt:ResponseDetails>
+         </xres:TransportHeader>
+         <xres:TransportBody/>
+      </xres:Transport>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockExtraServiceSendFetchPhase2" host="KX7149728" name="ExtraMockServiceSendFetch Phase 2" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse 2" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockExtraSterbedatenausPhase2" host="KX7149728" name="ExtraMockServiceSterbedatenausPhase2" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse Phase 2 Erfolg" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
 def holder = groovyUtils.getXmlHolder(mockRequest.requestContent)
 def reqRef = String.valueOf(holder.getNodeValue("//xmsg:GT"))
+def reqid = String.valueOf(holder.getNodeValue("//xcpt:RequestID"))
 def responseId = reqRef + "_RESP"
-context.setProperty("requestId", reqRef)
-context.setProperty("responseId", responseId)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/response/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
+def responseId1 = 10001 + Integer.valueOf(reqRef)
+def responseId2 = 10002 + Integer.valueOf(reqRef)
+context.setProperty("requestId", reqid)
+context.setProperty("responseId", responseId)
+context.setProperty("responseId1", responseId1)
+context.setProperty("responseId2", responseId2)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/response/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
    <soapenv:Header/>
    <soapenv:Body>
-		<xres:Transport xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-		    <xres:TransportHeader>
-		        <xcpt:RequestDetails>
-		            <xcpt:RequestID>4</xcpt:RequestID>
-		        </xcpt:RequestDetails>
-		        <xcpt:ResponseDetails>
-		            <xcpt:ResponseID>42</xcpt:ResponseID>
-		            <xcpt:Report>
-		                <xcpt:Flag>
-		                    <xcpt:Code>C00</xcpt:Code>
-		                    <xcpt:Text>O.K.</xcpt:Text>
-		                </xcpt:Flag>
-		            </xcpt:Report>
-		        </xcpt:ResponseDetails>
-		    </xres:TransportHeader>
-		    <xres:TransportBody>
-		        <xres:Package>
-		            <xres:PackageHeader>
-		                <xcpt:RequestDetails>
-		                    <xcpt:RequestID>RESPONSE_ID_Phase_1SEND_FETH_1</xcpt:RequestID>
-		                </xcpt:RequestDetails>
-		                <xcpt:ResponseDetails>
-		                    <xcpt:ResponseID>RESPONSE_ID_Phase_1SEND_FETH_1</xcpt:ResponseID>
-		                    <xcpt:Report>
-		                        <xcpt:Flag>
-		                            <xcpt:Code>C00</xcpt:Code>
-		                            <xcpt:Text>O.K.</xcpt:Text>
-		                        </xcpt:Flag>
-		                    </xcpt:Report>
-		                </xcpt:ResponseDetails>
-		            </xres:PackageHeader>
-		            <xres:PackageBody>
-		                <xcpt:Data>
-		                    <xcpt:Base64CharSequence>UkZWTlRWa2dVbVZ6Y0c5dWMyVWdabTl5SUZGMVpYSjVJRUZ5WjNWdFpXNTBPbEpGVTFCUFRsTkZYMGxFWDFCb1lYTmxYekZUUlU1RVgwWkZWRWhmTVE9PQ==</xcpt:Base64CharSequence>
-		                </xcpt:Data>
-		            </xres:PackageBody>
-		        </xres:Package>
-		        <xres:Package>
-		            <xres:PackageHeader>
-		                <xcpt:RequestDetails>
-		                    <xcpt:RequestID>RESPONSE_ID_Phase_1SEND_FETH_3</xcpt:RequestID>
-		                </xcpt:RequestDetails>
-		                <xcpt:ResponseDetails>
-		                    <xcpt:ResponseID>RESPONSE_ID_Phase_1SEND_FETH_3</xcpt:ResponseID>
-		                    <xcpt:Report>
-		                        <xcpt:Flag>
-		                            <xcpt:Code>C00</xcpt:Code>
-		                            <xcpt:Text>O.K.</xcpt:Text>
-		                        </xcpt:Flag>
-		                    </xcpt:Report>
-		                </xcpt:ResponseDetails>
-		            </xres:PackageHeader>
-		            <xres:PackageBody>
-		                <xcpt:Data>
-		                    <xcpt:Base64CharSequence>UkZWTlRWa2dVbVZ6Y0c5dWMyVWdabTl5SUZGMVpYSjVJRUZ5WjNWdFpXNTBPbEpGVTFCUFRsTkZYMGxFWDFCb1lYTmxYekZUUlU1RVgwWkZWRWhmTXc9PQ==</xcpt:Base64CharSequence>
-		                </xcpt:Data>
-		            </xres:PackageBody>
-		        </xres:Package>
-		    </xres:TransportBody>
-		</xres:Transport>
+      <xres:Transport xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+         <xres:TransportHeader>
+            <xcpt:TestIndicator>http://wwwxextra-standardxde/test/NONE</xcpt:TestIndicator>
+            <xcpt:Sender>
+               <xcpt:ReceiverID>es-1</xcpt:ReceiverID>
+               <xcpt:Name>eXTra-Server</xcpt:Name>
+            </xcpt:Sender>
+            <xcpt:Receiver>
+               <xcpt:SenderID>ec-1</xcpt:SenderID>
+               <xcpt:Name>eXTra-Client</xcpt:Name>
+            </xcpt:Receiver>
+            <xcpt:RequestDetails>
+               <xcpt:RequestID class="0">1111111</xcpt:RequestID>
+               <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
+               <xcpt:Application>
+                  <xcpt:Product>eXTra Client OpenSource</xcpt:Product>
+                  <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
+               </xcpt:Application>
+               <xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbemeldung</xcpt:Procedure>
+               <xcpt:DataType>http://www.extra-standard.de/datatype/DataRequest</xcpt:DataType>
+               <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
+            </xcpt:RequestDetails>
+            <xcpt:ResponseDetails>
+               <xcpt:ResponseID class="0">${responseId}</xcpt:ResponseID>
+               <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
+               <xcpt:Report highestWeight="http://www.extra-standard.de/weight/INFO">
+                  <xcpt:Flag weight="http://www.extra-standard.de/weight/INFO">
+                     <xcpt:Code>E98</xcpt:Code>
+                     <xcpt:Text>Anfrage erfolgreich</xcpt:Text>
+                  </xcpt:Flag>
+               </xcpt:Report>
+            </xcpt:ResponseDetails>
+         </xres:TransportHeader>
+         <xres:TransportBody>
+            <xres:Package>
+               <xres:PackageHeader>
+                  <xcpt:RequestDetails>
+                     <xcpt:RequestID>${requestId}</xcpt:RequestID>
+                  </xcpt:RequestDetails>
+                  <xcpt:ResponseDetails>
+                     <xcpt:ResponseID>${responseId1}</xcpt:ResponseID>
+                     <xcpt:Report>
+                        <xcpt:Flag>
+                           <xcpt:Code>C00</xcpt:Code>
+                           <xcpt:Text>O.K.</xcpt:Text>
+                        </xcpt:Flag>
+                     </xcpt:Report>
+                  </xcpt:ResponseDetails>
+               </xres:PackageHeader>
+               <xres:PackageBody>
+                  <xcpt:Data>
+                     <xcpt:Base64CharSequence>UkZWTlRWa2dVbVZ6Y0c5dWMyVWdabTl5SUZGMVpYSjVJRUZ5WjNWdFpXNTBPbEpGVTFCUFRsTkZYMGxFWDFCb1lYTmxYekZUUlU1RVgwWkZWRWhmTVE9PQ==</xcpt:Base64CharSequence>
+                  </xcpt:Data>
+               </xres:PackageBody>
+            </xres:Package>
+            <xres:Package>
+               <xres:PackageHeader>
+                  <xcpt:RequestDetails>
+                     <xcpt:RequestID>${requestId}</xcpt:RequestID>
+                  </xcpt:RequestDetails>
+                  <xcpt:ResponseDetails>
+                     <xcpt:ResponseID>${responseId2}</xcpt:ResponseID>
+                     <xcpt:Report>
+                        <xcpt:Flag>
+                           <xcpt:Code>C00</xcpt:Code>
+                           <xcpt:Text>O.K.</xcpt:Text>
+                        </xcpt:Flag>
+                     </xcpt:Report>
+                  </xcpt:ResponseDetails>
+               </xres:PackageHeader>
+               <xres:PackageBody>
+                  <xcpt:Data>
+                     <xcpt:Base64CharSequence>UkZWTlRWa2dVbVZ6Y0c5dWMyVWdabTl5SUZGMVpYSjVJRUZ5WjNWdFpXNTBPbEpGVTFCUFRsTkZYMGxFWDFCb1lYTmxYekZUUlU1RVgwWkZWRWhmTXc9PQ==</xcpt:Base64CharSequence>
+                  </xcpt:Data>
+               </xres:PackageBody>
+            </xres:Package>
+         </xres:TransportBody>
+      </xres:Transport>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockExtraServiceSendFetchPhase3" host="KX7149728" name="ExtraMockServiceSendFetch Phase 3" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse 2" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
-def holder = groovyUtils.getXmlHolder(mockRequest.requestContent)
-def reqRef = String.valueOf(holder.getNodeValue("//xmsg:Value"))
-def responseId = reqRef + "_RESP"
-context.setProperty("requestId", reqRef)
-context.setProperty("responseId", responseId)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/response/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
-   <soapenv:Header/>
-   <soapenv:Body>
-	 <xres:Transport xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-	    <xres:TransportHeader>
-	        <xcpt:RequestDetails>
-	            <xcpt:RequestID>RESPONSE_ID_Phase_1SEND_FETH_2</xcpt:RequestID>
-	        </xcpt:RequestDetails>
-	        <xcpt:ResponseDetails>
-	            <xcpt:ResponseID>42</xcpt:ResponseID>
-	            <xcpt:Report>
-	                <xcpt:Flag>
-	                    <xcpt:Code>C00</xcpt:Code>
-	                </xcpt:Flag>
-	            </xcpt:Report>
-	        </xcpt:ResponseDetails>
-	    </xres:TransportHeader>
-	</xres:Transport>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockExtraSterbedatenausPhase1" host="KX7149728" name="ExtraMockServiceSterbedatenausPhase1" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse Phase 1" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockExtraSterbedatenausPhase3" host="KX7149728" name="ExtraMockServiceSterbedatenausPhase3" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse Phase 3 Erfolg" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
 def holder = groovyUtils.getXmlHolder(mockRequest.requestContent)
 def reqRef = String.valueOf(holder.getNodeValue("//xcpt:RequestID"))
 def responseId = reqRef + "_RESP"
@@ -3964,41 +3822,86 @@ context.setProperty("requestId", reqRef)
 context.setProperty("responseId", responseId)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/response/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
    <soapenv:Header/>
    <soapenv:Body>
-		<xres:Transport xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:ns6="http://www.extra-standard.de/namespace/request/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-		   <xres:TransportHeader>
-		      <xcpt:TestIndicator>http://wwwxextra-standardxde/test/NONE</xcpt:TestIndicator>
-		      <xcpt:Sender>
-		         <xcpt:SenderID>12345678</xcpt:SenderID>
-		      </xcpt:Sender>
-		      <xcpt:Receiver>
-		         <xcpt:ReceiverID>66667777</xcpt:ReceiverID>
-		      </xcpt:Receiver>
-		      <xcpt:RequestDetails>
-		         <xcpt:RequestID>${requestId}</xcpt:RequestID>
-		         <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
-		         <xcpt:Application>
-		            <xcpt:Product>Software</xcpt:Product>
-		            <xcpt:Manufacturer>Hersteller</xcpt:Manufacturer>
-		         </xcpt:Application>
-		         <xcpt:Procedure>http://www.extra-standard.de/procedures/DEUEV</xcpt:Procedure>
-		         <xcpt:DataType>http://www.extra-standard.de/datatypes/Sofortmeldung</xcpt:DataType>
-		         <xcpt:Scenario>http://wwwxextra-standardxde/scenario/request-with-acknowledgement</xcpt:Scenario>
-		      </xcpt:RequestDetails>
-		      <xcpt:ResponseDetails>
-		         <xcpt:ResponseID>${responseId}</xcpt:ResponseID>
-		         <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
-		         <xcpt:Report highestWeight="http://wwwxextra-standardxde/weight/INFO">
-		            <xcpt:Flag weight="http://wwwxextra-standardxde/weight/INFO">
-		               <xcpt:Code>C00</xcpt:Code>
-		               <xcpt:Text>Die Nachricht entspricht dem geforderten Aufbau und kann im Fachverfahren verarbeitet werden</xcpt:Text>
-		            </xcpt:Flag>
-		         </xcpt:Report>
-		      </xcpt:ResponseDetails>
-		   </xres:TransportHeader>
-		   <xres:TransportBody/>
-		</xres:Transport>
+      <xres:Transport xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+         <xres:TransportHeader>
+            <xcpt:TestIndicator>http://www.extra-standard.de/test/NONE</xcpt:TestIndicator>
+            <xcpt:Sender>
+               <xcpt:ReceiverID>es-1</xcpt:ReceiverID>
+               <xcpt:Name>eXTra-Server</xcpt:Name>
+            </xcpt:Sender>
+            <xcpt:Receiver>
+               <xcpt:SenderID>ec-1</xcpt:SenderID>
+               <xcpt:Name>eXTra-Client</xcpt:Name>
+            </xcpt:Receiver>
+            <xcpt:RequestDetails>
+               <xcpt:RequestID>${requestId}</xcpt:RequestID>
+               <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
+               <xcpt:Application>
+                  <xcpt:Product>eXTra Client OpenSource</xcpt:Product>
+                  <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
+               </xcpt:Application>
+               <xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbemeldung</xcpt:Procedure>
+               <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
+               <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-acknowledgement</xcpt:Scenario>
+            </xcpt:RequestDetails>
+            <xcpt:ResponseDetails>
+               <xcpt:ResponseID>${responseId}</xcpt:ResponseID>
+               <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
+               <xcpt:Report highestWeight="http://www.extra-standard.de/weight/INFO">
+                  <xcpt:Flag weight="http://www.extra-standard.de/weight/INFO">
+                     <xcpt:Code>C00</xcpt:Code>
+                     <xcpt:Text>Empfang der Nachricht wurde erfolgreich bestaetigt</xcpt:Text>
+                  </xcpt:Flag>
+               </xcpt:Report>
+            </xcpt:ResponseDetails>
+         </xres:TransportHeader>
+      </xres:Transport>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockExtraSterbedatenausPhase2" host="KX7149728" name="ExtraMockServiceSterbedatenausPhase2" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse 2" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockExtraSterbedatenausPhase1Nok" host="KX7149728" name="ExtraMockServiceSterbedatenausPhase1Nok" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse Phase 1 Fehler" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+def holder = groovyUtils.getXmlHolder(mockRequest.requestContent)
+def reqRef = String.valueOf(holder.getNodeValue("//xcpt:RequestID"))
+def responseId = reqRef + "_RESP"
+context.setProperty("requestId", reqRef)
+context.setProperty("responseId", responseId)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/response/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xres:Transport xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:ns6="http://www.extra-standard.de/namespace/request/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+         <xres:TransportHeader>
+            <xcpt:TestIndicator>http://wwwxextra-standardxde/test/NONE</xcpt:TestIndicator>
+            <xcpt:Sender>
+               <xcpt:ReceiverID>es-1</xcpt:ReceiverID>
+               <xcpt:Name>eXTra-Server</xcpt:Name>
+            </xcpt:Sender>
+            <xcpt:Receiver>
+               <xcpt:SenderID>ec-1</xcpt:SenderID>
+               <xcpt:Name>eXTra-Client</xcpt:Name>
+            </xcpt:Receiver>
+            <xcpt:RequestDetails>
+               <xcpt:RequestID>${requestId}</xcpt:RequestID>
+               <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
+               <xcpt:Application>
+                  <xcpt:Product>eXTra Client OpenSource</xcpt:Product>
+                  <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
+               </xcpt:Application>
+               <xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbemeldung</xcpt:Procedure>
+               <xcpt:DataType>http://www.extra-standard.de/datatypes/DataSend</xcpt:DataType>
+               <xcpt:Scenario>http://wwwxextra-standardxde/scenario/request-with-acknowledgement</xcpt:Scenario>
+            </xcpt:RequestDetails>
+            <xcpt:ResponseDetails>
+               <xcpt:ResponseID>${responseId}</xcpt:ResponseID>
+               <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
+               <xcpt:Report highestWeight="http://wwwxextra-standardxde/weight/INFO">
+                  <xcpt:Flag weight="http://wwwxextra-standardxde/weight/INFO">
+                     <xcpt:Code>E00</xcpt:Code>
+                     <xcpt:Text>Fehler! Die Nachricht entspricht nicht dem geforderten Aufbau.</xcpt:Text>
+                  </xcpt:Flag>
+               </xcpt:Report>
+            </xcpt:ResponseDetails>
+         </xres:TransportHeader>
+         <xres:TransportBody/>
+      </xres:Transport>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockExtraSterbedatenausPhase2Nok" host="KX7149728" name="ExtraMockServiceSterbedatenausPhase2Nok" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse Phase 2 Fehler" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
 def holder = groovyUtils.getXmlHolder(mockRequest.requestContent)
 def reqRef = String.valueOf(holder.getNodeValue("//xmsg:GT"))
 def reqid = String.valueOf(holder.getNodeValue("//xcpt:RequestID"))
@@ -4009,68 +3912,86 @@ context.setProperty("responseId1", responseId1)
 context.setProperty("responseId2", responseId2)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/response/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
    <soapenv:Header/>
    <soapenv:Body>
-		<xres:Transport xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-		    <xres:TransportHeader>
-		        <xcpt:RequestDetails>
-		            <xcpt:RequestID>4</xcpt:RequestID>
-		        </xcpt:RequestDetails>
-		        <xcpt:ResponseDetails>
-		            <xcpt:ResponseID>42</xcpt:ResponseID>
-		            <xcpt:Report>
-		                <xcpt:Flag>
-		                    <xcpt:Code>C00</xcpt:Code>
-		                    <xcpt:Text>O.K.</xcpt:Text>
-		                </xcpt:Flag>
-		            </xcpt:Report>
-		        </xcpt:ResponseDetails>
-		    </xres:TransportHeader>
-		    <xres:TransportBody>
-		        <xres:Package>
-		            <xres:PackageHeader>
-		                <xcpt:RequestDetails>
-		                    <xcpt:RequestID>${requestId}</xcpt:RequestID>
-		                </xcpt:RequestDetails>
-		                <xcpt:ResponseDetails>
-		                    <xcpt:ResponseID>${responseId1}</xcpt:ResponseID>
-		                    <xcpt:Report>
-		                        <xcpt:Flag>
-		                            <xcpt:Code>C00</xcpt:Code>
-		                            <xcpt:Text>O.K.</xcpt:Text>
-		                        </xcpt:Flag>
-		                    </xcpt:Report>
-		                </xcpt:ResponseDetails>
-		            </xres:PackageHeader>
-		            <xres:PackageBody>
-		                <xcpt:Data>
-		                    <xcpt:Base64CharSequence>UkZWTlRWa2dVbVZ6Y0c5dWMyVWdabTl5SUZGMVpYSjVJRUZ5WjNWdFpXNTBPbEpGVTFCUFRsTkZYMGxFWDFCb1lYTmxYekZUUlU1RVgwWkZWRWhmTVE9PQ==</xcpt:Base64CharSequence>
-		                </xcpt:Data>
-		            </xres:PackageBody>
-		        </xres:Package>
-		        <xres:Package>
-		            <xres:PackageHeader>
-		                <xcpt:RequestDetails>
-		                    <xcpt:RequestID>${requestId}</xcpt:RequestID>
-		                </xcpt:RequestDetails>
-		                <xcpt:ResponseDetails>
-		                    <xcpt:ResponseID>${responseId2}</xcpt:ResponseID>
-		                    <xcpt:Report>
-		                        <xcpt:Flag>
-		                            <xcpt:Code>C00</xcpt:Code>
-		                            <xcpt:Text>O.K.</xcpt:Text>
-		                        </xcpt:Flag>
-		                    </xcpt:Report>
-		                </xcpt:ResponseDetails>
-		            </xres:PackageHeader>
-		            <xres:PackageBody>
-		                <xcpt:Data>
-		                    <xcpt:Base64CharSequence>UkZWTlRWa2dVbVZ6Y0c5dWMyVWdabTl5SUZGMVpYSjVJRUZ5WjNWdFpXNTBPbEpGVTFCUFRsTkZYMGxFWDFCb1lYTmxYekZUUlU1RVgwWkZWRWhmTXc9PQ==</xcpt:Base64CharSequence>
-		                </xcpt:Data>
-		            </xres:PackageBody>
-		        </xres:Package>
-		    </xres:TransportBody>
-		</xres:Transport>
+      <xres:Transport xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+         <xres:TransportHeader>
+            <xcpt:TestIndicator>http://wwwxextra-standardxde/test/NONE</xcpt:TestIndicator>
+            <xcpt:Sender>
+               <xcpt:ReceiverID>es-1</xcpt:ReceiverID>
+               <xcpt:Name>eXTra-Server</xcpt:Name>
+            </xcpt:Sender>
+            <xcpt:Receiver>
+               <xcpt:SenderID>ec-1</xcpt:SenderID>
+               <xcpt:Name>eXTra-Client</xcpt:Name>
+            </xcpt:Receiver>
+            <xcpt:RequestDetails>
+               <xcpt:RequestID class="0">1111111</xcpt:RequestID>
+               <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
+               <xcpt:Application>
+                  <xcpt:Product>eXTra Client OpenSource</xcpt:Product>
+                  <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
+               </xcpt:Application>
+               <xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbemeldung</xcpt:Procedure>
+               <xcpt:DataType>http://www.extra-standard.de/datatype/DataRequest</xcpt:DataType>
+               <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
+            </xcpt:RequestDetails>
+            <xcpt:ResponseDetails>
+               <xcpt:ResponseID class="0">${responseId}</xcpt:ResponseID>
+               <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
+               <xcpt:Report highestWeight="http://www.extra-standard.de/weight/INFO">
+                  <xcpt:Flag weight="http://www.extra-standard.de/weight/INFO">
+                     <xcpt:Code>E00</xcpt:Code>
+                     <xcpt:Text>Fehler! Nicht alle Anfragen konnten verarbeitet werden (1 von 2 fehlerhaft)!</xcpt:Text>
+                  </xcpt:Flag>
+               </xcpt:Report>
+            </xcpt:ResponseDetails>
+         </xres:TransportHeader>
+         <xres:TransportBody>
+            <xres:Package>
+               <xres:PackageHeader>
+                  <xcpt:RequestDetails>
+                     <xcpt:RequestID>${requestId}</xcpt:RequestID>
+                  </xcpt:RequestDetails>
+                  <xcpt:ResponseDetails>
+                     <xcpt:ResponseID>${responseId1}</xcpt:ResponseID>
+                     <xcpt:Report>
+                        <xcpt:Flag>
+                           <xcpt:Code>C00</xcpt:Code>
+                           <xcpt:Text>O.K.</xcpt:Text>
+                        </xcpt:Flag>
+                     </xcpt:Report>
+                  </xcpt:ResponseDetails>
+               </xres:PackageHeader>
+               <xres:PackageBody>
+                  <xcpt:Data>
+                     <xcpt:Base64CharSequence>UkZWTlRWa2dVbVZ6Y0c5dWMyVWdabTl5SUZGMVpYSjVJRUZ5WjNWdFpXNTBPbEpGVTFCUFRsTkZYMGxFWDFCb1lYTmxYekZUUlU1RVgwWkZWRWhmTVE9PQ==</xcpt:Base64CharSequence>
+                  </xcpt:Data>
+               </xres:PackageBody>
+            </xres:Package>
+            <xres:Package>
+               <xres:PackageHeader>
+                  <xcpt:RequestDetails>
+                     <xcpt:RequestID>${requestId}</xcpt:RequestID>
+                  </xcpt:RequestDetails>
+                  <xcpt:ResponseDetails>
+                     <xcpt:ResponseID>${responseId2}</xcpt:ResponseID>
+                     <xcpt:Report>
+                        <xcpt:Flag>
+                           <xcpt:Code>E00</xcpt:Code>
+                           <xcpt:Text>Fehler! Nachrichtenaufbau nicht korrekt!</xcpt:Text>
+                        </xcpt:Flag>
+                     </xcpt:Report>
+                  </xcpt:ResponseDetails>
+               </xres:PackageHeader>
+               <xres:PackageBody>
+                  <xcpt:Data>
+                     <xcpt:Base64CharSequence>UkZWTlRWa2dVbVZ6Y0c5dWMyVWdabTl5SUZGMVpYSjVJRUZ5WjNWdFpXNTBPbEpGVTFCUFRsTkZYMGxFWDFCb1lYTmxYekZUUlU1RVgwWkZWRWhmTXc9PQ==</xcpt:Base64CharSequence>
+                  </xcpt:Data>
+               </xres:PackageBody>
+            </xres:Package>
+         </xres:TransportBody>
+      </xres:Transport>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockExtraSterbedatenausPhase3" host="KX7149728" name="ExtraMockServiceSterbedatenausPhase3" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse 2" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockExtraSterbedatenausPhase3Nok" host="KX7149728" name="ExtraMockServiceSterbedatenausPhase3Nok" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse Phase 3 Fehler" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
 def holder = groovyUtils.getXmlHolder(mockRequest.requestContent)
 def reqRef = String.valueOf(holder.getNodeValue("//xcpt:RequestID"))
 def responseId = reqRef + "_RESP"
@@ -4078,159 +3999,39 @@ context.setProperty("requestId", reqRef)
 context.setProperty("responseId", responseId)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/response/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
    <soapenv:Header/>
    <soapenv:Body>
-	 <xres:Transport xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-	    <xres:TransportHeader>
-	        <xcpt:RequestDetails>
-	            <xcpt:RequestID>${requestId}</xcpt:RequestID>
-	        </xcpt:RequestDetails>
-	        <xcpt:ResponseDetails>
-	            <xcpt:ResponseID>${responseId}</xcpt:ResponseID>
-	            <xcpt:Report>
-	                <xcpt:Flag>
-	                    <xcpt:Code>C00</xcpt:Code>
-	                </xcpt:Flag>
-	            </xcpt:Report>
-	        </xcpt:ResponseDetails>
-	    </xres:TransportHeader>
-	</xres:Transport>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockExtraSterbedatenausPhase1Nok" host="KX7149728" name="ExtraMockServiceSterbedatenausPhase1Nok" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse Phase 1" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
-def holder = groovyUtils.getXmlHolder(mockRequest.requestContent)
-def reqRef = String.valueOf(holder.getNodeValue("//xcpt:RequestID"))
-def responseId = reqRef + "_RESP"
-context.setProperty("requestId", reqRef)
-context.setProperty("responseId", responseId)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/response/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
-   <soapenv:Header/>
-   <soapenv:Body>
-		<xres:Transport xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:ns6="http://www.extra-standard.de/namespace/request/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-		   <xres:TransportHeader>
-		      <xcpt:TestIndicator>http://wwwxextra-standardxde/test/NONE</xcpt:TestIndicator>
-		      <xcpt:Sender>
-		         <xcpt:SenderID>12345678</xcpt:SenderID>
-		      </xcpt:Sender>
-		      <xcpt:Receiver>
-		         <xcpt:ReceiverID>66667777</xcpt:ReceiverID>
-		      </xcpt:Receiver>
-		      <xcpt:RequestDetails>
-		         <xcpt:RequestID>${requestId}</xcpt:RequestID>
-		         <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
-		         <xcpt:Application>
-		            <xcpt:Product>Software</xcpt:Product>
-		            <xcpt:Manufacturer>Hersteller</xcpt:Manufacturer>
-		         </xcpt:Application>
-		         <xcpt:Procedure>http://www.extra-standard.de/procedures/DEUEV</xcpt:Procedure>
-		         <xcpt:DataType>http://www.extra-standard.de/datatypes/Sofortmeldung</xcpt:DataType>
-		         <xcpt:Scenario>http://wwwxextra-standardxde/scenario/request-with-acknowledgement</xcpt:Scenario>
-		      </xcpt:RequestDetails>
-		      <xcpt:ResponseDetails>
-		         <xcpt:ResponseID>${responseId}</xcpt:ResponseID>
-		         <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
-		         <xcpt:Report highestWeight="http://wwwxextra-standardxde/weight/INFO">
-		            <xcpt:Flag weight="http://wwwxextra-standardxde/weight/INFO">
-		               <xcpt:Code>E00</xcpt:Code>
-		               <xcpt:Text>Die Nachricht entspricht nicht dem geforderten Aufbau</xcpt:Text>
-		            </xcpt:Flag>
-		         </xcpt:Report>
-		      </xcpt:ResponseDetails>
-		   </xres:TransportHeader>
-		   <xres:TransportBody/>
-		</xres:Transport>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockExtraSterbedatenausPhase2Nok" host="KX7149728" name="ExtraMockServiceSterbedatenausPhase2Nok" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse 2" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
-def holder = groovyUtils.getXmlHolder(mockRequest.requestContent)
-def reqRef = String.valueOf(holder.getNodeValue("//xmsg:GT"))
-def reqid = String.valueOf(holder.getNodeValue("//xcpt:RequestID"))
-def responseId1 = 10001 + Integer.valueOf(reqRef)
-def responseId2 = 10002 + Integer.valueOf(reqRef)
-context.setProperty("requestId", reqid)
-context.setProperty("responseId1", responseId1)
-context.setProperty("responseId2", responseId2)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/response/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
-   <soapenv:Header/>
-   <soapenv:Body>
-		<xres:Transport xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-		    <xres:TransportHeader>
-		        <xcpt:RequestDetails>
-		            <xcpt:RequestID>4</xcpt:RequestID>
-		        </xcpt:RequestDetails>
-		        <xcpt:ResponseDetails>
-		            <xcpt:ResponseID>42</xcpt:ResponseID>
-		            <xcpt:Report>
-		                <xcpt:Flag>
-		                    <xcpt:Code>E00</xcpt:Code>
-		                    <xcpt:Text>Nicht alle Datensätze sind fehlerfrei</xcpt:Text>
-		                </xcpt:Flag>
-		            </xcpt:Report>
-		        </xcpt:ResponseDetails>
-		    </xres:TransportHeader>
-		    <xres:TransportBody>
-		        <xres:Package>
-		            <xres:PackageHeader>
-		                <xcpt:RequestDetails>
-		                    <xcpt:RequestID>${requestId}</xcpt:RequestID>
-		                </xcpt:RequestDetails>
-		                <xcpt:ResponseDetails>
-		                    <xcpt:ResponseID>${responseId1}</xcpt:ResponseID>
-		                    <xcpt:Report>
-		                        <xcpt:Flag>
-		                            <xcpt:Code>C00</xcpt:Code>
-		                            <xcpt:Text>O.K.</xcpt:Text>
-		                        </xcpt:Flag>
-		                    </xcpt:Report>
-		                </xcpt:ResponseDetails>
-		            </xres:PackageHeader>
-		            <xres:PackageBody>
-		                <xcpt:Data>
-		                    <xcpt:Base64CharSequence>UkZWTlRWa2dVbVZ6Y0c5dWMyVWdabTl5SUZGMVpYSjVJRUZ5WjNWdFpXNTBPbEpGVTFCUFRsTkZYMGxFWDFCb1lYTmxYekZUUlU1RVgwWkZWRWhmTVE9PQ==</xcpt:Base64CharSequence>
-		                </xcpt:Data>
-		            </xres:PackageBody>
-		        </xres:Package>
-		        <xres:Package>
-		            <xres:PackageHeader>
-		                <xcpt:RequestDetails>
-		                    <xcpt:RequestID>${requestId}</xcpt:RequestID>
-		                </xcpt:RequestDetails>
-		                <xcpt:ResponseDetails>
-		                    <xcpt:ResponseID>${responseId2}</xcpt:ResponseID>
-		                    <xcpt:Report>
-		                        <xcpt:Flag>
-		                            <xcpt:Code>E00</xcpt:Code>
-		                            <xcpt:Text>Fehler in der Verarbeitung!</xcpt:Text>
-		                        </xcpt:Flag>
-		                    </xcpt:Report>
-		                </xcpt:ResponseDetails>
-		            </xres:PackageHeader>
-		            <xres:PackageBody>
-		                <xcpt:Data>
-		                    <xcpt:Base64CharSequence>UkZWTlRWa2dVbVZ6Y0c5dWMyVWdabTl5SUZGMVpYSjVJRUZ5WjNWdFpXNTBPbEpGVTFCUFRsTkZYMGxFWDFCb1lYTmxYekZUUlU1RVgwWkZWRWhmTXc9PQ==</xcpt:Base64CharSequence>
-		                </xcpt:Data>
-		            </xres:PackageBody>
-		        </xres:Package>
-		    </xres:TransportBody>
-		</xres:Transport>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockExtraSterbedatenausPhase3Nok" host="KX7149728" name="ExtraMockServiceSterbedatenausPhase3Nok" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="execute" interface="extraSOAP" operation="execute"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="MockResponse 2" encoding="UTF-8"><con:settings/><con:script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
-def holder = groovyUtils.getXmlHolder(mockRequest.requestContent)
-def reqRef = String.valueOf(holder.getNodeValue("//xcpt:RequestID"))
-def responseId = reqRef + "_RESP"
-context.setProperty("requestId", reqRef)
-context.setProperty("responseId", responseId)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/response/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
-   <soapenv:Header/>
-   <soapenv:Body>
-	 <xres:Transport xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-	    <xres:TransportHeader>
-	        <xcpt:RequestDetails>
-	            <xcpt:RequestID>${requestId}</xcpt:RequestID>
-	        </xcpt:RequestDetails>
-	        <xcpt:ResponseDetails>
-	            <xcpt:ResponseID>${responseId}</xcpt:ResponseID>
-	            <xcpt:Report>
-	                <xcpt:Flag>
-	                    <xcpt:Code>E00</xcpt:Code>
-	                    <xcpt:Text>Unbekannte Dokumente!</xcpt:Text>
-	                </xcpt:Flag>
-	            </xcpt:Report>
-	        </xcpt:ResponseDetails>
-	    </xres:TransportHeader>
-	</xres:Transport>
+      <xres:Transport xmlns:ns2="http://www.extra-standard.de/namespace/request/1" xmlns:xlog="http://www.extra-standard.de/namespace/logging/1" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:xsrv="http://www.extra-standard.de/namespace/service/1" xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" xmlns:xres="http://www.extra-standard.de/namespace/response/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xmsg="http://www.extra-standard.de/namespace/message/1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+         <xres:TransportHeader>
+            <xcpt:TestIndicator>http://www.extra-standard.de/test/NONE</xcpt:TestIndicator>
+            <xcpt:Sender>
+               <xcpt:ReceiverID>es-1</xcpt:ReceiverID>
+               <xcpt:Name>eXTra-Server</xcpt:Name>
+            </xcpt:Sender>
+            <xcpt:Receiver>
+               <xcpt:SenderID>ec-1</xcpt:SenderID>
+               <xcpt:Name>eXTra-Client</xcpt:Name>
+            </xcpt:Receiver>
+            <xcpt:RequestDetails>
+               <xcpt:RequestID>${requestId}</xcpt:RequestID>
+               <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
+               <xcpt:Application>
+                  <xcpt:Product>eXTra Client OpenSource</xcpt:Product>
+                  <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
+               </xcpt:Application>
+               <xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbemeldung</xcpt:Procedure>
+               <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
+               <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-acknowledgement</xcpt:Scenario>
+            </xcpt:RequestDetails>
+            <xcpt:ResponseDetails>
+               <xcpt:ResponseID>${responseId}</xcpt:ResponseID>
+               <xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
+               <xcpt:Report highestWeight="http://www.extra-standard.de/weight/INFO">
+                  <xcpt:Flag weight="http://www.extra-standard.de/weight/INFO">
+                     <xcpt:Code>E00</xcpt:Code>
+                     <xcpt:Text>Fehler! Empfang der Nachricht kann nicht bestätigt werden</xcpt:Text>
+                  </xcpt:Flag>
+               </xcpt:Report>
+            </xcpt:ResponseDetails>
+         </xres:TransportHeader>
+      </xres:Transport>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/><con:sensitiveInformation/></con:soapui-project>

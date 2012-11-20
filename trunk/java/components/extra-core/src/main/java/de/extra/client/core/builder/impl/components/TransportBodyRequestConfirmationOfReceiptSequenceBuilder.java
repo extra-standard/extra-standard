@@ -30,10 +30,10 @@ import de.drv.dsrv.extrastandard.namespace.messages.ListOfConfirmationOfReceipt;
 import de.drv.dsrv.extrastandard.namespace.messages.PropertySet;
 import de.drv.dsrv.extrastandard.namespace.messages.Value;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
-import de.extra.client.core.model.inputdata.impl.DBMultiQueryInputData;
+import de.extra.client.core.model.inputdata.impl.DbQueryInputDataContainer;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
-import de.extrastandard.api.model.content.ISingleQueryInputData;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 
 /**
  * @author Leonid Potap
@@ -67,10 +67,10 @@ public class TransportBodyRequestConfirmationOfReceiptSequenceBuilder extends
 
 	private ListOfConfirmationOfReceipt createConfirmationOfReceipt(
 			final IInputDataContainer senderData) {
-		final DBMultiQueryInputData dbQueryInputData = senderData
-				.cast(DBMultiQueryInputData.class);
+		final DbQueryInputDataContainer dbQueryInputData = senderData
+				.cast(DbQueryInputDataContainer.class);
 		final ListOfConfirmationOfReceipt listOfConfirmationOfReceipt = new ListOfConfirmationOfReceipt();
-		final List<ISingleQueryInputData> singleDBQueryinputDataList = dbQueryInputData
+		final List<IDbQueryInputData> singleDBQueryinputDataList = dbQueryInputData
 				.getInputData();
 		final ListOfConfirmationOfReceipt.ConfirmationOfReceipt confirmationOfReceipt = new ListOfConfirmationOfReceipt.ConfirmationOfReceipt();
 		final PropertySet valuePropertySet = new PropertySet();
@@ -79,7 +79,7 @@ public class TransportBodyRequestConfirmationOfReceiptSequenceBuilder extends
 		confirmationOfReceipt.setPropertySet(valuePropertySet);
 		listOfConfirmationOfReceipt.getConfirmationOfReceipt().add(
 				confirmationOfReceipt);
-		for (final ISingleQueryInputData singleDBQueryInputData : singleDBQueryinputDataList) {
+		for (final IDbQueryInputData singleDBQueryInputData : singleDBQueryinputDataList) {
 			final Value value = new Value();
 			value.setValue(singleDBQueryInputData.getSourceResponceId());
 			valueList.add(value);

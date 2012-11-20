@@ -52,7 +52,7 @@ import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.model.content.ISingleInputData;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.api.plugin.IConfigPlugin;
@@ -174,7 +174,7 @@ public class ClientCore implements ApplicationContextAware {
 
 			for (final ISingleInputData singleContentInputData : versandDaten
 					.getContent()) {
-				final IInputData inputData = execution
+				final ICommunicationProtocol inputData = execution
 						.startInputData(singleContentInputData);
 
 				requestIdAcquisitionStrategy.setRequestId(inputData,

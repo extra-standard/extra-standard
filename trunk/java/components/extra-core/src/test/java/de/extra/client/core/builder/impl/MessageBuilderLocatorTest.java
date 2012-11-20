@@ -39,7 +39,7 @@ import de.extra.client.core.builder.IXmlRootElementBuilder;
 import de.extra.client.core.builder.impl.plugins.DataTransformConfigurablePluginsBuilder;
 import de.extra.client.core.builder.impl.plugins.DataTransformPluginsBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportBuilder;
-import de.extra.client.core.model.inputdata.impl.FileInputData;
+import de.extra.client.core.model.inputdata.impl.ContentInputDataContainer;
 import de.extra.client.core.util.IExtraValidator;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
@@ -102,8 +102,8 @@ public class MessageBuilderLocatorTest {
 	/**
 	 * @return
 	 */
-	private FileInputData createTestinputData(final String singleContent) {
-		return new FileInputData(new ArrayList<String>(
+	private ContentInputDataContainer createTestinputData(final String singleContent) {
+		return new ContentInputDataContainer(new ArrayList<String>(
 				Arrays.asList(singleContent)));
 	}
 

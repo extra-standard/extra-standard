@@ -42,7 +42,7 @@ public interface IExecution extends PersistentEntity {
 	 * @param singleInputData
 	 * @return
 	 */
-	IInputData startInputData(final ISingleInputData singleInputData);
+	ICommunicationProtocol startInputData(final ISingleInputData singleInputData);
 
 	/**
 	 * Updates this execution with the specified status.
@@ -140,6 +140,6 @@ public interface IExecution extends PersistentEntity {
 	/**
 	 * @return InputDaten der Execution
 	 */
-	Set<IInputData> getInputDataSet();
+	Set<ICommunicationProtocol> getInputDataSet();
 
 }

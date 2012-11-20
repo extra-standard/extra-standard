@@ -51,7 +51,7 @@ import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.model.content.ISingleInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.IProcessTransition;
 import de.extrastandard.api.model.execution.IStatus;
@@ -77,7 +77,7 @@ public class Execution extends AbstractEntity implements IExecution {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(InputData.class);
+			.getLogger(CommunicationProtocol.class);
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "execution_entity_seq_gen")
@@ -111,7 +111,7 @@ public class Execution extends AbstractEntity implements IExecution {
 	private ProcessTransition lastTransition;
 
 	@OneToMany(mappedBy = "execution", fetch = FetchType.LAZY)
-	private final Set<InputData> inputDataSet = new HashSet<InputData>();
+	private final Set<CommunicationProtocol> inputDataSet = new HashSet<CommunicationProtocol>();
 
 	@Inject
 	@Named("executionRepository")
@@ -160,7 +160,7 @@ public class Execution extends AbstractEntity implements IExecution {
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputData#updateProgress(de.extrastandard.api.model.execution.IStatus,
+	 * @see de.extrastandard.api.model.execution.ICommunicationProtocol#updateProgress(de.extrastandard.api.model.execution.IStatus,
 	 *      java.lang.String)
 	 */
 	@Override
@@ -181,7 +181,7 @@ public class Execution extends AbstractEntity implements IExecution {
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputData#failed(java.lang.String,
+	 * @see de.extrastandard.api.model.execution.ICommunicationProtocol#failed(java.lang.String,
 	 *      java.lang.String)
 	 */
 	@Override
@@ -191,7 +191,7 @@ public class Execution extends AbstractEntity implements IExecution {
 			this.errorMessage = errorMessage;
 			updateProgress(PersistentStatus.FAIL);
 			// InputData bzw. PhasenConnection updaten
-			for (final InputData inputData : this.inputDataSet) {
+			for (final CommunicationProtocol inputData : this.inputDataSet) {
 				final PhaseConnection currentPhaseConnection = inputData
 						.getCurrentPhaseConnection();
 				if (currentPhaseConnection != null) {
@@ -204,7 +204,7 @@ public class Execution extends AbstractEntity implements IExecution {
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputData#failed(de.extrastandard.api.exception.ExtraRuntimeException)
+	 * @see de.extrastandard.api.model.execution.ICommunicationProtocol#failed(de.extrastandard.api.exception.ExtraRuntimeException)
 	 */
 	@Override
 	public void failed(final ExtraRuntimeException exception) {
@@ -228,7 +228,7 @@ public class Execution extends AbstractEntity implements IExecution {
 		this.endTime = new Date();
 		updateProgress(PersistentStatus.DONE);
 		repository.save(this);
-		for (final InputData inputData : inputDataSet) {
+		for (final CommunicationProtocol inputData : inputDataSet) {
 			processResponseData(inputData, responseData);
 		}
 	}
@@ -236,42 +236,42 @@ public class Execution extends AbstractEntity implements IExecution {
 	/**
 	 * Verarbeitet das Server-Ergebnis (ResponseData) für eine Criteria-Query
 	 * (z.B. 'alle Dok. mit ID > 7'). Jedem Ergebnissatz (ISingleResponseData)
-	 * wird ein InputData-Objekt zugeordnet.
+	 * wird ein CommunicationProtocol-Objekt zugeordnet.
 	 * 
 	 * @since 1.0.0-M2
-	 * @param inputData
+	 * @param comProt
 	 * @param responseData
 	 */
-	private void processResponseData(InputData inputData,
+	private void processResponseData(CommunicationProtocol comProt,
 			final IResponseData responseData) {
-		final String requestId = inputData.getRequestId();
+		final String requestId = comProt.getRequestId();
 		int nummerResponse = 1;
 		// für jede Response muss ein InputData Objekt angelegt werden
 		for (ISingleResponseData singleResponseData : responseData
 				.getResponse(requestId)) {
 			if (nummerResponse == 1) {
-				// vorhandenes InputData Objekt nehmen und Kommunikationsdaten
+				// vorhandenes CommunicationProtocol Objekt nehmen und Kommunikationsdaten
 				// aktualisieren
-				inputData.transmitted(singleResponseData);
-				processPhaseConnectionForInputData(inputData);
+				comProt.transmitted(singleResponseData);
+				processPhaseConnectionForInputData(comProt);
 			} else {
 				// neues InputData Objekt erzeugen
-				InputData inputDataForResponse = new InputData(inputData,
+				CommunicationProtocol comProtForResponse = new CommunicationProtocol(comProt,
 						singleResponseData);
-				processPhaseConnectionForInputData(inputDataForResponse);
+				processPhaseConnectionForInputData(comProtForResponse);
 			}
 			nummerResponse++;
 		}
 	}
 
 	/**
-	 * Für das übergebene InputData Objekt wird die zugeordnete PhaseConection
+	 * Für das übergebene CommunicationProtocol Objekt wird die zugeordnete PhaseConection
 	 * geschlossen und eine Nachfolge-PhaseConnection vorbereitet (falls die
 	 * aktuelle Phase keine Endphase ist)
 	 * 
 	 * @param inputData
 	 */
-	private void processPhaseConnectionForInputData(InputData inputData) {
+	private void processPhaseConnectionForInputData(CommunicationProtocol inputData) {
 		// (14.11.12) Nur bei erfolgreicher Verarbeitung darf die nächste Phase
 		// vorbereitet werden!
 
@@ -323,8 +323,8 @@ public class Execution extends AbstractEntity implements IExecution {
 	 * @param singleInputData
 	 * @return
 	 */
-	public IInputData startInputData(final ISingleInputData singleInputData) {
-		final InputData inputData = new InputData(singleInputData, this);
+	public ICommunicationProtocol startInputData(final ISingleInputData singleInputData) {
+		final CommunicationProtocol inputData = new CommunicationProtocol(singleInputData, this);
 		this.inputDataSet.add(inputData);
 		repository.save(this);
 		return inputData;
@@ -390,8 +390,8 @@ public class Execution extends AbstractEntity implements IExecution {
 	 * @return the inputDataSet
 	 */
 	@Override
-	public HashSet<IInputData> getInputDataSet() {
-		return new HashSet<IInputData>(this.inputDataSet);
+	public HashSet<ICommunicationProtocol> getInputDataSet() {
+		return new HashSet<ICommunicationProtocol>(this.inputDataSet);
 	}
 
 	@Override
@@ -461,7 +461,7 @@ public class Execution extends AbstractEntity implements IExecution {
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IInputData#hasError()
+	 * @see de.extrastandard.api.model.execution.ICommunicationProtocol#hasError()
 	 */
 	@Override
 	public boolean hasError() {

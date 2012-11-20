@@ -21,7 +21,7 @@ package de.extra.client.core.process;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.ISingleInputData;
 import de.extrastandard.api.model.execution.IExecution;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 
 /**
  * @author Leonid Potap
@@ -33,7 +33,7 @@ public interface IRequestIdAcquisitionStrategy {
 	 * @param dbInputData
 	 * @param singleQueryInputData
 	 */
-	void setRequestId(IInputData dbInputData, ISingleInputData singleInputData);
+	void setRequestId(ICommunicationProtocol dbInputData, ISingleInputData singleInputData);
 
 	/**
 	 * Set RequestId for InputDataContainer and Execution

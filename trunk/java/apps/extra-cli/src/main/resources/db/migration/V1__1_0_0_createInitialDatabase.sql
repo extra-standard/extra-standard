@@ -6,7 +6,7 @@
 -- DROP
 
 --DROP TABLE EXECUTION CASCADE CONSTRAINTS;
---DROP TABLE INPUT_DATA CASCADE CONSTRAINTS;
+--DROP TABLE COMMUNICATION_PROTOCOL CASCADE CONSTRAINTS;
 --DROP TABLE MANDATOR CASCADE CONSTRAINTS;
 --DROP TABLE PHASE_CONNECTION CASCADE CONSTRAINTS;
 --DROP TABLE PROCEDURE CASCADE CONSTRAINTS;
@@ -43,7 +43,7 @@ ALTER TABLE EXECUTION
     ADD CONSTRAINT execution_PK PRIMARY KEY ( id ) ;
 
 
-CREATE TABLE INPUT_DATA 
+CREATE TABLE COMMUNICATION_PROTOCOL 
     ( 
      id NUMBER (15)  NOT NULL , 
      input_identifier VARCHAR2 (255) , 
@@ -54,24 +54,26 @@ CREATE TABLE INPUT_DATA
      return_text CLOB , 
      execution_id NUMBER (15)  NOT NULL , 
      next_phase_connection_id NUMBER (12) , 
-     current_phase_connection_id NUMBER (12) 
+     current_phase_connection_id NUMBER (12),
+     input_data_qualifier VARCHAR2 (100),
+     status_id NUMBER (10)
     ) 
 ;
 
 
-CREATE INDEX input_data_idx_execution ON INPUT_DATA 
+CREATE INDEX comm_prot_idx_execution ON COMMUNICATION_PROTOCOL 
     ( 
      execution_id ASC 
     ) 
 ;
-CREATE INDEX input_data_ix_request ON INPUT_DATA 
+CREATE INDEX comm_prot_ix_request ON COMMUNICATION_PROTOCOL 
     ( 
      request_id ASC 
     ) 
 ;
 
-ALTER TABLE INPUT_DATA 
-    ADD CONSTRAINT input_data_PK PRIMARY KEY ( id ) ;
+ALTER TABLE COMMUNICATION_PROTOCOL 
+    ADD CONSTRAINT communication_protocol_PK PRIMARY KEY ( id ) ;
 
 
 CREATE TABLE MANDATOR 
@@ -119,7 +121,7 @@ CREATE INDEX phase_conn_idx_quelle_data ON PHASE_CONNECTION
 ;
 
 ALTER TABLE PHASE_CONNECTION 
-    ADD CONSTRAINT phasen_connection_pk PRIMARY KEY ( id ) ;
+    ADD CONSTRAINT phase_connection_pk PRIMARY KEY ( id ) ;
 
 
 CREATE TABLE PROCEDURE 
@@ -135,7 +137,7 @@ CREATE TABLE PROCEDURE
 
 
 ALTER TABLE PROCEDURE 
-    ADD CONSTRAINT "procedure PK" PRIMARY KEY ( id ) ;
+    ADD CONSTRAINT "procedure_pk" PRIMARY KEY ( id ) ;
 
 ALTER TABLE PROCEDURE 
     ADD CONSTRAINT procedure_un_name UNIQUE ( name ) ;
@@ -195,7 +197,7 @@ CREATE INDEX transition_idx_status_date ON PROCESS_TRANSITION
 ;
 
 ALTER TABLE PROCESS_TRANSITION 
-    ADD CONSTRAINT input_data_transition_pk PRIMARY KEY ( id ) ;
+    ADD CONSTRAINT process_transition_pk PRIMARY KEY ( id ) ;
 
 
 CREATE TABLE STATUS 
@@ -254,7 +256,7 @@ ALTER TABLE PROCESS_TRANSITION
 ;
 
 
-ALTER TABLE INPUT_DATA 
+ALTER TABLE COMMUNICATION_PROTOCOL 
     ADD CONSTRAINT rel_data_phasen_con FOREIGN KEY 
     ( 
      next_phase_connection_id
@@ -266,6 +268,16 @@ ALTER TABLE INPUT_DATA
     ON DELETE SET NULL 
 ;
 
+ALTER TABLE COMMUNICATION_PROTOCOL 
+    ADD CONSTRAINT rel_comprot_conn_status FOREIGN KEY 
+    ( 
+     status_id
+    ) 
+    REFERENCES STATUS 
+    ( 
+     id
+    ) 
+;
 
 ALTER TABLE EXECUTION 
     ADD CONSTRAINT rel_execution_procedure FOREIGN KEY 
@@ -279,7 +291,7 @@ ALTER TABLE EXECUTION
 ;
 
 
-ALTER TABLE INPUT_DATA 
+ALTER TABLE COMMUNICATION_PROTOCOL 
     ADD CONSTRAINT rel_input_data_curr_phase_conn FOREIGN KEY 
     ( 
      current_phase_connection_id
@@ -292,7 +304,7 @@ ALTER TABLE INPUT_DATA
 ;
 
 
-ALTER TABLE INPUT_DATA 
+ALTER TABLE COMMUNICATION_PROTOCOL 
     ADD CONSTRAINT rel_input_data_execution FOREIGN KEY 
     ( 
      execution_id
@@ -309,7 +321,7 @@ ALTER TABLE PHASE_CONNECTION
     ( 
      quelle_data_id
     ) 
-    REFERENCES INPUT_DATA 
+    REFERENCES COMMUNICATION_PROTOCOL 
     ( 
      id
     ) 
@@ -321,7 +333,7 @@ ALTER TABLE PHASE_CONNECTION
     ( 
      target_data_id
     ) 
-    REFERENCES INPUT_DATA 
+    REFERENCES COMMUNICATION_PROTOCOL 
     ( 
      id
     ) 
@@ -411,7 +423,7 @@ CREATE SEQUENCE seq_execution_id
     CACHE 100 
 ;
 
-CREATE SEQUENCE seq_input_data_id 
+CREATE SEQUENCE seq_communication_protocol_id 
     START WITH 1 
     INCREMENT BY 1 
     MAXVALUE 99999999999 

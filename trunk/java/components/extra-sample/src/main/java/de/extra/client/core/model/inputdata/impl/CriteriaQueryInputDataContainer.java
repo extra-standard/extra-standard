@@ -3,21 +3,21 @@ package de.extra.client.core.model.inputdata.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.extrastandard.api.model.content.IDbSingleQueryInputData;
-import de.extrastandard.api.model.content.IDbSingleQueryInputDataContainer;
+import de.extrastandard.api.model.content.ICriteriaQueryInputData;
+import de.extrastandard.api.model.content.ICriteriaQueryInputDataContainer;
 import de.extrastandard.api.model.content.ISingleInputData;
 import de.extrastandard.api.model.content.QueryArgumentType;
 
-public class DBSingleQueryInputDataContainer extends InputDataContainer
-		implements IDbSingleQueryInputDataContainer {
+public class CriteriaQueryInputDataContainer extends InputDataContainer
+		implements ICriteriaQueryInputDataContainer {
 
-	private final List<IDbSingleQueryInputData> iDbSingleQueryInputDataList = new ArrayList<IDbSingleQueryInputData>();
+	private final List<ICriteriaQueryInputData> iDbSingleQueryInputDataList = new ArrayList<ICriteriaQueryInputData>();
 
-	public DBSingleQueryInputDataContainer() {
+	public CriteriaQueryInputDataContainer() {
 		super();
 	}
 
-	public DBSingleQueryInputDataContainer(String aArgument,
+	public CriteriaQueryInputDataContainer(String aArgument,
 			QueryArgumentType aQueryArgumentType, String aProcedureName) {
 		super();
 		addDBSingleQueryInputData(aArgument, aQueryArgumentType, aProcedureName);
@@ -25,7 +25,7 @@ public class DBSingleQueryInputDataContainer extends InputDataContainer
 
 	public void addDBSingleQueryInputData(String aArgument,
 			QueryArgumentType aQueryArgumentType, String aProcedureName) {
-		final IDbSingleQueryInputData singleDBQueryInputData = new DBSingleQueryInputData(
+		final ICriteriaQueryInputData singleDBQueryInputData = new CriteriaQueryInputData(
 				aArgument, aQueryArgumentType, aProcedureName);
 		iDbSingleQueryInputDataList.add(singleDBQueryInputData);
 	}

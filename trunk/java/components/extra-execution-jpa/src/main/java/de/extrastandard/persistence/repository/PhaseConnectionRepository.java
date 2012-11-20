@@ -25,7 +25,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import de.extrastandard.persistence.model.InputData;
+import de.extrastandard.persistence.model.CommunicationProtocol;
 import de.extrastandard.persistence.model.PhaseConnection;
 
 /**
@@ -41,6 +41,6 @@ public interface PhaseConnectionRepository extends
 
 	@Query("FROM PhaseConnection WHERE targetInputData = :targetInputData")
 	List<PhaseConnection> findByTargetInputData(
-			@Param("targetInputData") InputData inputData);
+			@Param("targetInputData") CommunicationProtocol inputData);
 
 }

@@ -31,7 +31,7 @@ import de.extra.client.core.responce.impl.SingleResponseData;
 import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.MandatorRepository;
@@ -107,7 +107,7 @@ public class PersistenceTestSetup {
 				.startExecution(PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
 						"-c d:/extras/configdir", PhaseQualifier.PHASE1);
 
-		final IInputData inputData = executionForTestPhase2
+		final ICommunicationProtocol inputData = executionForTestPhase2
 				.startInputData(new SingleStringInputData("TestStringInoutData"));
 		final String calculatedRequestId = inputData.calculateRequestId();
 		inputData.setRequestId(calculatedRequestId);
@@ -129,7 +129,7 @@ public class PersistenceTestSetup {
 				.startExecution(PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
 						"-c d:/extras/configdir2", PhaseQualifier.PHASE2);
 
-		final IInputData inputDataForPhase3 = executionForTestPhase3
+		final ICommunicationProtocol inputDataForPhase3 = executionForTestPhase3
 				.startInputData(new SingleStringInputData("TestStringInoutData"));
 		final String calculatedRequestIdForPhase3 = inputDataForPhase3
 				.calculateRequestId();

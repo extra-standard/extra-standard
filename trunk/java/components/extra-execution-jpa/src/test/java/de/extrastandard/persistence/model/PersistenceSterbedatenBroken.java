@@ -24,12 +24,12 @@ import de.extrastandard.api.model.content.ISingleContentInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.IProcessTransition;
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
-import de.extrastandard.persistence.repository.InputDataRepository;
+import de.extrastandard.persistence.repository.CommunicationProtocolRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
@@ -43,8 +43,8 @@ public class PersistenceSterbedatenBroken {
 
 	@Transient
 	@Inject
-	@Named("inputDataRepository")
-	private transient InputDataRepository inputDataRepository;
+	@Named("communicationProtocolRepository")
+	private transient CommunicationProtocolRepository communicationProtocolRepository;
 
 	@Inject
 	@Named("executionPersistenceJpa")
@@ -61,7 +61,7 @@ public class PersistenceSterbedatenBroken {
 		final String parameter = "-c d:/extras/configdir";
 		// erzeugt eine 'Execution' und eine zugeordnete 'ProcessTransition'
 		final IExecution execution = executionPersistence.startExecution(
-				PersistenceSterbedatenTestSetup.PROC_STERBEDATENAUS_NAME,
+				PersistenceSterbedatenTestSetup.PROC_STERBEMELDUNG_NAME,
 				parameter, PhaseQualifier.PHASE1);
 
 		// Execution vorhanden?
@@ -122,7 +122,7 @@ public class PersistenceSterbedatenBroken {
 
 		final ISingleContentInputData singleContentInputData = new SingleStringInputData(
 				"test data");
-		final IInputData inputData = execution
+		final ICommunicationProtocol inputData = execution
 				.startInputData(singleContentInputData);
 		assertNotNull(inputData);
 		assertEquals(singleContentInputData.getHashCode(),

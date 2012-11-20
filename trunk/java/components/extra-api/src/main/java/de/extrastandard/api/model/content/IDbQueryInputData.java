@@ -18,19 +18,23 @@
  */
 package de.extrastandard.api.model.content;
 
-import java.util.List;
-
-/**
- * 
- * @author DSRV
- * @version $Id: IFileInputData.java 841 2012-10-19 15:32:38Z
- *          potap.rentenservice@gmail.com $
- */
-public interface IFileInputData extends IInputDataContainer {
+public interface IDbQueryInputData extends ISingleInputData {
 
 	/**
-	 * @return the inputData
+	 * @return the dbInputDataId
 	 */
-	List<ISingleContentInputData> getInputData();
+	String getSourceRequestId();
+
+	/**
+	 * @return the serverResponceId
+	 */
+	String getSourceResponceId();
+
+	/**
+	 * Identification of the Source Input
+	 * 
+	 * @return
+	 */
+	Long getSourceIdentificationId();
 
 }

@@ -42,9 +42,9 @@ public class PersistenceSterbedatenTestSetup {
 
 	static final String MANDATOR_TEST = "DRV";
 
-	static final String PROCTYPE_STERBEDATENAUS = "STERBEDATENAUS";
-	static final String PROC_STERBEDATENAUS_NAME = "Sterbedaten Ausland";
-	static final String PROC_STERBEDATENAUS_KEY = "PROC_STERBEDATENAUS";
+	static final String PROCTYPE_STERBEMELDUNG = "STERBEMELDUNG";
+	static final String PROC_STERBEMELDUNG_NAME = "Sterbemeldung";
+	static final String PROC_STERBEMELDUNG_KEY = "PROC_STERBEMELDUNG";
 
 	@Inject
 	@Named("mandatorRepository")
@@ -60,7 +60,7 @@ public class PersistenceSterbedatenTestSetup {
 	@Transactional
 	public void setupProcedureSterbedatenAus() {
 		final ProcedureType procedureSterbedaten = new ProcedureType(
-				PROCTYPE_STERBEDATENAUS);
+				PROCTYPE_STERBEMELDUNG);
 
 		final ProcedurePhaseConfiguration procedurePhaseConfigurationPhase3 = new ProcedurePhaseConfiguration(
 				procedureSterbedaten, PhaseQualifier.PHASE3);
@@ -79,7 +79,7 @@ public class PersistenceSterbedatenTestSetup {
 				.findByName(MANDATOR_TEST);
 
 		new Procedure(mandatorTEST, procedureSterbedaten,
-				PROC_STERBEDATENAUS_NAME, PROC_STERBEDATENAUS_KEY);
+				PROC_STERBEMELDUNG_NAME, PROC_STERBEMELDUNG_KEY);
 
 		logger.info("setupProcedureSterbedatenAusland finished");
 	}

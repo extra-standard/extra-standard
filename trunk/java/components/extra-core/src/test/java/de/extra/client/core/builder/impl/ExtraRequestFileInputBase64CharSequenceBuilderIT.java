@@ -34,9 +34,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.config.impl.ExtraProfileConfiguration;
-import de.extra.client.core.model.inputdata.impl.FileInputData;
+import de.extra.client.core.model.inputdata.impl.ContentInputDataContainer;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
-import de.extrastandard.api.model.content.IFileInputData;
+import de.extrastandard.api.model.content.IContentInputDataContainer;
 
 /**
  * Test for ExtraRequestBuilder.
@@ -65,7 +65,7 @@ public class ExtraRequestFileInputBase64CharSequenceBuilderIT {
 
 	@Test
 	public final void testBuildRequestFileInputBase64CharSequence() {
-		final IFileInputData senderData = createTestDummyFileInputData();
+		final IContentInputDataContainer senderData = createTestDummyFileInputData();
 		senderData.setRequestId("STERBEDATENABGLEICH-7777777");
 		final IExtraProfileConfiguration config = createConfigFileBeanForElementSequenceWithListOfConfirmationOfReceipt();
 		final RootElementType elementType = extraRequestBuilder
@@ -79,8 +79,8 @@ public class ExtraRequestFileInputBase64CharSequenceBuilderIT {
 	/**
 	 * @return
 	 */
-	private IFileInputData createTestDummyFileInputData() {
-		final IFileInputData senderData = new FileInputData(
+	private IContentInputDataContainer createTestDummyFileInputData() {
+		final IContentInputDataContainer senderData = new ContentInputDataContainer(
 				Arrays.asList("Extra Test Message 235 ö ä"));
 		return senderData;
 	}

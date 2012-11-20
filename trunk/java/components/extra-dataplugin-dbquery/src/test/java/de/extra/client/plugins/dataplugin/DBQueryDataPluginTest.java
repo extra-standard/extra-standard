@@ -35,13 +35,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import de.extra.client.core.model.inputdata.impl.DBMultiQueryInputData;
+import de.extra.client.core.model.inputdata.impl.DbQueryInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataContainer;
-import de.extrastandard.api.model.content.ISingleQueryInputData;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
-import de.extrastandard.api.model.execution.IInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.PhaseQualifier;
-import de.extrastandard.persistence.model.InputData;
+import de.extrastandard.persistence.model.CommunicationProtocol;
 
 /**
  * Test for ExtraRequestBuilder.
@@ -67,9 +67,9 @@ public class DBQueryDataPluginTest {
 
 	@Before
 	public void setUp() throws Exception {
-		final ArrayList<IInputData> testDatenList = new ArrayList<IInputData>();
+		final ArrayList<ICommunicationProtocol> testDatenList = new ArrayList<ICommunicationProtocol>();
 		dbQueryDataPlugin.setExecutionPhase(PhaseQualifier.PHASE2.getName());
-		final IInputData inputData = mock(InputData.class);
+		final ICommunicationProtocol inputData = mock(CommunicationProtocol.class);
 		when(inputData.getId()).thenReturn(ID_23);
 		when(inputData.getRequestId()).thenReturn(REQUEST_23);
 		when(inputData.getResponseId()).thenReturn(RESPONSE_23);
@@ -86,13 +86,13 @@ public class DBQueryDataPluginTest {
 			final IInputDataContainer inputDataContainer = dbQueryDataPlugin
 					.getData();
 			Assert.assertTrue(inputDataContainer
-					.isImplementationOf(DBMultiQueryInputData.class));
-			final DBMultiQueryInputData dbQueryInputData = inputDataContainer
-					.cast(DBMultiQueryInputData.class);
-			final List<ISingleQueryInputData> singleQueryInputDatas = dbQueryInputData
+					.isImplementationOf(DbQueryInputDataContainer.class));
+			final DbQueryInputDataContainer dbQueryInputData = inputDataContainer
+					.cast(DbQueryInputDataContainer.class);
+			final List<IDbQueryInputData> singleQueryInputDatas = dbQueryInputData
 					.getInputData();
 			Assert.assertEquals(1, singleQueryInputDatas.size());
-			final ISingleQueryInputData singleQueryInputData = singleQueryInputDatas
+			final IDbQueryInputData singleQueryInputData = singleQueryInputDatas
 					.get(0);
 			Assert.assertEquals(RESPONSE_23,
 					singleQueryInputData.getSourceResponceId());

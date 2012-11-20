@@ -32,7 +32,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import de.extra.client.core.model.inputdata.impl.FileInputData;
+import de.extra.client.core.model.inputdata.impl.ContentInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
 /**
@@ -99,7 +99,7 @@ public class FileDataPluginTest {
 					.getData();
 			Assert.assertFalse(iInputDataContainer.isContentEmpty());
 			Assert.assertTrue(iInputDataContainer
-					.isImplementationOf(FileInputData.class));
+					.isImplementationOf(ContentInputDataContainer.class));
 			Assert.assertTrue("iInputDataContainer size größer als Limit",
 					iInputDataContainer.getContentSize() <= inputDataLimit);
 			counter = counter + iInputDataContainer.getContentSize();
