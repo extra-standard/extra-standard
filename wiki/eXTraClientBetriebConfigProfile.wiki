@@ -2,4 +2,4 @@
 
 = Profilierungs-Datei =
 
-Profilierungsdatei des Kommunikationsverfahrens.
+Profilierungsdatei des Fachverfahrens.
