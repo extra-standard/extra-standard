@@ -1,9 +1,9 @@
 #summary Technisches Referenzverfahren, das exemplarisch die Arbeit mit dem eXTra-Client verdeutlicht
 
 <h1>Konfiguration Fachverfahren</h1>
-Jedes Fachverfahren wird in einem eigenen Verzeichnis ausgeliefert. Die Struktur dieses Verzeichnisses ist für alle Fachverfahren gleich. Alle Fachverfahren werden daher in gleicher Weise konfiguriert.
+Im folgenden wird beschrieben, wie mit dem eXTra-Client ein Fachverfahren konfiguriert wird. Ergänzend zur Auslieferung des eXTra-Clients werden vorkonfigurierte Fachverfahren in eigenen Verzeichnissen ausgeliefert. Die Verzeichnisstruktur ist dabei stets gleich.
 
-Exemplarisch wird die Konfiguration am Fachverfahren _eXTra Szenario Send-Fetch (Sende-Hole Betrieb)_ gezeigt. Dieses Fachverfahren ist ein technisches Referenzverfahren, das exemplarisch die Arbeit mit dem eXTra-Client verdeutlichen soll. Dieses Szenario kann als Ausgangspunkt für die Realisierung von Fachverfahren verwendet werden. Für die Ausführung wird eine Version des eXTra Clients benoetigt.  
+Exemplarisch wird die Konfiguration am Fachverfahren _eXTra Szenario Send-Fetch (Sende-Hole Betrieb)_ gezeigt. Dieses Fachverfahren ist ein technisches Referenzverfahren, das die Arbeit mit dem eXTra-Client verdeutlichen soll. Dieses Szenario kann als Ausgangspunkt für die Realisierung eigener Fachverfahren verwendet werden. Für die Ausführung wird eine Version des eXTra Clients benötigt.  
 
 Im folgenden wird beschrieben, wie das Szenario Send-Fetch auf einem Windows-Rechner eingerichtet werden kann (Anpassung an andere Betriebssysteme (z.B. Linux) mit überschaubarem Aufwand möglich). Folgende Schritte müssen durchgeführt werden:
 
@@ -95,3 +95,6 @@ Für jede Phase des Szenario-Send-Fetch gibt es ein eigenes Konfigurationsverzei
 || extra-properties-user.properties || Spezifische Einstellungen (Datenbankverbindung, Eingabedateien, ...)||
 || logging-config.xml || Logging Konfiguration ||
 || phase...profil.xml || eXTra Profil-Datei ||
+
+=== Weitere Fachverfahren konfigurieren ===
+Die Konfiguration weiterer realer Fachverfahren erfolgt analog zu dem vorgestellten Beispielsverfahren. Das Fachverfahren _Sterbedatenabgleich Ausland_ besitzt z.b. die gleiche Verzeichnisstruktur.
