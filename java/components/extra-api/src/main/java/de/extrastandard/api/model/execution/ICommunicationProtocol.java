@@ -31,12 +31,19 @@ import de.extrastandard.api.model.content.ISingleResponseData;
 public interface ICommunicationProtocol extends PersistentEntity {
 
 	/**
-	 * Markiert CommunicationProtocol als Übertragen. Die ResponseDaten werden in den
+	 * Markiert das CommunicationProtocol als Übertragen. Die ResponseDaten werden im
 	 * CommunicationProtocol festgehalten
 	 * 
 	 * @param singleResponseData
 	 */
 	void transmitted(ISingleResponseData singleResponseData);
+
+	/**
+	 * Für dieses CommunicationProtocol sind keine ResponseDaten ermittelt worden.
+	 * 
+	 * @param singleResponseData
+	 */
+	void transmitWithoutResponse();
 
 	/**
 	 * @return requestId, unique identification of this message

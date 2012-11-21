@@ -146,9 +146,11 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 			final RequestDetailsType requestDetails = transportHeader
 					.getRequestDetails();
 			if (isBodyEmpty(extraResponse.getTransportBody())) {
-				throw new ExtraResponseProcessPluginRuntimeException(
-						ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
-						"Keine Daten vorhanden. Body Element ist leer");
+				// (21.11.12) Keine Ergebnisse ermoeglichen!
+				return responseData;
+//				throw new ExtraResponseProcessPluginRuntimeException(
+//						ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
+//						"Keine Daten vorhanden. Body Element ist leer");
 			}
 
 			final String responseId = responseDetails.getResponseID()

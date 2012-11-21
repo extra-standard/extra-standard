@@ -112,9 +112,11 @@ public class ClientProcessResult {
 	public String printResults() {
 		final StringBuilder successResultAsString = new StringBuilder();
 		final StringBuilder failedResultAsString = new StringBuilder();
+		final StringBuilder withoutResultAsString = new StringBuilder();
 		int processedResultsCount = 0;
 		int succesfulResultsCount = 0;
 		int failedResultsCount = 0;
+		int withoutResultsCount = 0;
 
 		for (final ProcessResult result : responses) {
 			if (result.getException() != null) {
@@ -134,29 +136,44 @@ public class ClientProcessResult {
 					// mehrere Responses für einen Request möglich!
 					Collection<ISingleResponseData> responses = responseData
 							.getResponse(requestId);
-					for (ISingleResponseData singleResponseData : responses) {
-						final StringBuilder singleDataResult = new StringBuilder();
-						singleDataResult.append(" InputData Type : ")
+					// (21.11.12) Kein Ergebnis ermoeglichen!
+					if (responses != null) {
+						for (ISingleResponseData singleResponseData : responses) {
+							final StringBuilder singleDataResult = new StringBuilder();
+							singleDataResult.append(" InputData Type : ")
+									.append(singleInputData.getInputDataType())
+									.append(" Identifier : ")
+									.append(singleInputData.getInputIdentifier());
+							singleDataResult.append(" Request : ").append(
+									singleResponseData.getRequestId());
+							singleDataResult.append(" Received Response: ").append(
+									singleResponseData.getResponseId());
+							singleDataResult.append(" With ReturnCode: ").append(
+									singleResponseData.getReturnCode());
+							singleDataResult.append(" and ReturnText: ").append(
+									singleResponseData.getReturnText());
+							singleDataResult.append(NEW_LINE);
+							if (singleResponseData.isSuccessful()) {
+								succesfulResultsCount++;
+								successResultAsString.append(singleDataResult);
+							} else {
+								failedResultsCount++;
+								failedResultAsString.append(singleDataResult);
+							}
+						}						
+					}
+					else {
+						// Kein Ergebnis!
+						succesfulResultsCount++;
+						withoutResultsCount++;
+						final StringBuilder withoutResult = new StringBuilder();
+						withoutResult.append(" InputData Type : ")
 								.append(singleInputData.getInputDataType())
+								.append(" RequestId : ")
+								.append(singleInputData.getRequestId())
 								.append(" Identifier : ")
 								.append(singleInputData.getInputIdentifier());
-						singleDataResult.append(" Request : ").append(
-								singleResponseData.getRequestId());
-						singleDataResult.append(" Received Response: ").append(
-								singleResponseData.getResponseId());
-						singleDataResult.append(" With ReturnCode: ").append(
-								singleResponseData.getReturnCode());
-						singleDataResult.append(" and ReturnText: ").append(
-								singleResponseData.getReturnText());
-						singleDataResult.append(NEW_LINE);
-						if (singleResponseData.isSuccessful()) {
-							succesfulResultsCount++;
-							successResultAsString.append(singleDataResult);
-						} else {
-							failedResultsCount++;
-							failedResultAsString.append(singleDataResult);
-						}
-
+						withoutResultAsString.append(withoutResult);
 					}
 				}
 			}
@@ -170,6 +187,10 @@ public class ClientProcessResult {
 		resultAsString.append(NEW_LINE);
 		resultAsString.append("Anzahl fehlerhafte Serverantworten: ").append(failedResultsCount);
 		resultAsString.append(NEW_LINE);
+		if (withoutResultsCount != 0) {
+			resultAsString.append("Anzahl Anfragen ohne Ergebnis (erfolgreich): ").append(withoutResultsCount);			
+		}
+		resultAsString.append(NEW_LINE);
 		resultAsString.append("Erfolgreich verarbeitete Datensätze: ").append(
 				NEW_LINE);
 		resultAsString.append(successResultAsString);
@@ -177,6 +198,11 @@ public class ClientProcessResult {
 			resultAsString.append("Fehlerhafte Datensätze: ").append(NEW_LINE);
 			resultAsString.append(failedResultAsString);
 		}
+		if (withoutResultsCount != 0) {
+			resultAsString.append("Anfragen ohne Ergebnis: ").append(NEW_LINE);
+			resultAsString.append(withoutResultAsString);
+		}
+		
 		return resultAsString.toString();
 	}
 
