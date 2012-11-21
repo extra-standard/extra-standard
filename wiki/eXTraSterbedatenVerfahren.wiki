@@ -29,7 +29,8 @@ Das Dokument ist unter http://www.extra-standard.de/upload/pdf/Anl-3-Spektrum_Sz
   
 = XSD: Profilierung des eXTra-Schemas =
 
-TODO
+Auf Basis der eXTra XSD-Schema-Dateien werden die Profilierungsdateien erstellt. Hier liegen die XSD-Schema-Dateien von eXTra 1.3:
+https://code.google.com/p/extra-standard/source/browse/#svn%2Ftrunk%2Fjava%2Fcomponents%2Fextra-schema%2Fsrc%2Fmain%2Fxsd
   
 = XML: Beispieldateien =
   * [https://code.google.com/p/extra-standard/source/browse/#svn%2Ftrunk%2Fjava%2Fprocedures%2Fextra-sterbedaten-ausland%2Fsrc%2Fmain%2Fdocs%2Fphase1%253Fstate%253Dclosed Phase 1]
