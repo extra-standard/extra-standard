@@ -492,12 +492,20 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 		this.returnCode = singleResponseData.getReturnCode();
 		this.returnText = singleResponseData.getReturnText();
 
-		// TODO MW Status InputData?!
 		PersistentStatus persistentStatus = singleResponseData.isSuccessful() ? PersistentStatus.DONE
 				: PersistentStatus.FAIL;
 		this.status = statusRepository.findOne(persistentStatus.getId());
 
 		repository.save(this);
+	}
+
+	@Override
+	public void transmitWithoutResponse() {
+		// TODO MW mehr Informationen falls kein Ergebnis vorliegt
+		this.returnText = "Kein Ergebnis!";
+		this.status = statusRepository.findOne(PersistentStatus.DONE.getId());
+
+		repository.save(this);		
 	}
 
 }

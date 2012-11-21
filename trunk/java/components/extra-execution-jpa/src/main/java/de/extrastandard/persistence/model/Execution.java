@@ -18,6 +18,7 @@
  */
 package de.extrastandard.persistence.model;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -247,20 +248,28 @@ public class Execution extends AbstractEntity implements IExecution {
 		final String requestId = comProt.getRequestId();
 		int nummerResponse = 1;
 		// für jede Response muss ein InputData Objekt angelegt werden
-		for (ISingleResponseData singleResponseData : responseData
-				.getResponse(requestId)) {
-			if (nummerResponse == 1) {
-				// vorhandenes CommunicationProtocol Objekt nehmen und Kommunikationsdaten
-				// aktualisieren
-				comProt.transmitted(singleResponseData);
-				processPhaseConnectionForInputData(comProt);
-			} else {
-				// neues InputData Objekt erzeugen
-				CommunicationProtocol comProtForResponse = new CommunicationProtocol(comProt,
-						singleResponseData);
-				processPhaseConnectionForInputData(comProtForResponse);
-			}
-			nummerResponse++;
+		// (21.11.12) kein Ergebnis muss auch moeglich sein!
+		Collection<ISingleResponseData> responseDataCollection =  responseData.getResponse(requestId);
+		// Liegen fuer diesen Request Ergebnisse vor?
+		if (responseDataCollection != null) {
+			for (ISingleResponseData singleResponseData : responseDataCollection) {
+				if (nummerResponse == 1) {
+					// vorhandenes CommunicationProtocol Objekt nehmen und Kommunikationsdaten
+					// aktualisieren
+					comProt.transmitted(singleResponseData);
+					processPhaseConnectionForInputData(comProt);
+				} else {
+					// neues InputData Objekt erzeugen
+					CommunicationProtocol comProtForResponse = new CommunicationProtocol(comProt,
+							singleResponseData);
+					processPhaseConnectionForInputData(comProtForResponse);
+				}
+				nummerResponse++;
+			}			
+		}
+		else {
+			// Keine Ergebnisse!
+			comProt.transmitWithoutResponse();
 		}
 	}
 
