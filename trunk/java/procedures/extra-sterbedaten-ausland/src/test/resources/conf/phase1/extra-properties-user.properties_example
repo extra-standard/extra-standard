@@ -7,9 +7,9 @@
 # =====================================
 # == Ablage-Ordner und Kontakt-Daten ==
 # =====================================
-plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=classpath:work/responses
-plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner=classpath:work/reports
-plugins.dataplugin.fileDataPlugin.inputVerzeichnis=classpath:work/input
+plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=classpath:work/italien/responses
+plugins.responseprocessplugin.fileSystemResponseProcessPlugin.reportOrdner=classpath:work/italien/reports
+plugins.dataplugin.fileDataPlugin.inputVerzeichnis=classpath:work/italien/input
 
 builder.xplg.Contacts.configurableSMTPContactsPluginsBuilder.emailaddress=test@rentenservice.de
 
