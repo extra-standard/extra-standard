@@ -1,4 +1,8 @@
-# Datenbank Connection Properties
+# =========================================================
+# == Szenario SendFetch, Technisches Referenzverfahren   ==
+# == Benutzerkonfigurationsdatei Phase 3                 ==
+# == Bitte Einstellungen anpassen!                       ==
+# ========================================================= 
 
 # HSQLDB
 plugins.execution.executionPersistenceJpa.hibernate.generateDdl=false
@@ -16,6 +20,8 @@ plugins.execution.executionPersistenceJpa.database.password=
 #plugins.execution.executionPersistenceJpa.database.username=extracli
 #plugins.execution.executionPersistenceJpa.database.password=extracli
 
-# WebService URL
+# ================================
+# == Webservices (eXTra Server) ==
+# ================================
 #webservice.endpoint.url=http://localhost:8088/mockExtraPhase1
 webservice.endpoint.url=http://10.140.0.44:8088/mockExtraPhase3

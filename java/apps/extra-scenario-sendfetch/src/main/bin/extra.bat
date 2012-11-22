@@ -15,7 +15,6 @@ rem See the License for the specific language governing permissions and
 rem limitations under the License.
 
 rem ---------------------------------------------------------------------------
-rem Fachverfahren sendFetch (PHASE 1)
 rem eXTra Startscript. Voraussetzung ist die Setzung der Umgebungsvariable 
 rem EXTRA_CLIENT_HOME.
 rem Als Argument wird der Pfad zum Konfigurationsverzeichnis erwartet
@@ -71,7 +70,7 @@ if "%LOGFILEPATH%" == "" set LOGFILEPATH=..\logs
 
 rem java aufruf
 rem im Aufruf wird beispielhaft die Konfiguration im Verzeichnis 'conf' erwartet und Logausgaben ins Verzeichnis 'logs' geschrieben (Syntax siehe Betriebshandbuch)
-%_JAVA% %JAVA_OPTS% -classpath %EXTRA_CLIENT_HOME%\lib\* de.extra.client.starter.ClientStarter -l %LOGFILEPATH% %* -c %1
+%_JAVA% %JAVA_OPTS% -classpath %EXTRA_CLIENT_HOME%\lib\* de.extra.client.starter.ClientStarter -l %LOGFILEPATH% %* -c ..\%1
 goto end
 
 :exit
