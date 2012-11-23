@@ -9,5 +9,5 @@ TODO Beispiel
 == Konfiguration ==
 
 {{{
-plugins.responseprocessplugin=fileSystemResultPackageDataResponseProcessPlugin
+plugins.responseprocessplugin=fileSystemResultDataResponseProcessPlugin
 }}}
