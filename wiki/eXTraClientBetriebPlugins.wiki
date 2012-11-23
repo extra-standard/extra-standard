@@ -3,7 +3,8 @@
 
 Der eXTra-Client bietet für verschiedene Aufgabenbereiche unterschiedliche Plugins an. So kann z.B. durch Auswahl eines Plugins gesteuert werden, ob das das erzeugte XML-Dokument im Filesystem abgelegt oder über einen Webservice verschickt wird.
 
-Produktive Plugins
+== Produktive Plugins ==
+Diese Plugins können produktiv eingesetzt werden.
 || *Name* || *Art* ||
 || acknowledgePhase1ResponseProcessPlugin || !ResponseProcessPlugin ||
 || acknowledgeSingleResponseDataResponseProcessPlugin || !ResponseProcessPlugin ||
@@ -16,7 +17,8 @@ Produktive Plugins
 || fileSystemResultPackageDataResponseProcessPlugin || !ResponseProcessPlugin ||
 || [eXTraClientPluginWsOutputPlugin wsOutputPlugin] || !OutputPlugin ||
 
-Plugins für Test- und Entwicklung
+== Plugins für Test- und Entwicklung ==
+Folgende Plugins sind für Test- und Entwicklungszwecke gedacht. Sie simulieren z.B. Serverantworten und werden in Unit-Tests verwendet.
 || *Name* || *Art* ||
 || dummyConfigPlugin || !ConfigPlugin ||
 || dummyDataPlugin || !DataPlugin ||
