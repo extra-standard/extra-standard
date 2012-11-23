@@ -1,8 +1,15 @@
-#summary Erfolgs- und Fehlerbehandlung
+#summary Erfolgs- und Fehlerbehandlung (Return Codes)
 
-= Erfolgs- und Fehlerbehandlung =
+= Erfolgs- und Fehlerbehandlung (Return Codes) =
+Im _ResponseProcessPlugin_ des eXTra-Clients wird das vom Server übertragene XML-Ergebnisdokument ausgewertet und dabei eine Fehlerbehandlung durchgeführt. 
 
-In der eXTra-Transport Spezifikation (http://www.extra-standard.de/upload/pdf/eXtra_Transport_Spezifikation_V130.pdf) ist auf Seite 126 das <Report> Element beschrieben, das zur Fehler - bzw. Erfolgsmeldung verwendet werden kann. Beispiel:
+== Konfiguration ==
+In der Konfigurationsdatei _extra-properties-basic.properties_ kann eine Liste positiver Server-Return Codes angegeben werden:
+{{{
+# positive Server Return-Codes
+de.extra.client.core.util.ExtraReturnCodeAnalyser.returncodelist=C00,I000,E98
+}}}
+Falls im Code Element der Server-Nachricht (siehe http://www.extra-standard.de/upload/pdf/eXtra_Transport_Spezifikation_V130.pdf) einer dieser Werte gefunden wird, wird die Kommunikation als erfolgreich angesehen. Ansonsten als nicht erfolgreich:
 {{{
 <Report highestWeight="http://www.extra-standard.de/weight/ERROR">
   <Flag weight="http://www.extra-standard.de/weight/ERROR">
@@ -12,14 +19,14 @@ In der eXTra-Transport Spezifikation (http://www.extra-standard.de/upload/pdf/eX
 </Report>
 }}}
 
-Erfolg/Fehler können auf verschiedene Art im Report-Element abgebildet werden. Der eXTra-Client wertet aktuell das Report Element folgendermaßen aus:
- * Pro Report Element wird genau ein Flag Element akzeptiert.
- * Der eXTra-Client wertet zur Fehlererkennung nur das Code Element aus.
- * In der Konfiguration kann eine Liste positiver Return-Codes hinterlegt werden. Falls im Code Element einer dieser Werte gefunden wird, wird die Kommunikation als erfolgreich angesehen. Ansonsten als nicht erfolgreich.
- * Der Inhalt des Text Elements wird im Kommunikations-Protokoll abgelegt.
- * Die Attribute highestWeight und weight werden nicht ausgewertet.
+Die Elemente _highestWeight_ und _weight_ werden aktuell nicht ausgewertet.
 
-Erfolg/Fehler können sowohl im TransportHeader-Element als auch im Transport-Body Element gemeldet werden. Der eXTra-Client geht aktuell von folgendem Verfahren aus:
+== eXTra-Client Return Codes ==
 
- * Im TransportHeader werden Erfolg/Fehler gemeldet die die Gesamt-Nachricht betreffen. Z.B. 'Alle Dateien erfolgreich verarbeitet' oder 'Nur 2 von 4 Dateien erfolgreich verarbeitet'
- * Im TransportBody werden Erfolg/Fehler für Einzelelemente (z.B. Dateien) gemeldet. Ein <TransportBody> kann z.B. mehrere <Package>-Elemente enthalten und in jedem <Package> Element wird eine Ergebnisdatei abgelegt.
+Dem aufrufenden Programm gibt der eXTra-Client folgende Return Codes zurück:
+
+|| *Code* || *Bedeutung* ||
+|| 0 || Erfolg ||
+|| 16 || Warnung ||
+|| 32 || Technischer Fehler ||
+|| 64 || Fachlicher Fehler ||
