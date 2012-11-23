@@ -5,33 +5,32 @@
 Profil-Datei
 {{{
 <element>
-  <Name>xcpt:Sender</Name>
-  <Elternelement>TransportHeader</Elternelement>
-</element>
-<element>
-  <Name>xcpt:Receiver</Name>
-  <Elternelement>TransportHeader</Elternelement>
+  <Name>xcpt:ElementSequence</Name>
+  <Elternelement>Data</Elternelement>
 </element>
 }}}
 
 Properties-Datei
 {{{
-message.builder.header.senderId.class=
-message.builder.header.senderId.value=ec-1
-message.builder.header.senderNameValue=eXTra-Client
-message.builder.header.receiverId.class=
-message.builder.header.receiverId.value=es-1
-message.builder.header.receiverNameValue=eXTra-Server
+builder.xcpt.ElementSequence=transportBodyRequestQueryElementSequenceBuilder
 }}}
 
 Erzeugter XML-Abschnitt
 {{{
-<xcpt:Sender>
-  <xcpt:SenderID>ec-1</xcpt:SenderID>
-  <xcpt:Name>eXTra-Client</xcpt:Name>
-</xcpt:Sender>
-<xcpt:Receiver>
-  <xcpt:ReceiverID>es-1</xcpt:ReceiverID>
-  <xcpt:Name>eXTra-Server</xcpt:Name>
-</xcpt:Receiver>
+<xcpt:ElementSequence>
+  <xmsg:dataRequest>
+    <xmsg:Query>
+      <xmsg:Argument property="http://www.extra-standard.de/property/ResponseID"
+        type="xs:string">
+        <xmsg:GT>3</xmsg:GT>
+      </xmsg:Argument>
+      <xmsg:Argument property="http://www.extra-standard.de/property/Procedure"
+        type="xs:string">
+			
+        <xmsg:EQ>Sterbemeldung</xmsg:EQ>
+      </xmsg:Argument>
+    </xmsg:Query>
+    <xmsg:Control />
+  </xmsg:dataRequest>
+</xcpt:ElementSequence>
 }}}
