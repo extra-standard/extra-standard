@@ -1,4 +1,4 @@
-#summary WsOutputPlugin - Kommunikation über Webservice
+#summary !WsOutputPlugin - Kommunikation über Webservice
 
 = WsOutputPlugin - Kommunikation über Webservice =
 
