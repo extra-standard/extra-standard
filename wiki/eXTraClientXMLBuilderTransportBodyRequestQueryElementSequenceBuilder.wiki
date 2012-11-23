@@ -2,6 +2,12 @@
 
 = XML Builder transportBodyRequestQueryElementSequenceBuilder =
 
+Mit diesem Builder kann eine Anfrage an den Server erzeugt werden. Der Builder erhält eine Liste von Anfrage-Elementen und verarbeitet diese zu einer XML-Anfrage. Die Anfrage-Elemente werden von einem Data-Plugin zur Verfügung gestellt.
+
+*Beispiel*
+
+Anfrage _(ResponseID > 3) AND (Procedure = Sterbemeldung)_
+
 Profil-Datei
 {{{
 <element>
