@@ -4,7 +4,9 @@
 *Art:* !ResponseProcessPlugin
 == Beschreibung ==
 
-Liest aus dem !TransportBody des Ergebnisdokumentes eine Liste von Ergebnisdateien aus und legt diese im Outputverzeichnis ab.
+Liest aus dem !TransportBody des Ergebnisdokumentes eine Liste von Ergebnisdokumenten aus und legt diese im Outputverzeichnis ab.
+
+Wird im Verfahren _Send Fetch_ in Phase 2 zur Abholung der Ergebnisdokumente verwendet.
 
 Beispiel:
 Ein Ergebnisdokument ist im Data-Element von !PackageBody abgelegt: 
