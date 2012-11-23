@@ -1,5 +1,5 @@
-#summary acknowledgePhase1ResponseProcessPlugin
-= AcknowledgePhase1ResponseProcessPlugin =
+#summary AcknowledgePhase1ResponseProcessPlugin
+= !AcknowledgePhase1ResponseProcessPlugin =
 *Art:* !ResponseProcessPlugin
 == Beschreibung ==
 
