@@ -2,7 +2,11 @@
 
 = !WsOutputPlugin - Kommunikation über Webservice =
 
+== Beschreibung ==
+
 Dieses Plugin steuert den Datenaustausch mit dem eXTra-Server über einen Webservice. 
+
+== Konfiguration ==
 Duch folgende Einträge in den Konfigurationsdateien wird das Plugin aktiviert und konfiguriert:
 {{{
 plugins.outputplugin=wsOutputPlugin
