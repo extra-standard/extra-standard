@@ -4,8 +4,10 @@
 *Art:* !ResponseProcessPlugin
 == Beschreibung ==
 
-Beispiel:
+Liest aus dem TransportBody des Ergebnisdokumentes eine Liste von Ergebnisdateien aus und legt diese im Outputverzeichnis ab.
 
+Beispiel:
+Ein Ergebnisdokument ist im Data-Element von PackageBody abgelegt: 
 {{{
 <xres:TransportBody>
 	<xres:Package>
