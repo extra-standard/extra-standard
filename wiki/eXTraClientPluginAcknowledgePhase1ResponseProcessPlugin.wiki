@@ -1,10 +1,17 @@
 #summary acknowledgePhase1ResponseProcessPlugin
-=  =
-*Art:* !OutputPlugin
+= AcknowledgePhase1ResponseProcessPlugin =
+*Art:* !ResponseProcessPlugin
 == Beschreibung ==
 
+In einem _Request With Response_ Szenario (Phase) wird die Serverantwort verarbeitet. Dieses Plugin sollte verwendet werden, wenn der Client Daten an den server sendet und eine Bestätigung erhält:
+
+{{{
+<xcpt:DataType>http://www.extra-standard.de/datatypes/DataSend</xcpt:DataType>
+<xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
+}}}  
 
 == Konfiguration ==
 
 {{{
+plugins.responseprocessplugin=acknowledgePhase1ResponseProcessPlugin
 }}}
