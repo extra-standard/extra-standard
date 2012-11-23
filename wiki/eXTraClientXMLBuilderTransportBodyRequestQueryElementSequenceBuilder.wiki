@@ -25,8 +25,7 @@ Erzeugter XML-Abschnitt
         <xmsg:GT>3</xmsg:GT>
       </xmsg:Argument>
       <xmsg:Argument property="http://www.extra-standard.de/property/Procedure"
-        type="xs:string">
-			
+        type="xs:string">			
         <xmsg:EQ>Sterbemeldung</xmsg:EQ>
       </xmsg:Argument>
     </xmsg:Query>
