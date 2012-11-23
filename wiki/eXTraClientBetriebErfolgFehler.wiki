@@ -1,7 +1,7 @@
 #summary Erfolgs- und Fehlerbehandlung (Return Codes)
 
 = Erfolgs- und Fehlerbehandlung (Return Codes) =
-Im _ResponseProcessPlugin_ des eXTra-Clients wird das vom Server übertragene XML-Ergebnisdokument ausgewertet und dabei eine Fehlerbehandlung durchgeführt. 
+Im _!ResponseProcessPlugin_ des eXTra-Clients wird das vom Server übertragene XML-Ergebnisdokument ausgewertet und dabei eine Fehlerbehandlung durchgeführt. 
 
 == Konfiguration ==
 In der Konfigurationsdatei _extra-properties-basic.properties_ kann eine Liste positiver Server-Return Codes angegeben werden:
