@@ -5,22 +5,22 @@ Der eXTra-Client bietet für verschiedene Aufgabenbereiche unterschiedliche Plug
 
 Produktive Plugins
 || *Name* || *Art* ||
-|| acknowledgePhase1ResponseProcessPlugin || ResponseProcessPlugin ||
-|| acknowledgeSingleResponseDataResponseProcessPlugin || ResponseProcessPlugin ||
-|| dbMaxResponseIdQueryDataPlugin || DataPlugin ||
-|| dbQueryDataPlugin || DataPlugin ||
-|| defaultConfigPlugin || ConfigPlugin ||
-|| fileDataPlugin || DataPlugin ||
-|| fileSystemResponseProcessPlugin || ResponseProcessPlugin ||
-|| fileSystemResultDataResponseProcessPlugin || ResponseProcessPlugin ||
-|| fileSystemResultPackageDataResponseProcessPlugin || ResponseProcessPlugin ||
-|| wsOutputPlugin || OutputPlugin ||
+|| acknowledgePhase1ResponseProcessPlugin || !ResponseProcessPlugin ||
+|| acknowledgeSingleResponseDataResponseProcessPlugin || !ResponseProcessPlugin ||
+|| dbMaxResponseIdQueryDataPlugin || !DataPlugin ||
+|| dbQueryDataPlugin || !DataPlugin ||
+|| defaultConfigPlugin || !ConfigPlugin ||
+|| fileDataPlugin || !DataPlugin ||
+|| fileSystemResponseProcessPlugin || !ResponseProcessPlugin ||
+|| fileSystemResultDataResponseProcessPlugin || !ResponseProcessPlugin ||
+|| fileSystemResultPackageDataResponseProcessPlugin || !ResponseProcessPlugin ||
+|| wsOutputPlugin || !OutputPlugin ||
 
 Plugins für Test- und Entwicklung
 || *Name* || *Art* ||
-|| dummyConfigPlugin || ConfigPlugin ||
-|| dummyDataPlugin || DataPlugin ||
-|| dummyDataResponceOutputPlugin || OutputPlugin ||
-|| dummyOutputPlugin || OutputPlugin ||
-|| dummyQueryDataResponceOutputPlugin || OutputPlugin ||
-|| dummyResponseProcessPlugin || ResponsePlugin ||
+|| dummyConfigPlugin || !ConfigPlugin ||
+|| dummyDataPlugin || !DataPlugin ||
+|| dummyDataResponceOutputPlugin || !OutputPlugin ||
+|| dummyOutputPlugin || !OutputPlugin ||
+|| dummyQueryDataResponceOutputPlugin || !OutputPlugin ||
+|| dummyResponseProcessPlugin || !ResponsePlugin ||
