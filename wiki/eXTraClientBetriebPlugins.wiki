@@ -3,4 +3,21 @@
 
 Der eXTra-Client bietet für verschiedene Aufgabenbereiche unterschiedliche Plugins an. So kann z.B. durch Auswahl eines Plugins gesteuert werden, ob das das erzeugte XML-Dokument im Filesystem abgelegt oder über einen Webservice verschickt wird.
 
-TODO Plugins dokumentieren
+|| *Name* || *Klasse* ||
+|| acknowledgePhase1ResponseProcessPlugin || de.extra.client.plugins.responseprocessplugin.filesystem.AcknowledgePhase1ResponseProcessPlugin ||
+|| acknowledgeSingleResponseDataResponseProcessPlugin || de.extra.client.plugins.responseprocessplugin.filesystem.AcknowledgeSingleResponseDataResponseProcessPlugin ||
+|| dbMaxResponseIdQueryDataPlugin || de.extra.client.plugins.dataplugin.DBMaxResponseIdQueryDataPlugin ||
+|| dbQueryDataPlugin || de.extra.client.plugins.dataplugin.DBQueryDataPlugin ||
+|| defaultConfigPlugin || de.extra.client.plugins.configplugin.ConfigPlugin ||
+|| dummyConfigPlugin || de.extra.client.core.plugin.dummies.DummyConfigPlugin ||
+|| dummyDataPlugin || de.extra.client.core.plugin.dummies.DummyDataPlugin ||
+|| dummyDataResponceOutputPlugin || de.extra.client.core.plugin.dummies.DummyDataResponceOutputPlugin ||
+|| dummyOutputPlugin || de.extra.client.core.plugin.dummies.DummyOutputPlugin ||
+|| dummyQueryDataResponceOutputPlugin || de.extra.client.core.plugin.dummies.DummyQueryDataResponceOutputPlugin ||
+|| dummyResponseProcessPlugin || de.extra.client.core.plugin.dummies.DummyResponseProcessPlugin ||
+|| fileDataPlugin || de.extra.client.plugins.dataplugin.FileDataPlugin ||
+|| fileSystemResponseProcessPlugin || de.extra.client.plugins.responseprocessplugin.filesystem.FileSystemResponseProcessPlugin ||
+|| fileSystemResultDataResponseProcessPlugin || de.extra.client.plugins.responseprocessplugin.filesystem.FileSystemResultDataResponseProcessPlugin ||
+|| fileSystemResultPackageDataResponseProcessPlugin || de.extra.client.plugins.responseprocessplugin.filesystem.FileSystemResultPackageDataResponseProcessPlugin ||
+|| httpOutputPlugin || de.extra.client.plugins.outputplugin.HttpOutputPlugin ||
+|| wsOutputPlugin || de.extra.client.plugins.outputplugin.ws.WsOutputPlugin ||
