@@ -1,11 +1,15 @@
 #summary dbMaxResponseIdQueryDataPlugin
 
-=  =
-*Art:* !OutputPlugin
+= DbMaxResponseIdQueryDataPlugin =
+*Art:* !DataPlugin
 == Beschreibung ==
 
+Ermittelt in der Protokollierungs-Datenbank die zuletzt vom eXTra-Server erhaltene ResponseId (bzw. die größte) für die konfigurierte Prozedur und Phase.
+
+Wird in Phase 2 des Verfahrens _Sterbedaten Ausland_ verwendet, um vom Server noch nicht erhaltene Ergebnisdateien zu erfragen.
 
 == Konfiguration ==
 
 {{{
+plugins.dataplugin=dbMaxResponseIdQueryDataPlugin
 }}}
