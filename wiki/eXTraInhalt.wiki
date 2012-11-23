@@ -20,7 +20,7 @@
       * [eXTraClientBetriebConfigProfile profile.xml]
     * [eXTraClientBetriebPlugins Plugins]
     * [eXTraClientBetriebBuilder XML-Builder]
-    * [eXTraClientBetriebSonstigeKonfiguration Sonstige Konfiguration]
+    * [eXTraClientBetriebErfolgFehler Fehlerbehandlung]
     * [eXTraClientBetriebLogging Logging]
     * [eXTraClientBetriebDatenbank Datenbank]
     * [eXTraClientBetriebSzenarioSendFetch Konf. Fachverfahren]
