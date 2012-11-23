@@ -1,0 +1,33 @@
+<ns2:TransportHeader>
+	<xcpt:TestIndicator>http://extra-standard.de/test/NONE</xcpt:TestIndicator>
+	<xcpt:Sender>
+		<xcpt:SenderID>ec-1</xcpt:SenderID>
+		<xcpt:Name>eXTra-Client</xcpt:Name>
+	</xcpt:Sender>
+	<xcpt:Receiver>
+		<xcpt:ReceiverID>es-1</xcpt:ReceiverID>
+		<xcpt:Name>eXTra-Server</xcpt:Name>
+	</xcpt:Receiver>
+	<xcpt:RequestDetails>
+		<xcpt:RequestID>PROC_STERBEMELDUNG_7007</xcpt:RequestID>
+		<xcpt:TimeStamp>2012-11-22T16:31:02</xcpt:TimeStamp>
+		<xcpt:Application>
+			<xcpt:Product>eXTra Klient OpenSource</xcpt:Product>
+			<xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
+			<xcpt:RegistrationID />
+		</xcpt:Application>
+		<xcpt:Procedure>Sterbemeldung</xcpt:Procedure>
+		<xcpt:DataType>http://www.extra-standard.de/datatypes/DataSend</xcpt:DataType>
+		<xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
+	</xcpt:RequestDetails>
+</ns2:TransportHeader>
+<ns2:TransportPlugIns>
+	<xplg:contactType>
+		<xplg:Endpoint type="SMTP">test@rentenservice.de</xplg:Endpoint>
+	</xplg:contactType>
+</ns2:TransportPlugIns>
+<ns2:TransportBody>
+	<xcpt:Data>
+		<xcpt:Base64CharSequence>VTNSbGNtSmxaR0YwWlc0Z01TQkpkR0ZzYVdWdQ==</xcpt:Base64CharSequence>
+	</xcpt:Data>
+</ns2:TransportBody>

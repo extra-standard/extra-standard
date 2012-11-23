@@ -1,0 +1,44 @@
+
+<ns2:TransportHeader>
+	<xcpt:TestIndicator>http://extra-standard.de/test/NONE</xcpt:TestIndicator>
+	<xcpt:Sender>
+		<xcpt:SenderID>ec-1</xcpt:SenderID>
+		<xcpt:Name>eXTra-Client</xcpt:Name>
+	</xcpt:Sender>
+	<xcpt:Receiver>
+		<xcpt:ReceiverID>es-1</xcpt:ReceiverID>
+		<xcpt:Name>eXTra-Server</xcpt:Name>
+	</xcpt:Receiver>
+	<xcpt:RequestDetails>
+		<xcpt:RequestID>7010</xcpt:RequestID>
+		<xcpt:TimeStamp>2012-11-22T16:58:41</xcpt:TimeStamp>
+		<xcpt:Application>
+			<xcpt:Product>eXTra Klient OpenSource</xcpt:Product>
+			<xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
+			<xcpt:RegistrationID />
+		</xcpt:Application>
+		<xcpt:Procedure>Sterbemeldung</xcpt:Procedure>
+		<xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
+		<xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
+	</xcpt:RequestDetails>
+</ns2:TransportHeader>
+<ns2:TransportPlugIns />
+<ns2:TransportBody>
+	<xcpt:Data>
+		<xcpt:ElementSequence>
+			<xmsg:dataRequest>
+				<xmsg:Query>
+					<xmsg:Argument property="http://www.extra-standard.de/property/ResponseID"
+						type="xs:string">
+						<xmsg:GT>3</xmsg:GT>
+					</xmsg:Argument>
+					<xmsg:Argument property="http://www.extra-standard.de/property/Procedure"
+						type="xs:string">
+						<xmsg:EQ>Sterbemeldung</xmsg:EQ>
+					</xmsg:Argument>
+				</xmsg:Query>
+				<xmsg:Control />
+			</xmsg:dataRequest>
+		</xcpt:ElementSequence>
+	</xcpt:Data>
+</ns2:TransportBody>

@@ -1,0 +1,39 @@
+<ns2:TransportHeader>
+	<xcpt:TestIndicator>http://extra-standard.de/test/NONE</xcpt:TestIndicator>
+	<xcpt:Sender>
+		<xcpt:SenderID>ec-1</xcpt:SenderID>
+		<xcpt:Name>eXTra-Client</xcpt:Name>
+	</xcpt:Sender>
+	<xcpt:Receiver>
+		<xcpt:ReceiverID>es-1</xcpt:ReceiverID>
+		<xcpt:Name>eXTra-Server</xcpt:Name>
+	</xcpt:Receiver>
+	<xcpt:RequestDetails>
+		<xcpt:RequestID>711</xcpt:RequestID>
+		<xcpt:TimeStamp>2012-11-22T17:17:04</xcpt:TimeStamp>
+		<xcpt:Application>
+			<xcpt:Product>eXTra Klient OpenSource</xcpt:Product>
+			<xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
+			<xcpt:RegistrationID />
+		</xcpt:Application>
+		<xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbemeldung</xcpt:Procedure>
+		<xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
+		<xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-acknowledgement</xcpt:Scenario>
+	</xcpt:RequestDetails>
+</ns2:TransportHeader>
+<ns2:TransportPlugIns />
+<ns2:TransportBody>
+	<xcpt:Data>
+		<xcpt:ElementSequence>
+			<xmsg:listOfConfirmationOfReceipt>
+				<xmsg:ConfirmationOfReceipt>
+					<xmsg:PropertySet
+						name="http://www.extra-standard.de/property/ResponseID">
+						<xmsg:Value>10004</xmsg:Value>
+						<xmsg:Value>10005</xmsg:Value>
+					</xmsg:PropertySet>
+				</xmsg:ConfirmationOfReceipt>
+			</xmsg:listOfConfirmationOfReceipt>
+		</xcpt:ElementSequence>
+	</xcpt:Data>
+</ns2:TransportBody>
