@@ -6,15 +6,15 @@ Der eXTra-Client bietet für verschiedene Aufgabenbereiche unterschiedliche Plug
 == Produktive Plugins ==
 Diese Plugins können produktiv eingesetzt werden.
 || *Name* || *Art* ||
-|| acknowledgePhase1ResponseProcessPlugin || !ResponseProcessPlugin ||
-|| acknowledgeSingleResponseDataResponseProcessPlugin || !ResponseProcessPlugin ||
-|| dbMaxResponseIdQueryDataPlugin || !DataPlugin ||
-|| dbQueryDataPlugin || !DataPlugin ||
-|| defaultConfigPlugin || !ConfigPlugin ||
-|| fileDataPlugin || !DataPlugin ||
-|| fileSystemResponseProcessPlugin || !ResponseProcessPlugin ||
-|| fileSystemResultDataResponseProcessPlugin || !ResponseProcessPlugin ||
-|| fileSystemResultPackageDataResponseProcessPlugin || !ResponseProcessPlugin ||
+|| [eXTraClientPluginAcknowledgePhase1ResponseProcessPlugin acknowledgePhase1ResponseProcessPlugin] || !ResponseProcessPlugin ||
+|| [eXTraClientPluginAcknowledgeSingleResponseDataResponseProcessPlugin acknowledgeSingleResponseDataResponseProcessPlugin] || !ResponseProcessPlugin ||
+|| [eXTraClientPluginDbMaxResponseIdQueryDataPlugin  dbMaxResponseIdQueryDataPlugin] || !DataPlugin ||
+|| [eXTraClientPluginDbQueryDataPlugin dbQueryDataPlugin] || !DataPlugin ||
+|| [eXTraClientPluginDefaultConfigPlugin defaultConfigPlugin] || !ConfigPlugin ||
+|| [eXTraClientPluginFileDataPlugin fileDataPlugin] || !DataPlugin ||
+|| [eXTraClientPluginFileSystemResponseProcessPlugin fileSystemResponseProcessPlugin] || !ResponseProcessPlugin ||
+|| [eXTraClientPluginFileSystemResultDataResponseProcessPlugin fileSystemResultDataResponseProcessPlugin] || !ResponseProcessPlugin ||
+|| [eXTraClientPluginFileSystemResultPackageDataResponseProcessPlugin fileSystemResultPackageDataResponseProcessPlugin] || !ResponseProcessPlugin ||
 || [eXTraClientPluginWsOutputPlugin wsOutputPlugin] || !OutputPlugin ||
 
 == Plugins für Test- und Entwicklung ==
