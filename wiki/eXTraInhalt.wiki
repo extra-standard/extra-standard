@@ -20,7 +20,7 @@
       * [eXTraClientBetriebConfigProfile profile.xml]
     * [eXTraClientBetriebPlugins Plugins]
     * [eXTraClientBetriebBuilder XML-Builder]
-      * [eXTRaClientXMLBuilderconfigurableSMTPContactsPluginsBuilder configurableSMTPContactsPluginsBuilder]
+      * [eXTRaClientXMLBuilderConfigurableSMTPContactsPluginsBuilder configurableSMTPContactsPluginsBuilder]
     * [eXTraClientBetriebSonstigeKonfiguration Sonstige Konfiguration]
     * [eXTraClientBetriebLogging Logging]
     * [eXTraClientBetriebDatenbank Datenbank]
