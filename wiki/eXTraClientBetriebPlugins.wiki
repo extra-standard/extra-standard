@@ -14,7 +14,7 @@ Produktive Plugins
 || fileSystemResponseProcessPlugin || !ResponseProcessPlugin ||
 || fileSystemResultDataResponseProcessPlugin || !ResponseProcessPlugin ||
 || fileSystemResultPackageDataResponseProcessPlugin || !ResponseProcessPlugin ||
-|| wsOutputPlugin || !OutputPlugin ||
+|| [eXTraClientPluginWsOutputPlugin wsOutputPlugin] || !OutputPlugin ||
 
 Plugins für Test- und Entwicklung
 || *Name* || *Art* ||
