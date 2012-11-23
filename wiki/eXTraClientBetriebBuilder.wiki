@@ -31,7 +31,7 @@ Erzeugter XML-Abschnitt
 
 == Übersicht über alle XML-Builder ==
 || *Name* || *XML-Element* || *Klasse* ||
-|| configurableSMTPContactsPluginsBuilder || xplg:Contacts || de.extra.client.core.builder.impl.plugins.ConfigurableSMTPContactsPluginsBuilder ||
+|| [eXTraClientXMLBuilderconfigurableSMTPContactsPluginsBuilder configurableSMTPContactsPluginsBuilder] || xplg:Contacts || de.extra.client.core.builder.impl.plugins.ConfigurableSMTPContactsPluginsBuilder ||
 || dataSourceConfigurablePluginsBuilder || xplg:!DataSource || de.extra.client.core.builder.impl.plugins.!DataSourceConfigurablePluginsBuilder ||
 || dataSourceInputDataPluginsBuilder || xplg:!DataSource || de.extra.client.core.builder.impl.plugins.!DataSourceInputDataPluginsBuilder ||
 || dataSourcePluginsBuilder || xplg:!DataSource || de.extra.client.core.builder.impl.plugins.!DataSourcePluginsBuilder ||
