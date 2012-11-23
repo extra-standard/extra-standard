@@ -44,7 +44,7 @@ Erzeugter XML-Abschnitt
 || transportBodyDataBuilder || xcpt:Data || de.extra.client.core.builder.impl.components.!TransportBodyDataBuilder ||
 || !transportBodyFileInputBase64CharSequenceBuilder || xcpt:!Base64CharSequence || de.extra.client.core.builder.impl.components.!TransportBodyFileInputBase64CharSequenceBuilder ||
 || transportBodyRequestConfirmationOfReceiptSequenceBuilder || xcpt:!ElementSequence || de.extra.client.core.builder.impl.components.!TransportBodyRequestConfirmationOfReceiptSequenceBuilder ||
-|| transportBodyRequestQueryElementSequenceBuilder || xcpt:!ElementSequence || de.extra.client.core.builder.impl.components.!TransportBodyRequestQueryElementSequenceBuilder ||
+|| [eXTraClientXMLBuilderTransportBodyRequestQueryElementSequenceBuilder transportBodyRequestQueryElementSequenceBuilder] || xcpt:!ElementSequence || de.extra.client.core.builder.impl.components.!TransportBodyRequestQueryElementSequenceBuilder ||
 || transportHeaderReceiverBuilder || xcpt:Receiver || de.extra.client.core.builder.impl.components.!TransportHeaderReceiverBuilder ||
 || transportHeaderRequestDetailsBuilder || xcpt:!RequestDetails || de.extra.client.core.builder.impl.components.!TransportHeaderRequestDetailsBuilder ||
 || transportHeaderSenderBuilder || xcpt:Sender || de.extra.client.core.builder.impl.components.!TransportHeaderSenderBuilder ||
