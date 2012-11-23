@@ -1,0 +1,23 @@
+#summary Erfolgs- und Fehlerbehandlung
+
+= Erfolgs- und Fehlerbehandlung =
+
+In der eXTra-Transport Spezifikation (http://www.extra-standard.de/upload/pdf/eXtra_Transport_Spezifikation_V130.pdf) ist auf Seite 126 das <Report> Element beschrieben, das zur Fehler - bzw. Erfolgsmeldung verwendet werden kann. Beispiel:
+<Report highestWeight="http://www.extra-standard.de/weight/ERROR">
+  <Flag weight="http://www.extra-standard.de/weight/ERROR">
+    <Code>X3301-500</Code>
+    <Text>Http error 500 was raised</Text>
+  </Flag>
+</Report>
+
+Erfolg/Fehler können auf verschiedene Art im <Report>-Element abgebildet werden. Der eXTra-Client wertet aktuell das <Report> Element folgendermaßen aus:
+Pro <Report> Element wird genau ein <Flag> Element akzeptiert.
+Der eXTra-Client wertet zur Fehlererkennung nur das <Code> Element aus.
+In der Konfiguration kann eine Liste positiver Return-Codes hinterlegt werden. Falls im <Code> Element einer dieser Werte gefunden wird, wird die Kommunikation als erfolgreich angesehen. Ansonsten als nicht erfolgreich.
+Der Inhalt des <Text> Elements wird im Kommunikations-Protokoll abgelegt.
+    Die Attribute highestWeight und weight werden nicht ausgewertet.
+
+Erfolg/Fehler können sowohl im TransportHeader-Element als auch im Transport-Body Element gemeldet werden. Der eXTra-Client geht aktuell von folgendem Verfahren aus:
+
+    Im TransportHeader werden Erfolg/Fehler gemeldet die die Gesamt-Nachricht betreffen. Z.B. 'Alle Dateien erfolgreich verarbeitet' oder 'Nur 2 von 4 Dateien erfolgreich verarbeitet'
+    Im TransportBody werden Erfolg/Fehler für Einzelelemente (z.B. Dateien) gemeldet. Ein <TransportBody> kann z.B. mehrere <Package>-Elemente enthalten und in jedem <Package> Element wird eine Ergebnisdatei abgelegt.
