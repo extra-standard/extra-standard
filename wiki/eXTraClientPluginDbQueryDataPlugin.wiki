@@ -1,10 +1,14 @@
 #summary dbQueryDataPlugin
-=  =
-*Art:* !OutputPlugin
+= !DbQueryDataPlugin =
+*Art:* !DataPlugin
 == Beschreibung ==
+Sucht in der Protokollierungs-DB alle Server-Response-ID's, die dem Server in der anstehenden Phase übermittelt werden sollen.
 
-
+Wird in Phase 3 des Verfahrens _Send Fetch_ verwendet, um alle zu bestätigenden Ergebnisdokumente (bzw. deren ID's) zu ermitteln. 
 == Konfiguration ==
 
 {{{
+plugins.dataplugin=dbQueryDataPlugin
+# Maximale Anzahl von Verarbeitungs-Objekten die dem Server in einer Nachricht gesendet werden
+plugins.dataplugin.dbQueryDataPlugin.inputDataLimit=100
 }}}
