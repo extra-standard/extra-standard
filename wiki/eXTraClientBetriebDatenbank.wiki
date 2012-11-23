@@ -6,4 +6,4 @@ Für den Betrieb benötigt der eXTra Client eine Datenbank. In dieser Datenbank 
  
 Eine Beschreibung findet sich hier: [eXTraPersistence]
 
-Informationen zur Erstellung finden sich in: [eXTraClientBetriebSzenarioSendFetch]
+Informationen zur Erstellung finden sich in: [eXTraClientBetriebSzenarioSendFetch Konfiguration Fachverfahren]
