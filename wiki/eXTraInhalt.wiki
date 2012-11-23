@@ -23,7 +23,7 @@
     * [eXTraClientBetriebSonstigeKonfiguration Sonstige Konfiguration]
     * [eXTraClientBetriebLogging Logging]
     * [eXTraClientBetriebDatenbank Datenbank]
-    * [eXTraClientBetriebSzenarioSendFetch Szenario Send-Fetch]
+    * [eXTraClientBetriebSzenarioSendFetch Konfiguration Fachverfahren]
   * [eXTraSpecIssues Offene Punkte]    
   * [eXTraEntwProzess Entwicklungsprozess]
   * [eXTraClientReleases Releases]
