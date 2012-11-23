@@ -1,11 +1,10 @@
 #summary defaultConfigPlugin
 
-=  =
-*Art:* !OutputPlugin
+= !DefaultConfigPlugin =
+*Art:* !ConfigPlugin
 == Beschreibung ==
-
-
+Das (aktuell) einzige Konfigurationsplugin.
 == Konfiguration ==
-
 {{{
+plugins.configplugin=defaultConfigPlugin
 }}}
