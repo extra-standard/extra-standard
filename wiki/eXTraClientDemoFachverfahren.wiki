@@ -12,6 +12,7 @@ Das Fachverfahren wird wie in der Betriebsanleitung beschrieben konfiguriert und
 
 Mit soapUI kann ein eXTra-Server simuliert werden.
 
+http://extra-standard.googlecode.com/svn/wiki/images/extra-demo-sterbedaten-soapui.png
 == Phase 1 durchführen ==
 
 In Phase 1 dendet der eXTra-Client alle Dateien aus dem Verzeichnis _work/input_ an den Server. Jede Datei wird in einer eigenen eXTra-Nachricht versendet.
