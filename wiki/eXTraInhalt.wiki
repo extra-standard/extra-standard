@@ -14,6 +14,7 @@
   * [eXTraVerfahren Fachverfahren] 
       * [eXTraErstellungVerfahren Erstellung Fachverfahren]   
       * [eXTraSterbedatenVerfahren Sterbedatenabgleich Ausland]
+      * [eXTraClientDemoFachverfahren Demo]
   * [eXTraClientBetriebsanleitung Betriebsanleitung]
     * [eXTraClientBetriebKonfigurationsdateien Konfigurationsdateien]
       * [eXTraClientBetriebConfigBasis extra-properties-basic]
