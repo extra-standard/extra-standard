@@ -97,8 +97,8 @@ Erfolgreich verarbeitete Datensätze:
 ...
 }}}
 
-Die zweite Log-Datei (developer) gibt ausführliche Informationen.
-Analog werden Phase 2 und Phase 3 durchgeführt.
+Die zweite Log-Datei (developer) ist wesentlich größer und gibt ausführliche Informationen.
+
 == Phase 2 durchführen ==
 Der eXTra-Client erfragt neue Dokumente vom Server.
 
