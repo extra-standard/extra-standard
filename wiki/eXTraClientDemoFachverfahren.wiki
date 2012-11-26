@@ -77,10 +77,20 @@ select EX.ID AS "Ex.Id", INP.ID AS "In.ID", EX.PHASE,
 inp, STATUS st where EX.ID = INP.EXECUTION_ID and INP.STATUS_ID = st.ID order by EX.ID, INP.ID;
 }}}
  
-=== Datenbank ===
+In soapUI wird die Kommunikation für jeden Aufruf protokolliert und läßt sich dort einsehen:
+
+http://extra-standard.googlecode.com/svn/wiki/images/extra-demo-sterbedaten-soapui-execute.png
 
 == Phase 2 durchführen ==
+Der eXTra-Client erfragt neue Dokumente vom Server.
+
+*Aufruf:* bin/italienPhase2.bat
 
 == Phase 3 durchführen ==
+Der eXTra-Client bestätigt die erfolgreich verarbeiteten Dateien.
+
+*Aufruf:* bin/italienPhase3.bat
 
 == Fehlerbehandlung ==
+
+Im soapUI-Projekt sind für die möglichen Fehlerfälle Server-Antworten vorbereitet. Durch Änderung der Webservice-Adresse in der Konfigurations-Datei [eXTraClientBetriebConfigUser extra-properties-user.properties] kann ein fehlerhafter Kommunikationsablauf simuliert werden.
