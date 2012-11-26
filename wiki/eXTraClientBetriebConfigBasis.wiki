@@ -3,6 +3,10 @@
 =Beschreibung eXTra-properties-basic.properties=
 In dieser Konfigurationsdatei ist die Basiskonfiguration des Fachverfahrens untergebracht. Im Normalfall sollte man diese nicht ändern müssen. Die Konfigurationsdatei besteht aus Attribut-Werte Paaren (Java-properties Format). In jeder Zeile wird der Wert für ein Attribut angegeben. Die Datei kann in folgende Bereiche aufgeteilt werden:
 
+ * *Fachverfahren*
+   * Angabe von _Procedure_ und _Phase_
+ * *Plugins*
+
 === Fachverfahren ===
 
 === Plugins === 
