@@ -1,0 +1,27 @@
+#summary Verwendung eines Fachverfahrens (Live Demo)
+
+= Einleitung =
+
+Im folgenden wird gezeigt, wie das Fachverfahren _Sterbedatenabgleich_ in einer Testumgebung (eXTra-Server wird mit soapUI simuliert) durchgeführt werden kann.
+
+== Fachverfahren einrichten ==
+
+Das Fachverfahren wird wie in der Betriebsanleitung beschrieben konfiguriert und eingerichtet. Folgende Verzeichnisstruktur ergibt sich:
+
+== soapUI Projekt starten ==
+
+Mit soapUI kann ein eXTra-Server simuliert werden.
+
+== Phase 1 durchführen ==
+
+In Phase 1 dendet der eXTra-Client alle Dateien aus dem Verzeichnis _work/input_ an den Server. Jede Datei wird in einer eigenen eXTra-Nachricht versendet.
+
+*Aufruf:* 
+
+=== Datenbank ===
+
+== Phase 2 durchführen ==
+
+== Phase 3 durchführen ==
+
+== Fehlerbehandlung ==
