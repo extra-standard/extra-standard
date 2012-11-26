@@ -1,7 +1,10 @@
 #summary Konfigurationsdatei extra-properties-user.properties
 
 = Beschreibung extra-properties-user.properties =
-In dieser Datei können spezielle Einstellungen eingetragen werden, die die Einstellungen aus eXTra-properties-basic.properties ergänzen oder überschreiben. Üblicherweise werden hier Umgebungsspezifische Einstellungen hinterlegt (z.B. Datenbankzugang).
+In dieser Datei können spezielle Einstellungen eingetragen werden, die die Einstellungen aus eXTra-properties-basic.properties ergänzen oder überschreiben. Üblicherweise werden hier Umgebungsspezifische Einstellungen hinterlegt:
+ * Verzeichnisse für Ein- und Ausgabedateien, Kontaktdaten
+ * Datenbank-Verbindung
+ * Webservice-Adresse (eXTra-Server)
 
 == Beispiel ==
 
@@ -13,7 +16,7 @@ In dieser Datei können spezielle Einstellungen eingetragen werden, die die Eins
 # ========================================================= 
 
 # =====================================
-# == Ablage-Ordner und Kontakt-Daten ==
+# == Verzeichnisse und Kontakt-Daten ==
 # =====================================
 plugins.dataplugin.fileDataPlugin.inputVerzeichnis=../work/italien/input
 plugins.responseprocessplugin.fileSystemResponseProcessPlugin.eingangOrdner=../work/italien/responses
