@@ -4,15 +4,35 @@
 
 Im folgenden wird gezeigt, wie das Fachverfahren _Sterbedatenabgleich_ in einer Testumgebung (eXTra-Server wird mit soapUI simuliert) durchgeführt werden kann.
 
+== Kurze Beschreibung des Fachverfahrens ==
+
+Das Fachverfahren ist in drei Phasen aufgeteilt:
+
+ * In *Phase 1* werden alle Dateien die sich im Eingabe-Verzeichnis befinden, jeweils einzeln in einer eXTra-Nachricht verpackt und an den eXTra-Server versendet.
+ * In *Phase 2* fragt der eXTra-Client den eXTra-Server ob neue Ergebnisdateien vorliegen. Der eXTra-Server übermittelt dem eXTra-Client 0 bis n Ergebnisdateien (mit Erfolgsstatus). Die Ergebnisdateien werden im Ausgabe-Verzeichnis abgelegt.
+ * In *Phase 3* bestätigt der eXTra-Client dem eXTra-Server den Empfang der erfolgreich verarbeiteten Dateien. Der Empfang einer fehlerhaft verarbeiteten Datei wird nicht bestätigt
+
 == Fachverfahren einrichten ==
 
 Das Fachverfahren wird wie in der Betriebsanleitung beschrieben konfiguriert und eingerichtet. Folgende Verzeichnisstruktur ergibt sich:
 
-== soapUI Projekt starten ==
+== Server simulieren (soapUI Projekt starten) ==
 
-Mit soapUI kann ein eXTra-Server simuliert werden.
+Im Auslieferungsarchiv des Fachverfahrens befindet sich auch ein soapUI-Projekt. In diesem Projekt Mit soapUI kann ein eXTra-Server simuliert werden.
 
 http://extra-standard.googlecode.com/svn/wiki/images/extra-demo-sterbedaten-soapui.png
+
+Für jeden Service wird eine Adresse angegeben:
+
+http://extra-standard.googlecode.com/svn/wiki/images/extra-demo-sterbedaten-soapui-service.png
+
+Diese Adresse ist in der Konfigurationsdatei _extra-properties-user.properties_ eingetragen:
+
+{{{
+webservice.endpoint.url=http://localhost:8088/mockExtraSterbedatenausPhase1
+}}}
+
+In soapUI werden die benötigten Services gestartet (ExtraMockServiceSterbedatenausPhase1-3, jeweils Klick auf grünes Dreieck)
 == Phase 1 durchführen ==
 
 In Phase 1 dendet der eXTra-Client alle Dateien aus dem Verzeichnis _work/input_ an den Server. Jede Datei wird in einer eigenen eXTra-Nachricht versendet.
