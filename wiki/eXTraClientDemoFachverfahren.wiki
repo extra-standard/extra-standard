@@ -1,4 +1,4 @@
-#summary Verwendung eines Fachverfahrens (Live Demo)
+#summary Durchführung eines Fachverfahrens (Live Demo)
 
 = Einleitung =
 
