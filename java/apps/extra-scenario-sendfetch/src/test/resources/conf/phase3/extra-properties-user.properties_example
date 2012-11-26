@@ -20,8 +20,11 @@ plugins.execution.executionPersistenceJpa.database.password=
 #plugins.execution.executionPersistenceJpa.database.username=extracli
 #plugins.execution.executionPersistenceJpa.database.password=extracli
 
+# Fuer interne Tests ist ein 'dummyOutputPlugin' voreingestellt 
+# Webservices-Plugin wird verwendet (def. in ...user.prop...), wenn folgende Zeile auskommentiert wird:
+plugins.outputplugin=dummyOutputPlugin
+
 # ================================
 # == Webservices (eXTra Server) ==
 # ================================
-#webservice.endpoint.url=http://localhost:8088/mockExtraPhase1
-webservice.endpoint.url=http://10.140.0.44:8088/mockExtraPhase3
+webservice.endpoint.url=http://localhost:8088/mockExtraServiceSendFetchPhase3
