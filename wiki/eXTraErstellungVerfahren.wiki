@@ -16,9 +16,34 @@ Abstimmung:
 
 Profil-Datei erstellen
 
+{{{
+<element>
+  <Name>xcpt:Transport</Name>
+</element>
+<element>
+  <Name>req:TransportHeader</Name>
+  <Elternelement>Transport</Elternelement>
+</element>
+<element>
+  <Name>req:TransportBody</Name>
+  <Elternelement>Transport</Elternelement>
+</element>
+}}}
+
 Builder auswählen
 
 Plugins auswählen
+
+{{{
+# -------------
+# -- Plugins --
+# -------------
+plugins.configplugin=defaultConfigPlugin
+plugins.dataplugin=fileDataPlugin
+plugins.outputplugin=wsOutputPlugin
+plugins.responseprocessplugin=acknowledgePhase1ResponseProcessPlugin
+plugins.execution=executionPersistenceJpa
+}}}
 
 DB-Script erstellen
 
