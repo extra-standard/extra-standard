@@ -3,7 +3,7 @@
 =Beschreibung eXTra-properties-basic.properties=
 In dieser Konfigurationsdatei ist die Basiskonfiguration des Fachverfahrens untergebracht. Im Normalfall sollte man diese nicht ändern müssen. Die Konfigurationsdatei besteht aus Attribut-Werte Paaren (Java-properties Format). In jeder Zeile wird der Wert für ein Attribut angegeben. Die Datei kann in folgende Bereiche aufgeteilt werden:
 
-=== Fachverfahren ===
+=== Fachverfahren und Pr===
    * Informationen für das durchzuführende Fachverfahren 
    * Beispiel: 	core.execution.procedure=Datenabgleich
    * Das Verfahren ‚Datenabgleich’ soll durchgeführt werden
@@ -36,10 +36,9 @@ Fachverfahren Sterbedatenaustausch Phase 1
 # == Muss im allgemeinen nicht mehr angepasst werden!    ==
 # ========================================================= 
 
-# Procedure, Phase und Profilierungsdatei
+# Procedure und Phase
 core.execution.procedure=Sterbemeldung
 core.execution.phase=PHASE1
-plugins.configplugin.defaultConfigPlugin.profilFileName=phase1-sent-profil.xml
 
 # -------------
 # -- Plugins --
@@ -49,6 +48,9 @@ plugins.dataplugin=fileDataPlugin
 plugins.outputplugin=wsOutputPlugin
 plugins.responseprocessplugin=acknowledgePhase1ResponseProcessPlugin
 plugins.execution=executionPersistenceJpa
+
+# Profilierungsdatei
+plugins.configplugin.defaultConfigPlugin.profilFileName=phase1-sent-profil.xml
 
 # Maximale Anzahl von Verarbeitungs-Objekten (z.b. Dateien)
 # In einer eXTra-Client Nachricht wird eine Datei verpackt (siehe Profil)!
