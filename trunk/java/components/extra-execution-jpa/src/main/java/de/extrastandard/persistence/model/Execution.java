@@ -51,8 +51,8 @@ import de.extrastandard.api.exception.ExtraRuntimeException;
 import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.model.content.ISingleInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
-import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.ICommunicationProtocol;
+import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.IProcessTransition;
 import de.extrastandard.api.model.execution.IStatus;
@@ -135,7 +135,7 @@ public class Execution extends AbstractEntity implements IExecution {
 	private transient PhaseConnectionRepository phaseConnectionRepository;
 
 	/**
-	 *
+	 * Empty constructor.
 	 */
 	public Execution() {
 	}
@@ -249,38 +249,40 @@ public class Execution extends AbstractEntity implements IExecution {
 		int nummerResponse = 1;
 		// für jede Response muss ein InputData Objekt angelegt werden
 		// (21.11.12) kein Ergebnis muss auch moeglich sein!
-		Collection<ISingleResponseData> responseDataCollection =  responseData.getResponse(requestId);
+		Collection<ISingleResponseData> responseDataCollection = responseData
+				.getResponse(requestId);
 		// Liegen fuer diesen Request Ergebnisse vor?
 		if (responseDataCollection != null) {
 			for (ISingleResponseData singleResponseData : responseDataCollection) {
 				if (nummerResponse == 1) {
-					// vorhandenes CommunicationProtocol Objekt nehmen und Kommunikationsdaten
+					// vorhandenes CommunicationProtocol Objekt nehmen und
+					// Kommunikationsdaten
 					// aktualisieren
 					comProt.transmitted(singleResponseData);
 					processPhaseConnectionForInputData(comProt);
 				} else {
 					// neues InputData Objekt erzeugen
-					CommunicationProtocol comProtForResponse = new CommunicationProtocol(comProt,
-							singleResponseData);
+					CommunicationProtocol comProtForResponse = new CommunicationProtocol(
+							comProt, singleResponseData);
 					processPhaseConnectionForInputData(comProtForResponse);
 				}
 				nummerResponse++;
-			}			
-		}
-		else {
+			}
+		} else {
 			// Keine Ergebnisse!
 			comProt.transmitWithoutResponse();
 		}
 	}
 
 	/**
-	 * Für das übergebene CommunicationProtocol Objekt wird die zugeordnete PhaseConection
-	 * geschlossen und eine Nachfolge-PhaseConnection vorbereitet (falls die
-	 * aktuelle Phase keine Endphase ist)
+	 * Für das übergebene CommunicationProtocol Objekt wird die zugeordnete
+	 * PhaseConection geschlossen und eine Nachfolge-PhaseConnection vorbereitet
+	 * (falls die aktuelle Phase keine Endphase ist)
 	 * 
 	 * @param inputData
 	 */
-	private void processPhaseConnectionForInputData(CommunicationProtocol inputData) {
+	private void processPhaseConnectionForInputData(
+			CommunicationProtocol inputData) {
 		// (14.11.12) Nur bei erfolgreicher Verarbeitung darf die nächste Phase
 		// vorbereitet werden!
 
@@ -332,8 +334,11 @@ public class Execution extends AbstractEntity implements IExecution {
 	 * @param singleInputData
 	 * @return
 	 */
-	public ICommunicationProtocol startInputData(final ISingleInputData singleInputData) {
-		final CommunicationProtocol inputData = new CommunicationProtocol(singleInputData, this);
+	@Override
+	public ICommunicationProtocol startInputData(
+			final ISingleInputData singleInputData) {
+		final CommunicationProtocol inputData = new CommunicationProtocol(
+				singleInputData, this);
 		this.inputDataSet.add(inputData);
 		repository.save(this);
 		return inputData;
