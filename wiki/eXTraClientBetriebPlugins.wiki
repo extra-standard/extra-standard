@@ -11,7 +11,7 @@ Diese Plugins können produktiv eingesetzt werden.
 || [eXTraClientPluginFileDataPlugin fileDataPlugin] || !DataPlugin || Liest Dateien aus einem Verzeichnis ||
 || [eXTraClientPluginDbQueryDataPlugin dbQueryDataPlugin] || !DataPlugin || Ermittelt Daten-ID's die dem Server noch bestätigt werden müssen ||
 || [eXTraClientPluginWsOutputPlugin wsOutputPlugin] || !OutputPlugin || Steuert den Datenaustausch mit dem Server über einen Webservice ||
-|| [eXTraClientPluginAcknowledgePhase1ResponseProcessPlugin acknowledgePhase1ResponseProcessPlugin] || !ResponseProcessPlugin || Verarbeitet eine Server-Bestätigung für einen Datensatz (z.B. 'Datei erhalten').
+|| [eXTraClientPluginAcknowledgePhase1ResponseProcessPlugin acknowledgePhase1ResponseProcessPlugin] || !ResponseProcessPlugin || Verarbeitet eine Server-Bestätigung für einen Datensatz (z.B. 'Datei erhalten'). ||
 || [eXTraClientPluginAcknowledgeSingleResponseDataResponseProcessPlugin acknowledgeSingleResponseDataResponseProcessPlugin] ||  !ResponseProcessPlugin || Verarbeitet eine Server-Bestätigung für mehrere Datensätze (z.B. 'Bestätigungen erhalten') ||
 || [eXTraClientPluginFileSystemResponseProcessPlugin fileSystemResponseProcessPlugin] || !ResponseProcessPlugin || - ||
 || [eXTraClientPluginFileSystemResultDataResponseProcessPlugin fileSystemResultDataResponseProcessPlugin] || !ResponseProcessPlugin || - ||
