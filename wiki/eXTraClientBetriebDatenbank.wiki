@@ -7,7 +7,13 @@ Für den Betrieb benötigt der eXTra Client eine Datenbank. In dieser Datenbank 
 Das Datenbank-Schema läßt sich in die beiden Bereich _Stammdaten_ und _Ausführung_ aufteilen_:
 
 == Stammdaten ==
+ * Einem _MANDATOR_ können mehrere _PROCEDURE_ zugeordnet werden
+ * Eine _PROCEDURE_ besitzt einen _PROCEDURE_TYPE_
+ * Ein _PROCEDURE_TYPE_ enthält mehrere _PROCEDURE_PHASE_CONFIGURATION_
+ * Eine _PROCEDURE_PHASE_CONFIGURATION_ kann einen Nachfolger besitzen
 http://extra-standard.googlecode.com/svn/wiki/images/extra-betrieb-db-stamm.png
 
 == Ausführung ==
+ * Eine _EXECUTION_ ist einer _PROCEDURE_ zugeordnet.
+ * Jede _EXECUTION_ sind mehrere _COMMUNICATION_PROTOCOL_ Einträge zugeordnet
 http://extra-standard.googlecode.com/svn/wiki/images/extra-betrieb-db-execution.png
