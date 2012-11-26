@@ -6,6 +6,11 @@ Kurze Beschreibung des Fachverfahrens
 
 Auszutauschende XML-Dokumente
 
+Abstimmung:
+ * Wo befinden sich zu sendende Daten?
+ * Wo werden Ergebnisse abgelegt?
+ * Fehlerbehandlung (Return Codes vereinbaren)
+
 - SoapUI
 
 
@@ -17,6 +22,7 @@ Plugins auswählen
 
 DB-Script erstellen
 
+Dateistruktur
+
+
 = Ausblick =
-
-
