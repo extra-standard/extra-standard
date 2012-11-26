@@ -81,9 +81,7 @@ In soapUI wird die Kommunikation für jeden Aufruf protokolliert und läßt sich
 
 http://extra-standard.googlecode.com/svn/wiki/images/extra-demo-sterbedaten-soapui-execute.png
 
-Zusätzlich zur Datenbank-Protokollierung werden pro Fachverfahren-Aufruf zwei Log-Dateien im Verzeichnis _logs_ angelegt.
-
-Die erste Log-Datei gibt in komprimierter Form die wichtigsten Ergebnisse wieder:
+Zusätzlich zur Datenbank-Protokollierung werden pro Fachverfahren-Aufruf zwei Log-Dateien im Verzeichnis _logs_ angelegt. Die erste Log-Datei gibt in komprimierter Form die wichtigsten Ergebnisse wieder z.B.:
 
 {{{
 2012-11-26 16:36:51,561: Start Of Processing.
@@ -96,12 +94,10 @@ Anzahl erfolgreiche Serverantworten: 3
 Anzahl fehlerhafte Serverantworten: 0
 
 Erfolgreich verarbeitete Datensätze: 
- InputData Type : FILE_INPUT_DATA Identifier : D:\extra\fachverfahren\extra-sterbedaten-ausland\work\italien\input\italienSterbedatenReq1.txt Request : PROC_STERBEMELDUNG_1 Received Response: PROC_STERBEMELDUNG_1_RESP With ReturnCode: C00 and ReturnText: Die Nachricht entspricht dem geforderten Aufbau und kann im Fachverfahren verarbeitet werden
- InputData Type : FILE_INPUT_DATA Identifier : D:\extra\fachverfahren\extra-sterbedaten-ausland\work\italien\input\italienSterbedatenReq2.txt Request : PROC_STERBEMELDUNG_2 Received Response: PROC_STERBEMELDUNG_2_RESP With ReturnCode: C00 and ReturnText: Die Nachricht entspricht dem geforderten Aufbau und kann im Fachverfahren verarbeitet werden
- InputData Type : FILE_INPUT_DATA Identifier : D:\extra\fachverfahren\extra-sterbedaten-ausland\work\italien\input\italienSterbedatenReq3.txt Request : PROC_STERBEMELDUNG_3 Received Response: PROC_STERBEMELDUNG_3_RESP With ReturnCode: C00 and ReturnText: Die Nachricht entspricht dem geforderten Aufbau und kann im Fachverfahren verarbeitet werden
+...
 }}}
 
-
+Die zweite Log-Datei (developer) gibt ausführliche Informationen.
 Analog werden Phase 2 und Phase 3 durchgeführt.
 == Phase 2 durchführen ==
 Der eXTra-Client erfragt neue Dokumente vom Server.
