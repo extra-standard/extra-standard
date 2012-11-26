@@ -7,7 +7,7 @@ In dieser Datei können spezielle Einstellungen eingetragen werden, die die Eins
  * Webservice-Adresse (eXTra-Server)
 
 == Beispiel ==
-
+*Fachverfahren Sterbedatenaustausch Phase 1*
 {{{
 # =========================================================
 # == Sterbedatenaustausch Ausland zwischen DSRV und DPRS ==
