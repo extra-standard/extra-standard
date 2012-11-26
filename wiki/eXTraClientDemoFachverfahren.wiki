@@ -68,6 +68,8 @@ In Phase 1 sendet der eXTra-Client alle Dateien aus dem Verzeichnis _work/input_
 
 *Aufruf:* bin/italienPhase1.bat
 
+Jeder eXTra-Client Nachricht ist in der [eXTraClientBetriebDatenbank eXTra-Client Datenbank] ein Eintrag in der Tabelle _EXECUTION_ zugeordnet.
+ 
 === Datenbank ===
 
 == Phase 2 durchführen ==
