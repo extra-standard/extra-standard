@@ -2,6 +2,8 @@
 
 = Einführung =
 
+
+
 Kurze Beschreibung des Fachverfahrens
 
 Auszutauschende XML-Dokumente
@@ -14,7 +16,7 @@ Abstimmung:
 - SoapUI
 
 
-Profil-Datei erstellen
+=== Profil-Datei erstellen ===
 
 {{{
 <element>
@@ -45,7 +47,7 @@ plugins.responseprocessplugin=acknowledgePhase1ResponseProcessPlugin
 plugins.execution=executionPersistenceJpa
 }}}
 
-DB-Script erstellen
+DB-Inhalte erstellen
 
 Dateistruktur
 
