@@ -2,8 +2,12 @@
 
 = Datenbank für den eXTra-Client =
 
-Für den Betrieb benötigt der eXTra Client eine Datenbank. In dieser Datenbank werden für jedes Fachverfahren die Kommunikationsabläufe protokolliert. Z.B. werden für mehrphasige Fachverfahren wie z.B. dem 3 Phasigen Sende-Hole Betrieb für jede Phase die Ergebnisse protokolliert. So wird z.B. hinterlegt, ob die Phase erfolgreich war und welche Antwort vom Server geliefert wurde. Diese Antwort (z.B. eine Response-ID) kann in der nächsten Phase als Anfrageparameter dienen.
- 
-Eine Beschreibung findet sich hier: [eXTraPersistence]
+Für den Betrieb benötigt der eXTra Client eine Datenbank. In dieser Datenbank werden die Fachverfahren verwaltet und die Kommunikationsabläufe protokolliert.
 
-Informationen zur Erstellung finden sich in: [eXTraClientBetriebSzenarioSendFetch Konfiguration Fachverfahren]
+Das Datenbank-Schema läßt sich in die beiden Bereich _Stammdaten_ und _Ausführung_ aufteilen_:
+
+== Stammdaten ==
+http://extra-standard.googlecode.com/svn/wiki/images/extra-betrieb-db-stamm.png
+
+== Ausführung ==
+http://extra-standard.googlecode.com/svn/wiki/images/extra-betrieb-db-execution.png
