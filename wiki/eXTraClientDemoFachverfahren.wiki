@@ -18,7 +18,7 @@ Das Fachverfahren wird wie in der Betriebsanleitung beschrieben konfiguriert und
 
 == Server simulieren (soapUI Projekt starten) ==
 
-Im Auslieferungsarchiv des Fachverfahrens befindet sich auch ein soapUI-Projekt. In diesem Projekt Mit soapUI kann ein eXTra-Server simuliert werden.
+Im Auslieferungsarchiv des Fachverfahrens befindet sich auch ein soapUI-Projekt mit dem der eXTra-Server simuliert wird. Für die möglichen Server-Responses sind Mock-Services eingerichtet: 
 
 http://extra-standard.googlecode.com/svn/wiki/images/extra-demo-sterbedaten-soapui.png
 
