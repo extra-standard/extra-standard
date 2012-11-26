@@ -43,7 +43,7 @@ D:\eXTra
       + luxemburg
 }}}
 
-Die Datenbank (Oracle XE) ist mit dem Werkzeug _flyway_ aufgebaut worden.
+Die [Datenbank eXTraClientBetriebDatenbank] (Oracle XE) ist mit dem Werkzeug _flyway_ aufgebaut worden.
 
 == Server simulieren (soapUI Projekt starten) ==
 
