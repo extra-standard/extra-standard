@@ -2,9 +2,9 @@
 
 <h1> Demonstration Sterbedatenabgleich (Testumgebung) </h1>
 
-<wiki:toc max_depth="2" />
-
 Im folgenden wird gezeigt, wie das Fachverfahren _Sterbedatenabgleich_ in einer Testumgebung (eXTra-Server wird mit soapUI simuliert) durchgeführt werden kann.
+
+<wiki:toc max_depth="3" />
 
 == Kurze Beschreibung des Fachverfahrens ==
 
@@ -64,7 +64,9 @@ webservice.endpoint.url=http://localhost:8088/mockExtraSterbedatenausPhase1
 }}}
 
 In soapUI werden die benötigten Services gestartet (ExtraMockServiceSterbedatenausPhase1-3, jeweils Klick auf grünes Dreieck)
-== Phase 1 durchführen ==
+
+== Durchführung ==
+=== Phase 1 durchführen ===
 
 In Phase 1 sendet der eXTra-Client alle Dateien aus dem Verzeichnis _work/input_ an den Server. Jede Datei wird in einer eigenen eXTra-Nachricht versendet.
 
@@ -101,12 +103,12 @@ Erfolgreich verarbeitete Datensätze:
 
 Die zweite Log-Datei (developer) ist wesentlich größer und gibt ausführliche Informationen.
 
-== Phase 2 durchführen ==
+=== Phase 2 durchführen ===
 Der eXTra-Client erfragt neue Dokumente vom Server.
 
 *Aufruf:* bin/italienPhase2.bat
 
-== Phase 3 durchführen ==
+=== Phase 3 durchführen ===
 Der eXTra-Client bestätigt die erfolgreich verarbeiteten Dateien.
 
 *Aufruf:* bin/italienPhase3.bat
