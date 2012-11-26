@@ -6,17 +6,11 @@ In dieser Konfigurationsdatei ist die Basiskonfiguration des Fachverfahrens unte
  * *Fachverfahren*
    * Angabe von _Procedure_ und _Phase_
  * *Plugins*
-
-=== Fachverfahren ===
-
-=== Plugins === 
-   * Angabe der Plugins die bei der Ausführung verwendet werden sollen.
-   * Konfiguration der Plugins (z.B. Profil-Datei) 
-
-=== Message-Header ===
+   * Angabe der Plugins
+   * Konfiguration der Plugins (z.B. Profil-Datei)
+ * *Message-Header*
    * _Request_, _Sender_ und _Receiver_ definieren
-
-=== XML-Builder ===
+ * *XML-Builder*
    * Auswahl der Bausteine, die aus den Eingabedaten und der Profildatei die Client-Nachricht zusammenbauen.
 
 == Beispiel einer extra-properties-basic.properties Datei ==
