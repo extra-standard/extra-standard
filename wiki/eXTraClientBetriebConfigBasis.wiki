@@ -28,4 +28,70 @@ In dieser Konfigurationsdatei ist die Basiskonfiguration des Fachverfahrens unte
 
 == Beispiel einer extra-properties-basic.properties Datei ==
 
-Siehe reales Beispiel im Szenario Send-Fetch ([eXTraClientBetriebSzenarioSendFetch]).
+Fachverfahren Sterbedatenaustausch Phase 1
+{{{
+# =========================================================
+# == Sterbedatenaustausch Ausland zwischen DSRV und DPRS ==
+# == Basiskonfigurationsdatei Phase 1 Italien            ==
+# == Muss im allgemeinen nicht mehr angepasst werden!    ==
+# ========================================================= 
+
+# Procedure, Phase und Profilierungsdatei
+core.execution.procedure=Sterbemeldung
+core.execution.phase=PHASE1
+plugins.configplugin.defaultConfigPlugin.profilFileName=phase1-sent-profil.xml
+
+# -------------
+# -- Plugins --
+# -------------
+plugins.configplugin=defaultConfigPlugin
+plugins.dataplugin=fileDataPlugin
+plugins.outputplugin=wsOutputPlugin
+plugins.responseprocessplugin=acknowledgePhase1ResponseProcessPlugin
+plugins.execution=executionPersistenceJpa
+
+# Maximale Anzahl von Verarbeitungs-Objekten (z.b. Dateien)
+# In einer eXTra-Client Nachricht wird eine Datei verpackt (siehe Profil)!
+plugins.dataplugin.fileDataPlugin.inputDataLimit=1
+plugins.dataplugin.dbQueryDataPlugin.inputDataLimit=100
+
+# positive Server Return-Codes (fuer die Fehlerbehandlung)
+de.extra.client.core.util.ExtraReturnCodeAnalyser.returncodelist=C00,I000,E98
+
+# ----------------------------------------
+# -- MessageHeaderBuilder Konfiguration --
+# ----------------------------------------
+message.builder.header.requestDetail.procedure=Sterbemeldung
+message.builder.header.requestDetail.dataType=http://www.extra-standard.de/datatypes/DataSend
+message.builder.header.requestDetail.scenario=http://www.extra-standard.de/scenario/request-with-response
+
+message.builder.header.testIndicator=http://extra-standard.de/test/NONE
+message.builder.header.senderId.class=
+message.builder.header.senderId.value=ec-1
+message.builder.header.senderNameValue=eXTra-Client
+message.builder.header.receiverId.class=
+message.builder.header.receiverId.value=es-1
+message.builder.header.receiverNameValue=eXTra-Server
+message.builder.transport.attributes.extraProfile=http://www.extra-standard.de/profile/DUSKO/1.0
+
+# -------------------------------
+# -- Xml-Builder Konfiguration --
+# -------------------------------
+builder.xplg.DataTransforms1=dataTransformConfigurablePluginsBuilder
+builder.xplg.DataSource=dataSourceConfigurablePluginsBuilder
+builder.xcpt.ElementSequence=transportBodyRequestQueryElementSequenceBuilder
+
+# ------------------------------------
+# -- Persistenz (JPA) Einstellungen --
+# ------------------------------------
+plugins.execution.executionPersistenceJpa.db.pool.maxIdle=10
+plugins.execution.executionPersistenceJpa.db.pool.maxActive=100
+plugins.execution.executionPersistenceJpa.db.pool.maxWait=1000
+plugins.execution.executionPersistenceJpa.db.pool.validationQuery=
+plugins.execution.executionPersistenceJpa.db.pool.testOnBorrow=false
+plugins.execution.executionPersistenceJpa.db.pool.testWhileIdle=true
+plugins.execution.executionPersistenceJpa.db.pool.timeBetweenEvictionRunsMillis=1200000
+plugins.execution.executionPersistenceJpa.db.pool.minEvictableIdleTimeMillis=1800000
+plugins.execution.executionPersistenceJpa.db.pool.numTestsPerEvictionRun=5
+plugins.execution.executionPersistenceJpa.db.pool.defaultAutoCommit=false
+}}}
