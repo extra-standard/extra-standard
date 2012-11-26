@@ -2,7 +2,7 @@
 
 = Betriebsanleitung =
 
-Auf dieser Seite wird beschrieben, wie die Auslieferungsversion des eXTra-Clients auf einem Betriebsrechner eingerichtet und konfiguriert werden kann. Die Auslieferungsversion des eXTra-Clients besteht aus einem zip-Archiv (z.B. extra-cli-1.0.0.zip). In diesem befindet sich der Basisteil. Die einzelnen Fachverfahren werden jeweils in gesonderten zip-Archiven ausgeliefert.
+In der Betriebsanleitung wird beschrieben, wie der eXTra-Client zur Konfiguration und Betrieb von Fachverfahren verwendet werden kann. Die Auslieferungsversion des eXTra-Clients besteht aus einem zip-Archiv (z.B. extra-cli-1.0.0.zip). In diesem befindet sich der Basisteil. Die einzelnen Fachverfahren werden jeweils in gesonderten zip-Archiven ausgeliefert.
 
 Der eXTra-Client unterstützt folgende Anwendungsfallszenarien:
  * Fachliche Inputdatei in ein eXTra-konformes Format (XML) wandeln
