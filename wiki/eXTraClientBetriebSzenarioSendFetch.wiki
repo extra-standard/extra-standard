@@ -36,6 +36,7 @@ D:\eXTra
       - phase3
     - docs
     - logs
+    - soapui
     - sql
     - work
       - input
@@ -51,6 +52,7 @@ Im folgenden werden die Verzeichnisse des Verfahrens Send-Fetch beschrieben (unt
 || /conf || Die Konfigurationsdateien sind für jede Phase in einem eigenen Verzeichnis abgelegt (/conf/phase1, /conf/phase2, /conf/phase3). ||
 || /docs || Exemplarisch sind hier für jede Phase die XML-Kommunikationsdokumente abgelegt. ||
 || /logs || Ausgabeort für Logdateien die während der Programmausführung erzeugt werden. ||
+|| /soapui || soapUI Demoprojekt. Mit diesem Projekt kann ein eXTra-Server simuliert werden. ||
 || /sql || Datenbankskripte, mit denen die Initial-Datenbankbefüllung für das Szenario Send-Fetch erzeugt wird. ||
 || /work/input || In diesem Verzeichnis werden Eingabedateien erwartet. ||
 || /work/reports || Ausgabeverzeichnis für Reports. ||
