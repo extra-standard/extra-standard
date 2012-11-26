@@ -5,17 +5,17 @@ Der eXTra-Client bietet für verschiedene Aufgabenbereiche unterschiedliche Plug
 
 == Produktive Plugins ==
 Diese Plugins können produktiv eingesetzt werden.
-|| *Name* || *Art* ||
-|| [eXTraClientPluginDefaultConfigPlugin defaultConfigPlugin] || !ConfigPlugin ||
-|| [eXTraClientPluginDbMaxResponseIdQueryDataPlugin  dbMaxResponseIdQueryDataPlugin] || !DataPlugin ||
-|| [eXTraClientPluginFileDataPlugin fileDataPlugin] || !DataPlugin ||
-|| [eXTraClientPluginDbQueryDataPlugin dbQueryDataPlugin] || !DataPlugin ||
-|| [eXTraClientPluginWsOutputPlugin wsOutputPlugin] || !OutputPlugin ||
-|| [eXTraClientPluginAcknowledgePhase1ResponseProcessPlugin acknowledgePhase1ResponseProcessPlugin] || !ResponseProcessPlugin ||
-|| [eXTraClientPluginAcknowledgeSingleResponseDataResponseProcessPlugin acknowledgeSingleResponseDataResponseProcessPlugin] || !ResponseProcessPlugin ||
-|| [eXTraClientPluginFileSystemResponseProcessPlugin fileSystemResponseProcessPlugin] || !ResponseProcessPlugin ||
-|| [eXTraClientPluginFileSystemResultDataResponseProcessPlugin fileSystemResultDataResponseProcessPlugin] || !ResponseProcessPlugin ||
-|| [eXTraClientPluginFileSystemResultPackageDataResponseProcessPlugin fileSystemResultPackageDataResponseProcessPlugin] || !ResponseProcessPlugin ||
+|| *Name* || *Art* || *Kurzbeschreibung* ||
+|| [eXTraClientPluginDefaultConfigPlugin defaultConfigPlugin] || !ConfigPlugin || Verarbeitung der Konfigurationsdateien ||
+|| [eXTraClientPluginDbMaxResponseIdQueryDataPlugin  dbMaxResponseIdQueryDataPlugin] || !DataPlugin || Ermittelt letzte Server-Antwort für Fachverfahren und Phase ||
+|| [eXTraClientPluginFileDataPlugin fileDataPlugin] || !DataPlugin || Liest Dateien aus einem Verzeichnis ||
+|| [eXTraClientPluginDbQueryDataPlugin dbQueryDataPlugin] || !DataPlugin || Ermittelt Daten-ID's die dem Server noch bestätigt werden müssen ||
+|| [eXTraClientPluginWsOutputPlugin wsOutputPlugin] || !OutputPlugin || Steuert den Datenaustausch mit dem Server über einen Webservice ||
+|| [eXTraClientPluginAcknowledgePhase1ResponseProcessPlugin acknowledgePhase1ResponseProcessPlugin] || !ResponseProcessPlugin || Verarbeitet eine Server-Bestätigung für einen Datensatz (z.B. 'Datei erhalten').
+|| [eXTraClientPluginAcknowledgeSingleResponseDataResponseProcessPlugin acknowledgeSingleResponseDataResponseProcessPlugin] ||  !ResponseProcessPlugin || Verarbeitet eine Server-Bestätigung für mehrere Datensätze (z.B. 'Bestätigungen erhalten') ||
+|| [eXTraClientPluginFileSystemResponseProcessPlugin fileSystemResponseProcessPlugin] || !ResponseProcessPlugin || - ||
+|| [eXTraClientPluginFileSystemResultDataResponseProcessPlugin fileSystemResultDataResponseProcessPlugin] || !ResponseProcessPlugin || - ||
+|| [eXTraClientPluginFileSystemResultPackageDataResponseProcessPlugin fileSystemResultPackageDataResponseProcessPlugin] || !ResponseProcessPlugin || - ||
 
 == Plugins für Test- und Entwicklung ==
 Folgende Plugins sind für Test- und Entwicklungszwecke gedacht. Sie simulieren z.B. Serverantworten und werden in Unit-Tests verwendet.
