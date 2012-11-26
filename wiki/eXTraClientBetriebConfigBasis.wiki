@@ -15,7 +15,7 @@ In dieser Konfigurationsdatei ist die Basiskonfiguration des Fachverfahrens unte
  * *Persistenz Einstellungen*
    * Technische Parameter für die eXTra-Client Datenbank
 
-== Beispiel einer extra-properties-basic.properties Datei ==
+== Beispiel ==
 
 *Fachverfahren Sterbedatenaustausch Phase 1*
 {{{
