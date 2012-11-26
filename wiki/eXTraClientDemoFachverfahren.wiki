@@ -16,6 +16,35 @@ Das Fachverfahren ist in drei Phasen aufgeteilt:
 
 Das Fachverfahren wird wie in der Betriebsanleitung beschrieben konfiguriert und eingerichtet. Folgende Verzeichnisstruktur ergibt sich:
 
+{{{
+D:\eXTra
+- extra-client
+  - bin
+  - lib
+  - sql
+- fachverfahren
+  - extra-sterbedaten-ausland
+    - bin
+    - conf
+      - italien
+        - phase1
+        - phase2
+        - phase3
+      + luxemburg
+    - docs
+    - logs
+    - soapui
+    - sql
+    - work
+      - italien
+        - input
+        - reports
+        - responses
+      + luxemburg
+}}}
+
+Die Datenbank (Oracle XE) ist mit dem Werkzeug _flyway_ aufgebaut worden.
+
 == Server simulieren (soapUI Projekt starten) ==
 
 Im Auslieferungsarchiv des Fachverfahrens befindet sich auch ein soapUI-Projekt mit dem der eXTra-Server simuliert wird. Für die möglichen Server-Responses sind Mock-Services eingerichtet: 
@@ -35,9 +64,9 @@ webservice.endpoint.url=http://localhost:8088/mockExtraSterbedatenausPhase1
 In soapUI werden die benötigten Services gestartet (ExtraMockServiceSterbedatenausPhase1-3, jeweils Klick auf grünes Dreieck)
 == Phase 1 durchführen ==
 
-In Phase 1 dendet der eXTra-Client alle Dateien aus dem Verzeichnis _work/input_ an den Server. Jede Datei wird in einer eigenen eXTra-Nachricht versendet.
+In Phase 1 sendet der eXTra-Client alle Dateien aus dem Verzeichnis _work/input_ an den Server. Jede Datei wird in einer eigenen eXTra-Nachricht versendet.
 
-*Aufruf:* 
+*Aufruf:* bin/italienPhase1.bat
 
 === Datenbank ===
 
