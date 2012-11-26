@@ -17,7 +17,7 @@
 			<xcpt:RegistrationID />
 		</xcpt:Application>
 		<xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbemeldung</xcpt:Procedure>
-		<xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
+		<xcpt:DataType>http://www.extra-standard.de/datatypes/ConfirmationOfReceipt</xcpt:DataType>
 		<xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-acknowledgement</xcpt:Scenario>
 	</xcpt:RequestDetails>
 </ns2:TransportHeader>

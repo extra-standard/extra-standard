@@ -31,7 +31,7 @@ plugins.execution.executionPersistenceJpa.database.password=
 #plugins.execution.executionPersistenceJpa.database.username=extracli
 #plugins.execution.executionPersistenceJpa.database.password=extracli
 
-# Fuer interne Tests ist das 'dummyOutputPlugin' voreingestellt 
+# Fuer interne Tests ist ein 'dummyOutputPlugin' voreingestellt 
 # Webservices-Plugin wird verwendet (def. in ...user.prop...), wenn folgende Zeile auskommentiert wird:
 plugins.outputplugin=dummyOutputPlugin
 
