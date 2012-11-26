@@ -1,6 +1,6 @@
 #summary Durchführung eines Fachverfahrens (Live Demo)
 
-= Einleitung =
+= Demonstration Sterbedatenabgleich (Testumgebung) =
 
 Im folgenden wird gezeigt, wie das Fachverfahren _Sterbedatenabgleich_ in einer Testumgebung (eXTra-Server wird mit soapUI simuliert) durchgeführt werden kann.
 
