@@ -1,6 +1,8 @@
 #summary Durchführung eines Fachverfahrens (Live Demo)
 
-= Demonstration Sterbedatenabgleich (Testumgebung) =
+<h1> Demonstration Sterbedatenabgleich (Testumgebung) </h1>
+
+<wiki:toc max_depth="2" />
 
 Im folgenden wird gezeigt, wie das Fachverfahren _Sterbedatenabgleich_ in einer Testumgebung (eXTra-Server wird mit soapUI simuliert) durchgeführt werden kann.
 
@@ -11,8 +13,6 @@ Das Fachverfahren ist in drei Phasen aufgeteilt:
  * In *Phase 1* werden alle Dateien die sich im Eingabe-Verzeichnis befinden, jeweils einzeln in einer eXTra-Nachricht verpackt und an den eXTra-Server versendet.
  * In *Phase 2* fragt der eXTra-Client den eXTra-Server ob neue Ergebnisdateien vorliegen. Der eXTra-Server übermittelt dem eXTra-Client 0 bis n Ergebnisdateien (mit Erfolgsstatus). Die Ergebnisdateien werden im Ausgabe-Verzeichnis abgelegt.
  * In *Phase 3* bestätigt der eXTra-Client dem eXTra-Server den Empfang der erfolgreich verarbeiteten Dateien. Der Empfang einer fehlerhaft verarbeiteten Datei wird nicht bestätigt
-
-<wiki:toc max_depth="2" />
 
 == Fachverfahren einrichten ==
 
