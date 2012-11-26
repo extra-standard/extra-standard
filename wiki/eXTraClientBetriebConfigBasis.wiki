@@ -4,26 +4,20 @@
 In dieser Konfigurationsdatei ist die Basiskonfiguration des Fachverfahrens untergebracht. Im Normalfall sollte man diese nicht ändern müssen. Die Konfigurationsdatei besteht aus Attribut-Werte Paaren (Java-properties Format). In jeder Zeile wird der Wert für ein Attribut angegeben. Die Datei kann in folgende Bereiche aufgeteilt werden:
 
 === Fachverfahren ===
-   * Informationen für das durchzuführende Fachverfahren 
-   * Beispiel: 	core.execution.procedure=Datenabgleich
-   * Das Verfahren ‚Datenabgleich’ soll durchgeführt werden
-
-=== Profiling ===
-   * Zu verwendende Profiling-Datei, Beispiel: plugins.configplugin.defaultConfigPlugin.profilOrdner=conf/profil.xml
 
 === Plugins === 
    * Angabe der Plugins die bei der Ausführung verwendet werden sollen.
    * Konfiguration der Plugins (z.B. Profil-Datei) 
 
+=== Message-Header ===
+   * _Request_, _Sender_ und _Receiver_ definieren
+
 === XML-Builder ===
-   * Jedes in der Profilierungsdatei angegebene Element wird von einem _Builder_ in einen XML-Abschnitt überführt.
-   * Für bestimmte Elemente können verschiedene Builder gewählt werden.
-   * z.B. _builder.xcpt.ElementSequence=transportBodyRequestConfirmationOfReceiptSequenceBuilder_
-   * siehe Dokumentation vorhandene Builder'
+   * Auswahl der Bausteine, die aus den Eingabedaten und der Profildatei die Client-Nachricht zusammenbauen.
 
 == Beispiel einer extra-properties-basic.properties Datei ==
 
-Fachverfahren Sterbedatenaustausch Phase 1
+*Fachverfahren Sterbedatenaustausch Phase 1*
 {{{
 # =========================================================
 # == Sterbedatenaustausch Ausland zwischen DSRV und DPRS ==
