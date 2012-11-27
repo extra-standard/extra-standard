@@ -171,7 +171,10 @@ Insert into PROCEDURE
     (select id from PROCEDURE_TYPE where name = 'STERBEMELDUNG'));
 }}}
 
- 
+Für das neue Fachverfahren wird eine SQL-Datei _V5__1_0_0_createInitialData.sql_ im sql-Verzeichnis angelegt. Durch Ausführen dieses Skriptes (z.B. über flyway) wird die Datenbank aktualisiert.  
+
+=== Profil Dateien erstellen ===
+Für jede Phase muss nun eine Profil-Datei erstellt werden. Diese Datei verwendet der Client 
 
 {{{
 <element>
@@ -187,9 +190,9 @@ Insert into PROCEDURE
 </element>
 }}}
 
-Builder auswählen
+=== Konfigurationsdateien erstellen ===
 
-Plugins auswählen
+==== Plugins auswählen ====
 
 {{{
 # -------------
@@ -202,9 +205,16 @@ plugins.responseprocessplugin=acknowledgePhase1ResponseProcessPlugin
 plugins.execution=executionPersistenceJpa
 }}}
 
-DB-Inhalte erstellen
 
-Dateistruktur
+==== XML-Builder auswählen ==== 
 
+=== soapUI Projekt überarbeiten ===
+
+=== Phasen durchführen ===
+
+
+== Neue Funktionalität in den eXTra-Client einbauen ==
+
+Falls die bestehende Funktionalität zur Realisierung eines Fachverfahrens nicht ausreicht, kann der eXTra-Client (Open Source Projekt!) durch die Entwicklung neuer Plugins oder XML-Builder erweitert werden. 
 
 = Ausblick =
