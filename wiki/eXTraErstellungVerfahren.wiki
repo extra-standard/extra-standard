@@ -13,8 +13,52 @@ Abstimmung:
  * Wo werden Ergebnisse abgelegt?
  * Fehlerbehandlung (Return Codes vereinbaren)
 
+Werkzeuge
 - SoapUI
+- Oracle XE
+- flyway
 
+
+=== Verzeichnisse für Fachverfahren erstellen ===
+
+Als Basis für neue Fachverfahren empfiehlt es sich, die beiden bestehenden Fachverfahren Sterbedatenabgleich und Send-Fetch als Ausgangsbasis zu verwenden. Insbesondere wenn das neu zu entwickelnde Fachverfahren große Ähnlichkeit mit einem bestehenden aufweist. Folgende Verzeichnis-Grundstruktur sollte aufgebaut werden:
+{{{
+D:\eXTra
+- extra-client
+  - bin
+  - lib
+  - sql
+- fachverfahren
+  - extra-scenario-sendfetch
+    - bin
+    - conf
+      - phase1
+      - phase2
+      - phase3
+    - docs
+    - logs
+    - soapui
+    - sql
+    - work
+      - input
+      - reports
+      - responses
+  + extra-sterbedaten-ausland
+  - neu
+    - bin
+    - conf
+      - phase1
+      - phase2
+      - phase3
+    - docs
+    - logs
+    - soapui
+    - sql
+    - work
+      - input
+      - reports
+      - responses
+}}}
 
 === Profil-Datei erstellen ===
 
