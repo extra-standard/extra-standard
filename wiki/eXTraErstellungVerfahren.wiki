@@ -2,7 +2,7 @@
 
 = Einführung =
 
-Im folgenden wird aus Erfahrungswerten, die bei der Entwicklung der Fachverfahren _Sterbedatenabgleich_ und _Send Fetch_ gewonnen wurden, ein Vorgehensmodell zur Entwicklung neuer Fachverfahren mit dem eXTra-Client vorgestellt.
+Im folgenden wird aus Erfahrungswerten, die bei der Entwicklung der Fachverfahren _Sterbedatenabgleich_ und _Send Fetch_ gewonnen wurden, ein Vorgehensmodell zur Entwicklung neuer Fachverfahren mit dem eXTra-Client abgeleitet.
 
 Das Vorgehensmodell besteht aus folgenden Schritten:
 
@@ -126,7 +126,9 @@ Ein wichtiges Werkzeug für die Entwicklung und den Test eines Fachverfahrens is
 
 http://extra-standard.googlecode.com/svn/wiki/images/extra-demo-sterbedaten-soapui.png
 
-=== Datenbankscript für das neue Fachverfahren ===
+== Konfiguration des Fachverfahren ==
+
+=== Datenbankscript für das Fachverfahren ===
 Zur Zeit muss ein neues Fachverfahren noch über ein Datenbank-Script im Stammdatenbereich der eXTra-Datenbank registriert werden:
 
 http://extra-standard.googlecode.com/svn/wiki/images/extra-betrieb-db-stamm.png
@@ -202,6 +204,8 @@ Für jede Phase müssen die beiden [eXtraClientBetriebKonfigurationsdateien Konf
 
 ==== extra-properties-basic.properties ====
 
+In dieser Datei werden die Bausteine zur Erstellung von Client-XML-Dokumenten und der Verarbeitung von Server-Ergebnissen ausgewählt und konfiguriert.
+ 
 ===== Plugins auswählen =====
 
 {{{
@@ -215,10 +219,13 @@ plugins.responseprocessplugin=acknowledgePhase1ResponseProcessPlugin
 plugins.execution=executionPersistenceJpa
 }}}
 
+Von Interesse sind _dataplugin_, _outputplugin_ und _responseprocessplugin_. _configplugin_ und _execution_ besitzen nur eine Implementierung und können nicht geändert werden.
+
  * Im obigen Beispiel wird die Datenbeschaffung durch das [eXTraClientPluginFileDataPlugin fileDataPlugin] durchgeführt. 
  * Die Kommunikation mit dem Server wird von dem [eXTraClientPluginWsOutputPlugin wsOutputPlugin] durchgeführt.
  * Die Server-Ergebnisse werden von dem [eXTraClientPluginAcknowledgePhase1ResponseProcessPlugin acknowledgePhase1ResponseProcessPlugin] verarbeitet
 
+Eine Übersicht mit Dokumentation aller Plugins findet sich [eXTraClientBetriebPlugins hier].
 ===== XML-Builder auswählen ===== 
 
 ==== extra-properties-user.properties ====
@@ -229,11 +236,16 @@ In dieser DaTei werden Umgebungsinformationen (DB-Verbindung, Webservice-Adresse
 
 Das soapUI-Projekt sollte nun so überarbeitet werden, das für die Client-Requests entsprechende Server-Responses in Form von Mock-Services bereitstehen und gestartet sind.
 
-=== Fachverfahren (Phasen) durchführen ===
+== Fachverfahren (Phasen) durchführen ==
 
+Im Verzeichnis _bin_ befinden sich ausführbare Batchdateien (für Windows). Die Datei _extra.bat_ ist die Haupt-Batchdatei. Sie braucht nicht angepasst zu werden. Die übrigen Batchdateien (z.B. phase1.bat) bestehen nur aus einer Zeile und rufen die Haupt-Batchdatei auf:
+
+{{{
+extra.bat conf\phase1
+}}}
 
 == Neue Funktionalität in den eXTra-Client einbauen ==
 
 Falls die bestehende Funktionalität zur Realisierung eines Fachverfahrens nicht ausreicht, kann der eXTra-Client (Open Source Projekt!) durch die Entwicklung neuer Plugins oder XML-Builder erweitert werden. 
 
-= Ausblick =
+== Ausblick ==
