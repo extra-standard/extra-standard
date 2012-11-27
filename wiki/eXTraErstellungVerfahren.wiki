@@ -2,8 +2,13 @@
 
 = Einführung =
 
-Im folgenden wird aus Erfahrungswerten der Entwicklung ein Vorgehensmodell zur Entwicklung neuer Fachverfahren mit dem eXTra-Client vorgestellt.
+Im folgenden wird aus Erfahrungswerten, die bei der Entwicklung der Fachverfahren _Sterbedatenabgleich_ und _Send Fetch_ gewonnen wurden, ein Vorgehensmodell zur Entwicklung neuer Fachverfahren mit dem eXTra-Client vorgestellt.
 
+Das Vorgehensmodell besteht aus folgenden Schritten:
+
+<wiki:toc max_depth="5" />
+
+Aktuell sind noch einige manuelle Schritte erforderlich. In einem Ausblick werden mögliche Vereinfachungen angesprochen.
 == Anforderungen definieren ==
 
 === Kurze Beschreibung des Fachverfahrens ===
