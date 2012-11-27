@@ -2,6 +2,8 @@
 
 = Einführung =
 
+Im folgenden wird aus Erfahrungswerten der Entwicklung ein Vorgehensmodell zur Entwicklung neuer Fachverfahren mit dem eXTra-Client vorgestellt.
+
 == Anforderungen definieren ==
 
 === Kurze Beschreibung des Fachverfahrens ===
