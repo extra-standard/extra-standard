@@ -10,7 +10,7 @@ Im ersten Schritt sollte das Fachverfahren grob beschrieben werden. Z.B.:
 
  * Das Verfahren besteht aus drei Phasen.
  * In der ersten Phase werden Dateien an den Server gesendet. Der Server bestätigt den Empfang.
- * In der zweiten Phase werden Ergebnisdateiten vom Server abgeholt.
+ * In der zweiten Phase werden Ergebnisdateien vom Server abgeholt.
  * In der dritten Phase sendet der Client eine Verarbeitungsbestätigung.
 
 === Abstimmung der Client-Server Kommunikation ===
@@ -24,17 +24,20 @@ Der eXTra-Client gibt in wesentlichen Punkten Gestaltungsfreiheit (Z.b. der Frag
 Ideal wäre es, wenn in diesem Schritt auch schon die XML-Request und -Response Dokumente definiert würden.
 
 == Infrastruktur aufbauen ==
-Im folgenden wird die Realisierung des Fachverfahrens angegangen. Zunächst muss die notwendige Infrastruktur aufgebaut werden. Diese besteht aus:
+Zunächst muss die notwendige Infrastruktur aufgebaut werden. Diese besteht aus:
 
- * eXTra-Client Auslieferung
- * Auslieferungen der Fachverfahren _extra-sterbedaten-ausland_ und _extra-scenario-sendfetch_ (zu Anschauungszwecken)
+ * Verzeichnisse
+   * eXTra-Client Auslieferung
+   * Auslieferungen der Fachverfahren _extra-sterbedaten-ausland_ und _extra-scenario-sendfetch_ (zu Anschauungszwecken)
+   * Einem Ordner für das neue Fachverfahren
  * Datenbank. Aktuell wird Oracle als Datenbank unterstützt. Es bietet sich an, das Fachverfahren lokal mit Oracle XE zu entwickeln. (Weitere Datenbankunterstützung ist angedacht.)
  * soapUI (simuliert den eXTra-Server)
  * Java Laufzeitumgebung
+ * flyway (Optionales Werkzeug für die Datenbank-Verwaltung)
 
 === Verzeichnisse für Fachverfahren erstellen ===
 
-Als Basis für neue Fachverfahren empfiehlt es sich, die beiden bestehenden Fachverfahren Sterbedatenabgleich und Send-Fetch als Ausgangsbasis zu verwenden. Insbesondere wenn das neu zu entwickelnde Fachverfahren große Ähnlichkeit mit einem bestehenden aufweist. Durch Auspacken der Auslieferungsversionen sollte folgende Verzeichnis-Grundstruktur aufgebaut werden:
+Als Basis für neue Fachverfahren empfiehlt es sich, die beiden bestehenden Fachverfahren Sterbedatenabgleich und Send-Fetch als Ausgangsbasis zu verwenden. Insbesondere wenn das neu zu entwickelnde Fachverfahren große Ähnlichkeit mit einem bestehenden aufweist. Durch Auspacken der Auslieferungsversionen sollte folgende Verzeichnis-Grundstruktur aufgebaut werden (siehe [eXTraClientBetriebsanleitung Betriebsanleitung]:
 {{{
 D:\eXTra
 - extra-client
@@ -104,7 +107,11 @@ flyway.user=flyway
 flyway.password=flyway
 }}}
 
-Zum Aufbau muss jetzt in der Kommandozeile im Verzeichnis _D:\extra\flyway\bin_ der Befehl: *flyway.cmd migrate* ausgeführt werden ([http://flywaydb.org/documentation/commandline/ flyway Befehlsübersicht])
+Zur Erstellung der Datenbank muss jetzt in der Kommandozeile im Verzeichnis _D:\extra\flyway\bin_ der Befehl: 
+
+*flyway.cmd migrate* 
+
+ausgeführt werden ([http://flywaydb.org/documentation/commandline/ flyway Befehlsübersicht])
 
 === soapUI Projekt ===
 
