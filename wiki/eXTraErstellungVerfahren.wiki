@@ -14,9 +14,9 @@ Abstimmung:
  * Fehlerbehandlung (Return Codes vereinbaren)
 
 Werkzeuge
-- SoapUI
-- Oracle XE
-- flyway
+ * SoapUI
+ * Oracle XE
+ * flyway
 
 == Vorbereitungen ==
 
@@ -55,13 +55,45 @@ D:\eXTra
     - work
 }}}
 
+Exemplarisch ist als Basisverzeichnis _D:\extra_ gewählt. Es kann aber auch jedes andere Verzeichnis genommen werden.
+
 === Datenbank aufbauen ===
 Der Aufbau der Datenbank erfolgt über SQL-Skripte. Diese können mit einem Datenbankwerkzeug (z.B. Toad) oder mit dem OpenSource-Werkzeug   
-[http://flywaydb.org flyway] ausgeführt werden.
+[http://flywaydb.org flyway] ausgeführt werden. Flyway hat den Vorteil, das sehr schnell und einfach die Datenbank in einen Urzustand versetzt werden kann.
 
 Im folgenden wird der Aufbau mit flyway gezeigt:
 
-[http://flywaydb.org/documentation/commandline/ flyway]
+ * Die aktuelle flyway-Version wird von der [http://flywaydb.org Projektseite] geladen und im Basisverzeichnis (_D:\eXTra_) entpackt.
+ * Die SQL-Skripte aus den jeweiligen SQL-Verzeichnissen werden in das Verzeichnis D:\extra\flyway\sql kopiert. Folgende Struktur ergibt sich:
+
+{{{
+D:\eXTra
++ extra-client
++ fachverfahren
+- flyway
+  - sql
+    - V1__1_0_0_createInitialDatabase.sql
+    - V2__1_0_0_createInitialData.sql
+    - V3__1_0_0_createInitialData.sql
+    - V4__1_0_0_createInitialData.sql
+}}}
+
+In der Datei _flyway\conf\flyway.properties_ müssen noch die Datenbank-Verbindungsparameter eingetragen werden:
+
+{{{
+# Fully qualified classname of the jdbc driver
+flyway.driver=oracle.jdbc.OracleDriver
+# Jdbc url to use to connect to the database
+flyway.url=jdbc:oracle:thin:@localhost:1521:xe
+# User to use to connect to the database
+flyway.user=flyway
+# Password to use to connect to the database (default: <<blank>>)
+flyway.password=flyway
+}}}
+
+Zum Aufbau muss jetzt in der Kommandozeile im Verzeichnis _D:\extra\flyway\bin_ der Befehl: *flyway.cmd migrate* ausgeführt werden.
+
+[http://flywaydb.org/documentation/commandline/ flyway Kommandozeile]
 
 === soapUI Projekt ===
 
