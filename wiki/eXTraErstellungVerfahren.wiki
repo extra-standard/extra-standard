@@ -1,6 +1,6 @@
 #summary Vorgehensmodell zur Erstellung eines Fachverfahrens.
 
-= Einführung =
+<h1>Vorgehensmodell zur Erstellung neuer Fachverfahren</h1>
 
 Im folgenden wird aus Erfahrungswerten, die bei der Entwicklung der Fachverfahren _Sterbedatenabgleich_ und _Send Fetch_ gewonnen wurden, ein Vorgehensmodell zur Entwicklung neuer Fachverfahren mit dem eXTra-Client abgeleitet.
 
@@ -246,6 +246,22 @@ extra.bat conf\phase1
 
 == Neue Funktionalität in den eXTra-Client einbauen ==
 
-Falls die bestehende Funktionalität zur Realisierung eines Fachverfahrens nicht ausreicht, kann der eXTra-Client (Open Source Projekt!) durch die Entwicklung neuer Plugins oder XML-Builder erweitert werden. 
+Falls die bestehende Funktionalität zur Realisierung eines Fachverfahrens nicht ausreicht, kann der eXTra-Client (Open Source Projekt!) durch die Entwicklung neuer Plugins oder XML-Builder erweitert werden. Dazu muss die Entwicklungsumgebung auf einem Rechner eingerichtet werden.
 
 == Ausblick ==
+
+=== Datenbankunterstützung ===
+Aktuell wird nur die Oracle Datenbank unterstützt (zu Testzwecken noch HSQLDB). Da der eXTra-Client intern den datenbankunabhängigen Standard JPA verwendet, sollte eine Unterstützung weiterer Datenbanken sich realisieren lassen.
+
+=== Vereinfachung der Konfiguration ===
+
+ * Die Registrierung eines neuen Fachverfahrens sollte ohne Datenbank-script erfolgen.
+ * Plugins und XML-Builder sollten 
+
+
+=== Web Anwendung ===
+Über eine Webanwendung könnte ein sehr mächtiges und einfach zu bedienendes Werkzeug für die Erstellung neuer Fachverfahren angeboten werden. 
+
+ * In einer Web-Anwendung könnten grob die Grundzüge des neuen Fachverfahrens definiert werden. (z.B. '3 Phasen', Senden - Holen - Bestätigen)
+ * Mit einem Assistenten wird man durch die weitere Konfiguration geführt (z.b. Datenablage in: ..., Serverdaten werden erwartet in: ...)
+ * Das über die Webanwendung konfigurierte Fachverfahren kann gespeichert werden und per Knopfdruck als lauffähiges Fachverfahren exportiert werden.
