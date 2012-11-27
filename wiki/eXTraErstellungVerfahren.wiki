@@ -7,20 +7,22 @@
 
 === Kurze Beschreibung des Fachverfahrens ===
 
-Im ersten Schritt sollte das Fachverfahren grob beschrieben werden. 
+Im ersten Schritt sollte das Fachverfahren grob beschrieben werden. Z.B.:
 
-Auszutauschende XML-Dokumente
+ * Das Verfahren best aus drei Phasen.
+ * In der ersten Phase werden Dateien an den Server gesendet. Der Server bestätigt den Empfang.
+ * In der zweiten Phase werden Ergebnisdateiten vom Server abgeholt.
+ * In der dritten Phase sendet der Client eine Verarbeitungsbestätigung.
 
-Abstimmung:
+=== Abstimmung der Client-Server Kommunikation ===
+
+In diesem Schritt sollten auch schon mit dem Server-Betreuer wesentliche Eckpunkte besprochen und definiert werden. Z.B.:
+
  * Wo befinden sich zu sendende Daten?
  * Wo werden Ergebnisse abgelegt?
  * Fehlerbehandlung (Return Codes vereinbaren)
 
-Werkzeuge
- * SoapUI
- * Oracle XE
- * flyway
-
+Ideal wäre es, wenn in diesem Schritt auch schon die im Kommunikationsablauf 
 == Vorbereitungen ==
 
 === Verzeichnisse für Fachverfahren erstellen ===
