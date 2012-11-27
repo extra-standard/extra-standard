@@ -26,7 +26,7 @@ Ideal wäre es, wenn in diesem Schritt auch schon die XML-Request und -Response 
 == Infrastruktur aufbauen ==
 Zunächst muss die notwendige Infrastruktur aufgebaut werden. Diese besteht aus:
 
- * Verzeichnisse
+ * Entwicklungsversion (Verzeichisse)
    * eXTra-Client Auslieferung
    * Auslieferungen der Fachverfahren _extra-sterbedaten-ausland_ und _extra-scenario-sendfetch_ (zu Anschauungszwecken)
    * Einem Ordner für das neue Fachverfahren
@@ -35,7 +35,7 @@ Zunächst muss die notwendige Infrastruktur aufgebaut werden. Diese besteht aus:
  * Java Laufzeitumgebung
  * flyway (Optionales Werkzeug für die Datenbank-Verwaltung)
 
-=== Verzeichnisse für Fachverfahren erstellen ===
+=== Entwicklungsversion (Verzeichisse) ===
 
 Als Basis für neue Fachverfahren empfiehlt es sich, die beiden bestehenden Fachverfahren Sterbedatenabgleich und Send-Fetch als Ausgangsbasis zu verwenden. Insbesondere wenn das neu zu entwickelnde Fachverfahren große Ähnlichkeit mit einem bestehenden aufweist. Durch Auspacken der Auslieferungsversionen sollte folgende Verzeichnis-Grundstruktur aufgebaut werden (siehe [eXTraClientBetriebsanleitung Betriebsanleitung]:
 {{{
@@ -118,6 +118,60 @@ ausgeführt werden ([http://flywaydb.org/documentation/commandline/ flyway Befeh
 Ein wichtiges Werkzeug für die Entwicklung und den Test eines Fachverfahrens ist soapUI. Mit soapUI kann sowohl der eXTra-Server simuliert werden als auch die Kommunikationsabläufe (Requests und Responses in den einzelnen Phasen) verfeinert werden. Die Demo-Fachverfahren enthalten jeweils ein soapUI Projekt (im Ordner _soapUI_) in dem die Requests und Responses abgelegt sind (kann als Basis für die eigene Entwicklung dienen):
 
 http://extra-standard.googlecode.com/svn/wiki/images/extra-demo-sterbedaten-soapui.png
+
+=== Datenbankscript für das neue Fachverfahren ===
+Zur Zeit muss ein neues Fachverfahren noch über ein Datenbank-Script im Stammdatenbereich der eXTra-Datenbank registriert werden:
+
+http://extra-standard.googlecode.com/svn/wiki/images/extra-betrieb-db-stamm.png
+
+Beispiel:
+ * Der Mandant 'DRV' wird eingetragen
+ * Der PROCEDURE_TYPE 'STERBEMELDUNG' wird angelegt
+ * Dieser PROCEDURE_TYPE besitzt drei Phasen. Phase 2 ist der Vorgänger von Phase 3 (und stellt die Eingabedaten für Phase 3 zur Verfügung).
+ * Eine PROCEDURE 'STERBEMELDUNG' wird angelegt
+
+{{{
+--------------------------------------------------------
+-- Initiale Datenbankbefuellung Sterbedatenabgleich
+-- Oracle Database.
+--------------------------------------------------------
+Insert into MANDATOR (ID, NAME) Values (seq_mandator_id.nextval, 'DRV');
+   
+Insert into PROCEDURE_TYPE (ID, NAME)
+ Values (seq_procedure_type_id.nextval, 'STERBEMELDUNG');
+   
+Insert into PROCEDURE_PHASE_CONFIGURATION (ID, PHASE, PROCEDURE_TYPE_ID)
+ Values
+   (seq_procephase_config_id.nextval,
+    'PHASE1', 
+    (select id from procedure_type where name = 'STERBEMELDUNG') );
+   
+Insert into PROCEDURE_PHASE_CONFIGURATION (ID, PHASE, PROCEDURE_TYPE_ID)
+ Values
+   (seq_procephase_config_id.nextval,
+    'PHASE3', 
+    (select id from procedure_type where name = 'STERBEMELDUNG') );
+   
+Insert into PROCEDURE_PHASE_CONFIGURATION
+   (ID, PHASE, PROCEDURE_TYPE_ID, NEXT_PHASE_CONFIGURATION_ID)
+ Values
+   (seq_procephase_config_id.nextval,
+    'PHASE2', 
+    (select id from procedure_type where name = 'STERBEMELDUNG'),
+     (select id from PROCEDURE_PHASE_CONFIGURATION 
+         where PROCEDURE_PHASE_CONFIGURATION.PROCEDURE_TYPE_ID =
+        (select id from PROCEDURE_TYPE where PROCEDURE_TYPE.NAME = 'STERBEMELDUNG')
+        and   PROCEDURE_PHASE_CONFIGURATION.PHASE = 'PHASE3'  ));
+     
+Insert into PROCEDURE
+   (ID, NAME, SHORT_KEY, MANDATOR_ID, PROCEDURE_TYPE_ID)
+ Values
+   (seq_procedure_id.nextval, 'Sterbemeldung', 'PROC_STERBEMELDUNG', 
+   (select id from MANDATOR where name = 'DRV'),
+    (select id from PROCEDURE_TYPE where name = 'STERBEMELDUNG'));
+}}}
+
+ 
 
 {{{
 <element>
