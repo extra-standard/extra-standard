@@ -30,7 +30,7 @@ Zunächst muss die notwendige Infrastruktur aufgebaut werden. Diese besteht aus:
    * eXTra-Client Auslieferung
    * Auslieferungen der Fachverfahren _extra-sterbedaten-ausland_ und _extra-scenario-sendfetch_ (zu Anschauungszwecken)
    * Einem Ordner für das neue Fachverfahren
- * Datenbank. Aktuell wird Oracle als Datenbank unterstützt. Es bietet sich an, das Fachverfahren lokal mit Oracle XE zu entwickeln. (Weitere Datenbankunterstützung ist angedacht.)
+ * [eXTraClientBetriebDatenbank eXTra-Client Datenbank]. Aktuell wird Oracle als Datenbank unterstützt. Es bietet sich an, das Fachverfahren lokal mit Oracle XE zu entwickeln. (Weitere Datenbankunterstützung ist angedacht.)
  * soapUI (simuliert den eXTra-Server)
  * Java Laufzeitumgebung
  * flyway (Optionales Werkzeug für die Datenbank-Verwaltung)
@@ -191,6 +191,8 @@ Für jede Phase muss nun eine Profil-Datei erstellt werden. Diese Datei verwende
 }}}
 
 === Konfigurationsdateien erstellen ===
+Für jede Phase müssen die beiden [eXtraClientBetriebKonfigurationsdateien Konfigurationsdateien] [eXTraClientBetriebConfigBasis extra-properties-basic.properties] und [eXTraClientBetriebConfigUser extra-properties-user.properties] erstellt werden (am besten, indem sie aus einem Beispiel kopiert und angepasst werden)
+
 
 ==== Plugins auswählen ====
 
@@ -206,11 +208,12 @@ plugins.execution=executionPersistenceJpa
 }}}
 
 
+
 ==== XML-Builder auswählen ==== 
 
 === soapUI Projekt überarbeiten ===
 
-=== Phasen durchführen ===
+=== Fachverfahren (Phasen) durchführen ===
 
 
 == Neue Funktionalität in den eXTra-Client einbauen ==
