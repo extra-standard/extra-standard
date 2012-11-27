@@ -183,7 +183,7 @@ Insert into PROCEDURE
 Für das neue Fachverfahren wird eine SQL-Datei _V5__1_0_0_createInitialData.sql_ im sql-Verzeichnis angelegt. Durch Ausführen dieses Skriptes (z.B. über flyway) wird die Datenbank aktualisiert.  
 
 === Profil Dateien erstellen ===
-Für jede Phase muss nun eine Profil-Datei erstellt werden. Diese Datei verwendet der Client 
+Für jede Phase muss nun eine Profil-Datei erstellt werden. In dieser Datei wird die Client-Response XML-Datei beschrieben. Ausschnitt: 
 
 {{{
 <element>
@@ -198,6 +198,8 @@ Für jede Phase muss nun eine Profil-Datei erstellt werden. Diese Datei verwende
   <Elternelement>Transport</Elternelement>
 </element>
 }}}
+
+Zu den XML-Elementen müssen in den Konfigurationsdateien Plugins und XML-Builder zugeordnet werden.
 
 === Konfigurationsdateien erstellen ===
 Für jede Phase müssen die beiden [eXtraClientBetriebKonfigurationsdateien Konfigurationsdateien] [eXTraClientBetriebConfigBasis extra-properties-basic.properties] und [eXTraClientBetriebConfigUser extra-properties-user.properties] erstellt werden (am besten, indem sie aus einem Beispiel kopiert und angepasst werden). Beide Dateien sind in Bereiche unterteilt  
@@ -228,6 +230,15 @@ Von Interesse sind _dataplugin_, _outputplugin_ und _responseprocessplugin_. _co
 Eine Übersicht mit Dokumentation aller Plugins findet sich [eXTraClientBetriebPlugins hier].
 ===== XML-Builder auswählen ===== 
 
+Analog zu den Plugins existiert für die XML-Builder ein eigener Bereich:
+{{{
+# -------------------------------
+# -- Xml-Builder Konfiguration --
+# -------------------------------
+}}}
+
+Für viele Elemente aus der Profil-Datei muss kein XML-Builder gewählt werden, da eine eindeutige Zuordnung existiert (für das Profil-Element gibt es nur einen Builder).
+ 
 ==== extra-properties-user.properties ====
 
 In dieser DaTei werden Umgebungsinformationen (DB-Verbindung, Webservice-Adresse und Ein-/Ausgabe Verzeichnisse eingetragen.
@@ -249,6 +260,9 @@ extra.bat conf\phase1
 Falls die bestehende Funktionalität zur Realisierung eines Fachverfahrens nicht ausreicht, kann der eXTra-Client (Open Source Projekt!) durch die Entwicklung neuer Plugins oder XML-Builder erweitert werden. Dazu muss die Entwicklungsumgebung auf einem Rechner eingerichtet werden.
 
 == Ausblick ==
+Wie beschrieben können mit dem eXTra-Client neue Fachverfahren entwickelt werden. Es sind aber noch einige manuelle Schritte notwendig. Außerdem benötigt man noch einiges an Hintergrundwissen.
+
+Durch einige Änderungen kann das Vorgehensmodell vereinfacht werden. 
 
 === Datenbankunterstützung ===
 Aktuell wird nur die Oracle Datenbank unterstützt (zu Testzwecken noch HSQLDB). Da der eXTra-Client intern den datenbankunabhängigen Standard JPA verwendet, sollte eine Unterstützung weiterer Datenbanken sich realisieren lassen.
@@ -256,8 +270,7 @@ Aktuell wird nur die Oracle Datenbank unterstützt (zu Testzwecken noch HSQLDB).
 === Vereinfachung der Konfiguration ===
 
  * Die Registrierung eines neuen Fachverfahrens sollte ohne Datenbank-script erfolgen.
- * Plugins und XML-Builder sollten 
-
+ * Bei der Konfiguration von Plugins und XML-Buildern gibt es noch Pflichtangaben. Diese sollten nicht mehr notwendig sein.
 
 === Web Anwendung ===
 Über eine Webanwendung könnte ein sehr mächtiges und einfach zu bedienendes Werkzeug für die Erstellung neuer Fachverfahren angeboten werden. 
