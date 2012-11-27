@@ -2,14 +2,14 @@
 
 = Betriebsanleitung =
 
-In der Betriebsanleitung wird beschrieben, wie der eXTra-Client zur Konfiguration und Betrieb von Fachverfahren verwendet werden kann. Die Auslieferungsversion des eXTra-Clients besteht aus einem zip-Archiv (z.B. extra-cli-1.0.0.zip). In diesem befindet sich der Basisteil. Die einzelnen Fachverfahren werden jeweils in gesonderten zip-Archiven ausgeliefert.
+In der Betriebsanleitung wird beschrieben, wie der eXTra-Client zur Konfiguration und Betrieb von Fachverfahren verwendet werden kann. Die Auslieferungsversion des eXTra-Clients besteht aus einem zip-Archiv (z.B. extra-cli-1.0.0.zip). In diesem befindet sich der Basisteil. Die einzelnen Fachverfahren können getrennt vom Basisteil entwickelt werden und werden jeweils in gesonderten zip-Archiven ausgeliefert.
 
-Der eXTra-Client unterstützt folgende Anwendungsfallszenarien:
- * Fachliche Inputdatei in ein eXTra-konformes Format (XML) wandeln
- * eXTra-Datei (XML) an einen eXTra-Server über einen Webservice versenden
- * Response des eXTra-Servers über Webservice empfangen und verarbeiten
+Der eXTra-Client unterstützt mehrere Kommunikationsabläufe, z.B.:
+ * Senden von Eingabedateien an den eXTra-Server über einen Webservice
+ * Ergebnisse vom eXTra-Server anfordern.
+ * Bestätigungen an den eXTra-Server senden 
 
-Durch Kombination dieser Anwendungsfälle können komplexere Kommunikationsabläufe realisiert werden (z.B. der Sende-/Holbetrieb). Aufgrund seines modularen Aufbaus und vielfältiger Konfigurationsmöglichkeiten kann der eXTra-Client auch zur Durchführung von Fachverfahren (z.B. Sterbedatenabgleich) eingesetzt werden. Programmänderungen des eXTra-Clients sind nur bei tiefgreifenden Funktionserweiterungen (z.B. Anpassungen an neuen eXTra-Standard) notwendig.
+Programmänderungen des eXTra-Clients sind nur bei tiefgreifenden Funktionserweiterungen (z.B. Anpassungen an neuen eXTra-Standard) notwendig.
 
 Der Kommunikationsablauf wird vom eXTra-Client in einer Datenbank protokolliert. Neben den einzelnen Aktionen werden z.B. auch Serverantworten die in späteren Schritten benötigt werden (z.B. Response-ID) oder Empfangszertifikate in der Datenbank abgelegt. Außerdem kann konfigurativ das Logging aktiviert werden (z.B. für die Fehlersuche). Die Skripte zum Aufbau der Datenbank befinden sich in der Auslieferungsversion.
 
@@ -18,7 +18,7 @@ Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird exemplarisch die Instal
 = Anforderungen an den Betriebsrechner =
 Der eXTra-Client wird als Java Anwendung ausgeliefert und benötigt eine Java 6 Laufzeitumgebung. Er ist nicht an ein spezielles Betriebssystem gebunden. Für die Protokollierung des Kommuninkationsablaufes wird eine Datenbank benötigt (siehe [eXTraClientBetriebDatenbank Datenbank]). Für den Kommunikationsablauf müssen evtl. bestimmte Externe eXTra-Server erreichbar sein.
 
-= Bestandteile der Auslieferungsversion =
+= Bestandteile der Basisversion (extraClient) =
 
 Die Auslieferungsversion besteht aus dem Programm-Bereich, einem exemplarischen Ausführungs-Bereich und einem SQL-Skript-Bereich. Jeder Bereich befindet sich in einem Verzeichnis:
 
