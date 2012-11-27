@@ -193,10 +193,11 @@ Für jede Phase muss nun eine Profil-Datei erstellt werden. Diese Datei verwende
 }}}
 
 === Konfigurationsdateien erstellen ===
-Für jede Phase müssen die beiden [eXtraClientBetriebKonfigurationsdateien Konfigurationsdateien] [eXTraClientBetriebConfigBasis extra-properties-basic.properties] und [eXTraClientBetriebConfigUser extra-properties-user.properties] erstellt werden (am besten, indem sie aus einem Beispiel kopiert und angepasst werden)
+Für jede Phase müssen die beiden [eXtraClientBetriebKonfigurationsdateien Konfigurationsdateien] [eXTraClientBetriebConfigBasis extra-properties-basic.properties] und [eXTraClientBetriebConfigUser extra-properties-user.properties] erstellt werden (am besten, indem sie aus einem Beispiel kopiert und angepasst werden). Beide Dateien sind in Bereiche unterteilt  
 
+==== extra-properties-basic.properties ====
 
-==== Plugins auswählen ====
+===== Plugins auswählen =====
 
 {{{
 # -------------
@@ -209,11 +210,19 @@ plugins.responseprocessplugin=acknowledgePhase1ResponseProcessPlugin
 plugins.execution=executionPersistenceJpa
 }}}
 
+ * Im obigen Beispiel wird die Datenbeschaffung durch das [eXTraClientPluginFileDataPlugin fileDataPlugin] durchgeführt. 
+ * Die Kommunikation mit dem Server wird von dem [eXTraClientPluginWsOutputPlugin wsOutputPlugin] durchgeführt.
+ * Die Server-Ergebnisse werden von dem [eXTraClientPluginAcknowledgePhase1ResponseProcessPlugin acknowledgePhase1ResponseProcessPlugin] verarbeitet
 
+===== XML-Builder auswählen ===== 
 
-==== XML-Builder auswählen ==== 
+==== extra-properties-user.properties ====
+
+In dieser DaTei werden Umgebungsinformationen (DB-Verbindung, Webservice-Adresse und Ein-/Ausgabe Verzeichnisse eingetragen.
 
 === soapUI Projekt überarbeiten ===
+
+Das soapUI-Projekt sollte nun so überarbeitet werden, das für die Client-Requests entsprechende Server-Responses in Form von Mock-Services bereitstehen und gestartet sind.
 
 === Fachverfahren (Phasen) durchführen ===
 
