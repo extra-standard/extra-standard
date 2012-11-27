@@ -9,9 +9,9 @@ Der eXTra-Client unterstützt mehrere Kommunikationsabläufe, z.B.:
  * Ergebnisse vom eXTra-Server anfordern.
  * Bestätigungen an den eXTra-Server senden 
 
-Programmänderungen des eXTra-Clients sind nur bei tiefgreifenden Funktionserweiterungen (z.B. Anpassungen an neuen eXTra-Standard) notwendig.
+Die Kommunikationsabläufe werden von dem eXTra-Client in einer [eXTraClientBetriebDatenbank Datenbank] protokolliert (die Skripte zum Aufbau der Datenbank befinden sich in der Auslieferungsversion). Dies ist notwendig, da spätere Phasen eventuell Ergebnisse von Vorgängerphasen benötigen (z.B. Empfangsbestätigung von Dateien).
 
-Der Kommunikationsablauf wird vom eXTra-Client in einer Datenbank protokolliert. Neben den einzelnen Aktionen werden z.B. auch Serverantworten die in späteren Schritten benötigt werden (z.B. Response-ID) oder Empfangszertifikate in der Datenbank abgelegt. Außerdem kann konfigurativ das Logging aktiviert werden (z.B. für die Fehlersuche). Die Skripte zum Aufbau der Datenbank befinden sich in der Auslieferungsversion.
+Der eXTra-Client kann so konfiguriert werden, das mehrstufige Fachverfahren (z.B. Sterbedatenabgleich) ohne Programmänderungen realisiert werden können. Falls noch Funktionalität fehlt, kann der eXTra-Client durch das Entwickelnneuer Plugins erweitert werden.
 
 Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird exemplarisch die Installation des eXTra-Clients mit einem technischen Referenzverfahren beschrieben.
 
@@ -31,7 +31,7 @@ Hier stehen sämtliche benötigte Jar-Dateien - sowohl die eXTra-Jar-Dateien als
 ==== SQL-Skript-Bereich (Verzeichnis: /sql) ==== 
 Hier sind SQL-Skripte für den Aufbau der eXTra-Client Datenbank abgelegt. 
 
-Aufgrund des modularen Aufbaus und der konfigurativen Steuerung des EXTra-Clients können zur Basisversion weitere Fachverfahren hinzugefügt werden. Pro Fachverfahren sollte die Konfiguration in einem Konfigurationsverzeichnisse abgelegt werden. Jedem Fachverfahren ist ein DB-Skript für die Initialisierung zugewiesen. 
+Aufgrund des modularen Aufbaus und der konfigurativen Steuerung des eXTra-Clients können zur Basisversion weitere Fachverfahren hinzugefügt werden. Pro Fachverfahren sollte die Konfiguration in einem Konfigurationsverzeichnisse abgelegt werden. Jedem Fachverfahren ist ein DB-Skript für die Initialisierung zugewiesen. 
 
 = Installation/Bereitstellung einer Version =
 Die Bereitstellung einer Version erfolgt in diesen Schritten:
