@@ -3,8 +3,11 @@
 = Einführung =
 
 
+== 
 
-Kurze Beschreibung des Fachverfahrens
+=== Kurze Beschreibung des Fachverfahrens ===
+
+Im ersten Schritt sollte das Fachverfahren grob beschrieben werden. 
 
 Auszutauschende XML-Dokumente
 
@@ -92,13 +95,13 @@ flyway.user=flyway
 flyway.password=flyway
 }}}
 
-Zum Aufbau muss jetzt in der Kommandozeile im Verzeichnis _D:\extra\flyway\bin_ der Befehl: *flyway.cmd migrate* ausgeführt werden.
-
-[http://flywaydb.org/documentation/commandline/ flyway Kommandozeile]
+Zum Aufbau muss jetzt in der Kommandozeile im Verzeichnis _D:\extra\flyway\bin_ der Befehl: *flyway.cmd migrate* ausgeführt werden ([http://flywaydb.org/documentation/commandline/ flyway Befehlsübersicht])
 
 === soapUI Projekt ===
 
-=== Profil-Datei erstellen ===
+Ein wichtiges Werkzeug für die Entwicklung und den Test eines Fachverfahrens ist soapUI. Mit soapUI kann sowohl der eXTra-Server simuliert werden als auch die Kommunikationsabläufe (Requests und Responses in den einzelnen Phasen) verfeinert werden. Die Demo-Fachverfahren enthalten jeweils ein soapUI Projekt (im Ordner _soapUI_) in dem die Requests und Responses abgelegt sind (kann als Basis für die eigene Entwicklung dienen):
+
+http://extra-standard.googlecode.com/svn/wiki/images/extra-demo-sterbedaten-soapui.png
 
 {{{
 <element>
