@@ -11,7 +11,7 @@ Der eXTra-Client unterstützt mehrere Kommunikationsabläufe, z.B.:
 
 Die Kommunikationsabläufe werden von dem eXTra-Client in einer [eXTraClientBetriebDatenbank Datenbank] protokolliert (die Skripte zum Aufbau der Datenbank befinden sich in der Auslieferungsversion). Dies ist notwendig, da spätere Phasen eventuell Ergebnisse von Vorgängerphasen benötigen (z.B. Empfangsbestätigung von Dateien).
 
-Der eXTra-Client kann so konfiguriert werden, das mehrstufige Fachverfahren (z.B. Sterbedatenabgleich) ohne Programmänderungen realisiert werden können. Falls noch Funktionalität fehlt, kann der eXTra-Client durch das Entwickelnneuer Plugins erweitert werden.
+Der eXTra-Client kann so konfiguriert werden, das mehrstufige Fachverfahren (z.B. Sterbedatenabgleich) ohne Programmänderungen realisiert werden können. Falls noch Funktionalität fehlt, kann der eXTra-Client durch das Entwickeln neuer Plugins erweitert werden.
 
 Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird exemplarisch die Installation des eXTra-Clients mit einem technischen Referenzverfahren beschrieben.
 
