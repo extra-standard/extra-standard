@@ -2,8 +2,7 @@
 
 = Einführung =
 
-
-== 
+== Anforderungen definieren ==
 
 === Kurze Beschreibung des Fachverfahrens ===
 
@@ -16,18 +15,26 @@ Im ersten Schritt sollte das Fachverfahren grob beschrieben werden. Z.B.:
 
 === Abstimmung der Client-Server Kommunikation ===
 
-In diesem Schritt sollten auch schon mit dem Server-Betreuer wesentliche Eckpunkte besprochen und definiert werden. Z.B.:
+Der eXTra-Client gibt in wesentlichen Punkten Gestaltungsfreiheit (Z.b. der Frage wo Daten abgelegt werden). Deshalb sollten in diesem Schritt mit dem Server-Betreuer wesentliche Eckpunkte der Kommunikation besprochen und definiert werden. Z.B.:
 
- * Wo befinden sich zu sendende Daten?
- * Wo werden Ergebnisse abgelegt?
- * Fehlerbehandlung (Return Codes vereinbaren)
+ * *Wo befinden sich zu sendende Daten?* (z.B. Base64 kodiert im Data-Element des Transport-Bodys)
+ * *Wo legt der Server Ergebnisse ab?* (z.B. in getrennten Packages)  
+ * *Fehlerbehandlung* (z.B. Return Codes vereinbaren)
 
-Ideal wäre es, wenn in diesem Schritt auch schon die im Kommunikationsablauf 
-== Vorbereitungen ==
+Ideal wäre es, wenn in diesem Schritt auch schon die XML-Request und -Response Dokumente definiert würden.
+
+== Infrastruktur aufbauen ==
+Im folgenden wird die Realisierung des Fachverfahrens angegangen. Zunächst muss die notwendige Infrastruktur aufgebaut werden. Diese besteht aus:
+
+ * eXTra-Client Auslieferung
+ * Auslieferungen der Fachverfahren _extra-sterbedaten-ausland_ und _extra-scenario-sendfetch_ (zu Anschauungszwecken)
+ * Datenbank. Aktuell wird Oracle als Datenbank unterstützt. Es bietet sich an, das Fachverfahren lokal mit Oracle XE zu entwickeln. (Weitere Datenbankunterstützung ist angedacht.)
+ * soapUI (simuliert den eXTra-Server)
+ * Java Laufzeitumgebung
 
 === Verzeichnisse für Fachverfahren erstellen ===
 
-Als Basis für neue Fachverfahren empfiehlt es sich, die beiden bestehenden Fachverfahren Sterbedatenabgleich und Send-Fetch als Ausgangsbasis zu verwenden. Insbesondere wenn das neu zu entwickelnde Fachverfahren große Ähnlichkeit mit einem bestehenden aufweist. Folgende Verzeichnis-Grundstruktur sollte aufgebaut werden:
+Als Basis für neue Fachverfahren empfiehlt es sich, die beiden bestehenden Fachverfahren Sterbedatenabgleich und Send-Fetch als Ausgangsbasis zu verwenden. Insbesondere wenn das neu zu entwickelnde Fachverfahren große Ähnlichkeit mit einem bestehenden aufweist. Durch Auspacken der Auslieferungsversionen sollte folgende Verzeichnis-Grundstruktur aufgebaut werden:
 {{{
 D:\eXTra
 - extra-client
