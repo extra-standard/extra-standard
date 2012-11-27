@@ -18,6 +18,7 @@ Werkzeuge
 - Oracle XE
 - flyway
 
+== Vorbereitungen ==
 
 === Verzeichnisse für Fachverfahren erstellen ===
 
@@ -47,18 +48,22 @@ D:\eXTra
   - neu
     - bin
     - conf
-      - phase1
-      - phase2
-      - phase3
     - docs
     - logs
     - soapui
     - sql
     - work
-      - input
-      - reports
-      - responses
 }}}
+
+=== Datenbank aufbauen ===
+Der Aufbau der Datenbank erfolgt über SQL-Skripte. Diese können mit einem Datenbankwerkzeug (z.B. Toad) oder mit dem OpenSource-Werkzeug   
+[http://flywaydb.org flyway] ausgeführt werden.
+
+Im folgenden wird der Aufbau mit flyway gezeigt:
+
+[http://flywaydb.org/documentation/commandline/ flyway]
+
+=== soapUI Projekt ===
 
 === Profil-Datei erstellen ===
 
