@@ -9,6 +9,6 @@ Hier werden sämtliche Präsentationen und Artikel über eXTra gesammelt.
 
 == Entwicklungsworkshop Post-Tower (Deutsche Post Renten Service) am 29.11.2012 ==
 
-   * [Vorgehensmodell Erstellung eines neuen Fachverfahrens für eXTra-Client https://code.google.com/p/extra-standard/source/browse/wiki/presentations/eXTra%20Client%20Fachverfahren%20Erstellung%20.pdf]
+   * [Vorgehensmodell Erstellung eines neuen Fachverfahrens für eXTra-Client http://extra-standard.googlecode.com/svn/wiki/presentations/eXTra%20Client%20Fachverfahren%20Erstellung%20.pdf]
 
 = Artikel =
