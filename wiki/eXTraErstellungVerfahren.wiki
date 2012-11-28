@@ -264,9 +264,6 @@ Wie beschrieben können mit dem eXTra-Client neue Fachverfahren entwickelt werde
 
 Durch einige Änderungen kann das Vorgehensmodell vereinfacht werden. 
 
-=== Datenbankunterstützung ===
-Aktuell wird nur die Oracle Datenbank unterstützt (zu Testzwecken noch HSQLDB). Da der eXTra-Client intern den datenbankunabhängigen Standard JPA verwendet, sollte eine Unterstützung weiterer Datenbanken sich realisieren lassen.
-
 === Vereinfachung der Konfiguration ===
 
  * Die Registrierung eines neuen Fachverfahrens sollte ohne Datenbank-script erfolgen.
