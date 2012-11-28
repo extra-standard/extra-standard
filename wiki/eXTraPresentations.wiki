@@ -12,6 +12,8 @@ Hier werden sämtliche Präsentationen und Artikel über eXTra gesammelt.
 
    * [http://extra-standard.googlecode.com/svn/wiki/presentations/eXTra%20Client%20Fachverfahren%20Erstellung%20.pdf Vorgehensmodell: Erstellung eines neuen Fachverfahrens für eXTra-Client]
    * [http://extra-standard.googlecode.com/svn/wiki/presentations/eXTra%20Client%20Ziele%2C%20Anforderungen%2C%20Architektur%20und%20Implementierung%20.pdf eXTra-Client: Anforderungen, Architektur und Implementierung]
+   * eXTra-Server: Anforderungen, Architektur und Implementierung
+   * eXTra-Profilierung
 
 = Artikel =
 
