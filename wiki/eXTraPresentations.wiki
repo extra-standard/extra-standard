@@ -1,4 +1,5 @@
 #summary Präsentationen und Artikel über eXTra.
+#labels Featured
 
 Hier werden sämtliche Präsentationen und Artikel über eXTra gesammelt.
 
