@@ -63,7 +63,7 @@ Diese Adresse ist in der Konfigurationsdatei _extra-properties-user.properties_ 
 webservice.endpoint.url=http://localhost:8088/mockExtraSterbedatenausPhase1
 }}}
 
-In soapUI werden die benötigten Services gestartet (ExtraMockServiceSterbedatenausPhase1-3, jeweils Klick auf grünes Dreieck)
+In soapUI werden die benötigten Services gestartet (_!ExtraMockServiceSterbedatenausPhase1-3_, jeweils Klick auf grünes Dreieck)
 
 == Durchführung ==
 === Phase 1 durchführen ===
