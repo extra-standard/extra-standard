@@ -29,6 +29,7 @@ Erzeugter XML-Abschnitt
 </xcpt:Sender>
 }}}
 
+Die meisten XML-Builder sind genau einem Profil-Element zugeordnet. Deshalb müssen sie in der Konfiguration nicht ausgewählt werden.
 == Übersicht über alle XML-Builder ==
 || *Name* || *XML-Element* || *Klasse* ||
 || [eXTraClientXMLBuilderconfigurableSMTPContactsPluginsBuilder configurableSMTPContactsPluginsBuilder] || xplg:Contacts || de.extra.client.core.builder.impl.plugins.ConfigurableSMTPContactsPluginsBuilder ||
