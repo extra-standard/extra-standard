@@ -1,5 +1,10 @@
 #summary Präsentationen und Artikel über eXTra.
 
+Hier werden sämtliche Präsentationen und Artikel über eXTra gesammelt.
+
+*Inhaltsverzeichnis*
+<wiki:toc max_depth="1" />
+
 = Präsentationen =
 
 
