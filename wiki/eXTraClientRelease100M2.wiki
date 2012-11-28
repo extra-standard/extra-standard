@@ -23,3 +23,6 @@ Die Auslieferung besteht aus diesen Archiven:
 
 Jedes Fachverfahren wird in einem gesonderten Archiv ausgeliefert.
 Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird beschrieben wie eine Installation des eXTra-Clients und des Technischem Referenzverfahrens 'Send-Fetch' durchgeführt werden kann.
+
+= Bis jetzt erledigte Aufgaben für die Version 1.0.0 =
+Siehe bitte: http://goo.gl/naokO
