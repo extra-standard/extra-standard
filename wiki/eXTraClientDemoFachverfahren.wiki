@@ -72,6 +72,10 @@ In Phase 1 sendet der eXTra-Client alle Dateien aus dem Verzeichnis _work/input_
 
 *Aufruf:* bin/italienPhase1.bat
 
+In soapUI wird die Kommunikation für jeden Aufruf protokolliert und läßt sich dort einsehen:
+
+http://extra-standard.googlecode.com/svn/wiki/images/extra-demo-sterbedaten-soapui-execute.png
+
 Jeder eXTra-Client Nachricht ist in der [eXTraClientBetriebDatenbank eXTra-Client Datenbank] ein Eintrag in der Tabelle _EXECUTION_ zugeordnet. Folgendes SQL liefert eine Übersicht über den Kommunikationsablauf:
 
 {{{
@@ -81,10 +85,6 @@ select EX.ID AS "Ex.Id", INP.ID AS "In.ID", EX.PHASE,
 inp, STATUS st where EX.ID = INP.EXECUTION_ID and INP.STATUS_ID = st.ID order by EX.ID, INP.ID;
 }}}
  
-In soapUI wird die Kommunikation für jeden Aufruf protokolliert und läßt sich dort einsehen:
-
-http://extra-standard.googlecode.com/svn/wiki/images/extra-demo-sterbedaten-soapui-execute.png
-
 Zusätzlich zur Datenbank-Protokollierung werden pro Fachverfahren-Aufruf zwei Log-Dateien im Verzeichnis _logs_ angelegt. Die erste Log-Datei gibt in komprimierter Form die wichtigsten Ergebnisse wieder z.B.:
 
 {{{
