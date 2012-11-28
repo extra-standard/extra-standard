@@ -206,7 +206,7 @@ Für jede Phase muss nun eine Profil-Datei erstellt werden. In dieser Datei wird
 Zu den XML-Elementen müssen in den Konfigurationsdateien Plugins und XML-Builder zugeordnet werden.
 
 === Konfigurationsdateien erstellen ===
-Für jede Phase müssen die beiden [eXtraClientBetriebKonfigurationsdateien Konfigurationsdateien] [eXTraClientBetriebConfigBasis extra-properties-basic.properties] und [eXTraClientBetriebConfigUser extra-properties-user.properties] erstellt werden (am besten, indem sie aus einem Beispiel kopiert und angepasst werden). Beide Dateien sind in Bereiche unterteilt  
+Für jede Phase müssen die beiden [eXTraClientBetriebKonfigurationsdateien Konfigurationsdateien] [eXTraClientBetriebConfigBasis extra-properties-basic.properties] und [eXTraClientBetriebConfigUser extra-properties-user.properties] erstellt werden (am besten, indem sie aus einem Beispiel kopiert und angepasst werden). Beide Dateien sind in Bereiche unterteilt  
 
 ==== extra-properties-basic.properties ====
 
