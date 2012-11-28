@@ -30,3 +30,4 @@
   * [eXTraEntwProzess Entwicklungsprozess]
   * [eXTraClientReleases Releases]
     * [eXTraClientRelease100M1 Version 1.0.0-M1]
+    * [eXTraClientRelease100M2 Version 1.0.0-M2]
