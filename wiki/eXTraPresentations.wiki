@@ -12,3 +12,5 @@ Hier werden sämtliche Präsentationen und Artikel über eXTra gesammelt.
    * [http://extra-standard.googlecode.com/svn/wiki/presentations/eXTra%20Client%20Fachverfahren%20Erstellung%20.pdf Vorgehensmodell Erstellung eines neuen Fachverfahrens für eXTra-Client]
 
 = Artikel =
+
+   * [http://heise.de/-1741596 heise.de News eXTra-Client Release]
