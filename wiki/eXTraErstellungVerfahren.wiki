@@ -4,7 +4,7 @@
 
 Im folgenden wird aus Erfahrungswerten, die bei der Entwicklung der Fachverfahren _Sterbedatenabgleich_ und _Send Fetch_ gewonnen wurden, ein Vorgehensmodell zur Entwicklung neuer Fachverfahren mit dem eXTra-Client abgeleitet. Aktuell sind noch einige manuelle Schritte erforderlich. In einem Ausblick werden mögliche Vereinfachungen angesprochen.
 
-Das Vorgehensmodell in Überblick:
+Das Vorgehensmodell im Überblick:
 
 http://extra-standard.googlecode.com/svn/wiki/images/procedure-creation-model.png
 
