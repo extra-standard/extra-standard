@@ -16,7 +16,7 @@ Das Fachverfahren ist in drei Phasen aufgeteilt:
 
 == Fachverfahren einrichten ==
 
-Das Fachverfahren wird wie in der Betriebsanleitung beschrieben konfiguriert und eingerichtet. Folgende Verzeichnisstruktur ergibt sich:
+Das Fachverfahren wird wie in der [eXTraClientBetriebsanleitung Betriebsanleitung] beschrieben konfiguriert und eingerichtet. Folgende Verzeichnisstruktur ergibt sich:
 
 {{{
 D:\eXTra
