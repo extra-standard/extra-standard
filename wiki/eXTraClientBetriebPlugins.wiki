@@ -14,8 +14,8 @@ Diese Plugins können produktiv eingesetzt werden.
 || [eXTraClientPluginAcknowledgePhase1ResponseProcessPlugin acknowledgePhase1ResponseProcessPlugin] || !ResponseProcessPlugin || Verarbeitet eine Server-Bestätigung für einen Datensatz (z.B. 'Datei erhalten'). ||
 || [eXTraClientPluginAcknowledgeSingleResponseDataResponseProcessPlugin acknowledgeSingleResponseDataResponseProcessPlugin] ||  !ResponseProcessPlugin || Verarbeitet eine Server-Bestätigung für mehrere Datensätze (z.B. 'Bestätigungen erhalten') ||
 || [eXTraClientPluginFileSystemResponseProcessPlugin fileSystemResponseProcessPlugin] || !ResponseProcessPlugin || - ||
-|| [eXTraClientPluginFileSystemResultDataResponseProcessPlugin fileSystemResultDataResponseProcessPlugin] || !ResponseProcessPlugin || - ||
-|| [eXTraClientPluginFileSystemResultPackageDataResponseProcessPlugin fileSystemResultPackageDataResponseProcessPlugin] || !ResponseProcessPlugin || - ||
+|| [eXTraClientPluginFileSystemResultDataResponseProcessPlugin fileSystemResultDataResponseProcessPlugin] || !ResponseProcessPlugin || Liest einen Serverdatensatz aus dem Data-Bereich des TransportBody ||
+|| [eXTraClientPluginFileSystemResultPackageDataResponseProcessPlugin fileSystemResultPackageDataResponseProcessPlugin] || !ResponseProcessPlugin || Liest mehrere Serverdatensätze aus den Data-Bereichen von PackageBody Elementen ||
 
 == Plugins für Test- und Entwicklung ==
 Folgende Plugins sind für Test- und Entwicklungszwecke gedacht. Sie simulieren z.B. Serverantworten und werden in Unit-Tests verwendet.
