@@ -7,7 +7,7 @@
 
   * [eXTraArchitekturAnwendungCli eXTra Command Line Interface (CLI)]
   * [eXTraArchitekturNachrichtenAufbau eXTra Architektur des MessageBuilders]
-  * [eXTraArchitekturDataPlugin eXTra DataPlugin]      
+  * [eXTraArchitekturDataPlugin eXTra Architektur des DataPlugins]      
   * [eXTraBuilderKonfiguration eXTra Konfiguration von CLI]
   * [eXTraArchitekturAnwendungBetrieb eXTra Betrieb von CLI]
   * [eXTraArchitekturAnwendungProfiling eXTra Profiling]
