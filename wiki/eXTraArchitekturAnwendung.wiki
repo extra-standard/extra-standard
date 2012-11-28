@@ -6,7 +6,7 @@
 *Inhaltsverzeichnis*
 
   * [eXTraArchitekturAnwendungCli eXTra Command Line Interface (CLI)]
-  * [eXTraArchitekturNachrichtenAufbau eXTra Nachrichtenaufbau]
+  * [eXTraArchitekturNachrichtenAufbau eXTra Architektur des MessageBuilders]
   * [eXTraArchitekturDataPlugin eXTra DataPlugin]      
   * [eXTraBuilderKonfiguration eXTra Konfiguration von CLI]
   * [eXTraArchitekturAnwendungBetrieb eXTra Betrieb von CLI]
