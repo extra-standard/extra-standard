@@ -241,7 +241,7 @@ Für viele Elemente aus der Profil-Datei muss kein XML-Builder gewählt werden, 
  
 ==== extra-properties-user.properties ====
 
-In dieser DaTei werden Umgebungsinformationen (DB-Verbindung, Webservice-Adresse und Ein-/Ausgabe Verzeichnisse eingetragen.
+In dieser Datei werden Umgebungsinformationen (DB-Verbindung, Webservice-Adresse und Ein-/Ausgabe Verzeichnisse eingetragen.
 
 === soapUI Projekt überarbeiten ===
 
