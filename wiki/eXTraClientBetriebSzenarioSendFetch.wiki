@@ -21,8 +21,8 @@ Im ersten Schritt müssen die beiden Auslieferungsarchive (extra-cli-1.0.0-M1.zi
 || *Schritt* || *Datei/Ordner* || *Aktion* ||
 || 1 || D:\eXTra  || Verzeichnis anlegen ||
 || 2 || D:\eXTra\fachverfahren || Verzeichnis anlegen ||
-|| 3 || extra-cli-1.0.0-M1.zip || Auspacken in: D:\eXTra ||
-|| 4 || extra-scenario-sendfetch-1.0.0-M1.zip || Auspacken in: D:\eXTra\fachverfahren ||
+|| 3 || extra-cli-_Version_.zip || Auspacken in: D:\eXTra ||
+|| 4 || extra-scenario-sendfetch-_Version_.zip || Auspacken in: D:\eXTra\fachverfahren ||
 
 Folgende Struktur ergibt sich:
 
@@ -68,9 +68,9 @@ Im ersten Schritt muss die eXTra-Client Datenbank angelegt werden. Aktuell wird 
 Mit folgenden SQL-Skripten wird diese Datenbank initial aufgebaut und befüllt:
 
 || *Skript* || *Beschreibung* ||
-|| extra-client \ sql \ V1__1_0_0_createInitialDatabase.sql || Initiale Datenbankerzeugung (Tabellen)||
-|| extra-client \ sql \ V2__1_0_0_createInitialData.sql || Initiale Datenbefüllung ||
-|| extra-scenario-sendfetch \ sql \ V3__1_0_0_createInitialData.sql || Initiale Datenbefüllung für das Szenario Send-Fetch ||
+|| extra-client \ sql \ V1 createInitialDatabase.sql || Initiale Datenbankerzeugung (Tabellen)||
+|| extra-client \ sql \ V2 createInitialData.sql || Initiale Datenbefüllung ||
+|| extra-scenario-sendfetch \ sql \ V3 createInitialData.sql || Initiale Datenbefüllung für das Szenario Send-Fetch ||
 
 Die Skripte können mit einem DB-Administrierungswerkzeug oder mit Flyway (http://code.google.com/p/flyway/) ausgeführt werden.
 
