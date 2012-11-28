@@ -3,7 +3,12 @@
 <h1>Konfiguration Fachverfahren</h1>
 Im folgenden wird beschrieben, wie mit dem eXTra-Client ein Fachverfahren konfiguriert wird. Ergänzend zur Auslieferung des eXTra-Clients werden vorkonfigurierte Fachverfahren in eigenen Verzeichnissen ausgeliefert. Die Verzeichnisstruktur ist dabei stets gleich.
 
-Exemplarisch wird die Konfiguration am Fachverfahren _eXTra Szenario Send-Fetch (Sende-Hole Betrieb)_ gezeigt. Dieses Fachverfahren ist ein technisches Referenzverfahren, das die Arbeit mit dem eXTra-Client verdeutlichen soll. Dieses Szenario kann als Ausgangspunkt für die Realisierung eigener Fachverfahren verwendet werden. Für die Ausführung wird eine Version des eXTra Clients benötigt.  
+Exemplarisch wird die Konfiguration am Fachverfahren _eXTra Szenario Send-Fetch (Sende-Hole Betrieb)_ gezeigt. Dieses Fachverfahren ist ein technisches Referenzverfahren, das die Arbeit mit dem eXTra-Client verdeutlichen soll. Dieses Szenario kann als Ausgangspunkt für die Realisierung eigener Fachverfahren verwendet werden. Für die Ausführung wird eine Version des eXTra Clients benötigt.
+
+Das Verfahren _Send-Fetch_ arbeitet in drei Phasen:
+ * In *Phase 1* werden 0 bis n Dateien an den den Server versendet (pro Datei eine eXTra-Nachricht)
+ * In *Phase 2* fragt der Server für jede in Phase 1 versendete Datei das Ergebnis vom Server ab. Die Ergebnisse werden jeweils als Datei in einem Verzeichnis abgelegt.
+ * In *Phase 3* bestätigt der Client dem Server die empfangenen Ergebnisse.  
 
 Im folgenden wird beschrieben, wie das Szenario Send-Fetch auf einem Windows-Rechner eingerichtet werden kann (Anpassung an andere Betriebssysteme (z.B. Linux) mit überschaubarem Aufwand möglich). Folgende Schritte müssen durchgeführt werden:
 
