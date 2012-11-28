@@ -1,5 +1,4 @@
 #summary Beschreibung der eXTra-Architektur
-#labels Featured
 
 = eXTra-Architektur =
 
