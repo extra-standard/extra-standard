@@ -86,7 +86,7 @@ Der Aufbau der Datenbank erfolgt über SQL-Skripte. Diese können mit einem Date
 Im folgenden wird der Aufbau mit flyway gezeigt:
 
  * Die aktuelle flyway-Version wird von der [http://flywaydb.org Projektseite] geladen und im Basisverzeichnis (_D:\eXTra_) entpackt.
- * Oracle JDBC Treiber in D:\extra\flyway\jars ablegen.
+ * Oracle JDBC Treiber (z.B. ojdbc14-10.2.0.4.0.jar) in D:\extra\flyway\jars ablegen. *Dieser Treiber muss auch in _extra-client\lib_ abgelegt werden.*
  * Die SQL-Skripte aus den jeweiligen SQL-Verzeichnissen werden in das Verzeichnis D:\extra\flyway\sql kopiert. Folgende Struktur ergibt sich:
 
 {{{
