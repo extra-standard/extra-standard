@@ -21,7 +21,7 @@ Die anwendungsspezifische Builder Konfiguration gibt an, wie die Inputdaten in e
 = eXTra-!RequestBuilder Interfaces =
 
 
-Die wesentlichen Interfaces eines RequestBuilder sind auf dem Diagramm abgebildet. 
+Die wesentlichen Interfaces eines !RequestBuilder sind auf dem Diagramm abgebildet. 
 
 http://extra-standard.googlecode.com/svn/wiki/images/extra-requestbuilder-interfaces.png
 
