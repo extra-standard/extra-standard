@@ -38,9 +38,9 @@ Zunächst muss die notwendige Infrastruktur aufgebaut werden. Diese besteht aus:
    * Auslieferungen der Fachverfahren _extra-sterbedaten-ausland_ und _extra-scenario-sendfetch_ (zu Anschauungszwecken)
    * Einem Ordner für das neue Fachverfahren
  * [eXTraClientBetriebDatenbank eXTra-Client Datenbank]. Aktuell wird Oracle als Datenbank unterstützt. Es bietet sich an, das Fachverfahren lokal mit Oracle XE zu entwickeln. (Weitere Datenbankunterstützung ist angedacht.)
- * soapUI (simuliert den eXTra-Server)
- * Java Laufzeitumgebung
- * flyway (Optionales Werkzeug für die Datenbank-Verwaltung)
+ * [http://www.soapui.org soapUI] (simuliert den eXTra-Server)
+ * Java Laufzeitumgebung (Version 6 ist getestet)
+ * [http://flywaydb.org flyway] (Optionales Werkzeug für die Datenbank-Verwaltung)
 
 === Entwicklungsversion (Verzeichisse) ===
 
@@ -80,7 +80,7 @@ D:\eXTra
 Exemplarisch ist als Basisverzeichnis _D:\extra_ gewählt. Es kann aber auch jedes andere Verzeichnis genommen werden.
 
 === Datenbank aufbauen ===
-Der Aufbau der Datenbank erfolgt über SQL-Skripte. Diese können mit einem Datenbankwerkzeug (z.B. Toad) oder mit dem OpenSource-Werkzeug   
+Der Aufbau der Datenbank erfolgt über SQL-Skripte. Diese können mit einem Datenbankwerkzeug (z.B. Toad) oder mit dem Open Source-Werkzeug   
 [http://flywaydb.org flyway] ausgeführt werden. Flyway hat den Vorteil, das sehr schnell und einfach die Datenbank in einen Urzustand versetzt werden kann.
 
 Im folgenden wird der Aufbau mit flyway gezeigt:
