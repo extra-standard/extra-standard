@@ -12,7 +12,10 @@ Hier werden sämtliche Präsentationen und Artikel über eXTra gesammelt.
  
    * Agenda
    * [http://extra-standard.googlecode.com/svn/wiki/presentations/extra-client-anforderungen-architektur-impl.pdf eXTra-Client: Anforderungen, Architektur und Implementierung]
+      * [eXTraClientDemoFachverfahren Live-Demo]
+      * In der Live-Demo wurde die [eXTraClientRelease100M2 Version 1.0.0-M2 eXTra Client] verwendet. Download unter [https://code.google.com/p/extra-standard/downloads/list Version 1.0.0-M2 eXTra Client]  
    * [http://extra-standard.googlecode.com/svn/wiki/presentations/extra-client-fachverfahren-erstellung.pdf Vorgehensmodell: Erstellung eines neuen Fachverfahrens für eXTra-Client]
+      * Vorgehensmodell Erstellung eines neuen Fachverfahren
    * eXTra-Profilierung
    * eXTra-Server: Anforderungen, Architektur und Implementierung
 
