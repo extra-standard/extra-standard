@@ -10,6 +10,7 @@
 	<bean id="namespacePrefixMapper" class="de.drv.dsrv.extra.marshaller.NamespacePrefixMapper">
 		<property name="mappings">
 			<props>
+				<prop key="http://www.extra-standard.de/namespace/request/1">xreq</prop>
 				<prop key="http://www.extra-standard.de/namespace/response/1">xres</prop>
 				<prop key="http://www.extra-standard.de/namespace/error/1">xerr</prop>
 				<prop key="http://www.extra-standard.de/namespace/components/1">xcpt</prop>
