@@ -39,8 +39,8 @@ import de.extrastandard.persistence.model.PhaseConnection;
 public interface PhaseConnectionRepository extends
 		JpaRepository<PhaseConnection, Long> {
 
-	@Query("FROM PhaseConnection WHERE targetInputData = :targetInputData")
-	List<PhaseConnection> findByTargetInputData(
-			@Param("targetInputData") CommunicationProtocol inputData);
+	@Query("FROM PhaseConnection WHERE targetCommunicationProtocol = :targetCommunicationProtocol")
+	List<PhaseConnection> findByTargetCommunicationProtocol(
+			@Param("targetCommunicationProtocol") CommunicationProtocol communicationProtocol);
 
 }

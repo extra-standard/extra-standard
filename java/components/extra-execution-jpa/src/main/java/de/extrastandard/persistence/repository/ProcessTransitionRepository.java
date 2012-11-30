@@ -30,7 +30,7 @@ import de.extrastandard.persistence.model.ProcessTransition;
  * @version $Id: InputDataTransitionRepository.java 508 2012-09-04 09:35:41Z
  *          thorstenvogel@gmail.com $
  */
-@Repository("inputDataTransitionRepository")
-public interface InputDataTransitionRepository extends
+@Repository("processTransitionRepository")
+public interface ProcessTransitionRepository extends
 		JpaRepository<ProcessTransition, Long> {
 }

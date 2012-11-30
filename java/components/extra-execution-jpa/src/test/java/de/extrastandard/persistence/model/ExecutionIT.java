@@ -156,7 +156,7 @@ public class ExecutionIT {
 			final IPhaseConnection quellePhaseConnection = quelleInputData
 					.getNextPhaseConnection();
 			final ICommunicationProtocol targetInputData = quellePhaseConnection
-					.getTargetInputData();
+					.getTargetCommunicationProtocol();
 			assertNotNull(targetInputData);
 			final IStatus quellePhaseConnectionStatus = quellePhaseConnection
 					.getStatus();
@@ -233,7 +233,7 @@ public class ExecutionIT {
 			final IPhaseConnection quellePhaseConnection = quelleInputData
 					.getNextPhaseConnection();
 			final ICommunicationProtocol targetInputData = quellePhaseConnection
-					.getTargetInputData();
+					.getTargetCommunicationProtocol();
 			assertNotNull(targetInputData);
 			final IStatus quellePhaseConnectionStatus = quellePhaseConnection
 					.getStatus();

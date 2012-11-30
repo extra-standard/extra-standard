@@ -66,12 +66,12 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 	private Long id;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "quelle_data_id")
-	private CommunicationProtocol quelleInputData;
+	@JoinColumn(name = "source_com_protocol_id")
+	private CommunicationProtocol sourceCommunicationProtocol;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "target_data_id")
-	private CommunicationProtocol targetInputData;
+	@JoinColumn(name = "target_com_protocol_id")
+	private CommunicationProtocol targetCommunicationProtocol;
 
 	@Column(name = "next_phase_qualifier", nullable = false)
 	private String nextPhasequalifier;
@@ -104,7 +104,7 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 	public PhaseConnection(final CommunicationProtocol quelleInputData,
 			final String nextPhasenQualifier) {
 		super();
-		this.quelleInputData = quelleInputData;
+		this.sourceCommunicationProtocol = quelleInputData;
 		this.nextPhasequalifier = nextPhasenQualifier;
 		final Status persistentStatusInitial = statusRepository
 				.findOne(PersistentStatus.INITIAL.getId());
@@ -122,22 +122,22 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * de.extrastandard.persistence.model.IPhaseConnection#getQuelleInputData()
+	 * de.extrastandard.persistence.model.IPhaseConnection#getSourceCommunicationProtocol()
 	 */
 	@Override
-	public ICommunicationProtocol getQuelleInputData() {
-		return quelleInputData;
+	public ICommunicationProtocol getSourceCommunicationProtocol() {
+		return sourceCommunicationProtocol;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * de.extrastandard.persistence.model.IPhaseConnection#getTargetInputData()
+	 * de.extrastandard.persistence.model.IPhaseConnection#getTargetCommunicationProtocol()
 	 */
 	@Override
-	public ICommunicationProtocol getTargetInputData() {
-		return targetInputData;
+	public ICommunicationProtocol getTargetCommunicationProtocol() {
+		return targetCommunicationProtocol;
 	}
 
 	/*
@@ -163,14 +163,14 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 	}
 
 	/**
-	 * @param targetInputData
+	 * @param targetCommunicationProtocol
 	 *            the targetInputData to set
 	 */
 	@Override
 	public void setTargetInputData(final ICommunicationProtocol iTargetInputData) {
 		final CommunicationProtocol targetInputData = communicationProtocolRepository
 				.findOne(iTargetInputData.getId());
-		this.targetInputData = targetInputData;
+		this.targetCommunicationProtocol = targetInputData;
 		repository.save(this);
 	}
 
@@ -206,14 +206,14 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 			builder.append(id);
 			builder.append(", ");
 		}
-		if (quelleInputData != null) {
+		if (sourceCommunicationProtocol != null) {
 			builder.append("quelleInputData=");
-			builder.append(quelleInputData);
+			builder.append(sourceCommunicationProtocol);
 			builder.append(", ");
 		}
-		if (targetInputData != null) {
+		if (targetCommunicationProtocol != null) {
 			builder.append("targetInputData=");
-			builder.append(targetInputData);
+			builder.append(targetCommunicationProtocol);
 			builder.append(", ");
 		}
 		if (nextPhasequalifier != null) {
