@@ -96,8 +96,8 @@ CREATE TABLE PHASE_CONNECTION
     ( 
      id NUMBER (12)  NOT NULL , 
      next_phase_qualifier VARCHAR2 (20) , 
-     quelle_data_id NUMBER (15)  NOT NULL , 
-     target_data_id NUMBER (15) , 
+     source_com_protocol_id NUMBER (15)  NOT NULL , 
+     target_com_protocol_id NUMBER (15) , 
      status_id NUMBER (10)  NOT NULL 
     ) 
 ;
@@ -109,14 +109,14 @@ CREATE INDEX phase_conn_idx_phase_status ON PHASE_CONNECTION
      status_id ASC 
     ) 
 ;
-CREATE INDEX phase_conn_idx_targetdata ON PHASE_CONNECTION 
+CREATE INDEX phase_conn_idx_target_com_prot ON PHASE_CONNECTION 
     ( 
-     target_data_id ASC 
+     target_com_protocol_id ASC 
     ) 
 ;
-CREATE INDEX phase_conn_idx_quelle_data ON PHASE_CONNECTION 
+CREATE INDEX phase_conn_idx_source_com_prot ON PHASE_CONNECTION 
     ( 
-     quelle_data_id ASC 
+     source_com_protocol_id ASC 
     ) 
 ;
 
@@ -317,9 +317,9 @@ ALTER TABLE COMMUNICATION_PROTOCOL
 
 
 ALTER TABLE PHASE_CONNECTION 
-    ADD CONSTRAINT rel_phase_conn_data_quelle FOREIGN KEY 
+    ADD CONSTRAINT rel_phase_conn_source_com FOREIGN KEY 
     ( 
-     quelle_data_id
+     source_com_protocol_id
     ) 
     REFERENCES COMMUNICATION_PROTOCOL 
     ( 
@@ -329,9 +329,9 @@ ALTER TABLE PHASE_CONNECTION
 
 
 ALTER TABLE PHASE_CONNECTION 
-    ADD CONSTRAINT rel_phasen_conn_data_target FOREIGN KEY 
+    ADD CONSTRAINT rel_phasen_conn_target_com FOREIGN KEY 
     ( 
-     target_data_id
+     target_com_protocol_id
     ) 
     REFERENCES COMMUNICATION_PROTOCOL 
     ( 
@@ -431,7 +431,7 @@ CREATE SEQUENCE seq_communication_protocol_id
     CACHE 1000 
 ;
 
-CREATE SEQUENCE seq_input_data_transition_id 
+CREATE SEQUENCE seq_process_transition_id 
     START WITH 1 
     INCREMENT BY 1 
     MAXVALUE 9999999999 

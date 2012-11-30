@@ -295,7 +295,7 @@ public class Execution extends AbstractEntity implements IExecution {
 
 		// Abgearbeitete PhaseConnection schliessen
 		final List<PhaseConnection> quellePhaseConnections = phaseConnectionRepository
-				.findByTargetInputData(inputData);
+				.findByTargetCommunicationProtocol(inputData);
 		for (final PhaseConnection quellePhaseConnection : quellePhaseConnections) {
 			// Erfolgreiche Verarbeitung?
 			if (inputData.isSuccessful()) {

@@ -28,14 +28,14 @@ package de.extrastandard.api.model.execution;
 public interface IPhaseConnection {
 
 	/**
-	 * @return the quelleInputData
+	 * @return the sourceCommunicationProtocol
 	 */
-	ICommunicationProtocol getQuelleInputData();
+	ICommunicationProtocol getSourceCommunicationProtocol();
 
 	/**
-	 * @return the targetInputData
+	 * @return the targetCommunicationProtocol
 	 */
-	ICommunicationProtocol getTargetInputData();
+	ICommunicationProtocol getTargetCommunicationProtocol();
 
 	/**
 	 * @return the nextPhasequalifier

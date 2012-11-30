@@ -40,7 +40,7 @@ import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IProcessTransition;
 import de.extrastandard.api.model.execution.IStatus;
 import de.extrastandard.api.model.execution.PersistentStatus;
-import de.extrastandard.persistence.repository.InputDataTransitionRepository;
+import de.extrastandard.persistence.repository.ProcessTransitionRepository;
 import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
@@ -64,8 +64,8 @@ public class ProcessTransition extends AbstractEntity implements
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "input_data_transition_entity_seq_gen")
-	@SequenceGenerator(name = "input_data_transition_entity_seq_gen", sequenceName = "seq_input_data_transition_id")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "process_transition_entity_seq_gen")
+	@SequenceGenerator(name = "process_transition_entity_seq_gen", sequenceName = "seq_process_transition_id")
 	private Long id;
 
 	@ManyToOne
@@ -88,8 +88,8 @@ public class ProcessTransition extends AbstractEntity implements
 
 	@Transient
 	@Inject
-	@Named("inputDataTransitionRepository")
-	private transient InputDataTransitionRepository repository;
+	@Named("processTransitionRepository")
+	private transient ProcessTransitionRepository repository;
 
 	public ProcessTransition() {
 	}
