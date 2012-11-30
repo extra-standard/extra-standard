@@ -10,10 +10,15 @@ Im folgenden Diagramm ist eine technische Zusammensetzung der Dataobjekten zusam
 
 http://extra-standard.googlecode.com/svn/wiki/images/input-plugin-data.png
 
-Hier sind 2 Arten der  Inputdaten abgebildet:
+Hier sind 3 Arten von  Inputdaten abgebildet:
 
-  * !ContentInputData
+|| !ContentInputData || Nutzdaten, Z.B. eine Datei||
+|| !DBQueryInputData|| Ergebnisse einer Datenbankanfrage. ||
+|| !CriteriaQueryInputData || Informationen zum Erstellen einer Anfrage an den eXTra-Server(z.B. Operator '=', Procedure 'Sterbemeldung'). ||
+
+  * 
   * DBQueryInputData
+  * CriteriaQueryInputData
 
 Content Input Data bildet reinen Nutzdaten sowie dazugehörigen Steuerungsinformationen wie Plugins und !RequestId.
 
