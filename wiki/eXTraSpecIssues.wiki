@@ -31,6 +31,14 @@ Die Verarbeitung großer Datenmengen ist aktuell mit dem eXTra Standard nicht ve
 
 Erster Vorschlag aus dem Projekt: Der eXTra-Standard sollte dahingehend entwickelt werden, dass die Nutzdaten und der Lieferschein getrennt gespeichert werden können (zusätzliche Datei zur eXTra-XML).
 
+Zweiter Vorschlag: Nutzung von !MapReduce-Framework wie Hadoop, um große XML-Datei parsen zu können. Folgende Infos sind interessant:
+   * http://heise.de/-1763366
+   * http://goo.gl/OG2m5
+   * http://goo.gl/48ATs
+   * http://goo.gl/MIbWE
+   * http://goo.gl/ez13f
+   * http://goo.gl/gBmO9
+
 
 == c) Spezifizierung bzw. Sematik von Plugins ==       
 
