@@ -19,10 +19,6 @@
 		<Elternelement>Transport</Elternelement>
 	</element>
 	<element>
-		<Name>xplg:Contacts</Name>
-		<Elternelement>TransportPlugins</Elternelement>
-	</element>
-	<element>
 		<Name>xcpt:Sender</Name>
 		<Elternelement>TransportHeader</Elternelement>
 	</element>

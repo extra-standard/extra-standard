@@ -51,6 +51,11 @@ public class RequestTransportBuilder implements IXmlRootElementBuilder {
 	public RootElementType buildXmlRootElement(
 			final IExtraProfileConfiguration config) {
 		final Transport requestTransport = new Transport();
+		
+		// (11.12.12) Pflichtattribute setzen! (siehe eXTra-Standard)
+		requestTransport.setVersion("1.3");
+		requestTransport.setProfile("http://code.google.com/p/extra-standard/profile/1");
+		
 		LOG.debug("Create XML Transport");
 		return requestTransport;
 	}
