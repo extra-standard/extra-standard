@@ -26,6 +26,7 @@ import java.io.InputStream;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.CommunicationException;
 import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.Logger;
@@ -263,4 +264,8 @@ public class ClientCore implements ApplicationContextAware {
 
 	}
 
+	// (14.12.12) Externer Aufruf
+	public boolean changeCommunicationProtocolStatusByOutputIdentifier(String outputIdentifier, PersistentStatus persistentStatus) {
+		return executionPersistence.changeCommunicationProtocolStatusByOutputIdentifier(outputIdentifier, persistentStatus);
+	}
 }

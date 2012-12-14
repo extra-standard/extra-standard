@@ -114,7 +114,7 @@ public class ExecutionIT {
 			final Boolean successful = true;
 			final ISingleResponseData singleResponseData = new SingleResponseData(
 					inputDataRequestId, inputDataReturnCode,
-					inputDataReturnText, inputDataResponseId, successful);
+					inputDataReturnText, inputDataResponseId, successful, PersistentStatus.DONE, "Output-ID");
 			responseData.addSingleResponse(singleResponseData);
 			final IDbQueryInputData singleQueryInputData = new DbQueryInputData(
 					sourceInputDataId, iSourcenputData.getRequestId(),
@@ -193,7 +193,7 @@ public class ExecutionIT {
 			final Boolean successful = true;
 			final ISingleResponseData singleResponseData = new SingleResponseData(
 					inputDataRequestId, inputDataReturnCode,
-					inputDataReturnText, inputDataResponseId, successful);
+					inputDataReturnText, inputDataResponseId, successful, PersistentStatus.DONE, "Output-ID");
 			responseData.addSingleResponse(singleResponseData);
 			final IDbQueryInputData singleQueryInputData = new DbQueryInputData(
 					sourceInputDataId, iSourceInputData.getRequestId(),

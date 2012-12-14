@@ -163,4 +163,16 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 		return String.valueOf(maxResponseId);
 	}
 
+	@Override
+	public boolean changeCommunicationProtocolStatusByOutputIdentifier(final String outputIdentifier, PersistentStatus persistentStatus) {
+		ICommunicationProtocol communicationProtocol = communicationProtocolRepository.findByOutputIdentifier(outputIdentifier);
+		if (communicationProtocol == null) {
+			// Fehler: zu dem OutputIdentifier gibt es kein CommunicationProtocol!
+			return false;
+		}
+		communicationProtocol.changeStatus(persistentStatus);
+		// Alles OK
+		return true;
+	}
+
 }

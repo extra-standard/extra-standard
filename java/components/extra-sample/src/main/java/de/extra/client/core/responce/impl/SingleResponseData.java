@@ -19,6 +19,7 @@
 package de.extra.client.core.responce.impl;
 
 import de.extrastandard.api.model.content.ISingleResponseData;
+import de.extrastandard.api.model.execution.PersistentStatus;
 
 /**
  * @author Leonid Potap
@@ -36,7 +37,11 @@ public class SingleResponseData implements ISingleResponseData {
 
 	/** Zeigt an, ob die Server-Verarbeitung erfolgreich war */
 	private final Boolean successful;
+	/** Status der sich aufgrund der Server-Verarbeitung ergibt */
+	private final PersistentStatus persistentStatus;
 
+	private String outputIdentifier;
+	
 	/**
 	 * @param requestId
 	 * @param returnCode
@@ -45,12 +50,14 @@ public class SingleResponseData implements ISingleResponseData {
 	 */
 	public SingleResponseData(final String requestId, final String returnCode,
 			final String returnText, final String responseId,
-			final Boolean successful) {
+			final Boolean successful, PersistentStatus persistentStatus, String outputIdentifier) {
 		this.requestId = requestId;
 		this.returnCode = returnCode;
 		this.returnText = returnText;
 		this.responseId = responseId;
 		this.successful = successful;
+		this.persistentStatus = persistentStatus;
+		this.outputIdentifier = outputIdentifier;
 	}
 
 	/*
@@ -99,6 +106,18 @@ public class SingleResponseData implements ISingleResponseData {
 		return successful;
 	}
 
+	/**
+	 * Gibt den Status an, der sich aufgrund der Server-Verarbeitung ergibt.
+	 */
+	@Override
+	public PersistentStatus getPersistentStatus() {
+		return persistentStatus;
+	}
+
+	public String getOutputIdentifier() {
+		return outputIdentifier;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -130,6 +149,16 @@ public class SingleResponseData implements ISingleResponseData {
 		if (successful != null) {
 			builder.append("successful=");
 			builder.append(successful);
+		}
+		if (persistentStatus != null) {
+			builder.append("persistentStatus=");
+			builder.append(persistentStatus);
+			builder.append(", ");
+		}
+		if (outputIdentifier != null) {
+			builder.append("outputIdentifier=");
+			builder.append(outputIdentifier);
+			builder.append(", ");
 		}
 		builder.append("]");
 		return builder.toString();

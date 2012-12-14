@@ -21,6 +21,7 @@ package de.extra.client.starter;
 import java.io.File;
 import java.util.Arrays;
 
+import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,25 +82,40 @@ public class ClientStarter {
 
 		// config dir zur konfiguration des clients nutzen
 		final ExtraClient extraClient = new ExtraClient(configurationDirectory);
-		try {
 
-			final ClientProcessResult result = extraClient.execute();
-
-			// TODO refactor
-			returnCode = !result.isSuccessful() ? ReturnCode.BUSINESS : (result
-					.hasExceptions() ? ReturnCode.TECHNICAL
-					: ReturnCode.SUCCESS);
-
-			if (returnCode.getCode() != 0) {
-				LOG.error("Fehler bei der Verarbeitung: " + returnCode);
-			} else {
-				LOG.info("Verarbeitung erfolgreich");
+		// (12.12.12) Aufruf Externer Anwendungen (Bestaetigung von
+		// Output-Dateien)
+		if (clientArguments.isExternalCall()) {
+			// Externer Aufruf
+			try {
+				ExternalCall externalCall = new ExternalCall();
+				boolean success = externalCall.executeExternalCall(clientArguments, extraClient);
+				returnCode = success ? ReturnCode.SUCCESS : ReturnCode.TECHNICAL;
+			} catch (final Exception e) {
+				LOG.error("Fehler bei der Verarbeitung", e);
+				returnCode = ReturnCode.TECHNICAL;
 			}
+		} else {
+			// Normale eXTra-Client Verarbeitung (Phase...)
+			try {
+				final ClientProcessResult result = extraClient.execute();
 
-		} catch (final Exception e) {
-			LOG.error("Fehler bei der Verarbeitung", e);
-			returnCode = ReturnCode.BUSINESS;
+				// TODO refactor
+				returnCode = !result.isSuccessful() ? ReturnCode.BUSINESS : (result
+						.hasExceptions() ? ReturnCode.TECHNICAL
+						: ReturnCode.SUCCESS);
+
+			} catch (final Exception e) {
+				LOG.error("Fehler bei der Verarbeitung", e);
+				returnCode = ReturnCode.BUSINESS;
+			}
 		}
+		if (returnCode.getCode() != 0) {
+			LOG.error("Fehler bei der Verarbeitung: " + returnCode);
+		} else {
+			LOG.info("Verarbeitung erfolgreich");
+		}
+
 		EXITER.exit(returnCode);
 	}
 }

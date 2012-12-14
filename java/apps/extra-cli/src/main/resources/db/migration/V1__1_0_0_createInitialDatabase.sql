@@ -47,6 +47,7 @@ CREATE TABLE COMMUNICATION_PROTOCOL
     ( 
      id NUMBER (15)  NOT NULL , 
      input_identifier VARCHAR2 (255) , 
+     output_identifier VARCHAR2 (255) , 
      hashcode VARCHAR2 (100) , 
      request_id VARCHAR2 (255) , 
      response_id VARCHAR2 (255) , 
