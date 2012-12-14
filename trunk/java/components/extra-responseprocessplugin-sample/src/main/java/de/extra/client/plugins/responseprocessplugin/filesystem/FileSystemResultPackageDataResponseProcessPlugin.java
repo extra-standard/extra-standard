@@ -64,6 +64,7 @@ import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraResponseProcessPluginRuntimeException;
 import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.model.content.ISingleResponseData;
+import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.observer.ITransportInfo;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
@@ -89,6 +90,14 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 	@PluginValue(key = "eingangOrdner")
 	@NotNull
 	private File eingangOrdner;
+
+	/** 
+	 * Wird benötigt, um nach einer Serververarbeitung den Status im Communication Protocol zu setzen.
+	 * So kann z.B. der Status 'WAIT' anzeigen, das das Ergebnis vom Server erfolgreich empfangen wurde
+	 * aber eine Bearbeitung/Prüfung durch eine externe Anwendung noch aussteht.
+	 */
+	@PluginValue(key = "successStatus")
+	private String successStatus;
 
 	@Inject
 	@Named("transportInfoBuilder")
@@ -153,6 +162,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 //						"Keine Daten vorhanden. Body Element ist leer");
 			}
 
+			// -- Fehler/Status aus TransportHeader auswerten --
 			final String responseId = responseDetails.getResponseID()
 					.getValue();
 
@@ -163,44 +173,52 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 			final String returnCode = reportData.getReturnCode();
 			final boolean returnCodeSuccessful = extraReturnCodeAnalyser
 					.isReturnCodeSuccessful(returnCode);
-			final ISingleResponseData singleResponseData = new SingleResponseData(
-					requestDetails.getRequestID().getValue(), returnCode,
-					reportData.getReturnText(), responseId,
-					returnCodeSuccessful);
-			// Evtl. In Fehlerfall zurückzugeben. ExceptionHandling vereinbaren
-			// responseData.addSingleResponse(singleResponseData);
-
-			final TransportBody transportBody = extraResponse
-					.getTransportBody();
-			Assert.notNull(transportBody, "TransportBody is null");
-			final List<Package> packages = transportBody.getPackage();
-			Assert.notEmpty(packages, "TransportBody.Package() is empty");
-			for (final Package transportBodyPackage : packages) {
-				final PackageBody packageBody = transportBodyPackage
-						.getPackageBody();
-				Assert.notNull(packageBody, "PackageBody is null");
-				final DataType data = packageBody.getData();
-				Assert.notNull(data, "PackageBody.data is null");
-				final Base64CharSequenceType base64CharSequence = data
-						.getBase64CharSequence();
-				Assert.notNull(base64CharSequence,
-						"Base64CharSequenceType.data is null");
-				final byte[] packageBodyData = base64CharSequence.getValue();
-				final byte[] decodedpackageBodyData = Base64
-						.decodeBase64(packageBodyData);
-				final PackageHeader packageHeader = transportBodyPackage
-						.getPackageHeader();
-
-				final ResponseDetailsType packageHeaderResponseDetails = packageHeader
-						.getResponseDetails();
-				final String packageHeaderResponseId = packageHeaderResponseDetails
-						.getResponseID().getValue();
-				saveBodyToFilesystem(packageHeaderResponseId,
-						decodedpackageBodyData);
-				final ISingleResponseData singlePackageResponseData = extractResponseDetail(
-						packageHeader, extraReturnCodeAnalyser);
-				responseData.addSingleResponse(singlePackageResponseData);
+			// TODO Fehler?!
+			if (returnCodeSuccessful == false) {
+				// Falls ein Fehler im Header angezeigt wird, wird der Body (= Einzelergebnisse)
+				// nicht mehr ausgewertet! Fehler wird hier zugeordnet
+				String outputIdentifier = responseId;
+				final ISingleResponseData singleResponseData = new SingleResponseData(
+						requestDetails.getRequestID().getValue(), returnCode,
+						reportData.getReturnText(), responseId,
+						returnCodeSuccessful, PersistentStatus.FAIL, responseId);
+				responseData.addSingleResponse(singleResponseData);				
 			}
+			else {
+				// Einzelergebnisse auswerten
+				final TransportBody transportBody = extraResponse
+						.getTransportBody();
+				Assert.notNull(transportBody, "TransportBody is null");
+				final List<Package> packages = transportBody.getPackage();
+				Assert.notEmpty(packages, "TransportBody.Package() is empty");
+				for (final Package transportBodyPackage : packages) {
+					final PackageBody packageBody = transportBodyPackage
+							.getPackageBody();
+					Assert.notNull(packageBody, "PackageBody is null");
+					final DataType data = packageBody.getData();
+					Assert.notNull(data, "PackageBody.data is null");
+					final Base64CharSequenceType base64CharSequence = data
+							.getBase64CharSequence();
+					Assert.notNull(base64CharSequence,
+							"Base64CharSequenceType.data is null");
+					final byte[] packageBodyData = base64CharSequence.getValue();
+					final byte[] decodedpackageBodyData = Base64
+							.decodeBase64(packageBodyData);
+					final PackageHeader packageHeader = transportBodyPackage
+							.getPackageHeader();
+
+					final ResponseDetailsType packageHeaderResponseDetails = packageHeader
+							.getResponseDetails();
+					final String packageHeaderResponseId = packageHeaderResponseDetails
+							.getResponseID().getValue();
+					saveBodyToFilesystem(packageHeaderResponseId,
+							decodedpackageBodyData);
+					final ISingleResponseData singlePackageResponseData = extractResponseDetail(
+							packageHeader, extraReturnCodeAnalyser);
+					responseData.addSingleResponse(singlePackageResponseData);
+				}
+			}
+
 			logger.info("ReponseData processed. {}", responseData);
 			return responseData;
 		} catch (final XmlMappingException xmlMappingException) {
@@ -240,12 +258,25 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 				}
 			}
 		}
+		// (12.12.12) Status und outputIdentifier
+		String outputIdentifier = buildFilename(packageHeaderResponseId);
 		final ISingleResponseData singleResponseData = new SingleResponseData(
 				packageHeaderRequestId, reportCode, reportText,
-				packageHeaderResponseId, successful);
+				packageHeaderResponseId, successful, calcResponseStatus(successful), outputIdentifier);
 		return singleResponseData;
 	}
 
+	private PersistentStatus calcResponseStatus(Boolean successful) {
+		if (successful == null || successful.booleanValue() == false) {
+			return PersistentStatus.FAIL;
+		}
+		// TODO WAIT aus Konstante?!
+		if (successStatus != null && successStatus.toLowerCase().equals("wait")) {
+			return PersistentStatus.WAIT;
+		}
+		return PersistentStatus.DONE;
+	}
+	
 	private void printResult(final Transport extraResponse) {
 		try {
 			final Writer writer = new StringWriter();
@@ -335,4 +366,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 		this.eingangOrdner = eingangOrdner;
 	}
 
+	public void setSuccessStatus(String aSuccessStatus) {
+		successStatus = aSuccessStatus;
+	}
 }

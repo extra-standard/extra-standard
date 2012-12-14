@@ -42,9 +42,9 @@ public class PersistenceSterbedatenTestSetup {
 
 	static final String MANDATOR_TEST = "DRV";
 
-	static final String PROCTYPE_STERBEMELDUNG = "STERBEMELDUNG";
-	static final String PROC_STERBEMELDUNG_NAME = "Sterbemeldung";
-	static final String PROC_STERBEMELDUNG_KEY = "PROC_STERBEMELDUNG";
+	static final String PROCTYPE_STERBEMELDUNG = "STERBEMELDUNG_AUSLAND";
+	static final String PROC_STERBEMELDUNG_NAME = "SterbemeldungAusland";
+	static final String PROC_STERBEMELDUNG_KEY = "STMELD_AUSL";
 
 	@Inject
 	@Named("mandatorRepository")

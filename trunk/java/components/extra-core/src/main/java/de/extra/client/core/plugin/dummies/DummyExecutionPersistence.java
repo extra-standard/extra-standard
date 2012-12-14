@@ -7,6 +7,7 @@ import javax.inject.Named;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.model.execution.ICommunicationProtocol;
+import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 
 @Named("dummyExecutionPersistence")
@@ -52,6 +53,12 @@ public class DummyExecutionPersistence implements IExecutionPersistence {
 			PhaseQualifier phaseQualifier) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean changeCommunicationProtocolStatusByOutputIdentifier(final String outputIdentifier, PersistentStatus persistentStatus) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }

@@ -61,18 +61,6 @@ public interface CommunicationProtocolRepository extends JpaRepository<Communica
 			@Param("phaseQualifier") String phaseQualifier,
 			@Param("status") Status status);
 
-	// select max (INPUT_DATA.RESPONSE_ID) from INPUT_DATA , PROCEDURE,
-	// EXECUTION
-	// where INPUT_DATA.EXECUTION_ID = EXECUTION.ID
-	// and EXECUTION.PROCEDURE_ID = PROCEDURE.ID
-	// and EXECUTION.PHASE = 'SterbedatenabgleichDataFetchPhase1'
-	// and PROCEDURE.NAME = 'SterbedatenabgleichDataFetch'
-
-	// TODO Reicht das?? Status??
-	// Oder Minimum mit Status Offen??
-
-	// FIXME inp.ResponseId ist kein numerisches Feld!
-	// Vorerst inp.Id statt inp.responseId genommen
 	/**
 	 * Für die übergebene Procedure und Phase wird die maximale Response-ID
 	 * eines Input_Data Elements ermittelt.
@@ -87,5 +75,15 @@ public interface CommunicationProtocolRepository extends JpaRepository<Communica
 	Integer maxResponseIdForProcedureAndPhase(
 			@Param("procedure") IProcedure procedure,
 			@Param("phaseQualifier") String phaseQualifier);
+
+	/**
+	 * Sucht für einen OutputIdentifier das zugeordnete CommunicationProtocol.
+	 * Diese Methode wird verwendet, wenn eine externe Anwendung eine OutputDatei (= OutputIdentifier) bestätigen
+	 * möchte.
+	 * @param outputIdentifier
+	 * @return
+	 */
+	@Query("FROM CommunicationProtocol WHERE outputIdentifier = :outputIdentifier")
+	CommunicationProtocol findByOutputIdentifier(@Param("outputIdentifier") String outputIdentifier);
 
 }

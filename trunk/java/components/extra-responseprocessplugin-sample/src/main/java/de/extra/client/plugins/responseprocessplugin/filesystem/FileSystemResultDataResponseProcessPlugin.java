@@ -56,6 +56,7 @@ import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraResponseProcessPluginRuntimeException;
 import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.model.content.ISingleResponseData;
+import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.observer.ITransportInfo;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
@@ -157,10 +158,15 @@ public class FileSystemResultDataResponseProcessPlugin implements
 			final String returnCode = reportData.getReturnCode();
 			final boolean returnCodeSuccessful = extraReturnCodeAnalyser
 					.isReturnCodeSuccessful(returnCode);
+			// Status (DONE oder FAIL)
+			PersistentStatus persistentStatus = returnCodeSuccessful ? PersistentStatus.DONE : PersistentStatus.FAIL;
+			
+			String outputIdentifier = buildFilename(responseId);
+
 			final ISingleResponseData singleResponseData = new SingleResponseData(
 					requestDetails.getRequestID().getValue(), returnCode,
 					reportData.getReturnText(), responseId,
-					returnCodeSuccessful);
+					returnCodeSuccessful, persistentStatus, outputIdentifier);
 			responseData.addSingleResponse(singleResponseData);
 
 		} catch (final XmlMappingException xmlMappingException) {

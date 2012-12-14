@@ -147,7 +147,7 @@ public class PersistenceIT {
 		final Boolean successful = true;
 		final ISingleResponseData singleResponseData = new SingleResponseData(
 				requestId, "ReturnCode", "ReturnText", "RESPONSE_ID",
-				successful);
+				successful, PersistentStatus.DONE, "Output-ID");
 		responceData.addSingleResponse(singleResponseData);
 		execution.endExecution(responceData);
 		final IProcessTransition lastTransitionDone = execution

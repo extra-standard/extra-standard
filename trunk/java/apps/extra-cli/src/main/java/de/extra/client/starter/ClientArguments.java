@@ -43,6 +43,12 @@ public class ClientArguments {
 	public static final String OPTION_NAME_LOGDIR = "logDirectory";
 	public static final String OPTION_NAME_LOGDIR_SHORTCUT = "l";
 
+	// (12.12.12) Externe Anwendungen muessen Output-Dateien bestaetigen koennen
+	public static final String OPTION_NAME_OUTPUT_CONFIRM = "outputConfirm";
+	public static final String OPTION_NAME_OUTPUT_CONFIRM_SHORTCUT = "oc";
+	public static final String OPTION_NAME_OUTPUT_FAILURE = "outputFailure";
+	public static final String OPTION_NAME_OUTPUT_FAILURE_SHORTCUT = "of";
+
 	private static final Option OPT_HELP = new Option(
 			OPTION_NAME_HELP_SHORTCUT, OPTION_NAME_HELP, false,
 			"Hilfe anzeigen");
@@ -55,6 +61,14 @@ public class ClientArguments {
 			OPTION_NAME_LOGDIR_SHORTCUT, OPTION_NAME_LOGDIR, true,
 			"Logverzeichnis");
 
+	private static final Option OPT_OUTPUT_CONFIRM = new Option(
+			OPTION_NAME_OUTPUT_CONFIRM_SHORTCUT, OPTION_NAME_OUTPUT_CONFIRM, true,
+			"Korrekten Output bestätigen");
+
+	private static final Option OPT_OUTPUT_FAILURE = new Option(
+			OPTION_NAME_OUTPUT_FAILURE_SHORTCUT, OPTION_NAME_OUTPUT_FAILURE, true,
+			"Fehlerhaften Output melden");
+
 	public static final Options OPTIONS;
 
 	private final SystemExiter exiter;
@@ -64,6 +78,8 @@ public class ClientArguments {
 		OPTIONS.addOption(OPT_HELP);
 		OPTIONS.addOption(OPT_CONFIGDIRECTORY);
 		OPTIONS.addOption(OPT_LOGDIRECTORY);
+		OPTIONS.addOption(OPT_OUTPUT_CONFIRM);
+		OPTIONS.addOption(OPT_OUTPUT_FAILURE);
 	}
 
 	/**
@@ -82,6 +98,18 @@ public class ClientArguments {
 	 * {@link #OPTION_NAME_LOGDIR}.
 	 */
 	private File logDirectory = null;
+
+	/**
+	 * Wert aus dem ermitteltem Kommandozeilenparameter
+	 * {@link #OPTION_NAME_OUTPUT_CONFIRM}.
+	 */
+	private String outputConfirm = null;
+
+	/**
+	 * Wert aus dem ermitteltem Kommandozeilenparameter
+	 * {@link #OPTION_NAME_OUTPUT_FAILURE}.
+	 */
+	private String outputFailure = null;
 
 	/**
 	 * Gibt an ob ein Hilfetext ausgegeben werden soll Parameter
@@ -139,6 +167,29 @@ public class ClientArguments {
 			throw new IllegalArgumentException("Bitte Parameter angeben.");
 		}
 
+		// (14.12.12) Externe Anwendungen: Optionale Parameter outputConfirm, outputFailure
+		if (commandLine.hasOption(OPTION_NAME_OUTPUT_CONFIRM)) {
+			String optionValue = commandLine
+					.getOptionValue(OPTION_NAME_OUTPUT_CONFIRM) != null ? commandLine
+					.getOptionValue(OPTION_NAME_OUTPUT_CONFIRM).trim() : null;
+			if (!StringUtils.hasText(optionValue)) {
+				throw new IllegalArgumentException(
+						"Dateiname (OutputIdentifier) muss angegeben werden.");
+			}
+			outputConfirm = optionValue;
+		}
+		
+		if (commandLine.hasOption(OPTION_NAME_OUTPUT_FAILURE)) {
+			String optionValue = commandLine
+					.getOptionValue(OPTION_NAME_OUTPUT_FAILURE) != null ? commandLine
+					.getOptionValue(OPTION_NAME_OUTPUT_FAILURE).trim() : null;
+			if (!StringUtils.hasText(optionValue)) {
+				throw new IllegalArgumentException(
+						"Dateiname (OutputIdentifier) muss angegeben werden.");
+			}
+			outputFailure = optionValue;
+		}
+		
 		if (showHelp == null && configDirectory == null) {
 			throw new IllegalArgumentException("Bitte Parameter angeben.");
 		}
@@ -174,6 +225,14 @@ public class ClientArguments {
 		return showHelp;
 	}
 
+	/**
+	 * Identifiziert einen externen Aufruf (z.B. Output bestaetigen)
+	 * @return
+	 */
+	public boolean isExternalCall() {
+		return (outputConfirm != null) || (outputFailure != null);
+	}
+	
 	public File getConfigDirectory() {
 		return configDirectory;
 	}
@@ -181,4 +240,13 @@ public class ClientArguments {
 	public File getLogDirectory() {
 		return logDirectory;
 	}
+
+	public String getOutputConfirm() {
+		return outputConfirm;
+	}
+
+	public String getOutputFailure() {
+		return outputFailure;
+	}
+	
 }

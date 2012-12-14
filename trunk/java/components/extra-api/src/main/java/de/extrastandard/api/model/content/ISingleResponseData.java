@@ -18,6 +18,8 @@
  */
 package de.extrastandard.api.model.content;
 
+import de.extrastandard.api.model.execution.PersistentStatus;
+
 /**
  * Liefert Ergebnisse Übertragung eines Datensatzes einer Anfrage/Übertragung
  * zurück.
@@ -56,4 +58,15 @@ public interface ISingleResponseData {
 	 * @return
 	 */
 	Boolean isSuccessful();
+
+	/**
+	 * Gibt den Status an, der sich aufgrund der Server-Verarbeitung ergibt.
+	 * Im ResponceProcess Plugin wird dieser Status je nach Verarbeitungsstrategie gesetzt.
+	 * Ein Status WAIT wird z.B. gewählt, wenn eine externe Anwendung das übermittelte Serverergebnis noch
+	 * prüfen bzw. verarbeiten muss. 
+	 * @return
+	 */
+	PersistentStatus getPersistentStatus();
+	
+	String getOutputIdentifier();
 }

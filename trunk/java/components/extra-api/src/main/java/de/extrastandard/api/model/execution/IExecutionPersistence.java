@@ -86,4 +86,15 @@ public interface IExecutionPersistence {
 	// Max Query (Sterbedatenabgleich)
 	String maxResponseIdForExecution(String procedureName,
 			PhaseQualifier phaseQualifier);
+	
+	/**
+	 * Sucht für einen OutputIdentifier das zugeordnete CommunicationProtocol.
+	 * Diese Methode wird verwendet, wenn eine externe Anwendung eine OutputDatei (= OutputIdentifier) bestätigen
+	 * möchte.
+	 * 
+	 * @param outputIdentifier
+	 * @return
+	 */
+	boolean changeCommunicationProtocolStatusByOutputIdentifier(final String outputIdentifier, PersistentStatus persistentStatus);
+	
 }

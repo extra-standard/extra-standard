@@ -44,6 +44,11 @@ public enum PersistentStatus {
 	TRANSMITTED(3L),
 
 	/**
+	 * Daten sind vom Client empfangen worden, warten aber noch auf Weiterverarbeitung.
+	 */
+	WAIT(4L),
+
+	/**
 	 * Abgeschlossen.
 	 */
 	DONE(7L),

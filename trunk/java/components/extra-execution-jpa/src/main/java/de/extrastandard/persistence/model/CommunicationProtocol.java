@@ -114,6 +114,10 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 	/** Anhand des Status erkennt man ob die letzte Serververarbeitung erfolgreich verlaufen ist */
 	private Status status;
 
+	// 1.0.0-M3 (12.12.12)
+	@Column(name = "output_identifier")
+	private String outputIdentifier;
+
 	@Transient
 	@Inject
 	@Named("communicationProtocolRepository")
@@ -486,17 +490,34 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 				PersistentStatus.DONE.getId()));
 	}
 
+	public String getOutputIdentifier() {
+		return outputIdentifier;
+	}
+
+	public void setOutputIdentifier(String outputIdentifier) {
+		this.outputIdentifier = outputIdentifier;
+	}
+
 	@Override
 	public void transmitted(final ISingleResponseData singleResponseData) {
 		this.responseId = singleResponseData.getResponseId();
 		this.returnCode = singleResponseData.getReturnCode();
 		this.returnText = singleResponseData.getReturnText();
+		this.outputIdentifier = singleResponseData.getOutputIdentifier();
 
-		PersistentStatus persistentStatus = singleResponseData.isSuccessful() ? PersistentStatus.DONE
-				: PersistentStatus.FAIL;
-		this.status = statusRepository.findOne(persistentStatus.getId());
+		// (12.12.12) PersistentStatus wird bei der Response-Verarbeitung berechnet
+		this.status = statusRepository.findOne(singleResponseData.getPersistentStatus().getId());
 
 		repository.save(this);
+	}
+	
+	/**
+	 * Für externe Status-Änderungen (z.B. von 'WAIT' nach 'DONE')
+	 * @param aPersistentStatus
+	 */
+	public void changeStatus(PersistentStatus aPersistentStatus) {
+		this.status = statusRepository.findOne(aPersistentStatus.getId());
+		repository.save(this);		
 	}
 
 	@Override

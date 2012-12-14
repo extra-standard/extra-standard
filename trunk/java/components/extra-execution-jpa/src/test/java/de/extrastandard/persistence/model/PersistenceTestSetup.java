@@ -70,6 +70,8 @@ public class PersistenceTestSetup {
 
 		new Status(PersistentStatus.FAIL);
 
+		new Status(PersistentStatus.WAIT);
+
 		new Status(PersistentStatus.DONE);
 
 		new Mandator(MANDATOR_TEST);
@@ -116,7 +118,7 @@ public class PersistenceTestSetup {
 		final Boolean successful = true;
 		final ISingleResponseData singleResponseData = new SingleResponseData(
 				calculatedRequestId, "ReturnCode", "ReturnText",
-				"RESPONSE_ID_Phase_1" + calculatedRequestId, true);
+				"RESPONSE_ID_Phase_1" + calculatedRequestId, true, PersistentStatus.DONE, "Output-ID");
 		responseData.addSingleResponse(singleResponseData);
 		executionForTestPhase2.endExecution(responseData);
 		logger.info("SetupTestDatenForProcedureSendFetchPhase2  finished");
@@ -140,7 +142,7 @@ public class PersistenceTestSetup {
 		final ISingleResponseData singleResponseDataForPhase3 = new SingleResponseData(
 				calculatedRequestIdForPhase3, "ReturnCodePhase2",
 				"ReturnTextPhase2", "RESPONSE_ID_Phase_1"
-						+ calculatedRequestIdForPhase3, successful);
+						+ calculatedRequestIdForPhase3, successful, PersistentStatus.DONE, "Output-ID");
 		responseDataForPhase3.addSingleResponse(singleResponseDataForPhase3);
 		executionForTestPhase3.endExecution(responseDataForPhase3);
 		logger.info("SetupTestDatenForProcedureSendFetchPhase3  finished");
