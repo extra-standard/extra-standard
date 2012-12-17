@@ -66,7 +66,13 @@ Das Logging erfolgt in das Verzeichnis logs. Die Konfiguration wird aus dem Verz
 ===Aufrufparameter===
 
 || Parameter || Beispiel || Beschreibung ||
-|| -c || -c conf || Konfiguration wird aus dem Verzeichnis _conf_ gelesen *(Pflicht)* ||
-|| -l || -l logs || Logs werden in das Verzeichnis _logs_ geschrieben ||
+|| -c "Konfigurationsverzeichnis" || -c conf || Konfiguration wird aus dem Verzeichnis _conf_ gelesen *(Pflicht)* ||
+|| -l "logs" || -l logs || Logs werden in das Verzeichnis _logs_ geschrieben ||
 || -h || -h || Hilfe ||
+
+Im Verarbeitungsverlauf können vom eXTra-Client Ergebnisdateien abgelegt worden sein, die noch von einer externen Anwendung geprüft werden müssen. Das Ergebnis dieser Prüfung kann dem eXTra-Client über folgende zwei Parameter mitgeteilt werden:
+	
+|| Parameter || Beispiel || Beschreibung ||
+|| -oc "Dateiname"|| -oc RESPONSE_10001_1355733323891 || Meldet das die Datei "Dateiname" erfolgreich verarbeitet werden konnte (oc steht für "Output Confirm") ||
+|| -of "Dateiname"|| -oc RESPONSE_10001_1355733323891 || Meldet das die Datei "Dateiname" nicht erfolgreich verarbeitet werden konnte (of steht für "Output Failure") ||
 		
