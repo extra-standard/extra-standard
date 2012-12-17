@@ -74,5 +74,5 @@ Im Verarbeitungsverlauf können vom eXTra-Client Ergebnisdateien abgelegt worden
 	
 || Parameter || Beispiel || Beschreibung ||
 || -oc "Dateiname"|| -oc RESPONSE_10001_1355733323891 || Meldet das die Datei "Dateiname" erfolgreich verarbeitet werden konnte (oc steht für "Output Confirm") ||
-|| -of "Dateiname"|| -oc RESPONSE_10001_1355733323891 || Meldet das die Datei "Dateiname" nicht erfolgreich verarbeitet werden konnte (of steht für "Output Failure") ||
+|| -of "Dateiname"|| -of RESPONSE_10001_1355733323891 || Meldet das die Datei "Dateiname" nicht erfolgreich verarbeitet werden konnte (of steht für "Output Failure") ||
 		
