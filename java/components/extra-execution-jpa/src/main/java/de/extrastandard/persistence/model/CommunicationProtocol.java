@@ -118,6 +118,10 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 	@Column(name = "output_identifier")
 	private String outputIdentifier;
 
+	// 1.0.0-M3 (17.12.12)
+	@Column(name = "subquery")
+	private String subquery;
+
 	@Transient
 	@Inject
 	@Named("communicationProtocolRepository")
@@ -249,6 +253,8 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 		this.inputIdentifier = criteriaInputData.inputIdentifier;
 		this.requestId = singleResponseData.getRequestId();
 
+		this.subquery = criteriaInputData.subquery;
+		
 		// nextPhaseConnection darf nicht uebernommen werden!
 		//this.nextPhaseConnection = criteriaInputData.nextPhaseConnection;
 
@@ -314,6 +320,9 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 		// (08.11.12) verschiedene Qualifizierungen (Query, Criteria, ...)
 		this.inputDataQualifier = InputDataQualifier.QUERY_CRITERIA.getName();
 
+		// (17.12.12) Suchanfrage erweitern (z.B. fuer gezielte Abfrage nach Laendern)
+		this.subquery = singleQueryInputData.getSubquery();
+		
 		repository.save(this);
 	}
 

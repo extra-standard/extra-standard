@@ -41,4 +41,7 @@ public interface ICriteriaQueryInputData extends ISingleInputData {
 	QueryArgumentType getQueryArgumentType();
 
 	String getProcedureName();
+	
+	/** Zusaetzliches Abfragekriterium (z.B. Laenderkennung) */
+	String getSubquery();
 }

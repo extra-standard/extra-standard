@@ -144,6 +144,35 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 		return dataRequestArgument;
 	}
 
+	/**
+	 * Erzeugt ein DataRequestArgument für den übergebenen Subquery-Ausdruck. ('EQ
+	 * subquery')
+	 * 
+	 * @param subquery
+	 * @return
+	 */
+	private DataRequestArgument createDataRequestArgumentSubquery(
+			String subquery) {
+		final DataRequestArgument dataRequestArgument = new DataRequestArgument();
+		dataRequestArgument
+				.setProperty("http://www.extra-standard.de/property/DataType");
+
+		Operand operand = new Operand();
+		operand.setValue(subquery);
+
+		final String operandAsString = "EQ";
+		QName qname = new QName("xs:string");
+		JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(new QName(
+				"http://www.extra-standard.de/namespace/message/1",
+				operandAsString), Operand.class, operand);
+		jaxbOperand.setValue(operand);
+
+		dataRequestArgument.setType(qname);
+		dataRequestArgument.getContent().add(jaxbOperand);
+
+		return dataRequestArgument;
+	}
+
 	private DataRequest createSingleDataRequest(
 			final IInputDataContainer senderData) {
 		final ICriteriaQueryInputDataContainer dbQueryInputData = senderData
@@ -155,6 +184,7 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 		DataRequestArgument dataRequestArgument = new DataRequestArgument();
 
 		String procedureName = null;
+		String subquery = null;
 		for (ISingleInputData singleInputData : dbQueryInputData.getContent()) {
 			if (ICriteriaQueryInputData.class.isAssignableFrom(singleInputData
 					.getClass())) {
@@ -162,6 +192,8 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 						.cast(singleInputData);
 
 				procedureName = singleQueryInputData.getProcedureName();
+				subquery = singleQueryInputData.getSubquery();
+				
 				Operand operand = new Operand();
 				operand.setValue(String.valueOf(singleQueryInputData
 						.getArgument()));
@@ -186,6 +218,10 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 		if (procedureName != null) {
 			query.getArgument().add(
 					createDataRequestArgumentProcedure(procedureName));
+		}
+		if (subquery != null && subquery.length() > 0) {
+			query.getArgument().add(
+					createDataRequestArgumentSubquery(subquery));			
 		}
 
 		dataRequest.setQuery(query);

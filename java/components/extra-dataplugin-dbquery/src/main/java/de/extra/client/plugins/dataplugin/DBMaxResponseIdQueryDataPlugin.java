@@ -38,6 +38,9 @@ public class DBMaxResponseIdQueryDataPlugin implements IDataPlugin {
 	@Value("${core.execution.procedure}")
 	private String executionProcedure;
 
+	@Value("${plugins.dataplugin.dbMaxResponseIdQueryDataPlugin.subquery}")
+	private String subquery;
+
 	private static final Logger logger = LoggerFactory
 			.getLogger(DBQueryDataPlugin.class);
 
@@ -55,10 +58,10 @@ public class DBMaxResponseIdQueryDataPlugin implements IDataPlugin {
 					.resolveByName(executionPhase);
 			String maxResponseId = executionPersistence
 					.maxResponseIdForExecution(executionProcedure,
-							phaseQualifier);
+							phaseQualifier, subquery);
 			dbQueryMaxResponseIdInputData = new CriteriaQueryInputDataContainer(
 					String.valueOf(maxResponseId),
-					QueryArgumentType.GREATER_THEN, executionProcedure);
+					QueryArgumentType.GREATER_THEN, executionProcedure, subquery);
 
 			logger.info("For Procedury and Phase {} MaxResponseId: {}",
 					executionProcedure + "->" + executionPhase,

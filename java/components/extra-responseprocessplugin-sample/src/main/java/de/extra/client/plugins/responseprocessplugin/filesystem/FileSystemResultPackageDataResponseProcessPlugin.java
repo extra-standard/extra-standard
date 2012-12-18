@@ -258,7 +258,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 				}
 			}
 		}
-		// (12.12.12) Status und outputIdentifier
+		// (17.12.12) Ergebnis-Dateiname als OutputIdentifier, Status setzen ('WAIT'?!)
 		String outputIdentifier = buildFilename(packageHeaderResponseId);
 		final ISingleResponseData singleResponseData = new SingleResponseData(
 				packageHeaderRequestId, reportCode, reportText,

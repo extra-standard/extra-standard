@@ -161,6 +161,7 @@ public class FileSystemResultDataResponseProcessPlugin implements
 			// Status (DONE oder FAIL)
 			PersistentStatus persistentStatus = returnCodeSuccessful ? PersistentStatus.DONE : PersistentStatus.FAIL;
 			
+			// (17.12.12) Ergebnis-Dateiname als OutputIdentifier
 			String outputIdentifier = buildFilename(responseId);
 
 			final ISingleResponseData singleResponseData = new SingleResponseData(

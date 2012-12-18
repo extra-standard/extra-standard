@@ -151,7 +151,8 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 			// Status (DONE oder FAIL)
 			PersistentStatus persistentStatus = returnCodeSuccessful ? PersistentStatus.DONE : PersistentStatus.FAIL;
 			
-			String outputIdentifier = responseId;
+			// (17.12.12) keine Server Daten -> kein OutputIdentifier 
+			String outputIdentifier = null;
 			
 			final ISingleResponseData singleResponseData = new SingleResponseData(
 					requestId, returnCode, reportData.getReturnText(),

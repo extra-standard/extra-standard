@@ -59,23 +59,34 @@ class ExternalCall {
 			final ClientCore clientCore = applicationContext.getBean(
 					"clientCore", ClientCore.class);
 
+			// Aktuell (17.12.12) zwei Aufrufe moeglich:
+			// -oc: OutputConfirm - Ergebnisdatei Bestaetigen
+			// -of: OutputFailure - Ergebnisdatei konnte nicht verarbeitet werden
 			boolean success = false;
 			String outputConfirm = clientArguments.getOutputConfirm();
 			String outputFailure = clientArguments.getOutputFailure();
+			final PersistentStatus persistentStatusNeu;
+			final String outputIdentifier;
+			final String aktion;
 			if (outputConfirm != null && outputConfirm.length() > 0) {
-				opperation_logger.info("Melde Bestaetigung fuer outputIdentifier: " + outputConfirm);
-				success = clientCore.changeCommunicationProtocolStatusByOutputIdentifier(outputConfirm, PersistentStatus.DONE);
+				outputIdentifier = outputConfirm;
+				persistentStatusNeu = PersistentStatus.DONE;
+				aktion = "Externer Aufruf: Datei fehlerfrei verarbeitet, outputIdentifier: " + outputIdentifier;
 			}
 			else if (outputFailure != null && outputFailure.length() > 0) {
-				opperation_logger.info("Melde Fehler fuer outputIdentifier: " + outputFailure);
-				success = clientCore.changeCommunicationProtocolStatusByOutputIdentifier(outputFailure, PersistentStatus.FAIL);				
+				outputIdentifier = outputFailure;
+				persistentStatusNeu = PersistentStatus.FAIL;
+				aktion = "Externer Aufruf: Fehler bei Dateiverarbeitung, outputIdentifier: " + outputIdentifier;
 			}
 			else {
 				// Unbekannter Aufruf!
 				opperation_logger.error("Unbekannter Aufruf!");				
 				throw new ExtraConfigRuntimeException(ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION);
 			}
-			opperation_logger.info(success ? "Statusaenderung erfolgreich" : "Fehler bei Statusaenderung");				
+			// Statusaenderung durchfuehren
+			opperation_logger.info(aktion);
+			success = clientCore.changeCommunicationProtocolStatusByOutputIdentifier(outputIdentifier, persistentStatusNeu);
+			opperation_logger.info(success ? "Statusaenderung erfolgreich" : "Fehler bei Statusaenderung (falscher OutputIdentifier?)");				
 			return success;
 			
 		} catch (final Exception e) {
