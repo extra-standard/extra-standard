@@ -119,11 +119,20 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 		Assert.notNull(phaseQualifier, "Phase is null");
 		final Status statusInitial = statusRepository
 				.findOne(PersistentStatus.INITIAL.getId());
+		final Status statusDone = statusRepository
+				.findOne(PersistentStatus.DONE.getId());
 
 		final Pageable pageRequest = new PageRequest(0, inputDataLimit);
+
+		// (18.12.12) es duerfen nur Erfolgreich verarbeitete Datensaetze weiter verarbeitet werden
+//		final List<ICommunicationProtocol> inputDateList = communicationProtocolRepository
+//				.findByProcedureAndPhaseQualifierAndStatus(procedure,
+//						phaseQualifier.getName(), statusInitial, pageRequest);
+
 		final List<ICommunicationProtocol> inputDateList = communicationProtocolRepository
-				.findByProcedureAndPhaseQualifierAndStatus(procedure,
-						phaseQualifier.getName(), statusInitial, pageRequest);
+				.findByProcedureAndPhaseQualifierAndStatusAndComProtStatus(procedure,
+						phaseQualifier.getName(), statusInitial, statusDone, pageRequest);
+		
 		return inputDateList;
 	}
 
