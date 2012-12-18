@@ -147,15 +147,23 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 
 	@Override
 	public String maxResponseIdForExecution(String procedureName,
-			PhaseQualifier phaseQualifier) {
+			PhaseQualifier phaseQualifier, String subquery) {
 		Assert.notNull(procedureName, "Procedure is null");
 		Assert.notNull(phaseQualifier, "Phase is null");
 		final IProcedure procedure = procedureRepository
 				.findByName(procedureName);
 
-		Integer maxResponseId = communicationProtocolRepository
-				.maxResponseIdForProcedureAndPhase(procedure,
-						phaseQualifier.getName());
+		final Integer maxResponseId ;
+		if (subquery != null && subquery.length() > 0) {
+			maxResponseId = communicationProtocolRepository
+					.maxResponseIdForProcedureAndPhaseAndSubquery(procedure,
+							phaseQualifier.getName(), subquery);			
+		}
+		else {
+			maxResponseId = communicationProtocolRepository
+					.maxResponseIdForProcedureAndPhase(procedure,
+							phaseQualifier.getName());			
+		}
 
 		if (maxResponseId == null) {
 			return "0";

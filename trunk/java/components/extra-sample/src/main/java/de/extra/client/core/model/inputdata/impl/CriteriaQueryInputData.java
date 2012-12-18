@@ -15,14 +15,16 @@ public class CriteriaQueryInputData implements ICriteriaQueryInputData {
 
 	private String procedureName;
 
+	private String subquery;
+
 	public CriteriaQueryInputData(String aArgument,
-			QueryArgumentType queryArgumentType, String aProcedureName) {
+			QueryArgumentType queryArgumentType, String aProcedureName, String subquery) {
 		super();
 		this.argument = aArgument;
 		this.queryArgumentType = queryArgumentType;
-		// TODO MAXRESP (06.11.12)
-		inputIdentifier = queryArgumentType.getType() + ": " + argument;
-		procedureName = aProcedureName;
+		this.inputIdentifier = queryArgumentType.getType() + ": " + argument;
+		this.procedureName = aProcedureName;
+		this.subquery = subquery;
 	}
 
 	@Override
@@ -58,6 +60,11 @@ public class CriteriaQueryInputData implements ICriteriaQueryInputData {
 	@Override
 	public String getProcedureName() {
 		return procedureName;
+	}
+
+	@Override
+	public String getSubquery() {
+		return subquery;
 	}
 
 }

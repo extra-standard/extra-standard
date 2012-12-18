@@ -18,15 +18,15 @@ public class CriteriaQueryInputDataContainer extends InputDataContainer
 	}
 
 	public CriteriaQueryInputDataContainer(String aArgument,
-			QueryArgumentType aQueryArgumentType, String aProcedureName) {
+			QueryArgumentType aQueryArgumentType, String aProcedureName, String aSubquery) {
 		super();
-		addDBSingleQueryInputData(aArgument, aQueryArgumentType, aProcedureName);
+		addDBSingleQueryInputData(aArgument, aQueryArgumentType, aProcedureName, aSubquery);
 	}
 
-	public void addDBSingleQueryInputData(String aArgument,
-			QueryArgumentType aQueryArgumentType, String aProcedureName) {
+	private void addDBSingleQueryInputData(String aArgument,
+			QueryArgumentType aQueryArgumentType, String aProcedureName, String aSubquery) {
 		final ICriteriaQueryInputData singleDBQueryInputData = new CriteriaQueryInputData(
-				aArgument, aQueryArgumentType, aProcedureName);
+				aArgument, aQueryArgumentType, aProcedureName, aSubquery);
 		iDbSingleQueryInputDataList.add(singleDBQueryInputData);
 	}
 

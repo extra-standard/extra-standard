@@ -158,11 +158,13 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 							.isReturnCodeSuccessful(returnCode);
 					// Status (DONE oder FAIL)
 					PersistentStatus persistentStatus = returnCodeSuccessful ? PersistentStatus.DONE : PersistentStatus.FAIL;
-					String outputIdentifier = responseId;
+					
+					String outputIdentifier = baueDateiname();
+					
 					final ISingleResponseData singleResponseData = new SingleResponseData(
 							requestDetails.getRequestID().getValue(),
 							returnCode, reportData.getReturnText(), responseId,
-							returnCodeSuccessful, persistentStatus, responseId);
+							returnCodeSuccessful, persistentStatus, outputIdentifier);
 					responseData.addSingleResponse(singleResponseData);
 
 				} else {

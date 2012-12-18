@@ -85,7 +85,7 @@ public interface IExecutionPersistence {
 
 	// Max Query (Sterbedatenabgleich)
 	String maxResponseIdForExecution(String procedureName,
-			PhaseQualifier phaseQualifier);
+			PhaseQualifier phaseQualifier, String subquery);
 	
 	/**
 	 * Sucht für einen OutputIdentifier das zugeordnete CommunicationProtocol.

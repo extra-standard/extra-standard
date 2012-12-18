@@ -63,7 +63,7 @@ public interface CommunicationProtocolRepository extends JpaRepository<Communica
 
 	/**
 	 * Für die übergebene Procedure und Phase wird die maximale Response-ID
-	 * eines Input_Data Elements ermittelt.
+	 * eines CommunicationProtocol Elements ermittelt.
 	 * 
 	 * @param procedure
 	 * @param phaseQualifier
@@ -75,6 +75,25 @@ public interface CommunicationProtocolRepository extends JpaRepository<Communica
 	Integer maxResponseIdForProcedureAndPhase(
 			@Param("procedure") IProcedure procedure,
 			@Param("phaseQualifier") String phaseQualifier);
+
+	/**
+	 * Für die übergebene Procedure, Phase und Subquery wird die maximale Response-ID
+	 * eines CommunicationProtocol Elements ermittelt. Wird z.B. benoetigt um fuer
+	 * ein Land (= Subquery) die zuletzt erhaltene Server-ResponseID abzufragen.
+	 * 
+	 * @param procedure
+	 * @param phaseQualifier
+	 * @param subquery
+	 * @return
+	 */
+	@Query("select max(cast (inp.responseId as int)) from CommunicationProtocol inp "
+			+ " WHERE inp.execution.procedure =:procedure "
+			+ " and inp.execution.phase = :phaseQualifier "
+			+ " and inp.subquery = :subquery ")
+	Integer maxResponseIdForProcedureAndPhaseAndSubquery(
+			@Param("procedure") IProcedure procedure,
+			@Param("phaseQualifier") String phaseQualifier,
+			@Param("subquery") String subquery);
 
 	/**
 	 * Sucht für einen OutputIdentifier das zugeordnete CommunicationProtocol.

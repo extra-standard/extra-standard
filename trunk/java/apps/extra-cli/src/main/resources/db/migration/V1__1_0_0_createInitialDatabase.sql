@@ -57,7 +57,8 @@ CREATE TABLE COMMUNICATION_PROTOCOL
      next_phase_connection_id NUMBER (12) , 
      current_phase_connection_id NUMBER (12),
      input_data_qualifier VARCHAR2 (100),
-     status_id NUMBER (10)
+     status_id NUMBER (10),
+     subquery VARCHAR2 (255)      
     ) 
 ;
 
