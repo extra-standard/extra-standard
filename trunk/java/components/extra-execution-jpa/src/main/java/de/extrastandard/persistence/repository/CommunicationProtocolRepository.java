@@ -53,6 +53,16 @@ public interface CommunicationProtocolRepository extends JpaRepository<Communica
 			@Param("phaseQualifier") String phaseQualifier,
 			@Param("status") Status status, Pageable pageRequest);
 
+	@Query("select communicationProtocol FROM CommunicationProtocol communicationProtocol "
+			+ " WHERE communicationProtocol.nextPhaseConnection.nextPhasequalifier = :phaseQualifier "
+			+ " and communicationProtocol.execution.procedure = :procedure "
+			+ " and communicationProtocol.nextPhaseConnection.status = :status"
+			+ " and communicationProtocol.status = :comProtStatus")
+	List<ICommunicationProtocol> findByProcedureAndPhaseQualifierAndStatusAndComProtStatus(
+			@Param("procedure") IProcedure procedure,
+			@Param("phaseQualifier") String phaseQualifier,
+			@Param("status") Status status, @Param("comProtStatus") Status comProtStatus, Pageable pageRequest);
+
 	@Query("select count(*) FROM CommunicationProtocol communicationProtocol "
 			+ " WHERE communicationProtocol.nextPhaseConnection.nextPhasequalifier = :phaseQualifier "
 			+ " and communicationProtocol.execution.procedure = :procedure "

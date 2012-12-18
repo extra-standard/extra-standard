@@ -499,6 +499,11 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 				PersistentStatus.DONE.getId()));
 	}
 
+	/** Zeigt an, ob die Kommunikation erfolgreich ist oder auf externe Bestaetigung wartet */
+	public boolean isSuccessfulOrWait() {
+		return isSuccessful() || (status != null && PersistentStatus.WAIT.getId().equals(status.getId()));
+	}
+
 	public String getOutputIdentifier() {
 		return outputIdentifier;
 	}

@@ -266,6 +266,7 @@ public class ClientCore implements ApplicationContextAware {
 
 	// (14.12.12) Externer Aufruf
 	public boolean changeCommunicationProtocolStatusByOutputIdentifier(String outputIdentifier, PersistentStatus persistentStatus) {
-		return executionPersistence.changeCommunicationProtocolStatusByOutputIdentifier(outputIdentifier, persistentStatus);
+		boolean success = executionPersistence.changeCommunicationProtocolStatusByOutputIdentifier(outputIdentifier, persistentStatus);
+		return success;
 	}
 }

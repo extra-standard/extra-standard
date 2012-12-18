@@ -279,26 +279,27 @@ public class Execution extends AbstractEntity implements IExecution {
 	 * PhaseConection geschlossen und eine Nachfolge-PhaseConnection vorbereitet
 	 * (falls die aktuelle Phase keine Endphase ist)
 	 * 
-	 * @param inputData
+	 * @param communicationProtocol
 	 */
 	private void processPhaseConnectionForInputData(
-			CommunicationProtocol inputData) {
+			CommunicationProtocol communicationProtocol) {
 		// (14.11.12) Nur bei erfolgreicher Verarbeitung darf die nächste Phase
 		// vorbereitet werden!
-
-		if (inputData.isSuccessful()
+		// (18.12.12) Auch im Zustand 'WAIT' wird die naechste Phase vorbereitet!
+		
+		if (communicationProtocol.isSuccessfulOrWait()
 				&& !this.procedure.isProcedureEndPhase(this.phase)) {
 			final String nextPhasenQualifier = this.procedure
 					.getNextPhase(this.phase);
-			new PhaseConnection(inputData, nextPhasenQualifier);
+			new PhaseConnection(communicationProtocol, nextPhasenQualifier);
 		}
 
 		// Abgearbeitete PhaseConnection schliessen
 		final List<PhaseConnection> quellePhaseConnections = phaseConnectionRepository
-				.findByTargetCommunicationProtocol(inputData);
+				.findByTargetCommunicationProtocol(communicationProtocol);
 		for (final PhaseConnection quellePhaseConnection : quellePhaseConnections) {
 			// Erfolgreiche Verarbeitung?
-			if (inputData.isSuccessful()) {
+			if (communicationProtocol.isSuccessful()) {
 				quellePhaseConnection.success();
 			} else {
 				quellePhaseConnection.setFailed();
