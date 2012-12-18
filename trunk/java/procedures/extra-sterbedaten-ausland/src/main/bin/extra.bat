@@ -68,8 +68,9 @@ set HEAP_MX=-Xmx1024m
 if "%JAVA_OPTS%" == "" set JAVA_OPTS=%HEAP_MS% %HEAP_MX%
 if "%LOGFILEPATH%" == "" set LOGFILEPATH=..\logs
 
+if "%1"=="" GOTO :conf_fehlt
+
 rem java aufruf
-rem im Aufruf wird beispielhaft die Konfiguration im Verzeichnis 'conf' erwartet und Logausgaben ins Verzeichnis 'logs' geschrieben (Syntax siehe Betriebshandbuch)
 %_JAVA% %JAVA_OPTS% -classpath %EXTRA_CLIENT_HOME%\lib\* de.extra.client.starter.ClientStarter -l %LOGFILEPATH% %* -c ..\%1
 goto end
 
@@ -79,5 +80,9 @@ exit /b 32
 :end
 if not "%ERRORLEVEL%"=="" echo exit mit code %ERRORLEVEL% 
 exit /b %ERRORLEVEL%
+
+:conf fehlt
+echo Bitte das Konfigurationsverzeichnis angeben
+exit /b 32
 
 :exit
