@@ -39,4 +39,7 @@ Ein Ergebnisdokument ist im Data-Element von !PackageBody abgelegt:
 
 {{{
 plugins.responseprocessplugin=fileSystemResultPackageDataResponseProcessPlugin
+# Erfolgreich vom Server empfangene Dateien erhalten diesen Status (WAIT oder DONE)
+plugins.responseprocessplugin.fileSystemResultPackageDataResponseProcessPlugin.successStatus=WAIT
+
 }}}
