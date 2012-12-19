@@ -6,7 +6,7 @@ Mit diesem Builder kann eine Anfrage an den Server erzeugt werden. Der Builder e
 
 *Beispiel*
 
-Anfrage _(ResponseID > 3) AND (Procedure = Sterbemeldung) AND (DataType = IT)_
+Anfrage _(ResponseID > 3) AND (Procedure = Sterbemeldung) AND (!DataType = IT)_
 
 Profil-Datei
 {{{
