@@ -50,7 +50,7 @@ public class Mandator extends AbstractEntity implements IMandator {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mandator_entity_seq_gen")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "mandator_entity_seq_gen")
 	@SequenceGenerator(name = "mandator_entity_seq_gen", sequenceName = "seq_mandator_id")
 	private Long id;
 
