@@ -6,73 +6,74 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
     jxb:extensionBindingPrefixes="xjc annox"
     version="2.1">
+    
    	
-   	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="/xs:schema">
+   	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.request"/>
         </jxb:schemaBindings>
     </jxb:bindings>
     <!-- 
-  	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestType']">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestType']">
     	<jxb:class name="XMLTransport"/>
     	 <annox:annotate>
              <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"/>
          </annox:annotate>
 	</jxb:bindings> 
 	 -->
-  	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestType']">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestType']">
     	<jxb:class name="Transport"/>
     	 <annox:annotate>
              <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="Transport"/>
          </annox:annotate>
 	</jxb:bindings> 	
 	
-  	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestHeaderType']">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestHeaderType']">
     	<jxb:class name="TransportHeader"/>
 	</jxb:bindings> 
-  	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestBodyType']">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestBodyType']">
     	<jxb:class name="TransportBody"/>
 	</jxb:bindings> 
     
-  	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='PackageRequestType']">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='PackageRequestType']">
     	<jxb:class name="Package"/>
 	</jxb:bindings> 
-  	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='PackageRequestHeaderType']">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='PackageRequestHeaderType']">
     	<jxb:class name="PackageHeader"/>
 	</jxb:bindings> 
-  	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='PackageRequestBodyType']">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='PackageRequestBodyType']">
     	<jxb:class name="PackageBody"/>
 	</jxb:bindings>     
     
-  	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='MessageRequestType']">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='MessageRequestType']">
     	<jxb:class name="Message"/>
 	</jxb:bindings> 
-  	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='MessageRequestHeaderType']">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='MessageRequestHeaderType']">
     	<jxb:class name="MessageHeader"/>
 	</jxb:bindings> 
-  	<jxb:bindings schemaLocation="../xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='MessageRequestBodyType']">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='MessageRequestBodyType']">
     	<jxb:class name="MessageBody"/>
 	</jxb:bindings>
 	    
-    <jxb:bindings schemaLocation="../xsd/eXTra-components-1.xsd" node="/xs:schema">
+    <jxb:bindings schemaLocation="../resources/xsd/eXTra-components-1.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.components"/>
         </jxb:schemaBindings>
     </jxb:bindings>
         
-    <jxb:bindings schemaLocation="../xsd/eXTra-logging-1.xsd" node="/xs:schema">
+    <jxb:bindings schemaLocation="../resources/xsd/eXTra-logging-1.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.logging"/>
         </jxb:schemaBindings>
     </jxb:bindings>
     
-    <jxb:bindings schemaLocation="../xsd/xenc-schema.xsd" node="/xs:schema">
+    <jxb:bindings schemaLocation="../resources/xsd/xenc-schema.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.xmlenc"/>
         </jxb:schemaBindings>
     </jxb:bindings>
     
-    <jxb:bindings schemaLocation="../xsd/xmldsig-core-schema.xsd" node="/xs:schema">
+    <jxb:bindings schemaLocation="../resources/xsd/xmldsig-core-schema.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.xmldsig"/>
         </jxb:schemaBindings>
