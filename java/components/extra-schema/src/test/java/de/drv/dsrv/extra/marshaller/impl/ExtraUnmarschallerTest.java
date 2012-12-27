@@ -56,7 +56,7 @@ public class ExtraUnmarschallerTest {
 	@Test
 	public final void testUnmarschallRequest() {
 		final InputStream inputStream = new ByteArrayInputStream(
-				testRequest.getBytes());
+				validTestRequest.getBytes());
 		try {
 			final Transport unmarschall = extraUnmarschaller
 					.unmarshal(
@@ -69,43 +69,81 @@ public class ExtraUnmarschallerTest {
 		} catch (final IOException e) {
 			Assert.fail(e.getMessage());
 		}
-
 	}
 
-	private final String testRequest = "<ns6:Transport xmlns:xenc=\"http://www.w3.org/2001/04/xmlenc#\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:xcpt=\"http://www.extra-standard.de/namespace/components/1\" xmlns:xres=\"http://www.extra-standard.de/namespace/response/1\" xmlns:xlog=\"http://www.extra-standard.de/namespace/logging/1\" xmlns:ns6=\"http://www.extra-standard.de/namespace/request/1\" xmlns:xplg=\"http://www.extra-standard.de/namespace/plugins/1\" xmlns:xmsg=\"http://www.extra-standard.de/namespace/message/1\" xmlns:xsrv=\"http://www.extra-standard.de/namespace/service/1\">\r\n"
-			+ "    <ns6:TransportHeader>\r\n"
-			+ "        <xcpt:TestIndicator>http://extra-standard.de/test/NONE</xcpt:TestIndicator>\r\n"
+	private final String validTestRequest = "<xreq:Transport xmlns:xcpt=\"http://www.extra-standard.de/namespace/components/1\" xmlns:xreq=\"http://www.extra-standard.de/namespace/request/1\" xmlns:xenc=\"http://www.w3.org/2001/04/xmlenc#\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:xlog=\"http://www.extra-standard.de/namespace/logging/1\" xmlns:xres=\"http://www.extra-standard.de/namespace/response/1\" xmlns:xplg=\"http://www.extra-standard.de/namespace/plugins/1\" xmlns:xmsg=\"http://www.extra-standard.de/namespace/message/1\" xmlns:xsrv=\"http://www.extra-standard.de/namespace/service/1\" version=\"1.3\" profile=\"http://code.google.com/p/extra-standard/profile/1\">\r\n"
+			+ "    <xreq:TransportHeader>\r\n"
+			+ "        <xcpt:TestIndicator>http://www.extra-standard.de/test/NONE</xcpt:TestIndicator>\r\n"
 			+ "        <xcpt:Sender>\r\n"
-			+ "            <xcpt:SenderID class=\"Betriebsnummer\">875624</xcpt:SenderID>\r\n"
-			+ "            <xcpt:Name>Tester 1</xcpt:Name>\r\n"
+			+ "            <xcpt:SenderID>ec-1</xcpt:SenderID>\r\n"
+			+ "            <xcpt:Name>eXTra-Client</xcpt:Name>\r\n"
 			+ "        </xcpt:Sender>\r\n"
 			+ "        <xcpt:Receiver>\r\n"
-			+ "            <xcpt:ReceiverID class=\"Betriebsnummer\">12345678</xcpt:ReceiverID>\r\n"
-			+ "            <xcpt:Name>Tester 2</xcpt:Name>\r\n"
+			+ "            <xcpt:ReceiverID>es-1</xcpt:ReceiverID>\r\n"
+			+ "            <xcpt:Name>eXTra-Server</xcpt:Name>\r\n"
 			+ "        </xcpt:Receiver>\r\n"
 			+ "        <xcpt:RequestDetails>\r\n"
-			+ "            <xcpt:RequestID class=\"0\">D:\\eclipse-workspaces\\extra\\extra-dev\\java\\apps\\extra-scenario-sendfetch\\target\\test-classes\\testDirectories\\input\\order.txt</xcpt:RequestID>\r\n"
-			+ "            <xcpt:TimeStamp>2012-09-07T11:31:50</xcpt:TimeStamp>\r\n"
+			+ "            <xcpt:RequestID>STMELD_AUSL_14</xcpt:RequestID>\r\n"
+			+ "            <xcpt:TimeStamp>2012-12-24T11:34:42</xcpt:TimeStamp>\r\n"
 			+ "            <xcpt:Application>\r\n"
 			+ "                <xcpt:Product>eXTra Klient OpenSource</xcpt:Product>\r\n"
 			+ "                <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>\r\n"
 			+ "                <xcpt:RegistrationID/>\r\n"
 			+ "            </xcpt:Application>\r\n"
-			+ "            <xcpt:Procedure>DeliveryServer</xcpt:Procedure>\r\n"
-			+ "            <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>\r\n"
-			+ "            <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>\r\n"
+			+ "            <xcpt:Procedure>http://www.extra-standard.de/procedures/SterbemeldungAusland</xcpt:Procedure>\r\n"
+			+ "            <xcpt:DataType>http://www.extra-standard.de/datatypes/DataSend</xcpt:DataType>\r\n"
+			+ "            <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-acknowledgement</xcpt:Scenario>\r\n"
 			+ "        </xcpt:RequestDetails>\r\n"
-			+ "    </ns6:TransportHeader>\r\n"
-			+ "    <ns6:TransportPlugIns>\r\n"
-			+ "        <xplg:contactType>\r\n"
-			+ "            <xplg:Endpoint type=\"SMTP\">test@rentenservice.de</xplg:Endpoint>\r\n"
-			+ "        </xplg:contactType>\r\n"
-			+ "    </ns6:TransportPlugIns>\r\n"
-			+ "    <ns6:TransportBody>\r\n"
+			+ "    </xreq:TransportHeader>\r\n"
+			+ "    <xreq:TransportPlugIns/>\r\n"
+			+ "    <xreq:TransportBody>\r\n"
 			+ "        <xcpt:Data>\r\n"
-			+ "            <xcpt:CharSequence>test</xcpt:CharSequence>\r\n"
+			+ "            <xcpt:Base64CharSequence>VTNSbGNtSmxaR0YwWlc0Z015QkpkR0ZzYVdWdQ==</xcpt:Base64CharSequence>\r\n"
 			+ "        </xcpt:Data>\r\n"
-			+ "    </ns6:TransportBody>\r\n"
-			+ "</ns6:Transport>";
+			+ "    </xreq:TransportBody>\r\n"
+			+ "</xreq:Transport>";
+
+	@Test(expected = XmlMappingException.class)
+	public final void testUnmarschallInvalidRequest()
+			throws XmlMappingException, IOException {
+		final InputStream inputStream = new ByteArrayInputStream(
+				invalidTestRequest.getBytes());
+		extraUnmarschaller.unmarshal(inputStream,
+				de.drv.dsrv.extrastandard.namespace.request.Transport.class);
+		Assert.fail("Expected XmlMappingException");
+
+	}
+
+	private final String invalidTestRequest = "<xreq:Transport xmlns:xcpt=\"http://www.extra-standard.de/namespace/components/1\" xmlns:xreq=\"http://www.extra-standard.de/namespace/request/1\" xmlns:xenc=\"http://www.w3.org/2001/04/xmlenc#\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:xlog=\"http://www.extra-standard.de/namespace/logging/1\" xmlns:xres=\"http://www.extra-standard.de/namespace/response/1\" xmlns:xplg=\"http://www.extra-standard.de/namespace/plugins/1\" xmlns:xmsg=\"http://www.extra-standard.de/namespace/message/1\" xmlns:xsrv=\"http://www.extra-standard.de/namespace/service/1\"  profile=\"http://code.google.com/p/extra-standard/profile/1\">\r\n"
+			+ "    <xreq:TransportHeader>\r\n"
+			+ "        <xcpt:TestIndicator>http://www.extra-standard.de/test/NONE</xcpt:TestIndicator>\r\n"
+			+ "        <xcpt:Sender>\r\n"
+			+ "            <xcpt:SenderID>ec-1</xcpt:SenderID>\r\n"
+			+ "            <xcpt:Name>eXTra-Client</xcpt:Name>\r\n"
+			+ "        </xcpt:Sender>\r\n"
+			+ "        <xcpt:Receiver>\r\n"
+			+ "            <xcpt:ReceiverID>es-1</xcpt:ReceiverID>\r\n"
+			+ "            <xcpt:Name>eXTra-Server</xcpt:Name>\r\n"
+			+ "        </xcpt:Receiver>\r\n"
+			+ "        <xcpt:RequestDetails>\r\n"
+			+ "            <xcpt:RequestID>STMELD_AUSL_11</xcpt:RequestID>\r\n"
+			+ "            <xcpt:TimeStamp>2012-12-24T11:17:33</xcpt:TimeStamp>\r\n"
+			+ "            <xcpt:Application>\r\n"
+			+ "                <xcpt:Product>eXTra Klient OpenSource</xcpt:Product>\r\n"
+			+ "                <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>\r\n"
+			+ "                <xcpt:RegistrationID/>\r\n"
+			+ "            </xcpt:Application>\r\n"
+			+ "            <xcpt:Procedure>http://www.extra-standard.de/procedures/SterbemeldungAusland</xcpt:Procedure>\r\n"
+			+ "            <xcpt:DataType>http://www.extra-standard.de/datatypes/DataSend</xcpt:DataType>\r\n"
+			+ "            <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-acknowledgement</xcpt:Scenario>\r\n"
+			+ "        </xcpt:RequestDetails>\r\n"
+			+ "    </xreq:TransportHeader>\r\n"
+			+ "    <xreq:TransportPlugIns/>\r\n"
+			+ "    <xreq:TransportBody>\r\n"
+			+ "        <xcpt:Data>\r\n"
+			+ "            <xcpt:Base64CharSequence>VTNSbGNtSmxaR0YwWlc0Z015QkpkR0ZzYVdWdQ==</xcpt:Base64CharSequence>\r\n"
+			+ "        </xcpt:Data>\r\n"
+			+ "    </xreq:TransportBody>\r\n"
+			+ "</xreq:Transport>";
 
 }
