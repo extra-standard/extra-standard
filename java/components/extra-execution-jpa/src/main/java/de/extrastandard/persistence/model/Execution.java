@@ -100,7 +100,7 @@ public class Execution extends AbstractEntity implements IExecution {
 	@Column(name = "error_code")
 	private String errorCode;
 
-	@Column(name = "error_message")
+	@Column(name = "error_message", length = 10000)
 	private String errorMessage;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -189,6 +189,12 @@ public class Execution extends AbstractEntity implements IExecution {
 	public void failed(final String errorCode, final String errorMessage) {
 		try {
 			this.errorCode = errorCode;
+			String truncatedErrorMessage = errorMessage;
+			if (org.apache.commons.lang.StringUtils.isNotEmpty(errorMessage)
+					&& errorMessage.length() > 255) {
+				truncatedErrorMessage = errorMessage.substring(0, 254);
+			}
+			this.errorMessage = truncatedErrorMessage;
 			this.errorMessage = errorMessage;
 			updateProgress(PersistentStatus.FAIL);
 			// InputData bzw. PhasenConnection updaten
@@ -243,17 +249,17 @@ public class Execution extends AbstractEntity implements IExecution {
 	 * @param comProt
 	 * @param responseData
 	 */
-	private void processResponseData(CommunicationProtocol comProt,
+	private void processResponseData(final CommunicationProtocol comProt,
 			final IResponseData responseData) {
 		final String requestId = comProt.getRequestId();
 		int nummerResponse = 1;
 		// für jede Response muss ein InputData Objekt angelegt werden
 		// (21.11.12) kein Ergebnis muss auch moeglich sein!
-		Collection<ISingleResponseData> responseDataCollection = responseData
+		final Collection<ISingleResponseData> responseDataCollection = responseData
 				.getResponse(requestId);
 		// Liegen fuer diesen Request Ergebnisse vor?
 		if (responseDataCollection != null) {
-			for (ISingleResponseData singleResponseData : responseDataCollection) {
+			for (final ISingleResponseData singleResponseData : responseDataCollection) {
 				if (nummerResponse == 1) {
 					// vorhandenes CommunicationProtocol Objekt nehmen und
 					// Kommunikationsdaten
@@ -262,7 +268,7 @@ public class Execution extends AbstractEntity implements IExecution {
 					processPhaseConnectionForInputData(comProt);
 				} else {
 					// neues InputData Objekt erzeugen
-					CommunicationProtocol comProtForResponse = new CommunicationProtocol(
+					final CommunicationProtocol comProtForResponse = new CommunicationProtocol(
 							comProt, singleResponseData);
 					processPhaseConnectionForInputData(comProtForResponse);
 				}
@@ -282,11 +288,12 @@ public class Execution extends AbstractEntity implements IExecution {
 	 * @param communicationProtocol
 	 */
 	private void processPhaseConnectionForInputData(
-			CommunicationProtocol communicationProtocol) {
+			final CommunicationProtocol communicationProtocol) {
 		// (14.11.12) Nur bei erfolgreicher Verarbeitung darf die nächste Phase
 		// vorbereitet werden!
-		// (18.12.12) Auch im Zustand 'WAIT' wird die naechste Phase vorbereitet!
-		
+		// (18.12.12) Auch im Zustand 'WAIT' wird die naechste Phase
+		// vorbereitet!
+
 		if (communicationProtocol.isSuccessfulOrWait()
 				&& !this.procedure.isProcedureEndPhase(this.phase)) {
 			final String nextPhasenQualifier = this.procedure
