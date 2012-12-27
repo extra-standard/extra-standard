@@ -26,14 +26,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.extrastandard.namespace.components.ElementSequenceType;
-import de.drv.dsrv.extrastandard.namespace.messages.ListOfConfirmationOfReceipt;
+import de.drv.dsrv.extrastandard.namespace.messages.ConfirmationOfReceipt;
 import de.drv.dsrv.extrastandard.namespace.messages.PropertySet;
 import de.drv.dsrv.extrastandard.namespace.messages.Value;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
 import de.extra.client.core.model.inputdata.impl.DbQueryInputDataContainer;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
-import de.extrastandard.api.model.content.IDbQueryInputData;
 
 /**
  * @author Leonid Potap
@@ -48,6 +48,8 @@ public class TransportBodyRequestConfirmationOfReceiptSequenceBuilder extends
 	 */
 	private static final String PROPERTY_NAME_RESPONSE_ID = "http://www.extra-standard.de/property/ResponseID";
 
+	private static final String VERSION_OF_CONFIRMATIONOFRECEIPT = "1.4";
+
 	private final static Logger LOG = LoggerFactory
 			.getLogger(TransportBodyRequestConfirmationOfReceiptSequenceBuilder.class);
 
@@ -59,32 +61,31 @@ public class TransportBodyRequestConfirmationOfReceiptSequenceBuilder extends
 		LOG.debug("xcpt:ElementSequence aufbauen");
 		// TODO DataRequest anders aufbauen. Der sollte über die Nutzdaten zu
 		// ziehen sein.
-		final ListOfConfirmationOfReceipt listOfConfirmationOfReceipt = createConfirmationOfReceipt(senderData);
+		final ConfirmationOfReceipt confirmationOfReceipt = createConfirmationOfReceipt(senderData);
 		final ElementSequenceType elementSequence = new ElementSequenceType();
-		elementSequence.getAny().add(listOfConfirmationOfReceipt);
+		elementSequence.getAny().add(confirmationOfReceipt);
 		return elementSequence;
 	}
 
-	private ListOfConfirmationOfReceipt createConfirmationOfReceipt(
+	private ConfirmationOfReceipt createConfirmationOfReceipt(
 			final IInputDataContainer senderData) {
 		final DbQueryInputDataContainer dbQueryInputData = senderData
 				.cast(DbQueryInputDataContainer.class);
-		final ListOfConfirmationOfReceipt listOfConfirmationOfReceipt = new ListOfConfirmationOfReceipt();
+
 		final List<IDbQueryInputData> singleDBQueryinputDataList = dbQueryInputData
 				.getInputData();
-		final ListOfConfirmationOfReceipt.ConfirmationOfReceipt confirmationOfReceipt = new ListOfConfirmationOfReceipt.ConfirmationOfReceipt();
+		final ConfirmationOfReceipt confirmationOfReceipt = new ConfirmationOfReceipt();
+		confirmationOfReceipt.setVersion(VERSION_OF_CONFIRMATIONOFRECEIPT);
 		final PropertySet valuePropertySet = new PropertySet();
 		valuePropertySet.setName(PROPERTY_NAME_RESPONSE_ID);
 		final List<Value> valueList = valuePropertySet.getValue();
 		confirmationOfReceipt.setPropertySet(valuePropertySet);
-		listOfConfirmationOfReceipt.getConfirmationOfReceipt().add(
-				confirmationOfReceipt);
 		for (final IDbQueryInputData singleDBQueryInputData : singleDBQueryinputDataList) {
 			final Value value = new Value();
 			value.setValue(singleDBQueryInputData.getSourceResponceId());
 			valueList.add(value);
 		}
-		return listOfConfirmationOfReceipt;
+		return confirmationOfReceipt;
 	}
 
 	@Override
