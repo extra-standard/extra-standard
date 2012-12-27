@@ -107,7 +107,7 @@
 						</goals>
 						<configuration>
 							<strict>false</strict>
-							<schemaDirectory>src/main/xsd</schemaDirectory>
+							<schemaDirectory>src/main/resources/xsd</schemaDirectory>
 							<schemaIncludes>
 								<value>eXTra-messages-1.xsd</value>
 								<value>eXTra-plugins-1.xsd</value>
