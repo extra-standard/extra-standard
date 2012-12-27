@@ -18,12 +18,9 @@
  */
 package de.extra.client.core.builder.impl.components;
 
-import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.inject.Named;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,7 +87,7 @@ public class TransportHeaderRequestDetailsBuilder implements
 		final String requestIDString = senderData.getRequestId();
 		requestId.setValue(requestIDString);
 		requestDetails.setRequestID(requestId);
-		requestDetails.setTimeStamp(CreateCurrentTimestamp());
+		requestDetails.setTimeStamp(new GregorianCalendar());
 
 		// Controllerinformation
 		requestDetails.setProcedure(requestDetailProcedure);
@@ -107,26 +104,26 @@ public class TransportHeaderRequestDetailsBuilder implements
 	 * 
 	 * @return XMLGregorianCalendar mit aktuellem Datum
 	 */
-	private XMLGregorianCalendar CreateCurrentTimestamp() {
-		XMLGregorianCalendar timestamp = null;
-
-		try {
-			timestamp = DatatypeFactory.newInstance().newXMLGregorianCalendar();
-		} catch (final DatatypeConfigurationException e) {
-			LOG.error(e.getMessage());
-		}
-
-		final Calendar now = Calendar.getInstance();
-		timestamp.setDay(now.get(Calendar.DAY_OF_MONTH));
-		// We do a +1 below because XMLGregorianCalendar goes from 1 to 12
-		// while Calendar.MONTH goes from 0 to 11 !!!
-		timestamp.setMonth(now.get(Calendar.MONTH) + 1);
-		timestamp.setYear(now.get(Calendar.YEAR));
-		timestamp.setTime(now.get(Calendar.HOUR_OF_DAY),
-				now.get(Calendar.MINUTE), now.get(Calendar.SECOND));
-
-		return timestamp;
-	}
+	// private XMLGregorianCalendar CreateCurrentTimestamp() {
+	// XMLGregorianCalendar timestamp = null;
+	//
+	// try {
+	// timestamp = DatatypeFactory.newInstance().newXMLGregorianCalendar();
+	// } catch (final DatatypeConfigurationException e) {
+	// LOG.error(e.getMessage());
+	// }
+	//
+	// final Calendar now = Calendar.getInstance();
+	// timestamp.setDay(now.get(Calendar.DAY_OF_MONTH));
+	// // We do a +1 below because XMLGregorianCalendar goes from 1 to 12
+	// // while Calendar.MONTH goes from 0 to 11 !!!
+	// timestamp.setMonth(now.get(Calendar.MONTH) + 1);
+	// timestamp.setYear(now.get(Calendar.YEAR));
+	// timestamp.setTime(now.get(Calendar.HOUR_OF_DAY),
+	// now.get(Calendar.MINUTE), now.get(Calendar.SECOND));
+	//
+	// return timestamp;
+	// }
 
 	@Override
 	public String getXmlType() {
