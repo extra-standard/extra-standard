@@ -35,8 +35,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.config.impl.ExtraProfileConfiguration;
 import de.extra.client.core.model.inputdata.impl.ContentInputDataContainer;
-import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IContentInputDataContainer;
+import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 
 /**
  * Test for ExtraRequestBuilder.
@@ -88,9 +88,11 @@ public class ExtraRequestFileInputBase64CharSequenceBuilderIT {
 	private ExtraProfileConfiguration createConfigFileBeanForElementSequenceWithListOfConfirmationOfReceipt() {
 		final ExtraProfileConfiguration config = extraRequestBuilderITBasic
 				.createTransportBodyWithDataConfigFileBean(requiredXmlType);
-		config.addElementsHierarchyMap("TransportPlugins", "xplg:DataSource");
+
 		config.addElementsHierarchyMap("Data", "xcpt:Base64CharSequence");
+
+		config.addElementsHierarchyMap("TransportPlugins", "xplg:DataSource");
+
 		return config;
 	}
-
 }
