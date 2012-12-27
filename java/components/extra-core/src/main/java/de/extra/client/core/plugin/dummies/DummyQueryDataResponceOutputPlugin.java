@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -40,15 +41,18 @@ import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.util.Assert;
 
+import de.drv.dsrv.extra.schemaversion.ExtraSchemaVersion;
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
 import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.drv.dsrv.extrastandard.namespace.components.ElementSequenceType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagCodeType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
+import de.drv.dsrv.extrastandard.namespace.components.ReceiverType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
+import de.drv.dsrv.extrastandard.namespace.components.SenderType;
 import de.drv.dsrv.extrastandard.namespace.components.TextType;
 import de.drv.dsrv.extrastandard.namespace.messages.DataRequest;
 import de.drv.dsrv.extrastandard.namespace.messages.DataRequestArgument;
@@ -79,6 +83,8 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(DummyQueryDataResponceOutputPlugin.class);
+
+	private static final String TEST_INDICATOR = "http://www.extra-standard.de/test/NONE";
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -129,12 +135,19 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 			final String requestId = requestXml.getTransportHeader()
 					.getRequestDetails().getRequestID().getValue();
 			final de.drv.dsrv.extrastandard.namespace.response.Transport response = new de.drv.dsrv.extrastandard.namespace.response.Transport();
+			response.setVersion(ExtraSchemaVersion.CURRENT_SCHEMA_VERSION
+					.getVersion());
+			response.setProfile("http://code.google.com/p/extra-standard/profile/1");
 			final TransportHeader transportHeader = new TransportHeader();
+			transportHeader.setTestIndicator(TEST_INDICATOR);
 			final ResponseDetailsType responseDetailsType = new ResponseDetailsType();
+			responseDetailsType.setTimeStamp(new GregorianCalendar());
 			final ClassifiableIDType idType = new ClassifiableIDType();
 			idType.setValue("42");
 			responseDetailsType.setResponseID(idType);
 			final ReportType reportType = createPositiveReportType();
+			reportType
+					.setHighestWeight("http://www.extra-standard.de/weight/OK");
 			responseDetailsType.setReport(reportType);
 			transportHeader.setResponseDetails(responseDetailsType);
 			final RequestDetailsType requestDetailsType = new RequestDetailsType();
@@ -143,6 +156,10 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 			requestDetailsType.setRequestID(requestIdType);
 			transportHeader.setRequestDetails(requestDetailsType);
 			response.setTransportHeader(transportHeader);
+			final SenderType sender = createDummySender();
+			transportHeader.setSender(sender);
+			final ReceiverType receiver = createDummyReceiver();
+			transportHeader.setReceiver(receiver);
 			final de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader = new de.drv.dsrv.extrastandard.namespace.request.TransportHeader();
 			requestHeader.setRequestDetails(requestDetailsType);
 			final ITransportInfo transportInfo = transportInfoBuilder
@@ -155,7 +172,11 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 				final PackageBody packageBody = createDummyBodyResponse(queryArgument);
 				trancportBodyPackage.setPackageBody(packageBody);
 				final PackageHeader packageHeader = new PackageHeader();
-
+				packageHeader.setTestIndicator(TEST_INDICATOR);
+				final SenderType dummyPackageSender = createDummySender();
+				packageHeader.setSender(dummyPackageSender);
+				final ReceiverType dummyPackageReceiver = createDummyReceiver();
+				packageHeader.setReceiver(dummyPackageReceiver);
 				// Dummy ResponseId
 				final ClassifiableIDType packageHeaderResponseDetailsIdType = new ClassifiableIDType();
 				packageHeaderResponseDetailsIdType.setValue(queryArgument);
@@ -174,8 +195,10 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 				packageHeader.setRequestDetails(headerRequestDetailsType);
 
 				final ReportType packageReportType = createPositiveReportType();
-				packageResponseDetailsType.setReport(packageReportType);
 
+				packageResponseDetailsType.setReport(packageReportType);
+				packageResponseDetailsType
+						.setTimeStamp(new GregorianCalendar());
 				trancportBodyPackage.setPackageHeader(packageHeader);
 				transportBody.getPackage().add(trancportBodyPackage);
 			}
@@ -190,14 +213,46 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 	}
 
 	/**
+	 * @return
+	 */
+	private ReceiverType createDummyReceiver() {
+		final ReceiverType receiver = new ReceiverType();
+		final TextType receiverName = new TextType();
+		receiverName.setValue("TEST_RECEIVER");
+		final ClassifiableIDType receiverId = new ClassifiableIDType();
+		receiverId.setValue("RECEIVER_ID");
+		receiverId.setClazz("TEST_CLASS");
+		receiver.setReceiverID(receiverId);
+		receiver.setName(receiverName);
+		return receiver;
+	}
+
+	/**
+	 * @return
+	 */
+	private SenderType createDummySender() {
+		final SenderType sender = new SenderType();
+		final TextType testSender = new TextType();
+		testSender.setValue("TEST SENDER");
+		sender.setName(testSender);
+		final ClassifiableIDType senderId = new ClassifiableIDType();
+		senderId.setValue("SENDER_ID");
+		senderId.setClazz("TestClass");
+		sender.setSenderID(senderId);
+		return sender;
+	}
+
+	/**
 	 * @param responseDetailsType
 	 */
 	private ReportType createPositiveReportType() {
 		final ReportType reportType = new ReportType();
+		reportType.setHighestWeight("http://www.extra-standard.de/weight/OK");
 		final FlagType flagType = new FlagType();
 		final FlagCodeType flagCodeType = new FlagCodeType();
 		flagCodeType.setValue("C00");
 		flagType.setCode(flagCodeType);
+		flagType.setWeight("http://www.extra-standard.de/weight/OK");
 		final TextType flagCodeText = new TextType();
 		flagCodeText.setValue("O.K.");
 		flagType.setText(flagCodeText);
@@ -287,13 +342,13 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 			// (z.B. 32,33,34) generiert
 			assignableOperand = true;
 			final Operand operand = (Operand) operandSetObject;
-			String operandValue = operand.getValue();
+			final String operandValue = operand.getValue();
 			try {
-				long operandValueAsLong = Long.parseLong(operandValue);
+				final long operandValueAsLong = Long.parseLong(operandValue);
 				for (long respId = operandValueAsLong + 1; respId <= operandValueAsLong + 3; respId++) {
 					queryArgumentList.add(String.valueOf(respId));
 				}
-			} catch (NumberFormatException ex) {
+			} catch (final NumberFormatException ex) {
 				// Anderes Fachverfahren?
 				queryArgumentList.add(operandValue);
 			}

@@ -18,12 +18,7 @@
  */
 package de.extra.client.core.model;
 
-import java.util.Date;
 import java.util.GregorianCalendar;
-
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 import de.drv.dsrv.extrastandard.namespace.plugins.AbstractPlugInType;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataContainerType;
@@ -35,17 +30,16 @@ public class DataSourcePluginHelper extends PluginHelperBase {
 
 	@Override
 	public AbstractPlugInType getPluginElement(
-			IInputDataPluginDescription plugindatenBean) {
-		DataSourcePluginDescription dataSourcePluginBean = (DataSourcePluginDescription) plugindatenBean;
+			final IInputDataPluginDescription plugindatenBean) {
+		final DataSourcePluginDescription dataSourcePluginBean = (DataSourcePluginDescription) plugindatenBean;
 
-		DataSource dataSource = new DataSource();
-		DataContainerType dataContainer = new DataContainerType();
+		final DataSource dataSource = new DataSource();
+		final DataContainerType dataContainer = new DataContainerType();
 
 		// Fuellen des DataContainers
 
 		dataContainer.setEncoding(dataSourcePluginBean.getDsEncoding());
-		dataContainer.setCreated(formatCreateDate(dataSourcePluginBean
-				.getDsCreated()));
+		dataContainer.setCreated(new GregorianCalendar());
 		dataContainer.setType(dataSourcePluginBean.getDsType());
 		dataContainer.setName(dataSourcePluginBean.getDsName());
 
@@ -54,17 +48,17 @@ public class DataSourcePluginHelper extends PluginHelperBase {
 		return dataSource;
 	}
 
-	private XMLGregorianCalendar formatCreateDate(Date datum) {
-		GregorianCalendar c = new GregorianCalendar();
-		c.setTime(datum);
-		XMLGregorianCalendar datumXML = null;
-		try {
-			datumXML = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
-		} catch (DatatypeConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return datumXML;
-	}
+	// private XMLGregorianCalendar formatCreateDate(final Date datum) {
+	// final GregorianCalendar c = new GregorianCalendar();
+	// c.setTime(datum);
+	// XMLGregorianCalendar datumXML = null;
+	// try {
+	// datumXML = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+	// } catch (final DatatypeConfigurationException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	//
+	// return datumXML;
+	// }
 }

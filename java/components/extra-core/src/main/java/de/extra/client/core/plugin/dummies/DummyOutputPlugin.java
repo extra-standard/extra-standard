@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.GregorianCalendar;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,13 +34,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 
+import de.drv.dsrv.extra.schemaversion.ExtraSchemaVersion;
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagCodeType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
+import de.drv.dsrv.extrastandard.namespace.components.ReceiverType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
+import de.drv.dsrv.extrastandard.namespace.components.SenderType;
+import de.drv.dsrv.extrastandard.namespace.components.TextType;
 import de.drv.dsrv.extrastandard.namespace.response.Transport;
+import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extrastandard.api.observer.ITransportInfo;
@@ -55,6 +61,8 @@ public class DummyOutputPlugin implements IOutputPlugin {
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(DummyOutputPlugin.class);
+
+	private static final String TEST_INDICATOR = "http://www.extra-standard.de/test/NONE";
 
 	@Inject
 	@Named("eXTrajaxb2Marshaller")
@@ -104,16 +112,27 @@ public class DummyOutputPlugin implements IOutputPlugin {
 		final String requestId = dummyOutputPluginUtil
 				.extractRequestId(request);
 		final Transport response = new Transport();
+		response.setVersion(ExtraSchemaVersion.CURRENT_SCHEMA_VERSION
+				.getVersion());
+
+		response.setProfile("http://code.google.com/p/extra-standard/profile/1");
 		final TransportHeader transportHeader = new TransportHeader();
+		transportHeader.setTestIndicator(TEST_INDICATOR);
 		final ResponseDetailsType responseDetailsType = new ResponseDetailsType();
 		final ClassifiableIDType idType = new ClassifiableIDType();
 		idType.setValue("42");
 		responseDetailsType.setResponseID(idType);
+		responseDetailsType.setTimeStamp(new GregorianCalendar());
 		final ReportType reportType = new ReportType();
+		reportType.setHighestWeight("http://www.extra-standard.de/weight/OK");
 		final FlagType flagType = new FlagType();
 		final FlagCodeType flagCodeType = new FlagCodeType();
 		flagCodeType.setValue("C00");
 		flagType.setCode(flagCodeType);
+		final TextType flagText = new TextType();
+		flagText.setValue("O.K");
+		flagType.setText(flagText);
+		flagType.setWeight("http://www.extra-standard.de/weight/OK");
 		reportType.getFlag().add(flagType);
 		responseDetailsType.setReport(reportType);
 		transportHeader.setResponseDetails(responseDetailsType);
@@ -123,7 +142,27 @@ public class DummyOutputPlugin implements IOutputPlugin {
 		requestDetailsType.setRequestID(requestIdType);
 		transportHeader.setRequestDetails(requestDetailsType);
 		response.setTransportHeader(transportHeader);
+		final SenderType sender = new SenderType();
+		final TextType testSender = new TextType();
+		testSender.setValue("TEST SENDER");
+		sender.setName(testSender);
+		final ClassifiableIDType senderId = new ClassifiableIDType();
+		senderId.setValue("SENDER_ID");
+		senderId.setClazz("TestClass");
+		sender.setSenderID(senderId);
+		transportHeader.setSender(sender);
+		final ReceiverType receiver = new ReceiverType();
+		final TextType receiverName = new TextType();
+		receiverName.setValue("TEST_RECEIVER");
+		final ClassifiableIDType receiverId = new ClassifiableIDType();
+		receiverId.setValue("RECEIVER_ID");
+		receiverId.setClazz("TEST_CLASS");
+		receiver.setReceiverID(receiverId);
+		receiver.setName(receiverName);
+		transportHeader.setReceiver(receiver);
 
+		final TransportBody transportBody = new TransportBody();
+		response.setTransportBody(transportBody);
 		final de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader = new de.drv.dsrv.extrastandard.namespace.request.TransportHeader();
 		requestHeader.setRequestDetails(requestDetailsType);
 		final ITransportInfo transportInfo = transportInfoBuilder

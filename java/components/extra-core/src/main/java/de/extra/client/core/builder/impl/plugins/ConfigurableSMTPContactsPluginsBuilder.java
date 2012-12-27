@@ -62,6 +62,7 @@ public class ConfigurableSMTPContactsPluginsBuilder extends
 	public Object buildXmlFragment(final IInputDataContainer senderData,
 			final IExtraProfileConfiguration config) {
 		final ContactType contactType = new ContactType();
+		contactType.setUsageHint("USAGE_HINT");
 		final EndpointType endpointType = new EndpointType();
 		endpointType.setType(EndpointTypeType.SMTP);
 		endpointType.setValue(eMailAddress);
