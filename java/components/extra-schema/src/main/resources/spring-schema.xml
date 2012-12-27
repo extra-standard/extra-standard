@@ -28,6 +28,7 @@
 	<bean id="eXTrajaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
 		<property name="contextPath"
 			value="de.drv.dsrv.extrastandard.namespace.request:de.drv.dsrv.extrastandard.namespace.response:de.drv.dsrv.extrastandard.namespace.plugins:de.drv.dsrv.extrastandard.namespace.messages:de.drv.dsrv.extrastandard.namespace.error" />
+		<!--  --><property name="schemas" ref="schemaList"  />
 		<property name="marshallerProperties">
 			<map>
 				<entry key="jaxb.encoding">
@@ -42,7 +43,21 @@
 				<entry key="com.sun.xml.bind.namespacePrefixMapper" value-ref="namespacePrefixMapper" />
 			</map>
 		</property>
+		<property name="schemaLanguage" value="http://www.w3.org/2001/XMLSchema" />
 	</bean>
+	
+
+	
+	
+
+	<!-- schema list -->
+	<util:list id="schemaList"> 
+		<value>classpath:xsd/eXTra-request-1.xsd</value> 
+		<value>classpath:xsd/eXTra-response-1.xsd</value> 
+		<value>classpath:xsd/eXTra-messages-1.xsd</value> 
+		<value>classpath:xsd/eXTra-error-1.xsd</value> 
+		<value>classpath:xsd/eXTra-plugins-1.xsd</value> 
+	</util:list> 
 	
 	<context:component-scan base-package="de.drv.dsrv.extra" />
 </beans>
