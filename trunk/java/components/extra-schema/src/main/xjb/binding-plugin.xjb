@@ -7,34 +7,34 @@
     jxb:extensionBindingPrefixes="xjc annox"
     version="2.1">
     
-    <jxb:bindings schemaLocation="../xsd/eXTra-plugins-1.xsd" node="/xs:schema">
+    <jxb:bindings schemaLocation="../resources/xsd/eXTra-plugins-1.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.plugins"/>
         </jxb:schemaBindings>
     </jxb:bindings>
     
-  	<jxb:bindings schemaLocation="../xsd/eXTra-plugins-1.xsd" node="//xs:complexType[@name='DataTransformsType']">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-plugins-1.xsd" node="//xs:complexType[@name='DataTransformsType']">
     	<jxb:class name="DataTransforms"/>
     	<annox:annotate>
              <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"/>
          </annox:annotate>
 	</jxb:bindings> 
 
-  	<jxb:bindings schemaLocation="../xsd/eXTra-plugins-1.xsd" node="//xs:complexType[@name='DataSourceType']">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-plugins-1.xsd" node="//xs:complexType[@name='DataSourceType']">
     	<jxb:class name="DataSource"/>
     	  <annox:annotate>
-             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"/>
+             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="DataSource"/>
          </annox:annotate>
 	</jxb:bindings> 
 	
-  	<jxb:bindings schemaLocation="../xsd/eXTra-plugins-1.xsd" node="//xs:complexType[@name='ContactType']">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-plugins-1.xsd" node="//xs:complexType[@name='ContactType']">
     	<jxb:class name="ContactType"/>
     	  <annox:annotate>
-             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"/>
+             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="ContactType"/>
          </annox:annotate>
 	</jxb:bindings> 	
 
-    <jxb:bindings schemaLocation="../xsd/eXTra-codelists-1.xsd" node="/xs:schema">
+    <jxb:bindings schemaLocation="../resources/xsd/eXTra-codelists-1.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.codelists"/>
         </jxb:schemaBindings>

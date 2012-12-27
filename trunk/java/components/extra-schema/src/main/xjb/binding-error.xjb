@@ -7,13 +7,13 @@
     jxb:extensionBindingPrefixes="xjc annox"
     version="2.1">
     
-  	<jxb:bindings schemaLocation="../xsd/eXTra-error-1.xsd" node="/xs:schema">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-error-1.xsd" node="/xs:schema">
         <jxb:schemaBindings>
             <jxb:package name="de.drv.dsrv.extrastandard.namespace.error"/>
         </jxb:schemaBindings>
     </jxb:bindings>
 
-  	<jxb:bindings schemaLocation="../xsd/eXTra-error-1.xsd" node="//xs:complexType[@name='ExtraErrorType']">
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-error-1.xsd" node="//xs:complexType[@name='ExtraErrorType']">
     	<jxb:class name="Error"/>
     	<annox:annotate>
              <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"/>
