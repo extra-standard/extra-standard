@@ -112,7 +112,6 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 
 			printResult(extraResponse);
 
-			// TODO Validierungsmodul
 			final TransportHeader transportHeader = extraResponse
 					.getTransportHeader();
 			Assert.notNull(transportHeader,
@@ -149,14 +148,16 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 			final boolean returnCodeSuccessful = extraReturnCodeAnalyser
 					.isReturnCodeSuccessful(returnCode);
 			// Status (DONE oder FAIL)
-			PersistentStatus persistentStatus = returnCodeSuccessful ? PersistentStatus.DONE : PersistentStatus.FAIL;
-			
-			// (17.12.12) keine Server Daten -> kein OutputIdentifier 
-			String outputIdentifier = null;
-			
+			final PersistentStatus persistentStatus = returnCodeSuccessful ? PersistentStatus.DONE
+					: PersistentStatus.FAIL;
+
+			// (17.12.12) keine Server Daten -> kein OutputIdentifier
+			final String outputIdentifier = null;
+
 			final ISingleResponseData singleResponseData = new SingleResponseData(
 					requestId, returnCode, reportData.getReturnText(),
-					responseId, returnCodeSuccessful, persistentStatus, outputIdentifier);
+					responseId, returnCodeSuccessful, persistentStatus,
+					outputIdentifier);
 			responseData.addSingleResponse(singleResponseData);
 
 		} catch (final XmlMappingException xmlMappingException) {
@@ -174,7 +175,9 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(extraResponse, streamResult);
-			logger.debug("ExtraResponse: " + ExtraMessageReturnDataExtractor.NEW_LINE + writer.toString());
+			logger.debug("ExtraResponse: "
+					+ ExtraMessageReturnDataExtractor.NEW_LINE
+					+ writer.toString());
 		} catch (final XmlMappingException xmlException) {
 			logger.debug("XmlMappingException beim Lesen des Results ",
 					xmlException);
