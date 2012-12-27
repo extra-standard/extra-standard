@@ -61,7 +61,7 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "phase_connection_entity_seq_gen")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "phase_connection_entity_seq_gen")
 	@SequenceGenerator(name = "phase_connection_entity_seq_gen", sequenceName = "seq_phase_connection_id")
 	private Long id;
 
