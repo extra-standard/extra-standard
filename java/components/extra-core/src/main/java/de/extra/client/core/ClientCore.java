@@ -26,7 +26,6 @@ import java.io.InputStream;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.naming.CommunicationException;
 import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.Logger;
@@ -51,16 +50,15 @@ import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.model.content.ISingleInputData;
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
-import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.api.plugin.IConfigPlugin;
 import de.extrastandard.api.plugin.IDataPlugin;
 import de.extrastandard.api.plugin.IOutputPlugin;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
-import de.extrastandard.api.util.IExtraReturnCodeAnalyser;
 
 @Named("clientCore")
 public class ClientCore implements ApplicationContextAware {
@@ -265,8 +263,12 @@ public class ClientCore implements ApplicationContextAware {
 	}
 
 	// (14.12.12) Externer Aufruf
-	public boolean changeCommunicationProtocolStatusByOutputIdentifier(String outputIdentifier, PersistentStatus persistentStatus) {
-		boolean success = executionPersistence.changeCommunicationProtocolStatusByOutputIdentifier(outputIdentifier, persistentStatus);
+	public boolean changeCommunicationProtocolStatusByOutputIdentifier(
+			final String outputIdentifier,
+			final PersistentStatus persistentStatus) {
+		final boolean success = executionPersistence
+				.changeCommunicationProtocolStatusByOutputIdentifier(
+						outputIdentifier, persistentStatus);
 		return success;
 	}
 }
