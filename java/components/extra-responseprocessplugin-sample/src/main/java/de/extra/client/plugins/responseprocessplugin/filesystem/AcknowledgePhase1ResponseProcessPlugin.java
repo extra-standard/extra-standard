@@ -29,10 +29,10 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.util.Assert;
 
+import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
@@ -72,8 +72,8 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 			.getLogger(AcknowledgePhase1ResponseProcessPlugin.class);
 
 	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Marshaller marshaller;
+	@Named("extraMarschaller")
+	private IExtraMarschaller marshaller;
 
 	@Inject
 	@Named("extraUnmarschaller")

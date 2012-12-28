@@ -36,9 +36,9 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.XmlMappingException;
 
+import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
 import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
@@ -74,8 +74,8 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			.getLogger(FileSystemResponseProcessPlugin.class);
 
 	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Marshaller marshaller;
+	@Named("extraMarschaller")
+	private IExtraMarschaller marshaller;
 
 	@Inject
 	@Named("extraUnmarschaller")
@@ -157,14 +157,16 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 					final boolean returnCodeSuccessful = extraReturnCodeAnalyser
 							.isReturnCodeSuccessful(returnCode);
 					// Status (DONE oder FAIL)
-					PersistentStatus persistentStatus = returnCodeSuccessful ? PersistentStatus.DONE : PersistentStatus.FAIL;
-					
-					String outputIdentifier = baueDateiname();
-					
+					final PersistentStatus persistentStatus = returnCodeSuccessful ? PersistentStatus.DONE
+							: PersistentStatus.FAIL;
+
+					final String outputIdentifier = baueDateiname();
+
 					final ISingleResponseData singleResponseData = new SingleResponseData(
 							requestDetails.getRequestID().getValue(),
 							returnCode, reportData.getReturnText(), responseId,
-							returnCodeSuccessful, persistentStatus, outputIdentifier);
+							returnCodeSuccessful, persistentStatus,
+							outputIdentifier);
 					responseData.addSingleResponse(singleResponseData);
 
 				} else {
@@ -214,7 +216,8 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 				saveReportToFilesystem(report, responseId, requestId);
 
 				final ISingleResponseData singleResponseData = new SingleResponseData(
-						requestId, "C00", "RETURNTEXT", responseId, true, PersistentStatus.DONE, "OUTPUT-ID");
+						requestId, "C00", "RETURNTEXT", responseId, true,
+						PersistentStatus.DONE, "OUTPUT-ID");
 				responseData.addSingleResponse(singleResponseData);
 				LOG.info("Body leer");
 			}
@@ -234,7 +237,9 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(extraResponse, streamResult);
-			LOG.debug("ExtraResponse: " + ExtraMessageReturnDataExtractor.NEW_LINE + writer.toString());
+			LOG.debug("ExtraResponse: "
+					+ ExtraMessageReturnDataExtractor.NEW_LINE
+					+ writer.toString());
 		} catch (final XmlMappingException xmlException) {
 			LOG.debug("XmlMappingException beim Lesen des Results ",
 					xmlException);
