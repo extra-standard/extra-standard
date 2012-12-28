@@ -17,14 +17,17 @@ public class CriteriaQueryInputDataContainer extends InputDataContainer
 		super();
 	}
 
-	public CriteriaQueryInputDataContainer(String aArgument,
-			QueryArgumentType aQueryArgumentType, String aProcedureName, String aSubquery) {
+	public CriteriaQueryInputDataContainer(final String aArgument,
+			final QueryArgumentType aQueryArgumentType,
+			final String aProcedureName, final String aSubquery) {
 		super();
-		addDBSingleQueryInputData(aArgument, aQueryArgumentType, aProcedureName, aSubquery);
+		addDBSingleQueryInputData(aArgument, aQueryArgumentType,
+				aProcedureName, aSubquery);
 	}
 
-	private void addDBSingleQueryInputData(String aArgument,
-			QueryArgumentType aQueryArgumentType, String aProcedureName, String aSubquery) {
+	private void addDBSingleQueryInputData(final String aArgument,
+			final QueryArgumentType aQueryArgumentType,
+			final String aProcedureName, final String aSubquery) {
 		final ICriteriaQueryInputData singleDBQueryInputData = new CriteriaQueryInputData(
 				aArgument, aQueryArgumentType, aProcedureName, aSubquery);
 		iDbSingleQueryInputDataList.add(singleDBQueryInputData);
@@ -45,6 +48,23 @@ public class CriteriaQueryInputDataContainer extends InputDataContainer
 		final List<ISingleInputData> content = new ArrayList<ISingleInputData>(
 				iDbSingleQueryInputDataList);
 		return content;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+		builder.append("CriteriaQueryInputDataContainer [");
+		if (iDbSingleQueryInputDataList != null) {
+			builder.append("iDbSingleQueryInputDataList=");
+			builder.append(iDbSingleQueryInputDataList);
+		}
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

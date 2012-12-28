@@ -7,18 +7,19 @@ public class CriteriaQueryInputData implements ICriteriaQueryInputData {
 
 	private static final String INPUT_DATA_TYPE = "DB_SINGLE_QUERY_INPUTDATA";
 
-	private String argument;
-	private QueryArgumentType queryArgumentType;
+	private final String argument;
+	private final QueryArgumentType queryArgumentType;
 
 	private String requestId;
-	private String inputIdentifier;
+	private final String inputIdentifier;
 
-	private String procedureName;
+	private final String procedureName;
 
-	private String subquery;
+	private final String subquery;
 
-	public CriteriaQueryInputData(String aArgument,
-			QueryArgumentType queryArgumentType, String aProcedureName, String subquery) {
+	public CriteriaQueryInputData(final String aArgument,
+			final QueryArgumentType queryArgumentType,
+			final String aProcedureName, final String subquery) {
 		super();
 		this.argument = aArgument;
 		this.queryArgumentType = queryArgumentType;
@@ -28,7 +29,7 @@ public class CriteriaQueryInputData implements ICriteriaQueryInputData {
 	}
 
 	@Override
-	public void setRequestId(String aRequestId) {
+	public void setRequestId(final String aRequestId) {
 		requestId = aRequestId;
 	}
 
@@ -65,6 +66,43 @@ public class CriteriaQueryInputData implements ICriteriaQueryInputData {
 	@Override
 	public String getSubquery() {
 		return subquery;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+		builder.append("CriteriaQueryInputData [");
+		if (argument != null) {
+			builder.append("argument=");
+			builder.append(argument);
+			builder.append(", ");
+		}
+		if (queryArgumentType != null) {
+			builder.append("queryArgumentType=");
+			builder.append(queryArgumentType);
+			builder.append(", ");
+		}
+		if (requestId != null) {
+			builder.append("requestId=");
+			builder.append(requestId);
+			builder.append(", ");
+		}
+		if (procedureName != null) {
+			builder.append("procedureName=");
+			builder.append(procedureName);
+			builder.append(", ");
+		}
+		if (subquery != null) {
+			builder.append("subquery=");
+			builder.append(subquery);
+		}
+		builder.append("]");
+		return builder.toString();
 	}
 
 }
