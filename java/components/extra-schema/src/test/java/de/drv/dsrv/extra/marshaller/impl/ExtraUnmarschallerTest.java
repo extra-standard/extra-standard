@@ -29,7 +29,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -45,10 +44,6 @@ public class ExtraUnmarschallerTest {
 	@Named("extraUnmarschaller")
 	private transient IExtraUnmarschaller extraUnmarschaller;
 
-	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Marshaller marshaller;
-
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -61,7 +56,8 @@ public class ExtraUnmarschallerTest {
 			final Transport unmarschall = extraUnmarschaller
 					.unmarshal(
 							inputStream,
-							de.drv.dsrv.extrastandard.namespace.request.Transport.class);
+							de.drv.dsrv.extrastandard.namespace.request.Transport.class,
+							true);
 			// Keine Exception und der Object nicht leer
 			Assert.assertNotNull("transport is null", unmarschall);
 		} catch (final XmlMappingException e) {
@@ -109,7 +105,8 @@ public class ExtraUnmarschallerTest {
 		final InputStream inputStream = new ByteArrayInputStream(
 				invalidTestRequest.getBytes());
 		extraUnmarschaller.unmarshal(inputStream,
-				de.drv.dsrv.extrastandard.namespace.request.Transport.class);
+				de.drv.dsrv.extrastandard.namespace.request.Transport.class,
+				true);
 		Assert.fail("Expected XmlMappingException");
 
 	}
