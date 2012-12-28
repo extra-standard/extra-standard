@@ -3784,6 +3784,11 @@ context.setProperty("responseId2", responseId2)</con:script><con:responseContent
                      </xcpt:Report>
                   </xcpt:ResponseDetails>
                </xres:PackageHeader>
+               <xres:PackagePlugIns>
+		    	  <xplg:DataSource> 
+		        	  <xplg:DataContainer type="http://www.extra-standard.de/container/FILE" created="2012-12-21T10:20:11.0Z" encoding="I1" name="FIKELA.PRD.DS.${responseId1}"/> 
+			      </xplg:DataSource> 
+               </xres:PackagePlugIns>
                <xres:PackageBody>
                   <xcpt:Data>
                      <xcpt:Base64CharSequence>UkZWTlRWa2dVbVZ6Y0c5dWMyVWdabTl5SUZGMVpYSjVJRUZ5WjNWdFpXNTBPbEpGVTFCUFRsTkZYMGxFWDFCb1lYTmxYekZUUlU1RVgwWkZWRWhmTVE9PQ==</xcpt:Base64CharSequence>
@@ -3805,6 +3810,11 @@ context.setProperty("responseId2", responseId2)</con:script><con:responseContent
                      </xcpt:Report>
                   </xcpt:ResponseDetails>
                </xres:PackageHeader>
+               <xres:PackagePlugIns>
+		    	  <xplg:DataSource> 
+		        	  <xplg:DataContainer type="http://www.extra-standard.de/container/FILE" created="2012-12-21T10:20:11.0Z" encoding="I1" name="FIKELA.PRD.DS.${responseId2}"/> 
+			      </xplg:DataSource> 
+               </xres:PackagePlugIns>               
                <xres:PackageBody>
                   <xcpt:Data>
                      <xcpt:Base64CharSequence>UkZWTlRWa2dVbVZ6Y0c5dWMyVWdabTl5SUZGMVpYSjVJRUZ5WjNWdFpXNTBPbEpGVTFCUFRsTkZYMGxFWDFCb1lYTmxYekZUUlU1RVgwWkZWRWhmTXc9PQ==</xcpt:Base64CharSequence>
