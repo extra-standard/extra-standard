@@ -28,10 +28,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
+import de.extra.client.core.annotation.PluginConfigType;
+import de.extra.client.core.annotation.PluginConfiguration;
+import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.model.inputdata.impl.DbQueryInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataContainer;
-import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.model.execution.ICommunicationProtocol;
+import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.api.plugin.IDataPlugin;
 
@@ -47,6 +50,7 @@ import de.extrastandard.api.plugin.IDataPlugin;
  * @version $Id$
  */
 @Named("dbQueryDataPlugin")
+@PluginConfiguration(pluginBeanName = "dbQueryDataPlugin", pluginType = PluginConfigType.DataPlugins)
 public class DBQueryDataPlugin implements IDataPlugin {
 
 	@Inject
@@ -59,7 +63,7 @@ public class DBQueryDataPlugin implements IDataPlugin {
 	@Value("${core.execution.procedure}")
 	private String executionProcedure;
 
-	@Value("${plugins.dataplugin.dbQueryDataPlugin.inputDataLimit}")
+	@PluginValue(key = "inputDataLimit")
 	private Integer inputDataLimit;
 
 	private static final Logger logger = LoggerFactory
@@ -115,5 +119,13 @@ public class DBQueryDataPlugin implements IDataPlugin {
 	 */
 	public void setExecutionPhase(final String executionPhase) {
 		this.executionPhase = executionPhase;
+	}
+
+	/**
+	 * @param inputDataLimit
+	 *            the inputDataLimit to set
+	 */
+	public void setInputDataLimit(final Integer inputDataLimit) {
+		this.inputDataLimit = inputDataLimit;
 	}
 }
