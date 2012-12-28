@@ -34,9 +34,9 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.XmlMappingException;
 
+import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.builder.IExtraRequestBuilder;
 import de.extra.client.core.locator.IPluginsLocatorManager;
@@ -74,6 +74,9 @@ public class ClientCore implements ApplicationContextAware {
 	@Value("${core.execution.phase}")
 	private String executionPhase;
 
+	@Value("${core.outgoing.validation}")
+	private boolean outgoingXmlValidation;
+
 	@Inject
 	@Named("pluginsLocatorManager")
 	private IPluginsLocatorManager pluginsLocatorManager;
@@ -83,8 +86,8 @@ public class ClientCore implements ApplicationContextAware {
 	IExtraRequestBuilder extraMessageBuilder;
 
 	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Marshaller marshaller;
+	@Named("extraMarschaller")
+	private IExtraMarschaller marshaller;
 
 	@Inject
 	@Named("simpleRequestIdAcquisitionStrategy")
@@ -233,9 +236,9 @@ public class ClientCore implements ApplicationContextAware {
 
 			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			final StreamResult streamResult = new StreamResult(outputStream);
-			marshaller.marshal(request, streamResult);
-			logger.debug("Ausgabe: " + outputStream.toString());
-			logger.debug("Übergabe an OutputPlugin");
+			marshaller.marshal(request, streamResult, outgoingXmlValidation);
+
+			logger.info("OutgoingXml: {}", outputStream.toString());
 
 			final InputStream responseAsStream = outputPlugin
 					.outputData(new ByteArrayInputStream(outputStream
