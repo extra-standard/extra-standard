@@ -24,6 +24,7 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.drv.dsrv.extra.codelist.DataContainerCode;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataContainerType;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataSource;
 import de.extra.client.core.annotation.PluginConfigType;
@@ -71,7 +72,7 @@ public class DataSourceConfigurablePluginsBuilder extends
 			final IExtraProfileConfiguration config) {
 		final DataSource dataSource = new DataSource();
 		final DataContainerType dataContainerType = new DataContainerType();
-		dataContainerType.setType(type);
+		dataContainerType.setType(DataContainerCode.FILE);
 		dataContainerType.setName(name);
 		dataContainerType.setEncoding(encoding);
 		dataSource.setDataContainer(dataContainerType);
