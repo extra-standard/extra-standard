@@ -19,6 +19,10 @@
 		<Elternelement>Transport</Elternelement>
 	</element>
 	<element>
+		<Name>xplg:DataSource</Name>
+		<Elternelement>TransportPlugins</Elternelement>
+	</element>		
+	<element>
 		<Name>xcpt:Sender</Name>
 		<Elternelement>TransportHeader</Elternelement>
 	</element>
