@@ -31,8 +31,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.oxm.Marshaller;
 
+import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
 import de.drv.dsrv.extrastandard.namespace.components.DataType;
@@ -62,8 +62,8 @@ public class DummyDataResponceOutputPlugin implements IOutputPlugin {
 			.getLogger(DummyDataResponceOutputPlugin.class);
 
 	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Marshaller marshaller;
+	@Named("extraMarschaller")
+	private IExtraMarschaller marshaller;
 
 	@Inject
 	@Named("transportObserver")

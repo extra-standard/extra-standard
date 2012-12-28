@@ -31,9 +31,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.oxm.Marshaller;
-import org.springframework.oxm.Unmarshaller;
 
+import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
 import de.drv.dsrv.extra.schemaversion.ExtraSchemaVersion;
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagCodeType;
@@ -65,13 +64,8 @@ public class DummyOutputPlugin implements IOutputPlugin {
 	private static final String TEST_INDICATOR = "http://www.extra-standard.de/test/NONE";
 
 	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Marshaller marshaller;
-
-	@SuppressWarnings("unused")
-	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Unmarshaller unmarshaller;
+	@Named("extraMarschaller")
+	private IExtraMarschaller marshaller;
 
 	@Inject
 	@Named("transportObserver")

@@ -31,16 +31,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.oxm.Marshaller;
-import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.util.Assert;
 
+import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
+import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
 import de.drv.dsrv.extra.schemaversion.ExtraSchemaVersion;
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
@@ -87,12 +86,12 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 	private static final String TEST_INDICATOR = "http://www.extra-standard.de/test/NONE";
 
 	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Unmarshaller unmarshaller;
+	@Named("extraMarschaller")
+	private IExtraMarschaller marshaller;
 
 	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Marshaller marshaller;
+	@Named("extraUnmarschaller")
+	private IExtraUnmarschaller extraUnmarschaller;
 
 	@Inject
 	@Named("transportObserver")
@@ -129,7 +128,8 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 			final InputStream request) {
 		try {
 
-			final Transport requestXml = extractRequest(request);
+			final Transport requestXml = extraUnmarschaller.unmarshal(request,
+					Transport.class);
 
 			// Ich gehe davon aus, dass requestId ein Mandatory Feld ist
 			final String requestId = requestXml.getTransportHeader()
@@ -359,23 +359,5 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 						+ dataRequestObject.getClass()
 						+ " Expected OperandSet or Operand.");
 		return queryArgumentList;
-	}
-
-	/**
-	 * @param responseAsStream
-	 * @return
-	 * @throws IOException
-	 */
-	private Transport extractRequest(final InputStream requestAsStream)
-			throws IOException {
-		final Object responseObject = unmarshaller.unmarshal(new StreamSource(
-				requestAsStream));
-		Assert.notNull(responseObject, "Response is null");
-		Assert.isAssignable(JAXBElement.class, responseObject.getClass(),
-				"ResponseObject not JAXBElement<Transport>");
-		// TODO Wie funktioniert es besser?
-		final JAXBElement<Transport> jaxbElementResponse = (JAXBElement<Transport>) responseObject;
-		final Transport extraResponse = jaxbElementResponse.getValue();
-		return extraResponse;
 	}
 }
