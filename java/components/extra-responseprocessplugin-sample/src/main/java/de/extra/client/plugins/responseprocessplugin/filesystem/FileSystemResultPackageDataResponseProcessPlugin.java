@@ -28,6 +28,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.codec.binary.Base64;
@@ -35,17 +36,21 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.util.Assert;
 
+import de.drv.dsrv.extra.codelist.DataContainerCode;
+import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
+import de.drv.dsrv.extrastandard.namespace.components.AnyPlugInContainerType;
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
+import de.drv.dsrv.extrastandard.namespace.plugins.DataContainerType;
+import de.drv.dsrv.extrastandard.namespace.plugins.DataSource;
 import de.drv.dsrv.extrastandard.namespace.response.Message;
 import de.drv.dsrv.extrastandard.namespace.response.Package;
 import de.drv.dsrv.extrastandard.namespace.response.PackageBody;
@@ -91,10 +96,11 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 	@NotNull
 	private File eingangOrdner;
 
-	/** 
-	 * Wird benötigt, um nach einer Serververarbeitung den Status im Communication Protocol zu setzen.
-	 * So kann z.B. der Status 'WAIT' anzeigen, das das Ergebnis vom Server erfolgreich empfangen wurde
-	 * aber eine Bearbeitung/Prüfung durch eine externe Anwendung noch aussteht.
+	/**
+	 * Wird benötigt, um nach einer Serververarbeitung den Status im
+	 * Communication Protocol zu setzen. So kann z.B. der Status 'WAIT'
+	 * anzeigen, das das Ergebnis vom Server erfolgreich empfangen wurde aber
+	 * eine Bearbeitung/Prüfung durch eine externe Anwendung noch aussteht.
 	 */
 	@PluginValue(key = "successStatus")
 	private String successStatus;
@@ -104,8 +110,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 	private TransportInfoBuilder transportInfoBuilder;
 
 	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Marshaller marshaller;
+	@Named("extraMarschaller")
+	private IExtraMarschaller marshaller;
 
 	@Inject
 	@Named("extraUnmarschaller")
@@ -157,9 +163,9 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 			if (isBodyEmpty(extraResponse.getTransportBody())) {
 				// (21.11.12) Keine Ergebnisse ermoeglichen!
 				return responseData;
-//				throw new ExtraResponseProcessPluginRuntimeException(
-//						ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
-//						"Keine Daten vorhanden. Body Element ist leer");
+				// throw new ExtraResponseProcessPluginRuntimeException(
+				// ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
+				// "Keine Daten vorhanden. Body Element ist leer");
 			}
 
 			// -- Fehler/Status aus TransportHeader auswerten --
@@ -175,16 +181,16 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 					.isReturnCodeSuccessful(returnCode);
 			// TODO Fehler?!
 			if (returnCodeSuccessful == false) {
-				// Falls ein Fehler im Header angezeigt wird, wird der Body (= Einzelergebnisse)
+				// Falls ein Fehler im Header angezeigt wird, wird der Body (=
+				// Einzelergebnisse)
 				// nicht mehr ausgewertet! Fehler wird hier zugeordnet
-				String outputIdentifier = responseId;
+				final String outputIdentifier = responseId;
 				final ISingleResponseData singleResponseData = new SingleResponseData(
 						requestDetails.getRequestID().getValue(), returnCode,
 						reportData.getReturnText(), responseId,
 						returnCodeSuccessful, PersistentStatus.FAIL, responseId);
-				responseData.addSingleResponse(singleResponseData);				
-			}
-			else {
+				responseData.addSingleResponse(singleResponseData);
+			} else {
 				// Einzelergebnisse auswerten
 				final TransportBody transportBody = extraResponse
 						.getTransportBody();
@@ -201,7 +207,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 							.getBase64CharSequence();
 					Assert.notNull(base64CharSequence,
 							"Base64CharSequenceType.data is null");
-					final byte[] packageBodyData = base64CharSequence.getValue();
+					final byte[] packageBodyData = base64CharSequence
+							.getValue();
 					final byte[] decodedpackageBodyData = Base64
 							.decodeBase64(packageBodyData);
 					final PackageHeader packageHeader = transportBodyPackage
@@ -211,10 +218,14 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 							.getResponseDetails();
 					final String packageHeaderResponseId = packageHeaderResponseDetails
 							.getResponseID().getValue();
-					saveBodyToFilesystem(packageHeaderResponseId,
+					final String incomingFileName = extractIncomingFileNameFromDataSource(transportBodyPackage
+							.getPackagePlugIns());
+					final String savedFileName = saveBodyToFilesystem(
+							incomingFileName, packageHeaderResponseId,
 							decodedpackageBodyData);
 					final ISingleResponseData singlePackageResponseData = extractResponseDetail(
-							packageHeader, extraReturnCodeAnalyser);
+							packageHeader, extraReturnCodeAnalyser,
+							savedFileName);
 					responseData.addSingleResponse(singlePackageResponseData);
 				}
 			}
@@ -230,9 +241,51 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 
 	}
 
+	/**
+	 * 
+	 * @param packagePlugIns
+	 * @return element Name aus der PackagePlugIns.DataSource mit dem Type File,
+	 *         wenn Element nicht vorhanden ist, wird null zurückgeliefert
+	 */
+	private String extractIncomingFileNameFromDataSource(
+			final AnyPlugInContainerType packagePlugIns) {
+		String fileName = null;
+		if (packagePlugIns != null) {
+			final List<Object> plugins = packagePlugIns.getAny();
+			for (final Object plugin : plugins) {
+
+				final JAXBElement<?> jaxbElement = (JAXBElement<?>) plugin;
+
+				if (DataSource.class.isAssignableFrom(jaxbElement
+						.getDeclaredType())) {
+					final DataSource dataSource = DataSource.class
+							.cast(jaxbElement.getValue());
+					final DataContainerType dataContainer = dataSource
+							.getDataContainer();
+					// Strikte Validierung. Element DataSource ohne
+					// DataContainer
+					// ist in diesem Scenario nicht vereinbart
+					Assert.notNull(dataContainer,
+							"DataContainer from ElementDataSource is null");
+					if (DataContainerCode.FILE.equals(dataContainer.getType())) {
+						if (fileName == null) {
+							fileName = dataContainer.getName();
+						} else {
+							throw new ExtraResponseProcessPluginRuntimeException(
+									ExceptionCode.EXTRA_ILLEGAL_ACCESS_EXCEPTION,
+									"Multiple DataContainer for DataSource found");
+						}
+					}
+				}
+			}
+		}
+		return fileName;
+	}
+
 	private ISingleResponseData extractResponseDetail(
 			final PackageHeader packageHeader,
-			IExtraReturnCodeAnalyser extraReturnCodeAnalyser) {
+			final IExtraReturnCodeAnalyser extraReturnCodeAnalyser,
+			final String savedFileName) {
 		Assert.notNull(packageHeader, "PackageHeader.data is null");
 		final RequestDetailsType packageHeaderRequestDetails = packageHeader
 				.getRequestDetails();
@@ -258,15 +311,16 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 				}
 			}
 		}
-		// (17.12.12) Ergebnis-Dateiname als OutputIdentifier, Status setzen ('WAIT'?!)
-		String outputIdentifier = buildFilename(packageHeaderResponseId);
+		// (17.12.12) Ergebnis-Dateiname als OutputIdentifier, Status setzen
+		// ('WAIT'?!)
 		final ISingleResponseData singleResponseData = new SingleResponseData(
 				packageHeaderRequestId, reportCode, reportText,
-				packageHeaderResponseId, successful, calcResponseStatus(successful), outputIdentifier);
+				packageHeaderResponseId, successful,
+				calcResponseStatus(successful), savedFileName);
 		return singleResponseData;
 	}
 
-	private PersistentStatus calcResponseStatus(Boolean successful) {
+	private PersistentStatus calcResponseStatus(final Boolean successful) {
 		if (successful == null || successful.booleanValue() == false) {
 			return PersistentStatus.FAIL;
 		}
@@ -276,14 +330,16 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 		}
 		return PersistentStatus.DONE;
 	}
-	
+
 	private void printResult(final Transport extraResponse) {
 		try {
 			final Writer writer = new StringWriter();
 			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(extraResponse, streamResult);
-			logger.debug("ExtraResponse: " + ExtraMessageReturnDataExtractor.NEW_LINE + writer.toString());
+			logger.debug("ExtraResponse: "
+					+ ExtraMessageReturnDataExtractor.NEW_LINE
+					+ writer.toString());
 		} catch (final XmlMappingException xmlException) {
 			logger.debug("XmlMappingException beim Lesen des Results ",
 					xmlException);
@@ -320,13 +376,13 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 	/**
 	 * @param responseId
 	 * @param responseBody
-	 * @return
+	 * @return fileName
 	 */
-	private void saveBodyToFilesystem(final String responseId,
-			final byte[] responseBody) {
+	private String saveBodyToFilesystem(final String incomingFileName,
+			final String responseId, final byte[] responseBody) {
 		try {
 
-			final String dateiName = buildFilename(responseId);
+			final String dateiName = buildFilename(incomingFileName, responseId);
 
 			final File responseFile = new File(eingangOrdner, dateiName);
 
@@ -337,6 +393,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 
 			logger.info("Response gespeichert in File: '" + dateiName + "'");
 
+			return dateiName;
 		} catch (final IOException ioException) {
 			throw new ExtraResponseProcessPluginRuntimeException(
 					ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
@@ -345,16 +402,24 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 	}
 
 	/**
-	 * Erzeugt einen eindeitigen Filenamen mit milissekunden und ResponseID
+	 * 
+	 * Wenn IncomingFileName ber DataSource Plugin gesetzt ist , wird dieser
+	 * Name übernommen, sonst Erzeugt einen eindeitigen Filenamen mit
+	 * milissekunden und ResponseID.
 	 * 
 	 * @param responseId
 	 * @return
 	 */
-	private String buildFilename(final String responseId) {
+	private String buildFilename(final String incomingFileName,
+			final String responseId) {
 		final StringBuilder fileName = new StringBuilder();
-		final String cleanResponseId = FilenameUtils.normalize(responseId);
-		fileName.append("RESPONSE_").append(cleanResponseId);
-		fileName.append("_").append(System.currentTimeMillis());
+		if (incomingFileName != null) {
+			fileName.append(incomingFileName);
+		} else {
+			final String cleanResponseId = FilenameUtils.normalize(responseId);
+			fileName.append("RESPONSE_").append(cleanResponseId);
+			fileName.append("_").append(System.currentTimeMillis());
+		}
 		return fileName.toString();
 	}
 
@@ -366,7 +431,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 		this.eingangOrdner = eingangOrdner;
 	}
 
-	public void setSuccessStatus(String aSuccessStatus) {
+	public void setSuccessStatus(final String aSuccessStatus) {
 		successStatus = aSuccessStatus;
 	}
 }
