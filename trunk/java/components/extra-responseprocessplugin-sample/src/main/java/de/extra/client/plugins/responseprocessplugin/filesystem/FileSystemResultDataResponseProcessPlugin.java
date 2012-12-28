@@ -33,9 +33,9 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.XmlMappingException;
 
+import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
@@ -80,8 +80,8 @@ public class FileSystemResultDataResponseProcessPlugin implements
 			.getLogger(FileSystemResultDataResponseProcessPlugin.class);
 
 	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Marshaller marshaller;
+	@Named("extraMarschaller")
+	private IExtraMarschaller marshaller;
 
 	@Inject
 	@Named("extraUnmarschaller")
@@ -159,10 +159,11 @@ public class FileSystemResultDataResponseProcessPlugin implements
 			final boolean returnCodeSuccessful = extraReturnCodeAnalyser
 					.isReturnCodeSuccessful(returnCode);
 			// Status (DONE oder FAIL)
-			PersistentStatus persistentStatus = returnCodeSuccessful ? PersistentStatus.DONE : PersistentStatus.FAIL;
-			
+			final PersistentStatus persistentStatus = returnCodeSuccessful ? PersistentStatus.DONE
+					: PersistentStatus.FAIL;
+
 			// (17.12.12) Ergebnis-Dateiname als OutputIdentifier
-			String outputIdentifier = buildFilename(responseId);
+			final String outputIdentifier = buildFilename(responseId);
 
 			final ISingleResponseData singleResponseData = new SingleResponseData(
 					requestDetails.getRequestID().getValue(), returnCode,
@@ -185,7 +186,9 @@ public class FileSystemResultDataResponseProcessPlugin implements
 			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(extraResponse, streamResult);
-			LOG.debug("ExtraResponse: " + ExtraMessageReturnDataExtractor.NEW_LINE + writer.toString());
+			LOG.debug("ExtraResponse: "
+					+ ExtraMessageReturnDataExtractor.NEW_LINE
+					+ writer.toString());
 		} catch (final XmlMappingException xmlException) {
 			LOG.debug("XmlMappingException beim Lesen des Results ",
 					xmlException);
