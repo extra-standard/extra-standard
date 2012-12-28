@@ -10,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
+import de.extra.client.core.annotation.PluginConfigType;
+import de.extra.client.core.annotation.PluginConfiguration;
+import de.extra.client.core.annotation.PluginValue;
 import de.extra.client.core.model.inputdata.impl.CriteriaQueryInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.QueryArgumentType;
@@ -26,6 +29,7 @@ import de.extrastandard.api.plugin.IDataPlugin;
  * 
  */
 @Named("dbMaxResponseIdQueryDataPlugin")
+@PluginConfiguration(pluginBeanName = "dbMaxResponseIdQueryDataPlugin", pluginType = PluginConfigType.DataPlugins)
 public class DBMaxResponseIdQueryDataPlugin implements IDataPlugin {
 
 	@Inject
@@ -38,7 +42,7 @@ public class DBMaxResponseIdQueryDataPlugin implements IDataPlugin {
 	@Value("${core.execution.procedure}")
 	private String executionProcedure;
 
-	@Value("${plugins.dataplugin.dbMaxResponseIdQueryDataPlugin.subquery}")
+	@PluginValue(key = "subquery")
 	private String subquery;
 
 	private static final Logger logger = LoggerFactory
@@ -56,12 +60,13 @@ public class DBMaxResponseIdQueryDataPlugin implements IDataPlugin {
 		if (dbQueryMaxResponseIdInputData == null) {
 			final PhaseQualifier phaseQualifier = PhaseQualifier
 					.resolveByName(executionPhase);
-			String maxResponseId = executionPersistence
+			final String maxResponseId = executionPersistence
 					.maxResponseIdForExecution(executionProcedure,
 							phaseQualifier, subquery);
 			dbQueryMaxResponseIdInputData = new CriteriaQueryInputDataContainer(
 					String.valueOf(maxResponseId),
-					QueryArgumentType.GREATER_THEN, executionProcedure, subquery);
+					QueryArgumentType.GREATER_THEN, executionProcedure,
+					subquery);
 
 			logger.info("For Procedury and Phase {} MaxResponseId: {}",
 					executionProcedure + "->" + executionPhase,
@@ -89,6 +94,14 @@ public class DBMaxResponseIdQueryDataPlugin implements IDataPlugin {
 	@Override
 	public boolean isEmpty() {
 		return false;
+	}
+
+	/**
+	 * @param subquery
+	 *            the subquery to set
+	 */
+	public void setSubquery(final String subquery) {
+		this.subquery = subquery;
 	}
 
 }
