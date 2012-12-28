@@ -44,7 +44,7 @@ import de.extra.client.core.builder.impl.components.TransportHeaderReceiverBuild
 import de.extra.client.core.builder.impl.components.TransportHeaderRequestDetailsBuilder;
 import de.extra.client.core.builder.impl.components.TransportHeaderSenderBuilder;
 import de.extra.client.core.builder.impl.components.TransportHeaderTestIndicatorBuilder;
-import de.extra.client.core.builder.impl.plugins.DataSourcePluginsBuilder;
+import de.extra.client.core.builder.impl.plugins.DataSourceConfigurablePluginsBuilder;
 import de.extra.client.core.builder.impl.plugins.TransportPluginsBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportBodyBuilder;
 import de.extra.client.core.builder.impl.request.RequestTransportBuilder;
@@ -95,7 +95,7 @@ public class ExtraRequestBuilderTest {
 		final IXmlComplexTypeBuilder transportBodyDataBuilder = new TransportBodyDataBuilder();
 		final IXmlComplexTypeBuilder transportBodyFileInputBase64CharSequenceBuilder = new TransportBodyFileInputBase64CharSequenceBuilder();
 		final IXmlComplexTypeBuilder transportBodyElementSequenceBuilder = new TransportBodyRequestQueryElementSequenceBuilder();
-		final IXmlComplexTypeBuilder dataSourcePluginsBuilder = new DataSourcePluginsBuilder();
+		final IXmlComplexTypeBuilder dataSourcePluginsBuilder = new DataSourceConfigurablePluginsBuilder();
 		final IXmlComplexTypeBuilder transportPluginsBuilder = new TransportPluginsBuilder();
 		builderMap.put(requestTransportHeaderBuilder.getXmlType(),
 				requestTransportHeaderBuilder);
