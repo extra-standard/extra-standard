@@ -31,18 +31,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ws.client.core.WebServiceTemplate;
 
+import de.extra.client.core.annotation.PluginConfigType;
+import de.extra.client.core.annotation.PluginConfiguration;
+import de.extra.client.core.annotation.PluginValue;
 import de.extrastandard.api.plugin.IOutputPlugin;
-
-// TODO (23.10.12) Annotation @PluginConfiguration einbinden (aktuell auskommentiert)
-// Problem: Property webservice.endpoint.url kann nicht aufgeloest werden!
 
 /**
  * @author Thorsten Vogel
  * @version $Id$
  */
 @Named("wsOutputPlugin")
-// @PluginConfiguration(pluginBeanName = "wsOutputPlugin", pluginType =
-// PluginConfigType.OutputPlugins)
+@PluginConfiguration(pluginBeanName = "wsOutputPlugin", pluginType = PluginConfigType.OutputPlugins)
 public class WsOutputPlugin implements IOutputPlugin {
 
 	private static final Logger logger = LoggerFactory
@@ -54,19 +53,30 @@ public class WsOutputPlugin implements IOutputPlugin {
 	@Named("webServiceTemplate")
 	private WebServiceTemplate webServiceTemplate;
 
+	@PluginValue(key = "endpoint.url")
+	private String endpointUrl;
+
 	/**
 	 * @see de.extrastandard.api.plugin.IOutputPlugin#outputData(java.io.InputStream)
 	 */
 	@Override
 	public InputStream outputData(final InputStream requestAsStream) {
-		ByteArrayOutputStream temp = new ByteArrayOutputStream();
+		final ByteArrayOutputStream temp = new ByteArrayOutputStream();
 
 		logger.debug("sending request");
-		operation_logger.info("Webservice Aufruf von: " + webServiceTemplate.getDefaultUri());
-		StreamSource source = new StreamSource(requestAsStream);
-		StreamResult result = new StreamResult(temp);
-		webServiceTemplate.sendSourceAndReceiveToResult(source, result);
-
+		operation_logger.info("Webservice Aufruf von: {}", endpointUrl);
+		final StreamSource source = new StreamSource(requestAsStream);
+		final StreamResult result = new StreamResult(temp);
+		webServiceTemplate.sendSourceAndReceiveToResult(endpointUrl, source,
+				result);
 		return new ByteArrayInputStream(temp.toByteArray());
+	}
+
+	/**
+	 * @param endpointUrl
+	 *            the endpointUrl to set
+	 */
+	public void setEndpointUrl(final String endpointUrl) {
+		this.endpointUrl = endpointUrl;
 	}
 }
