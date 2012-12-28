@@ -8,6 +8,8 @@ In dieser Konfigurationsdatei ist die Basiskonfiguration des Fachverfahrens unte
  * *Plugins*
    * Angabe der Plugins
    * Konfiguration der Plugins (z.B. Profil-Datei)
+* *Vlidierung*
+   * Validierung des ausgehenden XMLTransports
  * *Message-Header*
    * _Request_, _Sender_ und _Receiver_ definieren
  * *XML-Builder*
@@ -37,6 +39,12 @@ plugins.dataplugin=fileDataPlugin
 plugins.outputplugin=wsOutputPlugin
 plugins.responseprocessplugin=acknowledgePhase1ResponseProcessPlugin
 plugins.execution=executionPersistenceJpa
+
+# -------------
+# -- XML Processing --
+# -------------
+core.outgoing.validation=true
+
 
 # Profilierungsdatei
 plugins.configplugin.defaultConfigPlugin.profilFileName=phase1-sent-profil.xml
