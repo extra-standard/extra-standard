@@ -23,17 +23,19 @@ import java.util.List;
 
 import javax.inject.Named;
 
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
-import de.drv.dsrv.extra.codelist.DataContainerCode;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataContainerType;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataSource;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
+import de.extra.client.core.model.impl.DataSourcePluginDescription;
+import de.extrastandard.api.exception.ExtraCoreRuntimeException;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
+import de.extrastandard.api.model.content.IInputDataPluginDescription;
+import de.extrastandard.api.model.content.ISingleContentInputData;
 import de.extrastandard.api.model.content.ISingleInputData;
 
 /**
@@ -67,19 +69,52 @@ public class DataSourceSingleInputDataPluginsBuilder extends
 		Assert.isTrue(content.size() == 1,
 				"InputDataContainer beinhaltet mehr als 1 Element. Erwartet ist nur 1 Element");
 		final ISingleInputData iSingleInputData = content.get(0);
-		final String inputIdentifier = iSingleInputData.getInputIdentifier();
 		final DataSource dataSource = new DataSource();
-		final DataContainerType dataContainer = new DataContainerType();
-		final String fileName = FilenameUtils.getName(inputIdentifier);
-		dataContainer.setName(fileName);
-		dataContainer.setType(DataContainerCode.FILE);
-		// 27.12.2012 Die Semantik des Feldes ist unklar. Ist das
-		// Erstellungsdatum des Files?
-		dataContainer.setCreated(new GregorianCalendar());
-		dataSource.setDataContainer(dataContainer);
+		if (ISingleContentInputData.class.isAssignableFrom(iSingleInputData
+				.getClass())) {
+			final ISingleContentInputData singleContentInputData = ISingleContentInputData.class
+					.cast(iSingleInputData);
+			final DataSourcePluginDescription dataSourcePluginDescriptor = getDataSourcePluginDescriptor(singleContentInputData);
+			if (dataSourcePluginDescriptor != null) {
+				final DataContainerType dataContainer = new DataContainerType();
+				dataContainer.setName(dataSourcePluginDescriptor.getName());
+				dataSourcePluginDescriptor.getType();
+				dataContainer.setType(dataSourcePluginDescriptor.getType()
+						.getDataContainerCode());
+				// 27.12.2012 Die Semantik des Feldes ist unklar. Ist das
+				// Erstellungsdatum des Files?
+				final GregorianCalendar calenderCreated = new GregorianCalendar();
+				calenderCreated
+						.setTime(dataSourcePluginDescriptor.getCreated());
+				dataContainer.setCreated(calenderCreated);
+				dataContainer.setEncoding(dataSourcePluginDescriptor
+						.getEncoding());
+				dataSource.setDataContainer(dataContainer);
+			}
+		}
 		LOG.debug("DataSourcePlugin created.");
 		return dataSource;
 
+	}
+
+	private DataSourcePluginDescription getDataSourcePluginDescriptor(
+			final ISingleContentInputData singleContentInputData) {
+		DataSourcePluginDescription dataSourcePluginDescription = null;
+		for (final IInputDataPluginDescription inputDataPluginDescription : singleContentInputData
+				.getPlugins()) {
+			if (DataSourcePluginDescription.class
+					.isAssignableFrom(inputDataPluginDescription.getClass())) {
+				if (dataSourcePluginDescription != null) {
+					throw new ExtraCoreRuntimeException(
+							"MultipleDataSourcePluginDescriptors for iSingleInputData: "
+									+ singleContentInputData
+											.getInputIdentifier());
+				}
+				dataSourcePluginDescription = DataSourcePluginDescription.class
+						.cast(inputDataPluginDescription);
+			}
+		}
+		return dataSourcePluginDescription;
 	}
 
 	@Override

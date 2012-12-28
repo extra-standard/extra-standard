@@ -28,6 +28,7 @@ import java.util.List;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 
+import de.extra.client.core.model.impl.DataSourcePluginDescription;
 import de.extrastandard.api.exception.ExtraDataPluginRuntimeException;
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 import de.extrastandard.api.model.content.ISingleContentInputData;
@@ -50,14 +51,20 @@ public class SingleFileInputData extends Implementor implements
 
 	private List<IInputDataPluginDescription> plugins = new ArrayList<IInputDataPluginDescription>();
 
+	/**
+	 * @param inputDataFile
+	 */
 	public SingleFileInputData(final File inputDataFile) {
-		this(inputDataFile, new ArrayList<IInputDataPluginDescription>());
+		this.inputDataFile = inputDataFile;
+		final IInputDataPluginDescription fileInputDataDescriptor = new DataSourcePluginDescription(
+				inputDataFile, ENCODING_UTF_8.name());
+		plugins.add(fileInputDataDescriptor);
 	}
 
-	public SingleFileInputData(final File inputFile,
-			final List<IInputDataPluginDescription> pluginListe) {
-		this.inputDataFile = inputFile;
-		this.plugins = pluginListe;
+	public SingleFileInputData(final File inputDataFile,
+			final List<IInputDataPluginDescription> plugins) {
+		this.inputDataFile = inputDataFile;
+		this.plugins = plugins;
 	}
 
 	/*

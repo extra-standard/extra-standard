@@ -16,16 +16,45 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extrastandard.api.model.content;
+package de.extra.client.core.model.inputdata;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import de.drv.dsrv.extra.codelist.DataContainerCode;
 
 /**
- * MarkerInterface
+ * Enum für die Input Data Content Type
  * 
  * @author Leonid Potap
- * @version $Id: IInputDataPluginDescription.java 756 2012-10-15 14:14:40Z
- *          potap.rentenservice@gmail.com $
+ * @version $Id:$
  */
-public interface IInputDataPluginDescription {
+public enum InputDataContentType {
+	FILE("FILE");
+
+	String type;
+
+	DataContainerCode dataContainerCode;
+
+	private final static Map<InputDataContentType, String> contentTypeToContainerCodeMap = new HashMap<InputDataContentType, String>();
+
+	static {
+		contentTypeToContainerCodeMap.put(FILE, DataContainerCode.FILE);
+	}
+
+	private InputDataContentType(final String type) {
+		this.type = type;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @return the dataContainerCode
+	 */
+	public String getDataContainerCode() {
+		return contentTypeToContainerCodeMap.get(this);
+	}
 
 }

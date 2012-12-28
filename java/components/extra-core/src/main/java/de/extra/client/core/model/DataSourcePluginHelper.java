@@ -38,10 +38,10 @@ public class DataSourcePluginHelper extends PluginHelperBase {
 
 		// Fuellen des DataContainers
 
-		dataContainer.setEncoding(dataSourcePluginBean.getDsEncoding());
+		dataContainer.setEncoding(dataSourcePluginBean.getEncoding());
 		dataContainer.setCreated(new GregorianCalendar());
-		dataContainer.setType(dataSourcePluginBean.getDsType());
-		dataContainer.setName(dataSourcePluginBean.getDsName());
+		dataContainer.setType(dataSourcePluginBean.getType().toString());
+		dataContainer.setName(dataSourcePluginBean.getName());
 
 		dataSource.setDataContainer(dataContainer);
 
