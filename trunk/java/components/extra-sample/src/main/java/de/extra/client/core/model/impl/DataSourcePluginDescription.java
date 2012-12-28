@@ -18,52 +18,115 @@
  */
 package de.extra.client.core.model.impl;
 
+import java.io.File;
 import java.util.Date;
 
+import de.extra.client.core.model.inputdata.InputDataContentType;
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 
 public class DataSourcePluginDescription implements IInputDataPluginDescription {
 
 	// DataSource-Plugin
+	private static final String DEFAULT_ENCODING = "UTF-8";
 
 	// Datentyp
-	private String dsType;
+	private InputDataContentType type;
 	// Dateiname
-	private String dsName;
+	private String name;
 	// Erstellungsdatum
-	private Date dsCreated;
+	private Date created;
 	// Encoding
-	private String dsEncoding;
+	private String encoding = null;
 
-	public Date getDsCreated() {
-		return dsCreated;
+	public DataSourcePluginDescription() {
 	}
 
-	public void setDsCreated(Date dsCreated) {
-		this.dsCreated = dsCreated;
+	/**
+	 * @param inputFile
+	 */
+	public DataSourcePluginDescription(final File inputFile,
+			final String encoding) {
+		name = inputFile.getName();
+		final long lastModified = inputFile.lastModified();
+		created = new Date(lastModified);
+		type = InputDataContentType.FILE;
+		this.encoding = encoding;
 	}
 
-	public String getDsEncoding() {
-		return dsEncoding;
+	/**
+	 * @param inputFile
+	 */
+	public DataSourcePluginDescription(final File inputFile) {
+		this(inputFile, DEFAULT_ENCODING);
 	}
 
-	public void setDsEncoding(String dsEncoding) {
-		this.dsEncoding = dsEncoding;
+	/**
+	 * @return
+	 */
+	public Date getCreated() {
+		return created;
 	}
 
-	public String getDsName() {
-		return dsName;
+	/**
+	 * @return
+	 */
+	public String getEncoding() {
+		return encoding;
 	}
 
-	public void setDsName(String dsName) {
-		this.dsName = dsName;
+	/**
+	 * @return
+	 */
+	public String getName() {
+		return name;
 	}
 
-	public String getDsType() {
-		return dsType;
+	/**
+	 * @return
+	 */
+	public InputDataContentType getType() {
+		return type;
 	}
 
-	public void setDsType(String dsType) {
-		this.dsType = dsType;
+	/**
+	 * @param type
+	 *            the type to set
+	 */
+	public void setType(final InputDataContentType type) {
+		this.type = type;
 	}
+
+	/**
+	 * @param type
+	 *            the type to set. Versucht type zu dem InputDataContentType
+	 *            umzuwandeln
+	 */
+	public void setType(final String type) {
+		this.type = InputDataContentType.valueOf(type);
+	}
+
+	/**
+	 * @param name
+	 *            the name to set
+	 */
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @param created
+	 *            the created to set
+	 */
+	public void setCreated(final Date created) {
+		this.created = created;
+	}
+
+	/**
+	 * @param encoding
+	 *            the encoding to set
+	 */
+	public void setEncoding(final String encoding) {
+		this.encoding = encoding;
+	}
+
 }

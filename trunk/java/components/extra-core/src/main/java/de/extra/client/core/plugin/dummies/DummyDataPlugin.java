@@ -118,15 +118,15 @@ public class DummyDataPlugin implements IDataPlugin {
 		encryptionPlugin.setEncOutput(200);
 
 		// DataSource-Infos setzen
-		dataSourcePlugin.setDsType("http://extra-standard.de/container/FILE");
-		dataSourcePlugin.setDsName("EDUA0000003");
+		dataSourcePlugin.setType("http://extra-standard.de/container/FILE");
+		dataSourcePlugin.setName("EDUA0000003");
 
 		final Calendar cal = new GregorianCalendar();
 		cal.set(Calendar.YEAR, 2012);
 		cal.set(Calendar.MONTH, 12);
 		cal.set(Calendar.DATE, 01);
-		dataSourcePlugin.setDsCreated(cal.getTime());
-		dataSourcePlugin.setDsEncoding("I8");
+		dataSourcePlugin.setCreated(cal.getTime());
+		dataSourcePlugin.setEncoding("I8");
 
 		final List<IInputDataPluginDescription> pluginList = new ArrayList<IInputDataPluginDescription>();
 

@@ -48,6 +48,7 @@ import de.extrastandard.api.model.content.IInputDataPluginDescription;
  * 
  *             Wird als SpringBean aktuell nicht verwendet
  */
+@Deprecated
 public class DataPluginHelper {
 
 	private static final Logger LOG = LoggerFactory
@@ -271,11 +272,11 @@ public class DataPluginHelper {
 			final DataSourceInfoType dataSource) {
 		final DataSourcePluginDescription dataSourcePlugin = new DataSourcePluginDescription();
 
-		dataSourcePlugin.setDsType(dataSource.getDsType());
-		dataSourcePlugin.setDsName(dataSource.getDsName());
-		dataSourcePlugin.setDsCreated(dataSource.getDsCreateDate()
+		dataSourcePlugin.setType(dataSource.getDsType());
+		dataSourcePlugin.setName(dataSource.getDsName());
+		dataSourcePlugin.setCreated(dataSource.getDsCreateDate()
 				.toGregorianCalendar().getTime());
-		dataSourcePlugin.setDsEncoding(dataSource.getDsEncoding());
+		dataSourcePlugin.setEncoding(dataSource.getDsEncoding());
 
 		return dataSourcePlugin;
 	}
