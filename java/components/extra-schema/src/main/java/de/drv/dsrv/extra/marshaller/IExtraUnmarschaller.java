@@ -30,9 +30,8 @@ import org.springframework.oxm.XmlMappingException;
 public interface IExtraUnmarschaller {
 
 	/**
-	 * From an InputStream create an object corresponding to the specified
-	 * extraTransportClass. Checks if the input stream contains the specified
-	 * Object
+	 * Aus dem InputStream wird ein ExtraTransport Class ermittelt und
+	 * unmarschalled. Es findet keine Validierung statt
 	 * 
 	 * @param inputStream
 	 * @param extraTransportClass
@@ -41,8 +40,26 @@ public interface IExtraUnmarschaller {
 	 * @throws XmlMappingException
 	 * @throws IOException
 	 */
-	public abstract <X> X unmarshal(InputStream inputStream,
-			Class<X> extraTransportClass) throws XmlMappingException,
-			IOException;
+	public <X> X unmarshal(InputStream inputStream, Class<X> extraTransportClass)
+			throws XmlMappingException, IOException;
+
+	/**
+	 * From an InputStream create an object corresponding to the specified
+	 * extraTransportClass. Checks if the input stream contains the specified
+	 * Object
+	 * 
+	 * @param inputStream
+	 * @param extraTransportClass
+	 *            das erwartete extraRootElement.Class
+	 * @param validation
+	 *            , wenn validation true, inputStream wird beim marschallen
+	 *            validiert
+	 * @return the instance of extraTransportClass
+	 * @throws XmlMappingException
+	 * @throws IOException
+	 */
+	public <X> X unmarshal(InputStream inputStream,
+			Class<X> extraTransportClass, boolean validation)
+			throws XmlMappingException, IOException;
 
 }

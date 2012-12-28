@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.XmlMappingException;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.util.Assert;
 
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
@@ -42,12 +43,15 @@ import de.drv.dsrv.extrastandard.namespace.response.Transport;
 @Named("extraUnmarschaller")
 public class ExtraUnmarschaller implements IExtraUnmarschaller {
 
-	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Unmarshaller unmarshaller;
-
 	private static final Logger logger = LoggerFactory
 			.getLogger(ExtraUnmarschaller.class);
+	@Inject
+	@Named("eXTrajaxb2Marshaller")
+	private Jaxb2Marshaller validationJaxb2Marshaller;
+
+	@Inject
+	@Named("eXTraNoValidationjaxb2Marshaller")
+	private Jaxb2Marshaller noValidationJaxb2Marshaller;
 
 	/*
 	 * (non-Javadoc)
@@ -60,8 +64,17 @@ public class ExtraUnmarschaller implements IExtraUnmarschaller {
 	public <X> X unmarshal(final InputStream inputStream,
 			final Class<X> extraTransportClass) throws XmlMappingException,
 			IOException {
+		return unmarshal(inputStream, extraTransportClass, false);
+	}
+
+	@Override
+	public <X> X unmarshal(final InputStream inputStream,
+			final Class<X> extraTransportClass, final boolean validation)
+			throws XmlMappingException, IOException {
 		Assert.notNull(inputStream, "InputStream is null");
 		Assert.notNull(extraTransportClass, "ExtraTransportClass is null");
+
+		final Unmarshaller unmarshaller = findUnmarschaller(validation);
 		final Object responseObject = unmarshaller.unmarshal(new StreamSource(
 				inputStream));
 		logger.debug("ResponseObject Class: {}", responseObject.getClass());
@@ -87,5 +100,15 @@ public class ExtraUnmarschaller implements IExtraUnmarschaller {
 							+ responseObject.getClass());
 		}
 		return extraTransport;
+	}
+
+	private Jaxb2Marshaller findUnmarschaller(final boolean validation) {
+		Jaxb2Marshaller marshaller = null;
+		if (validation) {
+			marshaller = validationJaxb2Marshaller;
+		} else {
+			marshaller = noValidationJaxb2Marshaller;
+		}
+		return marshaller;
 	}
 }
