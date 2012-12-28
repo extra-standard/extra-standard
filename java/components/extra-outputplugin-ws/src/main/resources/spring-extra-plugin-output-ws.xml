@@ -22,7 +22,7 @@
 <!-- 				</property> -->
 <!-- 			</bean> -->
 <!-- 		</property> -->
-		<property name="defaultUri" value="${webservice.endpoint.url}" />
+<!--		<property name="defaultUri" value="${webservice.endpoint.url}" />-->
 	</bean>
 
 </beans>
