@@ -10,9 +10,9 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.XmlMappingException;
 
+import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.config.impl.ExtraProfileConfiguration;
 import de.extrastandard.api.exception.ExtraConfigRuntimeException;
@@ -24,8 +24,8 @@ public class ExtraRequestBuilderITBasic {
 			.getLogger(ExtraRequestBuilderITBasic.class);
 
 	@Inject
-	@Named("eXTrajaxb2Marshaller")
-	private Marshaller marshaller;
+	@Named("extraMarschaller")
+	private IExtraMarschaller marshaller;
 
 	public String getResultAsString(final RootElementType xmlTransport) {
 		try {
