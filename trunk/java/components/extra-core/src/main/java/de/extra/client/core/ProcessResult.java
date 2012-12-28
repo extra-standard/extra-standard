@@ -75,6 +75,11 @@ public class ProcessResult {
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
 		builder.append("ProcessResult [");
+		if (dataContainer != null) {
+			builder.append("dataContainer=");
+			builder.append(dataContainer);
+			builder.append(", ");
+		}
 		if (responseData != null) {
 			builder.append("responseData=");
 			builder.append(responseData);
