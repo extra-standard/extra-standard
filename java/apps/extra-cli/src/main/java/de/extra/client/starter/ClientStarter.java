@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.extra.client.core.ClientProcessResult;
+import de.extra.client.core.ReturnCode;
 import de.extra.client.exit.JvmSystemExiter;
 import de.extra.client.exit.SystemExiter;
 import de.extra.client.logging.LogFileHandler;
@@ -100,11 +101,7 @@ public class ClientStarter {
 			try {
 				final ClientProcessResult result = extraClient.execute();
 
-				// TODO refactor
-				returnCode = !result.isSuccessful() ? ReturnCode.BUSINESS : (result
-						.hasExceptions() ? ReturnCode.TECHNICAL
-						: ReturnCode.SUCCESS);
-
+				returnCode = result.getReturnCode();
 			} catch (final Exception e) {
 				LOG.error("Fehler bei der Verarbeitung", e);
 				returnCode = ReturnCode.BUSINESS;

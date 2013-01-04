@@ -60,6 +60,13 @@ public interface ISingleResponseData {
 	Boolean isSuccessful();
 
 	/**
+	 * Zeigt an, ob eine Warnung aufgetreten ist (z.B. keine Ergebnisdatei erhalten).
+	 * 
+	 * @return
+	 */
+	Boolean isWarning();
+
+	/**
 	 * Gibt den Status an, der sich aufgrund der Server-Verarbeitung ergibt.
 	 * Im ResponceProcess Plugin wird dieser Status je nach Verarbeitungsstrategie gesetzt.
 	 * Ein Status WAIT wird z.B. gewählt, wenn eine externe Anwendung das übermittelte Serverergebnis noch

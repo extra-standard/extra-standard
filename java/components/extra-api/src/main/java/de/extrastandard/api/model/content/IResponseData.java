@@ -50,4 +50,24 @@ public interface IResponseData {
 	 */
 	void addSingleResponse(ISingleResponseData singleResponseData);
 
+	/**
+	 * Zeigt an, ob die Server-Verarbeitung erfolgreich war.
+	 * 
+	 * @return
+	 */
+	Boolean isSuccessful();
+	
+	/**
+	 * Zeigt an, ob eine Warnung aufgetreten ist (z.B. keine Ergebnisdatei erhalten).
+	 * 
+	 * @return
+	 */
+	Boolean isWarning();
+	
+	/**
+	 * Wird benoetigt, um bei bestimmten Ereignissen (z.B. keine Ergebnisdatei vorhanden) eine Warnung signalisieren zu können.
+	 * @param warning
+	 */
+	void setWarning(Boolean warning);
+
 }

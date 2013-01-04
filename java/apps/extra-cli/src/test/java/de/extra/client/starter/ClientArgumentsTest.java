@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import de.extra.client.core.ReturnCode;
 import de.extra.client.exit.SystemExiter;
 
 /**
