@@ -27,7 +27,7 @@ import org.springframework.util.Assert;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
-import de.extra.client.starter.ReturnCode;
+import de.extra.client.core.ReturnCode;
 
 /**
  * @author Thorsten Vogel

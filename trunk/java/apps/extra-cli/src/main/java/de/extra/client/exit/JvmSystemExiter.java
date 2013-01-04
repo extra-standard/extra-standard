@@ -18,7 +18,7 @@
  */
 package de.extra.client.exit;
 
-import de.extra.client.starter.ReturnCode;
+import de.extra.client.core.ReturnCode;
 
 /**
  * @author DPRS
@@ -28,7 +28,7 @@ import de.extra.client.starter.ReturnCode;
 public class JvmSystemExiter implements SystemExiter {
 
 	/**
-	 * @see de.extra.client.starter.SystemExiter#exit(de.extra.client.starter.ReturnCode)
+	 * @see de.extra.client.starter.SystemExiter#exit(de.extra.client.core.ReturnCode)
 	 */
 	@Override
 	public void exit(final ReturnCode code) {

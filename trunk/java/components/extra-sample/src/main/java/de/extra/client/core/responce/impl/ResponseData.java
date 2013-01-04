@@ -38,6 +38,11 @@ public class ResponseData implements IResponseData {
 
 	private final Map<String, Collection<ISingleResponseData>> responseDatenMap = new HashMap<String, Collection<ISingleResponseData>>();
 
+	// (04.01.13) Warnung (z.B. keine Ergebnisdatei)
+	private Boolean warning = false;
+	// TODO (04.01.13) wird das Attribut 'successful' benoetigt?
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -52,6 +57,14 @@ public class ResponseData implements IResponseData {
 			allResponsesList.addAll(reponseDatalist);
 		}
 		return allResponsesList;
+	}
+
+	/**
+	 * Wird benoetigt, um bei bestimmten Ereignissen (z.B. keine Ergebnisdatei vorhanden) eine Warnung signalisieren zu können.
+	 * @param warning
+	 */
+	public void setWarning(Boolean warning) {
+		this.warning = warning;
 	}
 
 	/*
@@ -85,6 +98,36 @@ public class ResponseData implements IResponseData {
 		singleResponsesList.add(singleResponseData);
 		responseDatenMap.put(requestId, singleResponsesList);
 
+	}
+
+	/**
+	 * Eine Response ist erfolgreich, wenn alle Response-Objekte erfolgreich sind.
+	 */
+	@Override
+	public Boolean isSuccessful() {
+		if (getResponses() != null) {
+			for (final ISingleResponseData iResponseData : getResponses()) {
+				if (!iResponseData.isSuccessful()) {
+					return false;
+				}
+			}			
+		}
+		return true;
+	}
+
+	/**
+	 * Eine Warnung liegt dann vor, wenn für ein Response-Objekt eine Warnung vorliegt oder wenn für die Gesamt-Response eine Warnung vorliegt.
+	 */
+	@Override
+	public Boolean isWarning() {
+		if (getResponses() != null) {
+			for (final ISingleResponseData iResponseData : getResponses()) {
+				if (iResponseData.isWarning()) {
+					return true;
+				}
+			}			
+		}
+		return warning;
 	}
 
 	/*

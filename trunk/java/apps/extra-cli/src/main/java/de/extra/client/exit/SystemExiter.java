@@ -18,7 +18,7 @@
  */
 package de.extra.client.exit;
 
-import de.extra.client.starter.ReturnCode;
+import de.extra.client.core.ReturnCode;
 
 /**
  * @author DPRS

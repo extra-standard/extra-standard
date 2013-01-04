@@ -66,6 +66,32 @@ public class SingleResponseDataForMultipleRequest implements IResponseData {
 				"SingleResponseDataForMultipleRequest.addSingleResponse method is not supported");
 	}
 
+	@Override
+	public Boolean isSuccessful() {
+		if (getResponses() != null) {
+			for (final ISingleResponseData iResponseData : getResponses()) {
+				if (!iResponseData.isSuccessful()) {
+					return false;
+				}
+			}			
+		}
+		return true;
+	}
+
+	/**
+	 * Keine Warnung moeglich!
+	 */
+	@Override
+	public Boolean isWarning() {
+		return false;
+	}
+
+	@Override
+	public void setWarning(Boolean warning) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
