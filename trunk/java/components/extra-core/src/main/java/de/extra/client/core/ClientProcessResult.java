@@ -67,12 +67,9 @@ public class ClientProcessResult {
 		for (final ProcessResult result : responses) {
 			final IResponseData responseData = result.getResponseData();
 			if (responseData != null && responseData.getResponses() != null) {
-				for (final ISingleResponseData iResponseData : responseData
-						.getResponses()) {
-					if (!iResponseData.isSuccessful()) {
-						hasErrors = true;
-						break;
-					}
+				if (responseData != null && (!responseData.isSuccessful())) {
+					hasErrors = true;
+					break;					
 				}
 			} else if (result.getException() != null) {
 				// TODO possibly recoverable exceptions?
@@ -82,6 +79,22 @@ public class ClientProcessResult {
 		return !hasErrors;
 	}
 
+	/**
+	 * Eine Warnung wird signalisiert, wenn in den Einzel-Response Objekten eine Warnung existiert.
+	 * @return
+	 */
+	public boolean isWarning() {
+		for (final ProcessResult result : responses) {
+			final IResponseData responseData = result.getResponseData();
+			if (responseData != null) {
+				if (responseData.isWarning()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public boolean hasExceptions() {
 
 		for (final ProcessResult result : responses) {
@@ -179,6 +192,8 @@ public class ClientProcessResult {
 			}
 		}
 		final StringBuilder resultAsString = new StringBuilder(NEW_LINE);
+		resultAsString.append("Return Code: " + getReturnCode().name() + " (" + getReturnCode().getCode() + ")");
+		resultAsString.append(NEW_LINE);
 		resultAsString.append("Anzahl verarbeitete Saetze (Serveranfragen): ").append(
 				processedResultsCount);
 		resultAsString.append(NEW_LINE);
@@ -242,4 +257,19 @@ public class ClientProcessResult {
 		return builder.toString();
 	}
 
+	public ReturnCode getReturnCode() {
+		ReturnCode returnCode = ReturnCode.SUCCESS;
+		// (04.01.13) neuer Return-Code 'WARNING'
+		if (isSuccessful() == false) {
+			// Fehler!
+			returnCode = hasExceptions() ? ReturnCode.TECHNICAL : ReturnCode.BUSINESS;					
+		}
+		else if (isWarning()) {
+			returnCode = ReturnCode.WARNING;
+		}
+		else {
+			returnCode = ReturnCode.SUCCESS;
+		}
+		return returnCode;
+	}
 }

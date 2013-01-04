@@ -11,6 +11,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.springframework.util.StringUtils;
 
+import de.extra.client.core.ReturnCode;
 import de.extra.client.exit.SystemExiter;
 
 /**

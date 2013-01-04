@@ -36,4 +36,4 @@ plugins.execution.executionPersistenceJpa.database.password=
 plugins.outputplugin=dummyOutputPlugin
 
 # Webservices (eXTra Server)
-webservice.endpoint.url=http://localhost:8088/mockExtraSterbedatenausPhase3
+plugins.outputplugin.wsOutputPlugin.endpoint.url=http://localhost:8088/mockExtraSterbedatenausPhase3

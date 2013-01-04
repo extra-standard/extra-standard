@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.extra.client.starter;
+package de.extra.client.core;
 
 /**
  * Returncodes für Batchanwendungen.
@@ -13,7 +13,7 @@ package de.extra.client.starter;
 public enum ReturnCode {
 
 	/**
-	 * Programm ist ohne Fehler oder Unregelmae�igkeiten gelaufen.
+	 * Programm ist ohne Fehler oder Unregelmaessigkeiten gelaufen.
 	 */
 	SUCCESS(0),
 

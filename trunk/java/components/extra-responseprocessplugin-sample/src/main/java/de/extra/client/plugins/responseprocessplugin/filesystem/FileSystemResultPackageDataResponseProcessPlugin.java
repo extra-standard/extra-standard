@@ -162,6 +162,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 					.getRequestDetails();
 			if (isBodyEmpty(extraResponse.getTransportBody())) {
 				// (21.11.12) Keine Ergebnisse ermoeglichen!
+				// (04.01.13) Warnung signalisieren!
+				responseData.setWarning(true);
 				return responseData;
 				// throw new ExtraResponseProcessPluginRuntimeException(
 				// ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
