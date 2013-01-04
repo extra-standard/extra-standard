@@ -37,20 +37,23 @@ public class SingleResponseData implements ISingleResponseData {
 
 	/** Zeigt an, ob die Server-Verarbeitung erfolgreich war */
 	private final Boolean successful;
+	/** Zeigt an, ob eine Warnung aufgetreten ist (z.B. keine Ergebnisdatei erhalten) */
+	private Boolean warning = false; // Default: keine Warnung
 	/** Status der sich aufgrund der Server-Verarbeitung ergibt */
 	private final PersistentStatus persistentStatus;
 
 	private String outputIdentifier;
 	
-	/**
-	 * @param requestId
-	 * @param returnCode
-	 * @param returnText
-	 * @param responseId
-	 */
 	public SingleResponseData(final String requestId, final String returnCode,
 			final String returnText, final String responseId,
 			final Boolean successful, PersistentStatus persistentStatus, String outputIdentifier) {
+		// Default: warning=false
+		this(requestId, returnCode, returnText, responseId, successful, persistentStatus, outputIdentifier, false);
+	}
+
+	public SingleResponseData(final String requestId, final String returnCode,
+			final String returnText, final String responseId,
+			final Boolean successful, PersistentStatus persistentStatus, String outputIdentifier, final Boolean warning) {
 		this.requestId = requestId;
 		this.returnCode = returnCode;
 		this.returnText = returnText;
@@ -58,6 +61,7 @@ public class SingleResponseData implements ISingleResponseData {
 		this.successful = successful;
 		this.persistentStatus = persistentStatus;
 		this.outputIdentifier = outputIdentifier;
+		this.warning = warning;
 	}
 
 	/*
@@ -104,6 +108,11 @@ public class SingleResponseData implements ISingleResponseData {
 	@Override
 	public Boolean isSuccessful() {
 		return successful;
+	}
+
+	@Override
+	public Boolean isWarning() {
+		return warning;
 	}
 
 	/**
