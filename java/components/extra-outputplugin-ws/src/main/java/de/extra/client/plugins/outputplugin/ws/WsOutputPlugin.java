@@ -21,19 +21,34 @@ package de.extra.client.plugins.outputplugin.ws;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.Iterator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.xml.namespace.QName;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.soap.SoapFault;
+import org.springframework.ws.soap.SoapFaultDetail;
+import org.springframework.ws.soap.SoapFaultDetailElement;
+import org.springframework.ws.soap.client.SoapFaultClientException;
+import org.springframework.xml.transform.StringResult;
 
 import de.extra.client.core.annotation.PluginConfigType;
 import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
+import de.extrastandard.api.exception.ExceptionCode;
+import de.extrastandard.api.exception.ExtraCoreRuntimeException;
 import de.extrastandard.api.plugin.IOutputPlugin;
 
 /**
@@ -67,8 +82,38 @@ public class WsOutputPlugin implements IOutputPlugin {
 		operation_logger.info("Webservice Aufruf von: {}", endpointUrl);
 		final StreamSource source = new StreamSource(requestAsStream);
 		final StreamResult result = new StreamResult(temp);
-		webServiceTemplate.sendSourceAndReceiveToResult(endpointUrl, source,
-				result);
+		try {
+			webServiceTemplate.sendSourceAndReceiveToResult(endpointUrl, source,
+					result);			
+		}
+		// Faengt eine vom Server gemeldete SoapFaultClientException ab
+		catch (SoapFaultClientException soapFaultClientException) {
+			operation_logger.error("Server meldet SOAP-Fehler: {}", soapFaultClientException.getFaultStringOrReason());
+			SoapFault soapFault = soapFaultClientException.getSoapFault();
+			Source sourceFault = soapFault.getSource();
+			
+			// SoapFaultDetail extrahieren
+			String soapFaultDetail = "";
+			try {
+				Result resultFault = new StringResult();
+				TransformerFactory.newInstance().newTransformer().transform(sourceFault, resultFault);
+				soapFaultDetail = resultFault.toString();
+				operation_logger.error("SoapFault Detail:\n {}", soapFaultDetail);
+			} catch (TransformerConfigurationException e) {
+				operation_logger.error("Schwerwiegender Fehler beim Extrahieren des SOAP-Fehlers!");
+				e.printStackTrace();
+			} catch (TransformerException e) {
+				operation_logger.error("Schwerwiegender Fehler beim Extrahieren des SOAP-Fehlers!");
+				e.printStackTrace();
+			} catch (TransformerFactoryConfigurationError e) {
+				operation_logger.error("Schwerwiegender Fehler beim Extrahieren des SOAP-Fehlers!");
+				e.printStackTrace();
+			}
+			
+			// TODO ExtraCoreRuntimeException erweitern!
+			ExtraCoreRuntimeException extraCoreRuntimeException = new ExtraCoreRuntimeException(soapFaultDetail);			
+			throw (extraCoreRuntimeException);
+		}
 		return new ByteArrayInputStream(temp.toByteArray());
 	}
 
