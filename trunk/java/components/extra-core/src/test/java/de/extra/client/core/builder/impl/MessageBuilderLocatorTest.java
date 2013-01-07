@@ -86,7 +86,6 @@ public class MessageBuilderLocatorTest {
 	 * {@link de.extra.client.core.builder.impl.MessageBuilderLocator#getXmlComplexTypeBuilder(java.lang.String, de.extra.client.core.model.InputDataContainer)}
 	 * .
 	 */
-	@Test(expected = IllegalArgumentException.class)
 	public void testGetXmlComplexMultipleTypeBuilderException() {
 		final Map<String, IXmlComplexTypeBuilder> complexTypeBuilderMap = new HashMap<String, IXmlComplexTypeBuilder>();
 		final IXmlComplexTypeBuilder expectedXmlComplexTypeBuilder = new DataTransformConfigurablePluginsBuilder();
@@ -95,14 +94,19 @@ public class MessageBuilderLocatorTest {
 		final MessageBuilderLocator messageBuilderLocator = createMessageBuilderlocator(complexTypeBuilderMap);
 
 		final IInputDataContainer senderData = createTestinputData("Dummy Content");
-		messageBuilderLocator.getXmlComplexTypeBuilder(
-				expectedXmlComplexTypeBuilder.getXmlType(), senderData);
+		final IXmlComplexTypeBuilder xmlComplexTypeBuilder = messageBuilderLocator
+				.getXmlComplexTypeBuilder(
+						expectedXmlComplexTypeBuilder.getXmlType(), senderData);
+		Assert.assertNull("xmlComplexTypeBuilder is not null",
+				xmlComplexTypeBuilder);
+
 	}
 
 	/**
 	 * @return
 	 */
-	private ContentInputDataContainer createTestinputData(final String singleContent) {
+	private ContentInputDataContainer createTestinputData(
+			final String singleContent) {
 		return new ContentInputDataContainer(new ArrayList<String>(
 				Arrays.asList(singleContent)));
 	}
