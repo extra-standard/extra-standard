@@ -246,6 +246,8 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 						+ " not found, although multiple XmlComplexTypeBuilder defined system-wide.");
 		final IXmlComplexTypeBuilder complexTypeBuilder = complexTypeBuilderMap
 				.get(beanName);
+		// Assert.notNull(complexTypeBuilder, "ComplexTypeBuilder for XmlType "
+		// + currentBuilderXmlType + " not found");
 		validateComplexTypeBuilder(complexTypeBuilder, currentBuilderXmlType,
 				beanName);
 		return complexTypeBuilder;
@@ -284,16 +286,19 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 				pluginBuilderList.add(currenComplexTypeBuilder);
 			}
 		}
-		Assert.notEmpty(pluginBuilderList,
-				"XmlComplexTypeBuilder for ElementType " + xmlType
-						+ " not found");
+		// Assert.notEmpty(pluginBuilderList,
+		// "XmlComplexTypeBuilder for ElementType " + xmlType
+		// + " not found");
 		IXmlComplexTypeBuilder returnComplexTypeBuilder = null;
-		if (pluginBuilderList.size() > 1) {
-			returnComplexTypeBuilder = new CompositePluginsBuilder(
-					pluginBuilderList);
-		} else {
-			returnComplexTypeBuilder = pluginBuilderList.get(0);
+		if (!pluginBuilderList.isEmpty()) {
+			if (pluginBuilderList.size() > 1) {
+				returnComplexTypeBuilder = new CompositePluginsBuilder(
+						pluginBuilderList);
+			} else {
+				returnComplexTypeBuilder = pluginBuilderList.get(0);
+			}
 		}
+
 		return returnComplexTypeBuilder;
 	}
 
