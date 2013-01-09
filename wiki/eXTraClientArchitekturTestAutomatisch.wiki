@@ -7,9 +7,11 @@ Zusätzlich zu den Unit- und Integrationstests sollen auch die entwickelten Fach
 
 == Voraussetzungen ==
 
- * Datenbank komplett neu aufgebaut mit Stammdaten
+Um reproduzierbar-Testbare Ergebnisse erhalten zu können, muß bei Testbeginn folgendes sichergestellt werden:
+ * Als Datenbank für die automatisierten Tests wird HSQLDB eingesetzt.
+ * Die Datenbank wird komplett neu aufgebaut mit Stammdaten
    * Die DB-Migrationsskripte sollen mit flyway programmatisch aufgerufen werden.
- * Log-Verzeichnis vollständig gelöscht
+ * Die Log-Verzeichnisse werden vollständig gelöscht
  
 == Fachverfahren (Phasen) durchführen ==
 
@@ -30,5 +32,7 @@ Beispiel Fachverfahren Sterbedaten:
 || Logdateien || X || X || X ||
 || eXTra-XML-Nachrichten|| X || X || X ||
  
-
-Im ersten Schritt soll der Datenbank-Output über die geprüft
+Die automatisierten Tests werden schrittweise entwickelt.
+Im ersten Schritt soll der Datenbank-Output getestet werden:
+ * Nach dem Aufruf einer Phase werden über JPA Abfragen auf den zentralen Objekten (Execution, ...) durchgeführt.
+ * Es wird z.B. getestet, das sich nach Phase 1 drei Einträge in der Tabelle Execution befinden
