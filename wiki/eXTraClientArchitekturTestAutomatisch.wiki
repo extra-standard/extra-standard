@@ -1,0 +1,23 @@
+#summary Automatisierter Test der eXTra client Fachverfahren
+
+= Automatisierter Test eines eXTra client Fachverfahrens =
+
+Die automatisierte Testdurchführung von Unit- und Integrationstests einzelner Module erfolgt mit JUnit in einer Jenkins-Umgebung. 
+Zusätzlich zu den Unit- und Integrationstests sollen auch die entwickelten Fachverfahren automatisiert getestet werden. Dies erfolgt in folgenden Schritten:
+
+== Voraussetzungen ==
+
+ * Datenbank komplett neu aufgebaut mit Stammdaten
+   * Die DB-Migrationsskripte sollen mit flyway programmatisch aufgerufen werden.
+ * Log-Verzeichnis vollständig gelöscht
+ 
+== Fachverfahren (Phasen) durchführen ==
+
+In jeder Phase können folgende Dinge geprüft werden:
+
+ * Input-Dateien
+ * Datenbank-Output
+ * Logdateien
+ * eXTra-XML-Nachrichten (Client und Server)
+
+Im ersten Schritt soll der Datenbank-Output über die geprüft
