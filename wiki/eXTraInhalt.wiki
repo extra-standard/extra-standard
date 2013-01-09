@@ -11,6 +11,7 @@
       * [eXTraBuilderKonfiguration Konfiguration von CLI]
       * [eXTraArchitekturAnwendungBetrieb Betrieb von CLI]      
       * [eXTraArchitekturAnwendungProfiling Profiling]
+      * [eXTraClientArchitekturTestAutomatisch Autom. Tests]
   * [eXTraVerfahren Fachverfahren] 
       * [eXTraErstellungVerfahren Erstellung Fachverfahren]   
       * [eXTraSterbedatenVerfahren Sterbedatenabgleich Ausland]
