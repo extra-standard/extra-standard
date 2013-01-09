@@ -31,7 +31,8 @@ Beispiel Fachverfahren Sterbedaten:
 || Datenbank-Output || X || X || X ||
 || Logdateien || X || X || X ||
 || eXTra-XML-Nachrichten|| X || X || X ||
- 
+
+
 Die automatisierten Tests werden schrittweise entwickelt.
 Im ersten Schritt soll der Datenbank-Output getestet werden:
  * Nach dem Aufruf einer Phase werden über JPA Abfragen auf den zentralen Objekten (Execution, ...) durchgeführt.
