@@ -24,6 +24,7 @@ import java.io.InputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.bind.JAXBElement;
+import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
 import org.slf4j.Logger;
@@ -68,15 +69,14 @@ public class ExtraUnmarschaller implements IExtraUnmarschaller {
 	}
 
 	@Override
-	public <X> X unmarshal(final InputStream inputStream,
+	public <X> X unmarshal(final Source source,
 			final Class<X> extraTransportClass, final boolean validation)
 			throws XmlMappingException, IOException {
-		Assert.notNull(inputStream, "InputStream is null");
+		Assert.notNull(source, "StreamSource is null");
 		Assert.notNull(extraTransportClass, "ExtraTransportClass is null");
 
 		final Unmarshaller unmarshaller = findUnmarschaller(validation);
-		final Object responseObject = unmarshaller.unmarshal(new StreamSource(
-				inputStream));
+		final Object responseObject = unmarshaller.unmarshal(source);
 		logger.debug("ResponseObject Class: {}", responseObject.getClass());
 		Assert.notNull(responseObject, "Response is null");
 		X extraTransport = null;
@@ -102,6 +102,16 @@ public class ExtraUnmarschaller implements IExtraUnmarschaller {
 		return extraTransport;
 	}
 
+	@Override
+	public <X> X unmarshal(final InputStream inputStream,
+			final Class<X> extraTransportClass, final boolean validation)
+			throws XmlMappingException, IOException {
+		Assert.notNull(inputStream, "InputStream is null");
+		Assert.notNull(extraTransportClass, "ExtraTransportClass is null");
+		final StreamSource inputStreamSource = new StreamSource(inputStream);
+		return unmarshal(inputStreamSource, extraTransportClass, validation);
+	}
+
 	private Jaxb2Marshaller findUnmarschaller(final boolean validation) {
 		Jaxb2Marshaller marshaller = null;
 		if (validation) {
@@ -110,5 +120,12 @@ public class ExtraUnmarschaller implements IExtraUnmarschaller {
 			marshaller = noValidationJaxb2Marshaller;
 		}
 		return marshaller;
+	}
+
+	@Override
+	public <X> X unmarshal(final Source source,
+			final Class<X> extraTransportClass) throws XmlMappingException,
+			IOException {
+		return unmarshal(source, extraTransportClass, false);
 	}
 }
