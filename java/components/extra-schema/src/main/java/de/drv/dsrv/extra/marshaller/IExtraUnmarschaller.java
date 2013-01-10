@@ -21,11 +21,14 @@ package de.drv.dsrv.extra.marshaller;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.xml.transform.Source;
+
 import org.springframework.oxm.XmlMappingException;
 
 /**
  * @author Leonid Potap
- * @version $Id$
+ * @version $Id: IExtraUnmarschaller.java 1417 2012-12-28 11:07:10Z
+ *          potap.rentenservice@gmail.com $
  */
 public interface IExtraUnmarschaller {
 
@@ -62,4 +65,33 @@ public interface IExtraUnmarschaller {
 			Class<X> extraTransportClass, boolean validation)
 			throws XmlMappingException, IOException;
 
+	/**
+	 * Aus dem StreamSource wird ein ExtraTransport Class ermittelt und
+	 * unmarschalled. Es findet keine Validierung statt
+	 * 
+	 * @param streamSource
+	 * @param extraTransportClass
+	 *            das erwartete extraRootElement.Class
+	 * @return the instance of extraTransportClass
+	 * @throws XmlMappingException
+	 * @throws IOException
+	 */
+	public <X> X unmarshal(final Source source,
+			final Class<X> extraTransportClass, final boolean validation)
+			throws XmlMappingException, IOException;
+
+	/**
+	 * Aus dem StreamSource wird ein ExtraTransport Class ermittelt und
+	 * unmarschalled. Es findet keine Validierung statt
+	 * 
+	 * @param streamSource
+	 * @param extraTransportClass
+	 *            das erwartete extraRootElement.Class
+	 * @return the instance of extraTransportClass
+	 * @throws XmlMappingException
+	 * @throws IOException
+	 */
+	public <X> X unmarshal(final Source source,
+			final Class<X> extraTransportClass) throws XmlMappingException,
+			IOException;
 }
