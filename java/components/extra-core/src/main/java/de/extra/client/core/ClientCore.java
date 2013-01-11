@@ -65,6 +65,9 @@ public class ClientCore implements ApplicationContextAware {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(ClientCore.class);
+	// TODO globaler Logger: auslagern
+	private static final Logger operation_logger = LoggerFactory
+			.getLogger("de.extra.client.operation");
 
 	ApplicationContext applicationContext;
 
@@ -238,7 +241,7 @@ public class ClientCore implements ApplicationContextAware {
 			final StreamResult streamResult = new StreamResult(outputStream);
 			marshaller.marshal(request, streamResult, outgoingXmlValidation);
 
-			logger.info("OutgoingXml: {}", outputStream.toString());
+			operation_logger.info("Request OutgoingXml:\n {}", outputStream.toString());
 
 			final InputStream responseAsStream = outputPlugin
 					.outputData(new ByteArrayInputStream(outputStream

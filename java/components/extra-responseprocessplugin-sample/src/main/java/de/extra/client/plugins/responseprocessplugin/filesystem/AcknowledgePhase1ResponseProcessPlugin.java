@@ -70,6 +70,9 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(AcknowledgePhase1ResponseProcessPlugin.class);
+	// TODO globaler Logger: auslagern
+	private static final Logger operation_logger = LoggerFactory
+			.getLogger("de.extra.client.operation");
 
 	@Inject
 	@Named("extraMarschaller")
@@ -175,7 +178,7 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 			final StreamResult streamResult = new StreamResult(writer);
 
 			marshaller.marshal(extraResponse, streamResult);
-			logger.debug("ExtraResponse: "
+			operation_logger.debug("ExtraResponse: "
 					+ ExtraMessageReturnDataExtractor.NEW_LINE
 					+ writer.toString());
 		} catch (final XmlMappingException xmlException) {
