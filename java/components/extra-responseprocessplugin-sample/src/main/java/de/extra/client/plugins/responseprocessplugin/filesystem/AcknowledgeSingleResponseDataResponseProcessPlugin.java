@@ -20,15 +20,10 @@ package de.extra.client.plugins.responseprocessplugin.filesystem;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
-import java.io.Writer;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.xml.transform.stream.StreamResult;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.util.Assert;
 
@@ -62,9 +57,6 @@ import de.extrastandard.api.util.IExtraReturnCodeAnalyser;
 @Named("acknowledgeSingleResponseDataResponseProcessPlugin")
 public class AcknowledgeSingleResponseDataResponseProcessPlugin implements
 		IResponseProcessPlugin {
-
-	private static final Logger LOG = LoggerFactory
-			.getLogger(AcknowledgeSingleResponseDataResponseProcessPlugin.class);
 
 	@Inject
 	@Named("extraMarschaller")
@@ -104,7 +96,8 @@ public class AcknowledgeSingleResponseDataResponseProcessPlugin implements
 			final Transport extraResponse = extraUnmarschaller.unmarshal(
 					responseAsStream, Transport.class);
 
-			printResult(extraResponse);
+			// Ausgabe der Response im log
+			ExtraMessageReturnDataExtractor.printResult(marshaller, extraResponse);
 
 			// TODO Validierungsmodul
 			final TransportHeader transportHeader = extraResponse
@@ -163,24 +156,6 @@ public class AcknowledgeSingleResponseDataResponseProcessPlugin implements
 					xmlMappingException);
 		} catch (final IOException ioException) {
 			throw new ExtraResponseProcessPluginRuntimeException(ioException);
-		}
-
-	}
-
-	private void printResult(final Transport extraResponse) {
-		try {
-			final Writer writer = new StringWriter();
-			final StreamResult streamResult = new StreamResult(writer);
-
-			marshaller.marshal(extraResponse, streamResult);
-			LOG.debug("ExtraResponse: "
-					+ ExtraMessageReturnDataExtractor.NEW_LINE
-					+ writer.toString());
-		} catch (final XmlMappingException xmlException) {
-			LOG.debug("XmlMappingException beim Lesen des Results ",
-					xmlException);
-		} catch (final IOException ioException) {
-			LOG.debug("IOException beim Lesen des Results ", ioException);
 		}
 
 	}

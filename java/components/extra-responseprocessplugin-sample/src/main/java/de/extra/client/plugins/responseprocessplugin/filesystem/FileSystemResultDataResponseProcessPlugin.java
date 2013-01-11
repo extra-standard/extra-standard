@@ -21,13 +21,10 @@ package de.extra.client.plugins.responseprocessplugin.filesystem;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
@@ -42,7 +39,6 @@ import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
 import de.drv.dsrv.extrastandard.namespace.response.Message;
 import de.drv.dsrv.extrastandard.namespace.response.Package;
-import de.drv.dsrv.extrastandard.namespace.response.Transport;
 import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
 import de.extra.client.core.annotation.PluginConfigType;
@@ -123,7 +119,8 @@ public class FileSystemResultDataResponseProcessPlugin implements
 							responseAsStream,
 							de.drv.dsrv.extrastandard.namespace.response.Transport.class);
 
-			printResult(extraResponse);
+			// Ausgabe der Response im log
+			ExtraMessageReturnDataExtractor.printResult(marshaller, extraResponse);
 
 			final TransportHeader transportHeader = extraResponse
 					.getTransportHeader();
@@ -178,24 +175,6 @@ public class FileSystemResultDataResponseProcessPlugin implements
 			throw new ExtraResponseProcessPluginRuntimeException(ioException);
 		}
 		return responseData;
-	}
-
-	private void printResult(final Transport extraResponse) {
-		try {
-			final Writer writer = new StringWriter();
-			final StreamResult streamResult = new StreamResult(writer);
-
-			marshaller.marshal(extraResponse, streamResult);
-			LOG.debug("ExtraResponse: "
-					+ ExtraMessageReturnDataExtractor.NEW_LINE
-					+ writer.toString());
-		} catch (final XmlMappingException xmlException) {
-			LOG.debug("XmlMappingException beim Lesen des Results ",
-					xmlException);
-		} catch (final IOException ioException) {
-			LOG.debug("IOException beim Lesen des Results ", ioException);
-		}
-
 	}
 
 	private static boolean isBodyEmpty(final TransportBody transportBody) {

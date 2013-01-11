@@ -25,7 +25,13 @@
 		</encoder>
 	</appender>
 
-
+	<appender name="MESSAGE_FILE" class="ch.qos.logback.core.FileAppender">
+		<file>${logfilepath}/extra-message_${now}.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%date{ISO8601,Europe/Berlin}: %msg%n
+			</pattern>
+		</encoder>
+	</appender>
 
 
 	<logger name="org.springframework" level="ERROR" />
@@ -35,15 +41,19 @@
 	<logger name="de.extra.client.core.annotation" level="INFO" />
 	<logger name="de.extra.client.core.builder" level="INFO" />
 	
-	
-
 	<logger name="de.extra.client.operation" level="INFO">
 		<appender-ref ref="OPERATION_FILE" />
 	</logger>
 	
 	<logger name="de.extra.client.logging" level="DEBUG" />
 
-
+	<!-- extra Nachrichten -->
+	<logger name="de.extra.client.message.request" level="INFO">
+		<appender-ref ref="MESSAGE_FILE" />
+	</logger>
+	<logger name="de.extra.client.message.response" level="INFO">
+		<appender-ref ref="MESSAGE_FILE" />
+	</logger>
 
 	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
