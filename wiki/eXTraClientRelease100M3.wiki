@@ -34,8 +34,8 @@
 
 
 = eXTRa-Builder für das Schreiben von eXTra Standard-Nachrichten =
-  * DataRequest (xmsg:dataRequest)
-  * ConfirmationOfReceipt (xmsg:confirmationOfReceipt)
+  * !DataRequest (xmsg:dataRequest)
+  * !ConfirmationOfReceipt (xmsg:confirmationOfReceipt)
   
 
 
