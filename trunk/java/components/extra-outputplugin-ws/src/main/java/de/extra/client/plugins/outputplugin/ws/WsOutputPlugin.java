@@ -61,6 +61,7 @@ public class WsOutputPlugin implements IOutputPlugin {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(WsOutputPlugin.class);
+	// TODO globaler Logger: auslagern
 	private static final Logger operation_logger = LoggerFactory
 			.getLogger("de.extra.client.operation");
 
