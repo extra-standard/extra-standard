@@ -9,6 +9,36 @@
   * Unterstützte Spezifikationsversion: 1.3
   * Unterstützte Szenarien: Sende-/Holbetrieb mit drei Phasen
 
+= eXTRa-Builder für das Schreiben von XMLSegments des eXTra-Transports =
+  * TransportHeader (xreq:TransportHeader)
+    * TestIndicator (xcpt:TestIndicator)
+    * Sender (xcpt:Sender)
+    * Receiver (xcpt:Receiver)
+    * RequestDetail (xcpt:RequestDetails) 
+  * TransportPlugins
+    * DataSource (xplg:DataSource)
+      * DataContainer (xplg:DataContainer)
+      * DataTransform (xplg:DataTransforms)
+    * Contact (xplg:Contacts)
+  * TransportBody (xreq:TransportBody)
+    * Data (xcpt:Data)
+      * Base64CharSequense(xcpt:Base64CharSequence)
+      * ElementSequence (<xcpt:ElementSequence>)
+    * Package (xres:Package)
+      * PackageHeader (xres:PackageHeader)
+        * TestIndicator	(xcpt:TestIndicator)
+        * Sender (xcpt:Sender)
+        * Receiver (xcpt:Receiver)
+        * RequestDetail (xcpt:RequestDetails) 	
+      * PackageBody (xres:PackageBody)
+
+
+= eXTRa-Builder für das Schreiben von eXTra Standard-Nachrichten =
+  * DataRequest (xmsg:dataRequest)
+  * ConfirmationOfReceipt (xmsg:confirmationOfReceipt)
+  
+
+
 = Datenbank-Unterstützung =
   * Oracle XE oder Oracle 11
 
