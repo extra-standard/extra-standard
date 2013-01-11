@@ -59,10 +59,9 @@ Die Fachverfahren können über Batch-Dateien aufgerufen werden. Beispielhaft be
 
 In der Datei extra.bat kann auch der Heap-Speicher angepasst werden. Dies kann nötig werden, wenn sehr große Dateien versendet werden sollen (> 30MB). Auf einem 32 Bit Windows System sind folgende Testdaten ermittelt worden: 
 
-|| || Version ||
-|| max. Heap Space || 1610 ||
-|| 69,6 MB || Fehler ||
-|| 53,6 MB || OK ||
+|| Heap Space || Dateigröße || Ergebnis ||
+|| 1610 || 69,6 MB || Fehler ||
+|| 1610 || 53,6 MB || OK ||
 
 In einer Produktionsumgebung (64 Bit) kann der Heap-Speicher größer gewählt werden. In der aktuellen Version des eXTra-Clients muss aber im Vorfeld auf die Größe geachtet werden und der Heap-Space entsprechend groß gewählt werden.
 
