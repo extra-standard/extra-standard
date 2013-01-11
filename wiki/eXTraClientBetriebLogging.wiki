@@ -17,7 +17,7 @@ Zur Analyse und Fehlersuche kann konfigurativ ein Logging aktiviert werden. In d
 
 Für jeden Logger kann ein Log-Level angegeben werden (_ERROR, WARN, INFO, DEBUG_). Das Logging erfolgt unter Verwendung des Logback Frameworks (http://logback.qos.ch/)
 
-Die Logdatei hat den Namen _logging-config.xml_. Sie kann für jede Phase angepasst werden und befindet sich im Konfigurationsverzeichnis der Phase.
+Die Logdatei hat den Namen _logging-config.xml_. Sie kann für jede Phase angepasst werden und befindet sich im Konfigurationsverzeichnis der Phase. Das Ausgabeverzeichnis heißt üblicherweise _logs_.
 
 *Beispiel einer Logdatei:*
 
