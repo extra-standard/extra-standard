@@ -9,6 +9,8 @@ Zur Analyse und Fehlersuche kann konfigurativ ein Logging aktiviert werden. In d
 || de.extra.client.core.annotation || Informationen über Konfigurationseinstellungen ||
 || de.extra.client.core.builder || Erstellung von XML-Dokumenten ||
 || de.extra.client.logging || Ausführung des eXTra-Clients ||
+|| de.extra.client.message.request || Ausgabe des XML-Request (auf Level DEBUG). Achtung! XML-Request sollte nicht zu groß sein (< 1MB) ||
+|| de.extra.client.message.response || Ausgabe des XML-Response (auf Level DEBUG). Achtung! XML-Response sollte nicht zu groß sein (< 1MB) ||
 || org.springframework || springframework-Logger ||
 || org.hibernate || hibernate-Logger ||
 || org.apache|| apache-Logger ||
@@ -48,6 +50,15 @@ Die Logdatei hat den Namen _logging-config.xml_. Sie kann für jede Phase angepa
 		</encoder>
 	</appender>
 
+	<appender name="MESSAGE_FILE" class="ch.qos.logback.core.FileAppender">
+		<file>${logfilepath}/extra-message_${now}.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%date{ISO8601,Europe/Berlin}: %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+
 	<logger name="org.springframework" level="ERROR" />
 	<logger name="org.hibernate" level="ERROR" />
 	<logger name="org.apache" level="ERROR" />
@@ -61,7 +72,13 @@ Die Logdatei hat den Namen _logging-config.xml_. Sie kann für jede Phase angepa
 	
 	<logger name="de.extra.client.logging" level="DEBUG" />
 
-
+	<!-- extra Nachrichten -->
+	<logger name="de.extra.client.message.request" level="INFO">
+		<appender-ref ref="MESSAGE_FILE" />
+	</logger>
+	<logger name="de.extra.client.message.response" level="INFO">
+		<appender-ref ref="MESSAGE_FILE" />
+	</logger>
 
 	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
