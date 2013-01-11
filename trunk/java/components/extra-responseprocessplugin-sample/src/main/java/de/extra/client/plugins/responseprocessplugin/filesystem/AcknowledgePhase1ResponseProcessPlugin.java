@@ -20,15 +20,10 @@ package de.extra.client.plugins.responseprocessplugin.filesystem;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
-import java.io.Writer;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.xml.transform.stream.StreamResult;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.util.Assert;
 
@@ -67,12 +62,6 @@ import de.extrastandard.api.util.IExtraReturnCodeAnalyser;
 @Named("acknowledgePhase1ResponseProcessPlugin")
 public class AcknowledgePhase1ResponseProcessPlugin implements
 		IResponseProcessPlugin {
-
-	private static final Logger logger = LoggerFactory
-			.getLogger(AcknowledgePhase1ResponseProcessPlugin.class);
-	// TODO globaler Logger: auslagern
-	private static final Logger operation_logger = LoggerFactory
-			.getLogger("de.extra.client.operation");
 
 	@Inject
 	@Named("extraMarschaller")
@@ -113,7 +102,8 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 			final Transport extraResponse = extraUnmarschaller.unmarshal(
 					responseAsStream, Transport.class);
 
-			printResult(extraResponse);
+			// Ausgabe der Response im log
+			ExtraMessageReturnDataExtractor.printResult(marshaller, extraResponse);
 
 			final TransportHeader transportHeader = extraResponse
 					.getTransportHeader();
@@ -170,24 +160,6 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 			throw new ExtraResponseProcessPluginRuntimeException(ioException);
 		}
 		return responseData;
-	}
-
-	private void printResult(final Transport extraResponse) {
-		try {
-			final Writer writer = new StringWriter();
-			final StreamResult streamResult = new StreamResult(writer);
-
-			marshaller.marshal(extraResponse, streamResult);
-			operation_logger.debug("ExtraResponse: "
-					+ ExtraMessageReturnDataExtractor.NEW_LINE
-					+ writer.toString());
-		} catch (final XmlMappingException xmlException) {
-			logger.debug("XmlMappingException beim Lesen des Results ",
-					xmlException);
-		} catch (final IOException ioException) {
-			logger.debug("IOException beim Lesen des Results ", ioException);
-		}
-
 	}
 
 }

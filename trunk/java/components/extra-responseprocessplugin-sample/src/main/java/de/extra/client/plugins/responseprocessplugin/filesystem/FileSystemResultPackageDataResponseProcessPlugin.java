@@ -21,15 +21,12 @@ package de.extra.client.plugins.responseprocessplugin.filesystem;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.JAXBElement;
-import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
@@ -55,7 +52,6 @@ import de.drv.dsrv.extrastandard.namespace.response.Message;
 import de.drv.dsrv.extrastandard.namespace.response.Package;
 import de.drv.dsrv.extrastandard.namespace.response.PackageBody;
 import de.drv.dsrv.extrastandard.namespace.response.PackageHeader;
-import de.drv.dsrv.extrastandard.namespace.response.Transport;
 import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
 import de.extra.client.core.annotation.PluginConfigType;
@@ -148,7 +144,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 							responseAsStream,
 							de.drv.dsrv.extrastandard.namespace.response.Transport.class);
 
-			printResult(extraResponse);
+			// Ausgabe der Response im log
+			ExtraMessageReturnDataExtractor.printResult(marshaller, extraResponse);
 
 			final TransportHeader transportHeader = extraResponse
 					.getTransportHeader();
@@ -186,7 +183,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 				// Falls ein Fehler im Header angezeigt wird, wird der Body (=
 				// Einzelergebnisse)
 				// nicht mehr ausgewertet! Fehler wird hier zugeordnet
-				final String outputIdentifier = responseId;
+				//final String outputIdentifier = responseId;
 				final ISingleResponseData singleResponseData = new SingleResponseData(
 						requestDetails.getRequestID().getValue(), returnCode,
 						reportData.getReturnText(), responseId,
@@ -331,24 +328,6 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 			return PersistentStatus.WAIT;
 		}
 		return PersistentStatus.DONE;
-	}
-
-	private void printResult(final Transport extraResponse) {
-		try {
-			final Writer writer = new StringWriter();
-			final StreamResult streamResult = new StreamResult(writer);
-
-			marshaller.marshal(extraResponse, streamResult);
-			logger.debug("ExtraResponse: "
-					+ ExtraMessageReturnDataExtractor.NEW_LINE
-					+ writer.toString());
-		} catch (final XmlMappingException xmlException) {
-			logger.debug("XmlMappingException beim Lesen des Results ",
-					xmlException);
-		} catch (final IOException ioException) {
-			logger.debug("IOException beim Lesen des Results ", ioException);
-		}
-
 	}
 
 	private static boolean isBodyEmpty(final TransportBody transportBody) {

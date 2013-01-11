@@ -18,15 +18,21 @@
  */
 package de.extra.client.plugins.responseprocessplugin.filesystem;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Named;
+import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.oxm.XmlMappingException;
 import org.springframework.util.Assert;
 
+import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
 import de.drv.dsrv.extrastandard.namespace.components.FlagCodeType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
@@ -42,6 +48,11 @@ public class ExtraMessageReturnDataExtractor {
 
 	// TODO Systemunabhängigen Formatter
 	static final String NEW_LINE = "\r\n";
+	// TODO globaler Logger: auslagern
+	static final Logger operation_logger = LoggerFactory
+			.getLogger("de.extra.client.operation");
+	static final Logger message_response_logger = LoggerFactory
+			.getLogger("de.extra.client.message.response");
 
 	/**
 	 * Liefert ReportDaten. Vorraussetzung ist gibt genau ein FlagType in dem
@@ -101,4 +112,35 @@ public class ExtraMessageReturnDataExtractor {
 		}
 		return flagCode;
 	}
+
+	/**
+	 * Die eXTra-Nachricht wird im Log ausgegeben, wenn der messageLogger auf
+	 * Debug gesetzt ist.
+	 * 
+	 * @param marshaller
+	 * @param extraResponse
+	 */
+	static void printResult(IExtraMarschaller marshaller,
+			final Transport extraResponse) {
+		operation_logger.info("Nachricht vom eXTra-Server erhalten");
+		message_response_logger.info("Nachricht vom eXTra-Server erhalten:");
+		Logger messageLogger = ExtraMessageReturnDataExtractor.message_response_logger;
+		if (messageLogger.isDebugEnabled()) {
+			try {
+				final Writer writer = new StringWriter();
+				final StreamResult streamResult = new StreamResult(writer);
+
+				marshaller.marshal(extraResponse, streamResult);
+				messageLogger.debug(writer.toString());
+			} catch (final XmlMappingException xmlException) {
+				messageLogger.error(
+						"XmlMappingException beim Lesen des Results ",
+						xmlException);
+			} catch (final IOException ioException) {
+				messageLogger.debug("IOException beim Lesen des Results ",
+						ioException);
+			}
+		}
+	}
+
 }

@@ -68,6 +68,8 @@ public class ClientCore implements ApplicationContextAware {
 	// TODO globaler Logger: auslagern
 	private static final Logger operation_logger = LoggerFactory
 			.getLogger("de.extra.client.operation");
+	private static final Logger message_request_logger = LoggerFactory
+			.getLogger("de.extra.client.message.request");
 
 	ApplicationContext applicationContext;
 
@@ -241,7 +243,11 @@ public class ClientCore implements ApplicationContextAware {
 			final StreamResult streamResult = new StreamResult(outputStream);
 			marshaller.marshal(request, streamResult, outgoingXmlValidation);
 
-			operation_logger.info("Request OutgoingXml:\n {}", outputStream.toString());
+			operation_logger.info("eXTra.-Client Request verschickt");
+			message_request_logger.info("eXTra-Client Request verschickt:");
+			if (message_request_logger.isDebugEnabled()) {
+				message_request_logger.debug(outputStream.toString());				
+			}
 
 			final InputStream responseAsStream = outputPlugin
 					.outputData(new ByteArrayInputStream(outputStream
