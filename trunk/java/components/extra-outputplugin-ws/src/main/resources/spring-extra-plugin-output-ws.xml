@@ -18,21 +18,10 @@
 	<bean id="messageFactory" class="org.springframework.ws.soap.axiom.AxiomSoapMessageFactory">
 	    <property name="payloadCaching" value="true" />
 	</bean>
-
-	
-	 <bean id="httpParams" class="org.apache.commons.httpclient.params.HttpClientParams">
-	      <!-- Timeout in milliseconds: in this case 6 minutes -->
-	      <property name="soTimeout" value="360000" />
-	 </bean>
-	 
-    <bean id="httpClient" class="org.apache.commons.httpclient.HttpClient">
-      <property name="params" ref="httpParams" />
-    </bean>
  
     <bean id="httpSender" class="org.springframework.ws.transport.http.CommonsHttpMessageSender">
-      <constructor-arg>
-        <ref bean="httpClient"/>
-      </constructor-arg>
+		<property name="connectionTimeout" value="360000"></property>
+		<property name="readTimeout" value="360000"></property>
     </bean>  
 
 </beans>
