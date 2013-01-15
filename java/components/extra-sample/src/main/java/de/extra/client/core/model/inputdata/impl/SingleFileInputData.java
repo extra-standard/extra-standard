@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 import de.extra.client.core.model.impl.DataSourcePluginDescription;
 import de.extrastandard.api.exception.ExtraDataPluginRuntimeException;
@@ -124,10 +125,18 @@ public class SingleFileInputData extends Implementor implements
 
 	@Override
 	public byte[] getInputDataAsByteArray() {
+		InputStream in = null;
 		try {
-			return FileUtils.readFileToByteArray(inputDataFile);
+			// Angepasst. Statt FileUtils.readFileToByteArray prevent
+			// outOfMemory
+			// FileUtils.readFileToByteArray(inputDataFile); OutOfMemory bei
+			// sehr großen Dateien
+			in = FileUtils.openInputStream(inputDataFile);
+			return IOUtils.toByteArray(in);
 		} catch (final IOException ioException) {
 			throw new ExtraDataPluginRuntimeException(ioException);
+		} finally {
+			IOUtils.closeQuietly(in);
 		}
 	}
 
