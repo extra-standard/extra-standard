@@ -21,13 +21,4 @@
 		</property>
 		<property name="ignoreUnresolvablePlaceholders" value="false"></property>
 	</bean>
-	
-	<bean id="flyway_clean" class="com.googlecode.flyway.core.Flyway" init-method="clean">
-    	<property name="dataSource" ref="dbcpDataSource"/>
-	</bean>
-	
-	<bean id="flyway_migrate" class="com.googlecode.flyway.core.Flyway" init-method="migrate" depends-on="flyway_clean">
-    	<property name="dataSource" ref="dbcpDataSource"/>
-	</bean>
-	
 </beans>
