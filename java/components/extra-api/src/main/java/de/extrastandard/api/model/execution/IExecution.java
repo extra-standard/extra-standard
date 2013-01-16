@@ -140,6 +140,6 @@ public interface IExecution extends PersistentEntity {
 	/**
 	 * @return InputDaten der Execution
 	 */
-	Set<ICommunicationProtocol> getInputDataSet();
+	Set<ICommunicationProtocol> getCommunicationProtocols();
 
 }

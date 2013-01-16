@@ -140,7 +140,7 @@ public class ExecutionIT {
 		assertNotNull(currentStatus);
 		assertEquals("Unexpected Status", PersistentStatus.FAIL.name(),
 				currentStatus.getName());
-		final Set<ICommunicationProtocol> inputDataSet = execution.getInputDataSet();
+		final Set<ICommunicationProtocol> inputDataSet = execution.getCommunicationProtocols();
 		for (final ICommunicationProtocol iInputData : inputDataSet) {
 			final IPhaseConnection currentPhaseConnection = iInputData
 					.getCurrentPhaseConnection();
@@ -212,7 +212,7 @@ public class ExecutionIT {
 		final IStatus currentStatus = lastTransition.getCurrentStatus();
 		assertNotNull(currentStatus);
 		assertEquals(PersistentStatus.DONE.name(), currentStatus.getName());
-		final Set<ICommunicationProtocol> inputDataSet = execution.getInputDataSet();
+		final Set<ICommunicationProtocol> inputDataSet = execution.getCommunicationProtocols();
 		for (final ICommunicationProtocol iInputData : inputDataSet) {
 			final String requestId = iInputData.getRequestId();
 			final Collection<ISingleResponseData> responses = responseData
