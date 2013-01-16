@@ -112,7 +112,7 @@ public class Execution extends AbstractEntity implements IExecution {
 	private ProcessTransition lastTransition;
 
 	@OneToMany(mappedBy = "execution", fetch = FetchType.LAZY)
-	private final Set<CommunicationProtocol> inputDataSet = new HashSet<CommunicationProtocol>();
+	private final Set<CommunicationProtocol> communicationProtocols = new HashSet<CommunicationProtocol>();
 
 	@Inject
 	@Named("executionRepository")
@@ -198,7 +198,7 @@ public class Execution extends AbstractEntity implements IExecution {
 			this.errorMessage = errorMessage;
 			updateProgress(PersistentStatus.FAIL);
 			// InputData bzw. PhasenConnection updaten
-			for (final CommunicationProtocol inputData : this.inputDataSet) {
+			for (final CommunicationProtocol inputData : this.communicationProtocols) {
 				final PhaseConnection currentPhaseConnection = inputData
 						.getCurrentPhaseConnection();
 				if (currentPhaseConnection != null) {
@@ -235,7 +235,7 @@ public class Execution extends AbstractEntity implements IExecution {
 		this.endTime = new Date();
 		updateProgress(PersistentStatus.DONE);
 		repository.save(this);
-		for (final CommunicationProtocol inputData : inputDataSet) {
+		for (final CommunicationProtocol inputData : communicationProtocols) {
 			processResponseData(inputData, responseData);
 		}
 	}
@@ -347,7 +347,7 @@ public class Execution extends AbstractEntity implements IExecution {
 			final ISingleInputData singleInputData) {
 		final CommunicationProtocol inputData = new CommunicationProtocol(
 				singleInputData, this);
-		this.inputDataSet.add(inputData);
+		this.communicationProtocols.add(inputData);
 		repository.save(this);
 		return inputData;
 	}
@@ -385,7 +385,7 @@ public class Execution extends AbstractEntity implements IExecution {
 	}
 
 	/**
-	 * @see de.extrastandard.api.model.execution.IExecution#getInputDataSet()
+	 * @see de.extrastandard.api.model.execution.IExecution#getCommunicationProtocols()
 	 */
 	// @Override
 	// public Set<InputData> getInputDataSet() {
@@ -412,8 +412,8 @@ public class Execution extends AbstractEntity implements IExecution {
 	 * @return the inputDataSet
 	 */
 	@Override
-	public HashSet<ICommunicationProtocol> getInputDataSet() {
-		return new HashSet<ICommunicationProtocol>(this.inputDataSet);
+	public Set<ICommunicationProtocol> getCommunicationProtocols() {
+		return new HashSet<ICommunicationProtocol>(this.communicationProtocols);
 	}
 
 	@Override
