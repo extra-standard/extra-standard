@@ -33,6 +33,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Index;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import de.extrastandard.api.model.execution.ICommunicationProtocol;
@@ -56,6 +57,11 @@ import de.extrastandard.persistence.repository.StatusRepository;
 @Configurable(preConstruction = true)
 @Entity
 @Table(name = "PHASE_CONNECTION")
+@org.hibernate.annotations.Table(appliesTo = "PHASE_CONNECTION", indexes = {
+		@Index(name = "phase_conn_idx_phase_status", columnNames = {
+				"next_phase_qualifier", "status_id" }),
+		@Index(name = "phase_conn_idx_target_protocol", columnNames = { "target_com_protocol_id" }),
+		@Index(name = "phase_conn_idx_source_protokol", columnNames = { "source_com_protocol_id" }) })
 public class PhaseConnection extends AbstractEntity implements IPhaseConnection {
 
 	private static final long serialVersionUID = 1L;

@@ -33,6 +33,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Index;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.util.Assert;
 
@@ -53,6 +54,8 @@ import de.extrastandard.persistence.repository.StatusRepository;
 @Configurable(preConstruction = true)
 @Entity
 @Table(name = "PROCESS_TRANSITION")
+@org.hibernate.annotations.Table(appliesTo = "PROCESS_TRANSITION", indexes = { @Index(name = "transition_idx_status_date", columnNames = {
+		"current_status_id", "transition_date" }) })
 public class ProcessTransition extends AbstractEntity implements
 		IProcessTransition {
 

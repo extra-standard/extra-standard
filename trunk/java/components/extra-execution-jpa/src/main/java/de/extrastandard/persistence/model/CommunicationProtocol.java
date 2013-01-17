@@ -33,17 +33,18 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Index;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.util.Assert;
 
 import de.extrastandard.api.exception.ExtraCoreRuntimeException;
 import de.extrastandard.api.model.content.ICriteriaQueryInputData;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 import de.extrastandard.api.model.content.ISingleContentInputData;
 import de.extrastandard.api.model.content.ISingleInputData;
-import de.extrastandard.api.model.content.IDbQueryInputData;
 import de.extrastandard.api.model.content.ISingleResponseData;
-import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.ICommunicationProtocol;
+import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.InputDataQualifier;
 import de.extrastandard.api.model.execution.PersistentStatus;
@@ -60,12 +61,13 @@ import de.extrastandard.persistence.repository.StatusRepository;
 @Configurable(preConstruction = true)
 @Entity
 @Table(name = "COMMUNICATION_PROTOCOL")
-public class CommunicationProtocol extends AbstractEntity implements ICommunicationProtocol {
+@org.hibernate.annotations.Table(appliesTo = "COMMUNICATION_PROTOCOL", indexes = {
+		@Index(name = "comm_prot_idx_execution", columnNames = { "execution_id" }),
+		@Index(name = "comm_prot_idx_request", columnNames = { "request_id" }) })
+public class CommunicationProtocol extends AbstractEntity implements
+		ICommunicationProtocol {
 
 	private static final long serialVersionUID = 1L;
-
-	// private static final Logger logger =
-	// LoggerFactory.getLogger(InputData.class);
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "communication_protocol_entity_seq_gen")
@@ -140,63 +142,8 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 	public CommunicationProtocol() {
 	}
 
-	// /**
-	// * Erzeugt eine neue IInputData-Instanz und legt gleichzeitig eine neue
-	// * Transition an.
-	// *
-	// * @param inputIdentifier
-	// * Identifier
-	// * @param hashCode
-	// * Hashcode der Daten
-	// * @param qualifier
-	// * Qualifizierung
-	// */
-	// public InputData(final ISingleContentInputData singleContentInputData,
-	// final Execution execution) {
-	// Assert.notNull(singleContentInputData,
-	// "SingleContentInputData must be specified");
-	// final String hashCode = singleContentInputData.getHashCode();
-	// final String inputIdentifier = singleContentInputData
-	// .getInputIdentifier();
-	// Assert.notNull(inputIdentifier, "inputIdentifier must be specified");
-	// Assert.notNull(hashCode, "inputIdentifier must be specified");
-	// this.inputIdentifier = inputIdentifier;
-	// this.hashcode = hashCode;
-	// this.execution = execution;
-	// repository.save(this);
-	// }
-	//
-	// /**
-	// * @param serverResponseId
-	// * @param sourceRequestId
-	// * @param execution
-	// */
-	// public InputData(final ISingleQueryInputData singleQueryInputData,
-	// final Execution execution) {
-	// Assert.notNull(singleQueryInputData,
-	// "ISingleQueryInputData must be specified");
-	// Assert.notNull(execution, "Execution must be specified");
-	//
-	// this.execution = execution;
-	// final Long sourceIdentificationId = singleQueryInputData
-	// .getSourceIdentificationId();
-	// Assert.notNull(sourceIdentificationId,
-	// "SourceIdentification must be specified");
-	// final InputData sourceInputData = repository
-	// .findOne(sourceIdentificationId);
-	// final PhaseConnection sourceInputNextPhaseConnection = sourceInputData
-	// .getNextPhaseConnection();
-	// this.currentPhaseConnection = sourceInputNextPhaseConnection;
-	// repository.save(this);
-	// sourceInputNextPhaseConnection.setTargetInputData(this);
-	// final String requestId = this.calculateRequestId();
-	// this.requestId = requestId;
-	// this.inputIdentifier = singleQueryInputData.getInputIdentifier();
-	// repository.save(this);
-	// }
-
 	/**
-	 * Erzeugt eine neue IInputData-Instanz.
+	 * Erzeugt eine neue CommunicationProtocol-Instanz.
 	 * 
 	 * @param singleInputData
 	 * @param execution
@@ -209,8 +156,8 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 		final String inputIdentifier = singleInputData.getInputIdentifier();
 		Assert.notNull(inputIdentifier, "inputIdentifier must be specified");
 		this.inputIdentifier = inputIdentifier;
-		if (IDbQueryInputData.class.isAssignableFrom(singleInputData
-				.getClass())) {
+		if (IDbQueryInputData.class
+				.isAssignableFrom(singleInputData.getClass())) {
 			final IDbQueryInputData singleQueryInputData = IDbQueryInputData.class
 					.cast(singleInputData);
 			fillInputData(singleQueryInputData);
@@ -238,14 +185,15 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 	/**
 	 * Dieser Konstruktor wird verwendet, um einer 1 zu n Abfrage (z.B. 'alle
 	 * Dokumente mit ID > 7') mehr als ein Response-Ergebnis zuordnen zu können.
-	 * Aus dem Ursprungs CommunicationProtocol-Objekt und dem Response-Objekt wird ein
-	 * weiteres CommunicationProtocol Objekt erzeugt (ohne Status und nextPhaseConnection).
+	 * Aus dem Ursprungs CommunicationProtocol-Objekt und dem Response-Objekt
+	 * wird ein weiteres CommunicationProtocol Objekt erzeugt (ohne Status und
+	 * nextPhaseConnection).
 	 * 
 	 * @param criteriaInputData
 	 * @param singleResponseData
 	 */
-	public CommunicationProtocol(CommunicationProtocol criteriaInputData,
-			ISingleResponseData singleResponseData) {
+	public CommunicationProtocol(final CommunicationProtocol criteriaInputData,
+			final ISingleResponseData singleResponseData) {
 		// Datenübernahme aus CommunicationProtocol
 		this.currentPhaseConnection = criteriaInputData.currentPhaseConnection;
 		this.execution = criteriaInputData.execution;
@@ -254,9 +202,9 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 		this.requestId = singleResponseData.getRequestId();
 
 		this.subquery = criteriaInputData.subquery;
-		
+
 		// nextPhaseConnection darf nicht uebernommen werden!
-		//this.nextPhaseConnection = criteriaInputData.nextPhaseConnection;
+		// this.nextPhaseConnection = criteriaInputData.nextPhaseConnection;
 
 		// Datenübernahme aus ISingleResponseData
 		transmitted(singleResponseData);
@@ -320,9 +268,10 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 		// (08.11.12) verschiedene Qualifizierungen (Query, Criteria, ...)
 		this.inputDataQualifier = InputDataQualifier.QUERY_CRITERIA.getName();
 
-		// (17.12.12) Suchanfrage erweitern (z.B. fuer gezielte Abfrage nach Laendern)
+		// (17.12.12) Suchanfrage erweitern (z.B. fuer gezielte Abfrage nach
+		// Laendern)
 		this.subquery = singleQueryInputData.getSubquery();
-		
+
 		repository.save(this);
 	}
 
@@ -482,7 +431,7 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 	 * @param inputDataQualifier
 	 *            the inputDataQualifier to set
 	 */
-	public void setInputDataQualifier(String inputDataQualifier) {
+	public void setInputDataQualifier(final String inputDataQualifier) {
 		this.inputDataQualifier = inputDataQualifier;
 	}
 
@@ -499,16 +448,21 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 				PersistentStatus.DONE.getId()));
 	}
 
-	/** Zeigt an, ob die Kommunikation erfolgreich ist oder auf externe Bestaetigung wartet */
+	/**
+	 * Zeigt an, ob die Kommunikation erfolgreich ist oder auf externe
+	 * Bestaetigung wartet
+	 */
 	public boolean isSuccessfulOrWait() {
-		return isSuccessful() || (status != null && PersistentStatus.WAIT.getId().equals(status.getId()));
+		return isSuccessful()
+				|| (status != null && PersistentStatus.WAIT.getId().equals(
+						status.getId()));
 	}
 
 	public String getOutputIdentifier() {
 		return outputIdentifier;
 	}
 
-	public void setOutputIdentifier(String outputIdentifier) {
+	public void setOutputIdentifier(final String outputIdentifier) {
 		this.outputIdentifier = outputIdentifier;
 	}
 
@@ -519,19 +473,23 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 		this.returnText = singleResponseData.getReturnText();
 		this.outputIdentifier = singleResponseData.getOutputIdentifier();
 
-		// (12.12.12) PersistentStatus wird bei der Response-Verarbeitung berechnet
-		this.status = statusRepository.findOne(singleResponseData.getPersistentStatus().getId());
+		// (12.12.12) PersistentStatus wird bei der Response-Verarbeitung
+		// berechnet
+		this.status = statusRepository.findOne(singleResponseData
+				.getPersistentStatus().getId());
 
 		repository.save(this);
 	}
-	
+
 	/**
 	 * Für externe Status-Änderungen (z.B. von 'WAIT' nach 'DONE')
+	 * 
 	 * @param aPersistentStatus
 	 */
-	public void changeStatus(PersistentStatus aPersistentStatus) {
+	@Override
+	public void changeStatus(final PersistentStatus aPersistentStatus) {
 		this.status = statusRepository.findOne(aPersistentStatus.getId());
-		repository.save(this);		
+		repository.save(this);
 	}
 
 	@Override
@@ -540,7 +498,7 @@ public class CommunicationProtocol extends AbstractEntity implements ICommunicat
 		this.returnText = "Kein Ergebnis!";
 		this.status = statusRepository.findOne(PersistentStatus.DONE.getId());
 
-		repository.save(this);		
+		repository.save(this);
 	}
 
 }

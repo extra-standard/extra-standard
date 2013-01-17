@@ -25,7 +25,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Index;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import de.extrastandard.api.model.execution.IStatus;
@@ -41,7 +43,8 @@ import de.extrastandard.persistence.repository.StatusRepository;
  */
 @Configurable(preConstruction = true)
 @Entity
-@Table(name = "STATUS")
+@Table(name = "STATUS", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@org.hibernate.annotations.Table(appliesTo = "STATUS", indexes = { @Index(name = "status_idx_name", columnNames = { "name" }) })
 public class Status extends AbstractEntity implements IStatus {
 
 	private static final long serialVersionUID = 1L;
