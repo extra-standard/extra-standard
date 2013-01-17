@@ -32,6 +32,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Index;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.util.Assert;
 
@@ -48,7 +49,10 @@ import de.extrastandard.persistence.repository.ProcedureRepository;
  */
 @Configurable(preConstruction = true)
 @Entity
-@Table(name = "PROCEDURE", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(name = "PROCEDURE", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "name"),
+		@UniqueConstraint(columnNames = "short_key") })
+@org.hibernate.annotations.Table(appliesTo = "PROCEDURE", indexes = { @Index(name = "proc_idx_short_key", columnNames = { "short_key" }) })
 public class Procedure extends AbstractEntity implements IProcedure {
 
 	private static final long serialVersionUID = 1L;

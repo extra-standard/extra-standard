@@ -40,6 +40,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Index;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -73,6 +74,7 @@ import de.extrastandard.persistence.repository.StatusRepository;
 @Configurable(preConstruction = true)
 @Entity
 @Table(name = "EXECUTION")
+@org.hibernate.annotations.Table(appliesTo = "EXECUTION", indexes = { @Index(name = "execution_idx_proc", columnNames = { "procedure_id" }) })
 public class Execution extends AbstractEntity implements IExecution {
 
 	private static final long serialVersionUID = 1L;
