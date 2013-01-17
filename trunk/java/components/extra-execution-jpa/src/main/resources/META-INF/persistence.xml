@@ -10,6 +10,7 @@
             <property name="connection.pool_size" value="1"/>
             <!-- Batch updates -->
             <property name="hibernate.jdbc.batch_size" value="50"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
         </properties>
     </persistence-unit>
 </persistence>
