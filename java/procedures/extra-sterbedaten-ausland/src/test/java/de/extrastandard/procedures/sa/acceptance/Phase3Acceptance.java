@@ -43,24 +43,20 @@ import de.extrastandard.persistence.model.ProcessTransition;
 import de.extrastandard.persistence.repository.ExecutionRepository;
 
 /**
- * <pre>
- * Acceptance Test für die Fachverfahren Sterbedaten Phase 1.
- * Test setzt eine Oracle Datenbankschema vorraus. 
- * Das eXTra Schema wird vor jedem Test neu angelegt und mit der Testdaten initial gefüllt.
- * </pre>
+ * Ausfuehrung Sterbedaten Fachverfahren Phase 1
  * 
- * @author Leonid Potap
+ * @author r52gma
  * 
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
-		"/conf/acceptance/phase1/property-placeholder-acceptance-phase1.xml",
-		"/conf/acceptance/spring-acceptance-flyway.xml" })
+		"/conf/acceptance//phase3/property-placeholder-acceptance-phase3.xml",
+		"/conf/acceptance/phase3/spring-acceptance-phase3-flyway.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
-public class Phase1Acceptance {
+public class Phase3Acceptance {
 
-	private static final String TEST_CONFIG = "/conf/phase1";
+	private static final String TEST_CONFIG = "/conf/phase3";
 
 	private static final String LOG_DIR = "/logs";
 
@@ -76,20 +72,20 @@ public class Phase1Acceptance {
 
 	@Before
 	public void setUp() throws Exception {
-		ExtraClient extraClient;
-		extraClient = extraClientTestBasic.createExtraKlient(TEST_CONFIG,
-				LOG_DIR);
+		final ExtraClient extraClient = extraClientTestBasic.createExtraKlient(
+				TEST_CONFIG, LOG_DIR);
 		extraClientTestBasic.testExecute(extraClient);
 	}
 
 	@Test
 	public void checkResult() {
-		final int expectedExecutionSize = 3;
-		final String expectedPhase = "PHASE1";
-		final String expectedParametersSuffix = "\\conf\\phase1";
+		final int expectedExecutionSize = 1;
+		final String expectedPhase = "PHASE3";
+		final String expectedParametersSuffix = "\\conf\\phase3";
 		final String expectedReturnCode = "C00";
 
-		final List<Execution> allExecutions = executionRepository.findAll();
+		final List<Execution> allExecutions = executionRepository
+				.findByPhase(expectedPhase);
 		Assert.assertEquals("Unexpected Execution Size", expectedExecutionSize,
 				allExecutions.size());
 		for (final Execution execution : allExecutions) {
@@ -100,10 +96,8 @@ public class Phase1Acceptance {
 					execution.getPhase());
 			Assert.assertNotNull("Parameters ist null",
 					execution.getParameters());
-			Assert.assertTrue(
-					"Unexpected Parameters: " + execution.getParameters(),
-					execution.getParameters()
-							.endsWith(expectedParametersSuffix));
+			Assert.assertTrue("Unexpected Parameters", execution
+					.getParameters().endsWith(expectedParametersSuffix));
 			final ProcessTransition lastTransition = execution
 					.getLastTransition();
 			Assert.assertNotNull("LastTransition ist null", lastTransition);
