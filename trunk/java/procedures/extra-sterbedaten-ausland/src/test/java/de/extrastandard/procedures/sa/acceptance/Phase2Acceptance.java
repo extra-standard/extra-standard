@@ -36,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 import de.extra.client.starter.ExtraClient;
 import de.extra.client.starter.ExtraClientTestBasic;
 import de.extrastandard.api.model.execution.ICommunicationProtocol;
+import de.extrastandard.api.model.execution.IPhaseConnection;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.persistence.model.Execution;
 import de.extrastandard.persistence.model.ExecutionPersistenceJpa;
@@ -44,8 +45,10 @@ import de.extrastandard.persistence.repository.ExecutionRepository;
 
 /**
  * <pre>
- * Acceptance Test für die Fachverfahren Sterbedaten Phase 1.
+ * Acceptance Test für die Fachverfahren Sterbedaten Phase 2.
  * Test setzt eine Oracle Datenbankschema vorraus. 
+ * Test setzt eine valide und laufende SOAP UI Mock vorraus (siehe src/main/soapui).
+ * TODO aus Acceptance Test SoapUI starten 
  * Das eXTra Schema wird vor jedem Test neu angelegt und mit der Testdaten initial gefüllt.
  * </pre>
  * 
@@ -54,13 +57,13 @@ import de.extrastandard.persistence.repository.ExecutionRepository;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
-		"/conf/acceptance/phase1/property-placeholder-acceptance-phase1.xml",
+		"/conf/acceptance/phase2/property-placeholder-acceptance-phase2.xml",
 		"/conf/acceptance/spring-acceptance-flyway.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
-public class Phase1Acceptance {
+public class Phase2Acceptance {
 
-	private static final String TEST_CONFIG = "/conf/phase1";
+	private static final String TEST_CONFIG = "/conf/phase2";
 
 	private static final String LOG_DIR = "/logs";
 
@@ -76,17 +79,20 @@ public class Phase1Acceptance {
 
 	@Before
 	public void setUp() throws Exception {
-		ExtraClient extraClient;
-		extraClient = extraClientTestBasic.createExtraKlient(TEST_CONFIG,
-				LOG_DIR);
+		final ExtraClient extraClient = extraClientTestBasic.createExtraKlient(
+				TEST_CONFIG, LOG_DIR);
 		extraClientTestBasic.testExecute(extraClient);
 	}
 
 	@Test
 	public void checkResult() {
-		final int expectedExecutionSize = 3;
-		final String expectedPhase = "PHASE1";
-		final String expectedParametersSuffix = "\\conf\\phase1";
+		final int expectedExecutionSize = 1;
+		final int expectedCommunicationProtocolsSize = 2;
+
+		final String expectedPhase = "PHASE2";
+		final String expectedNextPhase = "PHASE3";
+
+		final String expectedParametersSuffix = "\\conf\\phase2";
 		final String expectedReturnCode = "C00";
 
 		final List<Execution> allExecutions = executionRepository.findAll();
@@ -100,10 +106,8 @@ public class Phase1Acceptance {
 					execution.getPhase());
 			Assert.assertNotNull("Parameters ist null",
 					execution.getParameters());
-			Assert.assertTrue(
-					"Unexpected Parameters: " + execution.getParameters(),
-					execution.getParameters()
-							.endsWith(expectedParametersSuffix));
+			Assert.assertTrue("Unexpected Parameters", execution
+					.getParameters().endsWith(expectedParametersSuffix));
 			final ProcessTransition lastTransition = execution
 					.getLastTransition();
 			Assert.assertNotNull("LastTransition ist null", lastTransition);
@@ -114,13 +118,25 @@ public class Phase1Acceptance {
 			final Set<ICommunicationProtocol> communicationProtocols = execution
 					.getCommunicationProtocols();
 			Assert.assertEquals("Unexpected Count of CommunicationProtokols",
-					1, communicationProtocols.size());
+					expectedCommunicationProtocolsSize,
+					communicationProtocols.size());
 			for (final ICommunicationProtocol communicationProtocol : communicationProtocols) {
 				Assert.assertEquals("Unexpected ReturnCode",
 						expectedReturnCode,
 						communicationProtocol.getReturnCode());
-				Assert.assertNull("Unexpected nextPhaseConnection",
-						communicationProtocol.getNextPhaseConnection());
+				final IPhaseConnection nextPhaseConnection = communicationProtocol
+						.getNextPhaseConnection();
+				Assert.assertNotNull("NextPhaseConnection is null",
+						nextPhaseConnection);
+				final String nextPhaseQualifier = nextPhaseConnection
+						.getNextPhasequalifier();
+				Assert.assertEquals("Unexpected NextPhase", expectedNextPhase,
+						nextPhaseQualifier);
+				final String nextPhaseStatusName = nextPhaseConnection
+						.getStatus().getName();
+				Assert.assertEquals("Unexpected NextPhase Status",
+						PersistentStatus.INITIAL.name(), nextPhaseStatusName);
+
 			}
 
 		}
