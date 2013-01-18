@@ -68,7 +68,7 @@ public class Phase2AcceptanceIT {
 	private static final Logger logger = LoggerFactory
 			.getLogger(Phase2AcceptanceIT.class);
 
-	private static final String TEST_CONFIG = "/conf/phase2";
+	private static final String TEST_CONFIG = "phase2";
 
 	private static final String LOG_DIR = "/logs";
 
