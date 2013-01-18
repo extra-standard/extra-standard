@@ -28,6 +28,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -43,20 +45,27 @@ import de.extrastandard.persistence.model.ProcessTransition;
 import de.extrastandard.persistence.repository.ExecutionRepository;
 
 /**
- * Ausfuehrung Sterbedaten Fachverfahren Phase 1
+ * <pre>
+ * Acceptance Test für die Fachverfahren Sterbedaten Phase 1.
+ * Test setzt eine Oracle Datenbankschema vorraus. 
+ * Das eXTra Schema wird vor jedem Test neu angelegt und mit der Testdaten initial gefüllt.
+ * </pre>
  * 
- * @author r52gma
+ * @author Leonid Potap
  * 
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
-		"/conf/acceptance//phase3/property-placeholder-acceptance-phase3.xml",
-		"/conf/acceptance/phase3/spring-acceptance-phase3-flyway.xml" })
+		"/conf/acceptance/phase1/property-placeholder-acceptance-phase1.xml",
+		"/conf/acceptance/spring-acceptance-flyway.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
-public class Phase3Acceptance {
+public class Phase1AcceptanceIT {
 
-	private static final String TEST_CONFIG = "/conf/phase3";
+	private static final Logger logger = LoggerFactory
+			.getLogger(Phase1AcceptanceIT.class);
+
+	private static final String TEST_CONFIG = "/conf/phase1";
 
 	private static final String LOG_DIR = "/logs";
 
@@ -72,20 +81,21 @@ public class Phase3Acceptance {
 
 	@Before
 	public void setUp() throws Exception {
-		final ExtraClient extraClient = extraClientTestBasic.createExtraKlient(
-				TEST_CONFIG, LOG_DIR);
+		ExtraClient extraClient;
+		extraClient = extraClientTestBasic.createExtraKlient(TEST_CONFIG,
+				LOG_DIR);
 		extraClientTestBasic.testExecute(extraClient);
 	}
 
 	@Test
-	public void checkResult() {
-		final int expectedExecutionSize = 1;
-		final String expectedPhase = "PHASE3";
-		final String expectedParametersSuffix = "\\conf\\phase3";
+	public void checkDBResults() {
+		logger.info("CheckDBResults started");
+		final int expectedExecutionSize = 3;
+		final String expectedPhase = "PHASE1";
+		final String expectedParametersSuffix = "\\conf\\phase1";
 		final String expectedReturnCode = "C00";
 
-		final List<Execution> allExecutions = executionRepository
-				.findByPhase(expectedPhase);
+		final List<Execution> allExecutions = executionRepository.findAll();
 		Assert.assertEquals("Unexpected Execution Size", expectedExecutionSize,
 				allExecutions.size());
 		for (final Execution execution : allExecutions) {
@@ -96,8 +106,10 @@ public class Phase3Acceptance {
 					execution.getPhase());
 			Assert.assertNotNull("Parameters ist null",
 					execution.getParameters());
-			Assert.assertTrue("Unexpected Parameters", execution
-					.getParameters().endsWith(expectedParametersSuffix));
+			Assert.assertTrue(
+					"Unexpected Parameters: " + execution.getParameters(),
+					execution.getParameters()
+							.endsWith(expectedParametersSuffix));
 			final ProcessTransition lastTransition = execution
 					.getLastTransition();
 			Assert.assertNotNull("LastTransition ist null", lastTransition);
@@ -116,8 +128,7 @@ public class Phase3Acceptance {
 				Assert.assertNull("Unexpected nextPhaseConnection",
 						communicationProtocol.getNextPhaseConnection());
 			}
-
 		}
-
+		logger.info("CheckDBResults successfully completed");
 	}
 }

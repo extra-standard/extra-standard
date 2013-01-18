@@ -14,7 +14,7 @@ Insert into COMMUNICATION_PROTOCOL
  Values
    (1, 'GT: 0', 'FIKELA.PRD.DS.10001', '27120928', '1', 
     '10001', 'C00', 'O.K.', 1, null, 
-    'QUERY_CRITERIA', 4, 'IT');
+    'QUERY_CRITERIA', 7, 'IT');
     
 
     

@@ -28,6 +28,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -61,7 +63,10 @@ import de.extrastandard.persistence.repository.ExecutionRepository;
 		"/conf/acceptance/spring-acceptance-flyway.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
-public class Phase2Acceptance {
+public class Phase2AcceptanceIT {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(Phase2AcceptanceIT.class);
 
 	private static final String TEST_CONFIG = "/conf/phase2";
 
@@ -85,7 +90,8 @@ public class Phase2Acceptance {
 	}
 
 	@Test
-	public void checkResult() {
+	public void checkDBResuls() {
+		logger.info("CheckDBResults started");
 		final int expectedExecutionSize = 1;
 		final int expectedCommunicationProtocolsSize = 2;
 
@@ -138,8 +144,8 @@ public class Phase2Acceptance {
 						PersistentStatus.INITIAL.name(), nextPhaseStatusName);
 
 			}
-
 		}
+		logger.info("CheckDBResults successfully completed");
 
 	}
 }
