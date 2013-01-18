@@ -68,7 +68,7 @@ public class Phase2AcceptanceIT {
 	private static final Logger logger = LoggerFactory
 			.getLogger(Phase2AcceptanceIT.class);
 
-	private static final String TEST_CONFIG = "phase2";
+	private static final String TEST_CONFIG = "cong/phase2";
 
 	private static final String LOG_DIR = "/logs";
 
@@ -98,7 +98,7 @@ public class Phase2AcceptanceIT {
 		final String expectedPhase = "PHASE2";
 		final String expectedNextPhase = "PHASE3";
 
-		final String expectedParametersSuffix = "\\conf\\phase2";
+		final String expectedParametersSuffix = "phase2";
 		final String expectedReturnCode = "C00";
 
 		final List<Execution> allExecutions = executionRepository.findAll();
