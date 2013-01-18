@@ -61,7 +61,7 @@ public class Phase3AcceptanceIT {
 	private static final Logger logger = LoggerFactory
 			.getLogger(Phase3AcceptanceIT.class);
 
-	private static final String TEST_CONFIG = "phase3";
+	private static final String TEST_CONFIG = "conf/phase3";
 
 	private static final String LOG_DIR = "/logs";
 
@@ -87,7 +87,7 @@ public class Phase3AcceptanceIT {
 		logger.info("CheckDBResults started");
 		final int expectedExecutionSize = 1;
 		final String expectedPhase = "PHASE3";
-		final String expectedParametersSuffix = "\\conf\\phase3";
+		final String expectedParametersSuffix = "phase3";
 		final String expectedReturnCode = "C00";
 
 		final List<Execution> allExecutions = executionRepository
