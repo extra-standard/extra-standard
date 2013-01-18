@@ -68,7 +68,7 @@ public class Phase2AcceptanceIT {
 	private static final Logger logger = LoggerFactory
 			.getLogger(Phase2AcceptanceIT.class);
 
-	private static final String TEST_CONFIG = "cong/phase2";
+	private static final String TEST_CONFIG = "/conf/phase2";
 
 	private static final String LOG_DIR = "/logs";
 
@@ -93,7 +93,7 @@ public class Phase2AcceptanceIT {
 	public void checkDBResuls() {
 		logger.info("CheckDBResults started");
 		final int expectedExecutionSize = 1;
-		final int expectedCommunicationProtocolsSize = 2;
+		final int expectedCommunicationProtocolsSize = 3;
 
 		final String expectedPhase = "PHASE2";
 		final String expectedNextPhase = "PHASE3";
