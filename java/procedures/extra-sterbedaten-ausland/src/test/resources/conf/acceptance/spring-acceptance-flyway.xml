@@ -15,6 +15,18 @@
 	
 	<bean id="flyway_migrate" class="com.googlecode.flyway.core.Flyway" init-method="migrate" depends-on="flyway_clean">
     	<property name="dataSource" ref="dbcpDataSource"/>
+    	<property name="locations">
+			 <list>
+	            <value>#{ flyway_locations.get('${plugins.execution.executionPersistenceJpa.hibernate.database}')}</value>
+	        </list>
+    	</property>
 	</bean>
+	
+	<util:map id="flyway_locations">
+	    <entry key="HSQL" value="/db/hsqldb/migration"/>
+	    <entry key="ORACLE" value="/db/oracle/migration"/>
+	</util:map>
+	
+	
 	
 </beans>
