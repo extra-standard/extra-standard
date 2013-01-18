@@ -92,7 +92,7 @@ public class Phase1AcceptanceIT {
 		logger.info("CheckDBResults started");
 		final int expectedExecutionSize = 3;
 		final String expectedPhase = "PHASE1";
-		final String expectedParametersSuffix = "\\conf\\phase1";
+		final String expectedParametersSuffix = "phase1";
 		final String expectedReturnCode = "C00";
 
 		final List<Execution> allExecutions = executionRepository.findAll();
