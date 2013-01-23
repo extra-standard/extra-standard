@@ -32,7 +32,43 @@ Der eXTra-Client gibt in wesentlichen Punkten Gestaltungsfreiheit (Z.b. der Frag
  * _Wo legt der Server Ergebnisse ab?_ (z.B. in getrennten Packages)  
  * _Fehlerbehandlung_ (z.B. Return Codes vereinbaren)
 
-Ideal wäre es, wenn in diesem Schritt auch schon die XML-Request und -Response Dokumente definiert würden.
+Ideal wäre es, wenn in diesem Schritt auch schon die XML-Request und -Response Dokumente definiert würden. Als Basis für die Dokumente können die im 'docs' Verzeichnis mitgelieferten Dokumente eines Demo-Fachverfahrens genommen werden. Als Beispiel hier der Request Phase 1 des Fachverfahrens Sterbedaten (Senden einer Datei):
+
+{{{
+    <xreq:TransportHeader>
+        <xcpt:TestIndicator>http://www.extra-standard.de/test/NONE</xcpt:TestIndicator>
+        <xcpt:Sender>
+            <xcpt:SenderID>ec-1</xcpt:SenderID>
+            <xcpt:Name>eXTra-Client</xcpt:Name>
+        </xcpt:Sender>
+        <xcpt:Receiver>
+            <xcpt:ReceiverID>es-1</xcpt:ReceiverID>
+            <xcpt:Name>eXTra-Server</xcpt:Name>
+        </xcpt:Receiver>
+        <xcpt:RequestDetails>
+            <xcpt:RequestID>STMELD_AUSL_3</xcpt:RequestID>
+            <xcpt:TimeStamp>2012-12-18T15:14:30</xcpt:TimeStamp>
+            <xcpt:Application>
+                <xcpt:Product>eXTra Klient OpenSource</xcpt:Product>
+                <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
+                <xcpt:RegistrationID/>
+            </xcpt:Application>
+            <xcpt:Procedure>http://www.extra-standard.de/procedures/SterbemeldungAusland</xcpt:Procedure>
+            <xcpt:DataType>http://www.extra-standard.de/datatypes/DataSend</xcpt:DataType>
+            <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-acknowledgement</xcpt:Scenario>
+        </xcpt:RequestDetails>
+    </xreq:TransportHeader>
+    <xreq:TransportPlugIns>
+    	<xplg:DataSource> 
+           <xplg:DataContainer type="http://www.extra-standard.de/container/FILE" created="2012-12-21T10:20:11.0Z" encoding="I1" name="FIKELA.PRD.DS48300.P0000017.DFF7"/> 
+	</xplg:DataSource> 
+    </xreq:TransportPlugIns>
+    <xreq:TransportBody>
+        <xcpt:Data>
+            <xcpt:Base64CharSequence>VTNSbGNtSmxaR0YwWlc0Z015QkpkR0ZzYVdWdQ==</xcpt:Base64CharSequence>
+        </xcpt:Data>
+    </xreq:TransportBody>
+}}}
 
 == Infrastruktur aufbauen ==
 Zunächst muss die notwendige Infrastruktur aufgebaut werden. Diese besteht aus:
