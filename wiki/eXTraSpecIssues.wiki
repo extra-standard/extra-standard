@@ -32,9 +32,9 @@ Die Verarbeitung großer Datenmengen ist aktuell mit dem eXTra Standard nicht ve
 Erster Vorschlag aus dem Projekt: Der eXTra-Standard sollte dahingehend entwickelt werden, dass die Nutzdaten und der Lieferschein getrennt gespeichert werden können (zusätzliche Datei zur eXTra-XML == Attachments).
 
 Anbei sind einige gute Artikel zu Webservice- bzw. SOAP-Attachment:
-   * Überblick über das Versenden von großen Dateien in Webservice: http://weblogs.java.net/blog/adhirmehta/archive/2010/06/11/transferring-large-binary-data-web-services
-   * Nutzung von MTOM in Webservice: http://stackoverflow.com/questions/5219271/transferring-large-files-with-web-services
-   * Java Webservice Attachment: SAAJ: http://docs.oracle.com/javaee/5/tutorial/doc/bnbhg.html
+   * Überblick über das Versenden von großen Dateien in Webservice: http://goo.gl/zTAVv
+   * Nutzung von MTOM in Webservice: http://goo.gl/9dIHY
+   * Java Webservice Attachment: SAAJ: http://goo.gl/fg8NE
 
 
 
