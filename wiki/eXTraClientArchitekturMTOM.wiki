@@ -7,6 +7,14 @@ TODO.
 
 = Aufgaben =
 
-1. Wir brauchen ein neues WS-Plugin (Output Plugin), das Versenden von Attachments / MTOM unterstützt.
+1. Erweiterung des XML-Briefumschlags: 
+- Wir nutzen DataSource-Plugin mit einem neuen Datentyp "WSLINK".
+- Ansonsten bleibt alles gleich.
 
-2. Wir brauchen ein neues Response Process Plugin, das Empfang von Attachment unterstützt.
+2. Spring, MTOM, Attachments ausprobieren
+
+3. Wir brauchen ein neues WS-Plugin (Output Plugin), das Versenden von Attachments / MTOM unterstützt.
+
+4. Wir brauchen ein neues Response Process Plugin, das Empfang von Attachment unterstützt.
+
+5. Verarbeitungsprozess und -Schnittstellen müssen wahrscheinlich angepaßt werden.
