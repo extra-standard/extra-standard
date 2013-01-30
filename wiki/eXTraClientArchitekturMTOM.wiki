@@ -13,7 +13,7 @@ Problembeschreibung und Infos: https://code.google.com/p/extra-standard/issues/d
 
 2. Erweiterung des XML-Briefumschlags: Es gibt hier zwei Möglichkeiten:
    * Wir nutzen Data Source-Plugin mit einem neuen Datentyp "WSATTACHMENT". Ansonsten bleibt alles gleich. Hierfür müssen wir die XSD-Dateien nicht anpassen. Die Spezifikation wird nicht angefasst.
-   * Wir fügen ein neues Feld "link" analog zu "data". Hierfür müssen wir XSD-Dateien anpassen. Die Spezifikation muss wahrscheinlich erweitert werden.
+   * Wir fügen ein neues Feld "link" analog zu "data" ein. Hierfür müssen wir XSD-Dateien anpassen. Die Spezifikation muss wahrscheinlich erweitert werden.
 
 3. Wir brauchen ein neues WS-Plugin (Output Plugin), das Versenden von Attachments / MTOM unterstützt.
 
