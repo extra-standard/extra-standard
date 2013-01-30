@@ -33,6 +33,8 @@ Erster Vorschlag aus dem Projekt: Der eXTra-Standard sollte dahingehend entwicke
 
 Anbei sind einige gute Artikel zu Webservice- bzw. SOAP-Attachment:
    * Überblick über das Versenden von großen Dateien in Webservice: http://goo.gl/zTAVv
+   * Überblick über MTOM: http://goo.gl/JHlIn
+   * Überblick über Webservice auch mit MTOM: http://goo.gl/VzxR6
    * Nutzung von MTOM in Webservice: http://goo.gl/9dIHY
    * Java Webservice Attachment: SAAJ: http://goo.gl/fg8NE
 
