@@ -4,16 +4,16 @@
 
 Derzeit ist eXTra nicht dafür gedacht, dass große Dateien auch versendet und empfangen werden können, da die Daten innerhalb der XML-Datei eingefügt werden.
 
-Problembeschreibung: https://code.google.com/p/extra-standard/issues/detail?id=76
+Problembeschreibung und Infos: https://code.google.com/p/extra-standard/issues/detail?id=76
 
 
 = Aufgaben =
 
 1. Spring, MTOM, Attachments ausprobieren
 
-2. Erweiterung des XML-Briefumschlags: 
-   * Wir nutzen Data Source-Plugin mit einem neuen Datentyp "WSATTACHMENT".
-   * Ansonsten bleibt alles gleich.
+2. Erweiterung des XML-Briefumschlags: Es gibt hier zwei Möglichkeiten:
+   * Wir nutzen Data Source-Plugin mit einem neuen Datentyp "WSATTACHMENT". Ansonsten bleibt alles gleich. Hierfür müssen wir die XSD-Dateien nicht anpassen. Die Spezifikation wird nicht angefasst.
+   * Wir fügen ein neues Feld "link" analog zu "data". Hierfür müssen wir XSD-Dateien anpassen. Die Spezifikation muss wahrscheinlich erweitert werden.
 
 3. Wir brauchen ein neues WS-Plugin (Output Plugin), das Versenden von Attachments / MTOM unterstützt.
 
