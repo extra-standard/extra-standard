@@ -13,3 +13,5 @@
   * [eXTraBuilderKonfiguration eXTra Konfiguration von CLI]
   * [eXTraArchitekturAnwendungBetrieb eXTra Betrieb von CLI]
   * [eXTraArchitekturAnwendungProfiling eXTra Profiling]
+  * [eXTraClientArchitekturTestAutomatisch Autom. Tests]
+  * [eXTraClientArchitekturMTOM Webservice Attachments MTOM]
