@@ -19,4 +19,4 @@ Problembeschreibung und Infos: https://code.google.com/p/extra-standard/issues/d
 
 4. Wir brauchen ein neues Response Process Plugin, das Empfang von Attachment unterstützt.
 
-5. Verarbeitungsprozess und -Schnittstellen müssen wahrscheinlich angepaßt werden.
+5. Verarbeitungsprozess und -Schnittstellen müssen wahrscheinlich angepasst werden.
