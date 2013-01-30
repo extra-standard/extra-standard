@@ -2,7 +2,9 @@
 
 = Einführung =
 
-Problem: https://code.google.com/p/extra-standard/issues/detail?id=76
+Derzeit ist eXTra nicht dafür gedacht, dass große Dateien auch versendet und empfangen werden können, da die Daten innerhalb der XML-Datei eingefügt werden.
+
+Problembeschreibung: https://code.google.com/p/extra-standard/issues/detail?id=76
 
 
 = Aufgaben =
