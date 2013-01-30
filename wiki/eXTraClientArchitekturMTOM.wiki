@@ -7,11 +7,11 @@ TODO.
 
 = Aufgaben =
 
-1. Erweiterung des XML-Briefumschlags: 
+1. Spring, MTOM, Attachments ausprobieren
+
+2. Erweiterung des XML-Briefumschlags: 
 - Wir nutzen Data Source-Plugin mit einem neuen Datentyp "WSLINK".
 - Ansonsten bleibt alles gleich.
-
-2. Spring, MTOM, Attachments ausprobieren
 
 3. Wir brauchen ein neues WS-Plugin (Output Plugin), das Versenden von Attachments / MTOM unterstützt.
 
