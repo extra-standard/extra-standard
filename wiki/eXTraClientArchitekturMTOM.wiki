@@ -12,7 +12,7 @@ Problembeschreibung: https://code.google.com/p/extra-standard/issues/detail?id=7
 1. Spring, MTOM, Attachments ausprobieren
 
 2. Erweiterung des XML-Briefumschlags: 
-   * Wir nutzen Data Source-Plugin mit einem neuen Datentyp "WSLINK".
+   * Wir nutzen Data Source-Plugin mit einem neuen Datentyp "WSATTACHMENT".
    * Ansonsten bleibt alles gleich.
 
 3. Wir brauchen ein neues WS-Plugin (Output Plugin), das Versenden von Attachments / MTOM unterstützt.
