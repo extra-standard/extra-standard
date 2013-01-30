@@ -12,6 +12,7 @@
       * [eXTraArchitekturAnwendungBetrieb Betrieb von CLI]      
       * [eXTraArchitekturAnwendungProfiling Profiling]
       * [eXTraClientArchitekturTestAutomatisch Autom. Tests]
+      * [eXTraClientArchitekturMTOM Webservice Attachments MTOM]
   * [eXTraVerfahren Fachverfahren] 
       * [eXTraErstellungVerfahren Erstellung Fachverfahren]   
       * [eXTraSterbedatenVerfahren Sterbedatenabgleich Ausland]
