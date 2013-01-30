@@ -7,4 +7,6 @@ TODO.
 
 = Aufgaben =
 
-TODO.
+1. Wir brauchen ein neues WS-Plugin (Output Plugin), das Versenden von Attachments / MTOM unterstützt.
+
+2. Wir brauchen ein neues Response Process Plugin, das Empfang von Attachment unterstützt.
