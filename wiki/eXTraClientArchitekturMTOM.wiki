@@ -10,8 +10,8 @@ TODO.
 1. Spring, MTOM, Attachments ausprobieren
 
 2. Erweiterung des XML-Briefumschlags: 
-- Wir nutzen Data Source-Plugin mit einem neuen Datentyp "WSLINK".
-- Ansonsten bleibt alles gleich.
+* Wir nutzen Data Source-Plugin mit einem neuen Datentyp "WSLINK".
+* Ansonsten bleibt alles gleich.
 
 3. Wir brauchen ein neues WS-Plugin (Output Plugin), das Versenden von Attachments / MTOM unterstützt.
 
