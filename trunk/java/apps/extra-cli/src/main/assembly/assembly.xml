@@ -23,8 +23,13 @@
 			<filtered>true</filtered>
 		</fileSet>
 		<fileSet>
-			<directory>src/main/resources/db/migration</directory>
-			<outputDirectory>/sql</outputDirectory>
+			<directory>src/main/resources/db/oracle/migration</directory>
+			<outputDirectory>/sql_oracle</outputDirectory>
+			<filtered>false</filtered>
+		</fileSet>
+		<fileSet>
+			<directory>src/main/resources/db/hsqldb/migration</directory>
+			<outputDirectory>/sql_hsqldb</outputDirectory>
 			<filtered>false</filtered>
 		</fileSet>
 	</fileSets>
