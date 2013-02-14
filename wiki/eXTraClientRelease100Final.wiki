@@ -57,7 +57,7 @@ Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird beschrieben wie eine In
 
 = Maven Central =
 
-Ab Final-Release stehen sämtliche eXTra-Dateien (Zip, Jar, usw.) direkt unter Maven-Central-Repository zur Verfügung: http://search.maven.org
+Ab Final-Release stehen sämtliche eXTra-Dateien (Zip, Jar, usw.) direkt unter [http://search.maven.org Maven-Central-Repository] zur Verfügung.
 
 = Bis jetzt erledigte Aufgaben für die Version 1.0.0 =
 Siehe bitte: http://goo.gl/naokO
