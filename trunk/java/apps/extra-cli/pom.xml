@@ -20,18 +20,17 @@
 <!-- 
  | version: $Id: pom.xml 509 2012-09-04 09:37:29Z thorstenvogel@gmail.com $
  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<artifactId>extra-cli</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 	<name>extra-cli</name>
 	<description>eXTra Command Line Interface</description>
@@ -45,60 +44,60 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-configplugin-default</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-responseprocessplugin-sample</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-dataplugin-dbquery</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-dataplugin-simplequery</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-dataplugin-file</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-outputplugin-http</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-outputplugin-ws</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-execution-jpa</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>		
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-execution-jpa</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 			<scope>test</scope>
 			<type>test-jar</type>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-core</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-dataplugin-dbquery</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
@@ -238,4 +237,10 @@
 			</build>
 		</profile>
 	</profiles>
+
+  <scm>
+    <connection>scm:svn:https://extra-standard.googlecode.com/svn/tags/extra-modules-1.0.0/trunk/extra-cli</connection>
+    <developerConnection>scm:svn:https://extra-standard.googlecode.com/svn/tags/extra-modules-1.0.0/trunk/extra-cli</developerConnection>
+    <url>http://code.google.com/p/extra-standard/source/browse/extra-cli/tags/extra-modules-1.0.0/browse/extra-cli</url>
+  </scm>
 </project>
