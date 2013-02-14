@@ -55,7 +55,7 @@ Jedes Fachverfahren wird in einem gesonderten Archiv ausgeliefert.
 Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird beschrieben wie eine Installation des eXTra-Clients und des Technischem Referenzverfahrens 'Send-Fetch' durchgeführt werden kann.
 
 
-= Maven Central =
+= OSS-Sonatype und Maven-Central =
 
   * Jede SNAPSHOT-Version steht auf [https://oss.sonatype.org/index.html#nexus-search;quick~extra-standard OSS-Sonatype-Maven-Repository] zur Verfügung.
   * Ab Final-Release stehen sämtliche eXTra-Dateien (Zip, Jar, usw.) direkt unter [http://search.maven.org Maven-Central-Repository] zur Verfügung.
