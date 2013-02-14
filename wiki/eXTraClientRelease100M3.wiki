@@ -9,7 +9,7 @@
   * Unterstützte Spezifikationsversion: 1.3
   * Unterstützte Szenarien: Sende-/Holbetrieb mit drei Phasen
 
-= eXTRa-Builder für das Schreiben von XMLSegments des eXTra-Transports =
+= eXTra-Builder für das Schreiben von XMLSegments des eXTra-Transports =
   * !TransportHeader (xreq:!TransportHeader)
     * !TestIndicator (xcpt:!TestIndicator)
     * Sender (xcpt:Sender)
@@ -33,7 +33,7 @@
       * !PackageBody (xres:!PackageBody)
 
 
-= eXTRa-Builder für das Schreiben von eXTra Standard-Nachrichten =
+= eXTra-Builder für das Schreiben von eXTra Standard-Nachrichten =
   * !DataRequest (xmsg:dataRequest)
   * !ConfirmationOfReceipt (xmsg:confirmationOfReceipt)
   
