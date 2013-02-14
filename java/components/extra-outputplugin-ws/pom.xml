@@ -21,16 +21,16 @@
  | version: $Id: pom.xml 509 2012-09-04 09:37:29Z thorstenvogel@gmail.com $
  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	
+	<modelVersion>4.0.0</modelVersion>	
 	<parent>
 		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../../components/extra-parent/pom.xml</relativePath>
 	</parent>
 	
 	<artifactId>extra-outputplugin-ws</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>extra-outputplugin-ws</name>
 	<description>eXTra Outputplugin für Webservices</description>
@@ -40,7 +40,7 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-sample</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.0-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>jaxb-xjc</artifactId>
@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-api</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -125,10 +125,6 @@
 	      <artifactId>stax-api</artifactId>
 	      <version>1.0.1</version>
 	    </dependency>	    
-
-
-	    
-	
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -255,11 +251,4 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-
-  <scm>
-    <connection>scm:svn:https://extra-standard.googlecode.com/svn/tags/extra-modules-1.0.0/trunk/extra-outputplugin-ws</connection>
-    <developerConnection>scm:svn:https://extra-standard.googlecode.com/svn/tags/extra-modules-1.0.0/trunk/extra-outputplugin-ws</developerConnection>
-    <url>http://code.google.com/p/extra-standard/source/browse/extra-outputplugin-ws/tags/extra-modules-1.0.0/browse/extra-outputplugin-ws</url>
-  </scm>
 </project>

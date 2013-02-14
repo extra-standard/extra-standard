@@ -22,17 +22,16 @@
  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<parent>
 		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../../components/extra-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>extra-dataplugin-dbquery</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	
 	<name>extra-dataplugin-dbquery</name>
 	<description>Dataplugin provides query data from the database</description>
 
@@ -40,25 +39,25 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-api</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-sample</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-execution-jpa</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>			
 		
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-execution-jpa</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.0-SNAPSHOT</version>
 			<scope>test</scope>
 			<type>test-jar</type>
 		</dependency>			
@@ -159,10 +158,4 @@
 			<scope>test</scope>
 		</dependency>		
 	</dependencies>
-
-  <scm>
-    <connection>scm:svn:https://extra-standard.googlecode.com/svn/tags/extra-modules-1.0.0/trunk/extra-dataplugin-dbquery</connection>
-    <developerConnection>scm:svn:https://extra-standard.googlecode.com/svn/tags/extra-modules-1.0.0/trunk/extra-dataplugin-dbquery</developerConnection>
-    <url>http://code.google.com/p/extra-standard/source/browse/extra-dataplugin-dbquery/tags/extra-modules-1.0.0/browse/extra-dataplugin-dbquery</url>
-  </scm>
 </project>

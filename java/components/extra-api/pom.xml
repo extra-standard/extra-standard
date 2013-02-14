@@ -21,25 +21,17 @@
  | version: $Id: pom.xml 509 2012-09-04 09:37:29Z thorstenvogel@gmail.com $
  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	
+	<modelVersion>4.0.0</modelVersion>	
 	<parent>
 		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../../components/extra-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>extra-api</artifactId>
-	<version>1.0.0</version>
-
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>extra-api</name>
 	<description>eXTra API</description>
-	
-
-  <scm>
-    <connection>scm:svn:https://extra-standard.googlecode.com/svn/tags/extra-modules-1.0.0/trunk/extra-api</connection>
-    <developerConnection>scm:svn:https://extra-standard.googlecode.com/svn/tags/extra-modules-1.0.0/trunk/extra-api</developerConnection>
-    <url>http://code.google.com/p/extra-standard/source/browse/extra-api/tags/extra-modules-1.0.0/browse/extra-api</url>
-  </scm>
 </project>
