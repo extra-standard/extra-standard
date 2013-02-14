@@ -41,6 +41,7 @@
 
 = Datenbank-Unterstützung =
   * Oracle XE oder Oracle 11
+  * HSQLDB (nicht produktionsgeeignet)
 
 = Installationsanleitung =
 
