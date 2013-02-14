@@ -20,18 +20,17 @@
 <!-- 
  | version: $Id: pom.xml 509 2012-09-04 09:37:29Z thorstenvogel@gmail.com $
  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
 		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<artifactId>extra-scenario-sendfetch</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>extra-scenario-sendfetch</name>
 	<description>eXTra Szenario Send-Fetch (Sende-Hole Betrieb)</description>
 
@@ -39,13 +38,13 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-cli</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-cli</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
@@ -53,7 +52,7 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-execution-jpa</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 			<scope>test</scope>
 			<type>test-jar</type>
 		</dependency>
@@ -116,47 +115,20 @@
 								<configuration>
 									<target>
 										<!-- Phase 1 -->
-										<copy
-											file="${project.basedir}/src/main/conf/phase1/extra-properties-basic.properties"
-											tofile="${project.basedir}/src/test/resources/conf/phase1/extra-properties-basic.properties" />
-										<copy
-											file="${project.basedir}/src/main/conf/phase1/logging-config.xml"
-											tofile="${project.basedir}/src/test/resources/conf/phase1/logging-config.xml" />
-										<copy
-											file="${project.basedir}/src/main/conf/phase1/phase1-sent-profil.xml"
-											tofile="${project.basedir}/src/test/resources/conf/phase1/phase1-sent-profil.xml" />
-										<copy
-											file="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties_example"
-											tofile="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties"
-											overwrite="false" />
+										<copy file="${project.basedir}/src/main/conf/phase1/extra-properties-basic.properties" tofile="${project.basedir}/src/test/resources/conf/phase1/extra-properties-basic.properties" />
+										<copy file="${project.basedir}/src/main/conf/phase1/logging-config.xml" tofile="${project.basedir}/src/test/resources/conf/phase1/logging-config.xml" />
+										<copy file="${project.basedir}/src/main/conf/phase1/phase1-sent-profil.xml" tofile="${project.basedir}/src/test/resources/conf/phase1/phase1-sent-profil.xml" />
+										<copy file="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties_example" tofile="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties" overwrite="false" />
 										<!-- Phase 2 -->
-										<copy
-											file="${project.basedir}/src/main/conf/phase2/extra-properties-basic.properties"
-											tofile="${project.basedir}/src/test/resources/conf/phase2/extra-properties-basic.properties" />
-										<copy
-											file="${project.basedir}/src/main/conf/phase2/logging-config.xml"
-											tofile="${project.basedir}/src/test/resources/conf/phase2/logging-config.xml" />
-										<copy
-											file="${project.basedir}/src/main/conf/phase2/phase2-fetchresult-profil.xml"
-											tofile="${project.basedir}/src/test/resources/conf/phase2/phase2-fetchresult-profil.xml" />
-										<copy
-											file="${project.basedir}/src/test/resources/conf/phase2/extra-properties-user.properties_example"
-											tofile="${project.basedir}/src/test/resources/conf/phase2/extra-properties-user.properties"
-											overwrite="false" />
+										<copy file="${project.basedir}/src/main/conf/phase2/extra-properties-basic.properties" tofile="${project.basedir}/src/test/resources/conf/phase2/extra-properties-basic.properties" />
+										<copy file="${project.basedir}/src/main/conf/phase2/logging-config.xml" tofile="${project.basedir}/src/test/resources/conf/phase2/logging-config.xml" />
+										<copy file="${project.basedir}/src/main/conf/phase2/phase2-fetchresult-profil.xml" tofile="${project.basedir}/src/test/resources/conf/phase2/phase2-fetchresult-profil.xml" />
+										<copy file="${project.basedir}/src/test/resources/conf/phase2/extra-properties-user.properties_example" tofile="${project.basedir}/src/test/resources/conf/phase2/extra-properties-user.properties" overwrite="false" />
 										<!-- Phase 3 -->
-										<copy
-											file="${project.basedir}/src/main/conf/phase3/extra-properties-basic.properties"
-											tofile="${project.basedir}/src/test/resources/conf/phase3/extra-properties-basic.properties" />
-										<copy
-											file="${project.basedir}/src/main/conf/phase3/logging-config.xml"
-											tofile="${project.basedir}/src/test/resources/conf/phase3/logging-config.xml" />
-										<copy
-											file="${project.basedir}/src/main/conf/phase3/phase3-confirmation-profil.xml"
-											tofile="${project.basedir}/src/test/resources/conf/phase3/phase3-confirmation-profil.xml" />
-										<copy
-											file="${project.basedir}/src/test/resources/conf/phase3/extra-properties-user.properties_example"
-											tofile="${project.basedir}/src/test/resources/conf/phase3/extra-properties-user.properties"
-											overwrite="false" />
+										<copy file="${project.basedir}/src/main/conf/phase3/extra-properties-basic.properties" tofile="${project.basedir}/src/test/resources/conf/phase3/extra-properties-basic.properties" />
+										<copy file="${project.basedir}/src/main/conf/phase3/logging-config.xml" tofile="${project.basedir}/src/test/resources/conf/phase3/logging-config.xml" />
+										<copy file="${project.basedir}/src/main/conf/phase3/phase3-confirmation-profil.xml" tofile="${project.basedir}/src/test/resources/conf/phase3/phase3-confirmation-profil.xml" />
+										<copy file="${project.basedir}/src/test/resources/conf/phase3/extra-properties-user.properties_example" tofile="${project.basedir}/src/test/resources/conf/phase3/extra-properties-user.properties" overwrite="false" />
 									</target>
 								</configuration>
 							</execution>
@@ -185,4 +157,10 @@
 		</profile>
 	</profiles>
 
+
+  <scm>
+    <connection>scm:svn:https://extra-standard.googlecode.com/svn/tags/extra-modules-1.0.0/trunk/extra-scenario-sendfetch</connection>
+    <developerConnection>scm:svn:https://extra-standard.googlecode.com/svn/tags/extra-modules-1.0.0/trunk/extra-scenario-sendfetch</developerConnection>
+    <url>http://code.google.com/p/extra-standard/source/browse/extra-scenario-sendfetch/tags/extra-modules-1.0.0/browse/extra-scenario-sendfetch</url>
+  </scm>
 </project>
