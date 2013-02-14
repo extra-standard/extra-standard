@@ -23,7 +23,7 @@
   * !TransportBody (xreq:!TransportBody)
     * Data (xcpt:Data)
       * !Base64CharSequense(xcpt:!Base64CharSequence)
-      * !ElementSequence (<xcpt:!ElementSequence>)
+      * !ElementSequence (xcpt:!ElementSequence)
     * Package (xres:Package)
       * !PackageHeader (xres:!PackageHeader)
         * !TestIndicator	(xcpt:!TestIndicator)
