@@ -6,17 +6,75 @@ Derzeit ist eXTra nicht dafür gedacht, dass große Dateien auch versendet und e
 
 Problembeschreibung und Infos: https://code.google.com/p/extra-standard/issues/detail?id=76
 
+= MTOM Umstellung Hintegrunde und Schritweiße Einführung = 
 
-= Aufgaben =
+MTOM (SOAP Message Transmission Optimization Mechanism) ist ein Standard, der erlaubt die binären Daten effizient und komfortabel zu übertragen.
 
-1. Spring, MTOM, Attachments ausprobieren
+Wenn die binären Daten als Teil eines XML-Dokuments eingefügt sind, müssen die base64 kodierten sein, was CPU-Zeit und die Nutzlast Größe erhöht. 
 
-2. Erweiterung des XML-Briefumschlags: Es gibt hier zwei Möglichkeiten:
-   * Wir nutzen Data Source-Plugin mit einem neuen Datentyp "WSATTACHMENT". Ansonsten bleibt alles gleich. Hierfür müssen wir die XSD-Dateien nicht anpassen. Die Spezifikation wird nicht angefasst.
-   * Wir fügen ein neues Feld "link" analog zu "data" ein. Hierfür müssen wir die XSD-Dateien anpassen. Die Spezifikation muss wahrscheinlich erweitert werden.
+Wenn MTOM auf einem Service aktiviert ist, nimmt es binären Daten, die Teil des XML-Dokuments sind, und bildet einen Attachment für die diese Daten.
 
-3. Wir brauchen ein neues WS-Plugin (Output Plugin), das Versenden von Attachments / MTOM unterstützt.
+== Schritte für die Umstellung ==
 
-4. Wir brauchen ein neues Response Process Plugin, das Empfang von Attachment unterstützt.
 
-5. Verarbeitungsprozess und -Schnittstellen müssen wahrscheinlich angepasst werden.
+Um MTOM zu aktivieren müssen mehrere Schritte durchgeführt werden.
+
+ * Zunächst muss ein bestimmtes Feld in Schema annotiert werden um JAXB wissen zu lassen, dass dieser Feld ein Kandidat für MTOM Optimierung sein könnte. 
+ * Zweitens, man muss über CXF Konfiguration MTOM aktivieren.
+ 
+== Schema Annotieren ==
+
+Vorher
+
+{{{
+    <xs:complexType name="Base64CharSequenceType">
+        <xs:simpleContent>
+            <xs:extension base="xs:base64Binary"/>
+        </xs:simpleContent>
+    </xs:complexType>
+}}}
+
+
+Nachher
+
+{{{
+    <xs:complexType name="Base64CharSequenceType">
+        <xs:simpleContent>
+            <xs:extension base="xs:base64Binary" xmime:expectedContentTypes="application/octet-stream"/>
+        </xs:simpleContent>
+    </xs:complexType>
+}}}
+
+Dies sagt JAXB (die nutzt WSDL2Java um  den Service zu erzeugen), dass dieses Feld jeglicher Inhalte beinhalten könnte.
+
+Darauf wird anstatt eines byte []-Array für den base64Binary Element, einen DataHandler (siehe http://docs.oracle.com/javaee/1.4/api/javax/activation/DataHandler.html) erstellt um den Datenstrom (stream) übertragen  zu können.
+
+
+
+== Klient konfigurieren  ==
+
+Die Konfigurations des Klients findet über folgende jaxws XML konfiguration:
+
+{{{
+	<jaxws:client id="extraClientMTOMWS" serviceClass="de.extra_standard.namespace.webservice.Extra" address="${webservice.endpoint.url}">
+		<jaxws:properties>
+			<entry key="mtom-enabled" value="false" />
+		</jaxws:properties>    
+	</jaxws:client>     
+}}}
+
+
+== DataHandler verwenden == 
+
+DataHandlers sind einfach zu bedienen und zu erstellen. DataHandler kann wie unten beschrieben konsumiert werden:
+{{{
+	final DataHandler dataHandler = base64CharSequence.getValue();
+	final InputStream inputStream = dataHandler.getInputStream();
+}}}
+
+Es gibt viele Möglichkeiten, einen DataHandler zu erstellen. Es kann ein FileDataSource, ByteArrayDataSource vewendet werden. 
+Sonst kann DataSource auch selber implementiert werden.
+{{{
+	File inputFile = new File ("Pfad zu File");
+	final DataSource source = new FileDataSource(inputFile);
+}}}
