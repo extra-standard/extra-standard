@@ -75,6 +75,6 @@ Die Konfigurations des Klients findet über folgende jaxws XML konfiguration:
 Es gibt viele Möglichkeiten, einen !DataHandler zu erstellen. Es kann ein !FileDataSource, !ByteArrayDataSource vewendet werden. 
 Sonst kann !DataSource auch selber implementiert werden.
 {{{
-	File inputFile = new File ("Pfad zu File");
+	File inputFile = new File ("Pfad zum File");
 	final DataSource source = new FileDataSource(inputFile);
 }}}
