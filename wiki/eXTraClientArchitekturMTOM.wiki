@@ -64,16 +64,16 @@ Die Konfigurations des Klients findet über folgende jaxws XML konfiguration:
 }}}
 
 
-== DataHandler verwenden == 
+== !DataHandler verwenden == 
 
-DataHandlers sind einfach zu bedienen und zu erstellen. DataHandler kann wie unten beschrieben konsumiert werden:
+!DataHandlers sind einfach zu bedienen und zu erstellen. !DataHandler kann wie unten beschrieben konsumiert werden:
 {{{
 	final DataHandler dataHandler = base64CharSequence.getValue();
 	final InputStream inputStream = dataHandler.getInputStream();
 }}}
 
-Es gibt viele Möglichkeiten, einen DataHandler zu erstellen. Es kann ein FileDataSource, ByteArrayDataSource vewendet werden. 
-Sonst kann DataSource auch selber implementiert werden.
+Es gibt viele Möglichkeiten, einen !DataHandler zu erstellen. Es kann ein !FileDataSource, !ByteArrayDataSource vewendet werden. 
+Sonst kann !DataSource auch selber implementiert werden.
 {{{
 	File inputFile = new File ("Pfad zu File");
 	final DataSource source = new FileDataSource(inputFile);
