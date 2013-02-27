@@ -6,7 +6,7 @@ Derzeit ist eXTra nicht dafür gedacht, dass große Dateien auch versendet und e
 
 Problembeschreibung und Infos: https://code.google.com/p/extra-standard/issues/detail?id=76
 
-= MTOM Umstellung Hintegrunde und Schrittweiße Einführung = 
+= MTOM Umstellung Hintergrunde und schrittweise Einführung = 
 
 MTOM (SOAP Message Transmission Optimization Mechanism) ist ein Standard, der erlaubt die binären Daten effizient und komfortabel zu übertragen.
 
