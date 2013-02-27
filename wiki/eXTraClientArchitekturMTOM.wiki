@@ -10,7 +10,7 @@ Problembeschreibung und Infos: https://code.google.com/p/extra-standard/issues/d
 
 MTOM (SOAP Message Transmission Optimization Mechanism) ist ein Standard, der erlaubt die binären Daten effizient und komfortabel zu übertragen.
 
-Wenn die binären Daten als Teil eines XML-Dokuments eingefügt sind, müssen die base64 kodierten sein, was CPU-Zeit und die Nutzlast Größe erhöht. 
+Wenn die binären Daten als Teil eines XML-Dokuments eingefügt sind, müssen die Base64 kodierten sein, was CPU-Zeit und die Nutzlast Größe erhöht. 
 
 Wenn MTOM auf einem Service aktiviert ist, nimmt es binären Daten, die Teil des XML-Dokuments sind, und bildet einen Attachment für die diese Daten.
 
@@ -47,13 +47,13 @@ Nachher
 
 Dies sagt JAXB (die nutzt WSDL2Java um  den Service zu erzeugen), dass dieses Feld jeglicher Inhalte beinhalten könnte.
 
-Darauf wird anstatt eines byte []-Array für den base64Binary Element, einen !DataHandler (siehe http://docs.oracle.com/javaee/1.4/api/javax/activation/DataHandler.html) erstellt um den Datenstrom (stream) übertragen  zu können.
+Darauf wird anstatt eines byte []-Array für den Base64Binary Element, einen !DataHandler (siehe http://docs.oracle.com/javaee/1.4/api/javax/activation/DataHandler.html) erstellt um den Datenstrom (stream) übertragen  zu können.
 
 
 
-== Klient konfigurieren  ==
+== Client konfigurieren  ==
 
-Die Konfigurations des Klients findet über folgende jaxws XML konfiguration:
+Die Konfigurations des Clients findet über folgende JAXWS XML Konfiguration:
 
 {{{
 	<jaxws:client id="extraClientMTOMWS" serviceClass="de.extra_standard.namespace.webservice.Extra" address="${webservice.endpoint.url}">
