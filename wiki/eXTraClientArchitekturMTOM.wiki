@@ -47,7 +47,7 @@ Nachher
 
 Dies sagt JAXB (die nutzt WSDL2Java um  den Service zu erzeugen), dass dieses Feld jeglicher Inhalte beinhalten könnte.
 
-Darauf wird anstatt eines Byte[]-Array für den !Base64Binary Element, einen !DataHandler (siehe http://docs.oracle.com/javaee/1.4/api/javax/activation/DataHandler.html) erstellt um den Datenstrom (stream) übertragen  zu können.
+Darauf wird anstatt eines Byte-Array für den !Base64Binary Element, einen !DataHandler (siehe http://docs.oracle.com/javaee/1.4/api/javax/activation/DataHandler.html) erstellt um den Datenstrom (stream) übertragen  zu können.
 
 
 
