@@ -37,7 +37,7 @@
   * !ConfirmationOfReceipt (xmsg:confirmationOfReceipt)
   
 = Bekannte Einschränkungen =
-  * Es kann keine sehr große Datei in einem eXTra-Briefumschlag verschickt werden, da die Datei als String innerhalb der XML-Datei eingefügt wird. Erklärung zu dieser Einschränkungen siehe: 
+  * Es kann keine sehr große Datei in einem eXTra-Briefumschlag verschickt werden, da die Datei als String innerhalb der XML-Datei eingefügt wird. Erklärung zu diesen Einschränkungen siehe: 
     * https://code.google.com/p/extra-standard/wiki/eXTraSpecIssues
     * https://code.google.com/p/extra-standard/wiki/eXTraClientArchitekturMTOM
 
