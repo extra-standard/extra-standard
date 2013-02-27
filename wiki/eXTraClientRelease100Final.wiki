@@ -32,11 +32,14 @@
         * !RequestDetail (xcpt:!RequestDetails) 	
       * !PackageBody (xres:!PackageBody)
 
-
 = eXTra-Builder für das Schreiben von eXTra Standard-Nachrichten =
   * !DataRequest (xmsg:dataRequest)
   * !ConfirmationOfReceipt (xmsg:confirmationOfReceipt)
   
+= Bekannte Einschränkungen =
+  * Es kann keine sehr große Datei in einem eXTra-Briefumschlag verschickt werden, da die Datei als String innerhalb der XML-Datei eingefügt wird. Erklärung zu dieser Einschränkungen siehe: 
+    * https://code.google.com/p/extra-standard/wiki/eXTraSpecIssues
+    * https://code.google.com/p/extra-standard/wiki/eXTraClientArchitekturMTOM
 
 
 = Datenbank-Unterstützung =
