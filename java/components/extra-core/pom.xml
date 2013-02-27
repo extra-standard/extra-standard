@@ -25,12 +25,12 @@
 	<parent>
 		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>../../components/extra-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>extra-core</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>extra-core</name>
 	<description>eXTra Core Components</description>
 
@@ -38,19 +38,19 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-schema</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-api</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-sample</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
