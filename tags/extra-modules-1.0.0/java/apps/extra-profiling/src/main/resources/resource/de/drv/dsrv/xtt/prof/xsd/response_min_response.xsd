@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.extra-standard.de/namespace/response/1" version="1.1.0" xmlns="http://www.extra-standard.de/namespace/response/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:import namespace="http://www.extra-standard.de/namespace/components/1" schemaLocation="response_min_components.xsd"/>
+    <xs:complexType name="TransportResponseType">
+        <xs:complexContent>
+            <xs:extension base="xcpt:RootElementType">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" ref="TransportHeader"/>
+                    <xs:element maxOccurs="1" minOccurs="1" ref="TransportBody"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TransportResponseHeaderType">
+        <xs:complexContent>
+            <xs:extension base="xcpt:ElementWithOptionalVersionType">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" ref="xcpt:Sender"/>
+                    <xs:element maxOccurs="1" minOccurs="1" ref="xcpt:Receiver"/>
+                    <xs:element maxOccurs="1" minOccurs="1" ref="xcpt:RequestDetails"/>
+                    <xs:element maxOccurs="1" minOccurs="1" ref="xcpt:ResponseDetails"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TransportResponseBodyType">
+        <xs:complexContent>
+            <xs:extension base="xcpt:ElementWithOptionalVersionType">
+                <xs:choice maxOccurs="1" minOccurs="0">
+                    <xs:element maxOccurs="1" minOccurs="1" ref="xcpt:Data"/>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="XMLTransport" type="TransportResponseType"/>
+    <xs:element name="TransportHeader" type="TransportResponseHeaderType"/>
+    <xs:element name="TransportBody" type="TransportResponseBodyType"/>
+</xs:schema>

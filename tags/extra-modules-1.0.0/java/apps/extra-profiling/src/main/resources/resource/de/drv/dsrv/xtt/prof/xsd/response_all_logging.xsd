@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.extra-standard.de/namespace/logging/1" version="1.1.0" xmlns="http://www.extra-standard.de/namespace/logging/1" xmlns:xcode="http://www.extra-standard.de/namespace/codelists/1" xmlns:xcpt="http://www.extra-standard.de/namespace/components/1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:import namespace="http://www.extra-standard.de/namespace/components/1" schemaLocation="response_all_components.xsd"/>
+    <xs:import namespace="http://www.extra-standard.de/namespace/codelists/1" schemaLocation="response_all_codelists.xsd"/>
+    <xs:complexType name="LoggingType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:choice maxOccurs="unbounded" minOccurs="0">
+                    <xs:element maxOccurs="1" minOccurs="1" ref="LogSequence"/>
+                    <xs:element maxOccurs="1" minOccurs="1" ref="LogStream"/>
+                </xs:choice>
+                <xs:attribute name="version" type="LoggingVersionType" use="required"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="LogSequenceType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" ref="xcpt:TimeStamp"/>
+                    <xs:element maxOccurs="1" minOccurs="0" ref="xcpt:ComponentID"/>
+                    <xs:element maxOccurs="1" minOccurs="0" ref="xcpt:ProcessID"/>
+                    <xs:element maxOccurs="1" minOccurs="0" ref="LogTrace"/>
+                    <xs:choice maxOccurs="unbounded" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="1" ref="LogSequence"/>
+                        <xs:element maxOccurs="1" minOccurs="1" ref="LogStream"/>
+                        <xs:element maxOccurs="1" minOccurs="1" ref="Event"/>
+                        <xs:element maxOccurs="1" minOccurs="1" ref="Exception"/>
+                        <xs:element maxOccurs="1" minOccurs="1" ref="Message"/>
+                        <xs:element maxOccurs="1" minOccurs="1" ref="Operation"/>
+                        <xs:element maxOccurs="1" minOccurs="1" ref="State"/>
+                    </xs:choice>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="LogTraceType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" ref="LogID"/>
+                    <xs:element maxOccurs="1" minOccurs="0" ref="PreviousLogID"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="LogStreamType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" ref="xcpt:TimeStamp"/>
+                    <xs:element maxOccurs="1" minOccurs="0" ref="xcpt:ComponentID"/>
+                    <xs:element maxOccurs="1" minOccurs="0" ref="xcpt:ProcessID"/>
+                    <xs:element maxOccurs="1" minOccurs="0" ref="LogTrace"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="1" ref="xcpt:AnyXML"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="EventType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="0" ref="xcpt:TimeStamp"/>
+                    <xs:element maxOccurs="1" minOccurs="0" ref="xcpt:ComponentID"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="Message"/>
+                </xs:sequence>
+                <xs:attribute name="description" type="xcpt:SimpleStringType"/>
+                <xs:attribute name="id" type="xcpt:SimpleIDType" use="required"/>
+                <xs:attribute name="name" type="xcpt:SimpleNameType"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="MessageType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" ref="xcpt:TimeStamp"/>
+                    <xs:element maxOccurs="1" minOccurs="0" ref="xcpt:ComponentID"/>
+                    <xs:element maxOccurs="1" minOccurs="1" ref="xcpt:Text"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ExceptionType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" ref="xcpt:TimeStamp"/>
+                    <xs:element maxOccurs="1" minOccurs="0" ref="xcpt:ComponentID"/>
+                    <xs:choice maxOccurs="unbounded" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="1" ref="Message"/>
+                        <xs:element maxOccurs="1" minOccurs="1" ref="StackTrace"/>
+                    </xs:choice>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="StackTraceType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="xcpt:AnyXML"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="xcpt:Text"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="OperationType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="0" ref="xcpt:TimeStamp"/>
+                    <xs:element maxOccurs="1" minOccurs="0" ref="xcpt:ComponentID"/>
+                    <xs:choice maxOccurs="unbounded" minOccurs="0">
+                        <xs:element maxOccurs="1" minOccurs="1" ref="Event"/>
+                        <xs:element maxOccurs="1" minOccurs="1" ref="Exception"/>
+                        <xs:element maxOccurs="1" minOccurs="1" ref="Message"/>
+                        <xs:element maxOccurs="1" minOccurs="1" ref="Parameter"/>
+                        <xs:element maxOccurs="1" minOccurs="1" ref="Object"/>
+                    </xs:choice>
+                </xs:sequence>
+                <xs:attribute name="completionCode" type="xs:string"/>
+                <xs:attribute name="description" type="xcpt:SimpleStringType"/>
+                <xs:attribute name="id" type="xcpt:SimpleIDType" use="required"/>
+                <xs:attribute name="name" type="xcpt:SimpleNameType"/>
+                <xs:attribute name="successful" type="xs:boolean"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ParameterType">
+        <xs:simpleContent>
+            <xs:extension base="xcpt:ClassifiableStringType">
+                <xs:attribute name="description" type="xcpt:SimpleStringType"/>
+                <xs:attribute name="name" type="xcpt:SimpleNameType"/>
+                <xs:attribute name="type" type="xcode:XSDPrefixedTypeCodes"/>
+                <xs:attribute name="usage" type="xcode:UsageCodeType"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="ObjectType">
+        <xs:simpleContent>
+            <xs:extension base="xcpt:ClassifiableStringType">
+                <xs:attribute name="description" type="xcpt:SimpleStringType"/>
+                <xs:attribute name="id" type="xcpt:SimpleIDType"/>
+                <xs:attribute name="location" type="xs:string"/>
+                <xs:attribute name="name" type="xcpt:SimpleNameType"/>
+                <xs:attribute name="type" type="xcpt:SimpleTypeType"/>
+                <xs:attribute name="usage" type="xcode:UsageCodeType"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="StateType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" ref="xcpt:TimeStamp"/>
+                    <xs:choice maxOccurs="1" minOccurs="1">
+                        <xs:element maxOccurs="1" minOccurs="1" ref="xcpt:Property"/>
+                        <xs:element maxOccurs="1" minOccurs="1" ref="xcpt:XMLFragment"/>
+                    </xs:choice>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="LoggingVersionType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1.0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="Logging" type="LoggingType"/>
+    <xs:element name="LogSequence" type="LogSequenceType"/>
+    <xs:element name="LogTrace" type="LogTraceType"/>
+    <xs:element name="LogID" type="xcpt:ClassifiableIDType"/>
+    <xs:element name="PreviousLogID" type="xcpt:ClassifiableIDType"/>
+    <xs:element name="LogStream" type="LogStreamType"/>
+    <xs:element name="Event" type="EventType"/>
+    <xs:element name="Message" type="MessageType"/>
+    <xs:element name="Exception" type="ExceptionType"/>
+    <xs:element name="StackTrace" type="StackTraceType"/>
+    <xs:element name="Operation" type="OperationType"/>
+    <xs:element name="Parameter" type="ParameterType"/>
+    <xs:element name="Object" type="ObjectType"/>
+    <xs:element name="State" type="StateType"/>
+</xs:schema>

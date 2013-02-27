@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>XSD-Creator Hilfe</title>
+</head>
+<body>
+<h1><a name="top">Hilfe zum XSD-Creator</a></h1>
+<h2>Inhalt</h2>
+<ul>
+<li><a href="#allg">Allgemeines</a></li>
+<li><a href="#neu">Neue Profilkonfiguration erstellen und anpassen</a></li>
+<li><a href="#laden">Bestehende Profilkonfiguration laden</a></li>
+<li><a href="#speichern">Profilkonfiguration speichern</a></li>
+<li><a href="#schema">Verfahrensspezifisches Schema aus Profilkonfiguration erzeugen</a></li>
+</ul>
+<p></p>
+
+<h2><a name="allg">Allgemeines</a></h2>
+<p>Mit Hilfe des XSD-Creators können verfahrensspezifische eXTra-Schemata erstellt werden.<br>
+Im ersten Schritt werden die für das Verfahren benötigten Elemente aus dem eXTra Basis-Schema gewählt.<br>
+Dabei wird zwischen <b>request</b>- und <b>response</b>-Verfahren unterschieden.<br>
+Die Auswahl wird in einer <b>Profilkonfiguration</b> (XML-Datei) gespeichert und kann bei Bedarf angepasst werden.<br>
+Aus einer Profilkonfiguration wird dann in einem zweiten Schritt das <b>verfahrensspezifische eXTra-Schema</b> generiert (XSD-Dateien).</p>
+<p><a href="#top">zum Inhalt</a></p>
+
+<h2><a name="neu">Neue Profilkonfiguration erstellen und anpassen</a></h2>
+<h3>Allgemeines</h3>
+<p>Zum Erstellen einer neuen Profilkonfiguration muss zunächst ausgewählt werden, ob das request- oder das response-Schema
+profiliert werden soll. Dies geschieht mit den Buttons <i>Request</i> bzw. <i>Response</i>. Das entsprechende eXTra Basis-Schema wird
+geladen und alle verfügbaren Elemente in Form eines Baumes angezeigt.<br>
+Dabei werden Elemente, die mehrfach referenziert werden (z.B. 'Message' im 'TransportBody' und 'PackageBody'), in einem eigenen Baum (<i>Mehrfach referenzierte Elemente</i>) angezeigt.</p>
+<p>Im Feld <i>Bezeichnung Verfahren</i> muss eine Bezeichnung für das zu profilierende Verfahren angegeben werden. Diese Bezeichnung wird in der PDF-Dokumentation verwendet.<br>
+Im Feld <i>Kurzbezeichnung</i> wird eine Kurzbezeichnung für das Verfahren angegeben. Diese Bezeichnung wird für die Dateinamen der profilierten Schemadateien verwendet und darf nur Buchstaben, Ziffern und Unterstriche ('_') enthalten.</p>
+
+<h3>Auswählen von Elementen</h3>
+<p>Mittels Anklicken der Checkbox vor einem Element kann gesteuert werden, ob das betreffende Element im profilierten Schema verwendet werden soll.<br>
+Elemente, die verwendet werden müssen, sind nicht abwählbar und werden als inaktiv angezeigt.</p>
+
+<h3>Parametrieren von Elementen</h3>
+<p>Beim Selektieren eines Elementes im Baum werden im unteren Bereich Informationen und Eingabefelder zu diesem Element angezeigt.<br>
+ Die Werte für <i>minOccurs</i> und <i>maxOccurs</i> können unter Beibehaltung der Vorgaben angepasst werden; wenn ein ursprünglich optionales Element (minOccurs = 0) zu einem Pflichtfeld (minOccurs &gt;= 1) gemacht wird, wird das Element im Baum mit dem Zeichen '*' gekennzeichnet.</p>
+<p>Im Feld <i>Anmerkung allgemein</i> kann die Beschreibung für das aktuelle Element angepasst bzw. eingegeben werden. Zum Übernehmen von Änderungen muss die Eingabe mit dem Button rechts bestätigt werden. Diese allgemeine Anmerkung wird für jedes Auftreten dieses Elements verwendet.<br>
+Das Feld <i>Anmerkung Verwendung</i> enthält eine Beschreibung für die Verwendung dieses Elements im aktuellen Kontext; diese Anmerkung steht in folgenden Fällen nicht zur Verfügung: lokal definierte Elemente (hier reicht die allgemeine Anmerkung aus); Referenzelemente im rechten Baum; Elemente einer any-Sequenz.<br>
+Die Textvorlagen für die Anmerkungen können in der Datei 'xtt_anmerkungen.properties' gepflegt werden.</p>
+
+<p><a href="#top">zum Inhalt</a></p>
+
+<h2><a name="laden">Bestehende Profilkonfiguration laden</a></h2>
+<p>Es kann eine bereits bestehende Profilkonfiguration mit der Funktion <i>Konfiguration laden</i> geöffnet werden.<br>
+Das dieser Konfiguration zugrunde liegende Schema wird geladen und die Auswahl der Elemente gemäß der Konfiguration angepasst.<br>
+Nun kann wie bei einer neuen Profilkonfiguration die Auswahl angepasst werden.</p>
+<p><a href="#top">zum Inhalt</a></p>
+
+<h2><a name="speichern">Profilkonfiguration speichern</a></h2>
+<p>Eine neue Profilkonfiguration kann mit der Funktion <i>Konfiguration speichern unter ...</i>, eine bereits gespeicherte bzw. geladene Profilkonfiguration  mit der Funktion <i>Konfiguration speichern</i> gespeichert werden.<br>
+Dabei wird die aktuell bestehende Auswahl der Elemente, die Angaben zu den Elementen und die Bezeichnung für das Verfahren in einer XML-Datei gespeichert.</p>
+<p><a href="#top">zum Inhalt</a></p>
+
+<h2><a name="schema">Verfahrensspezifisches Schema aus Profilkonfiguration erzeugen</a></h2>
+<p>Mit der Funktion <i>Profiliertes Schema erzeugen</i> werden für die geladene XML-Profilkonfiguration entsprechende Schema-Dateien erzeugt.<br>
+Wichtig: Vor dem Erzeugen eines Schemas müssen Änderungen an der aktuellen Profilkonfiguration zuerst gespeichert werden.</p>
+<p>Im Anschluss an die Erzeugung und Speicherung des Schemas kann optional eine PDF-Dokumentation erzeugt werden. Die PDF-Datei wird im selben Verzeichnis wie die Schemadateien gespeichert.</p>
+<p><a href="#top">zum Inhalt</a></p>
+
+</body>
+</html>
