@@ -25,12 +25,12 @@
 	<parent>
 		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>../../components/extra-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>extra-api</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 	<name>extra-api</name>
 	<description>eXTra API</description>
