@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.extra-standard.de/namespace/components/1" version="1.1.0" xmlns="http://www.extra-standard.de/namespace/components/1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:complexType abstract="true" name="RootElementType">
+        <xs:complexContent>
+            <xs:extension base="ElementWithVersionType">
+                <xs:attribute name="profile" type="ProfileIDType" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType abstract="true" name="ElementWithVersionType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:attribute name="version" type="SupportedVersionsType" use="required"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType abstract="true" name="ElementWithOptionalVersionType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:attribute name="version" type="SupportedVersionsType"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="SenderType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" ref="SenderID"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ClassifiableIDType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="class" type="SimpleClassType"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="ReceiverType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" ref="ReceiverID"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="RequestDetailsType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" ref="RequestID"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="DataType">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:choice maxOccurs="1" minOccurs="1">
+                    <xs:element maxOccurs="1" minOccurs="1" ref="Base64CharSequence"/>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Base64CharSequenceType">
+        <xs:simpleContent>
+            <xs:extension base="xs:base64Binary"/>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="ProfileIDType">
+        <xs:restriction base="SimpleURIencodableType"/>
+    </xs:simpleType>
+    <xs:simpleType name="SimpleURIencodableType">
+        <xs:restriction base="xs:anyURI"/>
+    </xs:simpleType>
+    <xs:simpleType name="SupportedVersionsType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1.0"/>
+            <xs:enumeration value="1.1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SimpleClassType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="Sender" type="SenderType"/>
+    <xs:element name="SenderID" type="ClassifiableIDType"/>
+    <xs:element name="Receiver" type="ReceiverType"/>
+    <xs:element name="ReceiverID" type="ClassifiableIDType"/>
+    <xs:element name="RequestDetails" type="RequestDetailsType"/>
+    <xs:element name="RequestID" type="ClassifiableIDType"/>
+    <xs:element name="Data" type="DataType"/>
+    <xs:element name="Base64CharSequence" type="Base64CharSequenceType"/>
+</xs:schema>

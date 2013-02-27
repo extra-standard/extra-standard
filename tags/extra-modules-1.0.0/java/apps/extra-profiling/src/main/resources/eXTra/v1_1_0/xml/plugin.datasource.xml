@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Beschreibt eine Datenquelle;
+    @name: optionaler Name fuer dokumentarische Zwecke
+-->
+<xplg:DataSource xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1" version="1.0">
+    <!-- Beschreibt den Container, in dem sich die Daten befinden
+        @type     (muß) http://www.extra-standard.de/container#FILE oder ..#DATABASE
+        @name     (muß) Name des Containers (Datei oder Datenbank)
+        @created  (opt) Datum & Uhrzeit der Erzeugung (bei Datei)
+        @encoding (opt) Zeichensatz (bei Datei)
+    -->
+    <xplg:DataContainer type="http://www.extra-standard.de/container/FILE" name="abc.xml" created="2008-11-07T12:48:26" encoding="UTF-8">
+        <!-- Optional: Beschreibt die Daten 
+            @name         (opt) Name, wenn von Container verschieden (z.B. Datenbanktabelle)
+            @type         (opt) Typ/Art der Daten/Datensatzname
+            @lastModified (opt) Datum & Uhrzeit der letzten fachlichen Aenderung
+        -->
+        <xplg:DataSet name="abcde" type="KKS-Auftragssatz" lastModified="2008-11-04T09:34:11"/>
+    </xplg:DataContainer>
+</xplg:DataSource>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.extra-standard.de/namespace/codelists/1" version="1.1.0" xmlns="http://www.extra-standard.de/namespace/codelists/1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="TestIndicatorCodeType">
+        <xs:restriction base="xs:anyURI">
+            <xs:pattern value="http://www.extra-standard.de/test/(NONE|RECEIVE|PROCESS|ACCEPT)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ScenarioCodeType">
+        <xs:restriction base="xs:anyURI">
+            <xs:pattern value="http://www.extra-standard.de/scenario/(fire-and-forget|request-with-response|request-with-acknowledgement)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="WeightCodeType">
+        <xs:restriction base="xs:anyURI">
+            <xs:pattern value="http://www.extra-standard.de/weight/(OK|INFO|WARNING|ERROR)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="XSDPrefixedTypeCodes">
+        <xs:restriction base="xs:QName">
+            <xs:enumeration value="xs:string"/>
+            <xs:enumeration value="xs:normalizedString"/>
+            <xs:enumeration value="xs:token"/>
+            <xs:enumeration value="xs:Name"/>
+            <xs:enumeration value="xs:NCName"/>
+            <xs:enumeration value="xs:QName"/>
+            <xs:enumeration value="xs:language"/>
+            <xs:enumeration value="xs:float"/>
+            <xs:enumeration value="xs:double"/>
+            <xs:enumeration value="xs:decimal"/>
+            <xs:enumeration value="xs:integer"/>
+            <xs:enumeration value="xs:long"/>
+            <xs:enumeration value="xs:int"/>
+            <xs:enumeration value="xs:short"/>
+            <xs:enumeration value="xs:byte"/>
+            <xs:enumeration value="xs:positiveInteger"/>
+            <xs:enumeration value="xs:nonPositiveInteger"/>
+            <xs:enumeration value="xs:negativeInteger"/>
+            <xs:enumeration value="xs:nonNegativeInteger"/>
+            <xs:enumeration value="xs:unsignedLong"/>
+            <xs:enumeration value="xs:unsignedInt"/>
+            <xs:enumeration value="xs:unsignedShort"/>
+            <xs:enumeration value="xs:unsignedByte"/>
+            <xs:enumeration value="xs:duration"/>
+            <xs:enumeration value="xs:dateTime"/>
+            <xs:enumeration value="xs:date"/>
+            <xs:enumeration value="xs:time"/>
+            <xs:enumeration value="xs:gYear"/>
+            <xs:enumeration value="xs:gMonth"/>
+            <xs:enumeration value="xs:gYearMonth"/>
+            <xs:enumeration value="xs:gMonthDay"/>
+            <xs:enumeration value="xs:gDay"/>
+            <xs:enumeration value="xs:ID"/>
+            <xs:enumeration value="xs:IDREF"/>
+            <xs:enumeration value="xs:IDREFS"/>
+            <xs:enumeration value="xs:ENTITY"/>
+            <xs:enumeration value="xs:ENITIES"/>
+            <xs:enumeration value="xs:NMTOKEN"/>
+            <xs:enumeration value="xs:NMTOKENS"/>
+            <xs:enumeration value="xs:NOTATION"/>
+            <xs:enumeration value="xs:boolean"/>
+            <xs:enumeration value="xs:hexBinary"/>
+            <xs:enumeration value="xs:base64Binary"/>
+            <xs:enumeration value="xs:anyURI"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="UsageCodeType">
+        <xs:restriction base="xs:anyURI">
+            <xs:pattern value="http://www.extra-standard.de/usage/(UNDEFINED|IN|OUT|INOUT)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DataContainerCodeType">
+        <xs:restriction base="xs:anyURI">
+            <xs:pattern value="http://www.extra-standard.de/container/(DATABASE|FILE)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CompressionAlgorithmCodeType">
+        <xs:restriction base="xs:anyURI">
+            <xs:pattern value="http://www.extra-standard.de/transforms/compression/(NONE|GZIP|ZIP|JET)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EncryptionAlgorithmCodeType">
+        <xs:restriction base="xs:anyURI">
+            <xs:pattern value="http://www.extra-standard.de/transforms/encryption/(NONE|PKCS7|PEM)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SignatureAlgorithmCodeType">
+        <xs:restriction base="xs:anyURI">
+            <xs:pattern value="http://www.extra-standard.de/transforms/signature/(NONE|PKCS7|PEM)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
