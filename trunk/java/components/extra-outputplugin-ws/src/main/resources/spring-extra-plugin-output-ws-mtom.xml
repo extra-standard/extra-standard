@@ -12,21 +12,18 @@
 	 
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
-	<context:component-scan base-package="de.extra.client.plugins.outputplugin.ws" />
-
-	<bean id="webServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
-	</bean>
-	
+	<context:component-scan base-package="de.extra.client.plugins.outputplugin.ws.mtom" />
+	                
 	<jaxws:client id="extraClientMTOMWS" serviceClass="de.extra_standard.namespace.webservice.Extra" address="http://localhost:8088/mockExtraSterbedatenausPhase1">
 	  <jaxws:dataBinding>
 	      <bean class="org.apache.cxf.jaxb.JAXBDataBinding">
-	        <!-- <property name="extraClass">
+	        <property name="extraClass">
 	          <list>
 	            <value>de.drv.dsrv.extrastandard.namespace.request.Transport</value>
 	            <value>de.drv.dsrv.extrastandard.namespace.response.Transport</value>
 	            <value>de.drv.dsrv.extrastandard.namespace.error.Error</value>
 	          </list>
-	        </property> -->
+	        </property>
 	        <property name="namespaceMap" >
 	        	<map>
 					<entry>
@@ -37,11 +34,6 @@
 						<key><value>http://www.extra-standard.de/namespace/response/1</value></key>
 						<value>xres</value> 
 					</entry>
-					<entry>
-						<key><value>http://www.extra-standard.de/namespace/components/1</value></key>
-						<value>xcpt</value> 
-					</entry>					
-					
 				</map>
 	        </property>
 	      </bean>
@@ -49,10 +41,9 @@
 		<jaxws:properties>
 			<entry key="mtom-enabled" value="true" />
 		</jaxws:properties>    
-	</jaxws:client>      
+	</jaxws:client>                  
 	
-<!-- 			<props>
-				<prop key="http://www.extra-standard.de/namespace/request/1">xreq</prop>
+<!-- 				<prop key="http://www.extra-standard.de/namespace/request/1">xreq</prop>
 				<prop key="http://www.extra-standard.de/namespace/response/1">xres</prop>
 				<prop key="http://www.extra-standard.de/namespace/error/1">xerr</prop>
 				<prop key="http://www.extra-standard.de/namespace/components/1">xcpt</prop>
@@ -61,6 +52,33 @@
 				<prop key="http://www.extra-standard.de/namespace/logging/1">xlog</prop>
 				<prop key="http://www.extra-standard.de/namespace/plugins/1">xplg</prop>
 				<prop key="http://www.extra-standard.de/namespace/message/1">xmsg</prop>
-				<prop key="http://www.extra-standard.de/namespace/service/1">xsrv</prop>
-			</props> -->	            
+				<prop key="http://www.extra-standard.de/namespace/service/1">xsrv</prop> -->
+
+
+    <bean id="eXTraMTOMjaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="classesToBeBound">
+            <list>
+                <value>de.extra_standard.namespace.request._1.TransportRequestType</value>
+                <value>de.extra_standard.namespace.response._1.TransportResponseType</value>                
+            </list>
+        </property>
+		<property name="marshallerProperties">
+			<map>
+				<entry key="jaxb.encoding">
+					<value>UTF-8</value>
+				</entry>
+				<entry key="jaxb.formatted.output">
+					<value type="boolean">true</value>
+				</entry>
+				<entry key="jaxb.fragment">
+					<value type="boolean">true</value>
+				</entry>
+				<entry key="com.sun.xml.bind.namespacePrefixMapper" value-ref="namespacePrefixMapper" />
+			</map>
+		</property>        
+		<property name="schemaLanguage" value="http://www.w3.org/2001/XMLSchema" />
+		<property name="mtomEnabled" value="true"></property>
+    </bean>
+
+
 </beans>
