@@ -27,6 +27,7 @@
 			</map>
 		</property>
 		<property name="schemaLanguage" value="http://www.w3.org/2001/XMLSchema" />
+		<property name="mtomEnabled" value="true"></property>
 	</bean>	
 	
 	<bean id="eXTraNoValidationjaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
@@ -47,7 +48,32 @@
 			</map>
 		</property>
 		<property name="schemaLanguage" value="http://www.w3.org/2001/XMLSchema" />
+		<property name="mtomEnabled" value="true"></property>
 	</bean>		
+	
+	<bean id="eXTraMTOMjaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="contextPath"
+			value="de.drv.dsrv.extrastandard.namespace.request:de.drv.dsrv.extrastandard.namespace.response:de.drv.dsrv.extrastandard.namespace.plugins:de.drv.dsrv.extrastandard.namespace.messages:de.drv.dsrv.extrastandard.namespace.error" />
+		<property name="marshallerProperties">
+			<map>
+				<entry key="jaxb.encoding">
+					<value>UTF-8</value>
+				</entry>
+				<entry key="jaxb.formatted.output">
+					<value type="boolean">true</value>
+				</entry>
+				<entry key="jaxb.fragment">
+					<value type="boolean">true</value>
+				</entry>
+				<entry key="com.sun.xml.bind.namespacePrefixMapper" value-ref="namespacePrefixMapper" />
+			</map>
+		</property>
+		<property name="schemaLanguage" value="http://www.w3.org/2001/XMLSchema" />
+		<property name="mtomEnabled" value="true"></property>
+	</bean>		
+	
+	
+	
 
 	<bean id="namespacePrefixMapper" class="de.drv.dsrv.extra.marshaller.NamespacePrefixMapper">
 		<property name="mappings">

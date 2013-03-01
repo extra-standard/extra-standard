@@ -23,11 +23,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.activation.DataHandler;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.XmlMappingException;
@@ -120,7 +122,8 @@ public class FileSystemResultDataResponseProcessPlugin implements
 							de.drv.dsrv.extrastandard.namespace.response.Transport.class);
 
 			// Ausgabe der Response im log
-			ExtraMessageReturnDataExtractor.printResult(marshaller, extraResponse);
+			ExtraMessageReturnDataExtractor.printResult(marshaller,
+					extraResponse);
 
 			final TransportHeader transportHeader = extraResponse
 					.getTransportHeader();
@@ -140,10 +143,16 @@ public class FileSystemResultDataResponseProcessPlugin implements
 
 			final String responseId = responseDetails.getResponseID()
 					.getValue();
-
+			final DataHandler transportBodyDataHandler = extraResponse
+					.getTransportBody().getData().getBase64CharSequence()
+					.getValue();
+			// TODO ReadFully ändern
+			final byte[] responseBody = null;
+			IOUtils.readFully(transportBodyDataHandler.getInputStream(),
+					responseBody);
 			// TODO Valiedierung
-			final byte[] responseBody = extraResponse.getTransportBody()
-					.getData().getBase64CharSequence().getValue();
+			// final byte[] responseBody = extraResponse.getTransportBody()
+			// .getData().getBase64CharSequence().getValue();
 
 			final byte[] decodedData = Base64.decodeBase64(responseBody);
 
