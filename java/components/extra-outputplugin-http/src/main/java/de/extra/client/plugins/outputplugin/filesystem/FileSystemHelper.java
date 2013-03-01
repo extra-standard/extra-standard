@@ -68,13 +68,13 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 							.getTransportHeader().getResponseDetails()
 							.getResponseID().getValue();
 					LOG.debug("Keine Pakete vorhanden");
-					final byte[] responseBody = extraResponse
-							.getTransportBody().getData()
-							.getBase64CharSequence().getValue();
+					// final byte[] responseBody = extraResponse
+					// .getTransportBody().getData()
+					// .getBase64CharSequence().getValue();
 
-					if (saveBodyToFilesystem(responseId, responseBody)) {
-						LOG.debug("Speicheren des Body auf Filesystem erfolgreich");
-					}
+					// if (saveBodyToFilesystem(responseId, responseBody)) {
+					// LOG.debug("Speicheren des Body auf Filesystem erfolgreich");
+					// }
 				} else {
 					for (final Iterator<Package> iter = packageList.iterator(); iter
 							.hasNext();) {
@@ -88,8 +88,8 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 						byte[] packageBody = null;
 
 						if (data.getBase64CharSequence() != null) {
-							packageBody = data.getBase64CharSequence()
-									.getValue();
+							// packageBody = data.getBase64CharSequence()
+							// .getValue();
 
 						} else {
 							if (data.getCharSequence() != null) {
