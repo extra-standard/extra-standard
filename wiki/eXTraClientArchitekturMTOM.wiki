@@ -45,7 +45,7 @@ Nachher
     </xs:complexType>
 }}}
 
-Dies sagt JAXB (JAXB nutzt WSDL2Java, um Klassen zu erzeugen), dass dieses Feld alle mögliche Inhalte beinhalten kann.
+Dies informiert JAXB (JAXB nutzt WSDL2Java, um Klassen zu erzeugen), dass dieses Feld alle mögliche Inhalte beinhalten kann.
 
 Darauf wird statt eines Byte-Array für den !Base64Binary Element, einen !DataHandler (siehe http://docs.oracle.com/javaee/1.4/api/javax/activation/DataHandler.html) erstellt, um den Datenstrom (Stream) übertragen zu können.
 
