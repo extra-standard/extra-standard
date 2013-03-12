@@ -53,7 +53,7 @@ Darauf wird statt eines Byte-Array für den !Base64Binary Element, einen !DataHa
 
 == Client konfigurieren  ==
 
-Die Konfigurations des Clients findet über folgende JAXWS XML Konfiguration:
+Die Konfigurations des Clients findet über folgende JAXWS XML Konfiguration statt:
 
 {{{
 	<jaxws:client id="extraClientMTOMWS" serviceClass="de.extra_standard.namespace.webservice.Extra" address="${webservice.endpoint.url}">
@@ -66,14 +66,13 @@ Die Konfigurations des Clients findet über folgende JAXWS XML Konfiguration:
 
 == !DataHandler verwenden == 
 
-!DataHandlers sind einfach zu bedienen und zu erstellen. !DataHandler kann wie unten beschrieben konsumiert werden:
+!DataHandlers sind einfach zu bedienen und zu erstellen. !DataHandler kann - wie unten beschrieben - konsumiert werden:
 {{{
 	final DataHandler dataHandler = base64CharSequence.getValue();
 	final InputStream inputStream = dataHandler.getInputStream();
 }}}
 
-Es gibt viele Möglichkeiten, einen !DataHandler zu erstellen. Es kann ein !FileDataSource, !ByteArrayDataSource vewendet werden. 
-Sonst kann !DataSource auch selber implementiert werden.
+Es gibt viele Möglichkeiten, einen !DataHandler zu erstellen. Es kann !FileDataSource, !ByteArrayDataSource vewendet werden. Ansonsten kann !DataSource auch für bestimmte Zwecke implementiert werden.
 {{{
 	File inputFile = new File ("Pfad zum File");
 	final DataSource source = new FileDataSource(inputFile);
