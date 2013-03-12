@@ -2,7 +2,7 @@
 
 = Einführung =
 
-Derzeit ist eXTra nicht dafür gedacht, dass große Dateien auch versendet und empfangen werden können, da die Daten innerhalb der XML-Datei eingefügt werden.
+Derzeit ist eXTra nicht dafür gedacht, dass große Dateien auch versendet und empfangen werden können, da die Dateien als Daten innerhalb der XML-Datei eingefügt werden.
 
 Problembeschreibung und Infos: https://code.google.com/p/extra-standard/issues/detail?id=76
 
@@ -10,17 +10,17 @@ Problembeschreibung und Infos: https://code.google.com/p/extra-standard/issues/d
 
 MTOM (SOAP Message Transmission Optimization Mechanism) ist ein Standard, der erlaubt die binären Daten effizient und komfortabel zu übertragen.
 
-Wenn die binären Daten als Teil eines XML-Dokuments eingefügt sind, müssen die Base64 kodierten sein, was CPU-Zeit und die Nutzlast Größe erhöht. 
+Wenn die binären Daten als Teil eines XML-Dokuments eingefügt sind, müssen sie Base64 kodiert sein, welches CPU-Zeit und Größe des Nutzlast erhöhen wird. 
 
-Wenn MTOM auf einem Service aktiviert ist, nimmt es binären Daten, die Teil des XML-Dokuments sind, und bildet einen Attachment für die diese Daten.
+Wenn MTOM auf einem Service aktiviert ist, nimmt dieser Mechanismus binären Daten, die Teil eines XML-Dokuments sind, und bildet ein Attachment für die diese Daten.
 
 == Schritte für die Umstellung ==
 
 
-Um MTOM zu aktivieren müssen mehrere Schritte durchgeführt werden.
+Um MTOM zu aktivieren, müssen mehrere Schritte durchgeführt werden:
 
- * Zunächst muss ein bestimmtes Feld in Schema annotiert werden um JAXB wissen zu lassen, dass dieser Feld ein Kandidat für MTOM Optimierung sein könnte. 
- * Zweitens, man muss über CXF Konfiguration MTOM aktivieren.
+ * Zunächst muss ein bestimmtes Feld im XML-Schema annotiert werden, damit JAXB weiß, dass dieses Feld ein Kandidat für MTOM-Optimierung ist. 
+ * Danach muss über CXF (Apache Webservice Framework) die Konfiguration für MTOM aktiviert werden.
  
 == Schema Annotieren ==
 
