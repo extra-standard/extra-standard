@@ -14,6 +14,14 @@ Wenn die binären Daten als Teil eines XML-Dokuments eingefügt sind, müssen si
 
 Wenn MTOM auf einem Service aktiviert ist, nimmt dieser Mechanismus binären Daten, die Teil eines XML-Dokuments sind, und bildet ein Attachment für die diese Daten.
 
+
+Die Grundlagen der MTOM Übertragung sind in folgenden Quellen beschrieben:
+
+http://www.redbooks.ibm.com/redpapers/pdfs/redp4884.pdf (Sending binary data using MTOM. Seite 64, Default mapping. Seite 65)
+
+http://www.w3.org/TR/soap12-mtom/#xop-serialization 
+
+
 == Schritte für die Umstellung ==
 
 
