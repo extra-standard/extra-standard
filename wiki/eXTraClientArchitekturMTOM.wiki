@@ -94,7 +94,9 @@ Encoding: UTF-8
 Http-Method: POST
 Content-Type: multipart/related; type="application/xop+xml"; boundary="uuid:e44d6a5a-d35a-4c14-ab64-a64fda6bdf12"; start="<root.message@cxf.apache.org>"; start-info="text/xml"
 Headers: {Accept=[*/*], SOAPAction=["http://www.extra-standard.de/namespace/webservice/execute"]}
-Payload: --uuid:e44d6a5a-d35a-4c14-ab64-a64fda6bdf12
+Payload: 
+
+--uuid:e44d6a5a-d35a-4c14-ab64-a64fda6bdf12
 Content-Type: application/xop+xml; charset=UTF-8; type="text/xml";
 Content-Transfer-Encoding: binary
 Content-ID: <root.message@cxf.apache.org>
