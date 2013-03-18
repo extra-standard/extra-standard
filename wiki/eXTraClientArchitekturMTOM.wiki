@@ -16,10 +16,8 @@ Wenn MTOM auf einem Service aktiviert ist, nimmt dieser Mechanismus binären Dat
 
 
 Die Grundlagen der MTOM Übertragung sind in folgenden Quellen beschrieben:
-
-http://www.redbooks.ibm.com/redpapers/pdfs/redp4884.pdf (Sending binary data using MTOM. Seite 64, Default mapping. Seite 65)
-
-http://www.w3.org/TR/soap12-mtom/#xop-serialization 
+ * http://www.redbooks.ibm.com/redpapers/pdfs/redp4884.pdf (Sending binary data using MTOM. Seite 64, Default mapping. Seite 65)
+ * http://www.w3.org/TR/soap12-mtom/#xop-serialization 
 
 
 == Schritte für die Umstellung ==
