@@ -86,7 +86,7 @@ Es gibt viele Möglichkeiten, einen !DataHandler zu erstellen. Es kann !FileData
 
 == Beispiel SOAP Nachrichten ==
 
- * Extra Nachricht mit der Datei als  Attachment
+ * eXTra-Nachricht mit der Datei als Attachment
 
  
 {{{
@@ -124,7 +124,7 @@ Content-ID: <root.message@cxf.apache.org>
 					<xcpt:RequestID>STMELD_AUSL_3</xcpt:RequestID>
 					<xcpt:TimeStamp>2013-02-21T11:38:00.854+01:00</xcpt:TimeStamp>
 					<xcpt:Application>
-						<xcpt:Product>eXTra Klient OpenSource</xcpt:Product>
+						<xcpt:Product>eXTra Client OpenSource</xcpt:Product>
 						<xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
 						<xcpt:RegistrationID></xcpt:RegistrationID>
 					</xcpt:Application>
@@ -161,7 +161,7 @@ Sterbedaten 1 Italien
 --uuid:e44d6a5a-d35a-4c14-ab64-a64fda6bdf12--
 }}}
 
- * Extra Nachricht mit der Datei Inline
+ * eXTra-Nachricht mit der Datei als Inline
  
  
 {{{
@@ -197,7 +197,7 @@ Payload:
 					<xcpt:RequestID>STMELD_AUSL_3</xcpt:RequestID>
 					<xcpt:TimeStamp>2013-02-21T11:38:00.854+01:00</xcpt:TimeStamp>
 					<xcpt:Application>
-						<xcpt:Product>eXTra Klient OpenSource</xcpt:Product>
+						<xcpt:Product>eXTra Client OpenSource</xcpt:Product>
 						<xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
 						<xcpt:RegistrationID></xcpt:RegistrationID>
 					</xcpt:Application>
