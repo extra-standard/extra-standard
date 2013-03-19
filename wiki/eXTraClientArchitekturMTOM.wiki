@@ -1,7 +1,7 @@
 #summary eXTra Client Webservice mit Attachments (MTOM).
 
 *Inhaltsverzeichnis*
-<wiki:toc max_depth="1" />
+<wiki:toc max_depth="2" />
 
 
 = Einführung =
