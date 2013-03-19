@@ -1,5 +1,9 @@
 #summary eXTra Client Webservice mit Attachments (MTOM).
 
+*Inhaltsverzeichnis*
+<wiki:toc max_depth="1" />
+
+
 = Einführung =
 
 Derzeit ist eXTra nicht dafür gedacht, dass große Dateien auch versendet und empfangen werden können, da die Dateien als Daten innerhalb der XML-Datei eingefügt werden.
