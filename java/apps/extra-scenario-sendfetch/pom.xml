@@ -30,7 +30,7 @@
 	</parent>
 
 	<artifactId>extra-scenario-sendfetch</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>extra-scenario-sendfetch</name>
 	<description>eXTra Szenario Send-Fetch (Sende-Hole Betrieb)</description>
 
@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-cli</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>

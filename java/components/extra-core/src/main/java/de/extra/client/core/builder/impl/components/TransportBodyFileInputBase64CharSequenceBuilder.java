@@ -22,15 +22,13 @@ import java.util.List;
 
 import javax.inject.Named;
 
-import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.Assert;
 
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
-import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IContentInputDataContainer;
+import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.ISingleContentInputData;
 
@@ -60,11 +58,12 @@ public class TransportBodyFileInputBase64CharSequenceBuilder extends
 				.getInputData();
 		// Es kann nicht in Transport mehrere Datensätze übertragen werden!!
 		// (21.11.12) warum nicht?, auskommentiert:
-		//Assert.isTrue(inputDataList.size() == 1, "Unexpected InputData size.");
+		// Assert.isTrue(inputDataList.size() == 1,
+		// "Unexpected InputData size.");
 		final ISingleContentInputData singleInputData = inputDataList.get(0);
-		final byte[] encodeData = Base64.encodeBase64(singleInputData
-				.getInputDataAsByteArray());
-		base64CharSequence.setValue(encodeData);
+
+		// JAXB encodiert Base64 automatisch! daher keine encoding noetig
+		base64CharSequence.setValue(singleInputData.getInputDataAsByteArray());
 		return base64CharSequence;
 	}
 
