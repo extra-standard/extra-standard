@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Schema module describing eXTra plugins and associated components
+    
+    @file    eXTra-plugins-1.xsd
+    @author  Michael Schäfer, Statistisches Bundesamt
+    @version 1.1.0
+    @state   FINAL
+    @date    2009-09-09
+-->
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xcode="http://www.extra-standard.de/namespace/codelists/1"
+    xmlns="http://www.extra-standard.de/namespace/plugins/1"
+    targetNamespace="http://www.extra-standard.de/namespace/plugins/1"
+    attributeFormDefault="unqualified"
+    elementFormDefault="qualified"
+    version="1.1.0">
+
+    <!-- Import of code list declarations -->
+
+    <xs:import namespace="http://www.extra-standard.de/namespace/codelists/1"
+        schemaLocation="eXTra-codelists-1.xsd"/>
+
+    <!-- DataTransforms -->
+
+    <xs:complexType name="DataTransformsType">
+        <xs:complexContent>
+            <xs:extension base="AbstractPlugInType">
+                <xs:sequence>
+                    <xs:element name="Compression" type="CompressionType" minOccurs="0"
+                        maxOccurs="unbounded"/>
+                    <xs:element name="Encryption" type="EncryptionType" minOccurs="0"
+                        maxOccurs="unbounded"/>
+                    <xs:element name="Signature" type="SignatureType" minOccurs="0"
+                        maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <!-- AbstractTransformType
+        An abstract base type for defining types describing some sort of transform.
+        Attribute 'order' is taken over unchanged from version 1.0, but has slightly
+        changed its semantics when used together with element 'TransformedData'.
+        The content of the order attribute is then interpreted as the transform's id.
+        Transform ids are placed inside the attribute TransformedData/@transfroms'
+        in the order in which the transforms were applied to the data. Conversely,
+        the order of transforms can be derived from the order of ids placed in the
+        'transforms' atribute.
+        
+        When used without 'TransformedData', the semantics of attribute 'order' are the
+        same as in version 1.0. 
+        
+        @created 2009-05-04 MS
+        
+        @changed 2009-07-17 MS / Made type abstract
+    -->
+    <xs:complexType name="AbstractTransformType" abstract="true">
+        <xs:attribute name="order" type="xs:positiveInteger" use="required"/>
+    </xs:complexType>
+
+    <!-- CompressionType
+        @changed 2009-05-04 MS / Now derived from ref:AbstractTransformType
+                                 Moved attribute 'order' to ref:AbstractTransformType
+    -->
+    <xs:complexType name="CompressionType">
+        <xs:complexContent>
+            <xs:extension base="AbstractTransformType">
+                <xs:sequence>
+                    <xs:element name="Algorithm" type="CompressionAlgorithmType"/>
+                    <xs:element name="InputData" type="DataType" minOccurs="0"/>
+                    <xs:element name="OutputData" type="DataType" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- EncryptionType
+        @changed 2009-05-04 MS / Now derived from ref:AbstractTransformType
+                                 Moved attribute 'order' to ref:AbstractTransformType
+    -->
+    <xs:complexType name="EncryptionType">
+        <xs:complexContent>
+            <xs:extension base="AbstractTransformType">
+                <xs:sequence>
+                    <xs:element name="Algorithm" type="EncryptionAlgorithmType"/>
+                    <xs:element name="InputData" type="DataType" minOccurs="0"/>
+                    <xs:element name="OutputData" type="DataType" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- SignatureType
+        @changed 2009-05-04 MS / Now derived from ref:AbstractTransformType
+                                 Moved attribute 'order' to ref:AbstractTransformType
+    -->
+    <xs:complexType name="SignatureType">
+        <xs:complexContent>
+            <xs:extension base="AbstractTransformType">
+                <xs:sequence>
+                    <xs:element name="Algorithm" type="SignatureAlgorithmType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CompressionAlgorithmType">
+        <xs:complexContent>
+            <xs:extension base="AbstractAlgorithmType">
+                <xs:attribute name="id" type="xcode:CompressionAlgorithmCodeType" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EncryptionAlgorithmType">
+        <xs:complexContent>
+            <xs:extension base="AbstractAlgorithmType">
+                <xs:attribute name="id" type="xcode:EncryptionAlgorithmCodeType" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SignatureAlgorithmType">
+        <xs:complexContent>
+            <xs:extension base="AbstractAlgorithmType">
+                <xs:attribute name="id" type="xcode:SignatureAlgorithmCodeType" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <!-- TransformedDataType
+        Represents transformed as a base64 string. The 'id' attributes carries a list
+        of ids that point to transforms described in a DataTransforms plugin that resides
+        in the same document, package or message object. The ids must appear in the
+        order in which the transforms were applied to the data.
+        
+        @created 2009-05-04 MS
+    -->
+    <xs:complexType name="TransformedDataType">
+        <xs:simpleContent>
+            <xs:extension base="xs:base64Binary">
+                <xs:attribute name="transforms">
+                    <xs:simpleType>
+                        <xs:list itemType="TransformIDType"/>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <!-- TransformIDType
+        Defines a data type for transform ids. Currently, a transform id must be an integer value
+        for compatibility with the use of the ref:AbstractTransformType/@order attribute established
+        in version 1.0. This will remain so for all versions 1.x. In a future version beginning with
+        2.0, the ref:AbstractTransformType/@order may be replaced with ref:AbstractTransformType/@id,
+        and the type may be extended to accommodate a wider range of values.
+        
+        @created 2009-05-04 MS
+    -->
+    <xs:simpleType name="TransformIDType">
+        <xs:restriction base="xs:integer"/>
+    </xs:simpleType>
+    
+    <!-- DataSource -->
+
+    <xs:complexType name="DataSourceType">
+        <xs:complexContent>
+            <xs:extension base="AbstractPlugInType">
+                <xs:sequence>
+                    <xs:element name="DataContainer" type="DataContainerType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DataContainerType">
+        <xs:sequence>
+            <xs:element name="DataSet" type="DataSetType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="type" type="xcode:DataContainerCodeType" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="created" type="xs:dateTime" use="optional"/>
+        <xs:attribute name="encoding" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="DataSetType">
+        <xs:attribute name="type" type="xs:anyURI" use="optional"/>
+        <xs:attribute name="name" type="xs:string" use="optional"/>
+        <xs:attribute name="lastModified" type="xs:dateTime" use="optional"/>
+    </xs:complexType>
+
+    <!-- Certificates -->
+
+    <xs:complexType name="CertificatesType">
+        <xs:complexContent>
+            <xs:extension base="AbstractPlugInType">
+                <xs:sequence>
+                    <xs:element name="X509EncCertificate" type="X509CertificateType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="X509CertificateType">
+        <xs:sequence>
+            <xs:element name="Value" type="xs:base64Binary"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- Miscellaneous -->
+
+    <xs:complexType name="AbstractPlugInType" abstract="true">
+        <xs:attribute name="version" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[1-9][0-9]*.[0-9]+"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="AbstractAlgorithmType" abstract="true">
+        <xs:sequence>
+            <xs:element name="Specification" type="SpecificationType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="optional"/>
+        <xs:attribute name="version" type="xs:string" use="optional"/>
+    </xs:complexType>
+    
+    <xs:complexType name="SpecificationType">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="url" type="xs:anyURI" use="optional"/>
+        <xs:attribute name="version" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="DataType">
+        <xs:attribute name="bytes" type="xs:nonNegativeInteger" use="required"/>
+    </xs:complexType>
+
+    <!-- PlugIn root elements -->
+    
+    <!-- DataTransforms -->
+    <xs:element name="DataTransforms" type="DataTransformsType"/>
+    
+    <!-- DataSource -->
+    <xs:element name="DataSource" type="DataSourceType"/>
+    
+    <!-- Certificates -->
+    <xs:element name="Certificates" type="CertificatesType"/>
+    
+    <!-- ===================== -->
+    <!-- Deprecated components --> 
+    <!-- ===================== -->
+    
+    <!-- CommunicationType
+        @state DEPRECATED 1.1
+    -->
+    <xs:complexType name="CommunicationType">
+        <xs:complexContent>
+            <xs:extension base="AbstractPlugInType">
+                <xs:sequence>
+                    <xs:element name="X509ReplyCertificate" type="X509ReplyCertificateType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <!-- X509ReplyCertificateType
+        @state DEPRECATED 1.1
+    -->
+    <xs:complexType name="X509ReplyCertificateType">
+        <xs:sequence>
+            <xs:element name="Value" type="xs:base64Binary"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- CommunicationType
+        @state DEPRECATED 1.1
+    -->
+    <xs:element name="Communication" type="CommunicationType"/>
+    
+</xs:schema>
