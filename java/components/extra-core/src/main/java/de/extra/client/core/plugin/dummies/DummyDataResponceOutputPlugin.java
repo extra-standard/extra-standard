@@ -24,11 +24,11 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import javax.activation.DataHandler;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -143,13 +143,11 @@ public class DummyDataResponceOutputPlugin implements IOutputPlugin {
 		final TransportBody transportBody = new TransportBody();
 		final DataType value = new DataType();
 		final String stringValue = "DUMMY Response";
-		// final byte[] decodeBase64Value = Base64.encodeBase64(stringValue
-		// .getBytes());
+		final byte[] decodeBase64Value = Base64.encodeBase64(stringValue
+				.getBytes());
 
 		final Base64CharSequenceType base64CharSequenceType = new Base64CharSequenceType();
-		final DataHandler dataHandler = new DataHandler(stringValue.getBytes(),
-				"application/octet-stream");
-		base64CharSequenceType.setValue(dataHandler);
+		base64CharSequenceType.setValue(decodeBase64Value);
 		value.setBase64CharSequence(base64CharSequenceType);
 		transportBody.setData(value);
 		return transportBody;
