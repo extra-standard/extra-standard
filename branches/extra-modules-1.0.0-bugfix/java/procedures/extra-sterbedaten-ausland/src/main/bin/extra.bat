@@ -31,7 +31,7 @@ echo    ____ ^\   ^\/  /^\__    ___/___________
 echo  _/ __ ^\ ^\     /   ^|    ^|  ^\_  __ ^\__  ^\  
 echo  ^\  ___/ /     ^\   ^|    ^|   ^|  ^| ^\// __ ^\_
 echo   ^\___  ^>___/^\  ^\  ^|____^|   ^|__^|  (____  /
-echo       ^\/      ^\_/                      ^\/ V1.0.0-SNAPSHOT
+echo       ^\/      ^\_/                      ^\/ V1.0.1
 echo 01100101 01011000 01010100 01110010 01100001 
 echo.
 
@@ -60,7 +60,8 @@ goto exit
 
 :okJava
 rem Start-Archiv angeben (Projekt extra-cli)
-set PROGRAM_JAR=extra-cli-1.0.0-SNAPSHOT.jar
+rem Nicht vergessen: oracle-jdbc Treiber (z.B. ojdbc14-10.2.0.4.0.jar) in Lib Verzeichnis
+set PROGRAM_JAR=extra-cli-1.0.1.jar
 set JAR_FILE=%EXTRA_CLIENT_HOME%\lib\%PROGRAM_JAR%
 set _JAVA="%JRE_HOME%\bin\java"
 set HEAP_MS=-Xms512m

@@ -30,7 +30,7 @@
 	</parent>
 
 	<artifactId>extra-cli</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>extra-cli</name>
 	<description>eXTra Command Line Interface</description>
@@ -92,7 +92,7 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-core</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
