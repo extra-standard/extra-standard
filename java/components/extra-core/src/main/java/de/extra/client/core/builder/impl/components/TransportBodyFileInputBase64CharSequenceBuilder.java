@@ -20,14 +20,10 @@ package de.extra.client.core.builder.impl.components;
 
 import java.util.List;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.sun.istack.ByteArrayDataSource;
 
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
@@ -65,13 +61,9 @@ public class TransportBodyFileInputBase64CharSequenceBuilder extends
 		// Assert.isTrue(inputDataList.size() == 1,
 		// "Unexpected InputData size.");
 		final ISingleContentInputData singleInputData = inputDataList.get(0);
-		// final byte[] encodeData = Base64.encodeBase64(singleInputData
-		// .getInputDataAsByteArray());
-		final DataSource source = new ByteArrayDataSource(
-				singleInputData.getInputDataAsByteArray(),
-				"application/octet-stream");
-		final DataHandler dataHandler = new DataHandler(source);
-		base64CharSequence.setValue(dataHandler);
+
+		// JAXB encodiert Base64 automatisch! daher keine encoding noetig
+		base64CharSequence.setValue(singleInputData.getInputDataAsByteArray());
 		return base64CharSequence;
 	}
 

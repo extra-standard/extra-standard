@@ -24,7 +24,6 @@
     xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1"
     xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
     attributeFormDefault="unqualified"
     elementFormDefault="qualified"
     version="1.3.0">
@@ -256,7 +255,7 @@
     
     <xs:complexType name="Base64CharSequenceType">
         <xs:simpleContent>
-            <xs:extension base="xs:base64Binary" xmime:expectedContentTypes="application/octet-stream"/>
+            <xs:extension base="xs:base64Binary"/>
         </xs:simpleContent>
     </xs:complexType>
     

@@ -32,7 +32,7 @@
 
 	<groupId>de.extra-standard.procedures</groupId>
 	<artifactId>extra-sterbedaten-ausland</artifactId>
-	<version>2.0.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>extra-sterbedaten-ausland</name>
 	<description>Fachverfahren Sterbedatenaustausch Ausland DSRV DPRS</description>
@@ -45,13 +45,13 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-cli</artifactId>
-			<version>2.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-cli</artifactId>
-			<version>2.0.0-SNAPSHOT</version>
+			<version>1.0.1-SNAPSHOT</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
@@ -59,7 +59,7 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-execution-jpa</artifactId>
-			<version>2.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 			<scope>test</scope>
 			<type>test-jar</type>
 		</dependency>

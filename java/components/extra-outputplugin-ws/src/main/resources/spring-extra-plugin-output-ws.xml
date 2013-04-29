@@ -1,66 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:oxm="http://www.springframework.org/schema/oxm"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	 http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
-    http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
-    http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd">
-
-	<import resource="classpath:META-INF/cxf/cxf.xml"/>
-	 
-	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<context:component-scan base-package="de.extra.client.plugins.outputplugin.ws" />
 
 	<bean id="webServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
+		<constructor-arg ref="messageFactory" />
+ 		<property name="messageSender" ref="httpSender"> 
+ 		</property> 
 	</bean>
 	
-	<jaxws:client id="extraClientMTOMWS" serviceClass="de.extra_standard.namespace.webservice.Extra" address="http://localhost:8088/mockExtraSterbedatenausPhase1">
-	  <jaxws:dataBinding>
-	      <bean class="org.apache.cxf.jaxb.JAXBDataBinding">
-	        <!-- <property name="extraClass">
-	          <list>
-	            <value>de.drv.dsrv.extrastandard.namespace.request.Transport</value>
-	            <value>de.drv.dsrv.extrastandard.namespace.response.Transport</value>
-	            <value>de.drv.dsrv.extrastandard.namespace.error.Error</value>
-	          </list>
-	        </property> -->
-	        <property name="namespaceMap" >
-	        	<map>
-					<entry>
-						<key><value>http://www.extra-standard.de/namespace/request/1</value></key>
-						<value>xreq</value> 
-					</entry>
-					<entry>
-						<key><value>http://www.extra-standard.de/namespace/response/1</value></key>
-						<value>xres</value> 
-					</entry>
-					<entry>
-						<key><value>http://www.extra-standard.de/namespace/components/1</value></key>
-						<value>xcpt</value> 
-					</entry>					
-					
-				</map>
-	        </property>
-	      </bean>
-	    </jaxws:dataBinding>
-		<jaxws:properties>
-			<entry key="mtom-enabled" value="true" />
-		</jaxws:properties>    
-	</jaxws:client>      
 	
-<!-- 			<props>
-				<prop key="http://www.extra-standard.de/namespace/request/1">xreq</prop>
-				<prop key="http://www.extra-standard.de/namespace/response/1">xres</prop>
-				<prop key="http://www.extra-standard.de/namespace/error/1">xerr</prop>
-				<prop key="http://www.extra-standard.de/namespace/components/1">xcpt</prop>
-				<prop key="http://www.w3.org/2001/04/xmlenc#">xenc</prop>
-				<prop key="http://www.w3.org/2000/09/xmldsig#">ds</prop>
-				<prop key="http://www.extra-standard.de/namespace/logging/1">xlog</prop>
-				<prop key="http://www.extra-standard.de/namespace/plugins/1">xplg</prop>
-				<prop key="http://www.extra-standard.de/namespace/message/1">xmsg</prop>
-				<prop key="http://www.extra-standard.de/namespace/service/1">xsrv</prop>
-			</props> -->	            
+	<!-- <bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory" />-->
+	<bean id="messageFactory" class="org.springframework.ws.soap.axiom.AxiomSoapMessageFactory">
+	    <property name="payloadCaching" value="true" />
+	</bean>
+ 
+    <bean id="httpSender" class="org.springframework.ws.transport.http.CommonsHttpMessageSender">
+		<property name="connectionTimeout" value="360000"></property>
+		<property name="readTimeout" value="360000"></property>
+    </bean>  
+
 </beans>

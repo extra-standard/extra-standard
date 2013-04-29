@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.activation.DataHandler;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
@@ -32,7 +31,6 @@ import javax.xml.bind.JAXBElement;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.XmlMappingException;
@@ -147,8 +145,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 							de.drv.dsrv.extrastandard.namespace.response.Transport.class);
 
 			// Ausgabe der Response im log
-			ExtraMessageReturnDataExtractor.printResult(marshaller,
-					extraResponse);
+			ExtraMessageReturnDataExtractor.printResult(marshaller, extraResponse);
 
 			final TransportHeader transportHeader = extraResponse
 					.getTransportHeader();
@@ -186,7 +183,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 				// Falls ein Fehler im Header angezeigt wird, wird der Body (=
 				// Einzelergebnisse)
 				// nicht mehr ausgewertet! Fehler wird hier zugeordnet
-				// final String outputIdentifier = responseId;
+				//final String outputIdentifier = responseId;
 				final ISingleResponseData singleResponseData = new SingleResponseData(
 						requestDetails.getRequestID().getValue(), returnCode,
 						reportData.getReturnText(), responseId,
@@ -209,12 +206,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 							.getBase64CharSequence();
 					Assert.notNull(base64CharSequence,
 							"Base64CharSequenceType.data is null");
-					final DataHandler packageBodyDataHandler = base64CharSequence
+					final byte[] packageBodyData = base64CharSequence
 							.getValue();
-					final byte[] packageBodyData = IOUtils
-							.toByteArray(packageBodyDataHandler
-									.getInputStream());
-
 					final byte[] decodedpackageBodyData = Base64
 							.decodeBase64(packageBodyData);
 					final PackageHeader packageHeader = transportBodyPackage
