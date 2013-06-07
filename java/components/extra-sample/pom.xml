@@ -30,7 +30,7 @@
 	</parent>
 
 	<artifactId>extra-sample</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>extra-sample</name>
 	<description>eXTra Sample</description>
@@ -45,7 +45,7 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-schema</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>			
 		
 		<dependency>

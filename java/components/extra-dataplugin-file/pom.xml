@@ -30,7 +30,7 @@
 	</parent>
 
 	<artifactId>extra-dataplugin-file</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>extra-dataplugin-file</name>
 	<description>Data Plugin for Filesystem</description>
@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-sample</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>		
 		
 		<dependency>
@@ -47,12 +47,6 @@
 			<artifactId>extra-api</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-		
-		<dependency>
-			<groupId>de.extra-standard</groupId>
-			<artifactId>extra-schema</artifactId>
-			<version>1.0.0</version>
-		</dependency>	
 		
 		<dependency>
 			<groupId>javax.enterprise</groupId>

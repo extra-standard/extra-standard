@@ -30,7 +30,7 @@
 	</parent>
 
 	<artifactId>extra-responseprocessplugin-sample</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>extra-responseprocessplugin-sample</name>
 	<description>Responseprocess Plugin Sample</description>
 
@@ -44,13 +44,13 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-sample</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-schema</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>				
 
 		<dependency>

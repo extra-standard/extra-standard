@@ -30,7 +30,7 @@
 	</parent>
 
 	<artifactId>extra-outputplugin-http</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>extra-outputplugin-http</name>
 	<description>Output Plugin for HTTP</description>

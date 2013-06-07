@@ -30,7 +30,7 @@
 	</parent>
 
 	<artifactId>extra-cli</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>extra-cli</name>
 	<description>eXTra Command Line Interface</description>
@@ -44,12 +44,12 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-configplugin-default</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-responseprocessplugin-sample</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
@@ -64,7 +64,7 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-dataplugin-file</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
@@ -74,25 +74,25 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-outputplugin-ws</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-execution-jpa</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>		
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-execution-jpa</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2-SNAPSHOT</version>
 			<scope>test</scope>
 			<type>test-jar</type>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-core</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
