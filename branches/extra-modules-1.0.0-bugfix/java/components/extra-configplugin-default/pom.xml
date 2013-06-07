@@ -30,7 +30,7 @@
 	</parent>
 
 	<artifactId>extra-configplugin-default</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>extra-configplugin-default</name>
 	<description>Config Plugin Default Implementation</description>
 
@@ -44,7 +44,7 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-sample</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>

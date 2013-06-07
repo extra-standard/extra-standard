@@ -30,7 +30,7 @@
 	</parent>
 
 	<artifactId>extra-schema</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>extra-schema</name>
 	<description>eXTra Schema for XSD</description>
 

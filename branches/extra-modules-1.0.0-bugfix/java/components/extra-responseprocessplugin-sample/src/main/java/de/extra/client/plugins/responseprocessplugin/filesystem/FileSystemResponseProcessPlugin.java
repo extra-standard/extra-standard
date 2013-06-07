@@ -28,9 +28,11 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.activation.DataHandler;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.XmlMappingException;
@@ -117,7 +119,8 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 							de.drv.dsrv.extrastandard.namespace.response.Transport.class);
 
 			// Ausgabe der Response im log
-			ExtraMessageReturnDataExtractor.printResult(marshaller, extraResponse);
+			ExtraMessageReturnDataExtractor.printResult(marshaller,
+					extraResponse);
 
 			pruefeVerzeichnis();
 
@@ -139,9 +142,16 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 					final String responseId = responseDetails.getResponseID()
 							.getValue();
 					LOG.debug("Keine Pakete vorhanden");
-					final byte[] responseBody = extraResponse
+					final DataHandler dataHandler = extraResponse
 							.getTransportBody().getData()
 							.getBase64CharSequence().getValue();
+					final byte[] responseBody = null;
+					// TODO ReadFully ändern
+					IOUtils.readFully(dataHandler.getInputStream(),
+							responseBody);
+					// final byte[] responseBody = extraResponse
+					// .getTransportBody().getData()
+					// .getBase64CharSequence().getValue();
 
 					if (saveBodyToFilesystem(responseId, responseBody)) {
 						LOG.debug("Speicheren des Body auf Filesystem erfolgreich");
@@ -177,10 +187,19 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 						DataType data = new DataType();
 						data = extraPackage.getPackageBody().getData();
 						byte[] packageBody = null;
+						final DataHandler dataHandler = extraResponse
+								.getTransportBody().getData()
+								.getBase64CharSequence().getValue();
+						final byte[] responseBody = null;
 
 						if (data.getBase64CharSequence() != null) {
-							packageBody = data.getBase64CharSequence()
-									.getValue();
+
+							final DataHandler packageBodyDataHandler = data
+									.getBase64CharSequence().getValue();
+							// TODO ReadFully ändern
+							IOUtils.readFully(
+									packageBodyDataHandler.getInputStream(),
+									packageBody);
 
 						} else {
 							if (data.getCharSequence() != null) {

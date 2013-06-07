@@ -23,16 +23,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.activation.DataHandler;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.XmlMappingException;
@@ -263,17 +264,22 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 
 	/**
 	 * @return Dummy Body Response
+	 * @throws MalformedURLException
 	 */
-	private PackageBody createDummyBodyResponse(final String queryArgument) {
+	private PackageBody createDummyBodyResponse(final String queryArgument)
+			throws MalformedURLException {
 		final PackageBody packageBody = new PackageBody();
 		final DataType value = new DataType();
 		final String stringValue = "DUMMY Response for Query Argument:"
 				+ queryArgument;
-		final byte[] decodeBase64Value = Base64.encodeBase64(stringValue
-				.getBytes());
-
+		// final byte[] decodeBase64Value = Base64.encodeBase64(stringValue
+		// .getBytes());
 		final Base64CharSequenceType base64CharSequenceType = new Base64CharSequenceType();
-		base64CharSequenceType.setValue(decodeBase64Value);
+
+		final DataHandler dataHandler = new DataHandler(stringValue.getBytes(),
+				"*/*");
+
+		base64CharSequenceType.setValue(dataHandler);
 		value.setBase64CharSequence(base64CharSequenceType);
 		packageBody.setData(value);
 		return packageBody;
