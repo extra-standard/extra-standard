@@ -21,7 +21,8 @@ package de.extrastandard.api.model.execution;
 import de.extrastandard.api.model.content.ISingleResponseData;
 
 /**
- * Die Kommunikation zwischen Client und Server wird im CommunicationProtocol festgehalten.
+ * Die Kommunikation zwischen Client und Server wird im CommunicationProtocol
+ * festgehalten.
  * 
  * 
  * @author Thorsten Vogel
@@ -31,15 +32,16 @@ import de.extrastandard.api.model.content.ISingleResponseData;
 public interface ICommunicationProtocol extends PersistentEntity {
 
 	/**
-	 * Markiert das CommunicationProtocol als Übertragen. Die ResponseDaten werden im
-	 * CommunicationProtocol festgehalten
+	 * Markiert das CommunicationProtocol als Übertragen. Die ResponseDaten
+	 * werden im CommunicationProtocol festgehalten
 	 * 
 	 * @param singleResponseData
 	 */
 	void transmitted(ISingleResponseData singleResponseData);
 
 	/**
-	 * Für dieses CommunicationProtocol sind keine ResponseDaten ermittelt worden.
+	 * Für dieses CommunicationProtocol sind keine ResponseDaten ermittelt
+	 * worden.
 	 * 
 	 * @param singleResponseData
 	 */
@@ -112,7 +114,13 @@ public interface ICommunicationProtocol extends PersistentEntity {
 	IPhaseConnection getCurrentPhaseConnection();
 
 	/**
+	 * @return
+	 */
+	public IStatus getStatus();
+
+	/**
 	 * Für externe Status-Änderungen (z.B. von 'WAIT' nach 'DONE')
+	 * 
 	 * @param aPersistentStatus
 	 */
 	public void changeStatus(PersistentStatus aPersistentStatus);

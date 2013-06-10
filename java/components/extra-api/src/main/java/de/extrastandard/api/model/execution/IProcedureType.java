@@ -19,7 +19,7 @@
 package de.extrastandard.api.model.execution;
 
 /**
- * Scenario.
+ * ScenarioTyp.
  * 
  * @author Leonid Potap
  * @version $Id: IProcedureType.java 754 2012-10-15 14:06:06Z
@@ -31,5 +31,18 @@ public interface IProcedureType {
 	 * @see de.extrastandard.api.model.execution.IProcedure#getName()
 	 */
 	String getName();
+
+	/**
+	 * @param phase
+	 * @return true, wenn die angegebene Phese EndPhase eine Procedur ist
+	 */
+	public boolean isProcedureEndPhase(final String phase);
+
+	/**
+	 * @param phase
+	 * @return die Phase, die der anegebene Phase innerhalb diese Procedure
+	 *         folgt
+	 */
+	public String getNextPhase(final String phase);
 
 }
