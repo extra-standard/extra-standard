@@ -20,7 +20,7 @@ package de.extra.client.core.builder.impl.request;
 
 import javax.inject.Named;
 
-import de.drv.dsrv.extrastandard.namespace.request.TransportHeader;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransportHeader;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
@@ -35,9 +35,9 @@ public class RequestTransportHeaderBuilder extends XmlComplexTypeBuilderAbstr {
 	private static final String BUILDER_XML_MESSAGE_TYPE = "req:TransportHeader";
 
 	@Override
-	public Object buildXmlFragment(IInputDataContainer senderData,
-			IExtraProfileConfiguration config) {
-		TransportHeader transportHeader = new TransportHeader();
+	public Object buildXmlFragment(final IInputDataContainer senderData,
+			final IExtraProfileConfiguration config) {
+		final RequestTransportHeader transportHeader = new RequestTransportHeader();
 		return transportHeader;
 	}
 

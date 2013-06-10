@@ -59,12 +59,13 @@ import de.drv.dsrv.extrastandard.namespace.messages.DataRequestArgument;
 import de.drv.dsrv.extrastandard.namespace.messages.DataRequestQuery;
 import de.drv.dsrv.extrastandard.namespace.messages.Operand;
 import de.drv.dsrv.extrastandard.namespace.messages.OperandSet;
-import de.drv.dsrv.extrastandard.namespace.request.Transport;
-import de.drv.dsrv.extrastandard.namespace.response.Package;
-import de.drv.dsrv.extrastandard.namespace.response.PackageBody;
-import de.drv.dsrv.extrastandard.namespace.response.PackageHeader;
-import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
-import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransportBody;
+import de.drv.dsrv.extrastandard.namespace.response.ResponsePackage;
+import de.drv.dsrv.extrastandard.namespace.response.ResponsePackageBody;
+import de.drv.dsrv.extrastandard.namespace.response.ResponsePackageHeader;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportBody;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportHeader;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extrastandard.api.exception.ExtraOutputPluginRuntimeException;
 import de.extrastandard.api.observer.ITransportInfo;
@@ -107,7 +108,7 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 		InputStream responseAsinputStream = null;
 		try {
 			LOG.info("request={}", request);
-			final de.drv.dsrv.extrastandard.namespace.response.Transport response = createExtraResponse(request);
+			final de.drv.dsrv.extrastandard.namespace.response.ResponseTransport response = createExtraResponse(request);
 
 			final Writer writer = new StringWriter();
 			final StreamResult streamResult = new StreamResult(writer);
@@ -125,21 +126,21 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 
 	}
 
-	private de.drv.dsrv.extrastandard.namespace.response.Transport createExtraResponse(
+	private de.drv.dsrv.extrastandard.namespace.response.ResponseTransport createExtraResponse(
 			final InputStream request) {
 		try {
 
-			final Transport requestXml = extraUnmarschaller.unmarshal(request,
-					Transport.class);
+			final RequestTransport requestXml = extraUnmarschaller.unmarshal(
+					request, RequestTransport.class);
 
 			// Ich gehe davon aus, dass requestId ein Mandatory Feld ist
 			final String requestId = requestXml.getTransportHeader()
 					.getRequestDetails().getRequestID().getValue();
-			final de.drv.dsrv.extrastandard.namespace.response.Transport response = new de.drv.dsrv.extrastandard.namespace.response.Transport();
+			final de.drv.dsrv.extrastandard.namespace.response.ResponseTransport response = new de.drv.dsrv.extrastandard.namespace.response.ResponseTransport();
 			response.setVersion(ExtraSchemaVersion.CURRENT_SCHEMA_VERSION
 					.getVersion());
 			response.setProfile("http://code.google.com/p/extra-standard/profile/1");
-			final TransportHeader transportHeader = new TransportHeader();
+			final ResponseTransportHeader transportHeader = new ResponseTransportHeader();
 			transportHeader.setTestIndicator(TEST_INDICATOR);
 			final ResponseDetailsType responseDetailsType = new ResponseDetailsType();
 			responseDetailsType.setTimeStamp(new GregorianCalendar());
@@ -161,18 +162,18 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 			transportHeader.setSender(sender);
 			final ReceiverType receiver = createDummyReceiver();
 			transportHeader.setReceiver(receiver);
-			final de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader = new de.drv.dsrv.extrastandard.namespace.request.TransportHeader();
+			final de.drv.dsrv.extrastandard.namespace.request.RequestTransportHeader requestHeader = new de.drv.dsrv.extrastandard.namespace.request.RequestTransportHeader();
 			requestHeader.setRequestDetails(requestDetailsType);
 			final ITransportInfo transportInfo = transportInfoBuilder
 					.createTransportInfo(requestHeader);
-			final TransportBody transportBody = new TransportBody();
+			final ResponseTransportBody transportBody = new ResponseTransportBody();
 			response.setTransportBody(transportBody);
 			final List<String> queryArguments = getQueryArguments(requestXml);
 			for (final String queryArgument : queryArguments) {
-				final Package trancportBodyPackage = new Package();
-				final PackageBody packageBody = createDummyBodyResponse(queryArgument);
+				final ResponsePackage trancportBodyPackage = new ResponsePackage();
+				final ResponsePackageBody packageBody = createDummyBodyResponse(queryArgument);
 				trancportBodyPackage.setPackageBody(packageBody);
-				final PackageHeader packageHeader = new PackageHeader();
+				final ResponsePackageHeader packageHeader = new ResponsePackageHeader();
 				packageHeader.setTestIndicator(TEST_INDICATOR);
 				final SenderType dummyPackageSender = createDummySender();
 				packageHeader.setSender(dummyPackageSender);
@@ -266,9 +267,9 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 	 * @return Dummy Body Response
 	 * @throws MalformedURLException
 	 */
-	private PackageBody createDummyBodyResponse(final String queryArgument)
-			throws MalformedURLException {
-		final PackageBody packageBody = new PackageBody();
+	private ResponsePackageBody createDummyBodyResponse(
+			final String queryArgument) throws MalformedURLException {
+		final ResponsePackageBody packageBody = new ResponsePackageBody();
 		final DataType value = new DataType();
 		final String stringValue = "DUMMY Response for Query Argument:"
 				+ queryArgument;
@@ -290,10 +291,10 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 	 * 
 	 * @return
 	 */
-	private List<String> getQueryArguments(final Transport requestXml) {
-		final de.drv.dsrv.extrastandard.namespace.request.TransportBody transportBody = requestXml
+	private List<String> getQueryArguments(final RequestTransport requestXml) {
+		final RequestTransportBody transportBody = requestXml
 				.getTransportBody();
-		Assert.notNull(transportBody, "TransportBody is null");
+		Assert.notNull(transportBody, "ResponseTransportBody is null");
 		final DataType data = transportBody.getData();
 		Assert.notNull(data, "TransportData is null");
 		final ElementSequenceType elementSequence = data.getElementSequence();

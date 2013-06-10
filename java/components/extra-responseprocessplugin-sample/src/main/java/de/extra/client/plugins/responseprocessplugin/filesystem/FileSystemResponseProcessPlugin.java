@@ -44,10 +44,10 @@ import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
-import de.drv.dsrv.extrastandard.namespace.response.Message;
-import de.drv.dsrv.extrastandard.namespace.response.Package;
-import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
-import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseMessage;
+import de.drv.dsrv.extrastandard.namespace.response.ResponsePackage;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportBody;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportHeader;
 import de.extra.client.core.annotation.PluginConfigType;
 import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
@@ -113,10 +113,10 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 		final IResponseData responseData = new ResponseData();
 		try {
 
-			final de.drv.dsrv.extrastandard.namespace.response.Transport extraResponse = extraUnmarschaller
+			final de.drv.dsrv.extrastandard.namespace.response.ResponseTransport extraResponse = extraUnmarschaller
 					.unmarshal(
 							responseAsStream,
-							de.drv.dsrv.extrastandard.namespace.response.Transport.class);
+							de.drv.dsrv.extrastandard.namespace.response.ResponseTransport.class);
 
 			// Ausgabe der Response im log
 			ExtraMessageReturnDataExtractor.printResult(marshaller,
@@ -124,7 +124,7 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
 			pruefeVerzeichnis();
 
-			final TransportHeader transportHeader = extraResponse
+			final ResponseTransportHeader transportHeader = extraResponse
 					.getTransportHeader();
 			final ITransportInfo transportInfo = transportInfoBuilder
 					.createTransportInfo(transportHeader);
@@ -136,7 +136,7 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 					.getRequestDetails();
 			if (!isBodyEmpty(extraResponse.getTransportBody())) {
 
-				final List<Package> packageList = extraResponse
+				final List<ResponsePackage> packageList = extraResponse
 						.getTransportBody().getPackage();
 				if (packageList == null || packageList.size() == 0) {
 					final String responseId = responseDetails.getResponseID()
@@ -177,9 +177,9 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 					responseData.addSingleResponse(singleResponseData);
 
 				} else {
-					for (final Iterator<Package> iter = packageList.iterator(); iter
-							.hasNext();) {
-						final Package extraPackage = iter.next();
+					for (final Iterator<ResponsePackage> iter = packageList
+							.iterator(); iter.hasNext();) {
+						final ResponsePackage extraPackage = iter.next();
 
 						final String responseId = extraPackage
 								.getPackageHeader().getResponseDetails()
@@ -216,7 +216,7 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 								}
 							}
 						} else {
-							LOG.error("PackageBody nicht gefüllt");
+							LOG.error("RequestPackageBody nicht gefüllt");
 
 						}
 					}
@@ -247,7 +247,7 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 		return responseData;
 	}
 
-	private static boolean isBodyEmpty(final TransportBody transportBody) {
+	private static boolean isBodyEmpty(final ResponseTransportBody transportBody) {
 		boolean isEmpty = false;
 
 		if (transportBody == null) {
@@ -259,8 +259,10 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 				isEmpty = true;
 			}
 
-			final List<Package> packageList = transportBody.getPackage();
-			final List<Message> messageList = transportBody.getMessage();
+			final List<ResponsePackage> packageList = transportBody
+					.getPackage();
+			final List<ResponseMessage> messageList = transportBody
+					.getMessage();
 			if (messageList.size() == 0 && packageList.size() == 0 && isEmpty) {
 				isEmpty = true;
 			} else {

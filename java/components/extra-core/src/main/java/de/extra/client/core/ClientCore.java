@@ -127,7 +127,7 @@ public class ClientCore implements ApplicationContextAware {
 	/**
 	 * <pre>
 	 *  1. Holt über den DataPlugin die zu verarbeitenden Daten.
-	 *  2. Verpackt die Daten in eine Extra Message Anhand der Meassagekonfiguration
+	 *  2. Verpackt die Daten in eine Extra RequestMessage Anhand der Meassagekonfiguration
 	 *  3. Versendet die Daten via Outputplugin
 	 *  4. Verarbeitet die eXTra Response via Reponse-Process Plugins
 	 * </pre>

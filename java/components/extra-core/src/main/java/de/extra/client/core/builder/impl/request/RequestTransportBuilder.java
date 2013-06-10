@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
-import de.drv.dsrv.extrastandard.namespace.request.Transport;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
 import de.extra.client.core.builder.IXmlRootElementBuilder;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
@@ -50,13 +50,13 @@ public class RequestTransportBuilder implements IXmlRootElementBuilder {
 	@Override
 	public RootElementType buildXmlRootElement(
 			final IExtraProfileConfiguration config) {
-		final Transport requestTransport = new Transport();
+		final RequestTransport requestTransport = new RequestTransport();
 		
 		// (11.12.12) Pflichtattribute setzen! (siehe eXTra-Standard)
 		requestTransport.setVersion("1.3");
 		requestTransport.setProfile("http://code.google.com/p/extra-standard/profile/1");
 		
-		LOG.debug("Create XML Transport");
+		LOG.debug("Create XML RequestTransport");
 		return requestTransport;
 	}
 

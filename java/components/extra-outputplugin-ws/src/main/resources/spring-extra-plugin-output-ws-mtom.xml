@@ -19,8 +19,8 @@
 	      <bean class="org.apache.cxf.jaxb.JAXBDataBinding">
 	        <property name="extraClass">
 	          <list>
-	            <value>de.drv.dsrv.extrastandard.namespace.request.Transport</value>
-	            <value>de.drv.dsrv.extrastandard.namespace.response.Transport</value>
+	            <value>de.drv.dsrv.extrastandard.namespace.request.RequestTransport</value>
+	            <value>de.drv.dsrv.extrastandard.namespace.response.ResponseTransport</value>
 	            <value>de.drv.dsrv.extrastandard.namespace.error.Error</value>
 	          </list>
 	        </property>

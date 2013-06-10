@@ -33,8 +33,8 @@ import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
-import de.drv.dsrv.extrastandard.namespace.response.Transport;
-import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportHeader;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extra.client.core.responce.impl.ResponseData;
 import de.extra.client.core.responce.impl.SingleReportData;
@@ -53,7 +53,7 @@ import de.extrastandard.api.util.IExtraReturnCodeAnalyser;
  * Extra Request in der Phase 1 der Nachrichtenaustausch.
  * 
  * Erste Ausführung für den Scenario mit der Übertragung der Daten in dem (1
- * Nachricht - 1 Datensatz) TransportBody
+ * Nachricht - 1 Datensatz) ResponseTransportBody
  * 
  * @author DPRS
  * @version $Id: AcknowledgePhase1ResponseProcessPlugin.java 897 2012-10-26
@@ -99,13 +99,14 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 		final IResponseData responseData = new ResponseData();
 		try {
 
-			final Transport extraResponse = extraUnmarschaller.unmarshal(
-					responseAsStream, Transport.class);
+			final ResponseTransport extraResponse = extraUnmarschaller
+					.unmarshal(responseAsStream, ResponseTransport.class);
 
 			// Ausgabe der Response im log
-			ExtraMessageReturnDataExtractor.printResult(marshaller, extraResponse);
+			ExtraMessageReturnDataExtractor.printResult(marshaller,
+					extraResponse);
 
-			final TransportHeader transportHeader = extraResponse
+			final ResponseTransportHeader transportHeader = extraResponse
 					.getTransportHeader();
 			Assert.notNull(transportHeader,
 					"Transportheader in der Acknowledge sind leer");

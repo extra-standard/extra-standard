@@ -41,9 +41,9 @@ import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
-import de.drv.dsrv.extrastandard.namespace.response.Transport;
-import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
-import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportBody;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportHeader;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extrastandard.api.observer.ITransportInfo;
 import de.extrastandard.api.observer.ITransportObserver;
@@ -82,7 +82,7 @@ public class DummyDataResponceOutputPlugin implements IOutputPlugin {
 		InputStream responseAsinputStream = null;
 		try {
 			LOG.info("request={}", request);
-			final Transport response = createExtraResponse(request);
+			final ResponseTransport response = createExtraResponse(request);
 
 			final Writer writer = new StringWriter();
 			final StreamResult streamResult = new StreamResult(writer);
@@ -100,11 +100,11 @@ public class DummyDataResponceOutputPlugin implements IOutputPlugin {
 
 	}
 
-	private Transport createExtraResponse(final InputStream request) {
+	private ResponseTransport createExtraResponse(final InputStream request) {
 		final String requestId = dummyOutputPluginUtil
 				.extractRequestId(request);
-		final Transport response = new Transport();
-		final TransportHeader transportHeader = new TransportHeader();
+		final ResponseTransport response = new ResponseTransport();
+		final ResponseTransportHeader transportHeader = new ResponseTransportHeader();
 		final ResponseDetailsType responseDetailsType = new ResponseDetailsType();
 		final ClassifiableIDType idType = new ClassifiableIDType();
 		idType.setValue("42");
@@ -124,9 +124,9 @@ public class DummyDataResponceOutputPlugin implements IOutputPlugin {
 		transportHeader.setRequestDetails(requestDetailsType);
 		response.setTransportHeader(transportHeader);
 
-		final TransportBody transportBody = createDummyBodyResponse();
+		final ResponseTransportBody transportBody = createDummyBodyResponse();
 		response.setTransportBody(transportBody);
-		final de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader = new de.drv.dsrv.extrastandard.namespace.request.TransportHeader();
+		final de.drv.dsrv.extrastandard.namespace.request.RequestTransportHeader requestHeader = new de.drv.dsrv.extrastandard.namespace.request.RequestTransportHeader();
 		requestHeader.setRequestDetails(requestDetailsType);
 		final ITransportInfo transportInfo = transportInfoBuilder
 				.createTransportInfo(requestHeader);
@@ -139,8 +139,8 @@ public class DummyDataResponceOutputPlugin implements IOutputPlugin {
 	/**
 	 * @return Dummy Body Response
 	 */
-	private TransportBody createDummyBodyResponse() {
-		final TransportBody transportBody = new TransportBody();
+	private ResponseTransportBody createDummyBodyResponse() {
+		final ResponseTransportBody transportBody = new ResponseTransportBody();
 		final DataType value = new DataType();
 		final String stringValue = "DUMMY Response";
 		// final byte[] decodeBase64Value = Base64.encodeBase64(stringValue

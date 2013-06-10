@@ -23,7 +23,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.drv.dsrv.extrastandard.namespace.request.TransportBody;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransportBody;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
@@ -43,9 +43,9 @@ public class RequestTransportBodyBuilder extends XmlComplexTypeBuilderAbstr {
 	@Override
 	public Object buildXmlFragment(final IInputDataContainer senderData,
 			final IExtraProfileConfiguration config) {
-		LOG.debug("TransportBody aufbauen");
+		LOG.debug("ResponseTransportBody aufbauen");
 
-		TransportBody transportBody = new TransportBody();
+		final RequestTransportBody transportBody = new RequestTransportBody();
 		return transportBody;
 	}
 

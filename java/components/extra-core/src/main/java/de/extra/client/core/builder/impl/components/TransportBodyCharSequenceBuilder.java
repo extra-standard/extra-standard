@@ -57,7 +57,7 @@ public class TransportBodyCharSequenceBuilder extends
 				.cast(IContentInputDataContainer.class);
 		final List<ISingleContentInputData> inputDataList = fileInputdata
 				.getInputData();
-		// Es kann nicht in Transport mehrere Datensätze übertragen werden!!
+		// Es kann nicht in RequestTransport mehrere Datensätze übertragen werden!!
 		Assert.isTrue(inputDataList.size() != 1, "Unexpected InputData size.");
 		final ISingleContentInputData singleFileInputData = inputDataList
 				.get(0);

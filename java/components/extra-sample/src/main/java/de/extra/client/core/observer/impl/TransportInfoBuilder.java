@@ -25,7 +25,8 @@ import org.springframework.util.Assert;
 import de.drv.dsrv.extrastandard.namespace.components.ApplicationType;
 import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
-import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransportHeader;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportHeader;
 import de.extrastandard.api.observer.ITransportInfo;
 
 /**
@@ -43,7 +44,7 @@ public class TransportInfoBuilder {
 	 * @param application
 	 */
 	public ITransportInfo createTransportInfo(
-			final TransportHeader requestHeader) {
+			final ResponseTransportHeader requestHeader) {
 		Assert.notNull(requestHeader, "TransportHeader is null");
 
 		final TransportInfo transportInfo = new TransportInfo();
@@ -77,7 +78,7 @@ public class TransportInfoBuilder {
 	 * @param application
 	 */
 	public ITransportInfo createTransportInfo(
-			final de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader) {
+			final RequestTransportHeader requestHeader) {
 		Assert.notNull(requestHeader, "TransportHeader is null");
 
 		final TransportInfo transportInfo = new TransportInfo();

@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
-import de.drv.dsrv.extrastandard.namespace.response.Transport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 
 /**
  * @author Leonid Potap
@@ -62,11 +62,11 @@ public class ExtraServiceImpl implements Extra {
 	@Override
 	@WebMethod(action = "http://www.extra-standard.de/namespace/webservice/execute")
 	@WebResult(name = "Transport", targetNamespace = "http://www.extra-standard.de/namespace/response/1", partName = "response")
-	public Transport execute(
-			@WebParam(name = "Transport", targetNamespace = "http://www.extra-standard.de/namespace/request/1", partName = "request") final de.drv.dsrv.extrastandard.namespace.request.Transport request)
+	public ResponseTransport execute(
+			@WebParam(name = "Transport", targetNamespace = "http://www.extra-standard.de/namespace/request/1", partName = "request") final de.drv.dsrv.extrastandard.namespace.request.RequestTransport request)
 			throws ExtraFault {
 		try {
-			logger.info("receive Extra Transport");
+			logger.info("receive Extra ResponseTransport");
 			final Base64CharSequenceType base64CharSequence = request
 					.getTransportBody().getData().getBase64CharSequence();
 			final DataHandler dataHandler = base64CharSequence.getValue();
@@ -89,6 +89,6 @@ public class ExtraServiceImpl implements Extra {
 		} catch (final IOException e) {
 			logger.error("IOException in Server:", e);
 		}
-		return new Transport();
+		return new ResponseTransport();
 	}
 }

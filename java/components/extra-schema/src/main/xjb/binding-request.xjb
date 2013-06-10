@@ -22,37 +22,37 @@
 	</jxb:bindings> 
 	 -->
   	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestType']">
-    	<jxb:class name="Transport"/>
+    	<jxb:class name="RequestTransport"/>
     	 <annox:annotate>
              <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="Transport"/>
          </annox:annotate>
 	</jxb:bindings> 	
 	
   	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestHeaderType']">
-    	<jxb:class name="TransportHeader"/>
+    	<jxb:class name="RequestTransportHeader"/>
 	</jxb:bindings> 
   	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='TransportRequestBodyType']">
-    	<jxb:class name="TransportBody"/>
+    	<jxb:class name="RequestTransportBody"/>
 	</jxb:bindings> 
     
   	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='PackageRequestType']">
-    	<jxb:class name="Package"/>
+    	<jxb:class name="RequestPackage"/>
 	</jxb:bindings> 
   	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='PackageRequestHeaderType']">
-    	<jxb:class name="PackageHeader"/>
+    	<jxb:class name="RequestPackageHeader"/>
 	</jxb:bindings> 
   	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='PackageRequestBodyType']">
-    	<jxb:class name="PackageBody"/>
+    	<jxb:class name="RequestPackageBody"/>
 	</jxb:bindings>     
     
   	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='MessageRequestType']">
-    	<jxb:class name="Message"/>
+    	<jxb:class name="RequestMessage"/>
 	</jxb:bindings> 
   	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='MessageRequestHeaderType']">
-    	<jxb:class name="MessageHeader"/>
+    	<jxb:class name="RequestMessageHeader"/>
 	</jxb:bindings> 
   	<jxb:bindings schemaLocation="../resources/xsd/eXTra-request-1.xsd" node="//xs:complexType[@name='MessageRequestBodyType']">
-    	<jxb:class name="MessageBody"/>
+    	<jxb:class name="RequestMessageBody"/>
 	</jxb:bindings>
 	    
     <jxb:bindings schemaLocation="../resources/xsd/eXTra-components-1.xsd" node="/xs:schema">
