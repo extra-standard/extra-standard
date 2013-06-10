@@ -24,7 +24,7 @@ import org.springframework.oxm.XmlMappingException;
 import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
-import de.drv.dsrv.extrastandard.namespace.response.Package;
+import de.drv.dsrv.extrastandard.namespace.response.ResponsePackage;
 import de.extra.client.core.responce.impl.ResponseData;
 import de.extra.client.plugins.outputplugin.utils.OutputPluginHelper;
 import de.extrastandard.api.model.content.IResponseData;
@@ -52,15 +52,15 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 	public IResponseData processResponse(final InputStream responseAsStream) {
 		try {
 			final IResponseData responseData = new ResponseData();
-			de.drv.dsrv.extrastandard.namespace.response.Transport extraResponse;
+			de.drv.dsrv.extrastandard.namespace.response.ResponseTransport extraResponse;
 
-			extraResponse = (de.drv.dsrv.extrastandard.namespace.response.Transport) unmarshaller
+			extraResponse = (de.drv.dsrv.extrastandard.namespace.response.ResponseTransport) unmarshaller
 					.unmarshal(new StreamSource(responseAsStream));
 
 			pruefeVerzeichnis();
 
-			final List<Package> packageList = extraResponse.getTransportBody()
-					.getPackage();
+			final List<ResponsePackage> packageList = extraResponse
+					.getTransportBody().getPackage();
 			if (!OutputPluginHelper.isBodyEmpty(extraResponse
 					.getTransportBody())) {
 				if (packageList == null || packageList.size() == 0) {
@@ -76,9 +76,9 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 					// LOG.debug("Speicheren des Body auf Filesystem erfolgreich");
 					// }
 				} else {
-					for (final Iterator<Package> iter = packageList.iterator(); iter
-							.hasNext();) {
-						final Package extraPackage = iter.next();
+					for (final Iterator<ResponsePackage> iter = packageList
+							.iterator(); iter.hasNext();) {
+						final ResponsePackage extraPackage = iter.next();
 
 						final String responseId = extraPackage
 								.getPackageHeader().getResponseDetails()
@@ -106,7 +106,7 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 								}
 							}
 						} else {
-							LOG.error("PackageBody nicht gefüllt");
+							LOG.error("RequestPackageBody nicht gefüllt");
 
 						}
 					}

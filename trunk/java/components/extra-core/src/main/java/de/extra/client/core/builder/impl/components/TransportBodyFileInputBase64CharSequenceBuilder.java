@@ -60,7 +60,7 @@ public class TransportBodyFileInputBase64CharSequenceBuilder extends
 				.cast(IContentInputDataContainer.class);
 		final List<ISingleContentInputData> inputDataList = fileInputdata
 				.getInputData();
-		// Es kann nicht in Transport mehrere Datensätze übertragen werden!!
+		// Es kann nicht in RequestTransport mehrere Datensätze übertragen werden!!
 		// (21.11.12) warum nicht?, auskommentiert:
 		// Assert.isTrue(inputDataList.size() == 1,
 		// "Unexpected InputData size.");

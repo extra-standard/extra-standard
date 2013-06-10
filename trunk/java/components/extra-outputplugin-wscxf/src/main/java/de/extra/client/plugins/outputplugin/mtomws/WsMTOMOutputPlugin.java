@@ -24,7 +24,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.drv.dsrv.extrastandard.namespace.request.Transport;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
 import de.extra_standard.namespace.webservice.Extra;
 import de.extra_standard.namespace.webservice.ExtraFault;
 
@@ -46,12 +46,12 @@ public class WsMTOMOutputPlugin {
 	 * @throws ExtraFault
 	 * @see de.extrastandard.api.plugin.IOutputPlugin#outputData(java.io.InputStream)
 	 */
-	public de.drv.dsrv.extrastandard.namespace.response.Transport outputData(
-			final Transport transportRequestType) throws ExtraFault {
+	public de.drv.dsrv.extrastandard.namespace.response.ResponseTransport outputData(
+			final RequestTransport transportRequestType) throws ExtraFault {
 
 		logger.debug("sending request");
 		try {
-			final de.drv.dsrv.extrastandard.namespace.response.Transport transportResponseType = extraClientMTOMWS
+			final de.drv.dsrv.extrastandard.namespace.response.ResponseTransport transportResponseType = extraClientMTOMWS
 					.execute(transportRequestType);
 			logger.debug("receive response: " + transportResponseType);
 			return transportResponseType;

@@ -37,7 +37,7 @@ import de.drv.dsrv.extrastandard.namespace.components.FlagCodeType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.components.TextType;
-import de.drv.dsrv.extrastandard.namespace.response.Transport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 import de.extra.client.core.responce.impl.SingleReportData;
 
 @Named("extraMessageReturnDataExtractor")
@@ -88,7 +88,7 @@ public class ExtraMessageReturnDataExtractor {
 	 * @param extraResponse
 	 * @return
 	 */
-	public FlagCodeType getReturnCode(final Transport extraResponse) {
+	public FlagCodeType getReturnCode(final ResponseTransport extraResponse) {
 		// TODO Allgemeine Lösung
 		List<FlagType> flagList = new ArrayList<FlagType>();
 
@@ -121,7 +121,7 @@ public class ExtraMessageReturnDataExtractor {
 	 * @param extraResponse
 	 */
 	static void printResult(IExtraMarschaller marshaller,
-			final Transport extraResponse) {
+			final ResponseTransport extraResponse) {
 		operation_logger.info("Nachricht vom eXTra-Server erhalten");
 		message_response_logger.info("Nachricht vom eXTra-Server erhalten:");
 		Logger messageLogger = ExtraMessageReturnDataExtractor.message_response_logger;

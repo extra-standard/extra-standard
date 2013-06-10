@@ -45,7 +45,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
-import de.drv.dsrv.extrastandard.namespace.request.Transport;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
 
 /**
  * @author evpqq5
@@ -53,8 +53,8 @@ import de.drv.dsrv.extrastandard.namespace.request.Transport;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "/spring-properties.xml",
-		"/spring-extra-plugin-output-ws-mtom.xml", "/spring-schema.xml",
-		"/spring-extra-ws-mtom-server.xml" })
+		"/spring-extra-plugin-output-ws-mtom.xml",
+		"/spring-extra-ws-mtom-server.xml", "/spring-schema.xml" })
 public class WsMTOMIT {
 
 	private static final Logger logger = LoggerFactory
@@ -79,10 +79,10 @@ public class WsMTOMIT {
 	@Test
 	public void testOutputData() throws Exception {
 		logger.info("Start Test OutputData");
-		final List<Transport> transportsToSend = createTestsTransportsWithFileAttachment();
-		for (final Transport requestTransport : transportsToSend) {
-			logger.info("Sending Transport");
-			final de.drv.dsrv.extrastandard.namespace.response.Transport responseTransport = plugin
+		final List<RequestTransport> transportsToSend = createTestsTransportsWithFileAttachment();
+		for (final RequestTransport requestTransport : transportsToSend) {
+			logger.info("Sending RequestTransport");
+			final de.drv.dsrv.extrastandard.namespace.response.ResponseTransport responseTransport = plugin
 					.outputData(requestTransport);
 			logger.info("Receive Response");
 			printResponse(responseTransport);
@@ -91,7 +91,7 @@ public class WsMTOMIT {
 	}
 
 	private void printResponse(
-			final de.drv.dsrv.extrastandard.namespace.response.Transport responseTransport) {
+			final de.drv.dsrv.extrastandard.namespace.response.ResponseTransport responseTransport) {
 		logger.info("printResponse: " + responseTransport.getClass());
 	}
 
@@ -100,16 +100,16 @@ public class WsMTOMIT {
 	 * @throws XmlMappingException
 	 * @throws IOException
 	 */
-	private List<Transport> createTestsTransportsWithFileAttachment()
+	private List<RequestTransport> createTestsTransportsWithFileAttachment()
 			throws XmlMappingException, IOException {
 		logger.info("Looking for Inptut into the Directory: "
 				+ inputDirectory.getAbsolutePath());
-		final List<Transport> transports = new ArrayList<Transport>();
+		final List<RequestTransport> transports = new ArrayList<RequestTransport>();
 		final Collection<File> listFiles = FileUtils.listFiles(inputDirectory,
 				TrueFileFilter.INSTANCE, null);
 		for (final File inputFile : listFiles) {
-			final Transport requestTransport = createDummyRequestTransport();
-			final Transport filledTransport = fillInputFile(requestTransport,
+			final RequestTransport requestTransport = createDummyRequestTransport();
+			final RequestTransport filledTransport = fillInputFile(requestTransport,
 					inputFile);
 			transports.add(filledTransport);
 			logger.info("Find File to send: " + inputFile.getName());
@@ -120,13 +120,13 @@ public class WsMTOMIT {
 	}
 
 	/**
-	 * Führt zu dem Transport InputFile
+	 * Führt zu dem RequestTransport InputFile
 	 * 
 	 * @param requestTransport
 	 * @param inputFile
 	 * @return
 	 */
-	private Transport fillInputFile(final Transport requestTransport,
+	private RequestTransport fillInputFile(final RequestTransport requestTransport,
 			final File inputFile) {
 		final Base64CharSequenceType base64CharSequence = requestTransport
 				.getTransportBody().getData().getBase64CharSequence();
@@ -144,12 +144,12 @@ public class WsMTOMIT {
 	 * @throws IOException
 	 * @throws XmlMappingException
 	 */
-	private Transport createDummyRequestTransport() throws XmlMappingException,
+	private RequestTransport createDummyRequestTransport() throws XmlMappingException,
 			IOException {
 		final InputStream inputStream = new ByteArrayInputStream(
 				dummyRequest.getBytes());
-		final Transport transportRequestType = extraUnmarschaller.unmarshal(
-				inputStream, Transport.class);
+		final RequestTransport transportRequestType = extraUnmarschaller.unmarshal(
+				inputStream, RequestTransport.class);
 		return transportRequestType;
 	}
 

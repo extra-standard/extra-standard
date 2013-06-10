@@ -34,7 +34,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
-import de.drv.dsrv.extrastandard.namespace.request.Transport;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-schema.xml" })
@@ -53,10 +53,10 @@ public class ExtraUnmarschallerTest {
 		final InputStream inputStream = new ByteArrayInputStream(
 				validTestRequest.getBytes());
 		try {
-			final Transport unmarschall = extraUnmarschaller
+			final RequestTransport unmarschall = extraUnmarschaller
 					.unmarshal(
 							inputStream,
-							de.drv.dsrv.extrastandard.namespace.request.Transport.class,
+							de.drv.dsrv.extrastandard.namespace.request.RequestTransport.class,
 							true);
 			// Keine Exception und der Object nicht leer
 			Assert.assertNotNull("transport is null", unmarschall);
@@ -105,7 +105,7 @@ public class ExtraUnmarschallerTest {
 		final InputStream inputStream = new ByteArrayInputStream(
 				invalidTestRequest.getBytes());
 		extraUnmarschaller.unmarshal(inputStream,
-				de.drv.dsrv.extrastandard.namespace.request.Transport.class,
+				de.drv.dsrv.extrastandard.namespace.request.RequestTransport.class,
 				true);
 		Assert.fail("Expected XmlMappingException");
 

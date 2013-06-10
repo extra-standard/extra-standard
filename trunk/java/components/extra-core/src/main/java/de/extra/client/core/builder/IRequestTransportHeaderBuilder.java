@@ -18,7 +18,7 @@
  */
 package de.extra.client.core.builder;
 
-import de.drv.dsrv.extrastandard.namespace.request.TransportHeader;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransportHeader;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
@@ -29,7 +29,7 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 public interface IRequestTransportHeaderBuilder extends IXmlComplexTypeBuilder {
 
 	/**
-	 * Erstellt ein TransportHeader XML Fragment der Nachricht. Die
+	 * Erstellt ein RequestTransportHeader XML Fragment der Nachricht. Die
 	 * Nachrichtbezogenen wie RequestId Paramenter können aus dem SenderDataBean
 	 * abgelesen werden.
 	 * 
@@ -37,7 +37,7 @@ public interface IRequestTransportHeaderBuilder extends IXmlComplexTypeBuilder {
 	 * @param config
 	 * @return
 	 */
-	TransportHeader buildTransportHeader(IInputDataContainer senderData,
+	RequestTransportHeader buildTransportHeader(IInputDataContainer senderData,
 			IExtraProfileConfiguration config);
 
 }

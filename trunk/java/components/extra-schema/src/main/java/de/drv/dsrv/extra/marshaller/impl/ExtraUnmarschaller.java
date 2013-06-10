@@ -35,7 +35,7 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.util.Assert;
 
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
-import de.drv.dsrv.extrastandard.namespace.response.Transport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 
 /**
  * @author Leonid Potap
@@ -80,7 +80,7 @@ public class ExtraUnmarschaller implements IExtraUnmarschaller {
 		logger.debug("ResponseObject Class: {}", responseObject.getClass());
 		Assert.notNull(responseObject, "Response is null");
 		X extraTransport = null;
-		if (Transport.class.isAssignableFrom(responseObject.getClass())) {
+		if (ResponseTransport.class.isAssignableFrom(responseObject.getClass())) {
 			extraTransport = extraTransportClass.cast(responseObject);
 		} else if (JAXBElement.class
 				.isAssignableFrom(responseObject.getClass())) {
@@ -92,11 +92,11 @@ public class ExtraUnmarschaller implements IExtraUnmarschaller {
 
 			Assert.isAssignable(extraTransportClass,
 					jaxBElementValue.getClass(),
-					"JaxBElement.value  can not be converted to the response.Transport");
+					"JaxBElement.value  can not be converted to the response.ResponseTransport");
 			extraTransport = extraTransportClass.cast(jaxBElementValue);
 		} else {
 			throw new IllegalArgumentException(
-					"Response can not be converted to the response.Transport. ResponseObjectClass: "
+					"Response can not be converted to the response.ResponseTransport. ResponseObjectClass: "
 							+ responseObject.getClass());
 		}
 		return extraTransport;

@@ -9,7 +9,7 @@ import javax.inject.Named;
 import org.springframework.oxm.XmlMappingException;
 
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
-import de.drv.dsrv.extrastandard.namespace.request.Transport;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
 import de.extrastandard.api.exception.ExtraOutputPluginRuntimeException;
 
 @Named("dummyOutputPluginUtil")
@@ -21,8 +21,8 @@ public class DummyOutputPluginUtil {
 
 	public String extractRequestId(final InputStream request) {
 		try {
-			final Transport requestXml = extraUnmarschaller.unmarshal(request,
-					Transport.class);
+			final RequestTransport requestXml = extraUnmarschaller.unmarshal(
+					request, RequestTransport.class);
 			// Ich gehe davon aus, dass requestId ein Mandatory Feld ist
 			final String requestId = requestXml.getTransportHeader()
 					.getRequestDetails().getRequestID().getValue();

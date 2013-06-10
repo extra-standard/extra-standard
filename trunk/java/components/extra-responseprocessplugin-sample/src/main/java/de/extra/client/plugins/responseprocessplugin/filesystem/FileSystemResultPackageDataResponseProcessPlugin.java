@@ -50,12 +50,12 @@ import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataContainerType;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataSource;
-import de.drv.dsrv.extrastandard.namespace.response.Message;
-import de.drv.dsrv.extrastandard.namespace.response.Package;
-import de.drv.dsrv.extrastandard.namespace.response.PackageBody;
-import de.drv.dsrv.extrastandard.namespace.response.PackageHeader;
-import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
-import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseMessage;
+import de.drv.dsrv.extrastandard.namespace.response.ResponsePackage;
+import de.drv.dsrv.extrastandard.namespace.response.ResponsePackageBody;
+import de.drv.dsrv.extrastandard.namespace.response.ResponsePackageHeader;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportBody;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportHeader;
 import de.extra.client.core.annotation.PluginConfigType;
 import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
@@ -77,7 +77,7 @@ import de.extrastandard.api.util.IExtraReturnCodeAnalyser;
  * 
  * Speichert Verarbeitungsergebnisse des Fachverfahren in dem Filesystem. Hier
  * wird initial eine einfache Verarbeitung vorrausgesetzt. Die Daten werden in
- * dem TransportBody.Package.PackageBody in dem Data-Fragment erwartet.
+ * dem ResponseTransportBody.Package.PackageBody in dem Data-Fragment erwartet.
  * 
  * @author DPRS
  * @version $Id$
@@ -129,7 +129,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 
 	/**
 	 * Erwartet Ergebnisse als Daten in den Felder
-	 * TransportBody.Package.PackageBody in dem Data-Fragment
+	 * ResponseTransportBody.Package.PackageBody in dem Data-Fragment
 	 * 
 	 * @see de.extra.client.core.plugin.IResponsePlugin#processResponse(de.drv.dsrv
 	 *      .extrastandard.namespace.response.XMLTransport)
@@ -139,18 +139,18 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 		final IResponseData responseData = new ResponseData();
 		try {
 
-			de.drv.dsrv.extrastandard.namespace.response.Transport extraResponse;
+			de.drv.dsrv.extrastandard.namespace.response.ResponseTransport extraResponse;
 
 			extraResponse = extraUnmarschaller
 					.unmarshal(
 							responseAsStream,
-							de.drv.dsrv.extrastandard.namespace.response.Transport.class);
+							de.drv.dsrv.extrastandard.namespace.response.ResponseTransport.class);
 
 			// Ausgabe der Response im log
 			ExtraMessageReturnDataExtractor.printResult(marshaller,
 					extraResponse);
 
-			final TransportHeader transportHeader = extraResponse
+			final ResponseTransportHeader transportHeader = extraResponse
 					.getTransportHeader();
 			final ITransportInfo transportInfo = transportInfoBuilder
 					.createTransportInfo(transportHeader);
@@ -194,13 +194,15 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 				responseData.addSingleResponse(singleResponseData);
 			} else {
 				// Einzelergebnisse auswerten
-				final TransportBody transportBody = extraResponse
+				final ResponseTransportBody transportBody = extraResponse
 						.getTransportBody();
-				Assert.notNull(transportBody, "TransportBody is null");
-				final List<Package> packages = transportBody.getPackage();
-				Assert.notEmpty(packages, "TransportBody.Package() is empty");
-				for (final Package transportBodyPackage : packages) {
-					final PackageBody packageBody = transportBodyPackage
+				Assert.notNull(transportBody, "ResponseTransportBody is null");
+				final List<ResponsePackage> packages = transportBody
+						.getPackage();
+				Assert.notEmpty(packages,
+						"ResponseTransportBody.Package() is empty");
+				for (final ResponsePackage transportBodyPackage : packages) {
+					final ResponsePackageBody packageBody = transportBodyPackage
 							.getPackageBody();
 					Assert.notNull(packageBody, "PackageBody is null");
 					final DataType data = packageBody.getData();
@@ -217,7 +219,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 
 					final byte[] decodedpackageBodyData = Base64
 							.decodeBase64(packageBodyData);
-					final PackageHeader packageHeader = transportBodyPackage
+					final ResponsePackageHeader packageHeader = transportBodyPackage
 							.getPackageHeader();
 
 					final ResponseDetailsType packageHeaderResponseDetails = packageHeader
@@ -289,7 +291,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 	}
 
 	private ISingleResponseData extractResponseDetail(
-			final PackageHeader packageHeader,
+			final ResponsePackageHeader packageHeader,
 			final IExtraReturnCodeAnalyser extraReturnCodeAnalyser,
 			final String savedFileName) {
 		Assert.notNull(packageHeader, "PackageHeader.data is null");
@@ -337,7 +339,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 		return PersistentStatus.DONE;
 	}
 
-	private static boolean isBodyEmpty(final TransportBody transportBody) {
+	private static boolean isBodyEmpty(final ResponseTransportBody transportBody) {
 		boolean isEmpty = false;
 
 		if (transportBody == null) {
@@ -349,8 +351,10 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 				isEmpty = true;
 			}
 
-			final List<Package> packageList = transportBody.getPackage();
-			final List<Message> messageList = transportBody.getMessage();
+			final List<ResponsePackage> packageList = transportBody
+					.getPackage();
+			final List<ResponseMessage> messageList = transportBody
+					.getMessage();
 			if (messageList.size() == 0 && packageList.size() == 0 && isEmpty) {
 				isEmpty = true;
 			} else {

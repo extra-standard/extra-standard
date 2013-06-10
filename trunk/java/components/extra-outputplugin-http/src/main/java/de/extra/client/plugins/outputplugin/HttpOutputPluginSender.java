@@ -54,7 +54,7 @@ public class HttpOutputPluginSender {
 	 */
 	public InputStream processOutput(final InputStream request) {
 
-		// Initialisiere Transport-Client
+		// Initialisiere RequestTransport-Client
 		client = extraTransportFactory.loadTransportImpl();
 		client.initTransport(extraConnectData);
 

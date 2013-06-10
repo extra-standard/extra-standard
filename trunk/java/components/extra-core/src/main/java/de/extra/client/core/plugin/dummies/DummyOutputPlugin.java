@@ -43,9 +43,9 @@ import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.SenderType;
 import de.drv.dsrv.extrastandard.namespace.components.TextType;
-import de.drv.dsrv.extrastandard.namespace.response.Transport;
-import de.drv.dsrv.extrastandard.namespace.response.TransportBody;
-import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportBody;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportHeader;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extrastandard.api.observer.ITransportInfo;
 import de.extrastandard.api.observer.ITransportObserver;
@@ -84,7 +84,7 @@ public class DummyOutputPlugin implements IOutputPlugin {
 		InputStream responseAsinputStream = null;
 		try {
 			LOG.info("request={}", request);
-			final Transport response = createExtraResponse(request);
+			final ResponseTransport response = createExtraResponse(request);
 
 			final Writer writer = new StringWriter();
 			final StreamResult streamResult = new StreamResult(writer);
@@ -102,15 +102,15 @@ public class DummyOutputPlugin implements IOutputPlugin {
 
 	}
 
-	private Transport createExtraResponse(final InputStream request) {
+	private ResponseTransport createExtraResponse(final InputStream request) {
 		final String requestId = dummyOutputPluginUtil
 				.extractRequestId(request);
-		final Transport response = new Transport();
+		final ResponseTransport response = new ResponseTransport();
 		response.setVersion(ExtraSchemaVersion.CURRENT_SCHEMA_VERSION
 				.getVersion());
 
 		response.setProfile("http://code.google.com/p/extra-standard/profile/1");
-		final TransportHeader transportHeader = new TransportHeader();
+		final ResponseTransportHeader transportHeader = new ResponseTransportHeader();
 		transportHeader.setTestIndicator(TEST_INDICATOR);
 		final ResponseDetailsType responseDetailsType = new ResponseDetailsType();
 		final ClassifiableIDType idType = new ClassifiableIDType();
@@ -155,9 +155,9 @@ public class DummyOutputPlugin implements IOutputPlugin {
 		receiver.setName(receiverName);
 		transportHeader.setReceiver(receiver);
 
-		final TransportBody transportBody = new TransportBody();
+		final ResponseTransportBody transportBody = new ResponseTransportBody();
 		response.setTransportBody(transportBody);
-		final de.drv.dsrv.extrastandard.namespace.request.TransportHeader requestHeader = new de.drv.dsrv.extrastandard.namespace.request.TransportHeader();
+		final de.drv.dsrv.extrastandard.namespace.request.RequestTransportHeader requestHeader = new de.drv.dsrv.extrastandard.namespace.request.RequestTransportHeader();
 		requestHeader.setRequestDetails(requestDetailsType);
 		final ITransportInfo transportInfo = transportInfoBuilder
 				.createTransportInfo(requestHeader);

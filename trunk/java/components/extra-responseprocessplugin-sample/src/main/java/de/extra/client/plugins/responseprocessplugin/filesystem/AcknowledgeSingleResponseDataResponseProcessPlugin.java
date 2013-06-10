@@ -33,8 +33,8 @@ import de.drv.dsrv.extrastandard.namespace.components.ClassifiableIDType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
-import de.drv.dsrv.extrastandard.namespace.response.Transport;
-import de.drv.dsrv.extrastandard.namespace.response.TransportHeader;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportHeader;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extra.client.core.responce.impl.SingleReportData;
 import de.extra.client.core.responce.impl.SingleResponseData;
@@ -49,7 +49,7 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
 import de.extrastandard.api.util.IExtraReturnCodeAnalyser;
 
 /**
- * Erwartet nur ein Response in Transport, der für alle Requests gilt
+ * Erwartet nur ein Response in RequestTransport, der für alle Requests gilt
  * 
  * @author DPRS
  * @version $Id$
@@ -93,14 +93,15 @@ public class AcknowledgeSingleResponseDataResponseProcessPlugin implements
 	public IResponseData processResponse(final InputStream responseAsStream) {
 		try {
 
-			final Transport extraResponse = extraUnmarschaller.unmarshal(
-					responseAsStream, Transport.class);
+			final ResponseTransport extraResponse = extraUnmarschaller
+					.unmarshal(responseAsStream, ResponseTransport.class);
 
 			// Ausgabe der Response im log
-			ExtraMessageReturnDataExtractor.printResult(marshaller, extraResponse);
+			ExtraMessageReturnDataExtractor.printResult(marshaller,
+					extraResponse);
 
 			// TODO Validierungsmodul
-			final TransportHeader transportHeader = extraResponse
+			final ResponseTransportHeader transportHeader = extraResponse
 					.getTransportHeader();
 			Assert.notNull(transportHeader,
 					"Transportheader in der Acknowledge sind leer");
