@@ -60,8 +60,9 @@ public interface IExecutionPersistence {
 	 *            limits the result set
 	 * @return
 	 */
-	List<ICommunicationProtocol> findInputDataForExecution(String executionProcedure,
-			PhaseQualifier phaseQualifier, Integer inputDataLimit);
+	List<ICommunicationProtocol> findInputDataForExecution(
+			String executionProcedure, PhaseQualifier phaseQualifier,
+			Integer inputDataLimit);
 
 	/**
 	 * Seeks InputData for further Procesierung depending on the ExecutePhase
@@ -70,8 +71,8 @@ public interface IExecutionPersistence {
 	 * @param phaseQualifier
 	 * @return
 	 */
-	List<ICommunicationProtocol> findInputDataForExecution(String executionProcedure,
-			PhaseQualifier phaseQualifier);
+	List<ICommunicationProtocol> findInputDataForExecution(
+			String executionProcedure, PhaseQualifier phaseQualifier);
 
 	/**
 	 * Seeks InputData for further Procesierung depending on the ExecutePhase
@@ -84,17 +85,24 @@ public interface IExecutionPersistence {
 			PhaseQualifier phaseQualifier);
 
 	// Max Query (Sterbedatenabgleich)
+	/**
+	 * @param procedureName
+	 * @param phaseQualifier
+	 * @param subquery
+	 * @return
+	 */
 	String maxResponseIdForExecution(String procedureName,
 			PhaseQualifier phaseQualifier, String subquery);
-	
+
 	/**
 	 * Sucht für einen OutputIdentifier das zugeordnete CommunicationProtocol.
-	 * Diese Methode wird verwendet, wenn eine externe Anwendung eine OutputDatei (= OutputIdentifier) bestätigen
-	 * möchte.
+	 * Diese Methode wird verwendet, wenn eine externe Anwendung eine
+	 * OutputDatei (= OutputIdentifier) bestätigen möchte.
 	 * 
 	 * @param outputIdentifier
 	 * @return
 	 */
-	boolean changeCommunicationProtocolStatusByOutputIdentifier(final String outputIdentifier, PersistentStatus persistentStatus);
-	
+	boolean changeCommunicationProtocolStatusByOutputIdentifier(
+			final String outputIdentifier, PersistentStatus persistentStatus);
+
 }
