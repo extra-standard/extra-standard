@@ -18,10 +18,11 @@
  */
 package de.extrastandard.api.plugin;
 
-import java.io.InputStream;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 
 public interface IOutputPlugin {
 
-	public InputStream outputData(InputStream request);
+	public ResponseTransport outputData(RequestTransport request);
 
 }

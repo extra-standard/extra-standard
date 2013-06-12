@@ -1,8 +1,5 @@
 package de.extra.client.core.plugin.dummies;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,18 +16,14 @@ public class DummyOutputPluginUtil {
 	@Named("extraUnmarschaller")
 	private IExtraUnmarschaller extraUnmarschaller;
 
-	public String extractRequestId(final InputStream request) {
+	public String extractRequestId(final RequestTransport request) {
 		try {
-			final RequestTransport requestXml = extraUnmarschaller.unmarshal(
-					request, RequestTransport.class);
 			// Ich gehe davon aus, dass requestId ein Mandatory Feld ist
-			final String requestId = requestXml.getTransportHeader()
+			final String requestId = request.getTransportHeader()
 					.getRequestDetails().getRequestID().getValue();
 			return requestId;
 		} catch (final XmlMappingException xmlMappingException) {
 			throw new ExtraOutputPluginRuntimeException(xmlMappingException);
-		} catch (final IOException ioException) {
-			throw new ExtraOutputPluginRuntimeException(ioException);
 		}
 	}
 }

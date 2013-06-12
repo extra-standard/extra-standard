@@ -53,16 +53,14 @@ import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "/spring-properties.xml",
-		"/spring-extra-plugin-output-ws-mtom.xml",
-		"/spring-extra-ws-mtom-server.xml", "/spring-schema.xml" })
-public class WsMTOMIT {
+		"/spring-extra-plugin-output-ws-cxf.xml", "/spring-schema.xml" })
+public class WsCxfIT {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(WsMTOMIT.class);
+	private static final Logger logger = LoggerFactory.getLogger(WsCxfIT.class);
 
 	@Inject
-	@Named("wsMTOMOutputPlugin")
-	private WsMTOMOutputPlugin plugin;
+	@Named("wsCxfOutputPlugin")
+	private WsCxfOutputPlugin plugin;
 
 	@Inject
 	@Named("extraUnmarschaller")
@@ -109,8 +107,8 @@ public class WsMTOMIT {
 				TrueFileFilter.INSTANCE, null);
 		for (final File inputFile : listFiles) {
 			final RequestTransport requestTransport = createDummyRequestTransport();
-			final RequestTransport filledTransport = fillInputFile(requestTransport,
-					inputFile);
+			final RequestTransport filledTransport = fillInputFile(
+					requestTransport, inputFile);
 			transports.add(filledTransport);
 			logger.info("Find File to send: " + inputFile.getName());
 			logger.info("ChecksumCRC32: " + FileUtils.checksumCRC32(inputFile));
@@ -126,8 +124,8 @@ public class WsMTOMIT {
 	 * @param inputFile
 	 * @return
 	 */
-	private RequestTransport fillInputFile(final RequestTransport requestTransport,
-			final File inputFile) {
+	private RequestTransport fillInputFile(
+			final RequestTransport requestTransport, final File inputFile) {
 		final Base64CharSequenceType base64CharSequence = requestTransport
 				.getTransportBody().getData().getBase64CharSequence();
 		final DataSource source = new FileDataSource(inputFile);
@@ -144,12 +142,12 @@ public class WsMTOMIT {
 	 * @throws IOException
 	 * @throws XmlMappingException
 	 */
-	private RequestTransport createDummyRequestTransport() throws XmlMappingException,
-			IOException {
+	private RequestTransport createDummyRequestTransport()
+			throws XmlMappingException, IOException {
 		final InputStream inputStream = new ByteArrayInputStream(
 				dummyRequest.getBytes());
-		final RequestTransport transportRequestType = extraUnmarschaller.unmarshal(
-				inputStream, RequestTransport.class);
+		final RequestTransport transportRequestType = extraUnmarschaller
+				.unmarshal(inputStream, RequestTransport.class);
 		return transportRequestType;
 	}
 

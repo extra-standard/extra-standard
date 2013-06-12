@@ -38,7 +38,6 @@ import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extra.client.core.builder.IXmlRootElementBuilder;
 import de.extra.client.core.builder.impl.plugins.DataTransformConfigurablePluginsBuilder;
 import de.extra.client.core.builder.impl.plugins.DataTransformPluginsBuilder;
-import de.extra.client.core.builder.impl.request.RequestTransportBuilder;
 import de.extra.client.core.model.inputdata.impl.ContentInputDataContainer;
 import de.extra.client.core.util.IExtraValidator;
 import de.extrastandard.api.model.content.IInputDataContainer;
@@ -140,28 +139,6 @@ public class MessageBuilderLocatorTest {
 	}
 
 	/**
-	 * Test method for
-	 * {@link de.extra.client.core.builder.impl.MessageBuilderLocator#getRootXmlBuilder(java.lang.String)}
-	 * .
-	 */
-	@Test
-	public void testGetRootXmlBuilder() {
-		final Map<String, IXmlRootElementBuilder> rootElementsBuilderMap = new HashMap<String, IXmlRootElementBuilder>();
-		final IXmlRootElementBuilder xmlRootElementBuilder = new RequestTransportBuilder();
-		rootElementsBuilderMap.put("testRootElementBuilder",
-				xmlRootElementBuilder);
-		final Map<String, IXmlComplexTypeBuilder> complexTypeBuilderMap = new HashMap<String, IXmlComplexTypeBuilder>();
-
-		final MessageBuilderLocator messageBuilderLocator = createMessageBuilderlocator(
-				rootElementsBuilderMap, complexTypeBuilderMap, new Properties());
-
-		final IXmlRootElementBuilder expectedXmlRootElementBuilder = messageBuilderLocator
-				.getRootXmlBuilder(xmlRootElementBuilder.getXmlType());
-		Assert.assertEquals("Unexpected RootElementBuilder found",
-				expectedXmlRootElementBuilder, xmlRootElementBuilder);
-	}
-
-	/**
 	 * Die 2 Maps werden von dem Spring Kontainer befüllt. Danach wird init
 	 * Merhod ausgeführt.
 	 * 
@@ -174,8 +151,6 @@ public class MessageBuilderLocatorTest {
 			final Map<String, IXmlComplexTypeBuilder> complexTypeBuilderMap,
 			final Properties properties) {
 		final MessageBuilderLocator messageBuilderLocator = new MessageBuilderLocator();
-		injectValue(messageBuilderLocator, rootElementsBuilderMap,
-				"rootElementsBuilderMap");
 		injectValue(messageBuilderLocator, complexTypeBuilderMap,
 				"complexTypeBuilderMap");
 		injectValue(messageBuilderLocator, properties, "configBasicProperties");

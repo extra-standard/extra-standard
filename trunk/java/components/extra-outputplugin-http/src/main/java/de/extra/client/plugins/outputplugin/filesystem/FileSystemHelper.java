@@ -3,7 +3,6 @@ package de.extra.client.plugins.outputplugin.filesystem;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,7 +12,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.xml.transform.stream.StreamSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +23,7 @@ import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.drv.dsrv.extrastandard.namespace.components.FlagType;
 import de.drv.dsrv.extrastandard.namespace.components.ReportType;
 import de.drv.dsrv.extrastandard.namespace.response.ResponsePackage;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 import de.extra.client.core.responce.impl.ResponseData;
 import de.extra.client.plugins.outputplugin.utils.OutputPluginHelper;
 import de.extrastandard.api.model.content.IResponseData;
@@ -49,14 +48,9 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 	private String reportOrdner;
 
 	@Override
-	public IResponseData processResponse(final InputStream responseAsStream) {
+	public IResponseData processResponse(final ResponseTransport extraResponse) {
 		try {
 			final IResponseData responseData = new ResponseData();
-			de.drv.dsrv.extrastandard.namespace.response.ResponseTransport extraResponse;
-
-			extraResponse = (de.drv.dsrv.extrastandard.namespace.response.ResponseTransport) unmarshaller
-					.unmarshal(new StreamSource(responseAsStream));
-
 			pruefeVerzeichnis();
 
 			final List<ResponsePackage> packageList = extraResponse
@@ -68,13 +62,6 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 							.getTransportHeader().getResponseDetails()
 							.getResponseID().getValue();
 					LOG.debug("Keine Pakete vorhanden");
-					// final byte[] responseBody = extraResponse
-					// .getTransportBody().getData()
-					// .getBase64CharSequence().getValue();
-
-					// if (saveBodyToFilesystem(responseId, responseBody)) {
-					// LOG.debug("Speicheren des Body auf Filesystem erfolgreich");
-					// }
 				} else {
 					for (final Iterator<ResponsePackage> iter = packageList
 							.iterator(); iter.hasNext();) {
@@ -128,11 +115,7 @@ public class FileSystemHelper implements IResponseProcessPlugin, Serializable {
 
 			return responseData;
 		} catch (final XmlMappingException xmlMappingException) {
-			// TODO Exceptionhandling
 			throw new IllegalStateException(xmlMappingException);
-		} catch (final IOException ioException) {
-			// TODO Auto-generated catch block
-			throw new IllegalStateException(ioException);
 		}
 	}
 

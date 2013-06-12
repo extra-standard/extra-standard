@@ -25,18 +25,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 import de.extra_standard.namespace.webservice.Extra;
 import de.extra_standard.namespace.webservice.ExtraFault;
+import de.extrastandard.api.exception.ExceptionCode;
+import de.extrastandard.api.exception.ExtraOutputPluginRuntimeException;
+import de.extrastandard.api.plugin.IOutputPlugin;
 
 /**
  * @author Leonid Potap
  * @version $Id: $
  */
-@Named("wsMTOMOutputPlugin")
-public class WsMTOMOutputPlugin {
+@Named("wsCxfOutputPlugin")
+public class WsCxfOutputPlugin implements IOutputPlugin {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(WsMTOMOutputPlugin.class);
+			.getLogger(WsCxfOutputPlugin.class);
+
+	private static final Logger operation_logger = LoggerFactory
+			.getLogger("de.extra.client.operation");
 
 	@Inject
 	@Named("extraClientMTOMWS")
@@ -46,18 +53,33 @@ public class WsMTOMOutputPlugin {
 	 * @throws ExtraFault
 	 * @see de.extrastandard.api.plugin.IOutputPlugin#outputData(java.io.InputStream)
 	 */
-	public de.drv.dsrv.extrastandard.namespace.response.ResponseTransport outputData(
-			final RequestTransport transportRequestType) throws ExtraFault {
+	@Override
+	public ResponseTransport outputData(
+			final RequestTransport transportRequestType) {
 
 		logger.debug("sending request");
 		try {
-			final de.drv.dsrv.extrastandard.namespace.response.ResponseTransport transportResponseType = extraClientMTOMWS
+			final ResponseTransport transportResponseType = extraClientMTOMWS
 					.execute(transportRequestType);
 			logger.debug("receive response: " + transportResponseType);
 			return transportResponseType;
 		} catch (final ExtraFault extraFault) {
 			logger.error("Fault:", extraFault);
-			throw extraFault;
+			// Faengt eine vom Server gemeldete SoapFaultClientException ab
+			operation_logger.error("Server meldet SOAP-Fehler: {}",
+					extraFault.getFaultInfo());
+
+			final ExtraOutputPluginRuntimeException extraOutputPluginRuntimeException = extractSoapFaultClientException(extraFault);
+			throw (extraOutputPluginRuntimeException);
 		}
+	}
+
+	private ExtraOutputPluginRuntimeException extractSoapFaultClientException(
+			final ExtraFault extraFault) {
+
+		// TODO Message From ExtraFault extrachieren
+		return new ExtraOutputPluginRuntimeException(
+				ExceptionCode.EXTRA_TRANSFER_EXCEPTION, extraFault.getMessage());
+
 	}
 }

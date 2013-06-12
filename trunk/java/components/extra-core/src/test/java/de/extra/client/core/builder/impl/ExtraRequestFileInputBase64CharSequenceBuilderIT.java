@@ -69,7 +69,7 @@ public class ExtraRequestFileInputBase64CharSequenceBuilderIT {
 		senderData.setRequestId("STERBEDATENABGLEICH-7777777");
 		final IExtraProfileConfiguration config = createConfigFileBeanForElementSequenceWithListOfConfirmationOfReceipt();
 		final RootElementType elementType = extraRequestBuilder
-				.buildXmlMessage(senderData, config);
+				.buildExtraRequestMessage(senderData, config);
 		assertNotNull(elementType);
 		final String messageAsString = extraRequestBuilderITBasic
 				.getResultAsString(elementType);

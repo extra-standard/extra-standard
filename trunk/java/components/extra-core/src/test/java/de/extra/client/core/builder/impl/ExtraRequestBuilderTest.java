@@ -30,13 +30,13 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
-import de.extra.client.core.builder.IXmlRootElementBuilder;
 import de.extra.client.core.builder.impl.components.TransportBodyDataBuilder;
 import de.extra.client.core.builder.impl.components.TransportBodyFileInputBase64CharSequenceBuilder;
 import de.extra.client.core.builder.impl.components.TransportBodyRequestQueryElementSequenceBuilder;
@@ -74,16 +74,24 @@ public class ExtraRequestBuilderTest {
 	@Mock
 	MessageBuilderLocator messageBuilderLocator;
 
+	@Mock
+	RequestTransportBuilder mockRequestTransportBuilder;
+
 	private String requiredXmlType;
 
 	@Before
 	public void setUp() throws Exception {
 		// Builder Anmelden in dem MessageBuilderLocator
-		final IXmlRootElementBuilder xmlRootElementBuilder = new RequestTransportBuilder();
-		final String rootXmlType = xmlRootElementBuilder.getXmlType();
-		when(messageBuilderLocator.getRootXmlBuilder(rootXmlType)).thenReturn(
-				xmlRootElementBuilder);
+		final RequestTransportBuilder requestTransportBuilder = new RequestTransportBuilder();
+		final String rootXmlType = requestTransportBuilder.getXmlType();
 		requiredXmlType = rootXmlType;
+
+		when(mockRequestTransportBuilder.getXmlType()).thenReturn(
+				requestTransportBuilder.getXmlType());
+		when(
+				mockRequestTransportBuilder.buildRequestTransport(Mockito
+						.any(IExtraProfileConfiguration.class)))
+				.thenCallRealMethod();
 
 		final Map<String, IXmlComplexTypeBuilder> builderMap = new HashMap<String, IXmlComplexTypeBuilder>();
 		final IXmlComplexTypeBuilder requestTransportHeaderBuilder = new RequestTransportHeaderBuilder();
@@ -134,7 +142,7 @@ public class ExtraRequestBuilderTest {
 		senderData.setRequestId("requestId");
 		final IExtraProfileConfiguration config = createSimpleConfigFileBean();
 		final RootElementType elementType = extraRequestBuilder
-				.buildXmlMessage(senderData, config);
+				.buildExtraRequestMessage(senderData, config);
 		assertNotNull(elementType);
 	}
 

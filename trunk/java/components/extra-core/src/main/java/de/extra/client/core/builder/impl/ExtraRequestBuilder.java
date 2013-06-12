@@ -32,11 +32,11 @@ import org.springframework.beans.PropertyValue;
 import org.springframework.util.Assert;
 
 import de.drv.dsrv.extrastandard.namespace.components.AnyPlugInContainerType;
-import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
 import de.extra.client.core.builder.IExtraRequestBuilder;
 import de.extra.client.core.builder.IMessageBuilderLocator;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
-import de.extra.client.core.builder.IXmlRootElementBuilder;
+import de.extra.client.core.builder.impl.request.RequestTransportBuilder;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
@@ -58,22 +58,28 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 	@Named("messageBuilderLocator")
 	IMessageBuilderLocator messageBuilderLocator;
 
+	@Inject
+	@Named("requestTransportBuilder")
+	RequestTransportBuilder requestTransportBuilder;
+
 	@Override
-	public RootElementType buildXmlMessage(
+	public RequestTransport buildExtraRequestMessage(
 			final IInputDataContainer senderData,
 			final IExtraProfileConfiguration config) {
 		Assert.notNull(senderData, "SenderData is null");
 		Assert.notNull(config, "ConfigFileBean is null");
 		final String rootElementName = config.getRootElement();
-		final IXmlRootElementBuilder rootElementBuilder = messageBuilderLocator
-				.getRootXmlBuilder(rootElementName);
-		Assert.notNull(rootElementBuilder,
-				"RootElementBuilder is null for ElementType: "
-						+ rootElementName);
-		final RootElementType rootXmlFragment = rootElementBuilder
-				.buildXmlRootElement(config);
+		Assert.isTrue(
+				requestTransportBuilder.getXmlType().equals(rootElementName),
+				"Unexpected RootElement " + rootElementName + "expected: "
+						+ requestTransportBuilder.getXmlType());
+
+		// TODO Anpassung der Schnitstelle. IMessageBuilderLocator
+		final RequestTransport rootXmlFragment = requestTransportBuilder
+				.buildRequestTransport(config);
 
 		buildXmlMessage(rootXmlFragment, rootElementName, config, senderData);
+
 		return rootXmlFragment;
 	}
 

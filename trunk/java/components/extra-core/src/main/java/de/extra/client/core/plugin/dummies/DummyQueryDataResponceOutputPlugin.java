@@ -18,11 +18,7 @@
  */
 package de.extra.client.core.plugin.dummies;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -32,12 +28,13 @@ import javax.activation.DataHandler;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.bind.JAXBElement;
-import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.util.Assert;
+
+import com.sun.istack.ByteArrayDataSource;
 
 import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
@@ -64,6 +61,7 @@ import de.drv.dsrv.extrastandard.namespace.request.RequestTransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.ResponsePackage;
 import de.drv.dsrv.extrastandard.namespace.response.ResponsePackageBody;
 import de.drv.dsrv.extrastandard.namespace.response.ResponsePackageHeader;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportHeader;
 import de.extra.client.core.observer.impl.TransportInfoBuilder;
@@ -104,37 +102,19 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 	private TransportInfoBuilder transportInfoBuilder;
 
 	@Override
-	public InputStream outputData(final InputStream request) {
-		InputStream responseAsinputStream = null;
-		try {
-			LOG.info("request={}", request);
-			final de.drv.dsrv.extrastandard.namespace.response.ResponseTransport response = createExtraResponse(request);
+	public ResponseTransport outputData(final RequestTransport request) {
+		LOG.info("request={}", request);
+		final ResponseTransport response = createExtraResponse(request);
 
-			final Writer writer = new StringWriter();
-			final StreamResult streamResult = new StreamResult(writer);
-
-			marshaller.marshal(response, streamResult);
-
-			responseAsinputStream = new ByteArrayInputStream(writer.toString()
-					.getBytes());
-			return responseAsinputStream;
-		} catch (final IOException ioException) {
-			// Hier kommt eine ExtraTechnischeRuntimeException
-			LOG.error("Unerwarteter Fehler: ", ioException);
-		}
-		return responseAsinputStream;
+		return response;
 
 	}
 
-	private de.drv.dsrv.extrastandard.namespace.response.ResponseTransport createExtraResponse(
-			final InputStream request) {
+	private ResponseTransport createExtraResponse(final RequestTransport request) {
 		try {
 
-			final RequestTransport requestXml = extraUnmarschaller.unmarshal(
-					request, RequestTransport.class);
-
 			// Ich gehe davon aus, dass requestId ein Mandatory Feld ist
-			final String requestId = requestXml.getTransportHeader()
+			final String requestId = request.getTransportHeader()
 					.getRequestDetails().getRequestID().getValue();
 			final de.drv.dsrv.extrastandard.namespace.response.ResponseTransport response = new de.drv.dsrv.extrastandard.namespace.response.ResponseTransport();
 			response.setVersion(ExtraSchemaVersion.CURRENT_SCHEMA_VERSION
@@ -168,7 +148,7 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 					.createTransportInfo(requestHeader);
 			final ResponseTransportBody transportBody = new ResponseTransportBody();
 			response.setTransportBody(transportBody);
-			final List<String> queryArguments = getQueryArguments(requestXml);
+			final List<String> queryArguments = getQueryArguments(request);
 			for (final String queryArgument : queryArguments) {
 				final ResponsePackage trancportBodyPackage = new ResponsePackage();
 				final ResponsePackageBody packageBody = createDummyBodyResponse(queryArgument);
@@ -277,8 +257,8 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 		// .getBytes());
 		final Base64CharSequenceType base64CharSequenceType = new Base64CharSequenceType();
 
-		final DataHandler dataHandler = new DataHandler(stringValue.getBytes(),
-				"*/*");
+		final DataHandler dataHandler = new DataHandler(
+				new ByteArrayDataSource(stringValue.getBytes(), "*/*"));
 
 		base64CharSequenceType.setValue(dataHandler);
 		value.setBase64CharSequence(base64CharSequenceType);

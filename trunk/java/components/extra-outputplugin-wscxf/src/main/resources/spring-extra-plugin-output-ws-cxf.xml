@@ -18,7 +18,7 @@
 
 	<context:component-scan base-package="de.extra.client.plugins.outputplugin.mtomws" />
 	                
-	<jaxws:client id="extraClientMTOMWS" serviceClass="de.extra_standard.namespace.webservice.Extra" address="${webservice.endpoint.url}">
+	<jaxws:client id="extraClientMTOMWS" serviceClass="de.extra_standard.namespace.webservice.Extra" address="${plugins.outputplugin.wsOutputPlugin.endpoint.url}">
 	  <jaxws:dataBinding>
 	      <bean class="org.apache.cxf.jaxb.JAXBDataBinding">
 	        <property name="namespaceMap" >
@@ -68,11 +68,11 @@
 	      </bean>
 	    </jaxws:dataBinding>
 		<jaxws:properties>
-			<entry key="mtom-enabled" value="true" />
+			<entry key="mtom-enabled" value="${plugins.outputplugin.wsOutputPlugin.emtom-enabled:false}" />
 		</jaxws:properties>    
 	</jaxws:client>     
 	
-    <http-conf:conduit name="${webservice.endpoint.url}.*">
+    <http-conf:conduit name="${plugins.outputplugin.wsOutputPlugin.endpoint.url}.*">
         <http-conf:client ConnectionTimeout="3000000" ReceiveTimeout="3000000"/>
     </http-conf:conduit>	
     

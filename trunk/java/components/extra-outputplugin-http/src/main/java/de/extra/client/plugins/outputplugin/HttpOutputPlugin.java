@@ -18,14 +18,25 @@
  */
 package de.extra.client.plugins.outputplugin;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.oxm.XmlMappingException;
 
+import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
+import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
+import de.extrastandard.api.exception.ExtraOutputPluginRuntimeException;
 import de.extrastandard.api.plugin.IOutputPlugin;
 
 @Named("httpOutputPlugin")
@@ -38,11 +49,42 @@ public class HttpOutputPlugin implements IOutputPlugin {
 	@Named("httpOutputPluginSender")
 	private HttpOutputPluginSender httpSender;
 
+	@Inject
+	@Named("extraUnmarschaller")
+	private IExtraUnmarschaller extraUnmarschaller;
+
+	@Inject
+	@Named("extraMarschaller")
+	private IExtraMarschaller marshaller;
+
+	@Value("${core.outgoing.validation}")
+	private boolean outgoingXmlValidation;
+
 	@Override
-	public InputStream outputData(final InputStream inputStream) {
-		LOG.info("Start des Versands...");
-		// TODO request = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-		// request;
-		return httpSender.processOutput(inputStream);
+	public ResponseTransport outputData(final RequestTransport requestTransport) {
+		try {
+			LOG.info("Start des Versands...");
+			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			final StreamResult streamResult = new StreamResult(outputStream);
+			marshaller.marshal(requestTransport, streamResult,
+					outgoingXmlValidation);
+			final ByteArrayInputStream requestAsStream = new ByteArrayInputStream(
+					outputStream.toByteArray());
+			final InputStream responseStreams = httpSender
+					.processOutput(requestAsStream);
+			// ResponseTransport aus Stream erzeugen
+			final ResponseTransport transportResponse = extraUnmarschaller
+					.unmarshal(responseStreams, ResponseTransport.class);
+
+			return transportResponse;
+		} catch (final XmlMappingException xmlMappingException) {
+			final ExtraOutputPluginRuntimeException extraOutputPluginRuntimeException = new ExtraOutputPluginRuntimeException(
+					xmlMappingException);
+			throw (extraOutputPluginRuntimeException);
+		} catch (final IOException ioException) {
+			final ExtraOutputPluginRuntimeException extraOutputPluginRuntimeException = new ExtraOutputPluginRuntimeException(
+					ioException);
+			throw (extraOutputPluginRuntimeException);
+		}
 	}
 }

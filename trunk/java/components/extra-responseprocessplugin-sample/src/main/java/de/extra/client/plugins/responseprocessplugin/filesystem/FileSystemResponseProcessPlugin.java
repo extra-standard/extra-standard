@@ -21,7 +21,6 @@ package de.extra.client.plugins.responseprocessplugin.filesystem;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,6 +45,7 @@ import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseMessage;
 import de.drv.dsrv.extrastandard.namespace.response.ResponsePackage;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportHeader;
 import de.extra.client.core.annotation.PluginConfigType;
@@ -109,14 +109,9 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 	 * .extrastandard.namespace.response.XMLTransport)
 	 */
 	@Override
-	public IResponseData processResponse(final InputStream responseAsStream) {
+	public IResponseData processResponse(final ResponseTransport extraResponse) {
 		final IResponseData responseData = new ResponseData();
 		try {
-
-			final de.drv.dsrv.extrastandard.namespace.response.ResponseTransport extraResponse = extraUnmarschaller
-					.unmarshal(
-							responseAsStream,
-							de.drv.dsrv.extrastandard.namespace.response.ResponseTransport.class);
 
 			// Ausgabe der Response im log
 			ExtraMessageReturnDataExtractor.printResult(marshaller,

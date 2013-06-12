@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.List;
 
+import javax.activation.DataSource;
+
 public interface ISingleContentInputData extends ISingleInputData {
 
 	/**
@@ -51,6 +53,11 @@ public interface ISingleContentInputData extends ISingleInputData {
 	 * @return
 	 */
 	String getInputDataAsString(Charset encoding);
+
+	/**
+	 * @return DataSource Representation der InputDaten
+	 */
+	DataSource getInputDataAsDataSource();
 
 	/**
 	 * Reads the contents of InputData into a byte array.

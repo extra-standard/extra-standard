@@ -37,12 +37,4 @@ public interface IMessageBuilderLocator {
 	public IXmlComplexTypeBuilder getXmlComplexTypeBuilder(
 			String elementXmlType, IInputDataContainer senderData);
 
-	/**
-	 * Liefert ein MessageBuilder abhängig von dem ParentElement und Type von
-	 * dem childElement
-	 * 
-	 * @param elementType
-	 * @return
-	 */
-	public IXmlRootElementBuilder getRootXmlBuilder(String elementType);
 }

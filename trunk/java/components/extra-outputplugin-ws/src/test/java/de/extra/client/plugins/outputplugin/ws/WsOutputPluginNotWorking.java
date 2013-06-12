@@ -19,10 +19,12 @@
 package de.extra.client.plugins.outputplugin.ws;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.StringWriter;
+import java.io.Writer;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.xml.transform.stream.StreamResult;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,13 +33,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
+import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
+
 /**
  * @author Thorsten Vogel
  * @version $Id$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "/spring-properties.xml",
-		"/spring-extra-plugin-output-ws.xml" })
+		"/spring-extra-plugin-output-ws.xml", "/spring-schema.xml" })
 public class WsOutputPluginNotWorking {
 
 	private static final Logger logger = LoggerFactory
@@ -47,23 +54,32 @@ public class WsOutputPluginNotWorking {
 	@Named("wsOutputPlugin")
 	private WsOutputPlugin plugin;
 
+	@Inject
+	@Named("extraUnmarschaller")
+	private IExtraUnmarschaller extraUnmarschaller;
+
+	@Inject
+	@Named("extraMarschaller")
+	private IExtraMarschaller marshaller;
+
 	/**
 	 * Test method for
 	 * {@link de.extra.client.plugins.outputplugin.ws.WsOutputPlugin#outputData(java.io.InputStream)}
 	 */
 	@Test
 	public void testOutputData() throws Exception {
-		final InputStream responseData = plugin
-				.outputData(new ByteArrayInputStream(request2.getBytes()));
 
-		final byte[] responseBuffer = new byte[256];
-		final StringBuilder response = new StringBuilder();
-		int numRead = 0;
-		while ((numRead = responseData.read(responseBuffer)) != -1) {
-			response.append(new String(responseBuffer).substring(0, numRead));
-		}
+		final RequestTransport requestTransport = extraUnmarschaller.unmarshal(
+				new ByteArrayInputStream(request2.getBytes()),
+				RequestTransport.class);
 
-		logger.debug(response.toString());
+		final ResponseTransport responseTransport = plugin
+				.outputData(requestTransport);
+		final Writer writer = new StringWriter();
+		final StreamResult streamResult = new StreamResult(writer);
+		marshaller.marshal(responseTransport, streamResult);
+
+		logger.debug(writer.toString());
 	}
 
 	private final String request = "<ns6:Transport xmlns:xenc=\"http://www.w3.org/2001/04/xmlenc#\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:xcpt=\"http://www.extra-standard.de/namespace/components/1\" xmlns:xres=\"http://www.extra-standard.de/namespace/response/1\" xmlns:xlog=\"http://www.extra-standard.de/namespace/logging/1\" xmlns:ns6=\"http://www.extra-standard.de/namespace/request/1\" xmlns:xplg=\"http://www.extra-standard.de/namespace/plugins/1\" xmlns:xmsg=\"http://www.extra-standard.de/namespace/message/1\" xmlns:xsrv=\"http://www.extra-standard.de/namespace/service/1\">\r\n"

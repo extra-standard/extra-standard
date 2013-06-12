@@ -18,7 +18,7 @@
  */
 package de.extra.client.core.builder;
 
-import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
@@ -29,11 +29,9 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 public interface IExtraRequestBuilder {
 
 	/**
-	 * 
-	 * 
-	 * @return eine XML Message
+	 * @return eine eXTra Request Message (siehe {@link RequestTransport})
 	 */
-	RootElementType buildXmlMessage(IInputDataContainer senderData,
+	RequestTransport buildExtraRequestMessage(IInputDataContainer senderData,
 			IExtraProfileConfiguration config);
 
 }

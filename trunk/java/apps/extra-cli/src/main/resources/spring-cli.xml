@@ -16,6 +16,8 @@
 	<import resource="classpath:spring-file-responseprocessplugin.xml" />
 	<import resource="classpath:spring-persistence-jpa.xml" />
 	<import resource="classpath:spring-extra-plugin-output-ws.xml" />
+	<import resource="classpath:spring-extra-plugin-output-ws-cxf.xml" />
+	
 	
 	
 	<context:component-scan base-package="de.extra.client.starter" />

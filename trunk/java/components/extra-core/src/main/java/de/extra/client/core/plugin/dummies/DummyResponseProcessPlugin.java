@@ -1,9 +1,8 @@
 package de.extra.client.core.plugin.dummies;
 
-import java.io.InputStream;
-
 import javax.inject.Named;
 
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.plugin.IResponseProcessPlugin;
 
@@ -11,8 +10,8 @@ import de.extrastandard.api.plugin.IResponseProcessPlugin;
 public class DummyResponseProcessPlugin implements IResponseProcessPlugin {
 
 	@Override
-	public IResponseData processResponse(final InputStream responseAsStream) {
-		// TODO Auto-generated method stub
+	public IResponseData processResponse(
+			final ResponseTransport responseTransport) {
 		return null;
 	}
 
