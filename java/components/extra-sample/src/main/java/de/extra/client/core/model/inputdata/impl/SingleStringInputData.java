@@ -1,7 +1,5 @@
 package de.extra.client.core.model.inputdata.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +35,6 @@ public class SingleStringInputData extends Implementor implements
 	@Override
 	public List<IInputDataPluginDescription> getPlugins() {
 		return plugins;
-	}
-
-	@Override
-	public InputStream getInputDataAsStream() {
-		return new ByteArrayInputStream(content.getBytes());
 	}
 
 	@Override
