@@ -53,7 +53,8 @@ import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "/spring-properties.xml",
-		"/spring-extra-plugin-output-ws-cxf.xml", "/spring-schema.xml" })
+		"/spring-extra-plugin-output-ws-cxf.xml", "/spring-schema.xml",
+		"/spring-extra-ws-cxf-mtom-server.xml" })
 public class WsCxfIT {
 
 	private static final Logger logger = LoggerFactory.getLogger(WsCxfIT.class);
