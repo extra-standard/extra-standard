@@ -66,7 +66,7 @@ public class ExtraRequestListOfConfirmationOfReceiptBuilderIT {
 		final IDbQueryInputDataContainer senderData = createTestDummyDBQueryInputData();
 		final IExtraProfileConfiguration config = createConfigFileBeanForElementSequenceWithListOfConfirmationOfReceipt();
 		final RootElementType elementType = extraRequestBuilder
-				.buildXmlMessage(senderData, config);
+				.buildExtraRequestMessage(senderData, config);
 		assertNotNull(elementType);
 		final String messageAsString = extraRequestBuilderITBasic
 				.getResultAsString(elementType);

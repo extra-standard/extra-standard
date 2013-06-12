@@ -39,7 +39,6 @@ import org.springframework.util.Assert;
 
 import de.extra.client.core.builder.IMessageBuilderLocator;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
-import de.extra.client.core.builder.IXmlRootElementBuilder;
 import de.extra.client.core.builder.impl.plugins.CompositePluginsBuilder;
 import de.extra.client.core.util.IExtraValidator;
 import de.extrastandard.api.model.content.IInputDataContainer;
@@ -86,17 +85,6 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	private IExtraValidator validator;
 
 	/**
-	 * Hier werden alle XMLRootElementbuilder injected
-	 */
-	@Inject
-	private Map<String, IXmlRootElementBuilder> rootElementsBuilderMap;
-
-	/**
-	 * In der InitMethode wird die Typ Map aufgebaut
-	 */
-	private final Map<String, IXmlRootElementBuilder> xmlTypesToRootElementsBuilderAssignmentMap = new HashMap<String, IXmlRootElementBuilder>();
-
-	/**
 	 * Hier werden alle bekannten IXmlComplexTypeBuilder injected
 	 */
 	@Inject
@@ -126,8 +114,6 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 		configProperties.putAll(configUserProperties);
 
 		processXmlComplexTypeBuilder();
-
-		processXmlRootElementBuilder();
 
 	}
 
@@ -160,35 +146,6 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 		validator.validate(complexTypeBuilder);
 
 		return complexTypeBuilder;
-	}
-
-	/**
-	 * Liefert ein MessageBuilder abhängig von dem ParentElement und Type von
-	 * dem childElement
-	 * 
-	 * @param elementType
-	 * @return
-	 */
-	@Override
-	public IXmlRootElementBuilder getRootXmlBuilder(final String elementType) {
-		final IXmlRootElementBuilder rootElementBuilder = xmlTypesToRootElementsBuilderAssignmentMap
-				.get(elementType);
-		return rootElementBuilder;
-	}
-
-	/**
-	 * Untersucht alle Implementierungen der XMLRootBuilder und ordnet
-	 * implementierungen zu den xmlTypen
-	 */
-	private void processXmlRootElementBuilder() {
-		final Collection<IXmlRootElementBuilder> rootElementsBuilderEtrySet = rootElementsBuilderMap
-				.values();
-		for (final IXmlRootElementBuilder rootElementBuilder : rootElementsBuilderEtrySet) {
-			final String rootElementBuilderXmlType = rootElementBuilder
-					.getXmlType();
-			xmlTypesToRootElementsBuilderAssignmentMap.put(
-					rootElementBuilderXmlType, rootElementBuilder);
-		}
 	}
 
 	/**

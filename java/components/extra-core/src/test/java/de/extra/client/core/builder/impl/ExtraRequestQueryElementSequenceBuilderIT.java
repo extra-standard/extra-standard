@@ -66,7 +66,7 @@ public class ExtraRequestQueryElementSequenceBuilderIT {
 		final IDbQueryInputDataContainer senderData = createTestDummyDBQueryInputData();
 		final IExtraProfileConfiguration config = createConfigFileBeanForElementSequenseData();
 		final RootElementType elementType = extraRequestBuilder
-				.buildXmlMessage(senderData, config);
+				.buildExtraRequestMessage(senderData, config);
 		assertNotNull(elementType);
 		final String messageAsString = extraRequestBuilderITBasic
 				.getResultAsString(elementType);

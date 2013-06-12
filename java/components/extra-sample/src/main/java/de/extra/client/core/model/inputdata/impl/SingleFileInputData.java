@@ -25,6 +25,9 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -196,6 +199,11 @@ public class SingleFileInputData extends Implementor implements
 	@Override
 	public String getInputDataType() {
 		return INPUT_DATA_TYPE;
+	}
+
+	@Override
+	public DataSource getInputDataAsDataSource() {
+		return new FileDataSource(this.inputDataFile);
 	}
 
 }

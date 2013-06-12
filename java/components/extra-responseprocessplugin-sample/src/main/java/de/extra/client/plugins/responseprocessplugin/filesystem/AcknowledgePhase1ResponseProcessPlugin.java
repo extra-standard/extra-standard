@@ -18,9 +18,6 @@
  */
 package de.extra.client.plugins.responseprocessplugin.filesystem;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -95,12 +92,9 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 	 * .extrastandard.namespace.response.XMLTransport)
 	 */
 	@Override
-	public IResponseData processResponse(final InputStream responseAsStream) {
+	public IResponseData processResponse(final ResponseTransport extraResponse) {
 		final IResponseData responseData = new ResponseData();
 		try {
-
-			final ResponseTransport extraResponse = extraUnmarschaller
-					.unmarshal(responseAsStream, ResponseTransport.class);
 
 			// Ausgabe der Response im log
 			ExtraMessageReturnDataExtractor.printResult(marshaller,
@@ -157,8 +151,6 @@ public class AcknowledgePhase1ResponseProcessPlugin implements
 		} catch (final XmlMappingException xmlMappingException) {
 			throw new ExtraResponseProcessPluginRuntimeException(
 					xmlMappingException);
-		} catch (final IOException ioException) {
-			throw new ExtraResponseProcessPluginRuntimeException(ioException);
 		}
 		return responseData;
 	}

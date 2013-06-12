@@ -18,15 +18,9 @@
  */
 package de.extra.client.core;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +31,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.oxm.XmlMappingException;
 
 import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
-import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 import de.extra.client.core.builder.IExtraRequestBuilder;
 import de.extra.client.core.locator.IPluginsLocatorManager;
 import de.extra.client.core.observer.OpLogger;
@@ -235,34 +230,26 @@ public class ClientCore implements ApplicationContextAware {
 			final IExtraProfileConfiguration configFile,
 			final IExecution execution) {
 		try {
-			final RootElementType request = extraMessageBuilder
-					.buildXmlMessage(inputDataContainer, configFile);
+			final RequestTransport requestTransport = extraMessageBuilder
+					.buildExtraRequestMessage(inputDataContainer, configFile);
 			execution.updateProgress(PersistentStatus.ENVELOPED);
 
-			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			final StreamResult streamResult = new StreamResult(outputStream);
-			marshaller.marshal(request, streamResult, outgoingXmlValidation);
-
-			operation_logger.info("eXTra.-Client Request verschickt");
 			message_request_logger.info("eXTra-Client Request verschickt:");
 			if (message_request_logger.isDebugEnabled()) {
-				message_request_logger.debug(outputStream.toString());				
+				// message_request_logger.debug(outputStream.toString());
 			}
 
-			final InputStream responseAsStream = outputPlugin
-					.outputData(new ByteArrayInputStream(outputStream
-							.toByteArray()));
+			final ResponseTransport responseTransport = outputPlugin
+					.outputData(requestTransport);
 			execution.updateProgress(PersistentStatus.TRANSMITTED);
-			// TODO MW
+			operation_logger.info("eXTra.-Client Request verschickt");
 			final IResponseData responseData = responsePlugin
-					.processResponse(responseAsStream);
+					.processResponse(responseTransport);
 
 			return responseData;
 
 		} catch (final XmlMappingException xmlMappingException) {
 			throw new ExtraCoreRuntimeException(xmlMappingException);
-		} catch (final IOException ioException) {
-			throw new ExtraCoreRuntimeException(ioException);
 		}
 
 	}

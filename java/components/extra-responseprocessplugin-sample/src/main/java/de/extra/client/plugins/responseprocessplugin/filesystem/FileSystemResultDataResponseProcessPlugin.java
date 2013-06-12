@@ -20,14 +20,12 @@ package de.extra.client.plugins.responseprocessplugin.filesystem;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import javax.activation.DataHandler;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -41,6 +39,7 @@ import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseMessage;
 import de.drv.dsrv.extrastandard.namespace.response.ResponsePackage;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportHeader;
 import de.extra.client.core.annotation.PluginConfigType;
@@ -112,15 +111,9 @@ public class FileSystemResultDataResponseProcessPlugin implements
 	 * .extrastandard.namespace.response.XMLTransport)
 	 */
 	@Override
-	public IResponseData processResponse(final InputStream responseAsStream) {
+	public IResponseData processResponse(final ResponseTransport extraResponse) {
 		final IResponseData responseData = new ResponseData();
 		try {
-
-			final de.drv.dsrv.extrastandard.namespace.response.ResponseTransport extraResponse = extraUnmarschaller
-					.unmarshal(
-							responseAsStream,
-							de.drv.dsrv.extrastandard.namespace.response.ResponseTransport.class);
-
 			// Ausgabe der Response im log
 			ExtraMessageReturnDataExtractor.printResult(marshaller,
 					extraResponse);
@@ -150,13 +143,8 @@ public class FileSystemResultDataResponseProcessPlugin implements
 			final byte[] responseBody = null;
 			IOUtils.readFully(transportBodyDataHandler.getInputStream(),
 					responseBody);
-			// TODO Valiedierung
-			// final byte[] responseBody = extraResponse.getTransportBody()
-			// .getData().getBase64CharSequence().getValue();
 
-			final byte[] decodedData = Base64.decodeBase64(responseBody);
-
-			saveBodyToFilesystem(responseId, decodedData);
+			saveBodyToFilesystem(responseId, responseBody);
 
 			final ReportType report = responseDetails.getReport();
 			final SingleReportData reportData = returnCodeExtractor

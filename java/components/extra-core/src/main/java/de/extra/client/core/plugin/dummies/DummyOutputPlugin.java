@@ -18,16 +18,10 @@
  */
 package de.extra.client.core.plugin.dummies;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.GregorianCalendar;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +37,7 @@ import de.drv.dsrv.extrastandard.namespace.components.RequestDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.ResponseDetailsType;
 import de.drv.dsrv.extrastandard.namespace.components.SenderType;
 import de.drv.dsrv.extrastandard.namespace.components.TextType;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportHeader;
@@ -80,29 +75,13 @@ public class DummyOutputPlugin implements IOutputPlugin {
 	private DummyOutputPluginUtil dummyOutputPluginUtil;
 
 	@Override
-	public InputStream outputData(final InputStream request) {
-		InputStream responseAsinputStream = null;
-		try {
-			LOG.info("request={}", request);
-			final ResponseTransport response = createExtraResponse(request);
-
-			final Writer writer = new StringWriter();
-			final StreamResult streamResult = new StreamResult(writer);
-
-			marshaller.marshal(response, streamResult);
-
-			responseAsinputStream = new ByteArrayInputStream(writer.toString()
-					.getBytes());
-			return responseAsinputStream;
-		} catch (final IOException ioException) {
-			// Hier kommt eine ExtraTechnischeRuntimeException
-			LOG.error("Unerwarteter Fehler: ", ioException);
-		}
-		return responseAsinputStream;
-
+	public ResponseTransport outputData(final RequestTransport request) {
+		LOG.info("request={}", request);
+		final ResponseTransport response = createExtraResponse(request);
+		return response;
 	}
 
-	private ResponseTransport createExtraResponse(final InputStream request) {
+	private ResponseTransport createExtraResponse(final RequestTransport request) {
 		final String requestId = dummyOutputPluginUtil
 				.extractRequestId(request);
 		final ResponseTransport response = new ResponseTransport();

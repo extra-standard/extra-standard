@@ -20,7 +20,7 @@ package de.extra.client.plugins.outputplugin.ws;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import java.io.IOException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -31,12 +31,17 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.oxm.XmlMappingException;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.client.SoapFaultClientException;
 import org.springframework.xml.transform.StringResult;
 
+import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 import de.extra.client.core.annotation.PluginConfigType;
 import de.extra.client.core.annotation.PluginConfiguration;
 import de.extra.client.core.annotation.PluginValue;
@@ -47,7 +52,8 @@ import de.extrastandard.api.plugin.IOutputPlugin;
 
 /**
  * @author Thorsten Vogel
- * @version $Id$
+ * @version $Id: WsOutputPlugin.java 1449 2013-01-11 10:45:54Z
+ *          potap.rentenservice@gmail.com $
  */
 @Named("wsOutputPlugin")
 @PluginConfiguration(pluginBeanName = "wsOutputPlugin", pluginType = PluginConfigType.OutputPlugins)
@@ -74,29 +80,58 @@ public class WsOutputPlugin implements IOutputPlugin {
 	@Named("extraUnmarschaller")
 	private IExtraUnmarschaller extraUnmarschaller;
 
+	@Inject
+	@Named("extraMarschaller")
+	private IExtraMarschaller marshaller;
+
+	@Value("${core.outgoing.validation}")
+	private boolean outgoingXmlValidation;
+
 	/**
 	 * @see de.extrastandard.api.plugin.IOutputPlugin#outputData(java.io.InputStream)
 	 */
 	@Override
-	public InputStream outputData(final InputStream requestAsStream) {
-		final ByteArrayOutputStream temp = new ByteArrayOutputStream();
-
-		logger.debug("sending request");
-		operation_logger.info("Webservice Aufruf von: {}", endpointUrl);
-		final StreamSource source = new StreamSource(requestAsStream);
-		final StreamResult result = new StreamResult(temp);
+	public ResponseTransport outputData(final RequestTransport requestTransport) {
+		// 1. RequestTransport as Stream umwandeln. Prüfen, ob es auch einfacher
+		// geht.
 		try {
+
+			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			final StreamResult streamResult = new StreamResult(outputStream);
+			marshaller.marshal(requestTransport, streamResult,
+					outgoingXmlValidation);
+			final ByteArrayInputStream requestAsStream = new ByteArrayInputStream(
+					outputStream.toByteArray());
+
+			logger.debug("sending request");
+			operation_logger.info("Webservice Aufruf von: {}", endpointUrl);
+
+			final ByteArrayOutputStream temp = new ByteArrayOutputStream();
+			final StreamSource source = new StreamSource(requestAsStream);
+			final StreamResult result = new StreamResult(temp);
 			webServiceTemplate.sendSourceAndReceiveToResult(endpointUrl,
 					source, result);
-		}
-		// Faengt eine vom Server gemeldete SoapFaultClientException ab
-		catch (final SoapFaultClientException soapFaultClientException) {
+			// ResponseTransport aus Stream erzeugen
+			final ResponseTransport extraResponse = extraUnmarschaller
+					.unmarshal(new ByteArrayInputStream(temp.toByteArray()),
+							ResponseTransport.class);
+			return extraResponse;
+		} catch (final SoapFaultClientException soapFaultClientException) {
+			// Faengt eine vom Server gemeldete SoapFaultClientException ab
 			operation_logger.error("Server meldet SOAP-Fehler: {}",
 					soapFaultClientException.getFaultStringOrReason());
 			final ExtraOutputPluginRuntimeException extraOutputPluginRuntimeException = extractSoapFaultClientException(soapFaultClientException);
 			throw (extraOutputPluginRuntimeException);
+		} catch (final XmlMappingException xmlMappingException) {
+			final ExtraOutputPluginRuntimeException extraOutputPluginRuntimeException = new ExtraOutputPluginRuntimeException(
+					xmlMappingException);
+			throw (extraOutputPluginRuntimeException);
+		} catch (final IOException ioException) {
+			final ExtraOutputPluginRuntimeException extraOutputPluginRuntimeException = new ExtraOutputPluginRuntimeException(
+					ioException);
+			throw (extraOutputPluginRuntimeException);
 		}
-		return new ByteArrayInputStream(temp.toByteArray());
+
 	}
 
 	private ExtraOutputPluginRuntimeException extractSoapFaultClientException(

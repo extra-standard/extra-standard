@@ -20,7 +20,6 @@ package de.extra.client.plugins.responseprocessplugin.filesystem;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import javax.activation.DataHandler;
@@ -29,7 +28,6 @@ import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.JAXBElement;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -54,6 +52,7 @@ import de.drv.dsrv.extrastandard.namespace.response.ResponseMessage;
 import de.drv.dsrv.extrastandard.namespace.response.ResponsePackage;
 import de.drv.dsrv.extrastandard.namespace.response.ResponsePackageBody;
 import de.drv.dsrv.extrastandard.namespace.response.ResponsePackageHeader;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportBody;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportHeader;
 import de.extra.client.core.annotation.PluginConfigType;
@@ -135,16 +134,9 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 	 *      .extrastandard.namespace.response.XMLTransport)
 	 */
 	@Override
-	public IResponseData processResponse(final InputStream responseAsStream) {
+	public IResponseData processResponse(final ResponseTransport extraResponse) {
 		final IResponseData responseData = new ResponseData();
 		try {
-
-			de.drv.dsrv.extrastandard.namespace.response.ResponseTransport extraResponse;
-
-			extraResponse = extraUnmarschaller
-					.unmarshal(
-							responseAsStream,
-							de.drv.dsrv.extrastandard.namespace.response.ResponseTransport.class);
 
 			// Ausgabe der Response im log
 			ExtraMessageReturnDataExtractor.printResult(marshaller,
@@ -217,8 +209,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 							.toByteArray(packageBodyDataHandler
 									.getInputStream());
 
-					final byte[] decodedpackageBodyData = Base64
-							.decodeBase64(packageBodyData);
+					// final byte[] decodedpackageBodyData = Base64
+					// .decodeBase64(packageBodyData);
 					final ResponsePackageHeader packageHeader = transportBodyPackage
 							.getPackageHeader();
 
@@ -230,7 +222,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 							.getPackagePlugIns());
 					final String savedFileName = saveBodyToFilesystem(
 							incomingFileName, packageHeaderResponseId,
-							decodedpackageBodyData);
+							packageBodyData);
 					final ISingleResponseData singlePackageResponseData = extractResponseDetail(
 							packageHeader, extraReturnCodeAnalyser,
 							savedFileName);

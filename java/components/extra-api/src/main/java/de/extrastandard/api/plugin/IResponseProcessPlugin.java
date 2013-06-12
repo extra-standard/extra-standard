@@ -18,8 +18,7 @@
  */
 package de.extrastandard.api.plugin;
 
-import java.io.InputStream;
-
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 import de.extrastandard.api.model.content.IResponseData;
 
 /**
@@ -37,6 +36,6 @@ public interface IResponseProcessPlugin {
 	 * @param extraResponse
 	 * @return
 	 */
-	IResponseData processResponse(InputStream responseAsStream);
+	IResponseData processResponse(ResponseTransport responseTransport);
 
 }

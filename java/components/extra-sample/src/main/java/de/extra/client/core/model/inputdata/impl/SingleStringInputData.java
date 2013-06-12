@@ -6,6 +6,10 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.activation.DataSource;
+
+import com.sun.istack.ByteArrayDataSource;
+
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 import de.extrastandard.api.model.content.ISingleContentInputData;
 
@@ -109,6 +113,13 @@ public class SingleStringInputData extends Implementor implements
 	@Override
 	public String getInputDataType() {
 		return INPUT_DATA_TYPE;
+	}
+
+	@Override
+	public DataSource getInputDataAsDataSource() {
+		final DataSource source = new ByteArrayDataSource(
+				this.getInputDataAsByteArray(), "application/octet-stream");
+		return source;
 	}
 
 }

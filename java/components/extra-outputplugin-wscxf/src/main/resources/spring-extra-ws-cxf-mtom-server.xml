@@ -13,7 +13,7 @@
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
 	<jaxws:endpoint
-		id="extraMTOMService" address="${webservice.endpoint.url}"
+		id="extraMTOMService" address="${plugins.outputplugin.wsOutputPlugin.endpoint.url}"
 		implementor="de.extra_standard.namespace.webservice.ExtraServiceImpl">
 	    <jaxws:properties>
 	      	<entry key="mtom-enabled" value="true"/>
