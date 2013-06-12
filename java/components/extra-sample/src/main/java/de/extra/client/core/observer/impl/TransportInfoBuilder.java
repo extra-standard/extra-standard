@@ -31,7 +31,8 @@ import de.extrastandard.api.observer.ITransportInfo;
 
 /**
  * @author Leonid Potap
- * @version $Id$
+ * @version $Id: TransportInfoBuilder.java 1605 2013-06-12 11:56:59Z
+ *          potap.rentenservice@gmail.com $
  */
 @Named("transportInfoBuilder")
 public class TransportInfoBuilder {
@@ -58,8 +59,9 @@ public class TransportInfoBuilder {
 		transportInfo.setHeaderId(requestID.getValue());
 		// TODO convert into Calender
 		// this.time = requestHeader.getRequestDetails().getTimeStamp();
-		transportInfo.setProcedure(requestDetails.getProcedure());
 
+		transportInfo.setProcedure(requestDetails.getProcedure());
+		transportInfo.setTime(requestDetails.getTimeStamp());
 		final ApplicationType applicationType = requestDetails.getApplication();
 		if (applicationType != null) {
 			transportInfo.setApplication(applicationType.getManufacturer());
@@ -92,6 +94,7 @@ public class TransportInfoBuilder {
 		transportInfo.setHeaderId(requestID.getValue());
 		// TODO convert into Calender
 		// this.time = requestHeader.getRequestDetails().getTimeStamp();
+		transportInfo.setTime(requestDetails.getTimeStamp());
 		transportInfo.setProcedure(requestDetails.getProcedure());
 
 		final ApplicationType applicationType = requestDetails.getApplication();
