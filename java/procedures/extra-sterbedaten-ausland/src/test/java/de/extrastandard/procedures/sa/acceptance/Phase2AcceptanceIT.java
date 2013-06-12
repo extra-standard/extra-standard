@@ -49,8 +49,6 @@ import de.extrastandard.persistence.repository.ExecutionRepository;
  * <pre>
  * Acceptance Test für die Fachverfahren Sterbedaten Phase 2.
  * Test setzt eine Oracle Datenbankschema vorraus. 
- * Test setzt eine valide und laufende SOAP UI Mock vorraus (siehe src/main/soapui).
- * TODO aus Acceptance Test SoapUI starten 
  * Das eXTra Schema wird vor jedem Test neu angelegt und mit der Testdaten initial gefüllt.
  * </pre>
  * 
