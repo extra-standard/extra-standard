@@ -25,6 +25,7 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
@@ -59,9 +60,7 @@ public class TransportBodyFileInputBase64CharSequenceBuilder extends
 				.getInputData();
 		// Es kann nicht in RequestTransport mehrere Datensätze übertragen
 		// werden!!
-		// (21.11.12) warum nicht?, auskommentiert:
-		// Assert.isTrue(inputDataList.size() == 1,
-		// "Unexpected InputData size.");
+		Assert.isTrue(inputDataList.size() == 1, "Unexpected InputData size.");
 		final ISingleContentInputData singleInputData = inputDataList.get(0);
 
 		final DataHandler dataHandler = new DataHandler(
