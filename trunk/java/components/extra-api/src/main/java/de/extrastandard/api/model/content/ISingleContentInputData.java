@@ -18,7 +18,6 @@
  */
 package de.extrastandard.api.model.content;
 
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -32,11 +31,6 @@ public interface ISingleContentInputData extends ISingleInputData {
 	 * @return
 	 */
 	List<IInputDataPluginDescription> getPlugins();
-
-	/**
-	 * @return inputData as Stream
-	 */
-	InputStream getInputDataAsStream();
 
 	/**
 	 * Default Encoding UTF-8

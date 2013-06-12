@@ -141,12 +141,10 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 							.getTransportBody().getData()
 							.getBase64CharSequence().getValue();
 					final byte[] responseBody = null;
-					// TODO ReadFully ändern
+					// TODO ReadFully ändern. Wie Kann die Inputdatei besser
+					// übertragen werden
 					IOUtils.readFully(dataHandler.getInputStream(),
 							responseBody);
-					// final byte[] responseBody = extraResponse
-					// .getTransportBody().getData()
-					// .getBase64CharSequence().getValue();
 
 					if (saveBodyToFilesystem(responseId, responseBody)) {
 						LOG.debug("Speicheren des Body auf Filesystem erfolgreich");

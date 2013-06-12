@@ -103,16 +103,6 @@ public class SingleFileInputData extends Implementor implements
 	}
 
 	@Override
-	public InputStream getInputDataAsStream() {
-		try {
-			// TODO wie schliesse bzw. lasse ich den Stream schliessen
-			return FileUtils.openInputStream(inputDataFile);
-		} catch (final IOException ioException) {
-			throw new ExtraDataPluginRuntimeException(ioException);
-		}
-	}
-
-	@Override
 	public String getInputDataAsString() {
 		return getInputDataAsString(ENCODING_UTF_8);
 	}
