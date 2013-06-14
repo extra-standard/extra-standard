@@ -8,7 +8,7 @@ Es sind unterschiedlichen Implementierungen des Data-Plugins sowie unterscheidli
 
 Im folgenden Diagramm ist eine technische Zusammensetzung der Dataobjekten zusammengefasst.
 
-http://extra-standard.googlecode.com/svn/wiki/images/input-plugin-data.png
+http://extra-standard.googlecode.com/svn/wiki/images/input-data-plugin.png
 
 Hier sind 3 Arten von  Inputdaten abgebildet:
 
