@@ -57,9 +57,6 @@ public class TransportInfoBuilder {
 		final ClassifiableIDType requestID = requestDetails.getRequestID();
 		Assert.notNull(requestID, "RequestID is null");
 		transportInfo.setHeaderId(requestID.getValue());
-		// TODO convert into Calender
-		// this.time = requestHeader.getRequestDetails().getTimeStamp();
-
 		transportInfo.setProcedure(requestDetails.getProcedure());
 		transportInfo.setTime(requestDetails.getTimeStamp());
 		final ApplicationType applicationType = requestDetails.getApplication();
@@ -92,8 +89,6 @@ public class TransportInfoBuilder {
 		final ClassifiableIDType requestID = requestDetails.getRequestID();
 		Assert.notNull(requestID, "RequestID is null");
 		transportInfo.setHeaderId(requestID.getValue());
-		// TODO convert into Calender
-		// this.time = requestHeader.getRequestDetails().getTimeStamp();
 		transportInfo.setTime(requestDetails.getTimeStamp());
 		transportInfo.setProcedure(requestDetails.getProcedure());
 

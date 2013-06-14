@@ -26,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -38,7 +40,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
+import de.drv.dsrv.extrastandard.namespace.components.DataType;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransportBody;
 
 /**
  * @author Leonid Potap
@@ -52,6 +56,10 @@ public class ExtraServiceImpl implements Extra {
 	@Inject
 	@Value("${plugins.wsserver.outputVerzeichnis}")
 	private File outputDirectory;
+
+	@Inject
+	@Value("${plugins.wsserver.testDataFile}")
+	private File testDataFile;
 
 	/*
 	 * (non-Javadoc)
@@ -89,6 +97,17 @@ public class ExtraServiceImpl implements Extra {
 		} catch (final IOException e) {
 			logger.error("IOException in Server:", e);
 		}
-		return new ResponseTransport();
+		// TODO TestTransport erzeugen!!
+		final ResponseTransport responseTransport = new ResponseTransport();
+		final ResponseTransportBody responseTransportBody = new ResponseTransportBody();
+		final DataType dataType = new DataType();
+		final Base64CharSequenceType base64CharSequenceType = new Base64CharSequenceType();
+		final DataSource ds = new FileDataSource(testDataFile);
+		final DataHandler dataHandler = new DataHandler(ds);
+		base64CharSequenceType.setValue(dataHandler);
+		dataType.setBase64CharSequence(base64CharSequenceType);
+		responseTransportBody.setData(dataType);
+		responseTransport.setTransportBody(responseTransportBody);
+		return responseTransport;
 	}
 }

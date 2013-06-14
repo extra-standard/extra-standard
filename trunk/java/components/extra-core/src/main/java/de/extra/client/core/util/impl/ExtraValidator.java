@@ -68,7 +68,6 @@ public class ExtraValidator implements IExtraValidator {
 				fieldErrors.size() + " Konfigurationsfehler: ");
 		final String sep = ";";
 		for (final FieldError fieldError : fieldErrors) {
-			// TODO statt Klassennamen den Konfigurationskey ausgeben
 			stringBuilder.append(fieldError.getObjectName());
 			stringBuilder.append(".").append(fieldError.getField());
 			stringBuilder.append(" ").append(fieldError.getDefaultMessage());

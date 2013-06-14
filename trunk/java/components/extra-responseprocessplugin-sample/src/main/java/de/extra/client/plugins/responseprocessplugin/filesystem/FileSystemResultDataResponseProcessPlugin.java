@@ -19,6 +19,7 @@
 package de.extra.client.plugins.responseprocessplugin.filesystem;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,7 +27,6 @@ import javax.activation.DataHandler;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,18 +133,13 @@ public class FileSystemResultDataResponseProcessPlugin implements
 						ExceptionCode.UNEXPECTED_INTERNAL_EXCEPTION,
 						"Keine Daten vorhanden. Body Element ist leer");
 			}
-
-			final String responseId = responseDetails.getResponseID()
-					.getValue();
 			final DataHandler transportBodyDataHandler = extraResponse
 					.getTransportBody().getData().getBase64CharSequence()
 					.getValue();
-			// TODO ReadFully ändern
-			final byte[] responseBody = null;
-			IOUtils.readFully(transportBodyDataHandler.getInputStream(),
-					responseBody);
+			final String responseId = responseDetails.getResponseID()
+					.getValue();
 
-			saveBodyToFilesystem(responseId, responseBody);
+			saveBodyToFilesystem(responseId, transportBodyDataHandler);
 
 			final ReportType report = responseDetails.getReport();
 			final SingleReportData reportData = returnCodeExtractor
@@ -168,8 +163,6 @@ public class FileSystemResultDataResponseProcessPlugin implements
 		} catch (final XmlMappingException xmlMappingException) {
 			throw new ExtraResponseProcessPluginRuntimeException(
 					xmlMappingException);
-		} catch (final IOException ioException) {
-			throw new ExtraResponseProcessPluginRuntimeException(ioException);
 		}
 		return responseData;
 	}
@@ -206,17 +199,19 @@ public class FileSystemResultDataResponseProcessPlugin implements
 	 * @return
 	 */
 	private void saveBodyToFilesystem(final String responseId,
-			final byte[] responseBody) {
+			final DataHandler dataHandler) {
 		try {
 
 			final String dateiName = buildFilename(responseId);
 
 			final File responseFile = new File(eingangOrdner, dateiName);
 
-			FileUtils.writeByteArrayToFile(responseFile, responseBody);
+			final FileOutputStream fileOutputStream = new FileOutputStream(
+					responseFile);
+			IOUtils.copyLarge(dataHandler.getInputStream(), fileOutputStream);
 
 			transportObserver.responseDataForwarded(
-					responseFile.getAbsolutePath(), responseBody.length);
+					responseFile.getAbsolutePath(), responseFile.length());
 
 			LOG.info("Response gespeichert in File: '" + dateiName + "'");
 
