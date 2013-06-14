@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
+import de.extra.client.core.builder.IRequestTransportBuilder;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
@@ -32,19 +33,27 @@ import de.extrastandard.api.model.content.IInputDataContainer;
  * 
  */
 @Named("requestTransportBuilder")
-public class RequestTransportBuilder {
+public class RequestTransportBuilder implements IRequestTransportBuilder {
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(RequestTransportBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:Transport";
 
+	/* (non-Javadoc)
+	 * @see de.extra.client.core.builder.impl.request.IRequestTransportBuilder#buildRequestTransport(de.extrastandard.api.model.content.IInputDataContainer, de.extrastandard.api.model.content.IExtraProfileConfiguration)
+	 */
+	@Override
 	public RequestTransport buildRequestTransport(
 			final IInputDataContainer senderData,
 			final IExtraProfileConfiguration config) {
 		return buildRequestTransport(config);
 	}
 
+	/* (non-Javadoc)
+	 * @see de.extra.client.core.builder.impl.request.IRequestTransportBuilder#buildRequestTransport(de.extrastandard.api.model.content.IExtraProfileConfiguration)
+	 */
+	@Override
 	public RequestTransport buildRequestTransport(
 			final IExtraProfileConfiguration config) {
 		final RequestTransport requestTransport = new RequestTransport();
@@ -58,6 +67,10 @@ public class RequestTransportBuilder {
 		return requestTransport;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.extra.client.core.builder.impl.request.IRequestTransportBuilder#getXmlType()
+	 */
+	@Override
 	public String getXmlType() {
 		return BUILDER_XML_MESSAGE_TYPE;
 	}

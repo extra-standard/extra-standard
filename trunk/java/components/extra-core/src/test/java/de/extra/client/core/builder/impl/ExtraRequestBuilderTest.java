@@ -32,10 +32,9 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import de.drv.dsrv.extrastandard.namespace.components.RootElementType;
+import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
+import de.extra.client.core.builder.IRequestTransportBuilder;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extra.client.core.builder.impl.components.TransportBodyDataBuilder;
 import de.extra.client.core.builder.impl.components.TransportBodyFileInputBase64CharSequenceBuilder;
@@ -65,8 +64,8 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 @RunWith(MockitoJUnitRunner.class)
 public class ExtraRequestBuilderTest {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(ExtraRequestBuilderTest.class);
+	// private static final Logger logger = LoggerFactory
+	// .getLogger(ExtraRequestBuilderTest.class);
 
 	@InjectMocks
 	private ExtraRequestBuilder extraRequestBuilder;
@@ -82,7 +81,7 @@ public class ExtraRequestBuilderTest {
 	@Before
 	public void setUp() throws Exception {
 		// Builder Anmelden in dem MessageBuilderLocator
-		final RequestTransportBuilder requestTransportBuilder = new RequestTransportBuilder();
+		final IRequestTransportBuilder requestTransportBuilder = new RequestTransportBuilder();
 		final String rootXmlType = requestTransportBuilder.getXmlType();
 		requiredXmlType = rootXmlType;
 
@@ -141,7 +140,7 @@ public class ExtraRequestBuilderTest {
 		final IInputDataContainer senderData = createTestDummyDBQueryInputData();
 		senderData.setRequestId("requestId");
 		final IExtraProfileConfiguration config = createSimpleConfigFileBean();
-		final RootElementType elementType = extraRequestBuilder
+		final RequestTransport elementType = extraRequestBuilder
 				.buildExtraRequestMessage(senderData, config);
 		assertNotNull(elementType);
 	}

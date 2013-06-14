@@ -35,8 +35,8 @@ import de.drv.dsrv.extrastandard.namespace.components.AnyPlugInContainerType;
 import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
 import de.extra.client.core.builder.IExtraRequestBuilder;
 import de.extra.client.core.builder.IMessageBuilderLocator;
+import de.extra.client.core.builder.IRequestTransportBuilder;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
-import de.extra.client.core.builder.impl.request.RequestTransportBuilder;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 
@@ -60,7 +60,7 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 
 	@Inject
 	@Named("requestTransportBuilder")
-	RequestTransportBuilder requestTransportBuilder;
+	IRequestTransportBuilder requestTransportBuilder;
 
 	@Override
 	public RequestTransport buildExtraRequestMessage(
