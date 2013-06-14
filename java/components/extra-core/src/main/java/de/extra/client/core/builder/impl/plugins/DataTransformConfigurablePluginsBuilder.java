@@ -50,9 +50,9 @@ public class DataTransformConfigurablePluginsBuilder extends
 	public Object buildXmlFragment(final IInputDataContainer senderData,
 			final IExtraProfileConfiguration config) {
 		// Transportplugins erstellen
-		// TODO Als erste Lösung Plugins über Konfiguration auswerden.
+		// Als erste Lösung Plugins über Konfiguration auswerden.
 		// Es besteht eien Möglichkeit Plugins über SenderDataBean auszuwerten
-		DataTransforms dataTransforms = new DataTransforms();
+		final DataTransforms dataTransforms = new DataTransforms();
 		dataTransforms.setVersion(this.getClass().getSimpleName());
 		LOG.debug("DataTransformsConfigurablePlugins created. ");
 		return dataTransforms;

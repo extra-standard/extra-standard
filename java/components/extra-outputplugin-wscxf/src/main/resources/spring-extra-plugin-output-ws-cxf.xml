@@ -21,6 +21,12 @@
 	<jaxws:client id="extraClientMTOMWS" serviceClass="de.extra_standard.namespace.webservice.Extra" address="${plugins.outputplugin.wsOutputPlugin.endpoint.url}">
 	  <jaxws:dataBinding>
 	      <bean class="org.apache.cxf.jaxb.JAXBDataBinding">
+			<property name="extraClass">
+				<list>
+					<value>de.drv.dsrv.extrastandard.namespace.messages.DataRequest</value>
+					<value>de.drv.dsrv.extrastandard.namespace.error.Error</value>
+				</list>
+			</property>
 	        <property name="namespaceMap" >
 	        	<map>
 					<entry>
@@ -69,6 +75,7 @@
 	    </jaxws:dataBinding>
 		<jaxws:properties>
 			<entry key="mtom-enabled" value="${plugins.outputplugin.wsOutputPlugin.emtom-enabled:false}" />
+			<entry key="schema-validation-enabled" value="${core.outgoing.validation}" />
 		</jaxws:properties>    
 	</jaxws:client>     
 	

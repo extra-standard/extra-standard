@@ -50,9 +50,9 @@ public class TransportPluginsBuilder extends XmlComplexTypeBuilderAbstr {
 	public Object buildXmlFragment(final IInputDataContainer senderData,
 			final IExtraProfileConfiguration config) {
 		// Transportplugins erstellen
-		// TODO Als erste Lösung Plugins über Konfiguration auswerden.
+		// Als erste Lösung Plugins über Konfiguration auswerden.
 		// Es besteht die Möglichkeit Plugins über SenderDataBean auszuwerten
-		AnyPlugInContainerType pluginContainer = new AnyPlugInContainerType();
+		final AnyPlugInContainerType pluginContainer = new AnyPlugInContainerType();
 		LOG.debug("TransportPlugins created. ");
 		return pluginContainer;
 

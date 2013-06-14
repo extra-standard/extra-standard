@@ -74,7 +74,6 @@ public class ExtraRequestBuilder implements IExtraRequestBuilder {
 				"Unexpected RootElement " + rootElementName + "expected: "
 						+ requestTransportBuilder.getXmlType());
 
-		// TODO Anpassung der Schnitstelle. IMessageBuilderLocator
 		final RequestTransport rootXmlFragment = requestTransportBuilder
 				.buildRequestTransport(config);
 

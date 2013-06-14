@@ -18,6 +18,8 @@
  */
 package de.extra.client.core.model;
 
+import org.apache.commons.lang.NotImplementedException;
+
 import de.drv.dsrv.extrastandard.namespace.plugins.AbstractTransformType;
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 
@@ -25,13 +27,13 @@ import de.extrastandard.api.model.content.IInputDataPluginDescription;
  * Helper erstellt aus Bean Objekt vom Typ AbstractPlugInType zum Einbau in den
  * Request
  */
-// TODO noch nicht implementiert da in Sofortmeldung bisher nicht verwendet
+// noch nicht implementiert da in Sofortmeldung bisher nicht verwendet
 public class SignaturePluginHelper extends TransformHelperBase {
 
 	@Override
 	public AbstractTransformType getTransformElement(
-			IInputDataPluginDescription pluginDatenBean) {
+			final IInputDataPluginDescription pluginDatenBean) {
 
-		return null;
+		throw new NotImplementedException();
 	}
 }

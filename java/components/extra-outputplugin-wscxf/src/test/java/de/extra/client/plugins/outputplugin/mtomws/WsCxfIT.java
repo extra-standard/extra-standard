@@ -20,10 +20,12 @@ package de.extra.client.plugins.outputplugin.mtomws;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.activation.DataHandler;
@@ -33,7 +35,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -46,6 +50,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
 import de.drv.dsrv.extrastandard.namespace.components.Base64CharSequenceType;
 import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
+import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 
 /**
  * @author evpqq5
@@ -71,6 +76,10 @@ public class WsCxfIT {
 	@Value("${plugins.dataplugin.fileDataPlugin.inputVerzeichnis}")
 	private File inputDirectory;
 
+	@Inject
+	@Value("${plugins.wsclient.outputVerzeichnis}")
+	private File outputDirectory;
+
 	/**
 	 * Test method for
 	 * {@link de.extra.client.plugins.outputplugin.ws.WsOutputPlugin#outputData(java.io.InputStream)}
@@ -85,8 +94,22 @@ public class WsCxfIT {
 					.outputData(requestTransport);
 			logger.info("Receive Response");
 			printResponse(responseTransport);
+			saveAttachment(responseTransport);
 		}
 
+	}
+
+	private void saveAttachment(final ResponseTransport responseTransport)
+			throws IOException {
+		final DataHandler dataHandler = responseTransport.getTransportBody()
+				.getData().getBase64CharSequence().getValue();
+		final File receivedFile = new File(outputDirectory, "tempClientInput"
+				+ DateFormatUtils.ISO_DATE_FORMAT.format(new Date()) + ".txt");
+
+		final FileOutputStream fileOutputStream = new FileOutputStream(
+				receivedFile);
+		IOUtils.copyLarge(dataHandler.getInputStream(), fileOutputStream);
+		logger.info("Attachment saved into " + receivedFile.getAbsolutePath());
 	}
 
 	private void printResponse(

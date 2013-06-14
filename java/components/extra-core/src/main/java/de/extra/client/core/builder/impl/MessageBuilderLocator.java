@@ -128,8 +128,8 @@ public class MessageBuilderLocator implements IMessageBuilderLocator {
 	@Override
 	public IXmlComplexTypeBuilder getXmlComplexTypeBuilder(
 			final String elementType, final IInputDataContainer senderData) {
-		// TODO Auswahl der Builder auch über Context (SenderDataBean)
-		// vorgenommen werden. Konzept erstellen
+		// Auswahl der Builder kann auch über Context (SenderDataBean)
+		// vorgenommen werden. Bei Bedarf wird der Konzept umgesetzt
 		IXmlComplexTypeBuilder complexTypeBuilder = xmlDefaultTypesToComplexTypeBuilderAssignmentMap
 				.get(elementType);
 		if (complexTypeBuilder == null) {

@@ -19,6 +19,7 @@
 package de.extra.client.plugins.responseprocessplugin.filesystem;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -139,8 +140,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 		try {
 
 			// Ausgabe der Response im log
-			ExtraMessageReturnDataExtractor.printResult(marshaller,
-					extraResponse);
+			// ExtraMessageReturnDataExtractor.printResult(marshaller,
+			// extraResponse);
 
 			final ResponseTransportHeader transportHeader = extraResponse
 					.getTransportHeader();
@@ -173,7 +174,6 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 			final String returnCode = reportData.getReturnCode();
 			final boolean returnCodeSuccessful = extraReturnCodeAnalyser
 					.isReturnCodeSuccessful(returnCode);
-			// TODO Fehler?!
 			if (returnCodeSuccessful == false) {
 				// Falls ein Fehler im Header angezeigt wird, wird der Body (=
 				// Einzelergebnisse)
@@ -205,9 +205,6 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 							"Base64CharSequenceType.data is null");
 					final DataHandler packageBodyDataHandler = base64CharSequence
 							.getValue();
-					final byte[] packageBodyData = IOUtils
-							.toByteArray(packageBodyDataHandler
-									.getInputStream());
 
 					// final byte[] decodedpackageBodyData = Base64
 					// .decodeBase64(packageBodyData);
@@ -222,7 +219,7 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 							.getPackagePlugIns());
 					final String savedFileName = saveBodyToFilesystem(
 							incomingFileName, packageHeaderResponseId,
-							packageBodyData);
+							packageBodyDataHandler);
 					final ISingleResponseData singlePackageResponseData = extractResponseDetail(
 							packageHeader, extraReturnCodeAnalyser,
 							savedFileName);
@@ -235,8 +232,6 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 		} catch (final XmlMappingException xmlMappingException) {
 			throw new ExtraResponseProcessPluginRuntimeException(
 					xmlMappingException);
-		} catch (final IOException ioException) {
-			throw new ExtraResponseProcessPluginRuntimeException(ioException);
 		}
 
 	}
@@ -363,17 +358,34 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 	 * @return fileName
 	 */
 	private String saveBodyToFilesystem(final String incomingFileName,
-			final String responseId, final byte[] responseBody) {
+			final String responseId, final DataHandler packageBodyDataHandler) {
 		try {
 
 			final String dateiName = buildFilename(incomingFileName, responseId);
 
 			final File responseFile = new File(eingangOrdner, dateiName);
 
-			FileUtils.writeByteArrayToFile(responseFile, responseBody);
+			final FileOutputStream fileOutputStream = new FileOutputStream(
+					responseFile);
+			final String dataHandlerName = packageBodyDataHandler.getName();
+			logger.info("Receiving File : " + dataHandlerName);
+
+			final List<String> readLines = IOUtils
+					.readLines(packageBodyDataHandler.getInputStream());
+
+			IOUtils.copy(packageBodyDataHandler.getInputStream(),
+					fileOutputStream);
+
+			IOUtils.closeQuietly(fileOutputStream);
+
+			logger.info("Input file is stored under "
+					+ responseFile.getAbsolutePath());
+			logger.info("ChecksumCRC32 "
+					+ FileUtils.checksumCRC32(responseFile));
+			logger.info("Filesize: " + FileUtils.sizeOf(responseFile));
 
 			transportObserver.responseDataForwarded(
-					responseFile.getAbsolutePath(), responseBody.length);
+					responseFile.getAbsolutePath(), responseFile.length());
 
 			logger.info("Response gespeichert in File: '" + dateiName + "'");
 

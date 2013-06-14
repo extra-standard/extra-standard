@@ -8,10 +8,6 @@
     http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
     http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd">
 
-	<import resource="classpath:META-INF/cxf/cxf.xml"/>
-	 
-	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
-
 	<context:component-scan base-package="de.extra.client.plugins.outputplugin.ws" />
 
 	<bean id="webServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">

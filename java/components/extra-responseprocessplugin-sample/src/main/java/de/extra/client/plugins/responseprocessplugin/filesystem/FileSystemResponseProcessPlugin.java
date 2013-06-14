@@ -19,6 +19,7 @@
 package de.extra.client.plugins.responseprocessplugin.filesystem;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -28,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -35,6 +37,8 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.XmlMappingException;
+
+import com.sun.istack.ByteArrayDataSource;
 
 import de.drv.dsrv.extra.marshaller.IExtraMarschaller;
 import de.drv.dsrv.extra.marshaller.IExtraUnmarschaller;
@@ -140,13 +144,8 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 					final DataHandler dataHandler = extraResponse
 							.getTransportBody().getData()
 							.getBase64CharSequence().getValue();
-					final byte[] responseBody = null;
-					// TODO ReadFully ändern. Wie Kann die Inputdatei besser
-					// übertragen werden
-					IOUtils.readFully(dataHandler.getInputStream(),
-							responseBody);
 
-					if (saveBodyToFilesystem(responseId, responseBody)) {
+					if (saveBodyToFilesystem(responseId, dataHandler)) {
 						LOG.debug("Speicheren des Body auf Filesystem erfolgreich");
 					}
 
@@ -179,30 +178,27 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 								.getResponseID().getValue();
 						DataType data = new DataType();
 						data = extraPackage.getPackageBody().getData();
-						byte[] packageBody = null;
-						final DataHandler dataHandler = extraResponse
-								.getTransportBody().getData()
-								.getBase64CharSequence().getValue();
-						final byte[] responseBody = null;
+						DataHandler packageBodyDataHandler = null;
 
 						if (data.getBase64CharSequence() != null) {
 
-							final DataHandler packageBodyDataHandler = data
+							packageBodyDataHandler = data
 									.getBase64CharSequence().getValue();
-							// TODO ReadFully ändern
-							IOUtils.readFully(
-									packageBodyDataHandler.getInputStream(),
-									packageBody);
 
 						} else {
 							if (data.getCharSequence() != null) {
-								packageBody = data.getCharSequence().getValue()
+								final byte[] packageBody = data
+										.getCharSequence().getValue()
 										.getBytes();
+								final DataSource source = new ByteArrayDataSource(
+										packageBody, "application/octet-stream");
+								packageBodyDataHandler = new DataHandler(source);
 							}
 						}
 
-						if (packageBody != null) {
-							if (saveBodyToFilesystem(responseId, packageBody)) {
+						if (packageBodyDataHandler != null) {
+							if (saveBodyToFilesystem(responseId,
+									packageBodyDataHandler)) {
 								if (LOG.isDebugEnabled()) {
 									LOG.debug("Speichern für RespId "
 											+ responseId + " erfolgreich");
@@ -267,7 +263,7 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 	}
 
 	private boolean saveBodyToFilesystem(final String responseId,
-			final byte[] responseBody) {
+			final DataHandler dataHandler) throws IOException {
 		final boolean erfolgreichGespeichert = false;
 
 		final StringBuffer dateiName = new StringBuffer();
@@ -278,27 +274,13 @@ public class FileSystemResponseProcessPlugin implements IResponseProcessPlugin {
 
 		final File responseFile = new File(eingangOrdner, dateiName.toString());
 
-		FileWriter fw = null;
+		final FileOutputStream fileOutputStream = new FileOutputStream(
+				responseFile);
 
-		try {
-			fw = new FileWriter(responseFile);
+		IOUtils.copyLarge(dataHandler.getInputStream(), fileOutputStream);
 
-			fw.write(new String(responseBody));
-			transportObserver.responseDataForwarded(
-					responseFile.getAbsolutePath(), responseBody.length);
-
-		} catch (final IOException e) {
-			LOG.error("Fehler beim schreiben der Antwort", e);
-		} finally {
-			if (fw != null) {
-				try {
-					fw.close();
-				} catch (final IOException e) {
-					LOG.warn("Exception beim Schliessen von dem FileWriter {}",
-							e.getLocalizedMessage());
-				}
-			}
-		}
+		transportObserver.responseDataForwarded(responseFile.getAbsolutePath(),
+				responseFile.length());
 
 		if (LOG.isTraceEnabled()) {
 			LOG.trace("Dateiname: '" + dateiName + "'");
