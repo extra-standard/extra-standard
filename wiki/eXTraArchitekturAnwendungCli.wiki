@@ -26,7 +26,7 @@ http://extra-standard.googlecode.com/svn/wiki/images/extra-cli-app-architecture.
 
 Folgende Interfaces stehen als zentrale Schnittstellen in der eXTra-Verarbeitung zur Verfügung:
 
-http://extra-standard.googlecode.com/svn/wiki/images/extra-core-interfaces.png
+http://extra-standard.googlecode.com/svn/wiki/images/extra-plugin-interfaces.png
 
 In Core-Library (extra-core) der Klasse _!ClientCore_ in der Methode _buildRequest_ werden die einzelnen Aufrufe der Plugins gesteuert. Mit Hilfe des folgenden Sequenzdiagramms wird der Sachverhalt grafisch dargestellt: 
 
