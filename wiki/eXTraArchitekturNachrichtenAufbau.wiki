@@ -23,7 +23,7 @@ Die anwendungsspezifische Builder Konfiguration gibt an, wie die Inputdaten in e
 
 Die wesentlichen Interfaces eines !RequestBuilder sind auf dem Diagramm abgebildet. 
 
-http://extra-standard.googlecode.com/svn/wiki/images/extra-requestbuilder-interfaces.png
+http://extra-standard.googlecode.com/svn/wiki/images/extra-request-builder.png
 
 
 
