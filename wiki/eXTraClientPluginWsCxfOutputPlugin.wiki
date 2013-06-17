@@ -1,6 +1,6 @@
-#summary WsOutputPlugin - Kommunikation über Webservice
+#summary WsCxfOutputPlugin - Kommunikation über Webservice
 
-= !WsOutputPlugin - Kommunikation über Webservice =
+= !WsCxfOutputPlugin - Kommunikation über Webservice (CXF Framework)=
 *Art:* !OutputPlugin
 == Beschreibung ==
 
