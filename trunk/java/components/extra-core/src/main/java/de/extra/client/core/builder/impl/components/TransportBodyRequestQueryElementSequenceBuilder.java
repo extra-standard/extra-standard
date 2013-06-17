@@ -33,13 +33,13 @@ import de.drv.dsrv.extrastandard.namespace.messages.DataRequestQuery;
 import de.drv.dsrv.extrastandard.namespace.messages.Operand;
 import de.drv.dsrv.extrastandard.namespace.messages.OperandSet;
 import de.extra.client.core.builder.impl.XmlComplexTypeBuilderAbstr;
-import de.extrastandard.api.model.content.IDbQueryInputDataContainer;
 import de.extrastandard.api.model.content.ICriteriaQueryInputData;
 import de.extrastandard.api.model.content.ICriteriaQueryInputDataContainer;
+import de.extrastandard.api.model.content.IDbQueryInputData;
+import de.extrastandard.api.model.content.IDbQueryInputDataContainer;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.ISingleInputData;
-import de.extrastandard.api.model.content.IDbQueryInputData;
 
 /**
  * @author Leonid Potap
@@ -53,6 +53,8 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 			.getLogger(TransportBodyRequestQueryElementSequenceBuilder.class);
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:ElementSequence";
+
+	private static final String DATA_REQUEST_VERSION = "1.3";
 
 	@Override
 	public Object buildXmlFragment(final IInputDataContainer senderData,
@@ -110,6 +112,7 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 		// Befüllen des Control-Arguments
 		dataRequest.setQuery(query);
 		dataRequest.setControl(controlElement);
+		dataRequest.setVersion(DATA_REQUEST_VERSION);
 		return dataRequest;
 	}
 
@@ -121,55 +124,53 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 	 * @return
 	 */
 	private DataRequestArgument createDataRequestArgumentProcedure(
-			String procedureName) {
+			final String procedureName) {
 		final DataRequestArgument dataRequestArgument = new DataRequestArgument();
 		dataRequestArgument
 				.setProperty("http://www.extra-standard.de/property/Procedure");
 
-		Operand operand = new Operand();
+		final Operand operand = new Operand();
 		operand.setValue(procedureName);
 
 		final String operandAsString = "EQ";
-		QName qname = new QName("xs:string");
-		JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(new QName(
-				"http://www.extra-standard.de/namespace/message/1",
-				operandAsString), Operand.class, operand);
+		// final QName qname = new QName("xs:string");
+		final JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(
+				new QName("http://www.extra-standard.de/namespace/message/1",
+						operandAsString), Operand.class, operand);
 		jaxbOperand.setValue(operand);
 
 		dataRequestArgument
 				.setProperty("http://www.extra-standard.de/property/Procedure");
-		dataRequestArgument.setType(qname);
+		// dataRequestArgument.setType(qname);
 		dataRequestArgument.getContent().add(jaxbOperand);
 
 		return dataRequestArgument;
 	}
 
 	/**
-	 * Erzeugt ein DataRequestArgument für den übergebenen Subquery-Ausdruck. ('EQ
-	 * subquery')
+	 * Erzeugt ein DataRequestArgument für den übergebenen Subquery-Ausdruck.
+	 * ('EQ subquery')
 	 * 
 	 * @param subquery
 	 * @return
 	 */
 	private DataRequestArgument createDataRequestArgumentSubquery(
-			String subquery) {
+			final String subquery) {
 		final DataRequestArgument dataRequestArgument = new DataRequestArgument();
 		dataRequestArgument
 				.setProperty("http://www.extra-standard.de/property/DataType");
 
-		Operand operand = new Operand();
+		final Operand operand = new Operand();
 		operand.setValue(subquery);
 
 		final String operandAsString = "EQ";
-		QName qname = new QName("xs:string");
-		JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(new QName(
-				"http://www.extra-standard.de/namespace/message/1",
-				operandAsString), Operand.class, operand);
+		final JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(
+				new QName("http://www.extra-standard.de/namespace/message/1",
+						operandAsString), Operand.class, operand);
 		jaxbOperand.setValue(operand);
 
-		dataRequestArgument.setType(qname);
+		// dataRequestArgument.setType(dataRequestArgument.getType());
 		dataRequestArgument.getContent().add(jaxbOperand);
-
 		return dataRequestArgument;
 	}
 
@@ -181,27 +182,28 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 
 		final Control controlElement = new Control();
 		final DataRequestQuery query = new DataRequestQuery();
-		DataRequestArgument dataRequestArgument = new DataRequestArgument();
+		final DataRequestArgument dataRequestArgument = new DataRequestArgument();
 
 		String procedureName = null;
 		String subquery = null;
-		for (ISingleInputData singleInputData : dbQueryInputData.getContent()) {
+		for (final ISingleInputData singleInputData : dbQueryInputData
+				.getContent()) {
 			if (ICriteriaQueryInputData.class.isAssignableFrom(singleInputData
 					.getClass())) {
-				ICriteriaQueryInputData singleQueryInputData = ICriteriaQueryInputData.class
+				final ICriteriaQueryInputData singleQueryInputData = ICriteriaQueryInputData.class
 						.cast(singleInputData);
 
 				procedureName = singleQueryInputData.getProcedureName();
 				subquery = singleQueryInputData.getSubquery();
-				
-				Operand operand = new Operand();
+
+				final Operand operand = new Operand();
 				operand.setValue(String.valueOf(singleQueryInputData
 						.getArgument()));
 
 				final String operandAsString = singleQueryInputData
 						.getQueryArgumentType().getType();
-				QName qname = new QName("xs:string");
-				JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(
+				// final QName qname = new QName("xs:string");
+				final JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(
 						new QName(
 								"http://www.extra-standard.de/namespace/message/1",
 								operandAsString), Operand.class, operand);
@@ -209,7 +211,7 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 
 				dataRequestArgument
 						.setProperty("http://www.extra-standard.de/property/ResponseID");
-				dataRequestArgument.setType(qname);
+				// dataRequestArgument.setType(dataRequestArgument.getType());
 				dataRequestArgument.getContent().add(jaxbOperand);
 			}
 		}
@@ -220,13 +222,13 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 					createDataRequestArgumentProcedure(procedureName));
 		}
 		if (subquery != null && subquery.length() > 0) {
-			query.getArgument().add(
-					createDataRequestArgumentSubquery(subquery));			
+			query.getArgument()
+					.add(createDataRequestArgumentSubquery(subquery));
 		}
 
 		dataRequest.setQuery(query);
 		dataRequest.setControl(controlElement);
-
+		dataRequest.setVersion(DATA_REQUEST_VERSION);
 		return dataRequest;
 	}
 
