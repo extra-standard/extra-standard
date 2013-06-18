@@ -90,8 +90,6 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 		dataRequestArgument
 				.setProperty("http://www.extra-standard.de/property/ResponseID");
 		final OperandSet operandSet = new OperandSet();
-		final QName qnameStringType = new QName("xs:string");
-		dataRequestArgument.setType(qnameStringType);
 		dataRequestArgument
 				.setEvent("http://www.extra-standard.de/event/RequestData");
 		// Setzen des Tags
@@ -133,7 +131,6 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 		operand.setValue(procedureName);
 
 		final String operandAsString = "EQ";
-		// final QName qname = new QName("xs:string");
 		final JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(
 				new QName("http://www.extra-standard.de/namespace/message/1",
 						operandAsString), Operand.class, operand);
@@ -141,7 +138,6 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 
 		dataRequestArgument
 				.setProperty("http://www.extra-standard.de/property/Procedure");
-		// dataRequestArgument.setType(qname);
 		dataRequestArgument.getContent().add(jaxbOperand);
 
 		return dataRequestArgument;
@@ -169,7 +165,6 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 						operandAsString), Operand.class, operand);
 		jaxbOperand.setValue(operand);
 
-		// dataRequestArgument.setType(dataRequestArgument.getType());
 		dataRequestArgument.getContent().add(jaxbOperand);
 		return dataRequestArgument;
 	}
@@ -202,7 +197,6 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 
 				final String operandAsString = singleQueryInputData
 						.getQueryArgumentType().getType();
-				// final QName qname = new QName("xs:string");
 				final JAXBElement<Operand> jaxbOperand = new JAXBElement<Operand>(
 						new QName(
 								"http://www.extra-standard.de/namespace/message/1",
