@@ -54,7 +54,7 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 
 	private static final String BUILDER_XML_MESSAGE_TYPE = "xcpt:ElementSequence";
 
-	private static final String DATA_REQUEST_VERSION = "1.3";
+	private static final String DATA_REQUEST_VERSION = "1.2";
 
 	@Override
 	public Object buildXmlFragment(final IInputDataContainer senderData,
