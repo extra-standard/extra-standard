@@ -48,7 +48,7 @@ public class TransportBodyRequestConfirmationOfReceiptSequenceBuilder extends
 	 */
 	private static final String PROPERTY_NAME_RESPONSE_ID = "http://www.extra-standard.de/property/ResponseID";
 
-	private static final String VERSION_OF_CONFIRMATIONOFRECEIPT = "1.4";
+	private static final String VERSION_OF_CONFIRMATIONOFRECEIPT = "1.3";
 
 	private final static Logger LOG = LoggerFactory
 			.getLogger(TransportBodyRequestConfirmationOfReceiptSequenceBuilder.class);
