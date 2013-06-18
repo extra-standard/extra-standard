@@ -26,7 +26,7 @@
     <xreq:TransportBody>
         <xcpt:Data>
             <xcpt:ElementSequence>
-                <xmsg:dataRequest>
+                <xmsg:DataRequest>
                     <xmsg:Query>
                         <xmsg:Argument property="http://www.extra-standard.de/property/ResponseID" type="xs:string">
                             <xmsg:GT>10002</xmsg:GT>
@@ -39,7 +39,7 @@
                         </xmsg:Argument>
                     </xmsg:Query>
                     <xmsg:Control/>
-                </xmsg:dataRequest>
+                </xmsg:DataRequest>
             </xcpt:ElementSequence>
         </xcpt:Data>
     </xreq:TransportBody>
