@@ -40,6 +40,6 @@ plugins.outputplugin=dummyOutputPlugin
 plugins.outputplugin.wsOutputPlugin.endpoint.url=http://localhost:8088/mockExtraSterbedatenausPhase3
 
 # unterstützt nut vom dem wsCxfOutputPlugin. Default Value=false
-plugins.outputplugin.wsOutputPlugin.emtom-enabled=false
+plugins.outputplugin.wsCxfOutputPlugin.emtom-enabled=false
 # unterstützt nut vom dem wsCxfOutputPlugin. Default Value=false
 #plugins.outputplugin.wsCxfOutputPlugin.validation=true
