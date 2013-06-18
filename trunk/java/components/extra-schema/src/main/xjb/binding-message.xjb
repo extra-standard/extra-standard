@@ -23,7 +23,7 @@
 	<jxb:bindings schemaLocation="../resources/xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ConfirmationOfReceiptType']">
     	<jxb:class name="ConfirmationOfReceipt"/>
     	<annox:annotate>
-             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"/>
+             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="ConfirmationOfReceipt"/>
         </annox:annotate>    	
 	</jxb:bindings> 
 	
@@ -34,7 +34,7 @@
 	<jxb:bindings schemaLocation="../resources/xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='DataRequestType']">
     	<jxb:class name="DataRequest"/>
     	<annox:annotate>
-             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement"/>
+             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="DataRequest"/>
         </annox:annotate>
 	</jxb:bindings> 
 	
