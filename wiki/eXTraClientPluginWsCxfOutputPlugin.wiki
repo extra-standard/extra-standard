@@ -14,5 +14,7 @@ plugins.outputplugin=wsCxfOutputPlugin
 webservice.endpoint.url=http://localhost:8088/mockExtraSterbedatenausPhase2
 # default (kein Eintrag in der Konfiguration) false
 plugins.outputplugin.wsOutputPlugin.emtom-enabled=true
+# default (kein Eintrag in der Konfiguration) false
+plugins.outputplugin.wsCxfOutputPlugin.validation=true
 }}}
 Das Plugin versendet das eXTra-Anfragedokument an den eXTra-Server und nimmt das Ergebnisdokument entgegen. 
