@@ -18,9 +18,13 @@
  */
 package de.extra.client.core;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.xml.transform.stream.StreamResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -234,9 +238,13 @@ public class ClientCore implements ApplicationContextAware {
 					.buildExtraRequestMessage(inputDataContainer, configFile);
 			execution.updateProgress(PersistentStatus.ENVELOPED);
 
-			message_request_logger.info("eXTra-Client Request verschickt:");
-			if (message_request_logger.isDebugEnabled()) {
-				// message_request_logger.debug(outputStream.toString());
+			if (outgoingXmlValidation) {
+				final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+				final StreamResult streamResult = new StreamResult(outputStream);
+				marshaller.marshal(requestTransport, streamResult,
+						outgoingXmlValidation);
+				logger.info("OutgoingXml: {}", outputStream.toString());
+				message_request_logger.debug(outputStream.toString());
 			}
 
 			final ResponseTransport responseTransport = outputPlugin
@@ -250,6 +258,8 @@ public class ClientCore implements ApplicationContextAware {
 
 		} catch (final XmlMappingException xmlMappingException) {
 			throw new ExtraCoreRuntimeException(xmlMappingException);
+		} catch (final IOException ioException) {
+			throw new ExtraCoreRuntimeException(ioException);
 		}
 
 	}

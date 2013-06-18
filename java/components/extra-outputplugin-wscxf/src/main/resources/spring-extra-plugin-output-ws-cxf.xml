@@ -75,7 +75,7 @@
 	    </jaxws:dataBinding>
 		<jaxws:properties>
 			<entry key="mtom-enabled" value="${plugins.outputplugin.wsOutputPlugin.emtom-enabled:false}" />
-			<entry key="schema-validation-enabled" value="${core.outgoing.validation}" />
+			<entry key="schema-validation-enabled" value="${plugins.outputplugin.wsCxfOutputPlugin.validation:false}" />
 		</jaxws:properties>    
 	</jaxws:client>     
 	

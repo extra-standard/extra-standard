@@ -36,3 +36,9 @@ plugins.outputplugin=dummyQueryDataResponceOutputPlugin
 
 # Webservices (eXTra Server)
 plugins.outputplugin.wsOutputPlugin.endpoint.url=http://localhost:8088/mockExtraSterbedatenausPhase2
+
+
+# unterstützt nut vom dem wsCxfOutputPlugin. Default Value=false
+plugins.outputplugin.wsOutputPlugin.emtom-enabled=false
+# unterstützt nut vom dem wsCxfOutputPlugin. Default Value=false
+#plugins.outputplugin.wsCxfOutputPlugin.validation=true
