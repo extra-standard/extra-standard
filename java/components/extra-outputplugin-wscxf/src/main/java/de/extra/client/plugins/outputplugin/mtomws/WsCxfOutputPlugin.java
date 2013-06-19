@@ -18,12 +18,19 @@
  */
 package de.extra.client.plugins.outputplugin.mtomws;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.drv.dsrv.extrastandard.namespace.components.FlagCodeType;
+import de.drv.dsrv.extrastandard.namespace.components.FlagType;
+import de.drv.dsrv.extrastandard.namespace.components.ReportType;
+import de.drv.dsrv.extrastandard.namespace.components.TextType;
+import de.drv.dsrv.extrastandard.namespace.error.Error;
 import de.drv.dsrv.extrastandard.namespace.request.RequestTransport;
 import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 import de.extra_standard.namespace.webservice.Extra;
@@ -77,9 +84,29 @@ public class WsCxfOutputPlugin implements IOutputPlugin {
 	private ExtraOutputPluginRuntimeException extractSoapFaultClientException(
 			final ExtraFault extraFault) {
 
-		// TODO Message From ExtraFault extrachieren
+		final StringBuilder message = new StringBuilder();
+		final String extraFaultMessage = extraFault.getMessage();
+		message.append("ExtraFaultMessage: ").append(extraFaultMessage);
+		final Error faultInfo = extraFault.getFaultInfo();
+		final String reason = faultInfo.getReason();
+		message.append(" Reason: ").append(reason);
+		final ReportType report = faultInfo.getReport();
+		final String highestWeight = report.getHighestWeight();
+		message.append(" HighestWeight: ").append(highestWeight);
+		final List<FlagType> flagList = report.getFlag();
+		for (final FlagType flagType : flagList) {
+			final FlagCodeType code = flagType.getCode();
+			final TextType text = flagType.getText();
+			if (code != null) {
+				message.append(" FlagType.code: ").append(code.getValue());
+			}
+			if (text != null) {
+				message.append(" FlagType.text: ").append(text.getValue());
+			}
+
+		}
 		return new ExtraOutputPluginRuntimeException(
-				ExceptionCode.EXTRA_TRANSFER_EXCEPTION, extraFault.getMessage());
+				ExceptionCode.EXTRA_TRANSFER_EXCEPTION, message.toString());
 
 	}
 }
