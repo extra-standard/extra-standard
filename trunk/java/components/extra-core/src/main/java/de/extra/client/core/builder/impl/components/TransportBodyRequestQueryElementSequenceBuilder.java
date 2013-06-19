@@ -97,6 +97,7 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 		jaxbOperand.setValue(operandSet);
 		// Setzen der Property
 		dataRequestArgument.getContent().add(jaxbOperand);
+		dataRequestArgument.setType(dataRequestArgument.getType());
 		for (final IDbQueryInputData singleQueryInputData : dbQueryInputData
 				.getInputData()) {
 			final Operand operand = new Operand();
@@ -137,7 +138,7 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 		dataRequestArgument
 				.setProperty("http://www.extra-standard.de/property/Procedure");
 		dataRequestArgument.getContent().add(jaxbOperand);
-
+		dataRequestArgument.setType(dataRequestArgument.getType());
 		return dataRequestArgument;
 	}
 
@@ -164,6 +165,7 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 		jaxbOperand.setValue(operand);
 
 		dataRequestArgument.getContent().add(jaxbOperand);
+		dataRequestArgument.setType(dataRequestArgument.getType());
 		return dataRequestArgument;
 	}
 
@@ -204,6 +206,7 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 				dataRequestArgument
 						.setProperty("http://www.extra-standard.de/property/ResponseID");
 				dataRequestArgument.getContent().add(jaxbOperand);
+				dataRequestArgument.setType(dataRequestArgument.getType());
 			}
 		}
 
