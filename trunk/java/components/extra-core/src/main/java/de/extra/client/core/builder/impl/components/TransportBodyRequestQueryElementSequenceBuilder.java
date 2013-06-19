@@ -60,8 +60,6 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 	public Object buildXmlFragment(final IInputDataContainer senderData,
 			final IExtraProfileConfiguration config) {
 		LOG.debug("xcpt:ElementSequence aufbauen");
-		// TODO DataRequest anders aufbauen. Der sollte über die Nutzdaten zu
-		// ziehen sein.
 
 		// Unterscheidung des Operanden
 		final DataRequest dataRequest;
@@ -205,7 +203,6 @@ public class TransportBodyRequestQueryElementSequenceBuilder extends
 
 				dataRequestArgument
 						.setProperty("http://www.extra-standard.de/property/ResponseID");
-				// dataRequestArgument.setType(dataRequestArgument.getType());
 				dataRequestArgument.getContent().add(jaxbOperand);
 			}
 		}
