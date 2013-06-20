@@ -13,6 +13,17 @@ Das Datenbank-Schema läßt sich in die beiden Bereich _Stammdaten_ und _Ausfüh
  * Eine _PROCEDURE_PHASE_CONFIGURATION_ kann einen Nachfolger besitzen
 http://extra-standard.googlecode.com/svn/wiki/images/extra-betrieb-db-stamm.png
 
+=== Beispiel einer Konfiguration ===
+
+Konfiguration für die Procedure Sterbedatenabgleich sieht wie folgt aus:
+
+http://extra-standard.googlecode.com/svn/wiki/images/eXTra-konfiguration-sterbemeldungausland.jpg
+
+Damit wird festgehalten, dass die Procedure aus 3 Phase besteht. Die Phasen werden mit der Phase1  , Phase 2 und Phase 3 benannt.
+Die Phase3 folgt der Phase 2.
+
+
+
 == Ausführung ==
  * Eine _EXECUTION_ ist einer _PROCEDURE_ zugeordnet.
  * Jede _EXECUTION_ sind mehrere _COMMUNICATION_PROTOCOL_ Einträge zugeordnet
