@@ -19,7 +19,7 @@ Konfiguration für die Procedure Sterbedatenabgleich sieht wie folgt aus:
 
 http://extra-standard.googlecode.com/svn/wiki/images/eXTra-konfiguration-sterbemeldungausland.jpg
 
-Damit wird festgehalten, dass die Procedure aus 3 Phase besteht. Die Phasen werden mit der Phase1  , Phase 2 und Phase 3 benannt.
+Damit wird festgehalten, dass die Procedure aus 3 Phasen besteht. Die Phasen werden mit der Phase1  , Phase 2 und Phase 3 benannt.
 Die Phase3 folgt der Phase 2.
 
 
