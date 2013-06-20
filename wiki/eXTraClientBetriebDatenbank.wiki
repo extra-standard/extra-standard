@@ -28,8 +28,6 @@ Die Phase3 folgt der Phase 2.
  * Eine _EXECUTION_ ist einer _PROCEDURE_ zugeordnet.
  	** Eine Execution trägt Daten einer Programmausführung.
  * Jede _EXECUTION_ sind mehrere _COMMUNICATION_PROTOCOL_ Einträge zugeordnet
-    ** In Laufe einer Execution können mehrere Dateien zwischen Systemen ausgetauscht werden. 
-    Die Daten einer Austausch werden in der Tabelle COMMUNICATION_PROTOCOL festgehalten
-	Dazugehören !RequestId und !ResponseId, !ReturnCodes, Identifier sowie einen Hashcode bei der Dateien.
+    ** In Laufe einer Execution können mehrere Dateien zwischen Systemen ausgetauscht werden. Die Daten einer Austausch werden in der Tabelle COMMUNICATION_PROTOCOL festgehalten. Dazugehören !RequestId und !ResponseId, !ReturnCodes, Identifier sowie einen Hashcode bei der Dateien.
 
 http://extra-standard.googlecode.com/svn/wiki/images/extra-betrieb-db-execution.png
