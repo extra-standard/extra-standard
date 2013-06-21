@@ -1,0 +1,44 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="MANDATOR" id="538D4FF3-AAB4-B66C-9C51-FF74F2270760" directorySegmentName="seg_0">
+   <createdBy>evpqq5</createdBy>
+   <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+   <changedBy>evpqq5</changedBy>
+   <changedTime>2012-10-15 08:00:14 UTC</changedTime>
+   <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+   <logging>YES</logging>
+   <columnProxies>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="id" id="A5CBBE06-B5B2-17C8-119C-5E56ADC27A3D">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="name" id="CF4505C2-482B-07DD-59BB-068EFFDC591A">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+   </columnProxies>
+   <primaryKeys>
+      <PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="mandant PK" id="F67541A9-0BE7-BFB7-1410-87E941148CB4">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <indexSort>NO</indexSort>
+      </PrimaryKey>
+   </primaryKeys>
+   <uniqueKeys>
+      <UniqueKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UniqueOraclev10g" name="mandant_un_name" id="4C4BA6EF-AB41-ADF8-F25C-03364D64F656">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </UniqueKey>
+   </uniqueKeys>
+</TableProxyOraclev11g>

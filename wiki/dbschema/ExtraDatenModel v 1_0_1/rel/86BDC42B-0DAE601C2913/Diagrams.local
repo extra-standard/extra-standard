@@ -1,0 +1,6 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle.dbtools.crest.model.design.relational.RelationalDesign>
+   <object objectType="main_view" objectID="392D70BB-7683-1276-21A6-73BEF34C4FB4" name="Relational_1" visible="true"/>
+   <object objectType="sub_view" objectID="EDA86466-D304-570C-B30B-A8572A901C46" name="Relational_1 - SubView_1" visible="true"/>
+   <object objectType="sub_view" objectID="F46352E5-84C3-E166-E8A7-25BE23FB60BC" name="eXTra Phase Konfiguration" visible="true"/>
+</oracle.dbtools.crest.model.design.relational.RelationalDesign>

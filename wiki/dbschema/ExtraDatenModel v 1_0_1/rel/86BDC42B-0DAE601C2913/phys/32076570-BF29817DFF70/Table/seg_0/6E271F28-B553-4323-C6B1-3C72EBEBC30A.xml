@@ -1,0 +1,44 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="STATUS" id="6E271F28-B553-4323-C6B1-3C72EBEBC30A" directorySegmentName="seg_0">
+   <createdBy>evpqq5</createdBy>
+   <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+   <changedBy>evpqq5</changedBy>
+   <changedTime>2012-10-15 08:00:15 UTC</changedTime>
+   <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+   <logging>YES</logging>
+   <columnProxies>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="name" id="26CE7747-33FA-B330-7125-9063400B6653">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="id" id="E30E20C1-4F43-591D-4531-56291C161854">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+   </columnProxies>
+   <indexProxies>
+      <IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="status_idx_name" id="5E0C9571-34E4-1631-1AF3-30165E0B0AA2">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </IndexProxy>
+   </indexProxies>
+   <primaryKeys>
+      <PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="status_pk" id="B7EF8B9A-7E78-3FDD-2BAB-FF7ACE9C2C28">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <indexSort>NO</indexSort>
+      </PrimaryKey>
+   </primaryKeys>
+</TableProxyOraclev11g>

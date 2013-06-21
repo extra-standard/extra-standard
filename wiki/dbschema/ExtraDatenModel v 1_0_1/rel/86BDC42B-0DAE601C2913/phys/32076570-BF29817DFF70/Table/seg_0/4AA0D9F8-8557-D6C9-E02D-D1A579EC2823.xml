@@ -1,0 +1,130 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="INPUT_DATA" id="4AA0D9F8-8557-D6C9-E02D-D1A579EC2823" directorySegmentName="seg_0">
+   <createdBy>evpqq5</createdBy>
+   <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+   <changedBy>evpqq5</changedBy>
+   <changedTime>2012-10-18 07:12:21 UTC</changedTime>
+   <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+   <logging>YES</logging>
+   <columnProxies>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="current_phase_connection_id" id="00798AA2-8313-6E11-7531-E19E2092587B">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-10-17 15:37:14 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-17 15:37:14 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="return_text" id="2D1FF4B9-1EA6-ABE6-CB36-E291056FD1F4">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="input_identifier" id="4F208185-9411-E7EC-84B5-F018A7A94162">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="hashcode" id="67F2BDDC-ED12-C534-2256-C01365A5EB76">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="response_id" id="77D73D32-0DD5-254C-9339-0987CA25FA3B">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-19 09:09:41 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-19 09:09:41 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="id" id="896323B0-6F48-D8B6-1D3A-971A63E4BBDA">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="next_phase_connection_id" id="B191E341-422B-5FF1-8271-55618B80F9E7">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-10-11 13:29:01 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-11 13:29:01 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="return_code" id="C3184998-ED93-772C-CF0E-C0A5E5415401">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="request_id" id="DEC05888-2405-E5B5-B694-894164B8FD0E">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-10-08 09:42:51 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-08 09:42:51 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="execution_id" id="ED6D23FC-D38E-EEEE-F5A3-DFB1F09B6508">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+   </columnProxies>
+   <indexProxies>
+      <IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="input_data_ix_request" id="153072D4-A9E5-3E27-CA79-A1ABF7D4B28E">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-10-11 14:54:26 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-11 14:54:26 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </IndexProxy>
+      <IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="input_data_idx_execution" id="3131C355-59F5-9AF1-4F79-1628B0700665">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </IndexProxy>
+   </indexProxies>
+   <foreignKeys>
+      <ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="rel_data_phasen_con" id="08325361-0C26-BD87-4BDA-023891876181">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-10-11 13:29:01 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-11 13:29:01 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ForeignKey>
+      <ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="rel_input_data_curr_phase_conn" id="460BCC29-EF1C-2C72-2813-7B7066A6424B">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-10-17 15:37:14 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-17 15:37:14 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ForeignKey>
+      <ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="rel_input_data_execution" id="4F2A63E4-270D-F6D6-15B2-07F48BBE4C8A">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ForeignKey>
+   </foreignKeys>
+   <primaryKeys>
+      <PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="input_data_PK" id="5F93C961-B39B-D807-484A-0D2377774437">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-17 15:57:36 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-17 15:57:36 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <indexSort>NO</indexSort>
+      </PrimaryKey>
+   </primaryKeys>
+</TableProxyOraclev11g>

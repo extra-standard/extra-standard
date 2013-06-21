@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SequenceOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.SequenceOraclev10g" name="seq_phase_connection_id" id="4F8D6985-9C3B-EF43-CF01-AD7FD05C48B3" directorySegmentName="seg_0">
+   <createdBy>evpqq5</createdBy>
+   <createdTime>2012-10-11 12:17:16 UTC</createdTime>
+   <changedBy>evpqq5</changedBy>
+   <changedTime>2012-10-11 14:11:23 UTC</changedTime>
+   <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+   <incrementBy>1</incrementBy>
+   <maxValue>9999999</maxValue>
+   <minValue>1</minValue>
+   <order>YES</order>
+   <startWith>1</startWith>
+</SequenceOraclev10g>

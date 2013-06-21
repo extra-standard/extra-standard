@@ -1,0 +1,284 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" id="4AA0D9F8-8557-D6C9-E02D-D1A579EC2823" directorySegmentName="seg_0" name="COMMUNICATION_PROTOCOL">
+   <createdBy>evpqq5</createdBy>
+   <createdTime>2012-08-29 07:38:40 UTC</createdTime>
+   <changedBy>evpqq5</changedBy>
+   <changedTime>2013-06-21 07:11:48 UTC</changedTime>
+   <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+   <pkName>input_data_PK</pkName>
+   <fonts>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Title</foType>
+         <fontStyle>1</fontStyle>
+         <colorRGB>-16776961</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Column</foType>
+         <colorRGB>-16777216</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Datatype</foType>
+         <colorRGB>-16744448</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>PK Element</foType>
+         <colorRGB>-16776961</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>FK Element</foType>
+         <colorRGB>-16777216</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>UK Element</foType>
+         <colorRGB>-16776961</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Not Null</foType>
+         <colorRGB>-65536</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Key</foType>
+         <colorRGB>-16777216</colorRGB>
+      </FontObject>
+   </fonts>
+   <columns>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="id" id="896323B0-6F48-D8B6-1D3A-971A63E4BBDA">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-08-29 07:39:01 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-08-29 07:39:01 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <use>1</use>
+         <logicalDatatype>LOGDT019</logicalDatatype>
+         <dataTypePrecision>15</dataTypePrecision>
+         <dataTypeScale>0</dataTypeScale>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="input_identifier" id="4F208185-9411-E7EC-84B5-F018A7A94162">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-08-29 07:41:01 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-11 15:35:17 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <nullsAllowed>true</nullsAllowed>
+         <use>1</use>
+         <logicalDatatype>LOGDT024</logicalDatatype>
+         <dataTypeSize>255</dataTypeSize>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="hashcode" id="67F2BDDC-ED12-C534-2256-C01365A5EB76">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-08-29 07:44:59 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-08-29 07:45:31 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <nullsAllowed>true</nullsAllowed>
+         <use>1</use>
+         <logicalDatatype>LOGDT024</logicalDatatype>
+         <dataTypeSize>100</dataTypeSize>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="request_id" id="DEC05888-2405-E5B5-B694-894164B8FD0E">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-10-01 09:40:30 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-12 15:24:42 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <nullsAllowed>true</nullsAllowed>
+         <use>1</use>
+         <logicalDatatype>LOGDT024</logicalDatatype>
+         <dataTypeSize>255</dataTypeSize>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="response_id" id="77D73D32-0DD5-254C-9339-0987CA25FA3B">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-19 09:09:41 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-12 15:24:49 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <nullsAllowed>true</nullsAllowed>
+         <use>1</use>
+         <logicalDatatype>LOGDT024</logicalDatatype>
+         <dataTypeSize>255</dataTypeSize>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="return_code" id="C3184998-ED93-772C-CF0E-C0A5E5415401">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-08-29 07:43:53 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-11 08:41:02 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <nullsAllowed>true</nullsAllowed>
+         <use>1</use>
+         <logicalDatatype>LOGDT024</logicalDatatype>
+         <dataTypeSize>255</dataTypeSize>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="return_text" id="2D1FF4B9-1EA6-ABE6-CB36-E291056FD1F4">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-08-29 07:43:53 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-11 08:42:01 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <nullsAllowed>true</nullsAllowed>
+         <use>1</use>
+         <logicalDatatype>LOGDT028</logicalDatatype>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="execution_id" id="ED6D23FC-D38E-EEEE-F5A3-DFB1F09B6508">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-08-29 07:45:54 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-01 16:20:05 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <use>1</use>
+         <logicalDatatype>LOGDT019</logicalDatatype>
+         <dataTypePrecision>15</dataTypePrecision>
+         <dataTypeScale>0</dataTypeScale>
+         <delegate>3F10E0C3-227C-2AC7-459B-04E06A874A7A</delegate>
+         <previousColumn>false</previousColumn>
+         <associations>
+            <colAssociation fkAssociation="02D1721E-F74C-94F0-7485-964944186E64" referredColumn="3F10E0C3-227C-2AC7-459B-04E06A874A7A"/>
+         </associations>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="next_phase_connection_id" id="B191E341-422B-5FF1-8271-55618B80F9E7">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-10-11 13:29:01 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-12 15:25:04 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <nullsAllowed>true</nullsAllowed>
+         <use>1</use>
+         <logicalDatatype>LOGDT019</logicalDatatype>
+         <dataTypePrecision>12</dataTypePrecision>
+         <dataTypeScale>0</dataTypeScale>
+         <delegate>32A6FC12-519E-1388-BFAD-B288AE366C79</delegate>
+         <previousColumn>false</previousColumn>
+         <associations>
+            <colAssociation fkAssociation="E0E41242-D13C-8B51-3540-74C3500B85E8" referredColumn="32A6FC12-519E-1388-BFAD-B288AE366C79"/>
+         </associations>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="current_phase_connection_id" id="00798AA2-8313-6E11-7531-E19E2092587B">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-10-17 15:37:14 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-17 15:47:25 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <nullsAllowed>true</nullsAllowed>
+         <use>1</use>
+         <logicalDatatype>LOGDT019</logicalDatatype>
+         <dataTypePrecision>12</dataTypePrecision>
+         <dataTypeScale>0</dataTypeScale>
+         <delegate>32A6FC12-519E-1388-BFAD-B288AE366C79</delegate>
+         <previousColumn>false</previousColumn>
+         <associations>
+            <colAssociation fkAssociation="E8E3663C-B3C0-6414-D354-0D7AA836D9AC" referredColumn="32A6FC12-519E-1388-BFAD-B288AE366C79"/>
+         </associations>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="subquery" id="26C27745-8C5B-2810-7B76-168CA6CF604C">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-12-20 15:09:54 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-12-20 15:09:54 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <nullsAllowed>true</nullsAllowed>
+         <use>1</use>
+         <logicalDatatype>LOGDT024</logicalDatatype>
+         <dataTypeSize>255</dataTypeSize>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="status_id" id="B0255D60-847F-1F7B-C76A-BB2498635980">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2013-06-20 13:18:05 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2013-06-20 13:18:42 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <use>1</use>
+         <logicalDatatype>LOGDT019</logicalDatatype>
+         <dataTypePrecision>10</dataTypePrecision>
+         <dataTypeScale>0</dataTypeScale>
+         <delegate>E30E20C1-4F43-591D-4531-56291C161854</delegate>
+         <previousColumn>false</previousColumn>
+         <associations>
+            <colAssociation fkAssociation="7611B2F2-21F0-68D1-5FC6-B22B139578DC" referredColumn="E30E20C1-4F43-591D-4531-56291C161854"/>
+         </associations>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="INPUT_DATA_QUALIFIER" id="D034A3E1-126A-C931-6240-E9C35B0C261B">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2013-06-21 07:11:40 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2013-06-21 07:11:40 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <nullsAllowed>true</nullsAllowed>
+         <use>1</use>
+         <logicalDatatype>LOGDT024</logicalDatatype>
+         <dataTypeSize>100</dataTypeSize>
+      </Column>
+   </columns>
+   <indexes>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="5F93C961-B39B-D807-484A-0D2377774437" name="input_data_PK">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-08-29 07:39:01 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-08-29 07:39:01 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <pk>true</pk>
+         <indexState>Primary Constraint</indexState>
+         <indexColumnUsage>
+            <colUsage columnID="896323B0-6F48-D8B6-1D3A-971A63E4BBDA"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="3131C355-59F5-9AF1-4F79-1628B0700665" name="input_data_idx_execution">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-08-31 09:09:25 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-18 16:07:42 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="ED6D23FC-D38E-EEEE-F5A3-DFB1F09B6508"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="153072D4-A9E5-3E27-CA79-A1ABF7D4B28E" name="input_data_ix_request">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-10-11 14:54:26 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-18 16:07:42 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="DEC05888-2405-E5B5-B694-894164B8FD0E"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="4F2A63E4-270D-F6D6-15B2-07F48BBE4C8A" name="rel_input_data_execution">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-08-29 07:45:54 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-08-29 07:46:20 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="ED6D23FC-D38E-EEEE-F5A3-DFB1F09B6508"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="08325361-0C26-BD87-4BDA-023891876181" name="rel_data_phasen_con">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-10-11 13:29:01 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-11 13:29:24 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="B191E341-422B-5FF1-8271-55618B80F9E7"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="460BCC29-EF1C-2C72-2813-7B7066A6424B" name="rel_input_data_curr_phase_conn">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-10-17 15:37:14 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-17 15:48:30 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="00798AA2-8313-6E11-7531-E19E2092587B"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="D16578E1-AE28-B90E-6B01-EA09E0196980" name="COMMUNICATION_PROTOCOL_STATUS_FK">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2013-06-20 13:18:05 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2013-06-20 13:18:05 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="B0255D60-847F-1F7B-C76A-BB2498635980"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+   </indexes>
+</Table>

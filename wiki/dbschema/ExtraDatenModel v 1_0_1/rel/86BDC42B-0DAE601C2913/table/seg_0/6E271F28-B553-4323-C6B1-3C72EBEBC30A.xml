@@ -1,0 +1,92 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" id="6E271F28-B553-4323-C6B1-3C72EBEBC30A" directorySegmentName="seg_0" name="STATUS">
+   <createdBy>evpqq5</createdBy>
+   <createdTime>2012-08-29 07:48:00 UTC</createdTime>
+   <changedBy>evpqq5</changedBy>
+   <changedTime>2012-10-19 08:24:22 UTC</changedTime>
+   <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+   <pkName>status_PK</pkName>
+   <fonts>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Title</foType>
+         <fontStyle>1</fontStyle>
+         <colorRGB>-16776961</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Column</foType>
+         <colorRGB>-16777216</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Datatype</foType>
+         <colorRGB>-16744448</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>PK Element</foType>
+         <colorRGB>-16776961</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>FK Element</foType>
+         <colorRGB>-16777216</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>UK Element</foType>
+         <colorRGB>-16776961</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Not Null</foType>
+         <colorRGB>-65536</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Key</foType>
+         <colorRGB>-16777216</colorRGB>
+      </FontObject>
+   </fonts>
+   <columns>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="id" id="E30E20C1-4F43-591D-4531-56291C161854">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-08-29 07:48:52 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-08-29 08:48:12 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <use>1</use>
+         <logicalDatatype>LOGDT019</logicalDatatype>
+         <dataTypePrecision>10</dataTypePrecision>
+         <dataTypeScale>0</dataTypeScale>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="name" id="26CE7747-33FA-B330-7125-9063400B6653">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-08-29 07:48:52 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-08-29 07:48:52 UTC</changedTime>
+         <comment>INITIAL, ERROR, DONE</comment>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <use>1</use>
+         <logicalDatatype>LOGDT024</logicalDatatype>
+         <dataTypeSize>50</dataTypeSize>
+      </Column>
+   </columns>
+   <indexes>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="B7EF8B9A-7E78-3FDD-2BAB-FF7ACE9C2C28" name="status_pk">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-08-29 07:48:52 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-08-29 07:48:52 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <pk>true</pk>
+         <indexState>Primary Constraint</indexState>
+         <indexColumnUsage>
+            <colUsage columnID="E30E20C1-4F43-591D-4531-56291C161854"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="5E0C9571-34E4-1631-1AF3-30165E0B0AA2" name="status_idx_name">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-08-31 09:07:41 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-08-31 09:07:41 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="26CE7747-33FA-B330-7125-9063400B6653"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+   </indexes>
+</Table>

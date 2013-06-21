@@ -1,0 +1,28 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle.dbtools.crest.model.design.relational.RelationalDesign>
+   <object objectType="Table" objectID="4AA0D9F8-8557-D6C9-E02D-D1A579EC2823" name="COMMUNICATION_PROTOCOL" seqName="seg_0"/>
+   <object objectType="Table" objectID="3F46153F-B9F9-2EFD-A819-3444C5BF3C94" name="EXECUTION" seqName="seg_0"/>
+   <object objectType="Table" objectID="538D4FF3-AAB4-B66C-9C51-FF74F2270760" name="MANDATOR" seqName="seg_0"/>
+   <object objectType="Table" objectID="E6E56B44-B576-0667-7FDE-2A95FD79161D" name="PHASE_CONNECTION" seqName="seg_0"/>
+   <object objectType="Table" objectID="701B6BAA-6FDC-F4DF-514C-E52991EEF00F" name="PROCEDURE" seqName="seg_0"/>
+   <object objectType="Table" objectID="711003FD-2481-33A5-63ED-F33DD02B41A8" name="PROCEDURE_PHASE_CONFIGURATION" seqName="seg_0"/>
+   <object objectType="Table" objectID="6732C415-43F4-A238-A7B2-E47BCBE4D3A1" name="PROCEDURE_TYPE" seqName="seg_0"/>
+   <object objectType="Table" objectID="E3C73798-923B-E309-8F3E-1B771ECBDE0F" name="PROCESS_TRANSITION" seqName="seg_0"/>
+   <object objectType="Table" objectID="6E271F28-B553-4323-C6B1-3C72EBEBC30A" name="STATUS" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="7611B2F2-21F0-68D1-5FC6-B22B139578DC" name="COMMUNICATION_PROTOCOL_STATUS_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="B145E6D5-A449-AB00-34FC-0B827F38CC79" name="REL_EXECUTION_PROCESS_TRANS_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="BA2343B6-68A1-22C8-BB8B-5D01508FC968" name="REL_TRANSITION_CURR_STATUS" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="66B9CBD1-CCDA-B1A0-BA91-EEC85B6F0720" name="REL_TRANSITION_PREV_STATUS" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="E0E41242-D13C-8B51-3540-74C3500B85E8" name="rel_data_phasen_con" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="AB789B83-B461-B00E-BE2F-6921551A8695" name="rel_execution_procedure" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="E8E3663C-B3C0-6414-D354-0D7AA836D9AC" name="rel_input_data_curr_phase_conn" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="02D1721E-F74C-94F0-7485-964944186E64" name="rel_input_data_execution" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="6BFAD5A7-60DB-508B-C951-5FA2D7BC1EE9" name="rel_phase_conn_data_quelle" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="BEEC0881-1C96-C0F8-DB7E-751791B98CE1" name="rel_phasen_conn_data_target" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="668A8F9A-7C10-BEE9-C9A3-728081724612" name="rel_phasen_conn_status" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="A0D2A89E-5349-C909-4A0B-E4C5AC2FB2A9" name="rel_proc_ph_proc_config_pk" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="C019E1B7-90A6-C874-3686-07939736079C" name="rel_proc_to_proc_config_pk" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="C74F0D20-5742-36CA-0FBD-2154B4AB7986" name="rel_proc_trans_execution" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="82E8917B-6B3C-FC51-8C61-5530D15176A4" name="rel_procedure_mandant" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="BFB787CD-E2E6-FDE2-4EC5-E529EAA56621" name="relphase_conf_follow_FK" seqName="seg_0"/>
+</oracle.dbtools.crest.model.design.relational.RelationalDesign>

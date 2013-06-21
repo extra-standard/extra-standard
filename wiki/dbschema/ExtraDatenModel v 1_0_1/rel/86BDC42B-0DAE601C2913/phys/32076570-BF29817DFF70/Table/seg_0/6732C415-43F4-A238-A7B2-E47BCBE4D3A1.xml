@@ -1,0 +1,44 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="PROCEDURE_TYPE" id="6732C415-43F4-A238-A7B2-E47BCBE4D3A1" directorySegmentName="seg_0">
+   <createdBy>evpqq5</createdBy>
+   <createdTime>2012-09-24 06:27:14 UTC</createdTime>
+   <changedBy>evpqq5</changedBy>
+   <changedTime>2012-10-15 08:00:14 UTC</changedTime>
+   <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+   <logging>YES</logging>
+   <columnProxies>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="id" id="21DB66A6-29FB-8DBC-8BCC-2C26E35265EB">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-24 06:27:54 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-24 06:27:54 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="name" id="C0615423-C029-CBB8-A74E-AFF1EB31B950">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-24 06:27:54 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-24 06:27:54 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </ColumnProxy>
+   </columnProxies>
+   <primaryKeys>
+      <PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="procedury_tape_pk" id="7A3EEA3E-9F1B-521C-7CEE-48DCD4259587">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-09-24 06:27:54 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-09-24 06:27:54 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+         <indexSort>NO</indexSort>
+      </PrimaryKey>
+   </primaryKeys>
+   <uniqueKeys>
+      <UniqueKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UniqueOraclev10g" name="procedure-type_name_un" id="DB021377-7975-4C59-83C0-BCF8AE874FE4">
+         <createdBy>evpqq5</createdBy>
+         <createdTime>2012-10-12 11:36:38 UTC</createdTime>
+         <changedBy>evpqq5</changedBy>
+         <changedTime>2012-10-12 11:36:38 UTC</changedTime>
+         <ownerDesignName>ExtraDatenModel v 1_0_1</ownerDesignName>
+      </UniqueKey>
+   </uniqueKeys>
+</TableProxyOraclev11g>

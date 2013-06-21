@@ -1,0 +1,9 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<DataTypesDesign class="oracle.dbtools.crest.model.design.datatypes.DataTypesDesign" name="DataTypes" id="6AAB1FA5-D11B-1240-D292-9D27C4A14EA5" mainViewID="0E365080-EFEF-1B14-BA50-2EF5BC71175F">
+   <createdBy>evpqq5</createdBy>
+   <createdTime>2012-08-29 07:09:48 UTC</createdTime>
+   <changedBy>evpqq5</changedBy>
+   <changedTime>2012-08-29 07:09:48 UTC</changedTime>
+   <ownerDesignName>ExtraDatenModel</ownerDesignName>
+   <shouldBeOpen>false</shouldBeOpen>
+</DataTypesDesign>
