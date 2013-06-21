@@ -53,7 +53,8 @@ and PROCEDURE.NAME = 'SterbemeldungAusland'
  
 http://extra-standard.googlecode.com/svn/wiki/images/dblog-sterbedatenausland-phase1.jpg
 
-Hier ist sichtber:
+Über die Datenbank kann nachvolzogen werden:
+
  * Wann die Nachrichtenaustausch stattgefunden
  * Welche Daten ausgetausche wurden (INPUT_IDENTIFIERT und INPUT_QUALIFIER)
  * Wie erfolgreich die Ausführung (EXECUTION_STATUS) sowie die einzeln Datenaustaausch (COMMUNICATION_PROTOKOL_STATUS) war
