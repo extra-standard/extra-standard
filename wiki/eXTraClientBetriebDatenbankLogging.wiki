@@ -1,0 +1,59 @@
+#summary Nachverfolgung der Nachrichtenaustauch in der Datenbank
+
+= Nachverfolgung der Nachrichtenaustauch in der Datenbank =
+
+In der eXTra-Datenbank werden die Fachverfahren verwaltet und die Kommunikationsabläufe protokolliert. Anhang der Fachverfahren "Sterbedatenaustausch Ausland" wird Präsentiert:
+
+  *Wie eine Fachverfhren konfiguriert wird.	
+  *Wie die Nachrichten in der Datenbank verfolgt werden können
+
+== Beispiel einer Konfiguration Anhang Fachverfahren Sterbedatenaustausch Ausland ==
+
+Das Datenbankmodel des Konfigurationsbereich ist unter http://code.google.com/p/extra-standard/wiki/eXTraClientBetriebDatenbank dokumentiert.
+
+Das Datenaustauch besteht aus 3 Schritten (Details siehe unter http://code.google.com/p/extra-standard/wiki/eXTraSterbedatenVerfahren): 
+
+  # PHASE1 Senden der fachlichen Daten an eine eXTra Server 
+  # PHASE2 Sender fordert die Verarbeitungsergebnisse des Fachvverfahren an
+  # PHASE3 Bestätigung der erfolgreich abgeholten Rückmeldungen
+  
+Dabei erfolgen die Schritte PHASE2 und PHASE3 voneinander abhängig. Die Bestätigung der abgeholten Rückmeldungen (PHASE3), bezieht sich auf die Nachrichten, die in der PHASE2 abgehollt sind und nach der bestätigung der Fachanwendung.
+  
+Konfiguration für die Procedure Sterbedatenabgleich sieht wie folgt aus:
+
+http://extra-standard.googlecode.com/svn/wiki/images/eXTra-konfiguration-sterbemeldungausland.jpg
+
+
+
+== Nachverfolgung für die Phase1 ==
+
+Die Kommunikation in Rahmen des Fachverfahren kann mit folgenden SQL Statement nachverfolgt werden:
+
+{{{
+select PROCEDURE.NAME, EXECUTION.PHASE,EXECUTION.ID, executionStatus.NAME as EXECUTION_STATUS,
+ EXECUTION.START_TIME, EXECUTION.END_TIME, 
+COMMUNICATION_PROTOCOL.request_id, 
+COMMUNICATION_PROTOCOL.response_id, 
+COMMUNICATION_PROTOCOL.subquery
+, COMMUNICATION_PROTOCOL.INPUT_IDENTIFIER , 
+COMMUNICATION_PROTOCOL.OUTPUT_IDENTIFIER, 
+COMMUNICATION_PROTOCOL.INPUT_DATA_QUALIFIER,
+COMMUNICATIONPROTOKOLSTATUS.NAME as COMMUNICATION_STATUS
+from  EXECUTION, COMMUNICATION_PROTOCOL, PROCEDURE, STATUS executionStatus, STATUS communicationProtokolStatus,PROCESS_TRANSITION
+where PROCEDURE.ID = EXECUTION.PROCEDURE_ID  
+and EXECUTION.ID = COMMUNICATION_PROTOCOL.execution_id
+and EXECUTION.PROCEDURE_ID = PROCEDURE.ID
+and EXECUTION.LAST_TRANSITION_ID = PROCESS_TRANSITION.ID
+and PROCESS_TRANSITION.CURRENT_STATUS_ID=executionStatus.ID 
+and PROCESS_TRANSITION.CURRENT_STATUS_ID=communicationProtokolStatus.ID
+and EXECUTION.PHASE = 'PHASE1'
+and PROCEDURE.NAME = 'SterbemeldungAusland'
+}}}
+ Die Ergebnisser dieser Abfrage siehen wie folgt aus:
+ 
+http://extra-standard.googlecode.com/svn/wiki/images/dblog-sterbedatenausland-phase1.jpg
+
+Hier ist sichtber:
+ * Wann die Nachrichtenaustausch stattgefunden
+ * Welche Daten ausgetausche wurden (INPUT_IDENTIFIERT und INPUT_QUALIFIER)
+ * Wie erfolgreich die Ausführung (EXECUTION_STATUS) sowie die einzeln Datenaustaausch (COMMUNICATION_PROTOKOL_STATUS) war
