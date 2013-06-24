@@ -75,5 +75,9 @@ public interface ISingleResponseData {
 	 */
 	PersistentStatus getPersistentStatus();
 	
+	/**
+	 * Identifiert der Nachricht
+	 * @return
+	 */
 	String getOutputIdentifier();
 }
