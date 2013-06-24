@@ -179,11 +179,7 @@ public class SingleFileInputData extends Implementor implements
 
 	@Override
 	public String getInputIdentifier() {
-		try {
-			return inputDataFile.getCanonicalPath();
-		} catch (final IOException ioException) {
-			throw new ExtraDataPluginRuntimeException(ioException);
-		}
+		return inputDataFile.getName();
 	}
 
 	@Override
