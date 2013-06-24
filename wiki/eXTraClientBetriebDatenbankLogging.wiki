@@ -100,4 +100,10 @@ http://extra-standard.googlecode.com/svn/wiki/images/dblog-sterbedatenausland-ph
  * Welche Daten von Server empfangen werden (OUTPUT_IDENTIFIER)
  * Mit welchen Parameter die Abfrage nach Daten erfolgte (INPUT_IDENTIFIERT , INPUT_DATA_CRITERIA)
 
-Dabei die Abfrage mit der ID (EXECUTION.ID) = 1 hat keine Ergebnisse von Server geliefert (OUTPUT_IDENTIFIER ist leer)
+
+Es sind unterschiedlichen Ergebnisse der Jobausführung möglich:
+
+ # Abfrage mit der ID (EXECUTION.ID) = 1 hat keine Ergebnisse von Server geliefert (OUTPUT_IDENTIFIER ist leer)
+ # Abfragen mit ID's (EXECUTION.ID) 5 und 10 haben von dem Server jeweils 3 Dateien abgeholt. In der Spalte OUTPUT_IDENTIFIER sind die Namen der Dateien aufgelistet
+ # Abfrage mit dem  ID (EXECUTION.ID) = 11 wurde technisch erfolgreich ausgeführt (Execution_STATUS=DONE), dennoch Fachlich wurde von dem Server ein Fehler gemeldet (COMMUNICATION_STATUS=FAIL). In der Spalte COMMUNICATION_PROTOCOL.RETURN_TEXT stehen genaue angaben zu der Servermeldung.
+ # Abfrage mit dem ID (EXECUTION.ID) = 11 hat einen technishen Fehler verursacht, was aus dem (Execution_STATUS=FAIL) abgeleitet werden kann. 
