@@ -108,7 +108,7 @@ Es sind unterschiedlichen Ergebnisse der Jobausführung möglich:
  # Abfrage mit dem  ID (EXECUTION.ID) = 11 wurde technisch erfolgreich ausgeführt (Execution_STATUS=DONE), dennoch Fachlich wurde von dem Server ein Fehler gemeldet (COMMUNICATION_STATUS=FAIL). In der Spalte COMMUNICATION_PROTOCOL.RETURN_TEXT stehen genaue angaben zu der Servermeldung.
  # Abfrage mit dem ID (EXECUTION.ID) = 11 hat einen technishen Fehler verursacht, was aus dem (Execution_STATUS=FAIL) abgeleitet werden kann. 
  
-== Nachverfolgung für die Phase2 ==
+== Nachverfolgung für die Phase3 ==
 
 Für die Phase3 sieht SQL Abfrage wie folgt aus:
 {{{
