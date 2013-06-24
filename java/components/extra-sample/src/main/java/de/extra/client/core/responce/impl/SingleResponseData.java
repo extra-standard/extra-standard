@@ -37,23 +37,29 @@ public class SingleResponseData implements ISingleResponseData {
 
 	/** Zeigt an, ob die Server-Verarbeitung erfolgreich war */
 	private final Boolean successful;
-	/** Zeigt an, ob eine Warnung aufgetreten ist (z.B. keine Ergebnisdatei erhalten) */
+	/**
+	 * Zeigt an, ob eine Warnung aufgetreten ist (z.B. keine Ergebnisdatei
+	 * erhalten)
+	 */
 	private Boolean warning = false; // Default: keine Warnung
 	/** Status der sich aufgrund der Server-Verarbeitung ergibt */
 	private final PersistentStatus persistentStatus;
 
-	private String outputIdentifier;
-	
+	private final String outputIdentifier;
+
 	public SingleResponseData(final String requestId, final String returnCode,
 			final String returnText, final String responseId,
-			final Boolean successful, PersistentStatus persistentStatus, String outputIdentifier) {
+			final Boolean successful, final PersistentStatus persistentStatus,
+			final String outputIdentifier) {
 		// Default: warning=false
-		this(requestId, returnCode, returnText, responseId, successful, persistentStatus, outputIdentifier, false);
+		this(requestId, returnCode, returnText, responseId, successful,
+				persistentStatus, outputIdentifier, false);
 	}
 
 	public SingleResponseData(final String requestId, final String returnCode,
 			final String returnText, final String responseId,
-			final Boolean successful, PersistentStatus persistentStatus, String outputIdentifier, final Boolean warning) {
+			final Boolean successful, final PersistentStatus persistentStatus,
+			final String outputIdentifier, final Boolean warning) {
 		this.requestId = requestId;
 		this.returnCode = returnCode;
 		this.returnText = returnText;
@@ -123,6 +129,7 @@ public class SingleResponseData implements ISingleResponseData {
 		return persistentStatus;
 	}
 
+	@Override
 	public String getOutputIdentifier() {
 		return outputIdentifier;
 	}
@@ -154,10 +161,12 @@ public class SingleResponseData implements ISingleResponseData {
 		if (responseId != null) {
 			builder.append("responseId=");
 			builder.append(responseId);
+			builder.append(", ");
 		}
 		if (successful != null) {
 			builder.append("successful=");
 			builder.append(successful);
+			builder.append(", ");
 		}
 		if (persistentStatus != null) {
 			builder.append("persistentStatus=");
