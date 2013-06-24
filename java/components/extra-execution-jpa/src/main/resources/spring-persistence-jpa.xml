@@ -32,6 +32,7 @@
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<property name="generateDdl" value="${plugins.execution.executionPersistenceJpa.hibernate.generateDdl}" />
 				<property name="database" value="${plugins.execution.executionPersistenceJpa.hibernate.database}" />
+				<property name="showSql" value="${plugins.execution.executionPersistenceJpa.hibernate.showSql:false}"></property>
 			</bean>
 		</property>
 	</bean>
