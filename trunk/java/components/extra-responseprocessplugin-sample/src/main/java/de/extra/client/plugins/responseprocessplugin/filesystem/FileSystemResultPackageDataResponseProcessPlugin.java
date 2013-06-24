@@ -143,6 +143,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 			// ExtraMessageReturnDataExtractor.printResult(marshaller,
 			// extraResponse);
 
+			logger.info("ResponsePlugin. ProcessResponse");
+
 			final ResponseTransportHeader transportHeader = extraResponse
 					.getTransportHeader();
 			final ITransportInfo transportInfo = transportInfoBuilder
