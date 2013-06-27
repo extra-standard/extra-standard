@@ -26,13 +26,13 @@
     <xreq:TransportBody>
         <xcpt:Data>
             <xcpt:ElementSequence>
-                <xmsg:listOfConfirmationOfReceipt>
+                <xmsg:ListOfConfirmationOfReceipt>
                     <xmsg:ConfirmationOfReceipt>
                         <xmsg:PropertySet name="http://www.extra-standard.de/property/ResponseID">
                             <xmsg:Value>10002</xmsg:Value>
                         </xmsg:PropertySet>
                     </xmsg:ConfirmationOfReceipt>
-                </xmsg:listOfConfirmationOfReceipt>
+                </xmsg:ListOfConfirmationOfReceipt>
             </xcpt:ElementSequence>
         </xcpt:Data>
     </xreq:TransportBody>
