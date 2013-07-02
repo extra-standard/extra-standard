@@ -48,11 +48,8 @@ import de.extrastandard.persistence.repository.StatusRepository;
  * JPA Implementierung von {@link IPhasenDataConnection}.
  * 
  * @author Leonid Potap
- * @version $Id$
- */
-/**
- * @author Leonid Potap
- * @version $Id$
+ * @version $Id: PhaseConnection.java 1664 2013-06-25 11:07:09Z
+ *          potap.rentenservice@gmail.com $
  */
 @Configurable(preConstruction = true)
 @Entity
