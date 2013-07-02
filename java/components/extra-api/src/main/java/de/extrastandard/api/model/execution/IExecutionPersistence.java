@@ -94,6 +94,19 @@ public interface IExecutionPersistence {
 	String maxResponseIdForExecution(String procedureName,
 			PhaseQualifier phaseQualifier, String subquery);
 
+	// Max String Query (Sterbedatenabgleich)
+	/**
+	 * Ermittelt MAX ResponseID auf Basis eines Strings. Gilt nur für ein feste
+	 * ResponseID Format.
+	 * 
+	 * @param procedureName
+	 * @param phaseQualifier
+	 * @param subquery
+	 * @return
+	 */
+	String maxSpecialStringResponseIdForExecution(String procedureName,
+			PhaseQualifier phaseQualifier, String subquery);
+
 	/**
 	 * Sucht für einen OutputIdentifier das zugeordnete CommunicationProtocol.
 	 * Diese Methode wird verwendet, wenn eine externe Anwendung eine
