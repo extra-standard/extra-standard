@@ -38,12 +38,18 @@ import org.springframework.transaction.annotation.Transactional;
 import de.extra.client.starter.ExtraClient;
 import de.extra.client.starter.ExtraClientTestBasic;
 import de.extrastandard.api.model.execution.ICommunicationProtocol;
+import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IPhaseConnection;
+import de.extrastandard.api.model.execution.IProcessTransition;
 import de.extrastandard.api.model.execution.PersistentStatus;
+import de.extrastandard.api.model.execution.PhaseQualifier;
+import de.extrastandard.persistence.model.CommunicationProtocol;
 import de.extrastandard.persistence.model.Execution;
 import de.extrastandard.persistence.model.ExecutionPersistenceJpa;
-import de.extrastandard.persistence.model.ProcessTransition;
+import de.extrastandard.persistence.model.Procedure;
+import de.extrastandard.persistence.repository.CommunicationProtocolRepository;
 import de.extrastandard.persistence.repository.ExecutionRepository;
+import de.extrastandard.persistence.repository.ProcedureRepository;
 
 /**
  * <pre>
@@ -77,6 +83,12 @@ public class Phase2AcceptanceIT {
 	private ExecutionPersistenceJpa executionPersistenceJpa;
 
 	@Inject
+	private CommunicationProtocolRepository communicationProtocolRepository;
+
+	@Inject
+	private ProcedureRepository procedureRepository;
+
+	@Inject
 	@Named("executionRepository")
 	private ExecutionRepository executionRepository;
 
@@ -93,6 +105,8 @@ public class Phase2AcceptanceIT {
 		final int expectedExecutionSize = 1;
 		final int expectedCommunicationProtocolsSize = 3;
 
+		final String procedureName = "SterbemeldungAusland";
+		final String subquery = null;
 		final String expectedPhase = "PHASE2";
 		final String expectedNextPhase = "PHASE3";
 
@@ -100,48 +114,55 @@ public class Phase2AcceptanceIT {
 		final String expectedReturnCode = "C00";
 
 		final List<Execution> allExecutions = executionRepository.findAll();
-		Assert.assertEquals("Unexpected Execution Size", expectedExecutionSize,
-				allExecutions.size());
-		for (final Execution execution : allExecutions) {
-			Assert.assertNull("ErrorCode is not null", execution.getErrorCode());
-			Assert.assertNull("ErrorMessage is not null",
-					execution.getErrorMessage());
-			Assert.assertEquals("Unexpected Phase", expectedPhase,
-					execution.getPhase());
-			Assert.assertNotNull("Parameters ist null",
-					execution.getParameters());
-			Assert.assertTrue("Unexpected Parameters", execution
-					.getParameters().endsWith(expectedParametersSuffix));
-			final ProcessTransition lastTransition = execution
-					.getLastTransition();
-			Assert.assertNotNull("LastTransition ist null", lastTransition);
-			final String statusName = lastTransition.getCurrentStatus()
-					.getName();
-			Assert.assertEquals("Unexpected Phase",
-					PersistentStatus.DONE.name(), statusName);
-			final Set<ICommunicationProtocol> communicationProtocols = execution
-					.getCommunicationProtocols();
-			Assert.assertEquals("Unexpected Count of CommunicationProtokols",
-					expectedCommunicationProtocolsSize,
-					communicationProtocols.size());
-			for (final ICommunicationProtocol communicationProtocol : communicationProtocols) {
-				Assert.assertEquals("Unexpected ReturnCode",
-						expectedReturnCode,
-						communicationProtocol.getReturnCode());
-				final IPhaseConnection nextPhaseConnection = communicationProtocol
-						.getNextPhaseConnection();
-				Assert.assertNotNull("NextPhaseConnection is null",
-						nextPhaseConnection);
-				final String nextPhaseQualifier = nextPhaseConnection
-						.getNextPhasequalifier();
-				Assert.assertEquals("Unexpected NextPhase", expectedNextPhase,
-						nextPhaseQualifier);
-				final String nextPhaseStatusName = nextPhaseConnection
-						.getStatus().getName();
-				Assert.assertEquals("Unexpected NextPhase Status",
-						PersistentStatus.INITIAL.name(), nextPhaseStatusName);
+		final PhaseQualifier phaseQualifier = PhaseQualifier
+				.resolveByName(expectedPhase);
+		final String responseIdForExecution = executionPersistenceJpa
+				.maxSpecialStringResponseIdForExecution(procedureName,
+						phaseQualifier, subquery);
+		final Procedure procedure = procedureRepository
+				.findByName(procedureName);
+		final CommunicationProtocol maxCommunicationProtocol = communicationProtocolRepository
+				.findByResponseIdAndPhaseAndProcedure(responseIdForExecution,
+						procedure, expectedPhase);
+		final IExecution execution = maxCommunicationProtocol.getExecution();
+		// Assert.assertEquals("Unexpected Execution Size",
+		// expectedExecutionSize,
+		// allExecutions.size());
 
-			}
+		Assert.assertNull("ErrorCode is not null", execution.getErrorCode());
+		Assert.assertNull("ErrorMessage is not null",
+				execution.getErrorMessage());
+		Assert.assertEquals("Unexpected Phase", expectedPhase,
+				execution.getPhase());
+		Assert.assertNotNull("Parameters ist null", execution.getParameters());
+		Assert.assertTrue("Unexpected Parameters", execution.getParameters()
+				.endsWith(expectedParametersSuffix));
+		final IProcessTransition lastTransition = execution.getLastTransition();
+		Assert.assertNotNull("LastTransition ist null", lastTransition);
+		final String statusName = lastTransition.getCurrentStatus().getName();
+		Assert.assertEquals("Unexpected Phase", PersistentStatus.DONE.name(),
+				statusName);
+		final Set<ICommunicationProtocol> communicationProtocols = execution
+				.getCommunicationProtocols();
+		Assert.assertEquals("Unexpected Count of CommunicationProtokols",
+				expectedCommunicationProtocolsSize,
+				communicationProtocols.size());
+		for (final ICommunicationProtocol communicationProtocol : communicationProtocols) {
+			Assert.assertEquals("Unexpected ReturnCode", expectedReturnCode,
+					communicationProtocol.getReturnCode());
+			final IPhaseConnection nextPhaseConnection = communicationProtocol
+					.getNextPhaseConnection();
+			Assert.assertNotNull("NextPhaseConnection is null",
+					nextPhaseConnection);
+			final String nextPhaseQualifier = nextPhaseConnection
+					.getNextPhasequalifier();
+			Assert.assertEquals("Unexpected NextPhase", expectedNextPhase,
+					nextPhaseQualifier);
+			final String nextPhaseStatusName = nextPhaseConnection.getStatus()
+					.getName();
+			Assert.assertEquals("Unexpected NextPhase Status",
+					PersistentStatus.INITIAL.name(), nextPhaseStatusName);
+
 		}
 		logger.info("CheckDBResults successfully completed");
 

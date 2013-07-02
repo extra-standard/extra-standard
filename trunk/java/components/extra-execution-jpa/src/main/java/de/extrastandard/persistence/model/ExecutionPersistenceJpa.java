@@ -28,9 +28,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
-import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
@@ -78,7 +78,8 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 	}
 
 	@Override
-	public ICommunicationProtocol findInputDataByRequestId(final String requestId) {
+	public ICommunicationProtocol findInputDataByRequestId(
+			final String requestId) {
 		return communicationProtocolRepository.findByRequestId(requestId);
 	}
 
@@ -124,15 +125,18 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 
 		final Pageable pageRequest = new PageRequest(0, inputDataLimit);
 
-		// (18.12.12) es duerfen nur Erfolgreich verarbeitete Datensaetze weiter verarbeitet werden
-//		final List<ICommunicationProtocol> inputDateList = communicationProtocolRepository
-//				.findByProcedureAndPhaseQualifierAndStatus(procedure,
-//						phaseQualifier.getName(), statusInitial, pageRequest);
+		// (18.12.12) es duerfen nur Erfolgreich verarbeitete Datensaetze weiter
+		// verarbeitet werden
+		// final List<ICommunicationProtocol> inputDateList =
+		// communicationProtocolRepository
+		// .findByProcedureAndPhaseQualifierAndStatus(procedure,
+		// phaseQualifier.getName(), statusInitial, pageRequest);
 
 		final List<ICommunicationProtocol> inputDateList = communicationProtocolRepository
-				.findByProcedureAndPhaseQualifierAndStatusAndComProtStatus(procedure,
-						phaseQualifier.getName(), statusInitial, statusDone, pageRequest);
-		
+				.findByProcedureAndPhaseQualifierAndStatusAndComProtStatus(
+						procedure, phaseQualifier.getName(), statusInitial,
+						statusDone, pageRequest);
+
 		return inputDateList;
 	}
 
@@ -150,28 +154,27 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 				.findOne(PersistentStatus.INITIAL.getId());
 		final IProcedure procedure = procedureRepository
 				.findByName(executionProcedure);
-		return communicationProtocolRepository.count(procedure, phaseQualifier.getName(),
-				statusInitial);
+		return communicationProtocolRepository.count(procedure,
+				phaseQualifier.getName(), statusInitial);
 	}
 
 	@Override
-	public String maxResponseIdForExecution(String procedureName,
-			PhaseQualifier phaseQualifier, String subquery) {
+	public String maxResponseIdForExecution(final String procedureName,
+			final PhaseQualifier phaseQualifier, final String subquery) {
 		Assert.notNull(procedureName, "Procedure is null");
 		Assert.notNull(phaseQualifier, "Phase is null");
 		final IProcedure procedure = procedureRepository
 				.findByName(procedureName);
 
-		final Integer maxResponseId ;
+		final Integer maxResponseId;
 		if (subquery != null && subquery.length() > 0) {
 			maxResponseId = communicationProtocolRepository
 					.maxResponseIdForProcedureAndPhaseAndSubquery(procedure,
-							phaseQualifier.getName(), subquery);			
-		}
-		else {
+							phaseQualifier.getName(), subquery);
+		} else {
 			maxResponseId = communicationProtocolRepository
 					.maxResponseIdForProcedureAndPhase(procedure,
-							phaseQualifier.getName());			
+							phaseQualifier.getName());
 		}
 
 		if (maxResponseId == null) {
@@ -181,10 +184,39 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 	}
 
 	@Override
-	public boolean changeCommunicationProtocolStatusByOutputIdentifier(final String outputIdentifier, PersistentStatus persistentStatus) {
-		ICommunicationProtocol communicationProtocol = communicationProtocolRepository.findByOutputIdentifier(outputIdentifier);
+	public String maxSpecialStringResponseIdForExecution(
+			final String procedureName, final PhaseQualifier phaseQualifier,
+			final String subquery) {
+		Assert.notNull(procedureName, "Procedure is null");
+		Assert.notNull(phaseQualifier, "Phase is null");
+		final IProcedure procedure = procedureRepository
+				.findByName(procedureName);
+		final String maxResponseId;
+		if (subquery != null && subquery.length() > 0) {
+			maxResponseId = communicationProtocolRepository
+					.maxStringResponseIdForProcedureAndPhaseAndSubquery(
+							procedure, phaseQualifier.getName(), subquery);
+		} else {
+			maxResponseId = communicationProtocolRepository
+					.maxStringResponseIdForProcedureAndPhase(procedure,
+							phaseQualifier.getName());
+		}
+
+		if (maxResponseId == null) {
+			return "0";
+		}
+		return maxResponseId;
+	}
+
+	@Override
+	public boolean changeCommunicationProtocolStatusByOutputIdentifier(
+			final String outputIdentifier,
+			final PersistentStatus persistentStatus) {
+		final ICommunicationProtocol communicationProtocol = communicationProtocolRepository
+				.findByOutputIdentifier(outputIdentifier);
 		if (communicationProtocol == null) {
-			// Fehler: zu dem OutputIdentifier gibt es kein CommunicationProtocol!
+			// Fehler: zu dem OutputIdentifier gibt es kein
+			// CommunicationProtocol!
 			return false;
 		}
 		communicationProtocol.changeStatus(persistentStatus);
