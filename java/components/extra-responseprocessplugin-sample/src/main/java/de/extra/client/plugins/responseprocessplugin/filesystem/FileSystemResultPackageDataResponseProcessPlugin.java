@@ -372,9 +372,6 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 			final String dataHandlerName = packageBodyDataHandler.getName();
 			logger.info("Receiving File : " + dataHandlerName);
 
-			final List<String> readLines = IOUtils
-					.readLines(packageBodyDataHandler.getInputStream());
-
 			IOUtils.copy(packageBodyDataHandler.getInputStream(),
 					fileOutputStream);
 
