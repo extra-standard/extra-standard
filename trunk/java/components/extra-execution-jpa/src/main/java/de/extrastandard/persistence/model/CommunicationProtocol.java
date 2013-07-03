@@ -264,7 +264,6 @@ public class CommunicationProtocol extends AbstractEntity implements
 
 		final String hashCode = String.valueOf(singleQueryInputData.hashCode());
 		this.hashcode = hashCode;
-		final String requestId = this.calculateRequestId();
 		// (08.11.12) verschiedene Qualifizierungen (Query, Criteria, ...)
 		this.inputDataQualifier = InputDataQualifier.QUERY_CRITERIA.getName();
 
@@ -438,6 +437,7 @@ public class CommunicationProtocol extends AbstractEntity implements
 	/**
 	 * @return the status
 	 */
+	@Override
 	public Status getStatus() {
 		return status;
 	}
