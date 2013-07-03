@@ -53,7 +53,7 @@ import de.extrastandard.persistence.repository.ExecutionRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
 		"/conf/acceptance//phase3/property-placeholder-acceptance-phase3.xml",
-		"/conf/acceptance/phase3/spring-acceptance-phase3-flyway.xml" })
+		"/conf/acceptance/phase3/spring-acceptance-phase3-flyway.xml"  })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
 public class Phase3AcceptanceIT {
@@ -86,6 +86,7 @@ public class Phase3AcceptanceIT {
 	public void checkDBResults() {
 		logger.info("CheckDBResults started");
 		final int expectedExecutionSize = 1;
+		final int expectedCommunicationProtocolsSize = 3;
 		final String expectedPhase = "PHASE3";
 		final String expectedParametersSuffix = "phase3";
 		final String expectedReturnCode = "C00";
@@ -114,7 +115,8 @@ public class Phase3AcceptanceIT {
 			final Set<ICommunicationProtocol> communicationProtocols = execution
 					.getCommunicationProtocols();
 			Assert.assertEquals("Unexpected Count of CommunicationProtokols",
-					2, communicationProtocols.size());
+					expectedCommunicationProtocolsSize,
+					communicationProtocols.size());
 			for (final ICommunicationProtocol communicationProtocol : communicationProtocols) {
 				Assert.assertEquals("Unexpected ReturnCode",
 						expectedReturnCode,
