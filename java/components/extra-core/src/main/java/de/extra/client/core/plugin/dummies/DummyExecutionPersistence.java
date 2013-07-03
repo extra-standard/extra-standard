@@ -1,8 +1,5 @@
 package de.extra.client.core.plugin.dummies;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Named;
