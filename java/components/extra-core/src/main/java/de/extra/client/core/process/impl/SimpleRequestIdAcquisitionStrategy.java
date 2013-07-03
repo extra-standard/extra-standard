@@ -28,12 +28,12 @@ import org.springframework.util.Assert;
 import de.extra.client.core.process.IRequestIdAcquisitionStrategy;
 import de.extrastandard.api.exception.ExtraCoreRuntimeException;
 import de.extrastandard.api.model.content.ICriteriaQueryInputData;
+import de.extrastandard.api.model.content.IDbQueryInputData;
 import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.ISingleContentInputData;
 import de.extrastandard.api.model.content.ISingleInputData;
-import de.extrastandard.api.model.content.IDbQueryInputData;
-import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.ICommunicationProtocol;
+import de.extrastandard.api.model.execution.IExecution;
 
 /**
  * Initialle implementation for the calculation of the RequestId
@@ -46,24 +46,24 @@ public class SimpleRequestIdAcquisitionStrategy implements
 		IRequestIdAcquisitionStrategy {
 
 	@Override
-	public void setRequestId(ICommunicationProtocol dbInputData,
-			ISingleInputData singleInputData) {
+	public void setRequestId(final ICommunicationProtocol dbInputData,
+			final ISingleInputData singleInputData) {
 		Assert.notNull(dbInputData, "Inputdata is null");
 		Assert.notNull(singleInputData, "inputDataContainer is null");
 
 		if (ISingleContentInputData.class.isAssignableFrom(singleInputData
 				.getClass())) {
-			ISingleContentInputData singleContentInputData = ISingleContentInputData.class
+			final ISingleContentInputData singleContentInputData = ISingleContentInputData.class
 					.cast(singleInputData);
 			setRequestIdForContentInputData(dbInputData, singleContentInputData);
 		} else if (IDbQueryInputData.class.isAssignableFrom(singleInputData
 				.getClass())) {
-			IDbQueryInputData iSingleQueryInputData = IDbQueryInputData.class
+			final IDbQueryInputData iSingleQueryInputData = IDbQueryInputData.class
 					.cast(singleInputData);
 			setRequestIdForQueryInpuData(dbInputData, iSingleQueryInputData);
 		} else if (ICriteriaQueryInputData.class
 				.isAssignableFrom(singleInputData.getClass())) {
-			ICriteriaQueryInputData singleQueryInputData = ICriteriaQueryInputData.class
+			final ICriteriaQueryInputData singleQueryInputData = ICriteriaQueryInputData.class
 					.cast(singleInputData);
 			setRequestIdForSingleQueryInputData(dbInputData,
 					singleQueryInputData);
@@ -85,7 +85,8 @@ public class SimpleRequestIdAcquisitionStrategy implements
 	 * @see de.extra.client.core.process.IRequestIdAcquisitionStrategy#setRequestId(de.extrastandard.api.model.execution.ICommunicationProtocol,
 	 *      de.extrastandard.api.model.content.IInputDataContainer)
 	 */
-	private void setRequestIdForContentInputData(final ICommunicationProtocol inputData,
+	private void setRequestIdForContentInputData(
+			final ICommunicationProtocol inputData,
 			final ISingleContentInputData singleContentInputData) {
 		Assert.notNull(inputData, "Inputdata is null");
 		Assert.notNull(singleContentInputData, "inputDataContainer is null");
@@ -117,7 +118,8 @@ public class SimpleRequestIdAcquisitionStrategy implements
 
 	}
 
-	private void setRequestIdForQueryInpuData(final ICommunicationProtocol inputData,
+	private void setRequestIdForQueryInpuData(
+			final ICommunicationProtocol inputData,
 			final IDbQueryInputData singleQueryInputData) {
 		Assert.notNull(inputData, "Inputdata is null");
 		Assert.notNull(singleQueryInputData, "inputDataContainer is null");
@@ -135,12 +137,7 @@ public class SimpleRequestIdAcquisitionStrategy implements
 			final ICriteriaQueryInputData singleQueryInputData) {
 		Assert.notNull(inputData, "Inputdata is null");
 		Assert.notNull(singleQueryInputData, "inputDataContainer is null");
-		String inputIdentifier = singleQueryInputData.getInputIdentifier();
-
-		// ??
-//		singleQueryInputData.setRequestId(inputIdentifier);
-//		inputData.setRequestId(inputIdentifier);
-		String requestIdKand = String.valueOf(inputData.getId());
+		final String requestIdKand = String.valueOf(inputData.getId());
 		singleQueryInputData.setRequestId(requestIdKand);
 		inputData.setRequestId(requestIdKand);
 	}
