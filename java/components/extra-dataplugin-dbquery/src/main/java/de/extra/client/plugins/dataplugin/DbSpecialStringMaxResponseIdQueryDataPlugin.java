@@ -33,6 +33,11 @@ import de.extrastandard.api.plugin.IDataPlugin;
 @PluginConfiguration(pluginBeanName = "dbSpecialStringMaxResponseIdQueryDataPlugin", pluginType = PluginConfigType.DataPlugins)
 public class DbSpecialStringMaxResponseIdQueryDataPlugin implements IDataPlugin {
 
+	/**
+	 * Initila Wert, wenn keine Daten vorhanden sind
+	 */
+	private static final String NULL_VALUE = "1970-01-01 12:00:00.000000";
+
 	@Inject
 	@Named("executionPersistenceJpa")
 	IExecutionPersistence executionPersistence;
@@ -61,9 +66,14 @@ public class DbSpecialStringMaxResponseIdQueryDataPlugin implements IDataPlugin 
 		if (dbQueryMaxResponseIdInputData == null) {
 			final PhaseQualifier phaseQualifier = PhaseQualifier
 					.resolveByName(executionPhase);
-			final String maxResponseId = executionPersistence
+			String maxResponseId = executionPersistence
 					.maxSpecialStringResponseIdForExecution(executionProcedure,
 							phaseQualifier, subquery);
+			if (maxResponseId == null) {
+				// NULL Value
+				maxResponseId = subquery + "-" + NULL_VALUE;
+			}
+
 			dbQueryMaxResponseIdInputData = new CriteriaQueryInputDataContainer(
 					String.valueOf(maxResponseId),
 					QueryArgumentType.GREATER_THEN, executionProcedure,

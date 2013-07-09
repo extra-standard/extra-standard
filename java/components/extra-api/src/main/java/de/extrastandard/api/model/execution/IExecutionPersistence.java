@@ -97,7 +97,8 @@ public interface IExecutionPersistence {
 	// Max String Query (Sterbedatenabgleich)
 	/**
 	 * Ermittelt MAX ResponseID auf Basis eines Strings. Gilt nur für ein feste
-	 * ResponseID Format.
+	 * ResponseID Format. Wenn keine Daten gefunden wird, wird Null
+	 * zurückgeliefert.
 	 * 
 	 * @param procedureName
 	 * @param phaseQualifier
