@@ -48,6 +48,8 @@ import de.extrastandard.persistence.repository.StatusRepository;
 @Named("executionPersistenceJpa")
 public class ExecutionPersistenceJpa implements IExecutionPersistence {
 
+	private static final Integer MAX_RESULT_SIZE = 5;
+
 	@Inject
 	@Named("procedureRepository")
 	private transient ProcedureRepository procedureRepository;
@@ -59,8 +61,6 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 	@Inject
 	@Named("statusRepository")
 	private transient StatusRepository statusRepository;
-
-	private static final Integer MAX_RESULT_SIZE = 5;
 
 	/**
 	 * @see de.extrastandard.api.model.execution.IExecutionPersistence#startExecution(java.lang.String)
@@ -202,9 +202,6 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 							phaseQualifier.getName());
 		}
 
-		if (maxResponseId == null) {
-			return "0";
-		}
 		return maxResponseId;
 	}
 
