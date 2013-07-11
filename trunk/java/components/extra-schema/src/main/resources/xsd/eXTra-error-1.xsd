@@ -66,5 +66,7 @@
     
     <!-- @since 1.0 MS -->
     <xs:element name="ExtraError" type="ExtraErrorType"/>
+    <!-- Workaround FehlermeldungMapping -->
+    <xs:element name="XMLError" type="ExtraErrorType"/>
         
 </xs:schema>
