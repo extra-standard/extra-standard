@@ -22,6 +22,7 @@ Das Plugin versendet das eXTra-Anfragedokument an den eXTra-Server und nimmt das
 == Logging ==
 
 Die SOAP Nachrichten können über Logging-Konfiguration ab und angeschaltet werden.
-
+{{{
 !--Level INFO schaltet Logging der SOAP-Nachrichten an, WARN ab -->
 <logger name="org.apache.cxf.services.ExtraService" level="INFO" />
+}}}
