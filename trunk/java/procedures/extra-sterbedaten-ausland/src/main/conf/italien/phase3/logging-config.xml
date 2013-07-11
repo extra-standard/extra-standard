@@ -41,11 +41,15 @@
 	<logger name="de.extra.client.core.annotation" level="INFO" />
 	<logger name="de.extra.client.core.builder" level="INFO" />
 	
+	<logger name="de.extra.client.logging" level="DEBUG" />
+	
+	<!--WSCXF  Level INFO schaltet Logging der SAOP Nachrichten an, WARN ab -->
+	<logger name="org.apache.cxf.services.ExtraService.extraPort" level="INFO" />		
+	
 	<logger name="de.extra.client.operation" level="INFO">
 		<appender-ref ref="OPERATION_FILE" />
 	</logger>
 	
-	<logger name="de.extra.client.logging" level="DEBUG" />
 
 	<!-- extra Nachrichten -->
 	<logger name="de.extra.client.message.request" level="INFO">
