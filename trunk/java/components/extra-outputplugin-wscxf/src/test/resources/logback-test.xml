@@ -14,9 +14,8 @@
 	<logger name="org.apache" level="INFO" />
 	<logger name="org.eclipse.jetty.http" level="INFO" />
 	
-	<logger name="org.apache.cxf.interceptor" level="INFO" />
-	<logger name="org.apache.cxf.interceptor.LoggingInInterceptor" level="INFO" />
-	
+		<!--WSCXF  Level INFO schaltet Logging der SAOP Nachrichten an, WARN ab -->
+	<logger name="org.apache.cxf.services.ExtraService.extraPort" level="INFO" />	
 	
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
