@@ -32,6 +32,7 @@ import javax.xml.bind.JAXBElement;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.oxm.XmlMappingException;
@@ -411,7 +412,8 @@ public class FileSystemResultPackageDataResponseProcessPlugin implements
 		if (incomingFileName != null) {
 			fileName.append(incomingFileName);
 		} else {
-			final String cleanResponseId = FilenameUtils.normalize(responseId);
+			String cleanResponseId = FilenameUtils.normalize(responseId);
+			cleanResponseId = StringUtils.substringBefore(cleanResponseId, " ");
 			fileName.append("RESPONSE_").append(cleanResponseId);
 			fileName.append("_").append(System.currentTimeMillis());
 		}
