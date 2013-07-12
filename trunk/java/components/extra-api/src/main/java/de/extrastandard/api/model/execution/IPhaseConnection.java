@@ -52,4 +52,9 @@ public interface IPhaseConnection {
 	 */
 	void setTargetInputData(ICommunicationProtocol targetInputData);
 
+	/**
+	 * Markiert PhaseConnction as fehlgeschlagen. Status is Fail
+	 */
+	public void setFailed();
+
 }

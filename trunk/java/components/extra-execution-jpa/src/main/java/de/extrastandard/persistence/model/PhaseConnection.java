@@ -187,6 +187,9 @@ public class PhaseConnection extends AbstractEntity implements IPhaseConnection 
 		repository.save(this);
 	}
 
+	/**
+	 * Markiert PhaseConnction as fehlgeschlagen. Status is Fail
+	 */
 	public void setFailed() {
 		final Status statusFailed = statusRepository
 				.findOne(PersistentStatus.FAIL.getId());

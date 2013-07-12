@@ -141,6 +141,54 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 	}
 
 	@Override
+	public List<ICommunicationProtocol> findInputDataForExecutionWithResent(
+			final String procedureName, final PhaseQualifier phaseQualifier,
+			final Integer inputDataLimit) {
+		Assert.notNull(procedureName, "ProcedureName is null");
+		Assert.notNull(phaseQualifier, "Phase is null");
+		final IProcedure procedure = procedureRepository
+				.findByName(procedureName);
+		return findInputDataForExecutionWithResent(procedure, phaseQualifier,
+				inputDataLimit);
+	}
+
+	/**
+	 * Seeks InputData for further Procesierung depending on the ExecutePhase.
+	 * Sends the messages again, at their first delivery was unsuccessful.
+	 * 
+	 * @param procedure
+	 *            the Procedure
+	 * @param phaseQualifier
+	 *            the PhaseQuelifier
+	 * @param inputDataLimit
+	 *            limits the result set
+	 * @return
+	 */
+	@Override
+	public List<ICommunicationProtocol> findInputDataForExecutionWithResent(
+			final IProcedure procedure, final PhaseQualifier phaseQualifier,
+			final Integer inputDataLimit) {
+		Assert.notNull(procedure, "Procedure is null");
+		Assert.notNull(phaseQualifier, "Phase is null");
+		final Status statusInitial = statusRepository
+				.findOne(PersistentStatus.INITIAL.getId());
+		final Status statusDone = statusRepository
+				.findOne(PersistentStatus.DONE.getId());
+
+		final Status statusFail = statusRepository
+				.findOne(PersistentStatus.FAIL.getId());
+
+		final Pageable pageRequest = new PageRequest(0, inputDataLimit);
+
+		final List<ICommunicationProtocol> inputDateList = communicationProtocolRepository
+				.findByProcedureAndPhaseQualifierAndStatusAndComProtStatus(
+						procedure, phaseQualifier.getName(), statusInitial,
+						statusFail, statusDone, pageRequest);
+
+		return inputDateList;
+	}
+
+	@Override
 	public List<ICommunicationProtocol> findInputDataForExecution(
 			final String executionProcedure, final PhaseQualifier phaseQualifier) {
 		return findInputDataForExecution(executionProcedure, phaseQualifier,
@@ -156,6 +204,19 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 				.findByName(executionProcedure);
 		return communicationProtocolRepository.count(procedure,
 				phaseQualifier.getName(), statusInitial);
+	}
+
+	@Override
+	public Long countInputDataForExecutionWithResend(
+			final String executionProcedure, final PhaseQualifier phaseQualifier) {
+		final Status statusInitial = statusRepository
+				.findOne(PersistentStatus.INITIAL.getId());
+		final Status statusFail = statusRepository
+				.findOne(PersistentStatus.FAIL.getId());
+		final IProcedure procedure = procedureRepository
+				.findByName(executionProcedure);
+		return communicationProtocolRepository.count(procedure,
+				phaseQualifier.getName(), statusInitial, statusFail);
 	}
 
 	@Override

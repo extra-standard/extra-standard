@@ -65,6 +65,32 @@ public interface IExecutionPersistence {
 			Integer inputDataLimit);
 
 	/**
+	 * Seeks InputData for further Procesierung depending on the ExecutePhase.
+	 * Sends the messages again, at their first delivery was unsuccessful.
+	 * 
+	 * @param procedureName
+	 * @param phaseQualifier
+	 * @param inputDataLimit
+	 * @return
+	 */
+	List<ICommunicationProtocol> findInputDataForExecutionWithResent(
+			final String procedureName, final PhaseQualifier phaseQualifier,
+			final Integer inputDataLimit);
+
+	/**
+	 * Seeks InputData for further Procesierung depending on the ExecutePhase.
+	 * Sends the messages again, at their first delivery was unsuccessful.
+	 * 
+	 * @param procedure
+	 * @param phaseQualifier
+	 * @param inputDataLimit
+	 * @return
+	 */
+	List<ICommunicationProtocol> findInputDataForExecutionWithResent(
+			final IProcedure procedure, final PhaseQualifier phaseQualifier,
+			final Integer inputDataLimit);
+
+	/**
 	 * Seeks InputData for further Procesierung depending on the ExecutePhase
 	 * 
 	 * @param executionProcedure
@@ -83,6 +109,17 @@ public interface IExecutionPersistence {
 	 */
 	Long countInputDataForExecution(String executionProcedure,
 			PhaseQualifier phaseQualifier);
+
+	/**
+	 * Seeks InputData for further Procesierung depending on the ExecutePhase
+	 * Included messages their first delivery was unsuccessful.
+	 * 
+	 * @param executionProcedure
+	 * @param phaseQualifier
+	 * @return
+	 */
+	public Long countInputDataForExecutionWithResend(String executionProcedure,
+			PhaseQualifier phaseQualifier);;
 
 	// Max Query (Sterbedatenabgleich)
 	/**

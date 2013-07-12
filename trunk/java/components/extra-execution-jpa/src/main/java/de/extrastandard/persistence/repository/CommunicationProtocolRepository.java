@@ -72,6 +72,18 @@ public interface CommunicationProtocolRepository extends
 			@Param("status") Status status,
 			@Param("comProtStatus") Status comProtStatus, Pageable pageRequest);
 
+	@Query("select communicationProtocol FROM CommunicationProtocol communicationProtocol "
+			+ " WHERE communicationProtocol.nextPhaseConnection.nextPhasequalifier = :phaseQualifier "
+			+ " and communicationProtocol.execution.procedure = :procedure "
+			+ " and communicationProtocol.nextPhaseConnection.status in (:status1,:status2 )"
+			+ " and communicationProtocol.status = :comProtStatus "
+			+ " order by communicationProtocol.nextPhaseConnection.status desc")
+	List<ICommunicationProtocol> findByProcedureAndPhaseQualifierAndStatusAndComProtStatus(
+			@Param("procedure") IProcedure procedure,
+			@Param("phaseQualifier") String phaseQualifier,
+			@Param("status1") Status status1, @Param("status2") Status status2,
+			@Param("comProtStatus") Status comProtStatus, Pageable pageRequest);
+
 	@Query("select count(*) FROM CommunicationProtocol communicationProtocol "
 			+ " WHERE communicationProtocol.nextPhaseConnection.nextPhasequalifier = :phaseQualifier "
 			+ " and communicationProtocol.execution.procedure = :procedure "
@@ -79,6 +91,14 @@ public interface CommunicationProtocolRepository extends
 	Long count(@Param("procedure") IProcedure procedure,
 			@Param("phaseQualifier") String phaseQualifier,
 			@Param("status") Status status);
+
+	@Query("select count(*) FROM CommunicationProtocol communicationProtocol "
+			+ " WHERE communicationProtocol.nextPhaseConnection.nextPhasequalifier = :phaseQualifier "
+			+ " and communicationProtocol.execution.procedure = :procedure "
+			+ " and communicationProtocol.nextPhaseConnection.status in (:status1, :status2)")
+	Long count(@Param("procedure") IProcedure procedure,
+			@Param("phaseQualifier") String phaseQualifier,
+			@Param("status1") Status status1, @Param("status2") Status status2);
 
 	/**
 	 * Für die übergebene Procedure und Phase wird die maximale Response-ID
