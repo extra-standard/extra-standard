@@ -35,6 +35,7 @@ plugins.execution.executionPersistenceJpa.database.password=
 # Fuer interne Tests ist ein 'dummyOutputPlugin' voreingestellt 
 # Webservices-Plugin wird verwendet (def. in ...user.prop...), wenn folgende Zeile auskommentiert wird:
 plugins.outputplugin=dummyOutputPlugin
+#plugins.outputplugin=wsCxfOutputPlugin
 
 # Webservices (eXTra Server)
 plugins.outputplugin.wsOutputPlugin.endpoint.url=http://localhost:8088/mockExtraSterbedatenausPhase3
