@@ -181,7 +181,7 @@ Mit Hilfe von javax.validation (z.B hier _*@!NotNull*_) werden die Konfiguration
 
 === Default Value === 
 
-Eine konfigurierbarer Property kann  mit DEFAULT Wert vorbelegt werden Z.B.
+Eine konfigurierbare Property kann  mit dem DEFAULT-Wert vorbelegt werden Z.B.
 {{{
 @Named("dbQueryDataPlugin")
 @PluginConfiguration(pluginBeanName = "dbQueryDataPlugin", pluginType = PluginConfigType.DataPlugins)
