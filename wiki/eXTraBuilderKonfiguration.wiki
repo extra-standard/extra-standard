@@ -188,7 +188,7 @@ Eine konfigurierbare Property kann  mit dem DEFAULT-Wert vorbelegt werden Z.B.
 public class DBQueryDataPlugin implements IDataPlugin {
 
 	@PluginValue(key = "resendFailed:false")
-	// @Value("${plugins.dataplugin.dbQueryDataPlugin.resendFailed:true}")
+	// @Value("${plugins.dataplugin.dbQueryDataPlugin.resendFailed:false}")
 	private boolean resendFailed;
 }}}
 
