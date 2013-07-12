@@ -179,6 +179,19 @@ dass die fehlenden Konfigurationswerte für die nicht aktivierte Plugins bzw. Bu
 
 Mit Hilfe von javax.validation (z.B hier _*@!NotNull*_) werden die Konfigurationswerte zur Laufzeit überprüft.
 
+=== Default Value === 
+
+Eine konfigurierbarer Property kann  mit DEFAULT Wert vorbelegt werden Z.B.
+{{{
+@Named("dbQueryDataPlugin")
+@PluginConfiguration(pluginBeanName = "dbQueryDataPlugin", pluginType = PluginConfigType.DataPlugins)
+public class DBQueryDataPlugin implements IDataPlugin {
+
+	@PluginValue(key = "resendFailed:false")
+	// @Value("${plugins.dataplugin.dbQueryDataPlugin.resendFailed:true}")
+	private boolean resendFailed;
+}}}
+
 == Plugins Präfix ==
 
 || *!PluginConfigType* || *Prefix* || 
