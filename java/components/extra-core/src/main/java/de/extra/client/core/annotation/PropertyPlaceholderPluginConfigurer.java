@@ -53,6 +53,8 @@ public class PropertyPlaceholderPluginConfigurer extends
 	private static final Logger LOG = LoggerFactory
 			.getLogger(PropertyPlaceholderPluginConfigurer.class);
 
+	private static final String VALUE_SEPARATOR = ":";
+
 	private boolean ignoreNullValues = false;
 
 	@Override
@@ -139,8 +141,25 @@ public class PropertyPlaceholderPluginConfigurer extends
 				}
 				final String key = extractKey(annotationConfigutation,
 						valueAnnotation, clazz);
-				final Object value = resolvePlaceholder(key, properties,
+				String value = resolvePlaceholder(key, properties,
 						SYSTEM_PROPERTIES_MODE_FALLBACK);
+				if (value == null) {
+					// DEFAULT Value suchen
+					final int separatorIndex = key.indexOf(VALUE_SEPARATOR);
+					if (separatorIndex != -1) {
+						final String actualPlaceholder = key.substring(0,
+								separatorIndex);
+						final String defaultValue = key
+								.substring(separatorIndex
+										+ VALUE_SEPARATOR.length());
+						value = resolvePlaceholder(actualPlaceholder,
+								properties, SYSTEM_PROPERTIES_MODE_FALLBACK);
+						if (value == null) {
+							value = defaultValue;
+						}
+					}
+				}
+
 				if (value != null) {
 					if (LOG.isDebugEnabled()) {
 						LOG.debug("setting property=[" + clazz.getName() + "."
