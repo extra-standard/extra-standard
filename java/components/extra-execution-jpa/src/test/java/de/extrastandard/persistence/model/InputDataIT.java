@@ -18,7 +18,9 @@
  */
 package de.extrastandard.persistence.model;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,8 +35,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.extrastandard.api.model.execution.IExecutionPersistence;
 import de.extrastandard.api.model.execution.ICommunicationProtocol;
+import de.extrastandard.api.model.execution.IExecutionPersistence;
+import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 
 /**
@@ -76,6 +79,45 @@ public class InputDataIT {
 						PhaseQualifier.PHASE2, inputDataLimit);
 		Assert.assertTrue("Zu viele Daten ausgewählt",
 				findInputDataForExecution.size() <= inputDataLimit);
+		for (final ICommunicationProtocol communicationProtocol : findInputDataForExecution) {
+
+			final Long phaseConnectionStatusId = communicationProtocol
+					.getNextPhaseConnection().getStatus().getId();
+
+			Assert.assertEquals(PersistentStatus.INITIAL.getId(),
+					phaseConnectionStatusId);
+		}
+	}
+
+	@Test
+	@Transactional
+	public void testFindInputDataForExecutionWithResentWithLimit() {
+		final Integer testDataSize = 6;
+		for (Integer counter = 0; counter < testDataSize; counter++) {
+			persistenceTestSetup
+					.setUpTestDatenForFailProcedureSendFetchPhase3();
+		}
+		final Integer inputDataLimit = 5;
+		final List<ICommunicationProtocol> findInputDataForExecution = executionPersistence
+				.findInputDataForExecutionWithResent(
+						PersistenceTestSetup.PROCEDURE_DATA_MATCH_NAME,
+						PhaseQualifier.PHASE3, inputDataLimit);
+		Assert.assertTrue("Zu viele Daten ausgewählt",
+				findInputDataForExecution.size() <= inputDataLimit);
+		final Set<Long> foundStatuses = new HashSet<Long>();
+		for (final ICommunicationProtocol communicationProtocol : findInputDataForExecution) {
+			final Long phaseConnectionStatusId = communicationProtocol
+					.getNextPhaseConnection().getStatus().getId();
+			final Set<Long> allowedStatuses = new HashSet<Long>();
+			allowedStatuses.add(PersistentStatus.INITIAL.getId());
+			allowedStatuses.add(PersistentStatus.FAIL.getId());
+			Assert.assertTrue("Unexpected Status",
+					allowedStatuses.contains(phaseConnectionStatusId));
+			foundStatuses.add(phaseConnectionStatusId);
+		}
+		Assert.assertTrue("CommunicationProtocol for Resend not found",
+				foundStatuses.contains(PersistentStatus.FAIL.getId()));
+
 	}
 
 	@Test

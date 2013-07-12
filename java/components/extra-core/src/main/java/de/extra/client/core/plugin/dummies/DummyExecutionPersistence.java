@@ -7,6 +7,7 @@ import javax.inject.Named;
 import de.extrastandard.api.model.execution.ICommunicationProtocol;
 import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.IExecutionPersistence;
+import de.extrastandard.api.model.execution.IProcedure;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 
@@ -68,6 +69,29 @@ public class DummyExecutionPersistence implements IExecutionPersistence {
 	public String maxSpecialStringResponseIdForExecution(
 			final String procedureName, final PhaseQualifier phaseQualifier,
 			final String subquery) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ICommunicationProtocol> findInputDataForExecutionWithResent(
+			final String procedureName, final PhaseQualifier phaseQualifier,
+			final Integer inputDataLimit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ICommunicationProtocol> findInputDataForExecutionWithResent(
+			final IProcedure procedure, final PhaseQualifier phaseQualifier,
+			final Integer inputDataLimit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long countInputDataForExecutionWithResend(
+			final String executionProcedure, final PhaseQualifier phaseQualifier) {
 		// TODO Auto-generated method stub
 		return null;
 	}

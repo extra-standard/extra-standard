@@ -18,6 +18,8 @@
  */
 package de.extrastandard.persistence.model;
 
+import java.util.Set;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -30,11 +32,13 @@ import de.extra.client.core.responce.impl.ResponseData;
 import de.extra.client.core.responce.impl.SingleResponseData;
 import de.extrastandard.api.model.content.IResponseData;
 import de.extrastandard.api.model.content.ISingleResponseData;
-import de.extrastandard.api.model.execution.IExecution;
 import de.extrastandard.api.model.execution.ICommunicationProtocol;
+import de.extrastandard.api.model.execution.IExecution;
+import de.extrastandard.api.model.execution.IPhaseConnection;
 import de.extrastandard.api.model.execution.PersistentStatus;
 import de.extrastandard.api.model.execution.PhaseQualifier;
 import de.extrastandard.persistence.repository.MandatorRepository;
+import de.extrastandard.persistence.repository.StatusRepository;
 
 /**
  * Setup the persistence.
@@ -59,6 +63,9 @@ public class PersistenceTestSetup {
 	@Inject
 	@Named("executionPersistenceJpa")
 	private ExecutionPersistenceJpa executionPersistence;
+
+	@Inject
+	private StatusRepository statusRepository;
 
 	@Transactional
 	public void setupInitialDaten() {
@@ -118,7 +125,8 @@ public class PersistenceTestSetup {
 		final Boolean successful = true;
 		final ISingleResponseData singleResponseData = new SingleResponseData(
 				calculatedRequestId, "ReturnCode", "ReturnText",
-				"RESPONSE_ID_Phase_1" + calculatedRequestId, true, PersistentStatus.DONE, "Output-ID");
+				"RESPONSE_ID_Phase_1" + calculatedRequestId, true,
+				PersistentStatus.DONE, "Output-ID");
 		responseData.addSingleResponse(singleResponseData);
 		executionForTestPhase2.endExecution(responseData);
 		logger.info("SetupTestDatenForProcedureSendFetchPhase2  finished");
@@ -142,11 +150,25 @@ public class PersistenceTestSetup {
 		final ISingleResponseData singleResponseDataForPhase3 = new SingleResponseData(
 				calculatedRequestIdForPhase3, "ReturnCodePhase2",
 				"ReturnTextPhase2", "RESPONSE_ID_Phase_1"
-						+ calculatedRequestIdForPhase3, successful, PersistentStatus.DONE, "Output-ID");
+						+ calculatedRequestIdForPhase3, successful,
+				PersistentStatus.DONE, "Output-ID");
 		responseDataForPhase3.addSingleResponse(singleResponseDataForPhase3);
 		executionForTestPhase3.endExecution(responseDataForPhase3);
 		logger.info("SetupTestDatenForProcedureSendFetchPhase3  finished");
 
 		return executionForTestPhase3;
+	}
+
+	@Transactional
+	public IExecution setUpTestDatenForFailProcedureSendFetchPhase3() {
+		final IExecution testDatenForProcedureSendFetchPhase3 = setUpTestDatenForProcedureSendFetchPhase3();
+		final Set<ICommunicationProtocol> communicationProtocols = testDatenForProcedureSendFetchPhase3
+				.getCommunicationProtocols();
+		for (final ICommunicationProtocol communicationProtocol : communicationProtocols) {
+			final IPhaseConnection phaseConnection = communicationProtocol
+					.getNextPhaseConnection();
+			phaseConnection.setFailed();
+		}
+		return testDatenForProcedureSendFetchPhase3;
 	}
 }

@@ -63,6 +63,12 @@ public class DBQueryDataPlugin implements IDataPlugin {
 	@Value("${core.execution.procedure}")
 	private String executionProcedure;
 
+	@PluginValue(key = "resendFailed:false")
+	// @Value("${plugins.dataplugin.dbQueryDataPlugin.resendFailed:true}")
+	private boolean resendFailed;
+
+	private boolean firstCall = true;
+
 	@PluginValue(key = "inputDataLimit")
 	private Integer inputDataLimit;
 
@@ -99,8 +105,14 @@ public class DBQueryDataPlugin implements IDataPlugin {
 	public synchronized boolean hasMoreData() {
 		final PhaseQualifier phaseQualifier = PhaseQualifier
 				.resolveByName(executionPhase);
-		inputDataList = executionPersistence.findInputDataForExecution(
-				executionProcedure, phaseQualifier, inputDataLimit);
+		if (resendFailed && computeFirstCall()) {
+			inputDataList = executionPersistence
+					.findInputDataForExecutionWithResent(executionProcedure,
+							phaseQualifier, inputDataLimit);
+		} else {
+			inputDataList = executionPersistence.findInputDataForExecution(
+					executionProcedure, phaseQualifier, inputDataLimit);
+		}
 		return !inputDataList.isEmpty();
 	}
 
@@ -108,8 +120,15 @@ public class DBQueryDataPlugin implements IDataPlugin {
 	public boolean isEmpty() {
 		final PhaseQualifier phaseQualifier = PhaseQualifier
 				.resolveByName(executionPhase);
-		final Long countInputData = executionPersistence
-				.countInputDataForExecution(executionProcedure, phaseQualifier);
+		Long countInputData = 0L;
+		if (resendFailed && firstCall) {
+			countInputData = executionPersistence
+					.countInputDataForExecutionWithResend(executionProcedure,
+							phaseQualifier);
+		} else {
+			countInputData = executionPersistence.countInputDataForExecution(
+					executionProcedure, phaseQualifier);
+		}
 		return (countInputData == 0);
 	}
 
@@ -127,5 +146,27 @@ public class DBQueryDataPlugin implements IDataPlugin {
 	 */
 	public void setInputDataLimit(final Integer inputDataLimit) {
 		this.inputDataLimit = inputDataLimit;
+	}
+
+	/**
+	 * Liefert true, nur bei 1. Aufrug der Methode.
+	 * 
+	 * @return the firstCall
+	 */
+	public synchronized boolean computeFirstCall() {
+		boolean isFirstCall = false;
+		if (firstCall) {
+			firstCall = false;
+			isFirstCall = true;
+		}
+		return isFirstCall;
+	}
+
+	/**
+	 * @param resendFailed
+	 *            the resendFailed to set
+	 */
+	public void setResendFailed(final boolean resendFailed) {
+		this.resendFailed = resendFailed;
 	}
 }
