@@ -50,6 +50,10 @@
 	<!--WS CXF  Level DEBUG Schaltet Logging der WS Klients an. Bietet hilfreiche Logging Informationen, 
 	wenn Logging Interseptor wegen größere Nachrichten nicht eingeschaltet werden kann -->
 	<logger name="org.apache.cxf.endpoint.ClientImpl" level="DEBUG" />	
+	
+	
+	<!--WSCXF  Level INFO schaltet Logging der SOAP Nachrichten an, WARN ab -->
+	<logger name="org.apache.cxf.services.ExtraService.extraPort" level="INFO" />		
 
 	<!-- extra Nachrichten -->
 	<logger name="de.extra.client.message.request" level="INFO">
