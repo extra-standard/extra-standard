@@ -43,8 +43,12 @@
 	
 	<logger name="de.extra.client.logging" level="DEBUG" />
 	
-	<!--WSCXF  Level INFO schaltet Logging der SAOP Nachrichten an, WARN ab -->
-	<logger name="org.apache.cxf.services.ExtraService.extraPort" level="INFO" />		
+	<!--WS CXF  Level DEBUG Schaltet Logging der WS Klients an. Bietet hilfreiche Logging Informationen, 
+	wenn Logging Interseptor wegen größere Nachrichten nicht eingeschaltet werden kann -->
+	<logger name="org.apache.cxf.endpoint.ClientImpl" level="DEBUG" />	
+	
+	<!--WSCXF  Level INFO schaltet Logging der SOAP Nachrichten an, WARN ab -->
+	<logger name="org.apache.cxf.services.ExtraService.extraPort" level="INFO" />	
 	
 	<logger name="de.extra.client.operation" level="INFO">
 		<appender-ref ref="OPERATION_FILE" />
@@ -58,6 +62,12 @@
 	<logger name="de.extra.client.message.response" level="INFO">
 		<appender-ref ref="MESSAGE_FILE" />
 	</logger>
+	
+	<!-- extra Nachrichten CXF Level INFO schaltet Logging der SOAP Nachrichten an, WARN ab -->
+	<logger name="org.apache.cxf.services.ExtraService.extraPort" level="INFO" >	
+		<appender-ref ref="MESSAGE_FILE" />
+	</logger>
+	
 
 	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
