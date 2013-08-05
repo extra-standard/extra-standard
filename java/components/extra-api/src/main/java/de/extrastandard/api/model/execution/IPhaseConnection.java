@@ -55,6 +55,6 @@ public interface IPhaseConnection {
 	/**
 	 * Markiert PhaseConnction as fehlgeschlagen. Status is Fail
 	 */
-	public void setFailed();
+	void setFailed();
 
 }

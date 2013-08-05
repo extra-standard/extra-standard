@@ -32,7 +32,7 @@ public interface ITransportObserver {
 	 *            Dateneinheit (zum Beispiel Dateiname), <i>muss</i> gleich dem
 	 *            zu Beginn verwendeten sein
 	 */
-	public void requestDataReceived(String unitName, long size);
+	void requestDataReceived(String unitName, long size);
 
 	/**
 	 * Der Request ist als Objekt im Speicher vollständig aufgebaut.
@@ -40,7 +40,7 @@ public interface ITransportObserver {
 	 * @param requestHeader
 	 *            fertig gestellter Header
 	 */
-	public void requestFilled(ITransportInfo transportInfo);
+	void requestFilled(ITransportInfo transportInfo);
 
 	/**
 	 * Der Request ist auf den Weg an sein Ziel an den Empfänger gebracht
@@ -54,7 +54,7 @@ public interface ITransportObserver {
 	 * @param size
 	 *            Größe in Bytes der Transport-Message
 	 */
-	public void requestForwarded(String destination, long size);
+	void requestForwarded(String destination, long size);
 
 	/**
 	 * Der Client hat eine Response empfangen und als Objekt im Speicher
@@ -63,7 +63,7 @@ public interface ITransportObserver {
 	 * @param responseHeader
 	 *            fertig gestellter Header
 	 */
-	public void responseFilled(ITransportInfo transportInfo);
+	void responseFilled(ITransportInfo transportInfo);
 
 	/**
 	 * Der Client hat die Response weitergegeben an das Ziel innerhalb des
@@ -77,5 +77,5 @@ public interface ITransportObserver {
 	 * @param size
 	 *            Größe in Bytes der Transport-Message
 	 */
-	public void responseDataForwarded(String destination, long size);
+	void responseDataForwarded(String destination, long size);
 }

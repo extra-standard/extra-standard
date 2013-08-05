@@ -23,6 +23,6 @@ import de.drv.dsrv.extrastandard.namespace.response.ResponseTransport;
 
 public interface IOutputPlugin {
 
-	public ResponseTransport outputData(RequestTransport request);
+	ResponseTransport outputData(RequestTransport request);
 
 }

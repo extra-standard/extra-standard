@@ -116,12 +116,12 @@ public interface ICommunicationProtocol extends PersistentEntity {
 	/**
 	 * @return
 	 */
-	public IStatus getStatus();
+	IStatus getStatus();
 
 	/**
 	 * Für externe Status-Änderungen (z.B. von 'WAIT' nach 'DONE')
 	 * 
 	 * @param aPersistentStatus
 	 */
-	public void changeStatus(PersistentStatus aPersistentStatus);
+	void changeStatus(PersistentStatus aPersistentStatus);
 }

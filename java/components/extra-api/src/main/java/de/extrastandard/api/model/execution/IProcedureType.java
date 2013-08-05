@@ -36,13 +36,13 @@ public interface IProcedureType {
 	 * @param phase
 	 * @return true, wenn die angegebene Phese EndPhase eine Procedur ist
 	 */
-	public boolean isProcedureEndPhase(final String phase);
+	boolean isProcedureEndPhase(final String phase);
 
 	/**
 	 * @param phase
 	 * @return die Phase, die der anegebene Phase innerhalb diese Procedure
 	 *         folgt
 	 */
-	public String getNextPhase(final String phase);
+	String getNextPhase(final String phase);
 
 }
