@@ -29,6 +29,6 @@ public interface IConfigPlugin {
 	/**
 	 * @return
 	 */
-	public IExtraProfileConfiguration getConfigFile();
+	IExtraProfileConfiguration getConfigFile();
 
 }
