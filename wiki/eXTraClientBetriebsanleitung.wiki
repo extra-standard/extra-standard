@@ -1,5 +1,8 @@
 #summary Einrichtung und Konfiguration der eXTra-Client Auslieferungsversion
 
+*Inhaltsverzeichnis*
+<wiki:toc max_depth="1" />
+
 = Betriebsanleitung =
 
 In der Betriebsanleitung wird beschrieben, wie der eXTra-Client zur Konfiguration und Betrieb von Fachverfahren verwendet werden kann. Die Auslieferungsversion des eXTra-Clients besteht aus einem zip-Archiv (z.B. extra-cli-1.0.0.zip). In diesem befindet sich der Basisteil. Die einzelnen Fachverfahren können getrennt vom Basisteil entwickelt werden und werden jeweils in gesonderten zip-Archiven ausgeliefert.
