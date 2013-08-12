@@ -10,25 +10,25 @@ In der eXTra-Datenbank werden die Fachverfahren verwaltet und die Kommunikations
   * Wie eine Fachverfahren konfiguriert wird.	
   * Wie die Nachrichten in der Datenbank verfolgt werden können.
 
-== Beispiel einer Konfiguration Anhang Fachverfahren Sterbedatenaustausch Ausland ==
+== Beispiel einer Konfiguration Anhang des Fachverfahrens Sterbedatenaustausch Ausland ==
 
-Das Datenbankmodel des Konfigurationsbereich ist unter [eXTraClientBetriebDatenbank] dokumentiert.
+Das Datenbankmodell für die Konfiguration ist unter [eXTraClientBetriebDatenbank] dokumentiert.
 
-Das Datenaustauch besteht aus 3 Schritten. Details siehe [eXTraSterbedatenVerfahren]: 
+Der Datenaustauch besteht aus drei Schritten. Details siehe [eXTraSterbedatenVerfahren]: 
 
-  # PHASE1 Senden der fachlichen Daten an eine eXTra Server 
-  # PHASE2 Sender fordert die Verarbeitungsergebnisse des Fachvverfahren an
-  # PHASE3 Bestätigung der erfolgreich abgeholten Rückmeldungen
+  # PHASE1: Senden der fachlichen Daten an eine eXTra Server 
+  # PHASE2: Sender fordert die Verarbeitungsergebnisse des Fachvverfahren an.
+  # PHASE3: Bestätigung der erfolgreich abgeholten Rückmeldungen
   
-Dabei erfolgen die Schritte PHASE2 und PHASE3 voneinander abhängig. Die Bestätigung der abgeholten Rückmeldungen (PHASE3), bezieht sich auf die Nachrichten, die in der PHASE2 abgehollt sind und nach der bestätigung der Fachanwendung.
+Dabei erfolgen die Schritte PHASE2 und PHASE3 abhängig voneinander. Die Bestätigung der abgeholten Rückmeldungen (PHASE3), bezieht sich auf die Nachrichten, die in der PHASE2 abgeholt worden sind und nach der Bestätigung der Fachanwendung.
   
-Konfiguration für die Procedure Sterbedatenabgleich sieht wie folgt aus:
+Konfiguration für das Fachverfahren Sterbedatenabgleich sieht wie folgt aus:
 
 http://extra-standard.googlecode.com/svn/wiki/images/eXTra-konfiguration-sterbemeldungausland.jpg
 
 == Nachverfolgung aller Phasen des Szenarios Sterbemeldung Ausland ==
 
-Die Kommunikation in Rahmen des Fachverfahren kann mit folgenden SQL Statement nachverfolgt werden:
+Die Kommunikation in Rahmen des Fachverfahrens kann mit folgenden SQL Statement nachverfolgt werden:
 
 {{{
 select MANDATOR.NAME, PROCEDURE.NAME, EXECUTION.PHASE,EXECUTION.ID,
@@ -55,7 +55,7 @@ and PROCEDURE.NAME = 'SterbemeldungAusland'
 order by phase
 }}}
 
-== Nachverfolgung für die Phase1 ==
+== Nachverfolgung für die Phase 1 ==
 
 Die Kommunikation in Rahmen des Fachverfahren kann mit folgenden SQL Statement nachverfolgt werden:
 
