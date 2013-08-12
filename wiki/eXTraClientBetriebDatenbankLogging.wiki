@@ -1,14 +1,14 @@
-#summary Nachverfolgung der Nachrichtenaustauch in der Datenbank
+#summary Nachverfolgung des Nachrichtenaustauchs in der Datenbank
 
 *Inhaltsverzeichnis*
 <wiki:toc max_depth="2" />
 
-= Nachverfolgung der Nachrichtenaustauch in der Datenbank =
+= Nachverfolgung des Nachrichtenaustauchs in der Datenbank =
 
-In der eXTra-Datenbank werden die Fachverfahren verwaltet und die Kommunikationsabläufe protokolliert. Anhang der Fachverfahren "Sterbedatenaustausch Ausland" wird Präsentiert:
+In der eXTra-Datenbank werden die Fachverfahren verwaltet und die Kommunikationsabläufe protokolliert. Anhang der Fachverfahren "Sterbedatenaustausch Ausland" werde folgende Punkte dargestellt:
 
   *Wie eine Fachverfhren konfiguriert wird.	
-  *Wie die Nachrichten in der Datenbank verfolgt werden können
+  *Wie die Nachrichten in der Datenbank verfolgt werden können.
 
 == Beispiel einer Konfiguration Anhang Fachverfahren Sterbedatenaustausch Ausland ==
 
@@ -119,7 +119,7 @@ and PROCEDURE.NAME = 'SterbemeldungAusland'
 }}}
 
 
- Die Ergebnisser dieser Abfrage siehen wie folgt aus:
+Die Ergebnisser dieser Abfrage sehen wie folgt aus:
  
 http://extra-standard.googlecode.com/svn/wiki/images/dblog-sterbedatenausland-phase2.jpg
 
@@ -165,7 +165,7 @@ and EXECUTION.PHASE = 'PHASE3'
 and PROCEDURE.NAME = 'SterbemeldungAusland'
 }}}
 
- Die Ergebnisser dieser Abfrage siehen wie folgt aus:
+Die Ergebnisse dieser Abfrage sehen wie folgt aus:
  
 http://extra-standard.googlecode.com/svn/wiki/images/dblog-sterbedatenausland-phase3.jpg
 
