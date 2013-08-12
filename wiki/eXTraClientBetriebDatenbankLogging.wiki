@@ -80,7 +80,8 @@ and  COMMUNICATION_PROTOCOL.INPUT_DATA_QUALIFIER = 'CONTENT'
 }}}
  
 
-Die Ergebnisse dieser Abfrage sehen wie folgt aus:
+Die Ergebnisse dieser Abfrage sehen wie folgt aus:   
+
  
 http://extra-standard.googlecode.com/svn/wiki/images/dblog-sterbedatenausland-phase1.jpg
 
@@ -119,7 +120,8 @@ and PROCEDURE.NAME = 'SterbemeldungAusland'
 }}}
 
 
-Die Ergebnisse dieser Abfrage sehen wie folgt aus:
+Die Ergebnisse dieser Abfrage sehen wie folgt aus:     
+
  
 http://extra-standard.googlecode.com/svn/wiki/images/dblog-sterbedatenausland-phase2.jpg
 
@@ -165,7 +167,8 @@ and EXECUTION.PHASE = 'PHASE3'
 and PROCEDURE.NAME = 'SterbemeldungAusland'
 }}}
 
-Die Ergebnisse dieser Abfrage sehen wie folgt aus:
+Die Ergebnisse dieser Abfrage sehen wie folgt aus:     
+
  
 http://extra-standard.googlecode.com/svn/wiki/images/dblog-sterbedatenausland-phase3.jpg
 
