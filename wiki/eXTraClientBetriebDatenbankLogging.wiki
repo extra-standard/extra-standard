@@ -26,7 +26,7 @@ http://extra-standard.googlecode.com/svn/wiki/images/eXTra-konfiguration-sterbem
 
 == Nachverfolgung aller Phasen des Szenarios Sterbemeldung Ausland ==
 
-Die Kommunikation in Rahmen des Fachverfahrens kann mit folgenden SQL Statement nachverfolgt werden:
+Die Kommunikation in Rahmen des Fachverfahrens kann mit folgendem SQL-Statement nachverfolgt werden:
 
 {{{
 select MANDATOR.NAME, PROCEDURE.NAME, EXECUTION.PHASE,EXECUTION.ID,
