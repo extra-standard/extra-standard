@@ -27,7 +27,7 @@
     * [eXTraClientBetriebErfolgFehler Fehlerbehandlung]
     * [eXTraClientBetriebLogging Logging]
     * [eXTraClientBetriebDatenbank Datenbank]
-    * [eXTraClientBetriebDatenbankLogging DatenbankLog]
+    * [eXTraClientBetriebDatenbankLogging Datenbank Logging]
     * [eXTraClientBetriebSzenarioSendFetch Konf. Fachverfahren]
   * [eXTraSpecIssues Offene Punkte]    
   * [eXTraEntwProzess Entwicklungsprozess]
