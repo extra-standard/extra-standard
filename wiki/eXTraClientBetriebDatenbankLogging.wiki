@@ -88,7 +88,7 @@ http://extra-standard.googlecode.com/svn/wiki/images/dblog-sterbedatenausland-ph
 
  * Wann der Nachrichtenaustausch stattgefunden hat.
  * Welche Daten ausgetauscht wurden (INPUT_IDENTIFIERT und INPUT_QUALIFIER).
- * Wie erfolgreich die Ausführung (EXECUTION_STATUS) sowie der einzelne Datenaustausch (COMMUNICATION_PROTOKOL_STATUS) war
+ * Wie erfolgreich die Ausführung (EXECUTION_STATUS) sowie der einzelne Datenaustausch (COMMUNICATION_PROTOKOL_STATUS) war.
  
  
 == Nachverfolgung für die PHASE2 ==
