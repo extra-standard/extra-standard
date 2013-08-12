@@ -55,9 +55,9 @@ and PROCEDURE.NAME = 'SterbemeldungAusland'
 order by phase
 }}}
 
-== Nachverfolgung für die Phase 1 ==
+== Nachverfolgung für die PHASE1 ==
 
-Die Kommunikation in Rahmen des Fachverfahren kann mit folgenden SQL Statement nachverfolgt werden:
+Die Kommunikation in Rahmen des Fachverfahrens kann mit folgenden SQL Statement nachverfolgt werden:
 
 {{{
 select MANDATOR.NAME, PROCEDURE.NAME, EXECUTION.PHASE,EXECUTION.ID,
@@ -80,20 +80,22 @@ and EXECUTION.PHASE = 'PHASE1'
 and PROCEDURE.NAME = 'SterbemeldungAusland'
 and  COMMUNICATION_PROTOCOL.INPUT_DATA_QUALIFIER = 'CONTENT'
 }}}
- Die Ergebnisser dieser Abfrage siehen wie folgt aus:
+ 
+
+Die Ergebnisse dieser Abfrage sehen wie folgt aus:
  
 http://extra-standard.googlecode.com/svn/wiki/images/dblog-sterbedatenausland-phase1.jpg
 
-Über die Datenbank kann nachvolzogen werden:
+Über die Datenbank können folgende Sachverhalte nachvollzogen werden:
 
- * Wann die Nachrichtenaustausch stattgefunden
- * Welche Daten ausgetausche wurden (INPUT_IDENTIFIERT und INPUT_QUALIFIER)
- * Wie erfolgreich die Ausführung (EXECUTION_STATUS) sowie die einzeln Datenaustaausch (COMMUNICATION_PROTOKOL_STATUS) war
+ * Wann der Nachrichtenaustausch stattgefunden hat.
+ * Welche Daten ausgetauscht wurden (INPUT_IDENTIFIERT und INPUT_QUALIFIER).
+ * Wie erfolgreich die Ausführung (EXECUTION_STATUS) sowie der einzelne Datenaustausch (COMMUNICATION_PROTOKOL_STATUS) war
  
  
-== Nachverfolgung für die Phase2 ==
+== Nachverfolgung für die PHASE2 ==
 
-Für die Phase2 können die Ergebnisse mit folgenden Statement abgefragt werden:
+Für die PHASE2 können die Ergebnisse mit folgenden Statement abgefragt werden:
 
 {{{
 select PROCEDURE.NAME, EXECUTION.PHASE,EXECUTION.ID, executionStatus.NAME as EXECUTION_STATUS,
@@ -119,29 +121,29 @@ and PROCEDURE.NAME = 'SterbemeldungAusland'
 }}}
 
 
-Die Ergebnisser dieser Abfrage sehen wie folgt aus:
+Die Ergebnisse dieser Abfrage sehen wie folgt aus:
  
 http://extra-standard.googlecode.com/svn/wiki/images/dblog-sterbedatenausland-phase2.jpg
 
-Über die Datenbank kann nachvolzogen werden:
+Über die Datenbank können folgende Punkte nachvolzogen werden:
 
- * Wann die Nachrichtenaustausch stattgefunden
- * Welche Daten ausgetausche wurden (INPUT_IDENTIFIERT und INPUT_QUALIFIER)
- * Wie erfolgreich die Ausführung (EXECUTION_STATUS) sowie die einzeln Datenaustaausch (COMMUNICATION_PROTOKOL_STATUS) war
- * Welche Daten von Server empfangen werden (OUTPUT_IDENTIFIER)
- * Mit welchen Parameter die Abfrage nach Daten erfolgte (INPUT_IDENTIFIERT , INPUT_DATA_CRITERIA)
+ * Wann der Nachrichtenaustausch stattgefunden hat.
+ * Welche Daten ausgetausch wurden (INPUT_IDENTIFIERT und INPUT_QUALIFIER).
+ * Wie erfolgreich die Ausführung (EXECUTION_STATUS) sowie der einzelne Datenaustausch (COMMUNICATION_PROTOKOL_STATUS) war.
+ * Welche Daten vom Server empfangen werden (OUTPUT_IDENTIFIER).
+ * Mit welchen Parametern die Abfrage nach Daten erfolgte (INPUT_IDENTIFIERT , INPUT_DATA_CRITERIA).
 
 
 Es sind unterschiedlichen Ergebnisse der Jobausführung möglich:
 
- # Abfrage mit der ID (EXECUTION.ID) = 1 hat keine Ergebnisse von Server geliefert (OUTPUT_IDENTIFIER ist leer)
- # Abfragen mit ID's (EXECUTION.ID) 5 und 10 haben von dem Server jeweils 3 Dateien abgeholt. In der Spalte OUTPUT_IDENTIFIER sind die Namen der Dateien aufgelistet
- # Abfrage mit dem  ID (EXECUTION.ID) = 11 wurde technisch erfolgreich ausgeführt (Execution_STATUS=DONE), dennoch Fachlich wurde von dem Server ein Fehler gemeldet (COMMUNICATION_STATUS=FAIL). In der Spalte COMMUNICATION_PROTOCOL.RETURN_TEXT stehen genaue angaben zu der Servermeldung.
+ # Abfrage mit der ID (EXECUTION.ID) = 1 hat keine Ergebnisse vom Server geliefert (OUTPUT_IDENTIFIER ist leer).
+ # Abfragen mit ID's (EXECUTION.ID) 5 und 10 haben von dem Server jeweils drei Dateien abgeholt. In der Spalte OUTPUT_IDENTIFIER sind die Namen der Dateien aufgelistet.
+ # Abfrage mit dem  ID (EXECUTION.ID) = 11 wurde technisch erfolgreich ausgeführt (Execution_STATUS=DONE), jedoch fachlich wurde vom Server ein Fehler gemeldet (COMMUNICATION_STATUS=FAIL). In der Spalte COMMUNICATION_PROTOCOL.RETURN_TEXT stehen genaue Angaben zu dieser Servermeldung.
  # Abfrage mit dem ID (EXECUTION.ID) = 11 hat einen technishen Fehler verursacht, was aus dem (Execution_STATUS=FAIL) abgeleitet werden kann. 
  
-== Nachverfolgung für die Phase3 ==
+== Nachverfolgung für die PHASE3 ==
 
-Für die Phase3 sieht SQL Abfrage wie folgt aus:
+Für die PHASE3 sieht SQL Abfrage wie folgt aus:
 {{{
 select PROCEDURE.NAME, EXECUTION.PHASE,EXECUTION.ID, executionStatus.NAME as EXECUTION_STATUS,
  EXECUTION.START_TIME, EXECUTION.END_TIME, 
@@ -169,4 +171,4 @@ Die Ergebnisse dieser Abfrage sehen wie folgt aus:
  
 http://extra-standard.googlecode.com/svn/wiki/images/dblog-sterbedatenausland-phase3.jpg
 
-Die Ergebnisse der Ausführung der Phase3 zeigen, dass die in der Phase 2 abgeholten Daten mit dem INPUT_IDENTIFIER (RESPONSE_ID des Servers) 110016, 110017, 110018 erfolgreich von der Fachanwendung verarbeitet worden und gegenüber dem Server bestätigt.
+Die Ergebnisse der Ausführung der PHASE3 zeigen, dass die in der PHASE2  abgeholten Daten mit dem INPUT_IDENTIFIER (RESPONSE_ID des Servers) 110016, 110017, 110018 erfolgreich von der Fachanwendung verarbeitet worden sind und gegenüber dem Server bestätigt wurden.
