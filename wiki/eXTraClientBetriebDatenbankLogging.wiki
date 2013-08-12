@@ -7,8 +7,8 @@
 
 In der eXTra-Datenbank werden die Fachverfahren verwaltet und die Kommunikationsabläufe protokolliert. Anhang der Fachverfahren "Sterbedatenaustausch Ausland" werde folgende Punkte dargestellt:
 
-  *Wie eine Fachverfhren konfiguriert wird.	
-  *Wie die Nachrichten in der Datenbank verfolgt werden können.
+  * Wie eine Fachverfahren konfiguriert wird.	
+  * Wie die Nachrichten in der Datenbank verfolgt werden können.
 
 == Beispiel einer Konfiguration Anhang Fachverfahren Sterbedatenaustausch Ausland ==
 
