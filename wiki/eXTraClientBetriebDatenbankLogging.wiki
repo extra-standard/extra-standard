@@ -1,5 +1,8 @@
 #summary Nachverfolgung der Nachrichtenaustauch in der Datenbank
 
+*Inhaltsverzeichnis*
+<wiki:toc max_depth="2" />
+
 = Nachverfolgung der Nachrichtenaustauch in der Datenbank =
 
 In der eXTra-Datenbank werden die Fachverfahren verwaltet und die Kommunikationsabläufe protokolliert. Anhang der Fachverfahren "Sterbedatenaustausch Ausland" wird Präsentiert:
