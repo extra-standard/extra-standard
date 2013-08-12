@@ -12,9 +12,7 @@ In der eXTra-Datenbank werden die Fachverfahren verwaltet und die Kommunikations
 
 == Beispiel einer Konfiguration Anhang des Fachverfahrens Sterbedatenaustausch Ausland ==
 
-Das Datenbankmodell für die Konfiguration ist unter [eXTraClientBetriebDatenbank] dokumentiert.
-
-Der Datenaustauch besteht aus drei Schritten. Details siehe [eXTraSterbedatenVerfahren]: 
+Das Datenbankmodell für die Konfiguration ist unter [eXTraClientBetriebDatenbank] dokumentiert. Der Datenaustauch besteht aus drei Schritten. Details siehe [eXTraSterbedatenVerfahren]: 
 
   # PHASE1: Senden der fachlichen Daten an eine eXTra Server 
   # PHASE2: Sender fordert die Verarbeitungsergebnisse des Fachvverfahren an.
