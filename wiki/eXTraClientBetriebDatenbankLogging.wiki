@@ -14,7 +14,7 @@ In der eXTra-Datenbank werden die Fachverfahren verwaltet und die Kommunikations
 
 Das Datenbankmodel des Konfigurationsbereich ist unter http://code.google.com/p/extra-standard/wiki/eXTraClientBetriebDatenbank dokumentiert.
 
-Das Datenaustauch besteht aus 3 Schritten (Details siehe unter http://code.google.com/p/extra-standard/wiki/eXTraSterbedatenVerfahren): 
+Das Datenaustauch besteht aus 3 Schritten. Details siehe  http://code.google.com/p/extra-standard/wiki/eXTraSterbedatenVerfahren: 
 
   # PHASE1 Senden der fachlichen Daten an eine eXTra Server 
   # PHASE2 Sender fordert die Verarbeitungsergebnisse des Fachvverfahren an
