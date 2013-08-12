@@ -24,7 +24,7 @@ Konfiguration für das Fachverfahren Sterbedatenabgleich sieht wie folgt aus:
 
 http://extra-standard.googlecode.com/svn/wiki/images/eXTra-konfiguration-sterbemeldungausland.jpg
 
-== Nachverfolgung gesamter Phasen des Szenarios Sterbemeldung Ausland ==
+== Nachverfolgung gesamter PHASEN des Szenarios Sterbemeldung Ausland ==
 
 Die Kommunikation in Rahmen des Fachverfahrens kann mit folgendem SQL-Statement nachverfolgt werden:
 
