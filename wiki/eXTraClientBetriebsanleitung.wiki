@@ -92,8 +92,8 @@ Im Verarbeitungsverlauf können vom eXTra-Client Ergebnisdateien abgelegt worden
 Folgendes Beispiel (Fachverfahren Sterbedaten Ausland) zeigt die Verwendung der Aufrufparameter: 
 
  * Phase 1: Senden einer Datei an den eXTra-Server
- * Phase 2: Empfang von 3 Dateien vom eXTra-Server
- * Verarbeitung der Dateien:
+ * Phase 2 A: Empfang von 3 Dateien vom eXTra-Server
+ * Phase 2 B: Verarbeitung der Dateien und Ergebnismeldung:
    * Der eXTra Client ist so konfiguriert, das eine Datei erst dann bestätigt werden, wenn ihre erfolgreiche Verarbeitung gemeldet wurde.  (Eintrag in phase2/extra-properties-basic.properties: plugins.responseprocessplugin.fileSystemResultPackageDataResponseProcessPlugin.successStatus=WAIT) 
    * Eine Datei wird erfolgreich verarbeitet (Meldung an den eXTra-Client)
    * Fehler beim Verarbeiten einer Datei (Meldung an den eXTra-Client)
