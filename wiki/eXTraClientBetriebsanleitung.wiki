@@ -129,7 +129,9 @@ In der Tabelle COMMUNICATION_PROTOCOL sieht man die Verarbeitungsergebnisse:
 http://extra-standard.googlecode.com/svn/wiki/images/betrieb_nach_phase2_status_meldung.png
 
 ===== Aufruf Phase 3: Bestätigung der erfolgreich verarbeiteten Dateien an den eXTra-Server =====
-<code>extra.bat conf\luxemburg\phase2</code>
+In Phase 3 werden erfolgreich verarbeitete Dateien dem eXTra-Server über diesen Aufruf bestätigt.
+
+<code>extra.bat conf\luxemburg\phase3</code>
 
 Nach Aufruf der Phase 3 darf nur die Datei '...676' als erfolgreich verarbeitet gemeldet worden sein. In der Tabelle COMMUNICATION_PROTOCOL ist ein entsprechender Eintrag vorhanden:
 
