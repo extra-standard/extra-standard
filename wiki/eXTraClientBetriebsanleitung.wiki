@@ -85,7 +85,7 @@ Im Verarbeitungsverlauf können vom eXTra-Client Ergebnisdateien abgelegt worden
 	
 || Parameter || Beispiel || Beschreibung ||
 || -oc "Dateiname"|| extra.bat conf\luxemburg\phase2 -oc "daten1" || Meldet das die Datei "daten1" erfolgreich verarbeitet werden konnte (oc steht für "Output Confirm") ||
-|| -of "Dateiname"|| extra.bat -of "daten2" || Meldet das die Datei "daten2" nicht erfolgreich verarbeitet werden konnte (of steht für "Output Failure") ||
+|| -of "Dateiname"|| extra.bat conf\luxemburg\phase2 -of "daten2" || Meldet das die Datei "daten2" nicht erfolgreich verarbeitet werden konnte (of steht für "Output Failure") ||
 
 ==== Beispiel für die Verwendung der Aufrufparameter ====
 
