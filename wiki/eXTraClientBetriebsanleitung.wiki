@@ -87,7 +87,16 @@ Im Verarbeitungsverlauf können vom eXTra-Client Ergebnisdateien abgelegt worden
 || -oc "Dateiname"|| -oc RESPONSE_10001_1355733323891 || Meldet das die Datei "Dateiname" erfolgreich verarbeitet werden konnte (oc steht für "Output Confirm") ||
 || -of "Dateiname"|| -of RESPONSE_10001_1355733323891 || Meldet das die Datei "Dateiname" nicht erfolgreich verarbeitet werden konnte (of steht für "Output Failure") ||
 
-=== Beispiel einer Aufrufreihenfolge ===
+==== Beispiel für die Verwendung der Aufrufparameter ====
+
+ * Phase 1: Senden einer Datei an den eXTra-Server
+ * Phase 2: Empfang von 3 Dateien vom eXTra-Server
+ * Verarbeitung der Dateien: 
+   * Eine Datei wird erfolgreich verarbeitet (Meldung an den eXTra-Client)
+   * Fehler beim Verarbeiten einer Datei (Meldung an den eXTra-Client)
+   * Eine Datei wird gar nicht verarbeitet
+ * Phase 3: Bestätigung erfolgreich verarbeiteter Dateien
+ 
 Im Auslieferungsbestan folgenden wird 	
 
 Die Aufrufe werden über den Parametrisierten Aufruf der Datei 'extra.bat' durchgeführt.
@@ -95,11 +104,15 @@ Die Aufrufe werden über den Parametrisierten Aufruf der Datei 'extra.bat' durch
 Aufruf Phase 1: Eine Datei an den eXTra-Server senden
 Aufruf Phase 2: 3 Dateien vom Server empfangen.
 
+Erfolgreiche Verarbeitung einer Datei dem eXTra-Client melden (Endung 676) 
 extra.bat conf\luxemburg\phase2 -oc "FIKELA.PRD.DS.LU2013-08-28 10-01-34.676"
 
 
-Aufruf Phase 3: Eine Datei an den eXTra-Server senden
+Fehlerhafte Verarbeitung einer Datei dem eXTra-Client melden (Endung 693) 
+extra.bat conf\luxemburg\phase2 -of "FIKELA.PRD.DS.LU2013-08-28 10-01-34.693"
 
-Aufruf Phase 3: Keine Bestätigung
+
+Aufruf Phase 3: Bestätigung erfolgreich verarbeiteter Dateien an den eXTra-Server
+
 
 	
