@@ -89,20 +89,25 @@ Im Verarbeitungsverlauf können vom eXTra-Client Ergebnisdateien abgelegt worden
 
 ==== Beispiel für die Verwendung der Aufrufparameter ====
 
+Das Beispiel stammt aus dem 
+
  * Phase 1: Senden einer Datei an den eXTra-Server
  * Phase 2: Empfang von 3 Dateien vom eXTra-Server
- * Verarbeitung der Dateien: 
+ * Verarbeitung der Dateien:
+   * Der eXTra Client ist so konfiguriert, das Datei erst dann bestätigt werden, wenn ihre erfolgreiche Verarbeitung gemeldet wurde.  (Eintrag in phase2/extra-properties-basic.properties: plugins.responseprocessplugin.fileSystemResultPackageDataResponseProcessPlugin.successStatus=WAIT) 
    * Eine Datei wird erfolgreich verarbeitet (Meldung an den eXTra-Client)
    * Fehler beim Verarbeiten einer Datei (Meldung an den eXTra-Client)
    * Eine Datei wird gar nicht verarbeitet
  * Phase 3: Bestätigung der erfolgreich verarbeiteten Dateien an den eXTra-Server
  
 
-Die Aufrufe werden über den Parametrisierten Aufruf der Datei 'extra.bat' durchgeführt.
+Die Aufrufe werden über den Parametrisierten Aufruf der Datei 'extra.bat' durchgeführt. (siehe Verzeichnis extra-sterbedaten-ausland/bin)
 
 ===== Aufruf Phase 1: Senden einer Datei an den eXTra-Server =====
+{code}extra.bat conf\luxemburg\phase1{/code}
 
 ===== Aufruf Phase 2: Empfang von 3 Dateien vom eXTra-Server =====
+{code}extra.bat conf\luxemburg\phase2{/code}
 
 ===== Verarbeitung der Dateien ====
 Dem eXTra-Client soll das Verarbeitungsergebnis der drei Dateien gemeldet werden. In der Kommunikations-Tabelle (COMMUNICATION_PROTOCOL) vermerkt der eXTra-Client dieses Ergebnis. Nur erfolgreich verarbeitete Dateien meldet der eXTra-Client in Phase 3 an den Server.
