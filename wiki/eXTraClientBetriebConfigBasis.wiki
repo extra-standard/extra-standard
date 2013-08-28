@@ -8,7 +8,7 @@ In dieser Konfigurationsdatei ist die Basiskonfiguration des Fachverfahrens unte
  * *Plugins*
    * Angabe der Plugins
    * Konfiguration der Plugins (z.B. Profil-Datei)
- * *Vlidierung*
+ * *Validierung*
    * Validierung des ausgehenden XMLTransports
  * *Message-Header*
    * _Request_, _Sender_ und _Receiver_ definieren
