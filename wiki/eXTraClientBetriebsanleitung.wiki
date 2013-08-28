@@ -89,45 +89,47 @@ Im Verarbeitungsverlauf können vom eXTra-Client Ergebnisdateien abgelegt worden
 
 ==== Beispiel für die Verwendung der Aufrufparameter ====
 
-Das Beispiel stammt aus dem 
+Folgendes Beispiel (Fachverfahren Sterbedaten Ausland) zeigt die Verwendung der Aufrufparameter: 
 
  * Phase 1: Senden einer Datei an den eXTra-Server
  * Phase 2: Empfang von 3 Dateien vom eXTra-Server
  * Verarbeitung der Dateien:
-   * Der eXTra Client ist so konfiguriert, das Datei erst dann bestätigt werden, wenn ihre erfolgreiche Verarbeitung gemeldet wurde.  (Eintrag in phase2/extra-properties-basic.properties: plugins.responseprocessplugin.fileSystemResultPackageDataResponseProcessPlugin.successStatus=WAIT) 
+   * Der eXTra Client ist so konfiguriert, das eine Datei erst dann bestätigt werden, wenn ihre erfolgreiche Verarbeitung gemeldet wurde.  (Eintrag in phase2/extra-properties-basic.properties: plugins.responseprocessplugin.fileSystemResultPackageDataResponseProcessPlugin.successStatus=WAIT) 
    * Eine Datei wird erfolgreich verarbeitet (Meldung an den eXTra-Client)
    * Fehler beim Verarbeiten einer Datei (Meldung an den eXTra-Client)
    * Eine Datei wird gar nicht verarbeitet
  * Phase 3: Bestätigung der erfolgreich verarbeiteten Dateien an den eXTra-Server
  
-
 Die Aufrufe werden über den Parametrisierten Aufruf der Datei 'extra.bat' durchgeführt. (siehe Verzeichnis extra-sterbedaten-ausland/bin)
 
 ===== Aufruf Phase 1: Senden einer Datei an den eXTra-Server =====
-{code}extra.bat conf\luxemburg\phase1{/code}
+<code>extra.bat conf\luxemburg\phase1</code>
 
 ===== Aufruf Phase 2: Empfang von 3 Dateien vom eXTra-Server =====
-{code}extra.bat conf\luxemburg\phase2{/code}
+<code>extra.bat conf\luxemburg\phase2</code>
+
+http://extra-standard.googlecode.com/svn/wiki/images/betrieb_nach_phase2_dateien_empfangen.png
 
 ===== Verarbeitung der Dateien ====
 Dem eXTra-Client soll das Verarbeitungsergebnis der drei Dateien gemeldet werden. In der Kommunikations-Tabelle (COMMUNICATION_PROTOCOL) vermerkt der eXTra-Client dieses Ergebnis. Nur erfolgreich verarbeitete Dateien meldet der eXTra-Client in Phase 3 an den Server.
 
 Tabelle COMMUNICATION_PROTOCOL nach Aufruf von Phase 2:
- 
+http://extra-standard.googlecode.com/svn/wiki/images/betrieb_nach_phase2_status.png
 
-Erfolgreiche Verarbeitung einer Datei dem eXTra-Client melden (Endung 676) 
-extra.bat conf\luxemburg\phase2 -oc "FIKELA.PRD.DS.LU2013-08-28 10-01-34.676"
+Erfolgreiche Verarbeitung einer Datei dem eXTra-Client melden (Endung 676):
+<code>extra.bat conf\luxemburg\phase2 -oc "FIKELA.PRD.DS.LU2013-08-28 10-01-34.676"</code>
 
-Fehlerhafte Verarbeitung einer Datei dem eXTra-Client melden (Endung 693) 
-extra.bat conf\luxemburg\phase2 -of "FIKELA.PRD.DS.LU2013-08-28 10-01-34.693"
+Fehlerhafte Verarbeitung einer Datei dem eXTra-Client melden (Endung 693):
+<code> extra.bat conf\luxemburg\phase2 -of "FIKELA.PRD.DS.LU2013-08-28 10-01-34.693"</code>
 
 Tabelle COMMUNICATION_PROTOCOL:
+http://extra-standard.googlecode.com/svn/wiki/images/betrieb_nach_phase2_status_meldung.png
 
- 
 ===== Aufruf Phase 3: Bestätigung der erfolgreich verarbeiteten Dateien an den eXTra-Server =====
-
+<code>extra.bat conf\luxemburg\phase2</code>
 
 Nach Aufruf der Phase 3 darf nur die Datei '...676' als erfolgreich verarbeitet gemeldet worden sein:
+http://extra-standard.googlecode.com/svn/wiki/images/betrieb_nach_phase3_bestaetigung.png
 
 
 
