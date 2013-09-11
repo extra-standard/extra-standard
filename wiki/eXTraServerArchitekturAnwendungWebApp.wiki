@@ -18,7 +18,7 @@ Ein eXTra-Server (im Sprachgebrauch von DSRV: [http://extra-standard.googlecode.
   
 Genau diese zwei Aufgaben sind die Stärke des Frameworks [http://www.manning.com/ibsen/Camel_ch01_update.pdf Apache Camel]. Daher wird die Webanwendung des eXTra-Servers auf Apache-Camel umgesetzt. Ein gutes Beispielszenario wofür Camel genutzt werden kann, kann in diesem Tutorial gefunden werden: [http://goo.gl/cuo9cy Tutorial Camel in Real Life Integration].
 
-Architektur von Apache Camel:
+*Architektur von Apache Camel:*
 
 http://camel.apache.org/architecture.data/camel-components.png
 
