@@ -13,6 +13,7 @@
       * [eXTraArchitekturAnwendungProfiling Profiling]
       * [eXTraClientArchitekturTestAutomatisch Autom. Tests]
       * [eXTraClientArchitekturMTOM Webservice Attachments MTOM]
+      * [eXTraServerArchitekturAnwendungWebApp eXTra Webanwendung (WebApp)]
   * [eXTraVerfahren Fachverfahren] 
       * [eXTraErstellungVerfahren Erstellung Fachverfahren]   
       * [eXTraSterbedatenVerfahren Sterbedatenabgleich Ausland]
