@@ -1,4 +1,5 @@
 #summary Beschreibung der technischen eXTra-WebApp-Anwendungsarchitektur
+#labels Featured
 
 = eXTra-!WebApp-Anwendungsarchitektur (Webanwendung - eXTra-Server) =
 
