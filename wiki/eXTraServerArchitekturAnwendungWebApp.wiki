@@ -1,6 +1,6 @@
 #summary Beschreibung der technischen eXTra-WebApp-Anwendungsarchitektur
 
-= eXTra-WebApp-Anwendungsarchitektur (Webanwendung - eXTra-Server) =
+= eXTra-!WebApp-Anwendungsarchitektur (Webanwendung - eXTra-Server) =
 
 *Inhaltsverzeichnis*
 <wiki:toc max_depth="1" />
