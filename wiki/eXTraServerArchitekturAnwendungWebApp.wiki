@@ -5,8 +5,17 @@
 *Inhaltsverzeichnis*
 <wiki:toc max_depth="1" />
 
+= STATUS: DRAFT! =
 
 = Philosophie des eXTra-Servers Webanwendung =
+
+Ein eXTra-Server (im Sprachgebrauch von DSRV: Single Point of Contact - SPoC) beinhaltet im Prinzip zwei Aufgaben:
+  * Routing und Transformation: Empfang einer Nachricht und weiterleiten dieser Nachricht an ein bestimmtes Zielsystem. 
+    * Konkret wird eine eXTra-Nachricht empfangen und anschließend über mehrere Transformatoren an eine Fachanwendung weitergereicht.
+    * Es kann wiederum eine eXTra-Client angesprochen werden.
+  * Integration: Unterschiedliche Systeme bzw. Fachanwendungen müssen integriert und angesprochen werden.
+  
+Genau diese zwei Aufgaben sind die Stärke des Frameworks Apache Camel [http://www.manning.com/ibsen/Camel_ch01_update.pdf]. Daher wird die Webanwendung des eXTra-Servers auf Apache-Camel umgesetzt. Ein gutes Beispielszenario wofür Camel genutzt werden kann, kann in diesem Tutorial gefunden werden: Tutorial Camel in Real Life Integration [http://goo.gl/cuo9cy].
 
 = Referenzen =
   * Apache Camel: http://camel.apache.org
