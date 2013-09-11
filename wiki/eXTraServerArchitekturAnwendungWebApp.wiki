@@ -22,6 +22,11 @@ Genau diese zwei Aufgaben sind die Stärke des Frameworks [http://www.manning.co
 
 http://camel.apache.org/architecture.data/camel-components.png
 
+Übertragen auf eXTra-Server sieht die *Architektur von eXTra-Server Webanwendung* so aus:
+
+http://extra-standard.googlecode.com/svn/wiki/images/extra-webapp-architecture.jpg
+
+
 = Referenzen =
   * Apache Camel: http://camel.apache.org
   * Spring Framework: http://www.springsource.org
