@@ -16,7 +16,6 @@ Hier sind 3 Arten von  Inputdaten abgebildet:
 || !DBQueryInputData|| Ergebnisse einer Datenbankanfrage. ||
 || !CriteriaQueryInputData || Informationen zum Erstellen einer Anfrage an den eXTra-Server(z.B. Operator '=', Procedure 'Sterbemeldung'). ||
 
-  * 
   * DBQueryInputData
   * CriteriaQueryInputData
 
