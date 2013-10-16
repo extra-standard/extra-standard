@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MagicDrawProfile="http:///schemas/MagicDrawProfile/_8ERkgDXfEeO7W57g039leA/0" xmlns:Standard="http://www.eclipse.org/uml2/schemas/Standard/1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:kissmdaprofilecore="http:///schemas/kissmdaprofilecore/_8EJBoTXfEeO7W57g039leA/0" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xsi:schemaLocation="http:///schemas/MagicDrawProfile/_8ERkgDXfEeO7W57g039leA/0 UML_Standard_Profile.MagicDraw_Profile.profile.uml#_8U3lqjXfEeO7W57g039leA http://www.eclipse.org/uml2/schemas/Standard/1 pathmap://UML_PROFILES/Standard.profile.uml#_yzU58YinEdqtvbnfB2L_5w http:///schemas/kissmdaprofilecore/_8EJBoTXfEeO7W57g039leA/0 kissmda-profile-core.profile.uml#_8U3lZzXfEeO7W57g039leA">
+<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MagicDrawProfile="http:///schemas/MagicDrawProfile/_8szDADZhEeOef83jM_8rPw/0" xmlns:Standard="http://www.eclipse.org/uml2/schemas/Standard/1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:kissmdaprofilecore="http:///schemas/kissmdaprofilecore/_8s3UcDZhEeOef83jM_8rPw/0" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xsi:schemaLocation="http:///schemas/MagicDrawProfile/_8szDADZhEeOef83jM_8rPw/0 UML_Standard_Profile.MagicDraw_Profile.profile.uml#_85ifJTZhEeOef83jM_8rPw http://www.eclipse.org/uml2/schemas/Standard/1 pathmap://UML_PROFILES/Standard.profile.uml#_yzU58YinEdqtvbnfB2L_5w http:///schemas/kissmdaprofilecore/_8s3UcDZhEeOef83jM_8rPw/0 kissmda-profile-core.profile.uml#_85gpfDZhEeOef83jM_8rPw">
   <uml:Model xmi:id="eee_1045467100313_135436_1" name="Data" viewpoint="">
     <ownedComment xmi:id="_17_0_1_2_7e40267_1336075157937_771376_1662" body="Author:b9nszp.&#xA;Created:5/3/12 9:59 PM.&#xA;Title:.&#xA;Comment:.&#xA;" annotatedElement="eee_1045467100313_135436_1"/>
     <packageImport xmi:id="_0primitiveTypesData">
@@ -50,7 +50,7 @@
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_17_0_2_1_43601ab_1380315839958_575536_2816" name="persistentStatus" visibility="private" type="_17_0_2_7e40267_1378901761183_108568_2194" isReadOnly="true">
-                  <ownedComment xmi:id="_17_0_2_1_43601ab_1380315875990_9757_2818" body="Gibt den Status an, der sich aufgrund der Server-Verarbeitung ergibt. Im ResponceProcess Plugin wird dieser Status je nach Verarbeitungsstrategie gesetzt. Ein Status WAIT wird z.B. gewählt, wenn eine externe Anwendung das übermittelte Serverergebnis noch prüfen bzw. verarbeiten muss. " annotatedElement="_17_0_2_1_43601ab_1380315839958_575536_2816"/>
+                  <ownedComment xmi:id="_17_0_2_1_43601ab_1380315875990_9757_2818" body="Gibt den Status an, der sich aufgrund der Server-Verarbeitung ergibt. Im ResponceProcess Plugin wird dieser Status je nach Verarbeitungsstrategie gesetzt. Ein Status WAIT wird z.B. gewaehlt, wenn eine externe Anwendung das uebermittelte Serverergebnis noch pruefen bzw. verarbeiten muss. " annotatedElement="_17_0_2_1_43601ab_1380315839958_575536_2816"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_17_0_2_1_43601ab_1380315895917_896451_2819" name="outputIdentifier" visibility="private" isReadOnly="true">
                   <ownedComment xmi:id="_17_0_2_1_43601ab_1380315918018_397678_2821" body="Identifiert der Nachricht." annotatedElement="_17_0_2_1_43601ab_1380315895917_896451_2819"/>
@@ -68,7 +68,7 @@
                   <ownedComment xmi:id="_17_0_2_1_43601ab_1380148988977_359055_2426" body="Beinhaltet die InputDaten für das eXTra-Client." annotatedElement="_17_0_2_1_43601ab_1380148497475_864276_2205"/>
                 </generalization>
                 <ownedAttribute xmi:id="_17_0_2_1_43601ab_1380148513135_349883_2207" name="requestId" visibility="private">
-                  <ownedComment xmi:id="_17_0_2_1_43601ab_1380148562452_481126_2209" body="Setzt und liefert RequestId für die eindeutige Identifizierung in der XmlMesage" annotatedElement="_17_0_2_1_43601ab_1380148513135_349883_2207"/>
+                  <ownedComment xmi:id="_17_0_2_1_43601ab_1380148562452_481126_2209" body="Setzt und liefert RequestId fuer die eindeutige Identifizierung in der XmlMesage." annotatedElement="_17_0_2_1_43601ab_1380148513135_349883_2207"/>
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_17_0_2_1_43601ab_1380149534115_22161_2528" name="content" visibility="private" type="_17_0_2_7e40267_1375449455848_385791_2311" isOrdered="true" isUnique="false" isReadOnly="true" association="_17_0_2_1_43601ab_1380149534115_967978_2527">
@@ -79,9 +79,7 @@
                   <ownedComment xmi:id="_17_0_2_1_43601ab_1380315544933_654387_2798" body="@return contentSize" annotatedElement="_17_0_2_1_43601ab_1380314847649_136135_2184"/>
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
                 </ownedAttribute>
-                <ownedAttribute xmi:id="_17_0_2_1_43601ab_1380663733778_245847_2843" name="contentEmpty" visibility="private" isReadOnly="true">
-                  <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
-                </ownedAttribute>
+                <ownedAttribute xmi:id="_17_0_2_1_43601ab_1380663733778_245847_2843" name="contentEmpty" visibility="private" type="_9_0_1fe00f9_1119336925531_736816_6" isReadOnly="true"/>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_17_0_2_1_43601ab_1380149079478_846186_2434" name="IContentInputDataContainer">
                 <generalization xmi:id="_17_0_2_1_43601ab_1380149087398_583824_2454" general="_17_0_2_1_43601ab_1380148485668_235087_2185"/>
@@ -93,7 +91,7 @@
               <packagedElement xmi:type="uml:Class" xmi:id="_17_0_2_1_43601ab_1380149199885_244728_2492" name="ISingleContentInputData">
                 <generalization xmi:id="_17_0_2_1_43601ab_1380149228212_762977_2513" general="_17_0_2_7e40267_1375449455848_385791_2311"/>
                 <ownedAttribute xmi:id="_17_0_2_1_43601ab_1380316007521_488491_2829" name="plugins" visibility="private" type="_17_0_2_1_43601ab_1380315310686_569490_2761" isOrdered="true" isUnique="false" isReadOnly="true" association="_17_0_2_1_43601ab_1380316007521_672312_2828">
-                  <ownedComment xmi:id="_17_0_2_1_43601ab_1380316169073_218447_2851" body="Liefert Daten Verschlüsselung, Transformation usw Beschreibung." annotatedElement="_17_0_2_1_43601ab_1380316007521_488491_2829"/>
+                  <ownedComment xmi:id="_17_0_2_1_43601ab_1380316169073_218447_2851" body="Liefert Daten Verschluesselung, Transformation usw Beschreibung." annotatedElement="_17_0_2_1_43601ab_1380316007521_488491_2829"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_17_0_2_1_43601ab_1380316132852_903298_2848" name="" value="*"/>
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_17_0_2_1_43601ab_1380316132852_886897_2847" name=""/>
                 </ownedAttribute>
@@ -210,7 +208,7 @@
                   <ownedComment xmi:id="_17_0_2_7e40267_1380551942076_2032_2865" body="@return the elementsHierarchyMap" annotatedElement="_17_0_2_7e40267_1380551305890_941363_2834"/>
                 </ownedAttribute>
                 <ownedOperation xmi:id="_17_0_2_7e40267_1380551957467_296962_2866" name="getChildElements" visibility="public">
-                  <ownedComment xmi:id="_17_0_2_7e40267_1380552127077_782560_3182" body="Liefert alle Kinderelemente der Knote. Wenn Knote keine kinderelemente hat, wird ein leeren List zurückgeliefert.&#xA;@param parentElement2&#xA;@return List of String" annotatedElement="_17_0_2_7e40267_1380551957467_296962_2866"/>
+                  <ownedComment xmi:id="_17_0_2_7e40267_1380552127077_782560_3182" body="Liefert alle Kinderelemente der Knote. Wenn Knote keine kinderelemente hat, wird ein leeren List zurueckgeliefert.&#xA;@param parentElement2&#xA;@return List of String" annotatedElement="_17_0_2_7e40267_1380551957467_296962_2866"/>
                   <ownedParameter xmi:id="_17_0_2_7e40267_1380551969592_742636_2868" name="parentElement" visibility="public">
                     <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                   </ownedParameter>
@@ -240,7 +238,7 @@
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_17_0_2_1_43601ab_1380662833206_208667_2830" name="warning" visibility="private">
-                  <ownedComment xmi:id="_17_0_2_1_43601ab_1380662887179_495357_2836" body="Zeigt an, ob eine Warnung aufgetreten ist (z.B. keine Ergebnisdatei erhalten). Wird benoetigt, um bei bestimmten Ereignissen (z.B. keine Ergebnisdatei vorhanden) eine Warnung signalisieren zu können." annotatedElement="_17_0_2_1_43601ab_1380662833206_208667_2830"/>
+                  <ownedComment xmi:id="_17_0_2_1_43601ab_1380662887179_495357_2836" body="Zeigt an, ob eine Warnung aufgetreten ist (z.B. keine Ergebnisdatei erhalten). Wird benoetigt, um bei bestimmten Ereignissen (z.B. keine Ergebnisdatei vorhanden) eine Warnung signalisieren zu koennen." annotatedElement="_17_0_2_1_43601ab_1380662833206_208667_2830"/>
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
                 </ownedAttribute>
                 <ownedOperation xmi:id="_17_0_2_1_43601ab_1380662305932_73986_2506" name="getResponse" visibility="public">
@@ -325,7 +323,7 @@
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_17_0_2_7e40267_1381492760140_66290_2921" name="hashCode" visibility="private" isReadOnly="true">
-                  <ownedComment xmi:id="_17_0_2_7e40267_1381492807593_219518_2923" body="Hashcode dieser Daten. Sollte kein HashCode verwendet werden können, so ist der Rückgabewert  &lt;code>null&lt;/code>.&#xA;&#xA;@return Hashcode oder &lt;code>null&lt;/code>" annotatedElement="_17_0_2_7e40267_1381492760140_66290_2921"/>
+                  <ownedComment xmi:id="_17_0_2_7e40267_1381492807593_219518_2923" body="Hashcode dieser Daten. Sollte kein HashCode verwendet werden koennen, so ist der Rueckgabewert  &lt;code>null&lt;/code>.&#xA;&#xA;@return Hashcode oder &lt;code>null&lt;/code>" annotatedElement="_17_0_2_7e40267_1381492760140_66290_2921"/>
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_17_0_2_7e40267_1381492979689_169104_2955" name="execution" visibility="private" type="_17_0_2_7e40267_1381492924595_609903_2928" association="_17_0_2_7e40267_1381492979689_591794_2954">
@@ -353,7 +351,7 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_17_0_2_7e40267_1381493846524_333172_3151" name=""/>
                 </ownedAttribute>
                 <ownedOperation xmi:id="_17_0_2_7e40267_1381492481104_919023_2626" name="transmitted" visibility="public">
-                  <ownedComment xmi:id="_17_0_2_7e40267_1381492591013_382340_2897" body="Markiert das CommunicationProtocol als Übertragen. Die ResponseDaten werden im CommunicationProtocol festgehalten.&#xA;&#xA;@param singleResponseData" annotatedElement="_17_0_2_7e40267_1381492481104_919023_2626"/>
+                  <ownedComment xmi:id="_17_0_2_7e40267_1381492591013_382340_2897" body="Markiert das CommunicationProtocol als Uebertragen. Die ResponseDaten werden im CommunicationProtocol festgehalten.&#xA;&#xA;@param singleResponseData" annotatedElement="_17_0_2_7e40267_1381492481104_919023_2626"/>
                   <ownedParameter xmi:id="_17_0_2_7e40267_1381492513965_835379_2629" name="singleResponseData" visibility="public" type="_17_0_2_7e40267_1375449500363_106703_2353"/>
                   <ownedParameter xmi:id="_17_0_2_7e40267_1381492558918_265654_2892" name="" visibility="public" direction="return">
                     <type xmi:type="uml:PrimitiveType" href="UML_Standard_Profile.MagicDraw_Profile.profile.uml#eee_1045467100323_249638_60"/>
@@ -372,7 +370,7 @@
                   </ownedParameter>
                 </ownedOperation>
                 <ownedOperation xmi:id="_17_0_2_7e40267_1381493915931_717324_3163" name="changeStatus" visibility="public">
-                  <ownedComment xmi:id="_17_0_2_7e40267_1381493941384_350351_3166" body="Für externe Status-Aenderungen (z.B. von 'WAIT' nach 'DONE').&#xA;&#xA;@param aPersistentStatus" annotatedElement="_17_0_2_7e40267_1381493915931_717324_3163"/>
+                  <ownedComment xmi:id="_17_0_2_7e40267_1381493941384_350351_3166" body="Fuer externe Status-Aenderungen (z.B. von 'WAIT' nach 'DONE').&#xA;&#xA;@param aPersistentStatus" annotatedElement="_17_0_2_7e40267_1381493915931_717324_3163"/>
                   <ownedParameter xmi:id="_17_0_2_7e40267_1381493970105_515055_3167" name="aPersistentStatus" visibility="public" type="_17_0_2_7e40267_1378901761183_108568_2194"/>
                   <ownedParameter xmi:id="_17_0_2_7e40267_1381493970105_378584_3168" name="" visibility="public" direction="return">
                     <type xmi:type="uml:PrimitiveType" href="UML_Standard_Profile.MagicDraw_Profile.profile.uml#eee_1045467100323_249638_60"/>
@@ -583,7 +581,7 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_17_0_2_7e40267_1381496810618_803046_4115" name=""/>
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_17_0_2_7e40267_1381496865354_538598_4128" name="transitionDate" visibility="private" type="_9_0_1fe00f9_1119336925531_195604_13" isReadOnly="true">
-                  <ownedComment xmi:id="_17_0_2_7e40267_1381496887635_33940_4130" body="Zeitpunkt der letzten Statusänderung.&#xA;@return Zeitpunkt dieser Transition" annotatedElement="_17_0_2_7e40267_1381496865354_538598_4128"/>
+                  <ownedComment xmi:id="_17_0_2_7e40267_1381496887635_33940_4130" body="Zeitpunkt der letzten Statusaenderung.&#xA;@return Zeitpunkt dieser Transition" annotatedElement="_17_0_2_7e40267_1381496865354_538598_4128"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_17_0_2_7e40267_1381496911214_534965_4135" name="duration" visibility="private" type="_9_0_1fe00f9_1119336925531_227130_59" isReadOnly="true">
                   <ownedComment xmi:id="_17_0_2_7e40267_1381496924542_215758_4137" body="Dauer der Transition.&#xA;@return Dauer der Transisition in Millisekunden" annotatedElement="_17_0_2_7e40267_1381496911214_534965_4135"/>
@@ -666,7 +664,7 @@
               </ownedAttribute>
             </packagedElement>
             <packagedElement xmi:type="uml:Class" xmi:id="_17_0_2_1_43601ab_1381781970542_924662_2226" name="ITransportObserver">
-              <ownedComment xmi:id="_17_0_2_1_43601ab_1381782567500_984766_2559" body="Beobachter von Ereignissen der eXTra Transportschicht in einem Client.&#xA; &#xA;&lt;p>&#xA;Vom konkreten Ziel und Protokoll fuer die Nachrichten wird abstrahiert.&#xA;&lt;/p>&#xA; &#xA;&lt;p>&#xA;Die erwartete Abfolge der Ereignisse ist:&#xA;&lt;code>&#xA;requestDataReceived+ requestFilled requestForwarded [responseFilled responseForwarded] &#xA;&lt;/code>&#xA;&lt;/p>&#xA; &#xA; &lt;p>&#xA; Ob Response Ereignisse auftreten, haengt vom im Request spezifizierten&#xA; erwarteten Antwortverhalten ab. Die Response-Ereignisse &lt;i>muessen&lt;/i>&#xA; auftreten, wenn der Request eine synchrone Response angefordert hat.&#xA; &lt;/p>&#xA;  &#xA;TODO: Acknowledge, Error (extra Kompendium kap. 4.3.2) &#xA;TODO: Benachrichtigung über eXTra-LogElement im XMLTransport (Kap. 4.3.4)" annotatedElement="_17_0_2_1_43601ab_1381781970542_924662_2226"/>
+              <ownedComment xmi:id="_17_0_2_1_43601ab_1381782567500_984766_2559" body="Beobachter von Ereignissen der eXTra Transportschicht in einem Client.&#xA; &#xA;&lt;p>&#xA;Vom konkreten Ziel und Protokoll fuer die Nachrichten wird abstrahiert.&#xA;&lt;/p>&#xA; &#xA;&lt;p>&#xA;Die erwartete Abfolge der Ereignisse ist:&#xA;&lt;code>&#xA;requestDataReceived + requestFilled requestForwarded [responseFilled responseForwarded] &#xA;&lt;/code>&#xA;&lt;/p>&#xA; &#xA; &lt;p>&#xA; Ob Response Ereignisse auftreten, haengt vom im Request spezifizierten&#xA; erwarteten Antwortverhalten ab. Die Response-Ereignisse &lt;i>muessen&lt;/i>&#xA; auftreten, wenn der Request eine synchrone Response angefordert hat.&#xA; &lt;/p>&#xA;  &#xA;TODO: Acknowledge, Error (extra Kompendium kap. 4.3.2) &#xA;TODO: Benachrichtigung ueber eXTra-LogElement im XMLTransport (Kap. 4.3.4)" annotatedElement="_17_0_2_1_43601ab_1381781970542_924662_2226"/>
               <ownedOperation xmi:id="_17_0_2_1_43601ab_1381783600911_830165_4736" name="requestDataReceived" visibility="public">
                 <ownedComment xmi:id="_17_0_2_1_43601ab_1381784801964_60681_4747" body="Ende des Empfangs einer Einheit Daten.&#xA;&#xA;@param unitName moeglichts eindeutige und menschenlesbare Kurzbezeichnung der Dateneinheit (zum Beispiel Dateiname), &lt;i>muss&lt;/i> gleich dem zu Beginn verwendeten sein" annotatedElement="_17_0_2_1_43601ab_1381783600911_830165_4736"/>
                 <ownedParameter xmi:id="_17_0_2_1_43601ab_1381783634171_27762_4740" name="unitName" visibility="public">
@@ -687,7 +685,7 @@
                 </ownedParameter>
               </ownedOperation>
               <ownedOperation xmi:id="_17_0_2_1_43601ab_1381870507496_686200_2488" name="requestForwarded" visibility="public">
-                <ownedComment xmi:id="_17_0_2_1_43601ab_1381870607436_728761_2492" body="Der Request ist auf den Weg an sein Ziel an den Empfänger gebracht worden.&#xA;&#xA;@param destination moeglichst eindeutige, menschenlesbare Kurzbezeichnung des Ziels (hier zum Beispiel im physikalischen Empfaenger); kann (zum Beispiel, wenn er ins Dateisystem geschrieben wurde),  muss aber nicht spezifisch pro Message sein&#xA;@param size Groesse in Bytes der Transport-Message" annotatedElement="_17_0_2_1_43601ab_1381870507496_686200_2488"/>
+                <ownedComment xmi:id="_17_0_2_1_43601ab_1381870607436_728761_2492" body="Der Request ist auf den Weg an sein Ziel an den Empfaenger gebracht worden.&#xA;&#xA;@param destination moeglichst eindeutige, menschenlesbare Kurzbezeichnung des Ziels (hier zum Beispiel im physikalischen Empfaenger); kann (zum Beispiel, wenn er ins Dateisystem geschrieben wurde),  muss aber nicht spezifisch pro Message sein&#xA;&#xA;@param size Groesse in Bytes der Transport-Message" annotatedElement="_17_0_2_1_43601ab_1381870507496_686200_2488"/>
                 <ownedParameter xmi:id="_17_0_2_1_43601ab_1381870693907_182772_2494" name="destination" visibility="public">
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedParameter>
@@ -728,15 +726,12 @@
               <ownedAttribute xmi:id="_17_0_2_1_43601ab_1381871543224_626848_2649" name="data" visibility="private" type="_17_0_2_1_43601ab_1380148485668_235087_2185" isReadOnly="true">
                 <ownedComment xmi:id="_17_0_2_1_43601ab_1381871627868_740318_2657" body="@return sehe {@link IInputDataContainer}" annotatedElement="_17_0_2_1_43601ab_1381871543224_626848_2649"/>
               </ownedAttribute>
-              <ownedAttribute xmi:id="_17_0_2_1_43601ab_1381871590448_878865_2655" name="empty" visibility="private" isReadOnly="true">
+              <ownedAttribute xmi:id="_17_0_2_1_43601ab_1381871590448_878865_2655" name="empty" visibility="private" type="_9_0_1fe00f9_1119336925531_736816_6" isReadOnly="true">
                 <ownedComment xmi:id="_17_0_2_1_43601ab_1381871655388_196441_2659" body="@return true, wenn keine Daten vorhanden sind" annotatedElement="_17_0_2_1_43601ab_1381871590448_878865_2655"/>
-                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
               </ownedAttribute>
               <ownedOperation xmi:id="_17_0_2_1_43601ab_1381871571936_919179_2651" name="hasMoreData" visibility="public">
                 <ownedComment xmi:id="_17_0_2_1_43601ab_1381871641372_671986_2658" body="@return true, wenn weitere Daten vorhanen sind" annotatedElement="_17_0_2_1_43601ab_1381871571936_919179_2651"/>
-                <ownedParameter xmi:id="_17_0_2_1_43601ab_1381871581766_40464_2654" name="" visibility="public" direction="return">
-                  <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
-                </ownedParameter>
+                <ownedParameter xmi:id="_17_0_2_1_43601ab_1381871581766_40464_2654" name="" visibility="public" type="_9_0_1fe00f9_1119336925531_736816_6" direction="return"/>
               </ownedOperation>
             </packagedElement>
             <packagedElement xmi:type="uml:Class" xmi:id="_17_0_2_1_43601ab_1381871306205_282462_2590" name="IOutputPlugin">
@@ -759,9 +754,7 @@
               <ownedComment xmi:id="_17_0_2_7e40267_1376564898408_369747_2176" body="Instanzen, welche mehere Interface implementieren, welche nicht ale an der&#xA;Instanz sichtbar sind, bieten mit Hilfe dieses IF die Moeglichkeit, zu einen&#xA;dieser 'versteckten' Interfaces zu wechselen&#xA;&#xA;@author zf4iks2" annotatedElement="_17_0_2_7e40267_1376564858391_84007_2175"/>
               <ownedOperation xmi:id="_17_0_2_7e40267_1376565233609_506364_2195" name="isImplementationOf" visibility="public">
                 <ownedComment xmi:id="_17_0_2_7e40267_1376576615930_326984_2632" body="Prueft, ob cast in die gewuenschte Zielklasse moeglich ist.&#xA;Ist &lt;code>cls==null&lt;/code>, so wird &lt;code>false&lt;/code> geliefert.&#xA;&#xA;@param &lt;X>&#xA;@param cls Zielklasse/Zielinterface&#xA;@return true g.d.w. die vorliegende Instance einen gesicherten cast nach &lt;code>Class&lt;X>&lt;/code> zulaesst" annotatedElement="_17_0_2_7e40267_1376565233609_506364_2195"/>
-                <ownedParameter xmi:id="_17_0_2_7e40267_1376565243797_313471_2198" name="" visibility="public" direction="return">
-                  <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
-                </ownedParameter>
+                <ownedParameter xmi:id="_17_0_2_7e40267_1376565243797_313471_2198" name="" visibility="public" type="_9_0_1fe00f9_1119336925531_736816_6" direction="return"/>
                 <ownedParameter xmi:id="_17_0_2_7e40267_1376565444365_339251_2336" name="cls" visibility="public" type="_17_0_2_7e40267_1376576256729_732347_2585"/>
                 <ownedTemplateSignature xmi:id="_17_0_2_7e40267_1376565583382_53740_2340" parameter="_17_0_2_7e40267_1376576497191_449266_2624">
                   <ownedParameter xmi:type="uml:ClassifierTemplateParameter" xmi:id="_17_0_2_7e40267_1376576497191_449266_2624" parameteredElement="_17_0_2_7e40267_1376576497191_111818_2623">
@@ -783,7 +776,7 @@
             <packagedElement xmi:type="uml:Class" xmi:id="_17_0_2_1_43601ab_1380317104377_442437_2921" name="IExtraReturnCodeAnalyser">
               <ownedComment xmi:id="_17_0_2_1_43601ab_1380317133418_23724_2943" body="@author Leonid Potap" annotatedElement="_17_0_2_1_43601ab_1380317104377_442437_2921"/>
               <ownedOperation xmi:id="_17_0_2_1_43601ab_1380317187957_944359_2955" name="isReturnCodeSuccessful" visibility="public">
-                <ownedComment xmi:id="_17_0_2_1_43601ab_1380317315202_880650_2963" body="Analysiert ExtraReturnCode und liefert True, wenn einen positiven Return Code zurückgeliefert ist.&#xA;@param extraReturnCode&#xA;@return boolean" annotatedElement="_17_0_2_1_43601ab_1380317187957_944359_2955"/>
+                <ownedComment xmi:id="_17_0_2_1_43601ab_1380317315202_880650_2963" body="Analysiert ExtraReturnCode und liefert True, wenn einen positiven Return Code zurueckgeliefert ist.&#xA;@param extraReturnCode&#xA;@return boolean" annotatedElement="_17_0_2_1_43601ab_1380317187957_944359_2955"/>
                 <ownedParameter xmi:id="_17_0_2_1_43601ab_1380317219946_818567_2961" name="extraReturnCode" visibility="public">
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedParameter>
@@ -1036,93 +1029,93 @@
     <packagedElement xmi:type="uml:Package" xmi:id="magicdraw_uml_standard_profile_v_0001" name="UML Standard Profile">
       <ownedComment xmi:id="_be00301_1078843546940_242228_131" body="UML Standard Profile contains UML metamodel (metaclasses without properties and associations), StandardProfileL2 and StandardProfileL3 from UML specification, Standard UML stereotypes defined in annex C of UML specification.&#xA;Profile also includes validation suites for UML model correctness and completeness checking, and stereotypes used by MagicDraw internally." annotatedElement="magicdraw_uml_standard_profile_v_0001"/>
     </packagedElement>
-    <profileApplication xmi:id="_11_5_f720368_1159529670215_231387_1profileApplicationData">
-      <eAnnotations xmi:id="_8U72sDXfEeO7W57g039leA" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="UML_Standard_Profile.Validation_Profile.profile.uml#_8U5awjXfEeO7W57g039leA"/>
-      </eAnnotations>
-      <appliedProfile href="UML_Standard_Profile.Validation_Profile.profile.uml#_11_5_f720368_1159529670215_231387_1"/>
-    </profileApplication>
-    <profileApplication xmi:id="_16_6_8f90291_1254846042821_86742_517profileApplicationData">
-      <eAnnotations xmi:id="_8VBWQTXfEeO7W57g039leA" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="UML_Standard_Profile.MagicDraw_Profile.Traceability_customization.profile.uml#_8U6CoDXfEeO7W57g039leA"/>
-      </eAnnotations>
-      <appliedProfile href="UML_Standard_Profile.MagicDraw_Profile.Traceability_customization.profile.uml#_16_6_8f90291_1254846042821_86742_517"/>
-    </profileApplication>
-    <profileApplication xmi:id="_17_0_1_2_7e40267_1336479729046_679021_1682profileApplicationData">
-      <eAnnotations xmi:id="_8VDygTXfEeO7W57g039leA" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="kissmda-profile-core.profile.uml#_8U3lZzXfEeO7W57g039leA"/>
-      </eAnnotations>
-      <appliedProfile href="kissmda-profile-core.profile.uml#_17_0_1_2_7e40267_1336479729046_679021_1682"/>
-    </profileApplication>
-    <profileApplication xmi:id="_be00301_1073394351331_445580_2profileApplicationData">
-      <eAnnotations xmi:id="_8VGOwTXfEeO7W57g039leA" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="UML_Standard_Profile.MagicDraw_Profile.profile.uml#_8U3lqjXfEeO7W57g039leA"/>
-      </eAnnotations>
-      <appliedProfile href="UML_Standard_Profile.MagicDraw_Profile.profile.uml#_be00301_1073394351331_445580_2"/>
-    </profileApplication>
-    <profileApplication xmi:id="_16_8beta_62a020a_1256807755193_508228_378profileApplicationData">
-      <eAnnotations xmi:id="_8VIrADXfEeO7W57g039leA" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="UML_Standard_Profile.StandardProfileL3.profile.uml#_8U3lYTXfEeO7W57g039leA"/>
-      </eAnnotations>
-      <appliedProfile href="UML_Standard_Profile.StandardProfileL3.profile.uml#_16_8beta_62a020a_1256807755193_508228_378"/>
-    </profileApplication>
-    <profileApplication xmi:id="_9_0_be00301_1108050582343_527400_10847profileApplicationData">
-      <eAnnotations xmi:id="_8VKgMTXfEeO7W57g039leA" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="UML_Standard_Profile.StandardProfileL2.profile.uml#_8U3lWzXfEeO7W57g039leA"/>
-      </eAnnotations>
-      <appliedProfile href="UML_Standard_Profile.StandardProfileL2.profile.uml#_9_0_be00301_1108050582343_527400_10847"/>
-    </profileApplication>
     <profileApplication xmi:id="_11_5_be00301_1153310565718_226811_161profileApplicationData">
-      <eAnnotations xmi:id="_8VMVYTXfEeO7W57g039leA" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="UML_Standard_Profile.MagicDraw_Profile.DSL_Customization.profile.uml#_8U40FDXfEeO7W57g039leA"/>
+      <eAnnotations xmi:id="_85lh9jZhEeOef83jM_8rPw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="UML_Standard_Profile.MagicDraw_Profile.DSL_Customization.profile.uml#_85bJwjZhEeOef83jM_8rPw"/>
       </eAnnotations>
       <appliedProfile href="UML_Standard_Profile.MagicDraw_Profile.DSL_Customization.profile.uml#_11_5_be00301_1153310565718_226811_161"/>
     </profileApplication>
+    <profileApplication xmi:id="_9_0_be00301_1108050582343_527400_10847profileApplicationData">
+      <eAnnotations xmi:id="_85pzQTZhEeOef83jM_8rPw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="UML_Standard_Profile.StandardProfileL2.profile.uml#_85gpdjZhEeOef83jM_8rPw"/>
+      </eAnnotations>
+      <appliedProfile href="UML_Standard_Profile.StandardProfileL2.profile.uml#_9_0_be00301_1108050582343_527400_10847"/>
+    </profileApplication>
+    <profileApplication xmi:id="_16_8beta_62a020a_1256807755193_508228_378profileApplicationData">
+      <eAnnotations xmi:id="_85uEsTZhEeOef83jM_8rPw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="UML_Standard_Profile.StandardProfileL3.profile.uml#_85cYlzZhEeOef83jM_8rPw"/>
+      </eAnnotations>
+      <appliedProfile href="UML_Standard_Profile.StandardProfileL3.profile.uml#_16_8beta_62a020a_1256807755193_508228_378"/>
+    </profileApplication>
+    <profileApplication xmi:id="_16_6_8f90291_1254846042821_86742_517profileApplicationData">
+      <eAnnotations xmi:id="_85y9MDZhEeOef83jM_8rPw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="UML_Standard_Profile.MagicDraw_Profile.Traceability_customization.profile.uml#_85cYnTZhEeOef83jM_8rPw"/>
+      </eAnnotations>
+      <appliedProfile href="UML_Standard_Profile.MagicDraw_Profile.Traceability_customization.profile.uml#_16_6_8f90291_1254846042821_86742_517"/>
+    </profileApplication>
+    <profileApplication xmi:id="_be00301_1073394351331_445580_2profileApplicationData">
+      <eAnnotations xmi:id="_852AgTZhEeOef83jM_8rPw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="UML_Standard_Profile.MagicDraw_Profile.profile.uml#_85ifJTZhEeOef83jM_8rPw"/>
+      </eAnnotations>
+      <appliedProfile href="UML_Standard_Profile.MagicDraw_Profile.profile.uml#_be00301_1073394351331_445580_2"/>
+    </profileApplication>
+    <profileApplication xmi:id="_17_0_1_2_7e40267_1336479729046_679021_1682profileApplicationData">
+      <eAnnotations xmi:id="_855q4DZhEeOef83jM_8rPw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="kissmda-profile-core.profile.uml#_85gpfDZhEeOef83jM_8rPw"/>
+      </eAnnotations>
+      <appliedProfile href="kissmda-profile-core.profile.uml#_17_0_1_2_7e40267_1336479729046_679021_1682"/>
+    </profileApplication>
+    <profileApplication xmi:id="_11_5_f720368_1159529670215_231387_1profileApplicationData">
+      <eAnnotations xmi:id="_858uMTZhEeOef83jM_8rPw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="UML_Standard_Profile.Validation_Profile.profile.uml#_85gpvzZhEeOef83jM_8rPw"/>
+      </eAnnotations>
+      <appliedProfile href="UML_Standard_Profile.Validation_Profile.profile.uml#_11_5_f720368_1159529670215_231387_1"/>
+    </profileApplication>
     <profileApplication xmi:id="_0profileApplicationData">
-      <eAnnotations xmi:id="_8WbrgTXfEeO7W57g039leA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <eAnnotations xmi:id="_86ikEjZhEeOef83jM_8rPw" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Standard.profile.uml#_yzU58YinEdqtvbnfB2L_5w"/>
       </eAnnotations>
       <appliedProfile href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
     </profileApplication>
   </uml:Model>
-  <kissmdaprofilecore:Entity xmi:id="_8V0ngzXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1381495153668_618603_3350"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V0nhDXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1381495216419_812537_3387"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V0nhTXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1381492924595_609903_2928"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V1OkDXfEeO7W57g039leA" base_Class="_17_0_2_1_43601ab_1380662013372_815980_2185"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V1OkTXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1381495478655_425348_3475"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V1OkjXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1381493347130_927185_3011"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V1OkzXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1381496328991_807874_4036"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V1OlDXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1375449500363_106703_2353"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V1OlTXfEeO7W57g039leA" base_Class="_17_0_2_1_43601ab_1380317490999_880013_3000"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V1OljXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1380551233043_340135_2811"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V1OlzXfEeO7W57g039leA" base_Class="_17_0_2_1_43601ab_1381781946191_736088_2206"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V1OmDXfEeO7W57g039leA" base_Class="_17_0_2_1_43601ab_1380315310686_569490_2761"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V1OmTXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1381493672570_731631_3096"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V11oDXfEeO7W57g039leA" base_Class="_17_0_2_1_43601ab_1380148485668_235087_2185"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V11oTXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1381491878975_42233_2594"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V11ojXfEeO7W57g039leA" base_Class="_17_0_2_1_43601ab_1380149079478_846186_2434"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V11ozXfEeO7W57g039leA" base_Class="_17_0_2_1_43601ab_1380149199885_244728_2492"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V11pDXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1376564858391_84007_2175"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V11pTXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1380528516025_968648_2750"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V11pjXfEeO7W57g039leA" base_Class="_17_0_2_1_43601ab_1380317104377_442437_2921"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V11pzXfEeO7W57g039leA" base_Class="_17_0_2_1_43601ab_1380318008843_495153_3095"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V11qDXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1380528358252_87929_2184"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V11qTXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1381491558582_293893_2561"/>
-  <kissmdaprofilecore:Entity xmi:id="_8V2csDXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1375449455848_385791_2311"/>
-  <kissmdaprofilecore:SourceDirectory xmi:id="_8V2csTXfEeO7W57g039leA" base_Package="eee_1045467100313_135436_1"/>
-  <kissmdaprofilecore:Service xmi:id="_8V2csjXfEeO7W57g039leA" base_Class="_17_0_2_1_43601ab_1381871324037_525587_2612"/>
-  <kissmdaprofilecore:Service xmi:id="_8V2cszXfEeO7W57g039leA" base_Class="_17_0_2_1_43601ab_1381871306205_282462_2590"/>
-  <kissmdaprofilecore:Service xmi:id="_8V2ctDXfEeO7W57g039leA" base_Class="_17_0_2_1_43601ab_1381871284942_476580_2570"/>
-  <kissmdaprofilecore:Service xmi:id="_8V2ctTXfEeO7W57g039leA" base_Class="_17_0_2_1_43601ab_1381871274198_933172_2550"/>
-  <kissmdaprofilecore:Service xmi:id="_8V2ctjXfEeO7W57g039leA" base_Class="_17_0_2_1_43601ab_1381781970542_924662_2226"/>
-  <kissmdaprofilecore:Service xmi:id="_8V2ctzXfEeO7W57g039leA" base_Class="_17_0_2_7e40267_1381497429282_309412_4204"/>
-  <MagicDrawProfile:auxiliaryResource xmi:id="_8V3DwDXfEeO7W57g039leA" base_Element="magicdraw_uml_standard_profile_v_0001" base_Package="magicdraw_uml_standard_profile_v_0001"/>
-  <MagicDrawProfile:autoGeneratedName xmi:id="_8WCp8DXfEeO7W57g039leA" base_Element="_17_0_2_1_43601ab_1367960786853_84565_4325" base_NamedElement="_17_0_2_1_43601ab_1367960786853_84565_4325"/>
-  <MagicDrawProfile:autoGeneratedName xmi:id="_8WCp8TXfEeO7W57g039leA" base_Element="_17_0_2_1_43601ab_1380149140829_933132_2464" base_NamedElement="_17_0_2_1_43601ab_1380149140829_933132_2464"/>
-  <MagicDrawProfile:autoGeneratedName xmi:id="_8WCp8jXfEeO7W57g039leA" base_Element="_17_0_2_7e40267_1380551998499_735975_2887" base_NamedElement="_17_0_2_7e40267_1380551998499_735975_2887"/>
-  <MagicDrawProfile:autoGeneratedName xmi:id="_8WCp8zXfEeO7W57g039leA" base_Element="_17_0_2_7e40267_1376576256729_732347_2585" base_NamedElement="_17_0_2_7e40267_1376576256729_732347_2585"/>
-  <MagicDrawProfile:autoGeneratedName xmi:id="_8WCp9DXfEeO7W57g039leA" base_Element="_17_0_2_7e40267_1380633598607_335530_2210" base_NamedElement="_17_0_2_7e40267_1380633598607_335530_2210"/>
-  <MagicDrawProfile:autoGeneratedName xmi:id="_8WDRADXfEeO7W57g039leA" base_Element="_17_0_2_1_43601ab_1380662424924_296260_2785" base_NamedElement="_17_0_2_1_43601ab_1380662424924_296260_2785"/>
-  <MagicDrawProfile:autoGeneratedName xmi:id="_8WDRATXfEeO7W57g039leA" base_Element="_17_0_2_7e40267_1381500474578_738540_4283" base_NamedElement="_17_0_2_7e40267_1381500474578_738540_4283"/>
-  <Standard:ModelLibrary xmi:id="_8WeHwDXfEeO7W57g039leA" base_Package="_9_0_1fe00f9_1119336925546_238419_77"/>
+  <Standard:ModelLibrary xmi:id="_86mOcDZhEeOef83jM_8rPw" base_Package="_9_0_1fe00f9_1119336925546_238419_77"/>
+  <MagicDrawProfile:auxiliaryResource xmi:id="_86nckDZhEeOef83jM_8rPw" base_Element="magicdraw_uml_standard_profile_v_0001" base_Package="magicdraw_uml_standard_profile_v_0001"/>
+  <MagicDrawProfile:autoGeneratedName xmi:id="_862tITZhEeOef83jM_8rPw" base_Element="_17_0_2_7e40267_1380551998499_735975_2887" base_NamedElement="_17_0_2_7e40267_1380551998499_735975_2887"/>
+  <MagicDrawProfile:autoGeneratedName xmi:id="_862tIjZhEeOef83jM_8rPw" base_Element="_17_0_2_7e40267_1381500474578_738540_4283" base_NamedElement="_17_0_2_7e40267_1381500474578_738540_4283"/>
+  <MagicDrawProfile:autoGeneratedName xmi:id="_862tIzZhEeOef83jM_8rPw" base_Element="_17_0_2_1_43601ab_1367960786853_84565_4325" base_NamedElement="_17_0_2_1_43601ab_1367960786853_84565_4325"/>
+  <MagicDrawProfile:autoGeneratedName xmi:id="_862tJDZhEeOef83jM_8rPw" base_Element="_17_0_2_1_43601ab_1380149140829_933132_2464" base_NamedElement="_17_0_2_1_43601ab_1380149140829_933132_2464"/>
+  <MagicDrawProfile:autoGeneratedName xmi:id="_863UMDZhEeOef83jM_8rPw" base_Element="_17_0_2_1_43601ab_1380662424924_296260_2785" base_NamedElement="_17_0_2_1_43601ab_1380662424924_296260_2785"/>
+  <MagicDrawProfile:autoGeneratedName xmi:id="_863UMTZhEeOef83jM_8rPw" base_Element="_17_0_2_7e40267_1376576256729_732347_2585" base_NamedElement="_17_0_2_7e40267_1376576256729_732347_2585"/>
+  <MagicDrawProfile:autoGeneratedName xmi:id="_863UMjZhEeOef83jM_8rPw" base_Element="_17_0_2_7e40267_1380633598607_335530_2210" base_NamedElement="_17_0_2_7e40267_1380633598607_335530_2210"/>
+  <kissmdaprofilecore:Entity xmi:id="_86_3EDZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1381493347130_927185_3011"/>
+  <kissmdaprofilecore:Entity xmi:id="_86_3ETZhEeOef83jM_8rPw" base_Class="_17_0_2_1_43601ab_1380315310686_569490_2761"/>
+  <kissmdaprofilecore:Entity xmi:id="_86_3EjZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1381496328991_807874_4036"/>
+  <kissmdaprofilecore:Entity xmi:id="_86_3EzZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1381495153668_618603_3350"/>
+  <kissmdaprofilecore:Entity xmi:id="_86_3FDZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1381491558582_293893_2561"/>
+  <kissmdaprofilecore:Entity xmi:id="_87AeIDZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1381495216419_812537_3387"/>
+  <kissmdaprofilecore:Entity xmi:id="_87AeITZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1381491878975_42233_2594"/>
+  <kissmdaprofilecore:Entity xmi:id="_87AeIjZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1380528358252_87929_2184"/>
+  <kissmdaprofilecore:Entity xmi:id="_87AeIzZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1375449500363_106703_2353"/>
+  <kissmdaprofilecore:Entity xmi:id="_87AeJDZhEeOef83jM_8rPw" base_Class="_17_0_2_1_43601ab_1380317490999_880013_3000"/>
+  <kissmdaprofilecore:Entity xmi:id="_87AeJTZhEeOef83jM_8rPw" base_Class="_17_0_2_1_43601ab_1380149079478_846186_2434"/>
+  <kissmdaprofilecore:Entity xmi:id="_87AeJjZhEeOef83jM_8rPw" base_Class="_17_0_2_1_43601ab_1380149199885_244728_2492"/>
+  <kissmdaprofilecore:Entity xmi:id="_87AeJzZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1381493672570_731631_3096"/>
+  <kissmdaprofilecore:Entity xmi:id="_87AeKDZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1381495478655_425348_3475"/>
+  <kissmdaprofilecore:Entity xmi:id="_87BFMDZhEeOef83jM_8rPw" base_Class="_17_0_2_1_43601ab_1381781946191_736088_2206"/>
+  <kissmdaprofilecore:Entity xmi:id="_87BFMTZhEeOef83jM_8rPw" base_Class="_17_0_2_1_43601ab_1380318008843_495153_3095"/>
+  <kissmdaprofilecore:Entity xmi:id="_87BFMjZhEeOef83jM_8rPw" base_Class="_17_0_2_1_43601ab_1380662013372_815980_2185"/>
+  <kissmdaprofilecore:Entity xmi:id="_87BFMzZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1380528516025_968648_2750"/>
+  <kissmdaprofilecore:Entity xmi:id="_87BFNDZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1381492924595_609903_2928"/>
+  <kissmdaprofilecore:Entity xmi:id="_87BFNTZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1380551233043_340135_2811"/>
+  <kissmdaprofilecore:Entity xmi:id="_87BFNjZhEeOef83jM_8rPw" base_Class="_17_0_2_1_43601ab_1380148485668_235087_2185"/>
+  <kissmdaprofilecore:Entity xmi:id="_87BFNzZhEeOef83jM_8rPw" base_Class="_17_0_2_1_43601ab_1380317104377_442437_2921"/>
+  <kissmdaprofilecore:Entity xmi:id="_87BsQDZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1375449455848_385791_2311"/>
+  <kissmdaprofilecore:Entity xmi:id="_87BsQTZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1376564858391_84007_2175"/>
+  <kissmdaprofilecore:SourceDirectory xmi:id="_87BsQjZhEeOef83jM_8rPw" base_Package="eee_1045467100313_135436_1"/>
+  <kissmdaprofilecore:Service xmi:id="_87BsQzZhEeOef83jM_8rPw" base_Class="_17_0_2_1_43601ab_1381781970542_924662_2226"/>
+  <kissmdaprofilecore:Service xmi:id="_87BsRDZhEeOef83jM_8rPw" base_Class="_17_0_2_7e40267_1381497429282_309412_4204"/>
+  <kissmdaprofilecore:Service xmi:id="_87BsRTZhEeOef83jM_8rPw" base_Class="_17_0_2_1_43601ab_1381871324037_525587_2612"/>
+  <kissmdaprofilecore:Service xmi:id="_87BsRjZhEeOef83jM_8rPw" base_Class="_17_0_2_1_43601ab_1381871284942_476580_2570"/>
+  <kissmdaprofilecore:Service xmi:id="_87BsRzZhEeOef83jM_8rPw" base_Class="_17_0_2_1_43601ab_1381871274198_933172_2550"/>
+  <kissmdaprofilecore:Service xmi:id="_87CTUDZhEeOef83jM_8rPw" base_Class="_17_0_2_1_43601ab_1381871306205_282462_2590"/>
 </xmi:XMI>
