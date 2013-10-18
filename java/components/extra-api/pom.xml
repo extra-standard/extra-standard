@@ -36,12 +36,11 @@
 	<name>extra-api</name>
 	<description>eXTra API</description>
 
-	<!-- For KissMDA
+	<!-- For KissMDA -->
 	<properties>
-		<kissmda.maven.plugin.version>1.3.0</kissmda.maven.plugin.version>
-		<kissmda.cartridges.simple.java.version>1.3.0</kissmda.cartridges.simple.java.version>
+		<kissmda.maven.plugin.version>1.4.0</kissmda.maven.plugin.version>
+		<kissmda.cartridges.simple.java.version>1.4.0</kissmda.cartridges.simple.java.version>
 	</properties>
-	-->
 
 	<dependencies>
 		<dependency>
@@ -51,7 +50,7 @@
 		</dependency>
 	</dependencies>
 
-	<!-- For KissMDA
+	<!-- For KissMDA -->
 	<build>
 		<plugins>
 			<plugin>
@@ -97,6 +96,7 @@
 						<transformerScanPackageName>de.crowdcode.kissmda.cartridges</transformerScanPackageName>
 					</transformerScanPackageNames>
 					<modelFile>src/main/resources/model/emf/extra-api.uml</modelFile>
+					<loggingLevel>ALL</loggingLevel>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -135,5 +135,4 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	-->
 </project>
