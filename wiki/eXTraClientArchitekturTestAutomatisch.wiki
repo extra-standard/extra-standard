@@ -1,4 +1,4 @@
-#summary Automatisierter Test der eXTra client Fachverfahren
+#summary Automatisierter Test der eXTra Client Fachverfahren
 
 = Automatisierter Test eines eXTra client Fachverfahrens =
 
