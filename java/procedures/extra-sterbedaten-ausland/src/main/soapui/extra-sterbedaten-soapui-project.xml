@@ -3678,7 +3678,7 @@
          </ns1:Signatures>
       </ns:Transport>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/></con:call></con:operation></con:interface><con:testSuite name="extraSOAP TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="execute TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="execute"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>extraSOAP</con:interface><con:operation>execute</con:operation><con:request name="execute"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost/SPoC/execute</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/request/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.extra-standard.de/namespace/webservice/execute"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite name="extraSOAP TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="execute TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="execute"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>extraSOAP</con:interface><con:operation>execute</con:operation><con:request name="execute"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost/SPoC/execute</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.extra-standard.de/namespace/request/1" xmlns:ns1="http://www.extra-standard.de/namespace/components/1" xmlns:xe="http://www.w3.org/2001/04/xmlenc#" xmlns:xd="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="http://www.extra-standard.de/namespace/logging/1">
    <soapenv:Header/>
    <soapenv:Body>
       <ns:Transport version="?" profile="?">
@@ -5490,14 +5490,9 @@ def holder = groovyUtils.getXmlHolder(mockRequest.requestContent)
 def reqRef = String.valueOf(holder.getNodeValue("//xmsg:GT"))
 def reqid = String.valueOf(holder.getNodeValue("//xcpt:RequestID"))
 def responseId = reqid + "_RESP"
-def responseId1 = "LU" + new java.text.SimpleDateFormat("yyyy-MM-dd HH-mm-ss.S").format(new java.sql.Timestamp(System
-				.currentTimeMillis() + 1));
-
-def responseId2 = "LU" + new java.text.SimpleDateFormat("yyyy-MM-dd HH-mm-ss.S").format(new java.sql.Timestamp(System
-				.currentTimeMillis() + 2));
-
-def responseId3 = "LU" + new java.text.SimpleDateFormat("yyyy-MM-dd HH-mm-ss.S").format(new java.sql.Timestamp(System
-				.currentTimeMillis() + 3));
+def responseId1 = reqid + 1;
+def responseId2 = reqid + 2;
+def responseId3 = reqid + 3;
 
 context.setProperty("requestId", reqid)
 context.setProperty("responseId", responseId)
