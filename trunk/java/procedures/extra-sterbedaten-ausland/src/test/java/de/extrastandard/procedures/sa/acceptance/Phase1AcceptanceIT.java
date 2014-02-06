@@ -56,7 +56,8 @@ import de.extrastandard.persistence.repository.ExecutionRepository;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
-		"/conf/acceptance/phase1/property-placeholder-acceptance-phase1.xml" })
+		"/conf/acceptance/phase1/property-placeholder-acceptance-phase1.xml",
+		"/conf/acceptance/spring-acceptance-flyway.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
 public class Phase1AcceptanceIT {
