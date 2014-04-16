@@ -21,3 +21,7 @@ extra-webapp
 ----------------------------------
 eXTra Webapp (Webanwendung) stellt eine Webanwendung sowohl für Client als auch Server 
 für eXTra zur Verfügung.
+
+extra-spoc
+----------------------------------
+eXTra Single Point of Contact (eXTra Server).
