@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:sws="http://www.springframework.org/schema/web-services"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+				http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+				http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd">
+
+	<!-- Importiert die Konfiguration für die Properties -->
+	<import resource="./spoc-properties.xml" />
+
+	<sws:annotation-driven />
+
+	<sws:static-wsdl location="/WEB-INF/wsdl/extra.wsdl" />
+
+	<!-- Definition des Default-Endpoints zur Abhandlung aller Nicht-eXTra-Requests -->
+	<bean
+		class="org.springframework.ws.server.endpoint.mapping.PayloadRootAnnotationMethodEndpointMapping">
+		<property name="defaultEndpoint" ref="defaultEndpoint" />
+	</bean>
+
+	<bean id="endpointAdapter"
+		class="org.springframework.ws.server.endpoint.adapter.PayloadEndpointAdapter" />
+
+	<bean id="defaultEndpoint" class="de.drv.dsrv.spoc.web.webservice.spring.DefaultEndpoint">
+		<constructor-arg ref="messageSource" />
+	</bean>
+
+	<bean class="de.drv.dsrv.spoc.web.webservice.spring.SpocEndpoint">
+		<constructor-arg ref="spocRoutingService" />
+		<constructor-arg ref="fachverfahrenRequestService" />
+		<constructor-arg ref="betriebsnummerService" />
+	</bean>
+
+	<!-- Wandelt evtl. aufgetretene Exceptions in das eXTra-Error Format um. -->
+	<bean
+		class="de.drv.dsrv.spoc.web.webservice.spring.SpocEndpointExceptionResolver">
+		<constructor-arg ref="extraExceptionHelper" />
+		<constructor-arg ref="extraJaxbMarshaller" />
+		<constructor-arg ref="messageSource" />
+		<constructor-arg value="${soap.fault.string}" />
+		<!-- Muss gesetzt sein, damit der Resolver vor dem SimpleSoapExceptionResolver 
+			ausgeführt wird. -->
+		<property name="order" value="0" />
+	</bean>
+
+	<!-- Validiert den eingehenden eXTra-Request gegen das Schema -->
+	<sws:interceptors>
+		<sws:payloadRoot namespaceUri="http://www.extra-standard.de/namespace/request/1">
+			<bean
+				class="de.drv.dsrv.spoc.web.webservice.spring.SpocPayloadValidatingInterceptor">
+				<property name="schema" value="/WEB-INF/schema/eXTra-request-1.xsd" />
+				<property name="validateRequest" value="true" />
+				<property name="validateResponse" value="false" />
+			</bean>
+		</sws:payloadRoot>
+	</sws:interceptors>
+
+</beans>
