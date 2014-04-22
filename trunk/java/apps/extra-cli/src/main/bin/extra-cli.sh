@@ -30,7 +30,7 @@ echo "   ____ ^\   ^\/   /^\__    ___/___________ "
 echo " _/ __ ^\ ^\     /   ^|    ^|  ^\_  __ ^\__  ^\ "
 echo " ^\  ___/ /     ^\   ^|    ^|   ^|  ^| ^\// __ ^\_"
 echo "  ^\___  ^>___/^\  ^\  ^|____^|   ^|__^|  (____ /"
-echo "      ^\/      ^\_/                      ^\/ V${project.version}"
+echo "      ^\/      ^\_/                      ^\/ "
 echo "01100101 01011000 01010100 01110010 01100001"
 echo
 
@@ -44,7 +44,7 @@ if [ -z "$JRE_HOME" -a -n "$JAVA_HOME" ] ; then
   JRE_HOME=$JAVA_HOME
   export JRE_HOME
 fi
-# Java-Executables müssen vorhanden sein
+# Java-Executables mï¿½ssen vorhanden sein
 if [ ! -f "${JRE_HOME}/bin/java.exe" -o ! -f "${JRE_HOME}/bin/javaw.exe" ] ; then
   echo "Die JRE_HOME Umgebungsvariablen ist nicht korrekt definiert."
   exit 32
