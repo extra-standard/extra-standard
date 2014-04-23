@@ -19,11 +19,7 @@ Das Domänenmodell besteht aus mehreren Entitäten. Im folgenden Diagramm sind d
 
 http://extra-standard.googlecode.com/svn/wiki/images/persistence_layer.png
 
-Die oberste Entity in der Hierarchy ist Mandant (Klasse Mandator). Zu einem Mandanten können mehrere Verfahren (Klasse Procedure) zugeordnet werden.
-
-Die Läufe (Die Klasse Execution) stellen einzelne Ausführungen dar. Eine Ausführung wird durch Start, Ende und dazugehörigen Parameters gekennzeichnet.
-
-Während eines Laufs können mehrere Dateien übertragen werden. Die Dateien sind durch einen Identifikation (Identifier) und ggf. hashcode eindeutig gekennzeichnet.
+Die oberste Entity in der Hierarchy ist Mandant (Klasse Mandator). Zu einem Mandanten können mehrere Verfahren (Klasse Procedure) zugeordnet werden. Die Läufe (Die Klasse Execution) stellen einzelne Ausführungen dar. Eine Ausführung wird durch Start, Ende und dazugehörigen Parameters gekennzeichnet. Während eines Laufs können mehrere Dateien übertragen werden. Die Dateien sind durch einen Identifikation (Identifier) und ggf. hashcode eindeutig gekennzeichnet.
 
 Jede Datei in einem mehrstufigen Szenario durchläuft unterschiedliche Stati:
 
