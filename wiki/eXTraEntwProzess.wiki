@@ -29,7 +29,24 @@ Hier wird der Entwicklungsprozess, die Entwicklungsumgebung und die Coding-Regel
   * *Modul-Projekt:* Im Ordner *_java_* befindet sich eine Maven-Datei namens _pom.xml_. In dieser Datei werden sämtliche Module von eXTra mit der richtigen Reihenfolge beschrieben. Nach der Installation des Parent-POM-Projekts kann in diesem Ordner der Maven-Befehl wie beispielsweise _mvn clean package_ ausgeführt werden. Damit werden sämtliche Module in der richtigen Reihenfolge gebaut.
 
 = Import von Maven-Projekten ins Eclipse-Workspace =
-  * Im Prinzip können die Maven-Projekte, die vorher aus SVN ausgescheckt wurden, in Eclipse einfach als Maven-Projekt importiert werden. Zu beachten, dass das Plugin m2e vorher installiert werden muss.
+
+Dir Projekte aus dem SVN können über einen SVN-Client in den Workspace importiert werden.
+Dabei ist zu beachten, dass es sich bei den Projekten bereits um Maven-Projekte handelt.
+
+==Auschecken aus dem SVN==
+
+Auch wenn es sich bereits um Maven-Projekte handelt, müssen die Projekte im Eclipse nur als "Projekte" ausgecheckt werden. Ein auschecken als Java-Projekt führt z.B. zu Problemen bei der Paketstruktur.
+
+http://extra-standard.googlecode.com/svn/wiki/images/SVNCheckout.png
+
+==Konvertieren in Maven-Projekt==
+
+Nach dem erfolgreichen Import in den eigenen Workspace müssen die Projekte noch in ein Maven-Projekt konvertiert werden.
+Dies geschieht über das Kontext-Menü. Hierzu sollte dann aber das Plugin m2e installiert sein.
+Danach kann normal mit dem Projekt gearbeitet werden.
+
+http://extra-standard.googlecode.com/svn/wiki/images/toMavenContext.png
+
 
 = Continuous Intergration (CI) Jenkins für eXTra-Projekt =
   * Unter: https://extra-standard.ci.cloudbees.com steht eine !CloudBees-CI mit Jenkins für das Projekt eXTra zur Verfügung. Hier kann der Build-Status und Unit-Test-Status von eXTra beobachtet werden. 
