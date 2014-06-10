@@ -24,4 +24,5 @@ Hier wird beschrieben, wie ein Fachverfahren umgesetzt werden kann: [eXTraErstel
 
 = Fachverfahren =
 
-  * [eXTraSterbedatenVerfahren Sterbedatenabgleich Ausland]  
+  * [eXTraSterbedatenVerfahren Sterbedatenabgleich Ausland]
+  * [eXTraVoat12Verfahren Elektronischer Antrag auf Vorschusszahlung (VOAT12)] 
