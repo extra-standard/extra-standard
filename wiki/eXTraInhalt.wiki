@@ -18,6 +18,7 @@
       * [eXTraErstellungVerfahren Erstellung Fachverfahren]   
       * [eXTraSterbedatenVerfahren Sterbedatenabgleich Ausland]
         * [eXTraClientDemoFachverfahren Demo (Testumgebung)]
+      * [eXTraVoat12Verfahren Elektronischer Antrag auf Vorschusszahlung (VOAT12)]
   * [eXTraClientBetriebsanleitung Betriebsanleitung]
     * [eXTraClientBetriebKonfigurationsdateien Konfigurationsdateien]
       * [eXTraClientBetriebConfigBasis extra-properties-basic]
