@@ -174,7 +174,7 @@ http://extra-standard.googlecode.com/svn/wiki/images/dblog-sterbedatenausland-ph
 
 Die Ergebnisse der Ausführung der PHASE3 zeigen, dass die in der PHASE2  abgeholten Daten mit dem INPUT_IDENTIFIER (RESPONSE_ID des Servers) 110016, 110017, 110018 erfolgreich von der Fachanwendung verarbeitet worden sind und gegenüber dem Server bestätigt wurden.
 
-== Nachverfolgung für die nicht bestätigte NAchrichten (COMMUNICATION_PROTOCOL Status WAIT) ==
+== Nachverfolgung für die nicht bestätigte Nachrichten (COMMUNICATION_PROTOCOL Status WAIT) ==
 
 Die SQL Abfrage für die Identifizierung der nicht bestätigten Nachrichten sieht wie folgt aus:
 {{{
