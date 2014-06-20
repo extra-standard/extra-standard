@@ -173,3 +173,28 @@ Die Ergebnisse dieser Abfrage sehen wie folgt aus:
 http://extra-standard.googlecode.com/svn/wiki/images/dblog-sterbedatenausland-phase3.jpg
 
 Die Ergebnisse der Ausführung der PHASE3 zeigen, dass die in der PHASE2  abgeholten Daten mit dem INPUT_IDENTIFIER (RESPONSE_ID des Servers) 110016, 110017, 110018 erfolgreich von der Fachanwendung verarbeitet worden sind und gegenüber dem Server bestätigt wurden.
+
+== Nachverfolgung für die nicht bestätigte NAchrichten (COMMUNICATION_PROTOCOL Status WAIT) ==
+
+Die SQL Abfrage für die Identifizierung der nicht bestätigten Nachrichten sieht wie folgt aus:
+{{{
+select PROCEDURE.NAME, EXECUTION.PHASE,EXECUTION.ID, executionStatus.NAME as EXECUTION_STATUS,
+ EXECUTION.START_TIME, EXECUTION.END_TIME, 
+--COMMUNICATION_PROTOCOL.request_id, 
+COMMUNICATION_PROTOCOL.response_id,
+--COMMUNICATION_PROTOCOL.subquery
+ COMMUNICATION_PROTOCOL.INPUT_IDENTIFIER , 
+COMMUNICATION_PROTOCOL.OUTPUT_IDENTIFIER, 
+COMMUNICATION_PROTOCOL.INPUT_DATA_QUALIFIER as INPUT_QUALIFIER,
+COMMUNICATIONPROTOKOLSTATUS.NAME as COMMUNICATION_STATUS,
+COMMUNICATION_PROTOCOL.RETURN_CODE, 
+COMMUNICATION_PROTOCOL.RETURN_TEXT
+from  EXECUTION, COMMUNICATION_PROTOCOL, PROCEDURE, STATUS executionStatus, STATUS communicationProtokolStatus,PROCESS_TRANSITION
+where PROCEDURE.ID = EXECUTION.PROCEDURE_ID  
+and EXECUTION.ID = COMMUNICATION_PROTOCOL.execution_id
+and EXECUTION.PROCEDURE_ID = PROCEDURE.ID
+and EXECUTION.LAST_TRANSITION_ID = PROCESS_TRANSITION.ID
+and PROCESS_TRANSITION.CURRENT_STATUS_ID=executionStatus.ID 
+and COMMUNICATION_PROTOCOL.STATUS_ID=communicationProtokolStatus.ID
+and COMMUNICATIONPROTOKOLSTATUS.NAME = 'WAIT'
+}}}
