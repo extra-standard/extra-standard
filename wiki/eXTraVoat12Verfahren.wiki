@@ -15,7 +15,7 @@
 
 = Phasen =
 
-http://extra-standard.googlecode.com/svn/wiki/images/extra-nachrichtenaustausch-holbsendeetrieb.jpg
+http://extra-standard.googlecode.com/svn/wiki/images/extra-nachrichtenaustausch-holsendebetrieb.jpg
 
   # Abrufen Verarbeitungsergebnisse Fachverfahren Sterbedatenabgleich (Request - Response)
   # Senden Fachverfahren Sterbedatenabgleich (Request - Response)
