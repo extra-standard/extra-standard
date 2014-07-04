@@ -13,6 +13,8 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="propertiesArray">
 			<array>
+				<util:properties id="global-properties"
+					location="classpath:/conf/testglobalconfig/extra-database.properties" />
 				<util:properties id="persistence-jpa-basic-properties"
 					location="classpath:/conf/phase3/extra-properties-basic.properties" />
 				<util:properties id="persistence-jpa-user-properties"

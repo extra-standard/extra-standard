@@ -28,21 +28,24 @@ public class ScenarioPhase1KlientIT {
 
 	private final ExtraClientTestBasic extraClientTestBasic = new ExtraClientTestBasic();
 
-	private ExtraClient extraClient;
+    private static final String DRV = "DRV";
 
-	private static final String TEST_CONFIG = "/conf/phase1";
+    private static final String GLOBAL_CONFIG_PATH = "/conf/testglobalconfig";
 
-	private static final String LOG_DIR = "/logs";
+    private static final String CONFIG_PATH = "/conf/phase1";
 
-	@Before
+    private static final String LOG_DIR = "/logs";
+
+    private ExtraClient extraClient;
+
+    @Before
 	public void setUp() throws Exception {
-
-		extraClient = extraClientTestBasic.createExtraKlient(TEST_CONFIG,
-				LOG_DIR);
+	    extraClient = extraClientTestBasic.createExtraClient(DRV, GLOBAL_CONFIG_PATH, CONFIG_PATH, LOG_DIR);
 	}
 
 	@Test
 	public void testExecute() throws Exception {
 		extraClientTestBasic.testExecute(extraClient);
 	}
+
 }

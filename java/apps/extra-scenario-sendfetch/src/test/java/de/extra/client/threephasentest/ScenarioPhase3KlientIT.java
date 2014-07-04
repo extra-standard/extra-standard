@@ -26,9 +26,9 @@ import de.extra.client.starter.ExtraClientTestBasic;
 
 /**
  * Phase 3: Bestätigung der erfolgreich abgeholten Rückmeldungen
- * 
+ *
  * @author r52gma
- * 
+ *
  */
 public class ScenarioPhase3KlientIT {
 
@@ -36,15 +36,17 @@ public class ScenarioPhase3KlientIT {
 
 	private ExtraClient extraClient;
 
-	private static final String TEST_CONFIG = "/conf/phase3";
+    private static final String DRV = "DRV";
 
-	private static final String LOG_DIR = "/logs";
+    private static final String GLOBAL_CONFIG_PATH = "/conf/testglobalconfig";
+
+    private static final String CONFIG_PATH = "/conf/phase3";
+
+    private static final String LOG_DIR = "/logs";
 
 	@Before
 	public void setUp() throws Exception {
-
-		extraClient = extraClientTestBasic.createExtraKlient(TEST_CONFIG,
-				LOG_DIR);
+	    extraClient = extraClientTestBasic.createExtraClient(DRV, GLOBAL_CONFIG_PATH, CONFIG_PATH, LOG_DIR);
 	}
 
 	@Test

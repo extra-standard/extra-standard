@@ -15,16 +15,14 @@ rem See the License for the specific language governing permissions and
 rem limitations under the License.
 
 rem ---------------------------------------------------------------------------
-rem Fachverfahren sendFetch (PHASE 1)
 rem eXTra Startscript. Voraussetzung ist die Setzung der Umgebungsvariable 
 rem EXTRA_CLIENT_HOME.
-rem Als Argument wird der Pfad zum Konfigurationsverzeichnis erwartet
 rem
-rem version: $Id$
+rem revision: $Id$
+rem version ${project.artifactId}-${project.version}
 rem ---------------------------------------------------------------------------
 
-rem if "%EXTRA_CLIENT_HOME%" == "" goto env_undefined
-if "%EXTRA_CLIENT_HOME%" == "" set EXTRA_CLIENT_HOME="..\..\..\extra-client"
+set RETURN_CODE_ERROR=32
 
 :logo
 echo         ____  ______________              
@@ -35,6 +33,9 @@ echo   ^\___  ^>___/^\  ^\  ^|____^|   ^|__^|  (____  /
 echo       ^\/      ^\_/                      ^\/ 
 echo 01100101 01011000 01010100 01110010 01100001 
 echo.
+
+rem EXTRA_CLIENT_HOME muss gesetzt sein.
+if "%EXTRA_CLIENT_HOME%" == "" goto env_undefined
 
 rem Java suchen
 if not "%JRE_HOME%" == "" goto gotJreHome
@@ -52,11 +53,11 @@ goto okJava
 
 :env_undefined
 echo Bitte die Umgebungsvariable EXTRA_CLIENT_HOME setzen.
-exit /b 32
+exit /b %RETURN_CODE_ERROR%
 
 :noJreHome
 rem Needed at least a JRE
-echo Die JRE_HOME Umgebungsvariablen ist nicht korrekt definiert.
+echo Die Umgebungsvariable JRE_HOME ist nicht korrekt definiert.
 goto exit
 
 :okJava
@@ -64,19 +65,18 @@ set _JAVA="%JRE_HOME%\bin\java"
 set HEAP_MS=-Xms512m
 set HEAP_MX=-Xmx1024m
 if "%JAVA_OPTS%" == "" set JAVA_OPTS=%HEAP_MS% %HEAP_MX%
-if "%LOGFILEPATH%" == "" set LOGFILEPATH=..\logs
 
-rem java aufruf
-rem im Aufruf wird beispielhaft die Konfiguration im Verzeichnis 'conf' erwartet und Logausgaben ins Verzeichnis 'logs' geschrieben (Syntax siehe Betriebshandbuch)
-%_JAVA% %JAVA_OPTS% -classpath "%EXTRA_CLIENT_HOME%\lib\*" de.extra.client.starter.ClientStarter -l %LOGFILEPATH% %* -c %1
+rem java call
+echo %_JAVA% %JAVA_OPTS% -classpath "%EXTRA_CLIENT_HOME%\lib\*" de.extra.client.starter.ClientStarter %*
+%_JAVA% %JAVA_OPTS% -classpath "%EXTRA_CLIENT_HOME%\lib\*" de.extra.client.starter.ClientStarter %*
 goto end
 
 :exit
-exit /b 32
+exit /b %RETURN_CODE_ERROR%
 
 :end
-if "%ERRORLEVEL%"=="1" exit /b 32
-if not "%ERRORLEVEL%"=="" echo exit mit code %ERRORLEVEL% 
+if "%ERRORLEVEL%"=="1" exit /b %RETURN_CODE_ERROR%
+if not "%ERRORLEVEL%"=="" echo exit mit code %ERRORLEVEL%
 exit /b %ERRORLEVEL%
 
 :exit

@@ -13,10 +13,9 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="propertiesArray">
 			<array>
-				<util:properties id="persistence-jpa-basic-properties"
-					location="classpath:/conf/phase1/extra-properties-basic.properties" />
-				<util:properties id="persistence-jpa-user-properties"
-					location="classpath:/conf/phase1/extra-properties-user.properties" />
+				<util:properties id="1" location="classpath:/conf/testglobalconfig/extra-database.properties" />
+				<util:properties id="2" location="classpath:/conf/phase1/extra-properties-basic.properties" />
+				<util:properties id="3" location="classpath:/conf/phase1/extra-properties-user.properties" />
 			</array>
 		</property>
 		<property name="ignoreUnresolvablePlaceholders" value="false"></property>

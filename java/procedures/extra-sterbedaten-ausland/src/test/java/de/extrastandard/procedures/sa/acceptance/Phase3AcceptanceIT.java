@@ -46,9 +46,9 @@ import de.extrastandard.persistence.repository.ExecutionRepository;
 
 /**
  * Ausfuehrung Sterbedaten Fachverfahren Phase 1
- * 
+ *
  * @author r52gma
- * 
+ *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
@@ -61,9 +61,13 @@ public class Phase3AcceptanceIT {
 	private static final Logger logger = LoggerFactory
 			.getLogger(Phase3AcceptanceIT.class);
 
-	private static final String TEST_CONFIG = "/conf/phase3";
+    private static final String DRV = "DRV";
 
-	private static final String LOG_DIR = "/logs";
+    private static final String GLOBAL_CONFIG_PATH = "/conf/testglobalconfig";
+
+    private static final String CONFIG_PATH = "/conf/phase3";
+
+    private static final String LOG_DIR = "/logs";
 
 	private final ExtraClientTestBasic extraClientTestBasic = new ExtraClientTestBasic();
 
@@ -77,8 +81,7 @@ public class Phase3AcceptanceIT {
 
 	@Before
 	public void setUp() throws Exception {
-		final ExtraClient extraClient = extraClientTestBasic.createExtraKlient(
-				TEST_CONFIG, LOG_DIR);
+		final ExtraClient extraClient = extraClientTestBasic.createExtraClient(DRV, GLOBAL_CONFIG_PATH, CONFIG_PATH, LOG_DIR);
 		extraClientTestBasic.testExecute(extraClient);
 	}
 

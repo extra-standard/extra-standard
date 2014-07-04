@@ -21,7 +21,6 @@ package de.extra.client.starter;
 import java.io.File;
 import java.util.Arrays;
 
-import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,86 +32,84 @@ import de.extra.client.logging.LogFileHandler;
 
 /**
  * eXTRa-CLI Startklasse.
- * 
+ *
  * @author DRV
+ * @author Thorsten Vogel
  * @version $Id: ClientStarter.java 563 2012-09-06 14:15:35Z
  *          thorstenvogel@gmail.com $
  */
 public class ClientStarter {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ClientStarter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ClientStarter.class);
 
-	private static final Logger opperation_logger = LoggerFactory
-			.getLogger("de.extra.client.operation");
+    private static final Logger opperation_logger = LoggerFactory.getLogger("de.extra.client.operation");
 
-	// TODO KOnstante Definieren. Konfiguration
+    // TODO KOnstante Definieren. Konfiguration
+    private static final SystemExiter EXITER = new JvmSystemExiter();
 
-	private static final SystemExiter EXITER = new JvmSystemExiter();
+    /**
+     * Main
+     *
+     * @param args
+     *            Kommandozeilenparameter
+     */
+    public static void main(final String[] args) {
+        ReturnCode returnCode = ReturnCode.SUCCESS;
 
-	/**
-	 * Main
-	 * 
-	 * @param args
-	 *            Kommandozeilenparameter
-	 */
-	public static void main(final String[] args) {
-		ReturnCode returnCode = ReturnCode.SUCCESS;
+        final ClientArgumentParser clientArguments = new ClientArgumentParser(args, EXITER);
+        final ExtraClientParameters parameters = clientArguments.parseArgs();
 
-		final ClientArguments clientArguments = new ClientArguments(args,
-				EXITER);
-		try {
-			clientArguments.parseArgs();
-		} catch (final Exception e) {
-			clientArguments.printHelpText(e);
-			EXITER.exit(ReturnCode.TECHNICAL);
-		}
+        // show errors
+        if (parameters.hasErrors()) {
+            clientArguments.printHelpText(null);
+            parameters.printErrors();
+            EXITER.exit(ReturnCode.TECHNICAL);
+        }
 
-		if (clientArguments.isShowHelp()) {
-			clientArguments.printHelpText(null);
-			EXITER.exit(returnCode);
-		}
-		opperation_logger.info("Eingabeparameter: " + Arrays.toString(args));
+        // only help display
+        if (parameters.getShowHelp()) {
+            clientArguments.printHelpText(null);
+            EXITER.exit(returnCode);
+        }
 
-		final File configurationDirectory = clientArguments
-				.getConfigDirectory();
+        opperation_logger.info("Eingabeparameter: " + Arrays.toString(args));
 
-		// initialisiert logging
-		new LogFileHandler(clientArguments.getLogDirectory(),
-				configurationDirectory);
+        final File configurationDirectory = parameters.getConfigurationDirectory();
 
-		// config dir zur konfiguration des clients nutzen
-		final ExtraClient extraClient = new ExtraClient(configurationDirectory);
+        // initialisiert logging
+        new LogFileHandler(parameters.getLogDirectory(), configurationDirectory);
 
-		// (12.12.12) Aufruf Externer Anwendungen (Bestaetigung von
-		// Output-Dateien)
-		if (clientArguments.isExternalCall()) {
-			// Externer Aufruf
-			try {
-				ExternalCall externalCall = new ExternalCall();
-				boolean success = externalCall.executeExternalCall(clientArguments, extraClient);
-				returnCode = success ? ReturnCode.SUCCESS : ReturnCode.TECHNICAL;
-			} catch (final Exception e) {
-				LOG.error("Fehler bei der Verarbeitung", e);
-				returnCode = ReturnCode.TECHNICAL;
-			}
-		} else {
-			// Normale eXTra-Client Verarbeitung (Phase...)
-			try {
-				final ClientProcessResult result = extraClient.execute();
+        // config dir zur konfiguration des clients nutzen
+        final ExtraClient extraClient = new ExtraClient(parameters);
 
-				returnCode = result.getReturnCode();
-			} catch (final Exception e) {
-				LOG.error("Fehler bei der Verarbeitung", e);
-				returnCode = ReturnCode.BUSINESS;
-			}
-		}
-		if (returnCode.getCode() != 0) {
-			LOG.error("Fehler bei der Verarbeitung: " + returnCode);
-		} else {
-			LOG.info("Verarbeitung erfolgreich");
-		}
+        // (12.12.12) Aufruf Externer Anwendungen (Bestaetigung von
+        // Output-Dateien)
+        if (parameters.isExternalCall()) {
+            // Externer Aufruf
+            try {
+                final ExternalCall externalCall = new ExternalCall();
+                final boolean success = externalCall.executeExternalCall(parameters, extraClient);
+                returnCode = success ? ReturnCode.SUCCESS : ReturnCode.TECHNICAL;
+            } catch (final Exception e) {
+                LOG.error("Fehler bei der Verarbeitung", e);
+                returnCode = ReturnCode.TECHNICAL;
+            }
+        } else {
+            // Normale eXTra-Client Verarbeitung (Phase...)
+            try {
+                final ClientProcessResult result = extraClient.execute();
+                returnCode = result.getReturnCode();
+            } catch (final Exception e) {
+                LOG.error("Fehler bei der Verarbeitung", e);
+                returnCode = ReturnCode.BUSINESS;
+            }
+        }
+        if (returnCode.getCode() != 0) {
+            LOG.error("Exit mit code " + returnCode);
+        } else {
+            LOG.info("Verarbeitung erfolgreich.");
+        }
+        EXITER.exit(returnCode);
+    }
 
-		EXITER.exit(returnCode);
-	}
 }
