@@ -22,53 +22,16 @@ rem
 rem version: $Id$
 rem ---------------------------------------------------------------------------
 
-rem if "%EXTRA_CLIENT_HOME%" == "" goto env_undefined
-if "%EXTRA_CLIENT_HOME%" == "" set EXTRA_CLIENT_HOME="..\..\..\extra-client"
+if "%EXTRA_CLIENT_HOME%" == "" goto env_undefined
 
-:logo
-echo         ____  ______________              
-echo    ____ ^\   ^\/  /^\__    ___/___________   
-echo  _/ __ ^\ ^\     /   ^|    ^|  ^\_  __ ^\__  ^\  
-echo  ^\  ___/ /     ^\   ^|    ^|   ^|  ^| ^\// __ ^\_
-echo   ^\___  ^>___/^\  ^\  ^|____^|   ^|__^|  (____  /
-echo       ^\/      ^\_/                      ^\/
-echo 01100101 01011000 01010100 01110010 01100001 
-echo.
+if "%1"=="" goto conf_fehlt
 
-rem Java suchen
-if not "%JRE_HOME%" == "" goto gotJreHome
-if not "%JAVA_HOME%" == "" goto gotJavaHome
-echo Weder JAVA_HOME noch JRE_HOME Umgebungsvariablen sind definiert.
-goto exit
-
-:gotJavaHome
-set "JRE_HOME=%JAVA_HOME%"
-
-:gotJreHome
-if not exist "%JRE_HOME%\bin\java.exe" goto noJreHome
-if not exist "%JRE_HOME%\bin\javaw.exe" goto noJreHome
-goto okJava
-
-:env_undefined
-echo Bitte die Umgebungsvariable EXTRA_CLIENT_HOME setzen.
-exit /b 32
-
-:noJreHome
-rem Needed at least a JRE
-echo Die JRE_HOME Umgebungsvariablen ist nicht korrekt definiert.
-goto exit
-
-:okJava
-set _JAVA="%JRE_HOME%\bin\java"
-set HEAP_MS=-Xms512m
-set HEAP_MX=-Xmx1024m
-if "%JAVA_OPTS%" == "" set JAVA_OPTS=%HEAP_MS% %HEAP_MX%
-if "%LOGFILEPATH%" == "" set LOGFILEPATH=..\logs
-
-if "%1"=="" GOTO :conf_fehlt
-
-rem java aufruf
-%_JAVA% %JAVA_OPTS% -classpath "%EXTRA_CLIENT_HOME%\lib\*" de.extra.client.starter.ClientStarter -l %LOGFILEPATH% %* -c ..\%1
+rem eXTra-Client Aufruf
+set CURRENT_DIR=%CD%
+pushd %~dp0..\logs
+set LOGFILEPATH=%CD%
+popd
+%EXTRA_CLIENT_HOME%\bin\extra-cli.bat -m DRV -g %EXTRA_CLIENT_HOME%\config -l "%LOGFILEPATH%" -c %~f1 %2 %3 %4 %5 %6 %7 %8 %9
 goto end
 
 :exit
@@ -78,6 +41,10 @@ exit /b 32
 if "%ERRORLEVEL%"=="1" exit /b 32
 if not "%ERRORLEVEL%"=="" echo exit mit code %ERRORLEVEL% 
 exit /b %ERRORLEVEL%
+
+:env_undefined
+echo Bitte die Umgebungsvariable EXTRA_CLIENT_HOME setzen.
+exit /b %RETURN_CODE_ERROR%
 
 :conf_fehlt
 echo Bitte das Konfigurationsverzeichnis angeben

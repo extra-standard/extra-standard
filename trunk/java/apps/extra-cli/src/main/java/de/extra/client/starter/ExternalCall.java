@@ -36,74 +36,65 @@ import de.extrastandard.api.model.execution.PersistentStatus;
  * bestätigen.
  * 
  * @author r52gma
- * 
  */
 class ExternalCall {
-	private static final Logger opperation_logger = LoggerFactory
-			.getLogger("de.extra.client.operation");
 
-	ExternalCall() {
-	}
+    private static final Logger opperation_logger = LoggerFactory.getLogger("de.extra.client.operation");
 
-	/**
-	 * Führt den externen Aufruf durch. Erkannt wird der externe Aufruf durch
-	 * die übergebenen 'ClientArguments'.
-	 * 
-	 * @param clientArguments
-	 * @param extraClient
-	 * @return true: externer Aufruf erfolgreich
-	 */
-	boolean executeExternalCall(final ClientArguments clientArguments,
-			final ExtraClient extraClient) {
-		opperation_logger.info("Starte Verarbeitung fuer Externen Aufruf.");
-		try {
-			final ApplicationContext applicationContext = extraClient
-					.createApplicationContext();
+    ExternalCall() {
+    }
 
-			final ClientCore clientCore = applicationContext.getBean(
-					"clientCore", ClientCore.class);
+    /**
+     * Führt den externen Aufruf durch. Erkannt wird der externe Aufruf durch
+     * die übergebenen 'ClientArguments'.
+     * 
+     * @param clientArguments
+     * @param extraClient
+     * @return true: externer Aufruf erfolgreich
+     */
+    boolean executeExternalCall(final ExtraClientParameters parameters, final ExtraClient extraClient) {
+        opperation_logger.info("Starte Verarbeitung fuer Externen Aufruf.");
+        try {
+            final ApplicationContext applicationContext = extraClient.createApplicationContext();
 
-			// Aktuell (17.12.12) zwei Aufrufe moeglich:
-			// -oc: OutputConfirm - Ergebnisdatei Bestaetigen
-			// -of: OutputFailure - Ergebnisdatei konnte nicht verarbeitet
-			// werden
-			boolean success = false;
-			final String outputConfirm = clientArguments.getOutputConfirm();
-			final String outputFailure = clientArguments.getOutputFailure();
-			final PersistentStatus persistentStatusNeu;
-			final String outputIdentifier;
-			final String aktion;
-			if (outputConfirm != null && outputConfirm.length() > 0) {
-				outputIdentifier = outputConfirm;
-				persistentStatusNeu = PersistentStatus.DONE;
-				aktion = "Externer Aufruf: Datei fehlerfrei verarbeitet, outputIdentifier: "
-						+ outputIdentifier;
-			} else if (outputFailure != null && outputFailure.length() > 0) {
-				outputIdentifier = outputFailure;
-				persistentStatusNeu = PersistentStatus.FAIL;
-				aktion = "Externer Aufruf: Fehler bei Dateiverarbeitung, outputIdentifier: "
-						+ outputIdentifier;
-			} else {
-				// Unbekannter Aufruf!
-				opperation_logger.error("Unbekannter Aufruf!");
-				throw new ExtraConfigRuntimeException(
-						ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION);
-			}
-			// Statusaenderung durchfuehren
-			opperation_logger.info(aktion);
-			success = clientCore
-					.changeCommunicationProtocolStatusByOutputIdentifier(
-							outputIdentifier, persistentStatusNeu);
-			opperation_logger
-					.info(success ? "Statusaenderung erfolgreich"
-							: "Fehler bei Statusaenderung (falscher OutputIdentifier?)");
-			return success;
+            final ClientCore clientCore = applicationContext.getBean("clientCore", ClientCore.class);
 
-		} catch (final Exception e) {
-			opperation_logger.error("Fehler bei Externer Verarbeitung", e);
-			throw new ExtraConfigRuntimeException(e);
-		}
+            // Aktuell (17.12.12) zwei Aufrufe moeglich:
+            // -oc: OutputConfirm - Ergebnisdatei Bestaetigen
+            // -of: OutputFailure - Ergebnisdatei konnte nicht verarbeitet
+            // werden
+            boolean success = false;
+            final String outputConfirm = parameters.getOutputConfirm();
+            final String outputFailure = parameters.getOutputFailure();
+            final PersistentStatus persistentStatusNeu;
+            final String outputIdentifier;
+            final String aktion;
+            if (outputConfirm != null && outputConfirm.length() > 0) {
+                outputIdentifier = outputConfirm;
+                persistentStatusNeu = PersistentStatus.DONE;
+                aktion = "Externer Aufruf: Datei fehlerfrei verarbeitet, outputIdentifier: " + outputIdentifier;
+            } else if (outputFailure != null && outputFailure.length() > 0) {
+                outputIdentifier = outputFailure;
+                persistentStatusNeu = PersistentStatus.FAIL;
+                aktion = "Externer Aufruf: Fehler bei Dateiverarbeitung, outputIdentifier: " + outputIdentifier;
+            } else {
+                // Unbekannter Aufruf!
+                opperation_logger.error("Unbekannter Aufruf!");
+                throw new ExtraConfigRuntimeException(ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION);
+            }
+            // Statusaenderung durchfuehren
+            opperation_logger.info(aktion);
+            success = clientCore.changeCommunicationProtocolStatusByOutputIdentifier(outputIdentifier,
+                    persistentStatusNeu);
+            opperation_logger.info(success ? "Statusaenderung erfolgreich"
+                    : "Fehler bei Statusaenderung (falscher OutputIdentifier?)");
+            return success;
 
-	}
-	// outputConfirm()
+        } catch (final Exception e) {
+            opperation_logger.error("Fehler bei Externer Verarbeitung", e);
+            throw new ExtraConfigRuntimeException(e);
+        }
+
+    }
+    // outputConfirm()
 }

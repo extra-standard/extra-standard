@@ -27,54 +27,57 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.Assert;
 
 import de.extra.client.core.ClientProcessResult;
 import de.extra.client.logging.LogFileHandler;
 
 public class ExtraClientTestBasic {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ExtraClientTestBasic.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ExtraClientTestBasic.class);
 
-	/**
-	 * Erstellt einen ExtraKlient mit der vorgegebenen Konfiguration Die
-	 * Konfigurationsverzeichniss wird in dem Klassenpfad als ClassPathResource
-	 * gesucht
-	 * 
-	 * @param path
-	 * @return
-	 * @throws IOException
-	 *             , wenn die Konfigurationsverzeichnis nicht vorhanden ist.
-	 * 
-	 */
-	public ExtraClient createExtraKlient(final String path, final String logDir)
-			throws IOException {
-		org.springframework.util.Assert.notNull(path, "Path is null");
-		// initialisiert logging
-		final File configurationDirectory = new ClassPathResource(path)
-				.getFile();
-		final File logDirectory = new ClassPathResource(logDir).getFile();
-		new LogFileHandler(logDirectory, configurationDirectory);
-		final ExtraClient extraClient = new ExtraClient(configurationDirectory);
-		return extraClient;
-	}
+    /**
+     * Erstellt einen ExtraKlient mit der vorgegebenen Konfiguration Die
+     * Konfigurationsverzeichniss wird in dem Klassenpfad als ClassPathResource
+     * gesucht
+     *
+     * @param configurationDirectory
+     * @return
+     * @throws IOException
+     *             wenn die Konfigurationsverzeichnis nicht vorhanden ist.
+     */
+    public ExtraClient createExtraClient(final String mandantName, final String globalConfigurationDirectoryName,
+            final String configurationDirectoryName, final String logDir) throws IOException {
+        Assert.notNull(mandantName, "mandantName");
+        Assert.notNull(globalConfigurationDirectoryName, "globalConfigurationDirectoryName is null");
+        Assert.notNull(configurationDirectoryName, "configurationDirectoryName is null");
+        // initialisiert logging
+        final File globalConfigurationDirectory = new ClassPathResource(globalConfigurationDirectoryName).getFile();
+        final File configurationDirectory = new ClassPathResource(configurationDirectoryName).getFile();
+        final File logDirectory = new ClassPathResource(logDir).getFile();
+        new LogFileHandler(logDirectory, configurationDirectory);
+        final ExtraClientParameters parameters = new ExtraClientParameters(mandantName, globalConfigurationDirectory,
+                configurationDirectory, logDirectory, null, null);
+        return new ExtraClient(parameters);
+    }
 
-	/**
-	 * Führt die Verarbeitung aus und wertet die Fehlermeldungen
-	 * 
-	 * @param extraClient
-	 * @throws Exception
-	 */
-	public void testExecute(final ExtraClient extraClient) throws Exception {
-		final ClientProcessResult clientProcessResult = extraClient.execute();
-		if (clientProcessResult.isSuccessful()) {
-			assertTrue(true);
-		} else {
-			if (clientProcessResult.hasExceptions()) {
-				LOG.error(clientProcessResult.exceptionsToString());
-			}
+    /**
+     * Führt die Verarbeitung aus und wertet die Fehlermeldungen
+     *
+     * @param extraClient
+     * @throws Exception
+     */
+    public void testExecute(final ExtraClient extraClient) throws Exception {
+        final ClientProcessResult clientProcessResult = extraClient.execute();
+        if (clientProcessResult.isSuccessful()) {
+            assertTrue(true);
+        } else {
+            if (clientProcessResult.hasExceptions()) {
+                LOG.error(clientProcessResult.exceptionsToString());
+            }
 
-			fail("Fehler bei der Verarbeitung!");
-		}
-	}
+            fail("Fehler bei der Verarbeitung!");
+        }
+    }
+
 }

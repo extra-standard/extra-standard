@@ -18,7 +18,8 @@
  */
 package de.extra.client.starter;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -34,46 +35,60 @@ import de.extra.client.exit.SystemExiter;
  */
 public class ClientArgumentsTest {
 
-	static class NotExiter implements SystemExiter {
-		@Override
-		public void exit(final ReturnCode code) {
-			// do nothing
-		}
-	}
+    private static final SystemExiter EXITER = new NotExiter();
 
-	/**
-	 * Test method for
-	 * {@link de.extra.client.starter.ClientArguments#ClientArguments(java.lang.String[])}
-	 * .
-	 */
-	@Test
-	public void testClientArguments() throws Exception {
-		final Resource configDir = new ClassPathResource("testconfig");
-		final Resource logDir = new ClassPathResource("log");
-		final String[] args = { "-c " + configDir.getFile().getAbsolutePath(),
-				"-l  " + logDir.getFile().getAbsolutePath() };
-		final ClientArguments arguments = new ClientArguments(args,
-				new NotExiter());
-		arguments.parseArgs();
-		assertNotNull(arguments.getConfigDirectory());
-	}
+    private static final String MANDANT_NAME = "DRV";
 
-	/**
-	 * Test method for
-	 * {@link de.extra.client.starter.ClientArguments#parseArgs()}.
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testParseNonArgs() {
-		final ClientArguments arguments = new ClientArguments(null,
-				new NotExiter());
-		arguments.parseArgs();
-	}
+    static class NotExiter implements SystemExiter {
+        @Override
+        public void exit(final ReturnCode code) {
+            // do nothing
+        }
+    }
 
-	public void testHelp() throws Exception {
-		final ClientArguments arguments = new ClientArguments(
-				new String[] { "-h" }, new NotExiter());
-		arguments.parseArgs();
-		assertTrue(arguments.isShowHelp());
-	}
+    @Test
+    public void testClientArguments() throws Exception {
+        final Resource globalConfigDir = new ClassPathResource("testglobalconfig");
+        final String globalConfigPath = globalConfigDir.getFile().getAbsolutePath();
+
+        final Resource configDir = new ClassPathResource("testconfig");
+        final String configPath = configDir.getFile().getAbsolutePath();
+
+        final Resource logDir = new ClassPathResource("testlog");
+        final String logPath = logDir.getFile().getAbsolutePath();
+
+        final String[] args = {
+                "-m", MANDANT_NAME,
+                "-g", globalConfigPath,
+                "-c", configPath,
+                "-l", logPath,
+                "-oc", "xxx",
+                "-of", "yyy"
+        };
+
+        final ClientArgumentParser arguments = new ClientArgumentParser(args, EXITER);
+        final ExtraClientParameters parameters = arguments.parseArgs();
+        assertEquals(MANDANT_NAME, parameters.getMandant());
+        assertEquals(globalConfigDir.getFile(), parameters.getGlobalConfigurationDirectory());
+        assertEquals(configDir.getFile(), parameters.getConfigurationDirectory());
+        assertEquals(logDir.getFile(), parameters.getLogDirectory());
+        assertEquals("xxx", parameters.getOutputConfirm());
+        assertEquals("yyy", parameters.getOutputFailure());
+    }
+
+    @Test
+    public void testParseNonArgs() {
+        final ClientArgumentParser arguments = new ClientArgumentParser(null, EXITER);
+        final ExtraClientParameters parameters = arguments.parseArgs();
+        assertTrue(parameters.hasErrors());
+    }
+
+    @Test
+    public void testHelp() throws Exception {
+        final ClientArgumentParser arguments = new ClientArgumentParser(new String[] { "-h" }, EXITER);
+        final ExtraClientParameters parameters = arguments.parseArgs();
+        assertFalse(parameters.hasErrors());
+        assertTrue(parameters.getShowHelp());
+    }
 
 }

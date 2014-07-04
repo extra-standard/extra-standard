@@ -47,12 +47,12 @@ import de.extrastandard.persistence.repository.ExecutionRepository;
 /**
  * <pre>
  * Acceptance Test für die Fachverfahren Sterbedaten Phase 1.
- * Test setzt eine Oracle Datenbankschema vorraus. 
+ * Test setzt eine Oracle Datenbankschema vorraus.
  * Das eXTra Schema wird vor jedem Test neu angelegt und mit der Testdaten initial gefüllt.
  * </pre>
- * 
+ *
  * @author Leonid Potap
- * 
+ *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
@@ -65,9 +65,13 @@ public class Phase1AcceptanceIT {
 	private static final Logger logger = LoggerFactory
 			.getLogger(Phase1AcceptanceIT.class);
 
-	private static final String TEST_CONFIG = "/conf/phase1";
+    private static final String DRV = "DRV";
 
-	private static final String LOG_DIR = "/logs";
+    private static final String GLOBAL_CONFIG_PATH = "/conf/testglobalconfig";
+
+    private static final String CONFIG_PATH = "/conf/phase1";
+
+    private static final String LOG_DIR = "/logs";
 
 	private final ExtraClientTestBasic extraClientTestBasic = new ExtraClientTestBasic();
 
@@ -82,8 +86,7 @@ public class Phase1AcceptanceIT {
 	@Before
 	public void setUp() throws Exception {
 		ExtraClient extraClient;
-		extraClient = extraClientTestBasic.createExtraKlient(TEST_CONFIG,
-				LOG_DIR);
+		extraClient = extraClientTestBasic.createExtraClient(DRV, GLOBAL_CONFIG_PATH, CONFIG_PATH, LOG_DIR);
 		extraClientTestBasic.testExecute(extraClient);
 	}
 

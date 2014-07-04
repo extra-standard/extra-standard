@@ -7,12 +7,19 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
-	<util:properties id="_extern_extra-properties-basic" location="classpath:/testconfig/extra-properties-basic.properties" />
+	<bean id="_extern_extra-properties-basic" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:/testglobalconfig/extra-database.properties</value>
+				<value>classpath:/testconfig/extra-properties-basic.properties</value>
+			</list>
+		</property>
+	</bean>
+
 	<util:properties id="_extern_extra-properties-user"  location="classpath:/testconfig/extra-properties-user.properties"/>
 
 	<bean id="_configurationDirectory" class="java.io.File" >
-		
 		<constructor-arg value="${_configurationDirectory}"></constructor-arg>
-	</bean>  
-	
+	</bean>
+
 </beans>

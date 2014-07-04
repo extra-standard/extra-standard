@@ -18,13 +18,18 @@
  */
 package de.extra.client.starter;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.Properties;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
 
 /**
  * @author Thorsten Vogel
  */
-public class ExtraClientTest {
+public class ExtraClientPropertiesTest {
 
     private final ExtraClientTestBasic extraClientTestBasic = new ExtraClientTestBasic();
 
@@ -44,8 +49,11 @@ public class ExtraClientTest {
     }
 
     @Test
-    public void testExecute() throws Exception {
-        extraClientTestBasic.testExecute(extraClient);
+    public void testProperties() throws Exception {
+        final ApplicationContext context = extraClient.createApplicationContext();
+        final Properties basicProperties = context.getBean(ExtraClient.BEAN_NAME_EXTRA_PROPERTIES_BASIC, Properties.class);
+        assertEquals("DRV", basicProperties.get("extra.mandant"));
+        assertEquals("drv property content", basicProperties.get("drv.property"));
     }
 
 }
