@@ -20,8 +20,10 @@
 <!-- 
  | version: $Id: pom.xml 509 2012-09-04 09:37:29Z thorstenvogel@gmail.com $
  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
@@ -30,7 +32,7 @@
 	</parent>
 
 	<artifactId>extra-cli</artifactId>
-	<version>2.1.1</version>
+	<version>2.2.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>extra-cli</name>
 	<description>eXTra Command Line Interface</description>
@@ -45,7 +47,7 @@
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-api</artifactId>
 			<version>2.1.1</version>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-configplugin-default</artifactId>
@@ -81,16 +83,16 @@
 			<artifactId>extra-outputplugin-ws</artifactId>
 			<version>2.1.1</version>
 		</dependency>
-	    <dependency>
+		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-outputplugin-wscxf</artifactId>
 			<version>2.1.1</version>
-		</dependency> 		
+		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-execution-jpa</artifactId>
 			<version>2.1.1</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-execution-jpa</artifactId>
@@ -101,9 +103,8 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-core</artifactId>
-			<version>2.1.1</version>
+			<version>2.2.0-SNAPSHOT</version>
 		</dependency>
-
 		<dependency>
 			<groupId>commons-cli</groupId>
 			<artifactId>commons-cli</artifactId>
@@ -122,6 +123,11 @@
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-jndi</artifactId>
+			<version>8.1.14.v20131031</version>
 		</dependency>
 	</dependencies>
 
