@@ -57,6 +57,50 @@ Folgende Dateien bilden die Konfigurationsdaten für ein Fachverfahren:
 || [eXTraClientBetriebLogging logging-config.xml] || Logging Einstellungen (z.B. Name der Logfiles und Loglevel) ||
 || [eXTraClientBetriebConfigProfile ‚profile.xml’] || eXTra-Profil Datei (siehe eXTra Standard). In der Profil-Date sind die Elemente des Extra-Standards aufgeführt, die zur Kommunikation zwischen Client und Server verwendet werden sollen (Der Name ist frei wählbar.)||
 
+=== Passwortverschlüsselung in Konfigurationsdateien ===
+
+Damit Passwörter, z.B. für eine Datenbank, nicht als Klartext in
+Konfigurationsdateien abgelegt werden müssen, stellt der eXTra-Client eine
+Möglichkeit bereit, diese Passwörter zu verschlüsseln und lediglich den
+Schlüssel anzugeben.
+
+Vorraussetzung:
+
+Die Umgebungsvariable {{{EXTRA_ENCRYPTION_PASSWORD}}} ist auf ein nur dem
+Administrator bekanntes Kennwort zu setzen, welches dazu genutzt wird, das
+eigentliche Passwort zu verschlüsseln und zu entschlüsseln.
+
+Die Umgebungsvariable {{{EXTRA_ENCRYPTION_PASSWORD}}} kann nach dem Einsatz des
+Verschlüsselungstool direkt wieder entfernt werden.
+
+Vor und während eines Laufs des Extra-Clients muss die Umgebungsvariable gesetzt
+sein. Diese kann nach dem Lauf wieder entfernt werden.
+
+Anwendung:
+
+In dem Installationsverzeichnis des Extra-Clients befindet sich das Skript "bin/encrypt-password.bat".
+
+Dieses wird mit dem zu verschlüsselndem Passwort als Parameter aufgerufen:
+{{{
+extra-client\bin\encrypt-password.bat 12345678
+}}}
+Das Programm erzeugt als Ausgabe den in die Konfigurationsdatei einzutregenden Wert, z.B.
+{{{
+ENC(rGyUjlb1oi3WWeRUTDNQHLlV+4PefVTc)
+}}}
+Dieser Wert muss kopiert und in die entsprechende Konfigurationsdatei eingetragen werden, z.B.
+{{{
+plugins.execution.executionPersistenceJpa.database.password=ENC(rGyUjlb1oi3WWeRUTDNQHLlV+4PefVTc)
+}}}
+Sobald ein verschlüsselter Wert in einer Konfigurationsdatei vorhanden ist, wird
+zur Laufzeit des eXTra-Clients versucht, diesen Wert zu entschlüsseln. Hierzu
+muss, wie bereits unter "Vorraussetzung" beschrieben, die Umgebungsvariable
+{{{EXTRA_ENCRYPTION_PASSWORD}}} auf das korrekte, zur Verschlüsselung genutzte
+Passwort gesetzt werden, da ansonsten die Entschlüsselung nicht funktionieren
+kann.
+
+
+
 ==Aufruf der Fachverfahren==
 Die Fachverfahren können über Batch-Dateien aufgerufen werden. Beispielhaft befindet sich im _/bin_ Verzeichnis der Auslieferungsversion ein Aufruf für Windows (extra.bat). In diesen Skripten wird eine Umgebungsvariable EXTRA_CLIENT_HOME für den Zugriff auf die eXTra-Client Dateien verwendet.
 
