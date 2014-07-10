@@ -77,7 +77,9 @@ Das Logging erfolgt in das Verzeichnis logs. Die Konfiguration wird aus dem Verz
 ===Aufrufparameter===
 
 || Parameter || Beispiel || Beschreibung ||
+|| -g "Globales Konfigurationsverzeichnis" || -g globalconf || Globale Konfiguration wird aus dem Verzeichnis _globalconf_ gelesen *(Pflicht)* ||
 || -c "Konfigurationsverzeichnis" || -c conf || Konfiguration wird aus dem Verzeichnis _conf_ gelesen *(Pflicht)* ||
+|| -m "Mandant" || -m xyz || Mandanten-spezifische Konfiguration wird aus dem Konfigurationsverzeichnis des Mandanten gelesen und überschreibt ggfs. globale Konfigurationen. ||
 || -l "logs" || -l logs || Logs werden in das Verzeichnis _logs_ geschrieben ||
 || -h || -h || Hilfe ||
 
