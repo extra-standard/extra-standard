@@ -6,27 +6,19 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
-	<import resource="spring-encryption.xml"/>
-
-	<!-- 
-	 | PropertyPlaceholderConfigurer für Plugins.
+	<!--
+	 |  Bezieht das Verschlüsselungspasswort aus der Umgebungsvariablen EXTRA_ENCRYPTION_PASSWORD.
 	 -->
-	<bean class="de.extra.client.core.annotation.PropertyPlaceholderPluginConfigurer">
-		<constructor-arg ref="configurationEncryptor" />
-		<property name="propertiesArray">
-			<array>
-				<ref bean="_extern_extra-properties-basic" />
-				<ref bean="_extern_extra-properties-user" />
-			</array>
-		</property>
-		<property name="ignoreNullValues" value="true" />
+	<bean id="environmentVariablesConfiguration" class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
+		<property name="algorithm" value="PBEWithMD5AndDES" />
+		<property name="passwordEnvName" value="EXTRA_ENCRYPTION_PASSWORD" />
 	</bean>
 
 	<!-- 
-	 | Validierung.
+	 | Verschlüsselungsmethode.
 	 -->
-	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
-
-	<context:component-scan base-package="de.extra.client.core" />
+	<bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		<property name="config" ref="environmentVariablesConfiguration" />
+	</bean>
 
 </beans>

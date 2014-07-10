@@ -15,24 +15,14 @@ rem See the License for the specific language governing permissions and
 rem limitations under the License.
 
 rem ---------------------------------------------------------------------------
-rem eXTra Startscript. Voraussetzung ist die Setzung der Umgebungsvariable 
-rem EXTRA_CLIENT_HOME.
+rem Script zur Verschlüsselung von Passwörtern. Voraussetzung ist die Setzung der Umgebungsvariablen 
+rem EXTRA_CLIENT_HOME und EXTRA_ENCRYPTION_PASSWORD.
 rem
 rem revision: $Id$
 rem version ${project.artifactId}-${project.version}
 rem ---------------------------------------------------------------------------
 
 set RETURN_CODE_ERROR=32
-
-:logo
-echo         ____  ______________              
-echo    ____ ^\   ^\/  /^\__    ___/___________   
-echo  _/ __ ^\ ^\     /   ^|    ^|  ^\_  __ ^\__  ^\  
-echo  ^\  ___/ /     ^\   ^|    ^|   ^|  ^| ^\// __ ^\_
-echo   ^\___  ^>___/^\  ^\  ^|____^|   ^|__^|  (____  /
-echo       ^\/      ^\_/                      ^\/ 
-echo 01100101 01011000 01010100 01110010 01100001 
-echo.
 
 rem EXTRA_CLIENT_HOME muss gesetzt sein.
 if "%EXTRA_CLIENT_HOME%" == "" goto env_undefined
@@ -74,16 +64,13 @@ set HEAP_MX=-Xmx1024m
 if "%JAVA_OPTS%" == "" set JAVA_OPTS=%HEAP_MS% %HEAP_MX%
 
 rem java call
-echo %_JAVA% %JAVA_OPTS% -classpath "%EXTRA_CLIENT_HOME%\lib\*" de.extra.client.starter.ClientStarter %*
-%_JAVA% %JAVA_OPTS% -classpath "%EXTRA_CLIENT_HOME%\lib\*" de.extra.client.starter.ClientStarter %*
+%_JAVA% %JAVA_OPTS% -classpath "%EXTRA_CLIENT_HOME%\lib\*" de.extra.client.crypto.ExtraPasswordEncryptor %*
 goto end
 
 :exit
 exit /b %RETURN_CODE_ERROR%
 
 :end
-if "%ERRORLEVEL%"=="1" exit /b %RETURN_CODE_ERROR%
-if not "%ERRORLEVEL%"=="" echo exit mit code %ERRORLEVEL%
 exit /b %ERRORLEVEL%
 
 :exit
