@@ -57,7 +57,7 @@ public class ExtraClientTestBasic {
         final File logDirectory = new ClassPathResource(logDir).getFile();
         new LogFileHandler(logDirectory, configurationDirectory);
         final ExtraClientParameters parameters = new ExtraClientParameters(mandantName, globalConfigurationDirectory,
-                configurationDirectory, logDirectory, null, null);
+                configurationDirectory, logDirectory, null, null, null, null);
         return new ExtraClient(parameters);
     }
 

@@ -39,27 +39,96 @@ import de.extra.client.exit.SystemExiter;
  */
 public class ClientArgumentParser {
 
+    /**
+     * Parameter zur Anzeige der Hilfe.
+     */
     public static final String OPTION_NAME_HELP = "help";
+
+    /**
+     * Kurzer Parameter zur Anzeige der Hilfe.
+     */
     public static final String OPTION_NAME_HELP_SHORTCUT = "h";
 
+    /**
+     * Parameter zur Angabe des Mandanten.
+     */
     public static final String OPTION_NAME_MANDANT = "mandant";
+
+    /**
+     * Kurzer Parameter zur Angabe des Mandanten.
+     */
     public static final String OPTION_NAME_MANDANT_SHORTCUT = "m";
 
+    /**
+     * Parameter zur Angabe des globalen Konfigurationsverzeichnisses.
+     */
     public static final String OPTION_NAME_GLOBAL_CONFIG_DIRECTORY = "globalConfigDirectory";
+
+    /**
+     * Kurzer Parameter zur Angabe des globalen Konfigurationsverzeichnisses.
+     */
     public static final String OPTION_NAME_GLOBAL_CONFIG_DIRECTORY_SHORTCUT = "g";
 
+    /**
+     * Parameter zur Angabe des Konfigurationsverzeichnisses.
+     */
     public static final String OPTION_NAME_CONFIG_DIRECTORY = "configDirectory";
+
+    /**
+     * Kurzer Parameter zur Angabe des Konfigurationsverzeichnisses.
+     */
     public static final String OPTION_NAME_CONFIG_DIRECTORY_SHORTCUT = "c";
 
+    /**
+     * Parameter zur Angabe des Logverzeichnisses.
+     */
     public static final String OPTION_NAME_LOG_DIRECTORY = "logDirectory";
+
+    /**
+     * Kurzer Parameter zur Angabe des Logverzeichnisses.
+     */
     public static final String OPTION_NAME_LOG_DIRECTORY_SHORTCUT = "l";
 
+    /**
+     * Parameter zur Angabe von Dateibestätigung.
+     */
     // (12.12.12) Externe Anwendungen muessen Output-Dateien bestaetigen koennen
     public static final String OPTION_NAME_OUTPUT_CONFIRM = "outputConfirm";
+
+    /**
+     * Kurzer Parameter zur Angabe von Dateibestätigung.
+     */
     public static final String OPTION_NAME_OUTPUT_CONFIRM_SHORTCUT = "oc";
 
+    /**
+     * Parameter zur Meldung von Fehlern.
+     */
     public static final String OPTION_NAME_OUTPUT_FAILURE = "outputFailure";
+
+    /**
+     * Kurzer Parameter zur Meldung von Fehlern.
+     */
     public static final String OPTION_NAME_OUTPUT_FAILURE_SHORTCUT = "of";
+
+    /**
+     * Parameter zur Angabe des Backupverzeichnisses.
+     */
+    public static final String OPTION_NAME_BACKUP_DIRECTORY = "backupDirectory";
+
+    /**
+     * Kurzer Parameter zur Angabe des Backupverzeichnisses.
+     */
+    public static final String OPTION_NAME_BACKUP_DIRECTORY_SHORTCUT = "b";
+
+    /**
+     * Kurzer Parameter zur Angabe, ob Eingangsdateien nach erfolgreicher Übertragung gelöscht werden sollen.
+     */
+    public static final String OPTION_NAME_DELETE_INPUTFILES = "deleteInputFiles";
+
+    /**
+     * Parameter zur Angabe, ob Eingangsdateien nach erfolgreicher Übertragung gelöscht werden sollen.
+     */
+    public static final String OPTION_NAME_DELETE_INPUTFILES_SHORTCUT = "d";
 
     private static final Option OPT_MANDANT = new Option(OPTION_NAME_MANDANT_SHORTCUT, OPTION_NAME_MANDANT, true,
             "Name des Mandanten");
@@ -82,6 +151,12 @@ public class ClientArgumentParser {
     private static final Option OPT_OUTPUT_FAILURE = new Option(OPTION_NAME_OUTPUT_FAILURE_SHORTCUT,
             OPTION_NAME_OUTPUT_FAILURE, true, "Fehlerhaften Output melden");
 
+    private static final Option OPT_BACKUP_DIRECTORY = new Option(OPTION_NAME_BACKUP_DIRECTORY_SHORTCUT,
+            OPTION_NAME_BACKUP_DIRECTORY, true, "Backupverzeichnis für Eingabedateien");
+
+    private static final Option OPT_DELETE_INPUTFILES = new Option(OPTION_NAME_DELETE_INPUTFILES_SHORTCUT,
+            OPTION_NAME_DELETE_INPUTFILES, true, "Eingabedateien löschen");
+
     public static final Options OPTIONS;
 
     private final SystemExiter exiter;
@@ -95,6 +170,8 @@ public class ClientArgumentParser {
         OPTIONS.addOption(OPT_LOG_DIRECTORY);
         OPTIONS.addOption(OPT_OUTPUT_CONFIRM);
         OPTIONS.addOption(OPT_OUTPUT_FAILURE);
+        OPTIONS.addOption(OPT_BACKUP_DIRECTORY);
+        OPTIONS.addOption(OPT_DELETE_INPUTFILES);
     }
 
     /**
@@ -207,8 +284,22 @@ public class ClientArgumentParser {
             }
         }
 
+        // optionales Backupdirectory
+        File backupDirectory = null;
+        if (commandLine.hasOption(OPTION_NAME_BACKUP_DIRECTORY)) {
+            final String optionValue = commandLine.getOptionValue(OPTION_NAME_BACKUP_DIRECTORY) != null ? commandLine
+                    .getOptionValue(OPTION_NAME_BACKUP_DIRECTORY).trim() : null;
+            if (StringUtils.hasText(optionValue)) {
+                backupDirectory = new File(optionValue);
+                checkDirectory(optionValue, backupDirectory, errors);
+            }
+        }
+
+        // Eingabedateien löschen?
+        final Boolean deleteInputFiles = commandLine.hasOption(OPTION_NAME_DELETE_INPUTFILES);
+
         return new ExtraClientParameters(mandant, globalConfigDirectory, configDirectory, logDirectory, outputConfirm,
-                outputFailure, showHelp, errors);
+                outputFailure, backupDirectory, deleteInputFiles, showHelp, errors);
     }
 
     /**
