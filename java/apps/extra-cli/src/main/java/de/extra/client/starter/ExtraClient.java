@@ -24,9 +24,11 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +38,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import de.extra.client.core.ClientCore;
 import de.extra.client.core.ClientProcessResult;
+import de.extra.client.core.ProcessResult;
+import de.extra.client.core.model.inputdata.impl.SingleFileInputData;
 import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraConfigRuntimeException;
+import de.extrastandard.api.model.content.ISingleInputData;
 
 /**
  *
@@ -105,13 +110,53 @@ public class ExtraClient {
         try {
             final ApplicationContext applicationContext = createApplicationContext();
             final ClientCore clientCore = applicationContext.getBean("clientCore", ClientCore.class);
-            final ClientProcessResult processResult = clientCore.process(parameters.getConfigurationDirectory()
+            final ClientProcessResult clientProcessResult = clientCore.process(parameters.getConfigurationDirectory()
                     .getAbsolutePath());
-            opperation_logger.info("ExecutionsResults: {}", processResult.printResults());
-            return processResult;
+            opperation_logger.info("ExecutionsResults: {}", clientProcessResult.printResults());
+            postProcess(clientProcessResult);
+            return clientProcessResult;
         } catch (final Exception e) {
             LOG.error("Fehler beim Start", e);
             throw new ExtraConfigRuntimeException(e);
+        }
+    }
+
+    private void postProcess(final ClientProcessResult clientProcessResult) {
+        final List<ProcessResult> responses = clientProcessResult.getResponses();
+        for (final ProcessResult processResult : responses) {
+            final List<ISingleInputData> content = processResult.getDataContainer().getContent();
+            for (final ISingleInputData singleInputData : content) {
+                final String inputDataType = singleInputData.getInputDataType();
+                if (!SingleFileInputData.INPUT_DATA_TYPE.equals(inputDataType)) {
+                    continue;
+                }
+                handleInputFile(singleInputData);
+            }
+        }
+    }
+
+    private void handleInputFile(final ISingleInputData singleInputData) {
+        final String inputIdentifier = singleInputData.getInputIdentifier();
+        final File file = new File(inputIdentifier);
+        if (parameters.shouldCreateBackup()) {
+            final File backupDirectory = parameters.getBackupDirectory();
+            LOG.debug("copying {} to {}", new Object[] {file.getAbsolutePath(), backupDirectory.getAbsolutePath()});
+            try {
+                FileUtils.copyFileToDirectory(file, backupDirectory);
+            } catch (final IOException e) {
+                LOG.error("Konnte Datei {} nicht nach {} kopieren ({}).",
+                        new Object[] {file.getAbsolutePath(), backupDirectory.getAbsolutePath(), e.getMessage()});
+            }
+        }
+        if (parameters.getDeleteInputFiles()) {
+            LOG.debug("deleting {}", file.getAbsolutePath());
+            try {
+                if (!file.delete()) {
+                    LOG.error("Datei {} konnte nicht gelöscht werden.", file.getAbsolutePath());
+                }
+            } catch (final Exception e) {
+                LOG.error("Fehler beim Löschen der Datei {} ({}).", file.getAbsolutePath(), e.getMessage());
+            }
         }
     }
 

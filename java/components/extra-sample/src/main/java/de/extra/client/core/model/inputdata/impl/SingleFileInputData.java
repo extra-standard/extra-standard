@@ -38,17 +38,18 @@ import de.extrastandard.api.model.content.IInputDataPluginDescription;
 import de.extrastandard.api.model.content.ISingleContentInputData;
 
 /**
- * Identifiziert InputDaten aus der Filesystem
- * 
+ * Identifiziert InputDaten aus dem Filesystem
+ *
  * @author DPRS
  * @version $Id$
  */
 public class SingleFileInputData extends Implementor implements
 		ISingleContentInputData {
 
+    public static final String INPUT_DATA_TYPE = "FILE_INPUT_DATA";
+
 	private static final Charset ENCODING_UTF_8 = Charsets.UTF_8;
 
-	private static final String INPUT_DATA_TYPE = "FILE_INPUT_DATA";
 	private final File inputDataFile;
 
 	private String requestId;
@@ -73,7 +74,7 @@ public class SingleFileInputData extends Implementor implements
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.extra.client.core.model.ISenderDataBean#getPlugins()
 	 */
 	@Override
@@ -95,7 +96,7 @@ public class SingleFileInputData extends Implementor implements
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.extra.client.core.model.IFileInputdata#getFileName()
 	 */
 	public String getFileName() {
@@ -135,7 +136,7 @@ public class SingleFileInputData extends Implementor implements
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
