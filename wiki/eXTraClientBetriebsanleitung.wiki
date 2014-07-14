@@ -125,6 +125,8 @@ Das Logging erfolgt in das Verzeichnis logs. Die Konfiguration wird aus dem Verz
 || -c "Konfigurationsverzeichnis" || -c conf || Konfiguration wird aus dem Verzeichnis _conf_ gelesen *(Pflicht)* ||
 || -m "Mandant" || -m xyz || Mandanten-spezifische Konfiguration wird aus dem Konfigurationsverzeichnis des Mandanten gelesen und überschreibt ggfs. globale Konfigurationen. ||
 || -l "logs" || -l logs || Logs werden in das Verzeichnis _logs_ geschrieben ||
+|| -b "backup" || -l backup || Erfolgreich gesendete Dateien werden in das angegebene Verzeichnis kopiert. ||
+|| -d || -d || Erfolgreich gesendete Dateien werden aus dem Quellverzeichnis gelöscht. ||
 || -h || -h || Hilfe ||
 
 Im Verarbeitungsverlauf können vom eXTra-Client Ergebnisdateien abgelegt worden sein, die noch von einer externen Anwendung geprüft werden müssen. Das Ergebnis dieser Prüfung kann dem eXTra-Client über folgende zwei Parameter mitgeteilt werden:
