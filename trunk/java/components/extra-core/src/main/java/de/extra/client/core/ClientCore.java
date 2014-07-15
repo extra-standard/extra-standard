@@ -156,7 +156,16 @@ public class ClientCore implements ApplicationContextAware {
 		return totalClientProcessResult;
 	}
 
-	/**
+    /**
+     * Liefert konfigurierte Phase.
+     *
+     * @return Phase
+     */
+    public PhaseQualifier getExecutionPhaseQualifier() {
+        return PhaseQualifier.resolveByName(executionPhase);
+    }
+
+    /**
 	 * @param processParameters
 	 * @param phaseQualifier
 	 * @param versandDaten
@@ -165,11 +174,9 @@ public class ClientCore implements ApplicationContextAware {
 	private ClientProcessResult processInputData(
 			final String processParameters,
 			final IInputDataContainer versandDaten) {
-		final PhaseQualifier phaseQualifier = PhaseQualifier
-				.resolveByName(executionPhase);
 
 		final IExecution execution = executionPersistence.startExecution(
-				executionProcedure, processParameters, phaseQualifier);
+				executionProcedure, processParameters, getExecutionPhaseQualifier());
 
 		final IExtraProfileConfiguration configFile = configPlugin
 				.getConfigFile();
@@ -280,4 +287,5 @@ public class ClientCore implements ApplicationContextAware {
 						outputIdentifier, persistentStatus);
 		return success;
 	}
+
 }
