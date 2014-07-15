@@ -43,7 +43,6 @@ import de.extra.client.core.model.inputdata.impl.SingleFileInputData;
 import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraConfigRuntimeException;
 import de.extrastandard.api.model.content.ISingleInputData;
-import de.extrastandard.api.model.execution.PhaseQualifier;
 
 /**
  *
@@ -114,9 +113,7 @@ public class ExtraClient {
             final ClientProcessResult clientProcessResult = clientCore.process(parameters.getConfigurationDirectory()
                     .getAbsolutePath());
             opperation_logger.info("ExecutionsResults: {}", clientProcessResult.printResults());
-            if (PhaseQualifier.PHASE1.equals(clientCore.getExecutionPhaseQualifier())) {
-                postProcess(clientProcessResult);
-            }
+            postProcess(clientProcessResult);
             return clientProcessResult;
         } catch (final Exception e) {
             LOG.error("Fehler beim Start", e);
