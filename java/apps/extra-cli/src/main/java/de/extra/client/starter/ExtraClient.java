@@ -124,6 +124,11 @@ public class ExtraClient {
         }
     }
 
+    /**
+     * Nachverarbeitung aller Dateien.
+     *
+     * @param clientProcessResult
+     */
     private void postProcess(final ClientProcessResult clientProcessResult) {
         final List<ProcessResult> responses = clientProcessResult.getResponses();
         for (final ProcessResult processResult : responses) {
@@ -138,6 +143,11 @@ public class ExtraClient {
         }
     }
 
+    /**
+     * Behandlung einer Datei gemäß Konfiguration (Backup erstellen und/oder löschen).
+     *
+     * @param singleInputData Eingabedatei
+     */
     private void handleInputFile(final ISingleInputData singleInputData) {
         final String inputIdentifier = singleInputData.getInputIdentifier();
         final File file = new File(inputIdentifier);
