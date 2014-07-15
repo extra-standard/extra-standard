@@ -155,7 +155,7 @@ public class ClientArgumentParser {
             OPTION_NAME_BACKUP_DIRECTORY, true, "Backupverzeichnis für Eingabedateien");
 
     private static final Option OPT_DELETE_INPUTFILES = new Option(OPTION_NAME_DELETE_INPUTFILES_SHORTCUT,
-            OPTION_NAME_DELETE_INPUTFILES, true, "Eingabedateien löschen");
+            OPTION_NAME_DELETE_INPUTFILES, false, "Eingabedateien löschen");
 
     public static final Options OPTIONS;
 
