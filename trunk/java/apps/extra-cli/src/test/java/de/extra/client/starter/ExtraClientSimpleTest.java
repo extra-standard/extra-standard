@@ -18,37 +18,40 @@
  */
 package de.extra.client.starter;
 
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import de.extra.client.core.model.inputdata.impl.SingleFileInputData;
+import de.extrastandard.api.model.content.ISingleInputData;
+
 /**
- * ExtraClientTest.
+ * ExtraClientSimpleTest.
  * 
- * @author Thorsten Vogel
+ * @author Lofi Dewanto
  */
-public class ExtraClientTest {
-
-	private final ExtraClientTestBasic extraClientTestBasic = new ExtraClientTestBasic();
-
-	private static final String DRV = "DRV";
-
-	private static final String GLOBAL_CONFIG_PATH = "/testglobalconfig";
-
-	private static final String CONFIG_PATH = "/testconfig";
-
-	private static final String LOG_DIR = "/testlog";
+public class ExtraClientSimpleTest {
 
 	protected ExtraClient extraClient;
 
 	@Before
 	public void setUp() throws Exception {
-		extraClient = extraClientTestBasic.createExtraClient(DRV,
-				GLOBAL_CONFIG_PATH, CONFIG_PATH, LOG_DIR);
+		ExtraClientParameters parameters = new ExtraClientParameters();
+		extraClient = new ExtraClient(parameters);
 	}
 
 	@Test
-	public void testExecute() throws Exception {
-		extraClientTestBasic.testExecute(extraClient);
+	public void testHandleInputFile() {
+		File inputDataFile = new File(
+				"src/test/resources/testDirectories/input/order.txt");
+		ISingleInputData singleInputData = new SingleFileInputData(
+				inputDataFile);
+		extraClient.handleInputFile(singleInputData);
+
+		assertTrue(true);
 	}
 
 }

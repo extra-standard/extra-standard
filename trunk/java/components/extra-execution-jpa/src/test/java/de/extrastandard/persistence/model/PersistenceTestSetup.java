@@ -105,9 +105,9 @@ public class PersistenceTestSetup {
 				.findByName(MANDATOR_TEST);
 
 		new Procedure(mandatorTEST, procedureSendFetch, "Datenabgleich",
-				"SEND_FETH");
+				"SEND_FETCH");
 
-		logger.info("setupProcedureSendFeth finished");
+		logger.info("setupProcedureSendFetch finished");
 	}
 
 	@Transactional
@@ -129,7 +129,7 @@ public class PersistenceTestSetup {
 				PersistentStatus.DONE, "Output-ID");
 		responseData.addSingleResponse(singleResponseData);
 		executionForTestPhase2.endExecution(responseData);
-		logger.info("SetupTestDatenForProcedureSendFetchPhase2  finished");
+		logger.info("SetupTestDatenForProcedureSendFetchPhase2 finished");
 		return executionForTestPhase2;
 	}
 

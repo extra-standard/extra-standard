@@ -45,7 +45,8 @@ import de.extrastandard.api.exception.ExtraConfigRuntimeException;
 import de.extrastandard.api.model.content.ISingleInputData;
 
 /**
- *
+ * ExtraClient main program.
+ * 
  * @author Leonid Potap
  * @author Thorsten Vogel
  * @version $Id: ExtraClient.java 538 2012-09-05 09:48:23Z
@@ -53,213 +54,248 @@ import de.extrastandard.api.model.content.ISingleInputData;
  */
 public class ExtraClient {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ExtraClient.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(ExtraClient.class);
 
-    private static final Logger opperation_logger = LoggerFactory.getLogger("de.extra.client.operation");
+	private static final Logger opperation_logger = LoggerFactory
+			.getLogger("de.extra.client.operation");
 
-    /**
-     * Name der grundlegenden Konfiguration.
-     */
-    public static final String PROPERTIES_BASIC_FILENAME = "extra-properties-basic.properties";
+	/**
+	 * Name of the basic configuration.
+	 */
+	public static final String PROPERTIES_BASIC_FILENAME = "extra-properties-basic.properties";
 
-    /**
-     * Name des die Basic-Properties enthaltenden Beans.
-     */
-    public static final String BEAN_NAME_EXTRA_PROPERTIES_BASIC = "_extern_extra-properties-basic";
+	/**
+	 * Name of Basic-Properties.
+	 */
+	public static final String BEAN_NAME_EXTRA_PROPERTIES_BASIC = "_extern_extra-properties-basic";
 
-    /**
-     * Dateiname der Benutzerkonfiguration
-     */
-    public static final String PROPERTIES_USER_FILENAME = "extra-properties-user.properties";
+	/**
+	 * Filename user configuration.
+	 */
+	public static final String PROPERTIES_USER_FILENAME = "extra-properties-user.properties";
 
-    /**
-     * Name des die User-Properties enthaltenden Beans.
-     */
-    public static final String BEAN_NAME_EXTRA_PROPERTIES_USER = "_extern_extra-properties-user";
+	/**
+	 * Name of User-Properties.
+	 */
+	public static final String BEAN_NAME_EXTRA_PROPERTIES_USER = "_extern_extra-properties-user";
 
-    /**
-     * Pfad und Dateiname der Spring Konfiguration
-     */
-    private static final String SPRING_XML_FILE_PATH = "spring-cli.xml";
+	/**
+	 * Path and filename for Spring configuration.
+	 */
+	private static final String SPRING_XML_FILE_PATH = "spring-cli.xml";
 
-    /**
-     * Ausgewertete Kommandozeilenparameter.
-     */
-    private final ExtraClientParameters parameters;
+	/**
+	 * Command line parameters.
+	 */
+	private final ExtraClientParameters parameters;
 
-    /**
-     * Erzeugt einen ExtraClient. Die Konfiguration wird aus den Dateien
-     * {@link #PROPERTIES_BASIC_FILENAME} und {@link #PROPERTIES_USER_FILENAME}
-     * ausgelesen.
-     *
-     * @param parameters
-     *            Konfigurationsverzeichnis
-     */
-    public ExtraClient(final ExtraClientParameters parameters) {
-        this.parameters = parameters;
-    }
+	/**
+	 * Create an ExtraClient. Configuration will be read from.
+	 * {@link #PROPERTIES_BASIC_FILENAME} and {@link #PROPERTIES_USER_FILENAME}
+	 * 
+	 * @param parameters
+	 *            parameters for extra-client
+	 */
+	public ExtraClient(final ExtraClientParameters parameters) {
+		this.parameters = parameters;
+	}
 
-    /**
-     * Startmethode zum Aufruf aus dem startenden Programm.
-     *
-     * @return Statuscode
-     */
-    public ClientProcessResult execute() {
-        opperation_logger.info("Start Of Processing.");
-        LOG.debug("Load ApplicationContext");
-        try {
-            final ApplicationContext applicationContext = createApplicationContext();
-            final ClientCore clientCore = applicationContext.getBean("clientCore", ClientCore.class);
-            final ClientProcessResult clientProcessResult = clientCore.process(parameters.getConfigurationDirectory()
-                    .getAbsolutePath());
-            opperation_logger.info("ExecutionsResults: {}", clientProcessResult.printResults());
-            postProcess(clientProcessResult);
-            return clientProcessResult;
-        } catch (final Exception e) {
-            LOG.error("Fehler beim Start", e);
-            throw new ExtraConfigRuntimeException(e);
-        }
-    }
+	/**
+	 * Start method.
+	 * 
+	 * @return Statuscode
+	 */
+	public ClientProcessResult execute() {
+		opperation_logger.info("Start Of Processing.");
+		LOG.debug("Load ApplicationContext");
+		try {
+			final ApplicationContext applicationContext = createApplicationContext();
+			final ClientCore clientCore = applicationContext.getBean(
+					"clientCore", ClientCore.class);
+			final ClientProcessResult clientProcessResult = clientCore
+					.process(parameters.getConfigurationDirectory()
+							.getAbsolutePath());
+			opperation_logger.info("ExecutionsResults: {}",
+					clientProcessResult.printResults());
+			postProcess(clientProcessResult);
+			return clientProcessResult;
+		} catch (final Exception e) {
+			LOG.error("Fehler beim Start", e);
+			throw new ExtraConfigRuntimeException(e);
+		}
+	}
 
-    /**
-     * Nachverarbeitung aller Dateien.
-     *
-     * @param clientProcessResult
-     */
-    private void postProcess(final ClientProcessResult clientProcessResult) {
-        final List<ProcessResult> responses = clientProcessResult.getResponses();
-        for (final ProcessResult processResult : responses) {
-            final List<ISingleInputData> content = processResult.getDataContainer().getContent();
-            for (final ISingleInputData singleInputData : content) {
-                final String inputDataType = singleInputData.getInputDataType();
-                if (!SingleFileInputData.INPUT_DATA_TYPE.equals(inputDataType)) {
-                    continue;
-                }
-                handleInputFile(singleInputData);
-            }
-        }
-    }
+	/**
+	 * Post process all files.
+	 * 
+	 * @param clientProcessResult
+	 */
+	private void postProcess(final ClientProcessResult clientProcessResult) {
+		final List<ProcessResult> responses = clientProcessResult
+				.getResponses();
+		for (final ProcessResult processResult : responses) {
+			final List<ISingleInputData> content = processResult
+					.getDataContainer().getContent();
+			for (final ISingleInputData singleInputData : content) {
+				final String inputDataType = singleInputData.getInputDataType();
+				if (!SingleFileInputData.INPUT_DATA_TYPE.equals(inputDataType)) {
+					continue;
+				}
+				handleInputFile(singleInputData);
+			}
+		}
+	}
 
-    /**
-     * Behandlung einer Datei gemäß Konfiguration (Backup erstellen und/oder löschen).
-     *
-     * @param singleInputData Eingabedatei
-     */
-    private void handleInputFile(final ISingleInputData singleInputData) {
-        final String inputIdentifier = singleInputData.getInputIdentifier();
-        final File file = new File(inputIdentifier);
-        if (parameters.shouldCreateBackup()) {
-            final File backupDirectory = parameters.getBackupDirectory();
-            LOG.debug("copying {} to {}", new Object[] {file.getAbsolutePath(), backupDirectory.getAbsolutePath()});
-            try {
-                FileUtils.copyFileToDirectory(file, backupDirectory);
-            } catch (final IOException e) {
-                LOG.error("Konnte Datei {} nicht nach {} kopieren ({}).",
-                        new Object[] {file.getAbsolutePath(), backupDirectory.getAbsolutePath(), e.getMessage()});
-            }
-        }
-        if (parameters.getDeleteInputFiles()) {
-            LOG.debug("deleting {}", file.getAbsolutePath());
-            try {
-                if (!file.delete()) {
-                    LOG.error("Datei {} konnte nicht gelöscht werden.", file.getAbsolutePath());
-                }
-            } catch (final Exception e) {
-                LOG.error("Fehler beim Löschen der Datei {} ({}).", file.getAbsolutePath(), e.getMessage());
-            }
-        }
-    }
+	/**
+	 * Handle the input files based on parameters. - Create Backup and/or -
+	 * Delete file
+	 * 
+	 * @param singleInputData
+	 *            file
+	 */
+	void handleInputFile(final ISingleInputData singleInputData) {
+		final String inputIdentifier = singleInputData.getInputIdentifier();
+		final File file = new File(inputIdentifier);
+		if (parameters.shouldCreateBackup()) {
+			final File backupDirectory = parameters.getBackupDirectory();
+			LOG.debug("copying {} to {}", new Object[] {
+					file.getAbsolutePath(), backupDirectory.getAbsolutePath() });
+			try {
+				FileUtils.copyFileToDirectory(file, backupDirectory);
+			} catch (final IOException e) {
+				LOG.error(
+						"Konnte Datei {} nicht nach {} kopieren ({}).",
+						new Object[] { file.getAbsolutePath(),
+								backupDirectory.getAbsolutePath(),
+								e.getMessage() });
+			}
+		}
 
-    /**
-     * Erzeugt den Spring-ApplicationContext der Anwendung.
-     *
-     * @return
-     * @throws Exception
-     */
-    ApplicationContext createApplicationContext() throws Exception {
-        final Properties basicProperties = readBasicProperties();
-        final Properties userProperties = readUserProperties();
-        final Map<String, Object> env = new HashMap<String, Object>();
-        env.put(BEAN_NAME_EXTRA_PROPERTIES_BASIC, basicProperties);
-        env.put(BEAN_NAME_EXTRA_PROPERTIES_USER, userProperties);
-        env.put("_configurationDirectory", parameters.getConfigurationDirectory());
-        final ApplicationContext applicationContext = new ApplicationContextStarter<AbstractApplicationContext>() {
-            @Override
-            protected AbstractApplicationContext createUninitializedContext() {
-                return new ClassPathXmlApplicationContext(new String[] { SPRING_XML_FILE_PATH }, false);
-            }
-        }.createApplicationContext(env);
+		if (parameters.getDeleteInputFiles()) {
+			LOG.debug("deleting {}", file.getAbsolutePath());
+			try {
+				if (!file.delete()) {
+					LOG.error("Datei {} konnte nicht gelöscht werden.",
+							file.getAbsolutePath());
+				}
+			} catch (final Exception e) {
+				LOG.error("Fehler beim Löschen der Datei {} ({}).",
+						file.getAbsolutePath(), e.getMessage());
+			}
+		}
+	}
 
-        return applicationContext;
-    }
+	/**
+	 * Create application context.
+	 * 
+	 * @return ApplicationContext
+	 * @throws Exception
+	 */
+	ApplicationContext createApplicationContext() throws Exception {
+		final Properties basicProperties = readBasicProperties();
+		final Properties userProperties = readUserProperties();
+		final Map<String, Object> env = new HashMap<String, Object>();
+		env.put(BEAN_NAME_EXTRA_PROPERTIES_BASIC, basicProperties);
+		env.put(BEAN_NAME_EXTRA_PROPERTIES_USER, userProperties);
+		env.put("_configurationDirectory",
+				parameters.getConfigurationDirectory());
+		final ApplicationContext applicationContext = new ApplicationContextStarter<AbstractApplicationContext>() {
+			@Override
+			protected AbstractApplicationContext createUninitializedContext() {
+				return new ClassPathXmlApplicationContext(
+						new String[] { SPRING_XML_FILE_PATH }, false);
+			}
+		}.createApplicationContext(env);
 
-    private Properties readBasicProperties() throws FileNotFoundException, IOException {
-        final Properties basicProperties = new Properties();
+		return applicationContext;
+	}
 
-        // read global configuration directory
-        final File globalConfigurationDirectory = parameters.getGlobalConfigurationDirectory();
-        readPropertiesFromDirectory(globalConfigurationDirectory, basicProperties);
+	private Properties readBasicProperties() throws FileNotFoundException,
+			IOException {
+		final Properties basicProperties = new Properties();
 
-        // store mandant as a property
-        final String mandant = parameters.getMandant();
-        basicProperties.put("extra.mandant", mandant);
+		// read global configuration directory
+		final File globalConfigurationDirectory = parameters
+				.getGlobalConfigurationDirectory();
+		readPropertiesFromDirectory(globalConfigurationDirectory,
+				basicProperties);
 
-        // determine mandant configuration directory
-        final String mandantConfigurationDirectory = mandant;
-        final File clientConfigurationDirectory = new File(globalConfigurationDirectory, mandantConfigurationDirectory);
-        if (clientConfigurationDirectory.exists()) {
-            LOG.info("reading client configuration directory {}", clientConfigurationDirectory.getAbsolutePath());
-            readPropertiesFromDirectory(clientConfigurationDirectory, basicProperties);
-        }
+		// store mandant as a property
+		final String mandant = parameters.getMandant();
+		basicProperties.put("extra.mandant", mandant);
 
-        final File basicPropertiesFile = new File(parameters.getConfigurationDirectory(), PROPERTIES_BASIC_FILENAME);
-        readPropertiesFromFile(basicProperties, basicPropertiesFile);
-        return basicProperties;
-    }
+		// determine mandant configuration directory
+		final String mandantConfigurationDirectory = mandant;
+		final File clientConfigurationDirectory = new File(
+				globalConfigurationDirectory, mandantConfigurationDirectory);
+		if (clientConfigurationDirectory.exists()) {
+			LOG.info("reading client configuration directory {}",
+					clientConfigurationDirectory.getAbsolutePath());
+			readPropertiesFromDirectory(clientConfigurationDirectory,
+					basicProperties);
+		}
 
-    private Properties readUserProperties() throws FileNotFoundException, IOException {
-        final Properties userProperties = new Properties();
-        final File userPropsFile = new File(parameters.getConfigurationDirectory(), PROPERTIES_USER_FILENAME);
-        readPropertiesFromFile(userProperties, userPropsFile);
-        return userProperties;
-    }
+		final File basicPropertiesFile = new File(
+				parameters.getConfigurationDirectory(),
+				PROPERTIES_BASIC_FILENAME);
+		readPropertiesFromFile(basicProperties, basicPropertiesFile);
+		return basicProperties;
+	}
 
-    private void readPropertiesFromDirectory(final File propertiesDirectory, final Properties properties)
-            throws FileNotFoundException, IOException {
-        checkDirectory(propertiesDirectory);
-        final String[] propertyFiles = propertiesDirectory.list(new FilenameFilter() {
-            @Override
-            public boolean accept(final File dir, final String name) {
-                return name != null && name.endsWith(".properties");
-            }
-        });
-        // merge all found properties
-        for (final String propertyFile : propertyFiles) {
-            readPropertiesFromFile(properties, new File(propertiesDirectory, propertyFile));
-        }
-    }
+	private Properties readUserProperties() throws FileNotFoundException,
+			IOException {
+		final Properties userProperties = new Properties();
+		final File userPropsFile = new File(
+				parameters.getConfigurationDirectory(),
+				PROPERTIES_USER_FILENAME);
+		readPropertiesFromFile(userProperties, userPropsFile);
+		return userProperties;
+	}
 
-    private void readPropertiesFromFile(final Properties properties, final File propertyFile)
-            throws FileNotFoundException, IOException {
-        checkFile(propertyFile);
-        final FileInputStream stream = new FileInputStream(propertyFile);
-        LOG.debug("loading properties from file {}", propertyFile);
-        properties.load(stream);
-        IOUtils.closeQuietly(stream);
-    }
+	private void readPropertiesFromDirectory(final File propertiesDirectory,
+			final Properties properties) throws FileNotFoundException,
+			IOException {
+		checkDirectory(propertiesDirectory);
+		final String[] propertyFiles = propertiesDirectory
+				.list(new FilenameFilter() {
+					@Override
+					public boolean accept(final File dir, final String name) {
+						return name != null && name.endsWith(".properties");
+					}
+				});
+		// merge all found properties
+		for (final String propertyFile : propertyFiles) {
+			readPropertiesFromFile(properties, new File(propertiesDirectory,
+					propertyFile));
+		}
+	}
 
-    private void checkDirectory(final File directory) {
-        if (directory == null || !directory.exists() || !directory.canRead() || !directory.isDirectory()) {
-            throw new ExtraConfigRuntimeException(ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, String.format(
-                    "Verzeichnis nicht gefunden: %s", directory.getAbsolutePath()));
-        }
-    }
+	private void readPropertiesFromFile(final Properties properties,
+			final File propertyFile) throws FileNotFoundException, IOException {
+		checkFile(propertyFile);
+		final FileInputStream stream = new FileInputStream(propertyFile);
+		LOG.debug("loading properties from file {}", propertyFile);
+		properties.load(stream);
+		IOUtils.closeQuietly(stream);
+	}
 
-    private void checkFile(final File file) {
-        if (file == null || !file.exists() || !file.canRead()) {
-            throw new ExtraConfigRuntimeException(ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, String.format(
-                    "Datei nicht gefunden: %s", file.getAbsolutePath()));
-        }
-    }
+	private void checkDirectory(final File directory) {
+		if (directory == null || !directory.exists() || !directory.canRead()
+				|| !directory.isDirectory()) {
+			throw new ExtraConfigRuntimeException(
+					ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, String.format(
+							"Verzeichnis nicht gefunden: %s",
+							directory.getAbsolutePath()));
+		}
+	}
+
+	private void checkFile(final File file) {
+		if (file == null || !file.exists() || !file.canRead()) {
+			throw new ExtraConfigRuntimeException(
+					ExceptionCode.EXTRA_CONFIGURATION_EXCEPTION, String.format(
+							"Datei nicht gefunden: %s", file.getAbsolutePath()));
+		}
+	}
 
 }
