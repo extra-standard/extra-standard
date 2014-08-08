@@ -130,7 +130,7 @@ public class WsOutputPluginNotWorking {
 			+ "            <xcpt:Name>Tester 2</xcpt:Name>\r\n"
 			+ "        </xcpt:Receiver>\r\n"
 			+ "        <xcpt:RequestDetails>\r\n"
-			+ "            <xcpt:RequestID>SEND_FETH_4</xcpt:RequestID>\r\n"
+			+ "            <xcpt:RequestID>SEND_FETCH_4</xcpt:RequestID>\r\n"
 			+ "            <xcpt:TimeStamp>2012-10-23T14:22:49</xcpt:TimeStamp>\r\n"
 			+ "            <xcpt:Application>\r\n"
 			+ "                <xcpt:Product>eXTra Klient OpenSource</xcpt:Product>\r\n"

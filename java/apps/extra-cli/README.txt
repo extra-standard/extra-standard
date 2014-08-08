@@ -1,12 +1,6 @@
 README.txt
 
 --------------------------------
-extra-cli Version 1.0.0-SNAPSHOT
---------------------------------
-Unterstützung von eXTra-Standard Version 1.3
-
-
---------------------------------
 Verzeichnisbeschreibung
 --------------------------------
 /bin
