@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xres:XMLTransport version="1.1" profile="http://www.extra-standard.de/profile/DEUEV/1.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.extra-standard.de/namespace/response/1 ../prof/xsd/eXTra-response-sofortmeldungen-erfolg.xsd"
+    xmlns:xres="http://www.extra-standard.de/namespace/response/1"
+    xmlns:xcpt="http://www.extra-standard.de/namespace/components/1"
+    xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1">
+<!--
+    Response mit Erfolgsmeldung (Annahmequittung)
+-->
+    <xres:TransportHeader>
+        <xcpt:TestIndicator>http://www.extra-standard.de/test/NONE</xcpt:TestIndicator>
+        <xcpt:Sender>
+            <xcpt:SenderID class="Betriebsnummer">77770000</xcpt:SenderID>
+            <xcpt:Name>Softwarehaus</xcpt:Name>
+        </xcpt:Sender>
+        <xcpt:Receiver>
+            <xcpt:ReceiverID class="Betriebsnummer">66667777</xcpt:ReceiverID>
+            <xcpt:Name>DRV Bund Wuerzburg</xcpt:Name>
+        </xcpt:Receiver>
+        <xcpt:RequestDetails>
+            <xcpt:RequestID class="0">20081218073950097402</xcpt:RequestID>
+            <xcpt:TimeStamp>2008-12-18T07:39:50</xcpt:TimeStamp>
+            <xcpt:Application>
+                <xcpt:Product>EDI-Server V1.25</xcpt:Product>
+                <xcpt:Manufacturer>Softwarehaus</xcpt:Manufacturer>
+            </xcpt:Application>
+            <xcpt:Procedure>http://www.extra-standard.de/procedures/DEUEV</xcpt:Procedure>
+            <xcpt:DataType>http://www.extra-standard.de/datatypes/Sofortmeldung</xcpt:DataType>
+            <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-acknowledgement</xcpt:Scenario>
+        </xcpt:RequestDetails>
+<!--
+	bis einschliesslich RequestDetails ist der Response TransportHeader eine Kopie des Request TransportHeader;
+	die ResponseDetails fuegt der Empfaenger hinzu
+-->
+        <xcpt:ResponseDetails>
+            <xcpt:ResponseID>7782</xcpt:ResponseID>
+            <xcpt:TimeStamp>2008-12-18T07:39:52</xcpt:TimeStamp>
+            <xcpt:Report highestWeight="http://www.extra-standard.de/weight/INFO">
+                <xcpt:Flag weight="http://www.extra-standard.de/weight/INFO">
+                    <xcpt:Code>T000</xcpt:Code>
+                    <xcpt:Text>TransportEbene: Annahme bestaetigt</xcpt:Text>
+                </xcpt:Flag>
+            </xcpt:Report>
+        </xcpt:ResponseDetails>
+
+    </xres:TransportHeader>
+    <xres:TransportBody/>
+</xres:XMLTransport>

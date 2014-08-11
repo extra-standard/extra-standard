@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="spocRoutingService"
+		class="de.drv.dsrv.spoc.web.service.impl.SpocRoutingServiceImpl">
+		<constructor-arg ref="spocConfigDAO" />
+	</bean>
+
+	<bean id="spocNutzdatenManager"
+		class="de.drv.dsrv.spoc.web.manager.impl.SpocNutzdatenManagerImpl">
+		<constructor-arg ref="spocMtomDataDAO" />
+		<constructor-arg value="${mtomdata.oid.request.insert}" />
+	</bean>
+	
+	<bean id="fachverfahrenRequestService"
+		class="de.drv.dsrv.spoc.web.service.impl.FachverfahrenRequestServiceImpl">
+		<constructor-arg value="${connections.max}" />
+		<constructor-arg value="${connections.max.route}" />
+		<constructor-arg value="${soap.fault.string}" />
+		<constructor-arg ref="spocResponseHandler" />
+		<constructor-arg ref="extraJaxbMarshaller" />
+		<constructor-arg ref="spocNutzdatenManager" />
+	</bean>
+
+	<bean id="betriebsnummerService"
+		class="de.drv.dsrv.spoc.web.service.impl.SpocBetriebsnummerServiceImpl">
+		<constructor-arg ref="zertifikatHelper" />
+	</bean>
+
+	<bean id="extraExceptionHelper"
+		class="de.drv.dsrv.spoc.web.webservice.ExtraExceptionHelper">
+		<constructor-arg ref="messageSource" />
+		<constructor-arg value="${extra.error.code}" />
+	</bean>
+
+	<bean id="extraExceptionHelperJaxWs"
+		class="de.drv.dsrv.spoc.web.webservice.jax.JaxWsExtraExceptionHelper">
+		<constructor-arg ref="messageSource" />
+		<constructor-arg value="${soap.fault.string}" />
+		<constructor-arg value="${extra.error.code}" />
+	</bean>
+
+	<bean id="zertifikatHelper" class="de.drv.dsrv.spoc.util.zertifikat.ZertifikatHelperImpl" />
+
+	<bean id="spocResponseHandler" class="de.drv.dsrv.spoc.web.service.impl.SpocResponseHandler" />
+
+	<bean id="extraJaxbMarshaller" class="de.drv.dsrv.spoc.extra.v1_3.ExtraJaxbMarshaller" />
+
+</beans>

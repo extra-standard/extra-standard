@@ -1,0 +1,62 @@
+<jxb:bindings
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:annox="http://annox.dev.java.net"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+    jxb:extensionBindingPrefixes="xjc annox"
+    version="2.1">
+    
+    <jxb:globalBindings>
+        <jxb:javaType name="java.util.Calendar" xmlType="xs:dateTime"
+            parseMethod="javax.xml.bind.DatatypeConverter.parseDateTime"
+            printMethod="javax.xml.bind.DatatypeConverter.printDateTime" />
+        <jxb:javaType name="java.util.Calendar" xmlType="xs:date"
+            parseMethod="javax.xml.bind.DatatypeConverter.parseDate"
+            printMethod="javax.xml.bind.DatatypeConverter.printDate" />
+        <jxb:javaType name="java.util.Calendar" xmlType="xs:time"
+            parseMethod="javax.xml.bind.DatatypeConverter.parseTime"
+            printMethod="javax.xml.bind.DatatypeConverter.printTime" />
+    </jxb:globalBindings> 
+    
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-response-1.xsd" node="/xs:schema">
+        <jxb:schemaBindings>
+            <jxb:package name="de.drv.dsrv.extrastandard.namespace.response"/>
+        </jxb:schemaBindings>
+    </jxb:bindings>
+
+
+	<jxb:bindings schemaLocation="../resources/xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='TransportResponseType']">
+    	<jxb:class name="ResponseTransport"/>
+    	<annox:annotate>
+             <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name = "ResponseTransport"/>
+         </annox:annotate>
+	</jxb:bindings> 
+	
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='TransportResponseHeaderType']">
+    	<jxb:class name="ResponseTransportHeader"/>
+	</jxb:bindings> 
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='TransportResponseBodyType']">
+    	<jxb:class name="ResponseTransportBody"/>
+	</jxb:bindings> 
+    
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='PackageResponseType']">
+    	<jxb:class name="ResponsePackage"/>
+	</jxb:bindings> 
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='PackageResponseHeaderType']">
+    	<jxb:class name="ResponsePackageHeader"/>
+	</jxb:bindings> 	
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='PackageResponseBodyType']">
+    	<jxb:class name="ResponsePackageBody"/>
+	</jxb:bindings>     
+    
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='MessageResponseType']">
+    	<jxb:class name="ResponseMessage"/>
+	</jxb:bindings> 
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='MessageResponseHeaderType']">
+    	<jxb:class name="ResponseMessageHeader"/>
+	</jxb:bindings> 	
+  	<jxb:bindings schemaLocation="../resources/xsd/eXTra-response-1.xsd" node="//xs:complexType[@name='MessageResponseBodyType']">
+    	<jxb:class name="ResponseMessageBody"/>
+	</jxb:bindings>
+</jxb:bindings>
