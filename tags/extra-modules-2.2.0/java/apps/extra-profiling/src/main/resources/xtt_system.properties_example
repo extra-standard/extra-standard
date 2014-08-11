@@ -1,6 +1,0 @@
-# Name des Wurzelelements im Hauptschema
-SCHEMA_ROOT_ELEMENT = XMLTransport
-
-# Diese beiden Pfade werden für die automatische Generierung verwendet
-PATH_PROF_XML = resource/de/drv/dsrv/xtt/prof/xml/
-PATH_PROF_SCHEMA = resource/de/drv/dsrv/xtt/prof/xsd/
