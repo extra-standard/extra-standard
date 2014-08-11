@@ -30,7 +30,7 @@
 	</parent>
 	
 	<artifactId>extra-modules</artifactId>
-	<version>2.2.0</version>
+	<version>2.2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>extra-modules</name>
 	<description>eXTra Modules</description>
