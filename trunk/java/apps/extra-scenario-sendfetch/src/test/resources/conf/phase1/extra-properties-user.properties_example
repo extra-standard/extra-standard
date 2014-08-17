@@ -14,25 +14,8 @@ plugins.dataplugin.fileDataPlugin.inputVerzeichnis=classpath:work/input
 builder.xplg.Contacts.configurableSMTPContactsPluginsBuilder.emailaddress=test@rentenservice.de
 
 # ==========================
-# == Datenbank-Verbindung ==
+# == Test                 ==
 # ==========================
-
-# HSQLDB
-plugins.execution.executionPersistenceJpa.hibernate.generateDdl=false
-plugins.execution.executionPersistenceJpa.hibernate.database=HSQL
-plugins.execution.executionPersistenceJpa.database.driver_class=org.hsqldb.jdbcDriver
-plugins.execution.executionPersistenceJpa.database.connect_url=jdbc:hsqldb:res:/test-hsqldb/eXTra-persistence
-plugins.execution.executionPersistenceJpa.database.username=sa
-plugins.execution.executionPersistenceJpa.database.password=
-
-# Oracle XE
-#plugins.execution.executionPersistenceJpa.hibernate.generateDdl=false
-#plugins.execution.executionPersistenceJpa.hibernate.database=ORACLE
-#plugins.execution.executionPersistenceJpa.database.driver_class=oracle.jdbc.OracleDriver
-#plugins.execution.executionPersistenceJpa.database.connect_url=jdbc:oracle:thin:@localhost:1521:xe
-#plugins.execution.executionPersistenceJpa.database.username=extracli
-#plugins.execution.executionPersistenceJpa.database.password=extracli
-
 # Fuer interne Tests ist ein 'dummyOutputPlugin' voreingestellt 
 # Webservices-Plugin wird verwendet (def. in ...user.prop...), wenn folgende Zeile auskommentiert wird:
 plugins.outputplugin=dummyOutputPlugin
