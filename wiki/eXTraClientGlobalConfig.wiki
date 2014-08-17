@@ -1,7 +1,7 @@
 #summary globale Konfigurationsdatei extra-database.properties
 
-=Beschreibung extra-database.properties=
-In dieser Konfigurationsdatei ist die Basiskonfiguration des Fachverfahrens untergebracht. Im Normalfall sollte man diese nicht ändern müssen. Die Konfigurationsdatei besteht aus Attribut-Werte Paaren (Java-properties Format). In jeder Zeile wird der Wert für ein Attribut angegeben. Die Datei kann in folgende Bereiche aufgeteilt werden:
+=Beschreibung eXTra-database.properties=
+In dieser Konfigurationsdatei ist die globale technische Konfiguration des Fachverfahrens untergebracht. Im Normalfall sollte man diese nicht ändern müssen. Die Konfigurationsdatei besteht aus Attribut-Werte Paaren (Java-properties Format). In jeder Zeile wird der Wert für ein Attribut angegeben. Die Datei kann in folgende Bereiche aufgeteilt werden:
 
  * *Persistenz Einstellungen*
    * Technische Parameter für die eXTra-Client Datenbank
