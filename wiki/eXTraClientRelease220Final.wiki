@@ -9,16 +9,19 @@
   * Unterstützte Spezifikationsversion: 1.3.1
   * Unterstützte Szenarien: Sende-/Holbetrieb mit drei Phasen
 
-= Versand größer Datei bzw. MTOM-Unterstützung =
+= What's New =
+
+== Versand größer Datei bzw. MTOM-Unterstützung ==
   * Siehe: [eXTraClientArchitekturMTOM]
 
-= Optimierung der Konfigurationsmöglichkeiten =
+== Optimierung der Konfigurationsmöglichkeiten ==
   * In dieser Version wird eine globale und mandantenspezifische Konfiguration eingeführt (issue 84)
-  * Dokumentation siehe [eXTraClientBetriebsanleitung.wiki]
+  * Dokumentation siehe [eXTraClientBetriebsanleitung]
 
-= Verschlüssellung von Passwörtern für den Zugriff auf die Datenbank =
- 
-  
+== Verschlüssellung von Passwörtern für den Zugriff auf die Datenbank ==
+  * In dieser Version kann das Password in der Properties-Datei verschlüsselt werden (issue 53).
+  * Dokumentation siehe [eXTraClientBetriebsanleitung]
+   
 = Bekannte Einschränkungen =
   * Nicht bekannt
 
