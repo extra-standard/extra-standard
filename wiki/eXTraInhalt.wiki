@@ -35,6 +35,7 @@
   * [eXTraEntwProzess Entwicklungsprozess]
   * [eXTraPresentations Präsentationen und Artikel]
   * [eXTraClientReleases Releases]
+    * [eXTraClientRelease220Final Version 2.2.0]
     * [eXTraClientRelease100Final Version 1.0.0]
     * [eXTraClientRelease100M3 Version 1.0.0-M3]
     * [eXTraClientRelease100M2 Version 1.0.0-M2]
