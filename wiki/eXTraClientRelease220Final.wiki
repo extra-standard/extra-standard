@@ -10,7 +10,7 @@
   * Unterstützte Szenarien: Sende-/Holbetrieb mit drei Phasen
 
 = Versand größer Datei bzw. MTOM-Unterstützung =
-  * Siehe: eXTraClientArchitekturMTOM
+  * Siehe: [eXTraClientArchitekturMTOM]
 
 = Optimierung der Konfigurationsmöglichkeiten =
 
