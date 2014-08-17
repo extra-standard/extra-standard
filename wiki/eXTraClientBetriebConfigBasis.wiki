@@ -14,8 +14,7 @@ In dieser Konfigurationsdatei ist die Basiskonfiguration des Fachverfahrens unte
    * _Request_, _Sender_ und _Receiver_ definieren
  * *XML-Builder*
    * Auswahl der Bausteine, die aus den Eingabedaten und der Profildatei die Client-Nachricht zusammenbauen.
- * *Persistenz Einstellungen*
-   * Technische Parameter für die eXTra-Client Datenbank
+
 
 == Beispiel ==
 
