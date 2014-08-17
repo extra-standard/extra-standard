@@ -57,7 +57,7 @@ Folgende Dateien bilden die Konfigurationsdaten für ein Fachverfahren:
 || [eXTraClientBetriebConfigUser extra-properties-user.properties] || Ergänzende/überschreibende Einstellungen. Üblicherweise sind hier die Verbindungsparameter zur Webservice-Zieladresse abgelegt. ||
 || [eXTraClientMandatorConfig extra-mandator.properties] || *Optional*. Globale Mandantenkonfigurationsdatei. In dieser Datei werden werden z.B. die Parameter zum bestimmten Mandaten konfiguriert. ||
 || [eXTraClientBetriebLogging logging-config.xml] || Logging Einstellungen (z.B. Name der Logfiles und Loglevel) ||
-|| [eXTraClientBetriebConfigProfile ‚profile.xml’] || eXTra-Profil Datei (siehe eXTra Standard). In der Profil-Date sind die Elemente des Extra-Standards aufgeführt, die zur Kommunikation zwischen Client und Server verwendet werden sollen (Der Name ist frei wählbar.)||
+|| [eXTraClientBetriebConfigProfile profile.xml] || eXTra-Profil Datei (siehe eXTra Standard). In der Profil-Date sind die Elemente des Extra-Standards aufgeführt, die zur Kommunikation zwischen Client und Server verwendet werden sollen (Der Name ist frei wählbar.)||
 
 === Passwortverschlüsselung in Konfigurationsdateien ===
 
