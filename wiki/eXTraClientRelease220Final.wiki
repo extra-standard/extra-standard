@@ -11,6 +11,9 @@
   * MTOM-Unterstützung
 
 = Optimierung der Konfigurationsmöglichkeiten =
+
+
+= Verschlüssellung von Passwörtern für den Zugriff auf die Datenbank =
  
   
 = Bekannte Einschränkungen =
