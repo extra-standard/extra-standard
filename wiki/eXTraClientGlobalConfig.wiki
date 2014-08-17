@@ -5,7 +5,7 @@ In dieser Konfigurationsdatei ist die globale technische Konfiguration des Fachv
 
  * *Datenbankeinstellungen*
    * Technische Parameter für die eXTra-Client Datenbank
- * *Persistenz Einstellungen*
+ * *Persistenzeinstellungen*
    * Technische Parameter für die eXTra-Client Datenbank
 
 == Beispiel ==
