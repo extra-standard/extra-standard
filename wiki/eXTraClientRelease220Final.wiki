@@ -51,3 +51,6 @@ Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird beschrieben wie eine In
 
 = Bis jetzt erledigte Aufgaben für die Version 2.2.0 =
 Siehe bitte: http://goo.gl/2rhK4r
+
+= Download =
+Google Code hat die Download-Möglichkeit eingestellt. Daher müssen die Dateien irgendwo anders gehostet werden. 
