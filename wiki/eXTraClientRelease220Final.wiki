@@ -14,6 +14,7 @@
 
 = Optimierung der Konfigurationsmöglichkeiten =
   * In dieser Version wird eine globale und mandantenspezifische Konfiguration eingeführt (issue 84)
+  * Dokumentation siehe [eXTraClientBetriebsanleitung.wiki]
 
 = Verschlüssellung von Passwörtern für den Zugriff auf die Datenbank =
  
