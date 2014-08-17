@@ -13,7 +13,7 @@
   * Siehe: [eXTraClientArchitekturMTOM]
 
 = Optimierung der Konfigurationsmöglichkeiten =
-  * In dieser Version wird eine globale und mandantenspezifische Konfiguration eingeführt ([https://code.google.com/p/extra-standard/issues/detail?id=84]Issue 84)
+  * In dieser Version wird eine globale und mandantenspezifische Konfiguration eingeführt (issue 84)
 
 = Verschlüssellung von Passwörtern für den Zugriff auf die Datenbank =
  
