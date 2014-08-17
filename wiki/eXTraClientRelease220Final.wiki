@@ -53,4 +53,4 @@ Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird beschrieben wie eine In
 Siehe bitte: http://goo.gl/2rhK4r
 
 = Download =
-Google Code hat die Download-Möglichkeit eingestellt, siehe: https://code.google.com/p/support/wiki/DownloadsFAQ. Daher müssen die Dateien irgendwo anders gehostet werden. 
+Google Code hat die Download-Möglichkeit eingestellt, siehe: https://code.google.com/p/support/wiki/DownloadsFAQ. Daher sollen die Dateien ab sofort in Google Drive zur Verfügung stehen.
