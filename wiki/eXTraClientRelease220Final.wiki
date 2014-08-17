@@ -49,7 +49,7 @@ Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird beschrieben wie eine In
   * Jede eXTra-SNAPSHOT-Versionen (Zip, Jar, usw.) stehen unter [https://oss.sonatype.org/index.html#nexus-search;quick~extra-standard OSS-Sonatype-Maven-Repository] zur Verfügung.
   * Ab Final-Release stehen sämtliche eXTra-Dateien (Zip, Jar, usw.) direkt unter [http://search.maven.org Maven-Central-Repository] zur Verfügung.
 
-= Bis jetzt erledigte Aufgaben für die Version 2.2.0 =
+= Erledigte Aufgaben für die Version 2.2.0 =
 Siehe bitte: http://goo.gl/2rhK4r
 
 = Download =
