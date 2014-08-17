@@ -1,6 +1,5 @@
 ----------------------------------------------
 eXTra Szenario Send-Fetch (Sende-Hole Betrieb)
-Version: 0.8
 ----------------------------------------------
 
 In diesem Archiv  befinden sich die Konfigurationsdateien fuer das technische Szenario 'Send-Fetch'. 
