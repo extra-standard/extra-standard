@@ -50,6 +50,7 @@
 		<module>components/extra-execution-jpa</module>
 		<module>components/extra-core</module>
 		<module>apps/extra-cli</module>
+		<module>apps/extra-common-conf</module>
 		<module>apps/extra-profiling</module>
 		<module>apps/extra-scenario-sendfetch</module>	
 	</modules>
