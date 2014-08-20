@@ -25,3 +25,7 @@ für eXTra zur Verfügung.
 extra-spoc
 ----------------------------------
 eXTra Single Point of Contact (eXTra Server).
+
+extra-common-conf
+----------------------------------
+Global- und Mandantenkonfiguration für eXTra-Fachverfahren.
