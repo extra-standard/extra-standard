@@ -1,6 +1,6 @@
-#summary globale Konfigurationsdatei extra-database.properties
+#summary globale Konfigurationsdatei extra-global.properties
 
-=Beschreibung eXTra-database.properties=
+=Beschreibung eXTra-global.properties=
 In dieser Konfigurationsdatei ist die globale technische Konfiguration des Fachverfahrens untergebracht. Datenbankverbindung oder Persistenzeinstellungen können in dieser Datei vorgenommen werden. Die Datei kann in folgende Bereiche aufgeteilt werden:
 
  * *Datenbankeinstellungen*
