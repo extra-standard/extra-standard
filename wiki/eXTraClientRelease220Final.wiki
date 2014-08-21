@@ -54,4 +54,4 @@ Siehe bitte: http://goo.gl/2rhK4r
 = Download =
 Google Code hat die Download-Möglichkeit eingestellt, siehe: https://code.google.com/p/support/wiki/DownloadsFAQ. Daher sollen die Releasedateien ab sofort in Google Drive bzw. !DropBox zur Verfügung stehen
 
-Download Release 2.2.0: http://goo.gl/s7H8df
+Download Release 2.2.0: http://goo.gl/CKpMdw
