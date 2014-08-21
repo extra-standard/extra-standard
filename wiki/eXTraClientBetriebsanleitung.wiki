@@ -55,7 +55,7 @@ Folgende Dateien bilden die Konfigurationsdaten für ein Fachverfahren:
 || [eXTraClientGlobalConfig extra-global.properties] || Globale Konfigurationsdatei. In dieser Datei werden werden z.B. die Verbindungsparameter zur Datenbank konfiguriert. ||
 || [eXTraClientBetriebConfigBasis extra-properties-basic.properties] || Zentrale Konfigurationsdatei. Besteht aus Attribut-Werte Paaren (Java-properties Format). In dieser Datei werden z.B. das Fachverfahren, die Plugins und die XML-Builder konfiguriert. ||
 || [eXTraClientBetriebConfigUser extra-properties-user.properties] || Ergänzende/überschreibende Einstellungen. Üblicherweise sind hier die Verbindungsparameter zur Webservice-Zieladresse abgelegt. ||
-|| [eXTraClientMandatorConfig extra-mandant-xxx.properties] || Globale Mandantenkonfigurationsdatei. *Optional*, wobei _xxx_ der Name des Mandanten darstellt. Das Verzeichnis muss den Namen des angegebenen Mandanten tragen unter unterhalb der über -g angegebenen globalen Konfigurationsverzeichnisses liegen. In dieser Datei werden z.B. Parameter zum eXTra-Server (Endpoint Webservice) konfiguriert. ||
+|| [eXTraClientMandatorConfig extra-mandant-xxx.properties] || Globale Mandantenkonfigurationsdatei. Optional, wobei _xxx_ der Name des Mandanten darstellt. Das Verzeichnis muss den Namen des angegebenen Mandanten tragen unter unterhalb der über -g angegebenen globalen Konfigurationsverzeichnisses liegen. In dieser Datei werden z.B. Parameter zum eXTra-Server (Endpoint Webservice) konfiguriert. ||
 || [eXTraClientBetriebLogging logging-config.xml] || Logging Einstellungen (z.B. Name der Logfiles und Loglevel) ||
 || [eXTraClientBetriebConfigProfile profile.xml] || eXTra-Profil Datei (siehe eXTra Standard). In der Profil-Date sind die Elemente des Extra-Standards aufgeführt, die zur Kommunikation zwischen Client und Server verwendet werden sollen (Der Name ist frei wählbar.)||
 
@@ -153,10 +153,10 @@ Folgendes Beispiel (Fachverfahren Sterbedaten Ausland) zeigt die Verwendung der 
 Die Aufrufe werden über den Parametrisierten Aufruf der Datei 'extra.bat' durchgeführt. (siehe Verzeichnis extra-sterbedaten-ausland/bin)
 
 ===== Aufruf Phase 1: Senden einer Datei an den eXTra-Server =====
-<code>extra.bat conf\luxemburg\phase1</code>
+<code>extra.bat -g ..\..\global -c conf\luxemburg\phase1 -m DRV -l ..\..\logs -b ..\..\backup\phase1</code>
 
 ===== Aufruf Phase 2: Empfang von 3 Dateien vom eXTra-Server =====
-<code>extra.bat conf\luxemburg\phase2</code>
+<code>extra.bat -g ..\..\global -c conf\luxemburg\phase2 -m DRV -l ..\..\logs -b ..\..\backup\phase1</code>
 Folgende drei Dateien hat der eXTra-Client empfangen und im Dateisystem abgelegt:
 
 http://extra-standard.googlecode.com/svn/wiki/images/betrieb_nach_phase2_dateien_empfangen.png
@@ -181,7 +181,7 @@ http://extra-standard.googlecode.com/svn/wiki/images/betrieb_nach_phase2_status_
 ===== Aufruf Phase 3: Bestätigung der erfolgreich verarbeiteten Dateien an den eXTra-Server =====
 In Phase 3 werden erfolgreich verarbeitete Dateien dem eXTra-Server über diesen Aufruf bestätigt.
 
-<code>extra.bat conf\luxemburg\phase3</code>
+<code>extra.bat -g ..\..\global -c conf\luxemburg\phase3 -m DRV -l ..\..\logs -b ..\..\backup\phase1</code>
 
 Nach Aufruf der Phase 3 darf nur die Datei '...676' als erfolgreich verarbeitet gemeldet worden sein. In der Tabelle COMMUNICATION_PROTOCOL ist ein entsprechender Eintrag vorhanden:
 
