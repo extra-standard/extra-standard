@@ -169,10 +169,10 @@ http://extra-standard.googlecode.com/svn/wiki/images/betrieb_nach_phase2_status.
 Die Verarbeitungsergebnisse werden dem eXTra-Client gemeldet:
  
  * Erfolgreiche Verarbeitung einer Datei dem eXTra-Client melden (Endung 676):
-<code>extra.bat conf\luxemburg\phase2 -oc "FIKELA.PRD.DS.LU2013-08-28 10-01-34.676"</code>
+<code>extra.bat -g ..\..\global -c conf\luxemburg\phase2 -m DRV -oc "FIKELA.PRD.DS.LU2013-08-28 10-01-34.676"</code>
 
  * Fehlerhafte Verarbeitung einer Datei dem eXTra-Client melden (Endung 693):
-<code> extra.bat conf\luxemburg\phase2 -of "FIKELA.PRD.DS.LU2013-08-28 10-01-34.693"</code>
+<code> extra.bat -g ..\..\global -c conf\luxemburg\phase2 -m DRV -of "FIKELA.PRD.DS.LU2013-08-28 10-01-34.693"</code>
 
 In der Tabelle COMMUNICATION_PROTOCOL sieht man die Verarbeitungsergebnisse: 
 
