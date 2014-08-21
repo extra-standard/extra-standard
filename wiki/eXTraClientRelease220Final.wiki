@@ -39,6 +39,7 @@ Die Auslieferung besteht aus diesen Archiven:
 || extra-cli-2.2.0.zip || Ausführbarer Basisbereich des eXTra-Clients. ||
 || extra-scenario-sendfetch-2.2.0.zip || Technisches Referenzverfahren 'Send-Fetch'. Dieses dient als exemplarisches Einsatzbeispiel des eXTra-Clients. Aufbauend auf diesem 'Muster' können weitere Fachverfahren entwickelt werden. ||
 || extra-sterbedaten-ausland-2.2.0.zip || Fachverfahren [eXTraSterbedatenVerfahren Sterbedaten Ausland]. ||
+|| extra-common-conf-2.2.0.zip || Globalkonfiguration und Mandantenkonfiguration für sämtliche Fachverfahren. ||
 
 Jedes Fachverfahren wird in einem gesonderten Archiv ausgeliefert.
 Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird beschrieben wie eine Installation des eXTra-Clients und des Technischem Referenzverfahrens 'Send-Fetch' durchgeführt werden kann.
@@ -53,4 +54,6 @@ Auf der Seite [eXTraClientBetriebSzenarioSendFetch] wird beschrieben wie eine In
 Siehe bitte: http://goo.gl/2rhK4r
 
 = Download =
-Google Code hat die Download-Möglichkeit eingestellt, siehe: https://code.google.com/p/support/wiki/DownloadsFAQ. Daher sollen die Dateien ab sofort in Google Drive zur Verfügung stehen.
+Google Code hat die Download-Möglichkeit eingestellt, siehe: https://code.google.com/p/support/wiki/DownloadsFAQ. Daher sollen die Releasedateien ab sofort in Google Drive bzw. DropBox zur Verfügung stehen
+
+Download Release 2.2.0: http://goo.gl/Qu1ccE
