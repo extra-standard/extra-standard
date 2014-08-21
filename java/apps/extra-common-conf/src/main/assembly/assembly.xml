@@ -6,43 +6,12 @@
 	<formats>
 		<format>zip</format>
 	</formats>
-	<baseDirectory>extra-sterbedaten-ausland</baseDirectory>
+	<baseDirectory>extra-common-conf</baseDirectory>
 	<includeBaseDirectory>true</includeBaseDirectory>
 	<fileSets>
 		<fileSet>
-			<directory>src/main/bin</directory>
-			<outputDirectory>/bin</outputDirectory>
-			<filtered>true</filtered>
-		</fileSet>
-		<fileSet>
 			<directory>src/main/conf</directory>
 			<outputDirectory>/conf</outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>src/main/logs</directory>
-			<outputDirectory>/logs</outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>src/main/docs</directory>
-			<outputDirectory>/docs</outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>src/main/soapui</directory>
-			<outputDirectory>/soapui</outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>src/test/resources/work</directory>
-			<outputDirectory>/work</outputDirectory>
-		</fileSet>
-		<fileSet>
-			<directory>src/main/resources/db/oracle/migration</directory>
-			<outputDirectory>/sql_oracle</outputDirectory>
-			<filtered>false</filtered>
-		</fileSet>
-		<fileSet>
-			<directory>src/main/resources/db/hsqldb/migration</directory>
-			<outputDirectory>/sql_hsqldb</outputDirectory>
-			<filtered>false</filtered>
 		</fileSet>
 	</fileSets>
 	<files>
