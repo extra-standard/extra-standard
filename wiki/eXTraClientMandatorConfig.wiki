@@ -1,4 +1,4 @@
-#summary Mandantenkonfigurationsdatei extra-mandator.properties
+#summary Mandantenkonfigurationsdatei extra-mandant-xxx.properties
 
 =Beschreibung eXTra-mandator.properties (Optional)=
 In dieser Konfigurationsdatei können mandantenspezifische Einstellungen vorgenommen werden.
