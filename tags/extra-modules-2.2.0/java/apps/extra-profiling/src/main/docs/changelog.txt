@@ -1,0 +1,49 @@
+Version 1.0 (16.12.2010)
+- Icon für Anwendung angepasst
+- Hinweis unter 'Profiliertes Schema erzeugen'-Button, dass Konfiguration zuerst gespeichert werden muss
+- Bei der Erzeugung des Schemas wird optional eine PDF-Dokumentation erzeugt
+  Die dabei verwendete Logo-Datei (logo_doku.png) kann durch eine eigene Grafik ausgetauscht werden
+- Allgemeine Anmerkungen und Anmerkungen zur Verwendung von Elementen können in der Oberfläche gepflegt werden
+  und werden in der Profilkonfiguration gespeichert
+- minOccurs- und maxOccurs-Werte können jetzt in allen sequence- und choice-Gruppen angepasst werden
+  bei maxOccurs sind alle Werte <= der Vorgabe aus dem Basisschema möglich
+  bei minOccurs sind alle Werte >= der Vorgabe aus dem Basisschema möglich
+- Neue Properties-Datei 'xtt_anmerkungen.properties' zum Pflegen der Default-Anmerkungen
+  Die Datei enthält beispielhaft Anmerkungen aus dem request-Schema
+- Datei mit Benutzereinstellungen (xtt_user.properties) überarbeitet, u.a. Kommentare eingefügt
+- Neue Benutzer-Einstellungen 'BAUM_HAUPTELEMENTE_EXPANDIERT' und 'BAUM_REFRENZIERTE_ELEMENTE_EXPANDIERT'
+  zum automatischen Expandieren der Bäume eingefügt 
+- Neue System-Einstellung 'SCHEMA_ROOT_ELEMENT' zur Angabe des Wurzelelements des Schemas (Standard: 'XMLTransport') 
+- (bugfix) Keine Aktion beim Klicken auf inaktive Buttons
+- (bugfix) Hyperlinks im Hilfefenster funktionieren jetzt
+
+Version 0.80 (01.12.2010)
+- Möglichkeit, optionale Elemente einer sequence als Pflichtfelder zu profilieren
+- Bäume beim Start standardmäßig komplett reduziert (durch komplettes Schema jetzt sehr viele Elemente) 
+- Verwendung eines eigenen targetNamespace erstmal deakiviert (da mehrere Schemdateien mit vordefinierten Namespaces)
+- Profilierung des kompletten Schemas inkl. der verknüpften Schemadateien möglich;
+  dabei werden bei der Erstellung des profilierten Schemas auch mehrere Schemadateien erzeugt -
+  dazu ist die Angabe einer Kurzbezeichnung des Verfahrens notwendig 
+- Anpassungen der jar-Export-Konfiguration (TailoringSchema.xsd innerhalb jar-File; changelog.txt außerhalb jar-File)
+
+Version 0.72 (17.11.2010)
+- Beim Anzeigen der Hilfe (HTML-Seite) Logausgabe, falls Fehler
+- Bäume beim Start standardmäßig komplett expandiert
+- Elememte werden nur dann bei den mehrfachreferenzierten Elementen angezeigt, wenn sie vom Typ "complexType" sind
+- Mehrfachreferenzierte Elemente auf der rechten Seite alphabetisch sortiert
+- System-Properties innerhalb JAR-File
+- Wait-Cursor bei längeren Aktionen wird angezeigt
+- Auch bei den mehrfach referenzierten Elementen werden Verweise auf mehrfachreferenzierte Elemente angezeigt
+- Beim Speichern von Dateien wird nachgefragt, ob sie ersetzt werden soll, falls die Datei bereits vorhanden ist
+- Beim Erstellen des profilierten Schemas werden die verknüpften Schemadateien in den angegebenen Zielordner kopiert
+- (bugfix) Abfrage, ob es im Schema überhaupt mehrfach referenzierte Elemente gibt (führte ansonsten zum Absturz; nicht relevant beim request/response-Schema)
+- (bugfix) Im Datei öffnen/speichern-Dialog werden jetzt auch Verzeichnisse angezeigt
+- (bugfix) Es können auch XML-Dateien mit Leerzeichen im Pfad (Verzeichnis oder Dateiname) unter WindowsXP verwendet werden
+- (bugfix) Beim Abbrechen des "Konfiguration speichern unter"-Dialogs erfolgt keine Aktion
+
+Version 0.1 (15.11.2010)
+Erste Version für DRV mit folgenden Funktionen:
+- Profilierung der Basis-Schemata eXTra-request-1.xsd und eXTra-response-1.xsd inkl. Anlegen, Speichern und Laden der Profilkonfiguration und Erzeugen des profilierten Schemas anhand der Profilkonfiguration
+- Intuitive Bedienung: In einem Baum werden die benötigten Elemente ausgewählt
+- Definition des TargetNamespaces für das profilierte Schema
+- Integrierte Hilfe im HTML-Format

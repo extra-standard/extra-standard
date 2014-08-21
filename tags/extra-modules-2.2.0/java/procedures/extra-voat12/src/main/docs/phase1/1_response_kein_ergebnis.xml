@@ -1,0 +1,32 @@
+<xres:TransportHeader>
+	<xcpt:TestIndicator>http://wwwxextra-standardxde/test/NONE</xcpt:TestIndicator>
+	<xcpt:Sender>
+		<xcpt:ReceiverID>es-1</xcpt:ReceiverID>
+		<xcpt:Name>eXTra-Server</xcpt:Name>
+	</xcpt:Sender>
+	<xcpt:Receiver>
+		<xcpt:SenderID>ec-1</xcpt:SenderID>
+		<xcpt:Name>eXTra-Client</xcpt:Name>
+	</xcpt:Receiver>
+	<xcpt:RequestDetails>
+		<xcpt:RequestID>PROC_VOAT12_FETCH_REQ_1</xcpt:RequestID>
+		<xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
+		<xcpt:Application>
+			<xcpt:Product>eXTra Client OpenSource</xcpt:Product>
+			<xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
+		</xcpt:Application>
+		<xcpt:Procedure>http://www.extra-standard.de/procedures/Voat12</xcpt:Procedure>
+		<xcpt:DataType>http://www.extra-standard.de/datatype/DataRequest</xcpt:DataType>
+		<xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
+	</xcpt:RequestDetails>
+	<xcpt:ResponseDetails>
+		<xcpt:ResponseID class="0">PROC_VOAT12_FETCH_RESP_1</xcpt:ResponseID>
+		<xcpt:TimeStamp>2001-12-17T09:30:47.0Z</xcpt:TimeStamp>
+		<xcpt:Report highestWeight="http://www.extra-standard.de/weight/INFO">
+			<xcpt:Flag weight="http://www.extra-standard.de/weight/INFO">
+				<xcpt:Code>E98</xcpt:Code>
+				<xcpt:Text>Keine Ergebnisse!</xcpt:Text>
+			</xcpt:Flag>
+		</xcpt:Report>
+	</xcpt:ResponseDetails>
+</xres:TransportHeader>
