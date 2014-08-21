@@ -32,11 +32,6 @@
 			<outputDirectory>/sql_hsqldb</outputDirectory>
 			<filtered>false</filtered>
 		</fileSet>
-		<fileSet>
-			<directory>src/main/config</directory>
-			<outputDirectory>/config</outputDirectory>
-			<filtered>false</filtered>
-		</fileSet>
 	</fileSets>
 	<files>
 		<file>
