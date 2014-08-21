@@ -1,7 +1,5 @@
 #summary eXTra CLI 2.2.0-Final
 
-= !!! IN VORBEREITUNG !!! =
-
 = eXTra Client CLI und Fachverfahren Scenario Send Fetch sowie Fachverfahren Sterbedaten-Ausland Italien und Luxemburg Version 2.2.0 FINAL=
 
 *Inhaltsverzeichnis*
