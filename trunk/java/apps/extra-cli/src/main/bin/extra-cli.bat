@@ -74,8 +74,8 @@ set HEAP_MX=-Xmx1024m
 if "%JAVA_OPTS%" == "" set JAVA_OPTS=%HEAP_MS% %HEAP_MX%
 
 rem java call
-echo %_JAVA% %JAVA_OPTS% -classpath "%EXTRA_CLIENT_HOME%\lib\*" de.extra.client.starter.ClientStarter -g "%EXTRA_CLIENT_HOME%\config" %*
-%_JAVA% %JAVA_OPTS% -classpath "%EXTRA_CLIENT_HOME%\lib\*" de.extra.client.starter.ClientStarter -g "%EXTRA_CLIENT_HOME%\config" %*
+echo %_JAVA% %JAVA_OPTS% -classpath "%EXTRA_CLIENT_HOME%\lib\*" de.extra.client.starter.ClientStarter %*
+%_JAVA% %JAVA_OPTS% -classpath "%EXTRA_CLIENT_HOME%\lib\*" de.extra.client.starter.ClientStarter %*
 goto end
 
 :exit
