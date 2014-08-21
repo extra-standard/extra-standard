@@ -31,7 +31,8 @@ set CURRENT_DIR=%CD%
 pushd %~dp0..\logs
 set LOGFILEPATH=%CD%
 popd
-%EXTRA_CLIENT_HOME%\bin\extra-cli.bat -m DRV -g %EXTRA_CLIENT_HOME%\config -l "%LOGFILEPATH%" -c %~f1 %2 %3 %4 %5 %6 %7 %8 %9
+rem %EXTRA_CLIENT_HOME%\bin\extra-cli.bat -m DRV -g %EXTRA_CLIENT_HOME%\config -l "%LOGFILEPATH%" -c %~f1 %2 %3 %4 %5 %6 %7 %8 %9
+%EXTRA_CLIENT_HOME%\bin\extra-cli.bat -m DRV %1 %2 %3 %4 %5 %6 %7 %8 %9
 goto end
 
 :exit
