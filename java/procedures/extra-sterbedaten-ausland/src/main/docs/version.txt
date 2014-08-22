@@ -1,0 +1,7 @@
+Version 2.2.0 (22.08.14)
+========================
+
+- Anpassungen an neues Konfigurationsverfahren
+  - Auslagern globaler Einstellungen nach extra-common-conf/conf/global
+  - Entfernen der Beispielhaften Batch-Aufrufe im Verzeichnis bin
+  - Aufrufbeispiele siehe docs/aufrufe.txt
