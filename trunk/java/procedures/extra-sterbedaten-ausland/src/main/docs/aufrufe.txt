@@ -1,0 +1,16 @@
+REM Aufruf des eXTra-Clients (Italien Phase 1, ...)
+
+REM folgende Umgebungsvariablen muessen vor dem Aufruf gesetzt werden:
+set EXTRA_CLIENT_HOME=D:\00extra\sterbedaten\140821\extra-client
+set EXTRA_ENCRYPTION_PASSWORD=extra-client
+set EXTRA_FACHVERFAHREN_STERBEDATEN=D:\00extra\sterbedaten\140821\fachverfahren\extra-sterbedaten-ausland
+set EXTRA_COMMON_CONF=D:\00extra\sterbedaten\140821\extra-common-conf\conf\global
+
+REM vor dem Aufruf sollte soapUI mit den Mockservern 1 bis 3 gestartet werden. Die Verbindung zu soapUI muss pro Phase in der Datei extra-common-conf\conf\global\DRV\extra-mandant-dsrv.properties angegeben werden:
+REM z.B. plugins.outputplugin.wsOutputPlugin.endpoint.url=http://localhost:8088/mockExtraSterbedatenausPhase3
+
+REM Kommandozeilen-Aufruf Italien Phase 1
+%EXTRA_CLIENT_HOME%\bin\extra-cli.bat -m DRV -g %EXTRA_COMMON_CONF% -l %EXTRA_FACHVERFAHREN_STERBEDATEN%\logs -c %EXTRA_FACHVERFAHREN_STERBEDATEN%\conf\italien\phase1
+
+REM Bestaetigen der Datei FIKELA.PRD.DS.71
+%EXTRA_CLIENT_HOME%\bin\extra-cli.bat -m DRV -g %EXTRA_COMMON_CONF% -l %EXTRA_FACHVERFAHREN_STERBEDATEN%\logs -c %EXTRA_FACHVERFAHREN_STERBEDATEN%\conf\italien\phase1 -oc FIKELA.PRD.DS.71
