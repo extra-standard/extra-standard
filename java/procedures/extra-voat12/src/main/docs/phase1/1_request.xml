@@ -17,7 +17,7 @@
                 <xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
                 <xcpt:RegistrationID/>
             </xcpt:Application>
-            <xcpt:Procedure>http://www.extra-standard.de/procedures/EVoat12</xcpt:Procedure>
+            <xcpt:Procedure>http://www.extra-standard.de/procedures/Voat12</xcpt:Procedure>
             <xcpt:DataType>http://www.extra-standard.de/datatypes/DataRequest</xcpt:DataType>
             <xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
         </xcpt:RequestDetails>
