@@ -31,10 +31,10 @@
 	</parent>
 
 	<groupId>de.extra-standard.procedures</groupId>
-	<artifactId>extra-evoat12</artifactId>
+	<artifactId>extra-voat12</artifactId>
 	<version>1.1.0</version>
 	<packaging>jar</packaging>
-	<name>extra-evoat12</name>
+	<name>extra-voat12</name>
 	<description>Elektronischer Antrag auf Vorschusszahlung</description>
 
 	<properties>
@@ -136,13 +136,13 @@
 										<!-- Procedure Sterbedaten Italien -->
 										<!-- Phase 1 -->
 										<copy
-											file="${project.basedir}/src/main/conf/evoat12/phase1/extra-properties-basic.properties"
+											file="${project.basedir}/src/main/conf/voat12/phase1/extra-properties-basic.properties"
 											tofile="${project.basedir}/src/test/resources/conf/phase1/extra-properties-basic.properties" />
 										<copy
-											file="${project.basedir}/src/main/conf/evoat12/phase1/logging-config.xml"
+											file="${project.basedir}/src/main/conf/voat12/phase1/logging-config.xml"
 											tofile="${project.basedir}/src/test/resources/conf/phase1/logging-config.xml" />
 										<copy
-											file="${project.basedir}/src/main/conf/evoat12/phase1/phase1-fetchresult-profil.xml"
+											file="${project.basedir}/src/main/conf/voat12/phase1/phase1-fetchresult-profil.xml"
 											tofile="${project.basedir}/src/test/resources/conf/phase1/phase1-fetchresult-profil.xml" />
 										<copy
 											file="${project.basedir}/src/test/resources/conf/phase1/extra-properties-user.properties_example"

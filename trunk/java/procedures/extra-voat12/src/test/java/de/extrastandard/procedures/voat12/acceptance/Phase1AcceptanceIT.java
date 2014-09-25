@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package de.extrastandard.procedures.evoat12.acceptance;
+package de.extrastandard.procedures.voat12.acceptance;
 
 import java.util.List;
 import java.util.Set;
