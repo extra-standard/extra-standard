@@ -32,7 +32,7 @@
 
 	<groupId>de.extra-standard.procedures</groupId>
 	<artifactId>extra-voat12</artifactId>
-	<version>1.1.0</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 	<name>extra-voat12</name>
 	<description>Elektronischer Antrag auf Vorschusszahlung</description>
