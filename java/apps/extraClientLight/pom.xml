@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.extra</groupId>
+	<artifactId>extraClientLight</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>ExtraClientLight</name>
+	<description>Lightweight eXTra-Client</description>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>2.7.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>2.7.3</version>
+		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.7</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.cxf</groupId>
+					<artifactId>cxf-codegen-plugin</artifactId>
+					<version>3.0.1</version>
+					<executions>
+						<execution> 
+							<id>generate-sources</id>
+							<phase>generate-sources</phase>
+							<configuration>
+								<sourceRoot>${project.build.directory}/generated/extraWs</sourceRoot>
+								<wsdlOptions>
+									<wsdlOption>
+										<wsdl>${basedir}/src/main/resources/wsdl/extra_mtom.wsdl</wsdl>										
+									</wsdlOption>
+								</wsdlOptions>
+							</configuration>
+							<goals>
+								<goal>wsdl2java</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-codegen-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>

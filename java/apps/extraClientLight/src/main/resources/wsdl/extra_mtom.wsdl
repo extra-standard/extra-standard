@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="extra"
+	targetNamespace="http://www.extra-standard.de/namespace/webservice"
+	xmlns:xws="http://www.extra-standard.de/namespace/webservice"
+	xmlns:xreq="http://www.extra-standard.de/namespace/request/1"
+	xmlns:xres="http://www.extra-standard.de/namespace/response/1"
+	xmlns:xsrv="http://www.extra-standard.de/namespace/service/1"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:wsp="http://www.w3.org/ns/ws-policy"
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+	xmlns:wsoma="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization">
+
+	<wsp:Policy wsu:Id="eXTraMTOMPolicy">
+		<wsoma:OptimizedMimeSerialization />
+	</wsp:Policy>
+
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:import namespace="http://www.extra-standard.de/namespace/request/1"
+				schemaLocation="eXTra-request-1.xsd" />
+			<xsd:import namespace="http://www.extra-standard.de/namespace/response/1"
+				schemaLocation="eXTra-response-1.xsd" />
+			<xsd:import namespace="http://www.extra-standard.de/namespace/service/1"
+				schemaLocation="extra-error-1.xsd" />
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="TransportRequest">
+		<wsdl:part element="xreq:Transport" name="TransportRequest" />
+	</wsdl:message>
+	<wsdl:message name="TransportResponse">
+		<wsdl:part element="xres:Transport" name="TransportResponse" />
+	</wsdl:message>
+	<wsdl:message name="ExtraError">
+		<wsdl:part element="xsrv:ExtraError" name="ExtraError" />
+	</wsdl:message>
+
+	<wsdl:portType name="Extra">
+		<wsdl:operation name="execute">
+			<wsdl:input message="xws:TransportRequest" />
+			<wsdl:output message="xws:TransportResponse" />
+			<wsdl:fault message="xws:ExtraError" name="ExtraError" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="ExtraBinding" type="xws:Extra">
+
+		<wsp:PolicyReference URI="#eXTraMTOMPolicy"
+			wsdl:required="true" />
+
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="execute">
+			<soap:operation
+				soapAction="http://www.extra-standard.de/namespace/webservice/execute" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="ExtraError">
+				<soap:fault name="ExtraError" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="ExtraService">
+		<wsdl:port binding="xws:ExtraBinding" name="extraSOAP">
+			<soap:address location="http://localhost/SPoC/ExtraService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
