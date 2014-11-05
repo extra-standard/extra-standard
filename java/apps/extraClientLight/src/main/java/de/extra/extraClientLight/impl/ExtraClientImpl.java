@@ -25,17 +25,19 @@ import org.slf4j.LoggerFactory;
 import de.extra.extraClientLight.IextraClient;
 import de.extra.extraClientLight.helper.BuildExtraTransport;
 import de.extra.extraClientLight.helper.ExtraRequestHelper;
+import de.extra.extraClientLight.helper.ExtraResponseHelper;
 import de.extra.extraClientLight.model.RequestExtraBean;
 import de.extra.extraClientLight.model.ResponseExtraBean;
 import de.extra.extraClientLight.util.SendWebService;
 import de.extra_standard.namespace.request._1.TransportRequestType;
+import de.extra_standard.namespace.response._1.TransportResponseType;
 
 public class ExtraClientImpl implements IextraClient {
 	private Logger LOGGER = LoggerFactory.getLogger(ExtraClientImpl.class);
 
 	public ResponseExtraBean sendExtra(RequestExtraBean requestExtra) {
 		LOGGER.info("Client aufgerufen");
-		ResponseExtraBean responseBean = new ResponseExtraBean();
+		ResponseExtraBean responseBean;
 
 		SendWebService sendWebService = new SendWebService();
 		TransportRequestType extraRequest = BuildExtraTransport
@@ -43,8 +45,10 @@ public class ExtraClientImpl implements IextraClient {
 
 		ExtraRequestHelper.printRequest(extraRequest);
 
-		sendWebService.sendRequest(extraRequest, requestExtra.getUrl(),
+		TransportResponseType extraResponse = sendWebService.sendRequest(extraRequest, requestExtra.getUrl(),
 				requestExtra.isMtom());
+		responseBean = ExtraResponseHelper.convertExtraResponse(extraResponse);
+		
 		return responseBean;
 	}
 
