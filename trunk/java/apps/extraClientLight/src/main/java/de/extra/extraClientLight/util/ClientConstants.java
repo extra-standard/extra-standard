@@ -25,4 +25,8 @@ public class ClientConstants {
 	public static final String DETAILS_REQUEST_RESPONSE = "http://www.extra-standard.de/scenario/request-with-response";
 	public static final String DETAILS_ACKNOWLEDGEMENT = "http://www.extra-standard.de/scenario/request-with-acknowledgement";
 
+	public static final String EXTRA_WEIGHT_INFO = "http://www.extra-standard.de/weight/INFO";
+	public static final String EXTRA_WEIGHT_WARN = "http://www.extra-standard.de/weight/WARN";
+	public static final String EXTRA_WEIGHT_ERROR = "http://www.extra-standard.de/weight/ERROR";
+
 }

@@ -27,7 +27,13 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.7</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
 	</dependencies>
+	<!-- 2014-11-03 FS Deaktiviert bis Weg gefunden mit Annox zu nutzen 
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -62,6 +68,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
+-->
 
 </project>
