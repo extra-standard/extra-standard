@@ -22,18 +22,27 @@ package de.extra.extraClientLight.helper;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.util.ByteArrayDataSource;
+import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
 
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.components.Base64CharSequenceType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.components.ClassifiableIDType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.components.DataType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.components.ElementSequenceType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.components.ReceiverType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.components.RequestDetailsType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.components.SenderType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.components.SupportedVersionsType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.messages.DataRequestArgumentType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.messages.DataRequestQueryType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.messages.DataRequestType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.messages.OperandSetType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.messages.OperandType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.request.TransportRequestBodyType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.request.TransportRequestHeaderType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.request.TransportRequestType;
 import de.extra.extraClientLight.model.RequestExtraBean;
 import de.extra.extraClientLight.util.ClientConstants;
-import de.extra_standard.namespace.components._1.Base64CharSequenceType;
-import de.extra_standard.namespace.components._1.ClassifiableIDType;
-import de.extra_standard.namespace.components._1.DataType;
-import de.extra_standard.namespace.components._1.ReceiverType;
-import de.extra_standard.namespace.components._1.RequestDetailsType;
-import de.extra_standard.namespace.components._1.SenderType;
-import de.extra_standard.namespace.request._1.TransportRequestBodyType;
-import de.extra_standard.namespace.request._1.TransportRequestHeaderType;
-import de.extra_standard.namespace.request._1.TransportRequestType;
 
 public class BuildExtraTransport {
 
@@ -42,7 +51,7 @@ public class BuildExtraTransport {
 
 		TransportRequestType request = new TransportRequestType();
 
-		request.setVersion(ClientConstants.EXTRA_VERSION);
+		request.setVersion(SupportedVersionsType.VERSION_1_3);
 		request.setProfile(requestBean.getProfile());
 		request.setTransportHeader(buildHeader(requestBean));
 		if (!requestBean.getDataObjekt().isQuery()) {
@@ -50,7 +59,7 @@ public class BuildExtraTransport {
 					.getData()));
 		} else {
 
-			// TODO Aufbau der Query
+			request.setTransportBody(buildQueryBody(requestBean));
 		}
 		return request;
 
@@ -110,7 +119,7 @@ public class BuildExtraTransport {
 		ClassifiableIDType requestId = new ClassifiableIDType();
 		requestId.setValue(requestBean.getFachschluessel());
 		requestDetails.setRequestID(requestId);
-		
+
 		if (requestBean.isSynchron()) {
 			requestDetails
 					.setScenario(ClientConstants.DETAILS_REQUEST_RESPONSE);
@@ -120,6 +129,55 @@ public class BuildExtraTransport {
 		}
 
 		return requestDetails;
+	}
+
+	private static TransportRequestBodyType buildQueryBody(
+			RequestExtraBean requestBean) {
+
+		TransportRequestBodyType transportBody = new TransportRequestBodyType();
+
+		ElementSequenceType elementSequence = new ElementSequenceType();
+
+		elementSequence.getAny().add(0, buildQuery(requestBean));
+		DataType data = new DataType();
+		data.setElementSequence(elementSequence);
+		transportBody.setData(data);
+
+		return transportBody;
+
+	}
+
+	private static DataRequestType buildQuery(RequestExtraBean requestBean) {
+
+		DataRequestType dataRequest = new DataRequestType();
+		DataRequestQueryType dataQuery = new DataRequestQueryType();
+		DataRequestArgumentType requestIdArgument = new DataRequestArgumentType();
+		DataRequestArgumentType procedureArgument = new DataRequestArgumentType();
+		DataRequestArgumentType dataTypeArgument = new DataRequestArgumentType();
+
+		requestIdArgument.setProperty(ClientConstants.QUERY_REQUESTID);
+
+		OperandType operand = new OperandType();
+		operand.setValue("1234");
+
+		final JAXBElement<OperandType> jaxbOperand = new JAXBElement<OperandType>(
+				new QName("http://www.extra-standard.de/namespace/message/1",
+						"GT"), OperandType.class, operand);
+		jaxbOperand.setValue(operand);
+		
+		requestIdArgument.getContent().add(jaxbOperand);
+		dataQuery.getArgument().add(requestIdArgument);
+/*
+		procedureArgument.setProperty(ClientConstants.QUERY_PROCEDURE);
+
+		dataQuery.getArgument().add(procedureArgument);
+
+		dataTypeArgument.setProperty(ClientConstants.QUERY_DATATYPE);
+		dataQuery.getArgument().add(dataTypeArgument);
+*/
+		dataRequest.setQuery(dataQuery);
+
+		return dataRequest;
 	}
 
 }

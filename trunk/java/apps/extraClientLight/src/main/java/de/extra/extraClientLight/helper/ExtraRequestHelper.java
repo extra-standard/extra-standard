@@ -19,6 +19,8 @@
 
 package de.extra.extraClientLight.helper;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 
@@ -29,28 +31,28 @@ import javax.xml.bind.Marshaller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.extra_standard.namespace.request._1.TransportRequestType;
+import de.drv.dsrv.spoc.extra.v1_3.ExtraJaxbMarshaller;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.request.TransportRequestType;
 
 public class ExtraRequestHelper {
-	
-	private static Logger LOGGER = LoggerFactory.getLogger(ExtraRequestHelper.class);
-	
-	public static void printRequest(TransportRequestType requestType){
-		
-		try {
-			JAXBContext context = JAXBContext.newInstance(TransportRequestType.class);
-			
-			Marshaller marshaller = context.createMarshaller();
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-					Boolean.TRUE);
 
-			Writer writer = new StringWriter();
-			marshaller.marshal(requestType, writer);
-			
-			LOGGER.debug(writer.toString());
-			
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(ExtraRequestHelper.class);
+
+	public static void printRequest(TransportRequestType requestType) {
+
+		try {
+
+			ExtraJaxbMarshaller extraMarshaller = new ExtraJaxbMarshaller();
+
+			OutputStream outputStream = new ByteArrayOutputStream();
+
+			extraMarshaller.marshalTransportRequest(requestType, outputStream);
+
+			LOGGER.debug("eXTra-Marshaller: " + outputStream.toString());
+
 		} catch (JAXBException e) {
-			LOGGER.error("Fehler beim marshalling",e);
+			LOGGER.error("Fehler beim marshalling", e);
 		}
 	}
 
