@@ -28,5 +28,8 @@ public class ClientConstants {
 	public static final String EXTRA_WEIGHT_INFO = "http://www.extra-standard.de/weight/INFO";
 	public static final String EXTRA_WEIGHT_WARN = "http://www.extra-standard.de/weight/WARN";
 	public static final String EXTRA_WEIGHT_ERROR = "http://www.extra-standard.de/weight/ERROR";
+	public static final String QUERY_REQUESTID = "http://www.extra-standard.de/property/RequestID";
+	public static final String QUERY_PROCEDURE = "http://www.extra-standard.de/property/Procedure";
+	public static final String QUERY_DATATYPE = "http://www.extra-standard.de/property/DataType";
 
 }

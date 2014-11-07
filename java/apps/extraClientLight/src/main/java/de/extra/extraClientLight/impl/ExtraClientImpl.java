@@ -22,6 +22,8 @@ package de.extra.extraClientLight.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.request.TransportRequestType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.response.TransportResponseType;
 import de.extra.extraClientLight.IextraClient;
 import de.extra.extraClientLight.helper.BuildExtraTransport;
 import de.extra.extraClientLight.helper.ExtraRequestHelper;
@@ -29,8 +31,7 @@ import de.extra.extraClientLight.helper.ExtraResponseHelper;
 import de.extra.extraClientLight.model.RequestExtraBean;
 import de.extra.extraClientLight.model.ResponseExtraBean;
 import de.extra.extraClientLight.util.SendWebService;
-import de.extra_standard.namespace.request._1.TransportRequestType;
-import de.extra_standard.namespace.response._1.TransportResponseType;
+
 
 public class ExtraClientImpl implements IextraClient {
 	private Logger LOGGER = LoggerFactory.getLogger(ExtraClientImpl.class);

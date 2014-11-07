@@ -28,8 +28,8 @@ import javax.xml.bind.Marshaller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.extra_standard.namespace.service._1.ExtraErrorType;
-import de.extra_standard.namespace.webservice.ExtraFault;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.service.ExtraErrorType;
+import de.extra.extraClientLight.webservice.ExtraFault;
 
 public class ExtraErrorHelper {
 

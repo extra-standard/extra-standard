@@ -26,11 +26,11 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.components.FlagType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.response.TransportResponseType;
 import de.extra.extraClientLight.model.ResponseExtraBean;
 import de.extra.extraClientLight.model.enums.ReportLevelEnum;
 import de.extra.extraClientLight.util.ClientConstants;
-import de.extra_standard.namespace.components._1.FlagType;
-import de.extra_standard.namespace.response._1.TransportResponseType;
 
 public class ExtraResponseHelper {
 

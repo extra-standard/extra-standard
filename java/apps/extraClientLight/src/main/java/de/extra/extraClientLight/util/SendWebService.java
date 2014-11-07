@@ -21,7 +21,6 @@ package de.extra.extraClientLight.util;
 
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPFault;
-import javax.xml.ws.Binding;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.soap.SOAPBinding;
 import javax.xml.ws.soap.SOAPFaultException;
@@ -29,18 +28,19 @@ import javax.xml.ws.soap.SOAPFaultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.request.TransportRequestType;
+import de.drv.dsrv.spoc.extra.v1_3.jaxb.response.TransportResponseType;
 import de.extra.extraClientLight.helper.ExtraErrorHelper;
-import de.extra_standard.namespace.request._1.TransportRequestType;
-import de.extra_standard.namespace.response._1.TransportResponseType;
-import de.extra_standard.namespace.webservice.Extra;
-import de.extra_standard.namespace.webservice.ExtraFault;
-import de.extra_standard.namespace.webservice.Extra_Service;
+import de.extra.extraClientLight.webservice.Extra;
+import de.extra.extraClientLight.webservice.ExtraFault;
+import de.extra.extraClientLight.webservice.Extra_Service;
+
 
 public class SendWebService {
 	private Logger LOGGER = LoggerFactory.getLogger(SendWebService.class);
 
 	private static final QName SERVICE_NAME = new QName(
-			"https://www.eservicet-drv.de/SPoC", "ExtraService");
+			"https://www.eservicet-drv.de/SPoC", "execute");
 
 	public TransportResponseType sendRequest(TransportRequestType extraRequest,
 			String url, boolean mtomActive) {
@@ -52,11 +52,9 @@ public class SendWebService {
 		BindingProvider bp = (BindingProvider) extraPort;
 		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY,
 				url);
-		Binding binding = ((BindingProvider) extraPort).getBinding();
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("MTOM: " + mtomActive);
-		}
-		((SOAPBinding) binding).setMTOMEnabled(mtomActive);
+		
+		SOAPBinding soapBinding =  (SOAPBinding) bp.getBinding();
+		soapBinding.setMTOMEnabled(false);
 
 		try {
 
@@ -64,7 +62,7 @@ public class SendWebService {
 		} catch (SOAPFaultException e) {
 			SOAPFault soapFault = e.getFault();
 
-			LOGGER.error(soapFault.getTextContent());
+			LOGGER.error(soapFault.getTextContent(),e);
 
 		} catch (ExtraFault e) {
 			ExtraErrorHelper.printExtraError(e);
