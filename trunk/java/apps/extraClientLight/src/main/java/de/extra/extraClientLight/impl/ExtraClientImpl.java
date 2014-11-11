@@ -30,6 +30,7 @@ import de.extra.extraClientLight.helper.ExtraRequestHelper;
 import de.extra.extraClientLight.helper.ExtraResponseHelper;
 import de.extra.extraClientLight.model.RequestExtraBean;
 import de.extra.extraClientLight.model.ResponseExtraBean;
+import de.extra.extraClientLight.util.RequestBeanValidator;
 import de.extra.extraClientLight.util.SendWebService;
 
 
@@ -38,8 +39,15 @@ public class ExtraClientImpl implements IextraClient {
 
 	public ResponseExtraBean sendExtra(RequestExtraBean requestExtra) {
 		LOGGER.info("Client aufgerufen");
-		ResponseExtraBean responseBean;
+		ResponseExtraBean responseBean = new ResponseExtraBean();
+		int returnCode = 99;
 
+		if(!RequestBeanValidator.validateRequestBean(requestExtra)){
+			
+			returnCode = 1;
+			
+		}else{
+		
 		SendWebService sendWebService = new SendWebService();
 		TransportRequestType extraRequest = BuildExtraTransport
 				.buildTransportRequest(requestExtra);
@@ -49,6 +57,8 @@ public class ExtraClientImpl implements IextraClient {
 		TransportResponseType extraResponse = sendWebService.sendRequest(extraRequest, requestExtra.getUrl(),
 				requestExtra.isMtom());
 		responseBean = ExtraResponseHelper.convertExtraResponse(extraResponse);
+		}
+		responseBean.setReturnCode(returnCode);
 		
 		return responseBean;
 	}

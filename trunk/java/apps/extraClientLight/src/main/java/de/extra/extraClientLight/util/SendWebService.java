@@ -41,7 +41,13 @@ public class SendWebService {
 
 	private static final QName SERVICE_NAME = new QName(
 			"https://www.eservicet-drv.de/SPoC", "execute");
-
+/**
+ * 
+ * @param extraRequest
+ * @param url
+ * @param mtomActive
+ * @return
+ */
 	public TransportResponseType sendRequest(TransportRequestType extraRequest,
 			String url, boolean mtomActive) {
 		TransportResponseType response = new TransportResponseType();

@@ -24,7 +24,7 @@ import de.extra.extraClientLight.model.enums.ReportLevelEnum;
 public class ResponseExtraBean {
 	
 	private int returnCode;
-	private String requestId;
+	private String fachschluessel;
 	private byte[] data;
 	private String responseId;
 	private ReportLevelEnum reportLevel;
@@ -37,10 +37,10 @@ public class ResponseExtraBean {
 		this.returnCode = returnCode;
 	}
 	public String getRequestId() {
-		return requestId;
+		return fachschluessel;
 	}
 	public void setRequestId(String requestId) {
-		this.requestId = requestId;
+		this.fachschluessel = requestId;
 	}
 	public byte[] getData() {
 		return data;
