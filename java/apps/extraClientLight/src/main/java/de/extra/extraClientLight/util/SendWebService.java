@@ -19,12 +19,19 @@
 
 package de.extra.extraClientLight.util;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPFault;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.soap.SOAPBinding;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.cxf.message.Attachment;
+import org.apache.cxf.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,19 +42,19 @@ import de.extra.extraClientLight.webservice.Extra;
 import de.extra.extraClientLight.webservice.ExtraFault;
 import de.extra.extraClientLight.webservice.Extra_Service;
 
-
 public class SendWebService {
 	private Logger LOGGER = LoggerFactory.getLogger(SendWebService.class);
 
 	private static final QName SERVICE_NAME = new QName(
 			"https://www.eservicet-drv.de/SPoC", "execute");
-/**
- * 
- * @param extraRequest
- * @param url
- * @param mtomActive
- * @return
- */
+
+	/**
+	 * 
+	 * @param extraRequest
+	 * @param url
+	 * @param mtomActive
+	 * @return
+	 */
 	public TransportResponseType sendRequest(TransportRequestType extraRequest,
 			String url, boolean mtomActive) {
 		TransportResponseType response = new TransportResponseType();
@@ -58,17 +65,26 @@ public class SendWebService {
 		BindingProvider bp = (BindingProvider) extraPort;
 		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY,
 				url);
-		
-		SOAPBinding soapBinding =  (SOAPBinding) bp.getBinding();
-		soapBinding.setMTOMEnabled(false);
+
+		SOAPBinding soapBinding = (SOAPBinding) bp.getBinding();
+		soapBinding.setMTOMEnabled(mtomActive);
 
 		try {
-
+			LOGGER.debug("Versand gestartet...");
 			response = extraPort.execute(extraRequest);
+			LOGGER.debug("...Empfang Response");
+
+			if (mtomActive) {
+				Collection<Attachment> attachmentList = (Collection<Attachment>) bp
+						.getResponseContext().get(Message.ATTACHMENTS);
+
+				LOGGER.debug("Attachments: " + attachmentList.size());
+
+			}
 		} catch (SOAPFaultException e) {
 			SOAPFault soapFault = e.getFault();
 
-			LOGGER.error(soapFault.getTextContent(),e);
+			LOGGER.error(soapFault.getTextContent(), e);
 
 		} catch (ExtraFault e) {
 			ExtraErrorHelper.printExtraError(e);
