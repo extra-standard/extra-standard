@@ -33,7 +33,6 @@ import de.extra.extraClientLight.model.ResponseExtraBean;
 import de.extra.extraClientLight.util.RequestBeanValidator;
 import de.extra.extraClientLight.util.SendWebService;
 
-
 public class ExtraClientImpl implements IextraClient {
 	private Logger LOGGER = LoggerFactory.getLogger(ExtraClientImpl.class);
 
@@ -42,24 +41,35 @@ public class ExtraClientImpl implements IextraClient {
 		ResponseExtraBean responseBean = new ResponseExtraBean();
 		int returnCode = 99;
 
-		if(!RequestBeanValidator.validateRequestBean(requestExtra)){
-			
+		if (!RequestBeanValidator.validateRequestBean(requestExtra)) {
+
 			returnCode = 1;
-			
-		}else{
-		
-		SendWebService sendWebService = new SendWebService();
-		TransportRequestType extraRequest = BuildExtraTransport
-				.buildTransportRequest(requestExtra);
 
-		ExtraRequestHelper.printRequest(extraRequest);
+		} else {
 
-		TransportResponseType extraResponse = sendWebService.sendRequest(extraRequest, requestExtra.getUrl(),
-				requestExtra.isMtom());
-		responseBean = ExtraResponseHelper.convertExtraResponse(extraResponse);
+			SendWebService sendWebService = new SendWebService();
+			TransportRequestType extraRequest = BuildExtraTransport
+					.buildTransportRequest(requestExtra);
+
+			ExtraRequestHelper.printRequest(extraRequest);
+
+			TransportResponseType extraResponse = sendWebService.sendRequest(
+					extraRequest, requestExtra.getUrl(), requestExtra.isMtom());
+
+			ExtraResponseHelper.printResponse(extraResponse);
+			if (extraResponse.getProfile() != null) {
+				responseBean = ExtraResponseHelper
+						.convertExtraResponse(extraResponse);
+				returnCode = 0;
+			} else {
+
+				LOGGER.warn("Keine Response-Objekt");
+				returnCode = 9;
+			}
+
 		}
 		responseBean.setReturnCode(returnCode);
-		
+
 		return responseBean;
 	}
 
