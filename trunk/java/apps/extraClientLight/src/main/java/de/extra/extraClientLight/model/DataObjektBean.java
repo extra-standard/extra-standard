@@ -19,18 +19,20 @@
 
 package de.extra.extraClientLight.model;
 
+import java.io.InputStream;
+
 public class DataObjektBean {
-	
-	private byte[] data;
+	//TODO data auch als Stream(Groesse!)
+	private InputStream data;
 	private boolean query;
 	private String queryId;
 	private String queryProcedure;
 	private String queryDataType;
 	
-	public byte[] getData() {
+	public InputStream getData() {
 		return data;
 	}
-	public void setData(byte[] data) {
+	public void setData(InputStream data) {
 		this.data = data;
 	}
 	public boolean isQuery() {
