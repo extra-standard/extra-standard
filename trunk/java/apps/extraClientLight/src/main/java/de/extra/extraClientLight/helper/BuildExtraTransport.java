@@ -19,11 +19,18 @@
 
 package de.extra.extraClientLight.helper;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.util.ByteArrayDataSource;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
+
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.spoc.extra.v1_3.jaxb.components.Base64CharSequenceType;
 import de.drv.dsrv.spoc.extra.v1_3.jaxb.components.ClassifiableIDType;
@@ -45,6 +52,7 @@ import de.extra.extraClientLight.model.RequestExtraBean;
 import de.extra.extraClientLight.util.ClientConstants;
 
 public class BuildExtraTransport {
+	private static Logger LOGGER = LoggerFactory.getLogger(BuildExtraTransport.class);
 
 	public static TransportRequestType buildTransportRequest(
 			RequestExtraBean requestBean) {
@@ -55,8 +63,12 @@ public class BuildExtraTransport {
 		request.setProfile(requestBean.getProfile());
 		request.setTransportHeader(buildHeader(requestBean));
 		if (!requestBean.getDataObjekt().isQuery()) {
-			request.setTransportBody(buildBody(requestBean.getDataObjekt()
-					.getData()));
+			try {
+				request.setTransportBody(buildBody(requestBean.getDataObjekt()
+						.getData()));
+			} catch (IOException e) {
+				LOGGER.error("Fehler beim Lesen des InputStreams",e);
+			}
 		} else {
 
 			request.setTransportBody(buildQueryBody(requestBean));
@@ -94,12 +106,14 @@ public class BuildExtraTransport {
 
 	}
 
-	private static TransportRequestBodyType buildBody(byte[] nutzdaten) {
+	private static TransportRequestBodyType buildBody(InputStream nutzdaten)
+			throws IOException {
 		TransportRequestBodyType requestBody = new TransportRequestBodyType();
 		DataType data = new DataType();
 
 		Base64CharSequenceType payload = new Base64CharSequenceType();
-		DataSource ds = new ByteArrayDataSource(nutzdaten, "application");
+		DataSource ds = new ByteArrayDataSource(IOUtils.toByteArray(nutzdaten),
+				"application");
 		DataHandler dataHandler = new DataHandler(ds);
 		payload.setValue(dataHandler);
 		data.setBase64CharSequence(payload);
@@ -164,17 +178,17 @@ public class BuildExtraTransport {
 				new QName("http://www.extra-standard.de/namespace/message/1",
 						"GT"), OperandType.class, operand);
 		jaxbOperand.setValue(operand);
-		
+
 		requestIdArgument.getContent().add(jaxbOperand);
 		dataQuery.getArgument().add(requestIdArgument);
-/*
-		procedureArgument.setProperty(ClientConstants.QUERY_PROCEDURE);
-
-		dataQuery.getArgument().add(procedureArgument);
-
-		dataTypeArgument.setProperty(ClientConstants.QUERY_DATATYPE);
-		dataQuery.getArgument().add(dataTypeArgument);
-*/
+		/*
+		 * procedureArgument.setProperty(ClientConstants.QUERY_PROCEDURE);
+		 * 
+		 * dataQuery.getArgument().add(procedureArgument);
+		 * 
+		 * dataTypeArgument.setProperty(ClientConstants.QUERY_DATATYPE);
+		 * dataQuery.getArgument().add(dataTypeArgument);
+		 */
 		dataRequest.setQuery(dataQuery);
 
 		return dataRequest;

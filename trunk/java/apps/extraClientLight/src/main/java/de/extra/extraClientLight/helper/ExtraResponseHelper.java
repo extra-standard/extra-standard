@@ -19,13 +19,24 @@
 
 package de.extra.extraClientLight.helper;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.activation.DataSource;
+import javax.mail.util.ByteArrayDataSource;
+import javax.xml.bind.JAXBException;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.cxf.attachment.AttachmentDataSource;
+import org.apache.cxf.attachment.LazyAttachmentCollection;
+import org.apache.cxf.attachment.LazyDataSource;
+import org.apache.cxf.message.Attachment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.drv.dsrv.spoc.extra.v1_3.ExtraJaxbMarshaller;
 import de.drv.dsrv.spoc.extra.v1_3.jaxb.components.FlagType;
 import de.drv.dsrv.spoc.extra.v1_3.jaxb.response.TransportResponseType;
 import de.extra.extraClientLight.model.ResponseExtraBean;
@@ -52,11 +63,28 @@ public class ExtraResponseHelper {
 				.getResponseDetails().getReport().getFlag().get(0);
 
 		getReportInformation(reportFlag);
-		try {
-			final InputStream in = extraResponse.getTransportBody().getData()
-					.getBase64CharSequence().getValue().getInputStream();
 
-			responseBean.setData(IOUtils.toByteArray(in));
+		// TODO Attachments in Response auslesen.
+
+		try {
+
+			DataSource nutzdatenDS = extraResponse.getTransportBody().getData()
+					.getBase64CharSequence().getValue().getDataSource();
+
+			InputStream in = null;
+			if (nutzdatenDS instanceof ByteArrayDataSource) {
+				in = extraResponse.getTransportBody().getData()
+						.getBase64CharSequence().getValue().getInputStream();
+
+			}
+
+			if (nutzdatenDS instanceof LazyDataSource) {
+
+				in = nutzdatenDS.getInputStream();
+
+			}
+
+			responseBean.setData(in);
 		} catch (IOException e) {
 			LOGGER.error("Fehler beim Lesen des Datenstreams");
 			responseBean.setReturnCode(9);
@@ -83,6 +111,24 @@ public class ExtraResponseHelper {
 
 			responseBean.setReportLevel(ReportLevelEnum.ERROR);
 			responseBean.setReturnCode(2);
+		}
+	}
+
+	public static void printResponse(TransportResponseType response) {
+
+		try {
+
+			ExtraJaxbMarshaller extraMarshaller = new ExtraJaxbMarshaller();
+
+			OutputStream outputStream = new ByteArrayOutputStream();
+
+			String responseString = extraMarshaller
+					.marshalTransportResponse(response);
+
+			LOGGER.debug("eXTra-Marshaller: " + responseString);
+
+		} catch (JAXBException e) {
+			LOGGER.error("Fehler beim marshalling", e);
 		}
 	}
 }
