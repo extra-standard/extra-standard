@@ -19,13 +19,15 @@
 
 package de.extra.extraClientLight.model;
 
+import java.io.InputStream;
+
 import de.extra.extraClientLight.model.enums.ReportLevelEnum;
 
 public class ResponseExtraBean {
 	
 	private int returnCode;
 	private String fachschluessel;
-	private byte[] data;
+	private InputStream data;
 	private String responseId;
 	private ReportLevelEnum reportLevel;
 	private String reportCode;
@@ -42,10 +44,10 @@ public class ResponseExtraBean {
 	public void setRequestId(String requestId) {
 		this.fachschluessel = requestId;
 	}
-	public byte[] getData() {
+	public InputStream getData() {
 		return data;
 	}
-	public void setData(byte[] data) {
+	public void setData(InputStream data) {
 		this.data = data;
 	}
 	public String getResponseId() {
