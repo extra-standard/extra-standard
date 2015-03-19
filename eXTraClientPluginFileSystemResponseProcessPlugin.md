@@ -1,0 +1,9 @@
+#  #
+**Art:** OutputPlugin
+## Beschreibung ##
+
+
+## Konfiguration ##
+
+```
+```
