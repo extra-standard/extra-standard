@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 
 import de.drv.dsrv.spoc.extra.v1_3.jaxb.request.TransportRequestType;
 import de.drv.dsrv.spoc.extra.v1_3.jaxb.response.TransportResponseType;
+import de.extra.extraClientLight.exception.ExtraClientLightException;
 import de.extra.extraClientLight.helper.ExtraErrorHelper;
 import de.extra.extraClientLight.webservice.Extra;
 import de.extra.extraClientLight.webservice.ExtraFault;
@@ -54,9 +55,10 @@ public class SendWebService {
 	 * @param url
 	 * @param mtomActive
 	 * @return
+	 * @throws ExtraClientLightException
 	 */
 	public TransportResponseType sendRequest(TransportRequestType extraRequest,
-			String url, boolean mtomActive) {
+			String url, boolean mtomActive) throws ExtraClientLightException {
 		TransportResponseType response = new TransportResponseType();
 
 		Extra_Service extraService = new Extra_Service(null, SERVICE_NAME);
@@ -88,6 +90,9 @@ public class SendWebService {
 
 		} catch (ExtraFault e) {
 			ExtraErrorHelper.printExtraError(e);
+		} catch (Exception e) {
+			LOGGER.error("Schwerer Fehler", e);
+			throw new ExtraClientLightException();
 		}
 
 		return response;

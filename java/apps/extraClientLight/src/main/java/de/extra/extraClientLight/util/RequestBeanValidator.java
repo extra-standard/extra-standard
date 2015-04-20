@@ -19,25 +19,35 @@
 
 package de.extra.extraClientLight.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.extra.extraClientLight.model.RequestExtraBean;
 
 public class RequestBeanValidator {
+
+	private static Logger LOGGER = LoggerFactory
+			.getLogger(RequestBeanValidator.class);
 
 	public static boolean validateRequestBean(RequestExtraBean requestBean) {
 
 		boolean isValid = true;
 
 		// Pruefe Verfahren, Fachdienst, URL und Profile
-		if (!checkUrl(requestBean.getVerfahren())) {
+		if (requestBean.getVerfahren().length() == 0) {
+			LOGGER.warn("Verfahren nicht gesetzt");
 			return false;
 		}
 		if (!checkUrl(requestBean.getFachdienst())) {
+			LOGGER.warn("Fachdienst falsch gesetzt");
 			return false;
 		}
 		if (!checkUrl(requestBean.getUrl())) {
+			LOGGER.warn("Zielurl falsch gesetzt");
 			return false;
 		}
 		if (!checkUrl(requestBean.getProfile())) {
+			LOGGER.warn("Profil falsch gesetzt");
 			return false;
 		}
 
@@ -51,7 +61,7 @@ public class RequestBeanValidator {
 
 			return false;
 		}
-		
+
 		return isValid;
 	}
 

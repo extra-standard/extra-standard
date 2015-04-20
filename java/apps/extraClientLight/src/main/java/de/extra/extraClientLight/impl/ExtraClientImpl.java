@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import de.drv.dsrv.spoc.extra.v1_3.jaxb.request.TransportRequestType;
 import de.drv.dsrv.spoc.extra.v1_3.jaxb.response.TransportResponseType;
 import de.extra.extraClientLight.IextraClient;
+import de.extra.extraClientLight.exception.ExtraClientLightException;
 import de.extra.extraClientLight.helper.BuildExtraTransport;
 import de.extra.extraClientLight.helper.ExtraRequestHelper;
 import de.extra.extraClientLight.helper.ExtraResponseHelper;
@@ -42,7 +43,7 @@ public class ExtraClientImpl implements IextraClient {
 		int returnCode = 99;
 
 		if (!RequestBeanValidator.validateRequestBean(requestExtra)) {
-
+			LOGGER.error("RequestBean konnte nicht validiert werden!");
 			returnCode = 1;
 
 		} else {
@@ -53,8 +54,14 @@ public class ExtraClientImpl implements IextraClient {
 
 			ExtraRequestHelper.printRequest(extraRequest);
 
-			TransportResponseType extraResponse = sendWebService.sendRequest(
-					extraRequest, requestExtra.getUrl(), requestExtra.isMtom());
+			TransportResponseType extraResponse = new TransportResponseType();
+			try {
+				extraResponse = sendWebService.sendRequest(extraRequest,
+						requestExtra.getUrl(), requestExtra.isMtom());
+			} catch (ExtraClientLightException e) {
+				LOGGER.error("Unerwarteter Fehler beim Versand", e);
+				returnCode = 9;
+			}
 
 			ExtraResponseHelper.printResponse(extraResponse);
 			if (extraResponse.getProfile() != null) {

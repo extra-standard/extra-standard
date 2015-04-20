@@ -65,7 +65,7 @@ public class ExtraResponseHelper {
 		getReportInformation(reportFlag);
 
 		// TODO Attachments in Response auslesen.
-
+//TODO Body kann auch leer sein (v.a. im asynchronen Verfahren)
 		try {
 
 			DataSource nutzdatenDS = extraResponse.getTransportBody().getData()
