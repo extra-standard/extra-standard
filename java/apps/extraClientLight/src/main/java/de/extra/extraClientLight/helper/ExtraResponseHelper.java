@@ -28,11 +28,7 @@ import javax.activation.DataSource;
 import javax.mail.util.ByteArrayDataSource;
 import javax.xml.bind.JAXBException;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.cxf.attachment.AttachmentDataSource;
-import org.apache.cxf.attachment.LazyAttachmentCollection;
 import org.apache.cxf.attachment.LazyDataSource;
-import org.apache.cxf.message.Attachment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

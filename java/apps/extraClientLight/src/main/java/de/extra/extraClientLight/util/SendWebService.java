@@ -19,8 +19,6 @@
 
 package de.extra.extraClientLight.util;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.xml.namespace.QName;
@@ -29,7 +27,6 @@ import javax.xml.ws.BindingProvider;
 import javax.xml.ws.soap.SOAPBinding;
 import javax.xml.ws.soap.SOAPFaultException;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.cxf.message.Attachment;
 import org.apache.cxf.message.Message;
 import org.slf4j.Logger;
@@ -50,6 +47,7 @@ public class SendWebService {
 			"https://www.eservicet-drv.de/SPoC", "execute");
 
 	/**
+	 * Realisiert den eigentlichen Versand
 	 * 
 	 * @param extraRequest
 	 * @param url
