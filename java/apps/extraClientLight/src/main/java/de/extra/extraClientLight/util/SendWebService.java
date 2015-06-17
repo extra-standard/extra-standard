@@ -75,8 +75,9 @@ public class SendWebService {
 			LOGGER.debug("...Empfang Response");
 
 			if (mtomActive) {
-				Collection<Attachment> attachmentList = (Collection<Attachment>) bp
-						.getResponseContext().get(Message.ATTACHMENTS);
+				@SuppressWarnings("unchecked")
+				Collection<Attachment> attachmentList = ((Collection<Attachment>) bp
+						.getResponseContext().get(Message.ATTACHMENTS));
 
 				LOGGER.debug("Attachments: " + attachmentList.size());
 

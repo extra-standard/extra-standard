@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.util.ByteArrayDataSource;
 import javax.xml.bind.JAXBException;
@@ -60,23 +61,44 @@ public class ExtraResponseHelper {
 
 		getReportInformation(reportFlag);
 
-		// TODO Attachments in Response auslesen.
-//TODO Body kann auch leer sein (v.a. im asynchronen Verfahren)
+		// TODO Body kann auch leer sein (v.a. im asynchronen Verfahren)
 		try {
+
+			// Ermitteln der DataSource aus dem DataHandler
 
 			DataSource nutzdatenDS = extraResponse.getTransportBody().getData()
 					.getBase64CharSequence().getValue().getDataSource();
 
 			InputStream in = null;
+
+			// Wenn Nutzdaten inline sind, dann ist DataSource vom Typ
+			// ByteArrayDataSource
+
+			if (LOGGER.isTraceEnabled()) {
+
+				LOGGER.trace("Datentyp der Nutzdaten: "
+						+ nutzdatenDS.getContentType());
+
+			}
+
 			if (nutzdatenDS instanceof ByteArrayDataSource) {
 				in = extraResponse.getTransportBody().getData()
 						.getBase64CharSequence().getValue().getInputStream();
 
-			}
+			} else
+
+			// Wenn Nutzdaten als MTOM-Attachment übermittelt werden, dann sind
+			// die Daten innerhalb einer LazyDataSource
 
 			if (nutzdatenDS instanceof LazyDataSource) {
 
 				in = nutzdatenDS.getInputStream();
+
+			} else {
+
+				LOGGER.warn("Es konnte kein passender Datentyp gefunden werden! Wandle in Stream um");
+				in = extraResponse.getTransportBody().getData()
+						.getBase64CharSequence().getValue().getInputStream();
 
 			}
 
