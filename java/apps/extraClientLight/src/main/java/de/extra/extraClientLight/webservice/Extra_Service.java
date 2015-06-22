@@ -15,7 +15,7 @@ import javax.xml.ws.Service;
  * 
  */
 @WebServiceClient(name = "extra", 
-                  wsdlLocation = "file:/Users/florianstratil/localGit/extraClientLight/src/main/resources/wsdl/extra.wsdl",
+                  wsdlLocation = "http://localhost/wsdl/extra.wsdl",
                   targetNamespace = "http://www.extra-standard.de/namespace/webservice") 
 public class Extra_Service extends Service {
 
@@ -26,11 +26,11 @@ public class Extra_Service extends Service {
     static {
         URL url = null;
         try {
-            url = new URL("file:/Users/florianstratil/localGit/extraClientLight/src/main/resources/wsdl/extra.wsdl");
+            url = new URL("http://localhost/wsdl/extra.wsdl");
         } catch (MalformedURLException e) {
             java.util.logging.Logger.getLogger(Extra_Service.class.getName())
                 .log(java.util.logging.Level.INFO, 
-                     "Can not initialize the default wsdl from {0}", "file:/Users/florianstratil/localGit/extraClientLight/src/main/resources/wsdl/extra.wsdl");
+                     "Can not initialize the default wsdl from {0}", "http://localhost/wsdl/extra.wsdl");
         }
         WSDL_LOCATION = url;
     }

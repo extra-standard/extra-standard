@@ -102,7 +102,7 @@ public class BuildExtraTransport {
 	 * @param requestBean
 	 * @return TransportRequestHeaderF
 	 */
-	private static TransportRequestHeaderType buildHeader(
+	 static TransportRequestHeaderType buildHeader(
 			RequestExtraBean requestBean) {
 
 		TransportRequestHeaderType requestHeader = new TransportRequestHeaderType();
@@ -139,7 +139,7 @@ public class BuildExtraTransport {
 	 * @return TransportRequestBodyType
 	 * @throws IOException
 	 */
-	private static TransportRequestBodyType buildBody(InputStream nutzdaten)
+	 static TransportRequestBodyType buildBody(InputStream nutzdaten)
 			throws IOException {
 		TransportRequestBodyType requestBody = new TransportRequestBodyType();
 		DataType data = new DataType();
@@ -163,7 +163,7 @@ public class BuildExtraTransport {
 	 * @return RequestDetails
 	 */
 
-	private static RequestDetailsType buildRequestDetails(
+	 static RequestDetailsType buildRequestDetails(
 			RequestExtraBean requestBean) {
 
 		RequestDetailsType requestDetails = new RequestDetailsType();
@@ -192,7 +192,7 @@ public class BuildExtraTransport {
 	 * @return TransportBody
 	 */
 
-	private static TransportRequestBodyType buildQueryBody(
+	 static TransportRequestBodyType buildQueryBody(
 			RequestExtraBean requestBean) {
 
 		TransportRequestBodyType transportBody = new TransportRequestBodyType();
@@ -215,7 +215,7 @@ public class BuildExtraTransport {
 	 * @return DataRequestType
 	 */
 
-	private static DataRequestType buildQuery(RequestExtraBean requestBean) {
+	 static DataRequestType buildQuery(RequestExtraBean requestBean) {
 
 		DataRequestType dataRequest = new DataRequestType();
 		DataRequestQueryType dataQuery = new DataRequestQueryType();

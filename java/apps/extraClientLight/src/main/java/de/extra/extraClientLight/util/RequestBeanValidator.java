@@ -34,30 +34,30 @@ public class RequestBeanValidator {
 		boolean isValid = true;
 
 		// Pruefe Verfahren, Fachdienst, URL und Profile
-		if (requestBean.getVerfahren().length() == 0) {
+		if (isNull(requestBean.getVerfahren()) || requestBean.getVerfahren().length() == 0) {
 			LOGGER.warn("Verfahren nicht gesetzt");
 			return false;
 		}
-		if (!checkUrl(requestBean.getFachdienst())) {
+		if (isNull(requestBean.getFachdienst()) ||!checkUrl(requestBean.getFachdienst())) {
 			LOGGER.warn("Fachdienst falsch gesetzt");
 			return false;
 		}
-		if (!checkUrl(requestBean.getUrl())) {
+		if (isNull(requestBean.getUrl()) ||!checkUrl(requestBean.getUrl())) {
 			LOGGER.warn("Zielurl falsch gesetzt");
 			return false;
 		}
-		if (!checkUrl(requestBean.getProfile())) {
+		if (isNull(requestBean.getProfile()) ||!checkUrl(requestBean.getProfile())) {
 			LOGGER.warn("Profil falsch gesetzt");
 			return false;
 		}
 
 		// Pruefe Absender und Empfaenger
 
-		if (!checkAdress(requestBean.getAbsender())) {
+		if (isNull(requestBean.getAbsender()) ||!checkAdress(requestBean.getAbsender())) {
 
 			return false;
 		}
-		if (!checkAdress(requestBean.getEmpfaenger())) {
+		if (isNull(requestBean.getEmpfaenger()) ||!checkAdress(requestBean.getEmpfaenger())) {
 
 			return false;
 		}
@@ -65,7 +65,7 @@ public class RequestBeanValidator {
 		return isValid;
 	}
 
-	private static boolean checkUrl(String url) {
+	static boolean checkUrl(String url) {
 		boolean isValid = true;
 		if (url != null) {
 			if (!url.startsWith("http")) {
@@ -78,7 +78,7 @@ public class RequestBeanValidator {
 		return isValid;
 	}
 
-	private static boolean checkAdress(String adress) {
+	static boolean checkAdress(String adress) {
 		boolean isValid = true;
 		if (adress != null) {
 			if (adress.isEmpty()) {
@@ -90,6 +90,24 @@ public class RequestBeanValidator {
 		}
 
 		return isValid;
+	}
+
+	static boolean isNull(Object testObject) {
+
+		boolean isNull = true;
+
+		if (testObject != null) {
+
+			isNull = false;
+
+		} else {
+
+			isNull = true;
+
+		}
+
+		return isNull;
+
 	}
 
 }

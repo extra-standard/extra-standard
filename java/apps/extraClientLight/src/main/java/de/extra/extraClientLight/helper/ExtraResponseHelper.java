@@ -74,29 +74,25 @@ public class ExtraResponseHelper {
 			// Wenn Nutzdaten inline sind, dann ist DataSource vom Typ
 			// ByteArrayDataSource
 
-			if (LOGGER.isTraceEnabled()) {
+			if (LOGGER.isDebugEnabled()) {
 
-				LOGGER.trace("Datentyp der Nutzdaten: "
-						+ nutzdatenDS.getContentType());
+				LOGGER.debug("Datentyp der Nutzdaten: "
+						+ nutzdatenDS.getClass());
 
 			}
-
-			if (nutzdatenDS instanceof ByteArrayDataSource) {
-				in = extraResponse.getTransportBody().getData()
-						.getBase64CharSequence().getValue().getInputStream();
-
-			} else
 
 			// Wenn Nutzdaten als MTOM-Attachment übermittelt werden, dann sind
 			// die Daten innerhalb einer LazyDataSource
 
 			if (nutzdatenDS instanceof LazyDataSource) {
+				LOGGER.debug("Payload wurde als MTOM/LazyDataSource erkannt");
 
 				in = nutzdatenDS.getInputStream();
 
 			} else {
 
 				LOGGER.warn("Es konnte kein passender Datentyp gefunden werden! Wandle in Stream um");
+				
 				in = extraResponse.getTransportBody().getData()
 						.getBase64CharSequence().getValue().getInputStream();
 
