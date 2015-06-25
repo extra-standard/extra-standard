@@ -69,28 +69,34 @@ public class BuildExtraTransport {
 		request.setVersion(SupportedVersionsType.VERSION_1_3);
 		request.setProfile(requestBean.getProfile());
 		request.setTransportHeader(buildHeader(requestBean));
-		if (!requestBean.getDataObjekt().isQuery()) {
+		if (requestBean.getDataObjekt() != null
+				&& !requestBean.getDataObjekt().isQuery()) {
 			try {
 
 				// Setzen des Body wenn Request-Daten nicht leer
 
-				if (requestBean.getDataObjekt() != null) {
-					// Lese Nutzdaten aus Stream
-					request.setTransportBody(buildBody(requestBean
-							.getDataObjekt().getData()));
-				} else {
+				// Lese Nutzdaten aus Stream
+				request.setTransportBody(buildBody(requestBean.getDataObjekt()
+						.getData()));
 
-					// Sende mit leerem Body
-					request.setTransportBody(new TransportRequestBodyType());
-				}
 			} catch (IOException e) {
 				LOGGER.error("Fehler beim Lesen des InputStreams", e);
 			}
 		} else {
 
-			// Baue Query
+			if (requestBean.getDataObjekt() != null
+					&& requestBean.getDataObjekt().isQuery()) {
 
-			request.setTransportBody(buildQueryBody(requestBean));
+				// Baue Query
+
+				request.setTransportBody(buildQueryBody(requestBean));
+			}
+			if (requestBean.getDataObjekt() == null) {
+
+				// Sende mit leerem Body
+				request.setTransportBody(new TransportRequestBodyType());
+
+			}
 		}
 		return request;
 
@@ -102,8 +108,7 @@ public class BuildExtraTransport {
 	 * @param requestBean
 	 * @return TransportRequestHeaderF
 	 */
-	 static TransportRequestHeaderType buildHeader(
-			RequestExtraBean requestBean) {
+	static TransportRequestHeaderType buildHeader(RequestExtraBean requestBean) {
 
 		TransportRequestHeaderType requestHeader = new TransportRequestHeaderType();
 
@@ -139,7 +144,7 @@ public class BuildExtraTransport {
 	 * @return TransportRequestBodyType
 	 * @throws IOException
 	 */
-	 static TransportRequestBodyType buildBody(InputStream nutzdaten)
+	static TransportRequestBodyType buildBody(InputStream nutzdaten)
 			throws IOException {
 		TransportRequestBodyType requestBody = new TransportRequestBodyType();
 		DataType data = new DataType();
@@ -163,8 +168,7 @@ public class BuildExtraTransport {
 	 * @return RequestDetails
 	 */
 
-	 static RequestDetailsType buildRequestDetails(
-			RequestExtraBean requestBean) {
+	static RequestDetailsType buildRequestDetails(RequestExtraBean requestBean) {
 
 		RequestDetailsType requestDetails = new RequestDetailsType();
 
@@ -192,8 +196,7 @@ public class BuildExtraTransport {
 	 * @return TransportBody
 	 */
 
-	 static TransportRequestBodyType buildQueryBody(
-			RequestExtraBean requestBean) {
+	static TransportRequestBodyType buildQueryBody(RequestExtraBean requestBean) {
 
 		TransportRequestBodyType transportBody = new TransportRequestBodyType();
 
@@ -215,7 +218,7 @@ public class BuildExtraTransport {
 	 * @return DataRequestType
 	 */
 
-	 static DataRequestType buildQuery(RequestExtraBean requestBean) {
+	static DataRequestType buildQuery(RequestExtraBean requestBean) {
 
 		DataRequestType dataRequest = new DataRequestType();
 		DataRequestQueryType dataQuery = new DataRequestQueryType();

@@ -40,7 +40,7 @@ import de.extra.extraClientLight.webservice.Extra;
 import de.extra.extraClientLight.webservice.ExtraFault;
 import de.extra.extraClientLight.webservice.Extra_Service;
 
-public class SendWebService {
+public class SendWebService implements ISendWebService{
 	private Logger LOGGER = LoggerFactory.getLogger(SendWebService.class);
 
 	private static final QName SERVICE_NAME = new QName(

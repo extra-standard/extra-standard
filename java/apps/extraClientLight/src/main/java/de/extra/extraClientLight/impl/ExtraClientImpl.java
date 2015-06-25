@@ -31,8 +31,9 @@ import de.extra.extraClientLight.helper.ExtraRequestHelper;
 import de.extra.extraClientLight.helper.ExtraResponseHelper;
 import de.extra.extraClientLight.model.RequestExtraBean;
 import de.extra.extraClientLight.model.ResponseExtraBean;
+import de.extra.extraClientLight.util.ISendWebService;
 import de.extra.extraClientLight.util.RequestBeanValidator;
-import de.extra.extraClientLight.util.SendWebService;
+import de.extra.extraClientLight.util.SendWebServiceFactory;
 
 public class ExtraClientImpl implements IextraClient {
 	private Logger LOGGER = LoggerFactory.getLogger(ExtraClientImpl.class);
@@ -48,11 +49,17 @@ public class ExtraClientImpl implements IextraClient {
 
 		} else {
 
-			SendWebService sendWebService = new SendWebService();
+			SendWebServiceFactory webServiceFactory = new SendWebServiceFactory();
+			ISendWebService sendWebService = webServiceFactory
+					.getWebSendWebSerice();
+
 			TransportRequestType extraRequest = BuildExtraTransport
 					.buildTransportRequest(requestExtra);
 
-			ExtraRequestHelper.printRequest(extraRequest);
+			if (LOGGER.isDebugEnabled()) {
+
+				ExtraRequestHelper.printRequest(extraRequest);
+			}
 
 			TransportResponseType extraResponse = new TransportResponseType();
 			try {

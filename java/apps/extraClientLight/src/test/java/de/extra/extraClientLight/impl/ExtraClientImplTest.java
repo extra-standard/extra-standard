@@ -1,54 +1,42 @@
 package de.extra.extraClientLight.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import de.extra.extraClientLight.IextraClient;
-import de.extra.extraClientLight.model.DataObjektBean;
 import de.extra.extraClientLight.model.RequestExtraBean;
+import de.extra.extraClientLight.model.ResponseExtraBean;
+import de.extra.extraClientLight.test.BuildTestRequestBeanHelper;
 import de.extra.extraClientLight.util.SendWebService;
+import de.extra.extraClientLight.util.SendWebServiceFactory;
 
 public class ExtraClientImplTest {
 
 	RequestExtraBean requestBean;
+	
+	@Mock
+	SendWebServiceFactory webServiceFactory;
 
 	@Mock
-	SendWebService sendWebService;
+	SendWebService sendWebServiceMock;
+	
+	@InjectMocks
+	ExtraClientImpl client;
 
 	@Before
 	public void setUp() throws Exception {
+		
+		MockitoAnnotations.initMocks(this);
 
-		requestBean = new RequestExtraBean();
-
-		requestBean.setUrl("http://localhost:8088/mockExtraBinding");
-
-		requestBean.setMtom(false);
-		requestBean.setAbsender("test-Sender");
-		requestBean.setEmpfaenger("66667777");
-		requestBean.setFachschluessel("47-test-11");
-		requestBean
-				.setFachdienst("http://www.extra-standard.de/datatypes/DummyData");
-		requestBean
-				.setVerfahren("http://www.extra-standard.de/procedures/Dummy");
-		requestBean.setSynchron(false);
-
-		requestBean
-				.setProfile("http://www.extra-standard.de/profile/dummy/1.3");
-
-		DataObjektBean dataObjekt = new DataObjektBean();
-
-		InputStream is = new ByteArrayInputStream(new String(
-				"<test>äsgeks</test>").getBytes());
-
-		dataObjekt.setData(is);
-		dataObjekt.setQuery(false);
-		requestBean.setDataObjekt(dataObjekt);
-
+		when(webServiceFactory.getWebSendWebSerice()).thenReturn(sendWebServiceMock);
+		
+		requestBean = BuildTestRequestBeanHelper.buildRequestInlineBean();
 	}
 
 	// Erfolgreich
@@ -56,9 +44,9 @@ public class ExtraClientImplTest {
 	@Test
 	public void testExtraClientImplValid() {
 
-		IextraClient extraClient = new ExtraClientImpl();
+		ResponseExtraBean repsonse =client.sendExtra(requestBean);
 
-		Assert.assertNotNull(extraClient.sendExtra(requestBean));
+		assertNotNull(repsonse);
 
 	}
 
@@ -67,12 +55,26 @@ public class ExtraClientImplTest {
 	@Test
 	public void testExtraClientImplInvalidAbsLeer() {
 
-		IextraClient extraClient = new ExtraClientImpl();
+	//	IextraClient extraClient = new ExtraClientImpl();
 
 		RequestExtraBean testBean = requestBean;
 		testBean.setAbsender("");
 
-		Assert.assertNotNull(extraClient.sendExtra(testBean));
+		assertNotNull(client.sendExtra(testBean));
+
+	}
+
+	// Senden mit MTOM
+
+	@Test
+	public void testExtraClientImplSendMtom() {
+
+	//	IextraClient extraClient = new ExtraClientImpl();
+
+		RequestExtraBean testBean = requestBean;
+		testBean.setMtom(true);
+
+		assertNotNull(client.sendExtra(testBean));
 
 	}
 
