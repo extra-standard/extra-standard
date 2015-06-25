@@ -38,6 +38,20 @@ import de.extra.extraClientLight.util.SendWebServiceFactory;
 public class ExtraClientImpl implements IextraClient {
 	private Logger LOGGER = LoggerFactory.getLogger(ExtraClientImpl.class);
 
+	private SendWebServiceFactory sendWebServiceFactory;
+
+	public ExtraClientImpl() {
+		super();
+		this.sendWebServiceFactory = new SendWebServiceFactory();
+
+	}
+
+	public ExtraClientImpl(SendWebServiceFactory webServiceFactory) {
+		super();
+		this.sendWebServiceFactory = webServiceFactory;
+
+	}
+
 	public ResponseExtraBean sendExtra(RequestExtraBean requestExtra) {
 		LOGGER.info("Client aufgerufen");
 		ResponseExtraBean responseBean = new ResponseExtraBean();
@@ -49,8 +63,7 @@ public class ExtraClientImpl implements IextraClient {
 
 		} else {
 
-			SendWebServiceFactory webServiceFactory = new SendWebServiceFactory();
-			ISendWebService sendWebService = webServiceFactory
+			ISendWebService sendWebService = sendWebServiceFactory
 					.getWebSendWebSerice();
 
 			TransportRequestType extraRequest = BuildExtraTransport

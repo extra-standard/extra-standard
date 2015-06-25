@@ -13,6 +13,7 @@ import de.extra.extraClientLight.IextraClient;
 import de.extra.extraClientLight.model.RequestExtraBean;
 import de.extra.extraClientLight.model.ResponseExtraBean;
 import de.extra.extraClientLight.test.BuildTestRequestBeanHelper;
+import de.extra.extraClientLight.util.ISendWebService;
 import de.extra.extraClientLight.util.SendWebService;
 import de.extra.extraClientLight.util.SendWebServiceFactory;
 
@@ -24,7 +25,7 @@ public class ExtraClientImplTest {
 	SendWebServiceFactory webServiceFactory;
 
 	@Mock
-	SendWebService sendWebServiceMock;
+	ISendWebService sendWebServiceMock;
 	
 	@InjectMocks
 	ExtraClientImpl client;

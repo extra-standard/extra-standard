@@ -58,7 +58,7 @@ public class SendWebService implements ISendWebService{
 	public TransportResponseType sendRequest(TransportRequestType extraRequest,
 			String url, boolean mtomActive) throws ExtraClientLightException {
 		TransportResponseType response = new TransportResponseType();
-
+// Getter setzen und Spy beim testen
 		Extra_Service extraService = new Extra_Service(null, SERVICE_NAME);
 
 		Extra extraPort = extraService.getPort(Extra.class);
