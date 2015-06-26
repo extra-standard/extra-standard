@@ -83,7 +83,9 @@ public class ExtraClientImpl implements IextraClient {
 				returnCode = 9;
 			}
 
-			ExtraResponseHelper.printResponse(extraResponse);
+			if (LOGGER.isDebugEnabled()) {
+				ExtraResponseHelper.printResponse(extraResponse);
+			}
 			if (extraResponse.getProfile() != null) {
 				responseBean = ExtraResponseHelper
 						.convertExtraResponse(extraResponse);
