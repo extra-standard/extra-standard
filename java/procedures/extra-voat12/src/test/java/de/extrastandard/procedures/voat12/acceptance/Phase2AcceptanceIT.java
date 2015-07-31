@@ -38,46 +38,34 @@ import org.springframework.transaction.annotation.Transactional;
 import de.extra.client.starter.ExtraClient;
 import de.extra.client.starter.ExtraClientTestBasic;
 import de.extrastandard.api.model.execution.ICommunicationProtocol;
-import de.extrastandard.api.model.execution.IExecution;
-import de.extrastandard.api.model.execution.IPhaseConnection;
-import de.extrastandard.api.model.execution.IProcessTransition;
 import de.extrastandard.api.model.execution.PersistentStatus;
-import de.extrastandard.api.model.execution.PhaseQualifier;
-import de.extrastandard.persistence.model.CommunicationProtocol;
 import de.extrastandard.persistence.model.Execution;
 import de.extrastandard.persistence.model.ExecutionPersistenceJpa;
-import de.extrastandard.persistence.model.Procedure;
 import de.extrastandard.persistence.model.ProcessTransition;
-import de.extrastandard.persistence.repository.CommunicationProtocolRepository;
 import de.extrastandard.persistence.repository.ExecutionRepository;
-import de.extrastandard.persistence.repository.ProcedureRepository;
 
 /**
- * <pre>
- * Acceptance Test für die Fachverfahren Sterbedaten Phase 2.
- * Test setzt eine Oracle Datenbankschema vorraus.
- * Das eXTra Schema wird vor jedem Test neu angelegt und mit der Testdaten initial gefüllt.
- * </pre>
+ * Ausfuehrung Sterbedaten Fachverfahren Phase 2
  *
- * @author Leonid Potap
+ * @author r52gma
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-persistence-jpa.xml",
-		"/conf/acceptance/phase1/property-placeholder-acceptance-phase1.xml",
-		"/conf/acceptance/spring-acceptance-flyway.xml" })
+		"/conf/acceptance//phase2/property-placeholder-acceptance-phase2.xml"
+		,"/conf/acceptance/phase2/spring-acceptance-phase2-flyway.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
-public class Phase1AcceptanceIT {
+public class Phase2AcceptanceIT {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(Phase1AcceptanceIT.class);
+			.getLogger(Phase2AcceptanceIT.class);
 
     private static final String DRV = "DRV";
 
     private static final String GLOBAL_CONFIG_PATH = "/conf/testglobalconfig";
 
-    private static final String CONFIG_PATH = "/conf/phase1";
+    private static final String CONFIG_PATH = "/conf/phase2";
 
     private static final String LOG_DIR = "/logs";
 
@@ -86,12 +74,6 @@ public class Phase1AcceptanceIT {
 	@Inject
 	@Named("executionPersistenceJpa")
 	private ExecutionPersistenceJpa executionPersistenceJpa;
-
-	@Inject
-	private CommunicationProtocolRepository communicationProtocolRepository;
-
-	@Inject
-	private ProcedureRepository procedureRepository;
 
 	@Inject
 	@Named("executionRepository")
@@ -104,49 +86,48 @@ public class Phase1AcceptanceIT {
 	}
 
 	@Test
-	public void checkDBResuls() {
+	public void checkDBResults() {
 		logger.info("CheckDBResults started");
 		final int expectedExecutionSize = 1;
-		final int expectedCommunicationsProtokolSize = 3;
-		final String expectedPhase = "PHASE1";
-		final String expectedParametersSuffix = "phase1";
+		final int expectedCommunicationProtocolsSize = 3;
+		final String expectedPhase = "PHASE2";
+		final String expectedParametersSuffix = "phase2";
 		final String expectedReturnCode = "C00";
 
-		final List<Execution> allExecutions = executionRepository.findAll();
+		final List<Execution> allExecutions = executionRepository
+				.findByPhase(expectedPhase);
 		Assert.assertEquals("Unexpected Execution Size", expectedExecutionSize,
 				allExecutions.size());
-		for (final Execution execution : allExecutions) {
-			Assert.assertNull("ErrorCode is not null", execution.getErrorCode());
-			Assert.assertNull("ErrorMessage is not null",
-					execution.getErrorMessage());
-			Assert.assertEquals("Unexpected Phase", expectedPhase,
-					execution.getPhase());
-			Assert.assertNotNull("Parameters ist null",
-					execution.getParameters());
-			Assert.assertTrue(
-					"Unexpected Parameters: " + execution.getParameters(),
-					execution.getParameters()
-							.endsWith(expectedParametersSuffix));
-			final ProcessTransition lastTransition = execution
-					.getLastTransition();
-			Assert.assertNotNull("LastTransition ist null", lastTransition);
-			final String statusName = lastTransition.getCurrentStatus()
-					.getName();
-			Assert.assertEquals("Unexpected Phase",
-					PersistentStatus.DONE.name(), statusName);
-			final Set<ICommunicationProtocol> communicationProtocols = execution
-					.getCommunicationProtocols();
-			Assert.assertEquals("Unexpected Count of CommunicationProtokols",
-					expectedCommunicationsProtokolSize, communicationProtocols.size());
-			for (final ICommunicationProtocol communicationProtocol : communicationProtocols) {
-				Assert.assertEquals("Unexpected ReturnCode",
-						expectedReturnCode,
-						communicationProtocol.getReturnCode());
-				Assert.assertNotNull("Unexpected nextPhaseConnection",
-						communicationProtocol.getNextPhaseConnection());
-			}
-		}
+//		for (final Execution execution : allExecutions) {
+//			Assert.assertNull("ErrorCode is not null", execution.getErrorCode());
+//			Assert.assertNull("ErrorMessage is not null",
+//					execution.getErrorMessage());
+//			Assert.assertEquals("Unexpected Phase", expectedPhase,
+//					execution.getPhase());
+//			Assert.assertNotNull("Parameters ist null",
+//					execution.getParameters());
+//			Assert.assertTrue("Unexpected Parameters", execution
+//					.getParameters().endsWith(expectedParametersSuffix));
+//			final ProcessTransition lastTransition = execution
+//					.getLastTransition();
+//			Assert.assertNotNull("LastTransition ist null", lastTransition);
+//			final String statusName = lastTransition.getCurrentStatus()
+//					.getName();
+//			Assert.assertEquals("Unexpected Phase",
+//					PersistentStatus.DONE.name(), statusName);
+//			final Set<ICommunicationProtocol> communicationProtocols = execution
+//					.getCommunicationProtocols();
+//			Assert.assertEquals("Unexpected Count of CommunicationProtokols",
+//					expectedCommunicationProtocolsSize,
+//					communicationProtocols.size());
+//			for (final ICommunicationProtocol communicationProtocol : communicationProtocols) {
+//				Assert.assertEquals("Unexpected ReturnCode",
+//						expectedReturnCode,
+//						communicationProtocol.getReturnCode());
+//				Assert.assertNull("Unexpected nextPhaseConnection",
+//						communicationProtocol.getNextPhaseConnection());
+//			}
+//		}
 		logger.info("CheckDBResults successfully completed");
-
 	}
 }
