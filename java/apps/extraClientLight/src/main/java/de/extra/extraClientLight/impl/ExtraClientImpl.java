@@ -78,21 +78,22 @@ public class ExtraClientImpl implements IextraClient {
 			try {
 				extraResponse = sendWebService.sendRequest(extraRequest,
 						requestExtra.getUrl(), requestExtra.isMtom());
+
+				if (LOGGER.isDebugEnabled()) {
+					ExtraResponseHelper.printResponse(extraResponse);
+				}
+				if (extraResponse.getProfile() != null) {
+					responseBean = ExtraResponseHelper
+							.convertExtraResponse(extraResponse);
+					returnCode = 0;
+				} else {
+
+					LOGGER.warn("Keine Response-Objekt");
+					returnCode = 8;
+				}
+
 			} catch (ExtraClientLightException e) {
 				LOGGER.error("Unerwarteter Fehler beim Versand", e);
-				returnCode = 9;
-			}
-
-			if (LOGGER.isDebugEnabled()) {
-				ExtraResponseHelper.printResponse(extraResponse);
-			}
-			if (extraResponse.getProfile() != null) {
-				responseBean = ExtraResponseHelper
-						.convertExtraResponse(extraResponse);
-				returnCode = 0;
-			} else {
-
-				LOGGER.warn("Keine Response-Objekt");
 				returnCode = 9;
 			}
 

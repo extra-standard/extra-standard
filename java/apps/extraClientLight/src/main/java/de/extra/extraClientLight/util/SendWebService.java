@@ -85,9 +85,11 @@ public class SendWebService implements ISendWebService{
 		} catch (SOAPFaultException e) {
 			SOAPFault soapFault = e.getFault();
 
-			LOGGER.error(soapFault.getTextContent(), e);
+			LOGGER.error("SOAP-Fault aufgetreten " + soapFault.getTextContent(), e);
 
 		} catch (ExtraFault e) {
+			LOGGER.error("Response war eine eXTra-Error");
+			
 			ExtraErrorHelper.printExtraError(e);
 		} catch (Exception e) {
 			LOGGER.error("Schwerer Fehler", e);
