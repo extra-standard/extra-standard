@@ -108,7 +108,7 @@
 						</transformerNameWithOrder>
 					</transformerNameWithOrders>
 					<modelFile>src/main/resources/model/emf/extra-api.uml</modelFile>
-					<loggingLevel>ALL</loggingLevel>
+					<loggingLevel>WARN</loggingLevel>
 				</configuration>
 			</plugin>
 		</plugins>
