@@ -15,7 +15,7 @@
 			<xcpt:Product>eXTra Client OpenSource</xcpt:Product>
 			<xcpt:Manufacturer>OpenSource</xcpt:Manufacturer>
 		</xcpt:Application>
-		<xcpt:Procedure>http://www.extra-standard.de/procedures/Sterbemeldung</xcpt:Procedure>
+		<xcpt:Procedure>http://www.extra-standard.de/procedures/Voat12</xcpt:Procedure>
 		<xcpt:DataType>http://www.extra-standard.de/datatype/DataRequest</xcpt:DataType>
 		<xcpt:Scenario>http://www.extra-standard.de/scenario/request-with-response</xcpt:Scenario>
 	</xcpt:RequestDetails>
