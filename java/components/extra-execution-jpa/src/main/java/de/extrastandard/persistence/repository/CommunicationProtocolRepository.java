@@ -181,7 +181,7 @@ public interface CommunicationProtocolRepository extends
 	 * @return
 	 */
 	@Query("FROM CommunicationProtocol WHERE outputIdentifier = :outputIdentifier")
-	CommunicationProtocol findByOutputIdentifier(
+	List<CommunicationProtocol> findByOutputIdentifier(
 			@Param("outputIdentifier") String outputIdentifier);
 
 }
