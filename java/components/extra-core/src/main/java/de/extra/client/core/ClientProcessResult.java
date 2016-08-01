@@ -25,6 +25,7 @@ import java.util.List;
 
 import javax.inject.Named;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.context.annotation.Scope;
 
 import de.extrastandard.api.model.content.IInputDataContainer;
@@ -42,8 +43,7 @@ import de.extrastandard.api.model.content.ISingleResponseData;
 @Named("clientProcessResult")
 public class ClientProcessResult {
 
-	// TODO Systemunabhängigen Formatter
-	private static final String NEW_LINE = "\r\n";
+	private static final String NEW_LINE = IOUtils.LINE_SEPARATOR;
 
 	private final List<ProcessResult> responses = new ArrayList<ProcessResult>();
 
