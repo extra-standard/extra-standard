@@ -114,7 +114,7 @@ public class Execution extends AbstractEntity implements IExecution {
 	private ProcessTransition lastTransition;
 
 	@OneToMany(mappedBy = "execution", fetch = FetchType.LAZY)
-	private final Set<CommunicationProtocol> communicationProtocols = new HashSet<CommunicationProtocol>();
+	private Set<CommunicationProtocol> communicationProtocols = new HashSet<CommunicationProtocol>();
 
 	@Inject
 	@Named("executionRepository")
