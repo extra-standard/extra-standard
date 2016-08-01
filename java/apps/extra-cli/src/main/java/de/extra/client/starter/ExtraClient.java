@@ -42,6 +42,7 @@ import de.extra.client.core.ProcessResult;
 import de.extra.client.core.model.inputdata.impl.SingleFileInputData;
 import de.extrastandard.api.exception.ExceptionCode;
 import de.extrastandard.api.exception.ExtraConfigRuntimeException;
+import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.ISingleInputData;
 
 /**
@@ -135,14 +136,17 @@ public class ExtraClient {
 		final List<ProcessResult> responses = clientProcessResult
 				.getResponses();
 		for (final ProcessResult processResult : responses) {
-			final List<ISingleInputData> content = processResult
-					.getDataContainer().getContent();
-			for (final ISingleInputData singleInputData : content) {
-				final String inputDataType = singleInputData.getInputDataType();
-				if (!SingleFileInputData.INPUT_DATA_TYPE.equals(inputDataType)) {
-					continue;
+			IInputDataContainer dataContainer = processResult.getDataContainer();
+			if (dataContainer != null){
+				final List<ISingleInputData> content = processResult
+						.getDataContainer().getContent();
+				for (final ISingleInputData singleInputData : content) {
+					final String inputDataType = singleInputData.getInputDataType();
+					if (!SingleFileInputData.INPUT_DATA_TYPE.equals(inputDataType)) {
+						continue;
+					}
+					handleInputFile(singleInputData);
 				}
-				handleInputFile(singleInputData);
 			}
 		}
 	}
