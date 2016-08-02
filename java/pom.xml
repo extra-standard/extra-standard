@@ -43,7 +43,7 @@
 		<module>components/extra-dataplugin-file</module>
 		<module>components/extra-dataplugin-simplequery</module>
 		<module>components/extra-dataplugin-dbquery</module>
-		<module>components/extra-outputplugin-http</module>
+		<!-- <module>components/extra-outputplugin-http</module> -->
 		<module>components/extra-outputplugin-ws</module>
 		<module>components/extra-outputplugin-wscxf</module>
 		<module>components/extra-responseprocessplugin-sample</module>
@@ -51,7 +51,7 @@
 		<module>components/extra-core</module>
 		<module>apps/extra-cli</module>
 		<module>apps/extra-common-conf</module>
-		<module>apps/extra-profiling</module>
+		<!-- <module>apps/extra-profiling</module> -->
 		<module>apps/extra-scenario-sendfetch</module>	
 	</modules>
 </project>
