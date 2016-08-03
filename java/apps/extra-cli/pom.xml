@@ -124,11 +124,11 @@
 			<artifactId>hsqldb</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-jndi</artifactId>
 			<version>8.1.14.v20131031</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<build>
