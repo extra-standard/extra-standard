@@ -31,13 +31,14 @@ import de.extra.client.core.ReturnCode;
 public class ExtraPasswordEncryptor {
 
     public static void main(final String[] args) {
+    	if (args == null || args.length != 1) {
+    		System.err.println("Argument fehlt. Aufruf mit\nencrypt-password.bat <Passwort>");
+    		System.exit(ReturnCode.TECHNICAL.getCode());
+    	}
         final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-encryption.xml");
         final StringEncryptor stringEncryptor = context.getBean("configurationEncryptor", StringEncryptor.class);
-        if (args == null || args.length != 1) {
-            System.err.println("Argument fehlt. Aufruf mit\nencrypt-password.bat <Passwort>");
-            System.exit(ReturnCode.TECHNICAL.getCode());
-        }
         System.out.println("ENC("+stringEncryptor.encrypt(args[0])+ ")");
+        context.close();
         System.exit(ReturnCode.SUCCESS.getCode());
     }
 
