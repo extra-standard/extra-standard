@@ -474,7 +474,6 @@
 	<!-- =============================================================== -->
 	<!-- Profiles -->
 	<!-- =============================================================== -->
-	<!-- Make sure that you read this doc first: http://goo.gl/BbIqH -->
 	<profiles>
 		<profile>
 			<id>release-sign-artifacts</id>
