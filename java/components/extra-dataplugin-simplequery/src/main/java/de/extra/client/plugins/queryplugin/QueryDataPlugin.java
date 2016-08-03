@@ -60,4 +60,9 @@ public class QueryDataPlugin implements IDataPlugin {
 	public boolean isEmpty() {
 		return queryController.isEmpty();
 	}
+
+	@Override
+	public boolean hasWarnings() {
+		return false;
+	}
 }

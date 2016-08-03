@@ -44,6 +44,10 @@ import de.extrastandard.api.model.content.ISingleResponseData;
 public class ClientProcessResult {
 
 	private static final String NEW_LINE = IOUtils.LINE_SEPARATOR;
+	
+	private boolean hasWarnings = false;
+
+
 
 	private final List<ProcessResult> responses = new ArrayList<ProcessResult>();
 
@@ -54,6 +58,14 @@ public class ClientProcessResult {
 
 	public void addException(final Exception exception) {
 		responses.add(new ProcessResult(exception));
+	}
+	
+	/**
+	 * 
+	 * @param hasWarnings
+	 */
+	public void setHasWarnings(boolean hasWarnings) {
+		this.hasWarnings = hasWarnings;
 	}
 
 	/**
@@ -84,6 +96,9 @@ public class ClientProcessResult {
 	 * @return
 	 */
 	public boolean isWarning() {
+		if (hasWarnings){
+			return true;
+		}
 		for (final ProcessResult result : responses) {
 			final IResponseData responseData = result.getResponseData();
 			if (responseData != null) {
