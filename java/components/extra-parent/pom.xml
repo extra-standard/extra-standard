@@ -28,7 +28,7 @@
 
 	<name>extra-parent</name>
 	<description>eXTra Parent-POM</description>
-	<url>http://code.google.com/p/extra-standard</url>
+	<url>https://github.com/extra-standard/extra-standard</url>
 
 	<inceptionYear>2012</inceptionYear>
 
@@ -117,16 +117,6 @@
 	<!-- =============================================================== -->
 	<!-- SCM etc. -->
 	<!-- =============================================================== -->
-
-	<ciManagement>
-		<system>CloudBees</system>
-		<url>https://extra-standard.ci.cloudbees.com</url>
-	</ciManagement>
-
-	<issueManagement>
-		<system>Google Code Issuetracker</system>
-		<url>http://code.google.com/p/extra-standard/issues/list</url>
-	</issueManagement>
 
 	<licenses>
 		<license>
