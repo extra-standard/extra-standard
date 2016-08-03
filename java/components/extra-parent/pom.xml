@@ -168,10 +168,6 @@
 		<com.sun.xml.bind.jaxb-impl.version>2.2.5</com.sun.xml.bind.jaxb-impl.version>
 		<com.sun.xml.bind.jaxb-xjc.version>2.2.5</com.sun.xml.bind.jaxb-xjc.version>
 
-		<!-- Hibernate Versions -->
-		<org.hibernate.hibernate-entitymanager.version>4.0.1.Final</org.hibernate.hibernate-entitymanager.version>
-		<org.hibernate.hibernate-validator.version>4.2.0.Final</org.hibernate.hibernate-validator.version>
-
 		<!-- CXF -->
 		<org.apache.cxf.version>3.1.6</org.apache.cxf.version>
 
@@ -179,18 +175,9 @@
 		<org.aspectj.aspectjrt.version>1.8.7</org.aspectj.aspectjrt.version>
 		<org.aspectj.aspectjweaver.version>1.8.7</org.aspectj.aspectjweaver.version>
 
-		<!-- Commons -->
-		<commons-dbcp.version>1.4</commons-dbcp.version>
-		<commons-httpclient.version>3.1</commons-httpclient.version>
-		<commons-codec.version>1.6</commons-codec.version>
-		<commons-io.version>2.4</commons-io.version>
-		<commons-cli.version>1.2</commons-cli.version>
-		<commons-lang.version>2.5</commons-lang.version>
-
 		<!-- Logging Versions -->
-		<org.slf4j.version> [1.4,)</org.slf4j.version>
-		<ch.qos.logback.version>1.0.0</ch.qos.logback.version>
-		<org.slf4j.jcl.over.slf4j.version>1.6.1</org.slf4j.jcl.over.slf4j.version>
+		<org.slf4j.version>1.7.21</org.slf4j.version>
+		<ch.qos.logback.version>1.1.7</ch.qos.logback.version>
 
 		<!-- Unit-Testing Libraries Versions -->
 		<org.junit.version>4.10</org.junit.version>
@@ -220,6 +207,12 @@
 				<scope>import</scope>
 			</dependency>
 
+			<dependency>
+				<groupId>org.springframework.ws</groupId>
+				<artifactId>spring-ws</artifactId>
+				<version>${org.springframework.ws.version}</version>
+				<classifier>all</classifier>
+			</dependency>
 
 			<!-- Aspects -->
 			<dependency>
@@ -263,7 +256,7 @@
 			<dependency>
 				<groupId>com.sun.xml.bind</groupId>
 				<artifactId>jaxb-xjc</artifactId>
-				<version>2.2.5</version>
+				<version>${com.sun.xml.bind.jaxb-xjc.version}</version>
 			</dependency>
 
 			<!-- Unit Testing -->
@@ -292,7 +285,7 @@
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>jcl-over-slf4j</artifactId>
-				<version>${org.slf4j.jcl.over.slf4j.version}</version>
+				<version>${org.slf4j.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
@@ -304,27 +297,6 @@
 				<artifactId>logback-classic</artifactId>
 				<version>${ch.qos.logback.version}</version>
 			</dependency>
-
-			<!-- Hibernate -->
-			<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-entitymanager</artifactId> 
-				<version>${org.hibernate.hibernate-entitymanager.version}</version> </dependency> 
-				<dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-validator</artifactId> 
-				<version>${org.hibernate.hibernate-validator.version}</version> </dependency> -->
-
-			<!-- Commons -->
-
-			<!-- <dependency> <groupId>commons-dbcp</groupId> <artifactId>commons-dbcp</artifactId> 
-				<version>${commons-dbcp.version}</version> </dependency> <dependency> <groupId>commons-codec</groupId> 
-				<artifactId>commons-codec</artifactId> <version>${commons-codec.version}</version> 
-				</dependency> <dependency> <groupId>commons-httpclient</groupId> <artifactId>commons-httpclient</artifactId> 
-				<version>${commons-httpclient.version}</version> </dependency> <dependency> 
-				<groupId>commons-io</groupId> <artifactId>commons-io</artifactId> <version>${commons-io.version}</version> 
-				</dependency> <dependency> <groupId>commons-cli</groupId> <artifactId>commons-cli</artifactId> 
-				<version>${commons-cli.version}</version> </dependency> <dependency> <groupId>commons-lang</groupId> 
-				<artifactId>commons-lang</artifactId> <version>${commons-lang.version}</version> 
-				</dependency> -->
-
-			<!-- Validation -->
 
 			<dependency>
 				<groupId>javax.validation</groupId>
@@ -477,6 +449,13 @@
 				</executions>
 				<configuration>
 					<forkMode>always</forkMode>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18</version>
+				<configuration>
+					<forkMode>once</forkMode>
 				</configuration>
 			</plugin>
 

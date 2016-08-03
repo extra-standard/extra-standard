@@ -62,7 +62,6 @@
 		<dependency>
 			<groupId>org.springframework.ws</groupId>
 			<artifactId>spring-ws</artifactId>
-			<version>${org.springframework.ws.version}</version>
 			<classifier>all</classifier>
 		</dependency>
 
@@ -101,13 +100,11 @@
 	 	<dependency>
 	      <groupId>org.apache.ws.commons.axiom</groupId>
 	      <artifactId>axiom-api</artifactId>
-	      <version>1.2.9</version>
 	    </dependency>
 	    
 	    <dependency>
 	      <groupId>org.apache.ws.commons.axiom</groupId>
 	      <artifactId>axiom-impl</artifactId>
-	      <version>1.2.9</version>
 	    </dependency>	
 	    
 	    <dependency>
@@ -131,13 +128,11 @@
 	   <dependency>
 		  <groupId>org.apache.cxf</groupId>
 		  <artifactId>cxf-rt-frontend-jaxws</artifactId>
-		  <version>2.7.3</version> 
 	    </dependency>
 	 
 	    <dependency>
 	      <groupId>org.apache.cxf</groupId>
 	      <artifactId>cxf-rt-transports-http</artifactId>
-	      <version>2.7.3</version>
 	    </dependency>	    
 	    
 
@@ -173,42 +168,9 @@
 	<build>
 		<plugins>
 	 		<plugin>
-				<!-- TODO: test mit neuem Plugin und Java 6 -->
-				<!-- 23.10.12 Test fehlgeschlagen! -->
-				<!-- Grund 1: jaxb Versions-Probleme  -->
-				<!-- Grund 2: m2eConnector (execution goal) -->
-				
-                <!--
-				<groupId>org.jvnet.jax-ws-commons</groupId>
-				<artifactId>jaxws-maven-plugin</artifactId>
-				<version>2.2</version>
-                -->
-				 
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
 				<version>1.11</version>
-	<!--			 
-				<executions>
-					<execution>
-						<id>gen-extra-wsdl-artifacts</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>wsimport</goal>
-						</goals>
-						<configuration>
-							<sourceDestDir>target/generated-sources/java</sourceDestDir>
-							<wsdlDirectory>src/main/wsdl</wsdlDirectory>
-							<wsdlFiles>
-								<wsdlFile>extra.wsdl</wsdlFile>
-							</wsdlFiles>
-							<xnocompile>true</xnocompile>
-							<verbose>true</verbose>
-							<args>
-							<arg>-Xendorsed</arg>
-							</args>
-						</configuration>
-					</execution>
-				</executions>-->
 			</plugin> 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
