@@ -73,11 +73,11 @@
 			<artifactId>extra-dataplugin-file</artifactId>
 			<version>2.3.0</version>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-outputplugin-http</artifactId>
 			<version>2.3.0</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-outputplugin-ws</artifactId>
