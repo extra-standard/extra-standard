@@ -118,6 +118,16 @@
 	<!-- SCM etc. -->
 	<!-- =============================================================== -->
 
+	<ciManagement>
+		<system>CloudBees</system>
+		<url>https://extra-standard.ci.cloudbees.com</url>
+	</ciManagement>
+	
+	<issueManagement>
+		<system>Github Issuetracker</system>
+		<url>https://github.com/extra-standard/extra-standard/issues</url>
+	</issueManagement>	
+
 	<licenses>
 		<license>
 			<name>Apache License 2.0</name>
