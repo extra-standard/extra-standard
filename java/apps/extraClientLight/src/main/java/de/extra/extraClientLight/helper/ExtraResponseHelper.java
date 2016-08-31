@@ -61,47 +61,55 @@ public class ExtraResponseHelper {
 
 		getReportInformation(reportFlag);
 
-		// TODO Body kann auch leer sein (v.a. im asynchronen Verfahren)
-		try {
+		if (extraResponse.getTransportBody().getData() != null) {
+			try {
 
-			// Ermitteln der DataSource aus dem DataHandler
+				// Ermitteln der DataSource aus dem DataHandler
 
-			DataSource nutzdatenDS = extraResponse.getTransportBody().getData()
-					.getBase64CharSequence().getValue().getDataSource();
+				DataSource nutzdatenDS = extraResponse.getTransportBody()
+						.getData().getBase64CharSequence().getValue()
+						.getDataSource();
 
-			InputStream in = null;
+				InputStream in = null;
 
-			// Wenn Nutzdaten inline sind, dann ist DataSource vom Typ
-			// ByteArrayDataSource
+				// Wenn Nutzdaten inline sind, dann ist DataSource vom Typ
+				// ByteArrayDataSource
 
-			if (LOGGER.isDebugEnabled()) {
+				if (LOGGER.isDebugEnabled()) {
 
-				LOGGER.debug("Datentyp der Nutzdaten: "
-						+ nutzdatenDS.getClass());
+					LOGGER.debug("Datentyp der Nutzdaten: "
+							+ nutzdatenDS.getClass());
 
+				}
+
+				// Wenn Nutzdaten als MTOM-Attachment übermittelt werden, dann
+				// sind
+				// die Daten innerhalb einer LazyDataSource
+
+				if (nutzdatenDS instanceof LazyDataSource) {
+					LOGGER.debug("Payload wurde als MTOM/LazyDataSource erkannt");
+
+					in = nutzdatenDS.getInputStream();
+
+				} else {
+
+					LOGGER.warn("Es konnte kein passender Datentyp gefunden werden! Wandle in Stream um");
+
+					in = extraResponse.getTransportBody().getData()
+							.getBase64CharSequence().getValue()
+							.getInputStream();
+
+				}
+
+				responseBean.setData(in);
+			} catch (IOException e) {
+				LOGGER.error("Fehler beim Lesen des Datenstreams");
+				responseBean.setReturnCode(9);
 			}
 
-			// Wenn Nutzdaten als MTOM-Attachment übermittelt werden, dann sind
-			// die Daten innerhalb einer LazyDataSource
+		} else {
 
-			if (nutzdatenDS instanceof LazyDataSource) {
-				LOGGER.debug("Payload wurde als MTOM/LazyDataSource erkannt");
-
-				in = nutzdatenDS.getInputStream();
-
-			} else {
-
-				LOGGER.warn("Es konnte kein passender Datentyp gefunden werden! Wandle in Stream um");
-				
-				in = extraResponse.getTransportBody().getData()
-						.getBase64CharSequence().getValue().getInputStream();
-
-			}
-
-			responseBean.setData(in);
-		} catch (IOException e) {
-			LOGGER.error("Fehler beim Lesen des Datenstreams");
-			responseBean.setReturnCode(9);
+			LOGGER.info("Keine Nutzdaten gefunden");
 		}
 
 		return responseBean;

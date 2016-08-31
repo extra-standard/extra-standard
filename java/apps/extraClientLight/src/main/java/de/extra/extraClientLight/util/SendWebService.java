@@ -27,8 +27,11 @@ import javax.xml.ws.BindingProvider;
 import javax.xml.ws.soap.SOAPBinding;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.message.Attachment;
 import org.apache.cxf.message.Message;
+import org.apache.cxf.transport.http.HTTPConduit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,6 +71,11 @@ public class SendWebService implements ISendWebService{
 
 		SOAPBinding soapBinding = (SOAPBinding) bp.getBinding();
 		soapBinding.setMTOMEnabled(mtomActive);
+		
+		//TODO Support TLS
+		
+		Client client = ClientProxy.getClient(extraPort);
+		HTTPConduit http = (HTTPConduit) client.getConduit();
 
 		try {
 			LOGGER.debug("Versand gestartet...");
@@ -88,7 +96,7 @@ public class SendWebService implements ISendWebService{
 			LOGGER.error("SOAP-Fault aufgetreten " + soapFault.getTextContent(), e);
 
 		} catch (ExtraFault e) {
-			LOGGER.error("Response war eine eXTra-Error");
+			LOGGER.error("Response war ein eXTra-Error");
 			
 			ExtraErrorHelper.printExtraError(e);
 		} catch (Exception e) {

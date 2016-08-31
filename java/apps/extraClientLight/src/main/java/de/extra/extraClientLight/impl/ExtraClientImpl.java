@@ -79,12 +79,20 @@ public class ExtraClientImpl implements IextraClient {
 				extraResponse = sendWebService.sendRequest(extraRequest,
 						requestExtra.getUrl(), requestExtra.isMtom());
 
+				if (extraResponse == null) {
+
+					LOGGER.warn("Response-Objekt ist leer");
+					throw new ExtraClientLightException();
+
+				}
+
 				if (LOGGER.isDebugEnabled()) {
 					ExtraResponseHelper.printResponse(extraResponse);
 				}
 				if (extraResponse.getProfile() != null) {
 					responseBean = ExtraResponseHelper
 							.convertExtraResponse(extraResponse);
+
 					returnCode = 0;
 				} else {
 
