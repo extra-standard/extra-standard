@@ -27,12 +27,12 @@
 	<parent>
 		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
-		<version>1.0.0</version>
+		<version>2.0.0</version>
 		<relativePath>components/extra-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>extra-cli</artifactId>
-	<version>2.2.0</version>
+	<version>2.3.0</version>
 	<packaging>jar</packaging>
 	<name>extra-cli</name>
 	<description>eXTra Command Line Interface</description>
@@ -46,64 +46,64 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-api</artifactId>
-			<version>2.2.0</version>
+			<version>2.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-configplugin-default</artifactId>
-			<version>2.2.0</version>
+			<version>2.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-responseprocessplugin-sample</artifactId>
-			<version>2.2.0</version>
+			<version>2.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-dataplugin-dbquery</artifactId>
-			<version>2.2.0</version>
+			<version>2.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-dataplugin-simplequery</artifactId>
-			<version>2.2.0</version>
+			<version>2.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-dataplugin-file</artifactId>
-			<version>2.2.0</version>
+			<version>2.3.0</version>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-outputplugin-http</artifactId>
-			<version>2.2.0</version>
-		</dependency>
+			<version>2.3.0</version>
+		</dependency> -->
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-outputplugin-ws</artifactId>
-			<version>2.2.0</version>
+			<version>2.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-outputplugin-wscxf</artifactId>
-			<version>2.2.0</version>
+			<version>2.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-execution-jpa</artifactId>
-			<version>2.2.0</version>
+			<version>2.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-execution-jpa</artifactId>
-			<version>2.2.0</version>
+			<version>2.3.0</version>
 			<scope>test</scope>
 			<type>test-jar</type>
 		</dependency>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-core</artifactId>
-			<version>2.2.0</version>
+			<version>2.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-cli</groupId>
@@ -124,11 +124,11 @@
 			<artifactId>hsqldb</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-jndi</artifactId>
 			<version>8.1.14.v20131031</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<build>

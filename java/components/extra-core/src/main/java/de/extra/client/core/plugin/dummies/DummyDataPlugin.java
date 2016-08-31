@@ -139,4 +139,9 @@ public class DummyDataPlugin implements IDataPlugin {
 		return fileInputData;
 	}
 
+	@Override
+	public boolean hasWarnings() {
+		return false;
+	}
+
 }

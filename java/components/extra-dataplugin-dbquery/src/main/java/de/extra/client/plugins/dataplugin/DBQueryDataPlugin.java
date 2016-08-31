@@ -169,4 +169,9 @@ public class DBQueryDataPlugin implements IDataPlugin {
 	public void setResendFailed(final boolean resendFailed) {
 		this.resendFailed = resendFailed;
 	}
+
+	@Override
+	public boolean hasWarnings() {
+		return false;
+	}
 }

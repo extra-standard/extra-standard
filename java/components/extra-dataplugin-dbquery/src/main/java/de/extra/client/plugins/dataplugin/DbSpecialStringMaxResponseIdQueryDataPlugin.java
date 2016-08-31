@@ -115,4 +115,9 @@ public class DbSpecialStringMaxResponseIdQueryDataPlugin implements IDataPlugin 
 		this.subquery = subquery;
 	}
 
+	@Override
+	public boolean hasWarnings() {
+		return false;
+	}
+
 }

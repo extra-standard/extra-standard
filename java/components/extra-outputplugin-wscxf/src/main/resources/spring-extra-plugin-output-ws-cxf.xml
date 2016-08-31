@@ -79,9 +79,13 @@
 		</jaxws:properties>    
 	</jaxws:client>     
 	
-    <http-conf:conduit name="${plugins.outputplugin.wsOutputPlugin.endpoint.url}.*">
-        <http-conf:client ConnectionTimeout="3000000" ReceiveTimeout="3000000"/>
-    </http-conf:conduit>	
+<!--     <http-conf:conduit name="${plugins.outputplugin.wsOutputPlugin.endpoint.url}.*">
+        <http-conf:client ConnectionTimeout="3000000" ReceiveTimeout="3000000" Connection="Keep-Alive"/>
+    </http-conf:conduit>	 -->
+    
+    <http-conf:conduit name="*.http-conduit">
+        <http-conf:client ConnectionTimeout="3000000" ReceiveTimeout="3000000" Connection="Keep-Alive"/>
+    </http-conf:conduit>	    
     
   
     <cxf:bus>

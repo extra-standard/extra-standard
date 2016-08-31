@@ -104,4 +104,9 @@ public class DBMaxResponseIdQueryDataPlugin implements IDataPlugin {
 		this.subquery = subquery;
 	}
 
+	@Override
+	public boolean hasWarnings() {
+		return false;
+	}
+
 }

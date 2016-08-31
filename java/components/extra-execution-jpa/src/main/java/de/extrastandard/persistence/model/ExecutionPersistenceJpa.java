@@ -270,14 +270,17 @@ public class ExecutionPersistenceJpa implements IExecutionPersistence {
 	public boolean changeCommunicationProtocolStatusByOutputIdentifier(
 			final String outputIdentifier,
 			final PersistentStatus persistentStatus) {
-		final ICommunicationProtocol communicationProtocol = communicationProtocolRepository
+		List<CommunicationProtocol> communicationProtocols = communicationProtocolRepository
 				.findByOutputIdentifier(outputIdentifier);
-		if (communicationProtocol == null) {
+		
+		if (communicationProtocols == null || communicationProtocols.size() ==0) {
 			// Fehler: zu dem OutputIdentifier gibt es kein
 			// CommunicationProtocol!
 			return false;
 		}
-		communicationProtocol.changeStatus(persistentStatus);
+		for (CommunicationProtocol communicationProtocol : communicationProtocols){
+			communicationProtocol.changeStatus(persistentStatus);
+		}
 		// Alles OK
 		return true;
 	}

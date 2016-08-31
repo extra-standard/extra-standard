@@ -123,4 +123,13 @@ public class FileDataPlugin implements IDataPlugin {
         this.inputDirectory = inputDirectory;
     }
 
+	@Override
+	public boolean hasWarnings() {
+		//Liefert Warnings,wenn keine Inputdaten vorhanden sind
+        if (!isResultPrepared.get()) {
+            initInputData();
+        }
+        return inputFiles.isEmpty();
+	}
+
 }
