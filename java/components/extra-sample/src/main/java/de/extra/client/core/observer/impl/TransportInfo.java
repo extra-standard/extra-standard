@@ -18,7 +18,7 @@
  */
 package de.extra.client.core.observer.impl;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 import de.extrastandard.api.observer.ITransportInfo;
 
@@ -30,7 +30,7 @@ public class TransportInfo implements ITransportInfo {
 
 	private String headerId;
 
-	private Calendar time;
+	private LocalDateTime time;
 
 	private String procedure;
 
@@ -44,7 +44,7 @@ public class TransportInfo implements ITransportInfo {
 	 * @param procedure
 	 * @param application
 	 */
-	public TransportInfo(String headerId, Calendar time, String procedure,
+	public TransportInfo(String headerId, LocalDateTime time, String procedure,
 			String application) {
 		super();
 		this.headerId = headerId;
@@ -75,7 +75,7 @@ public class TransportInfo implements ITransportInfo {
 	 * @see de.extrastandard.api.observer.ITransportInfo#getTime()
 	 */
 	@Override
-	public Calendar getTime() {
+	public LocalDateTime getTime() {
 		return time;
 	}
 
@@ -111,7 +111,7 @@ public class TransportInfo implements ITransportInfo {
 	 * @param time
 	 *            the time to set
 	 */
-	public void setTime(Calendar time) {
+	public void setTime(LocalDateTime time) {
 		this.time = time;
 	}
 

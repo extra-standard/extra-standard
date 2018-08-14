@@ -18,7 +18,7 @@
  */
 package de.extra.client.core.model;
 
-import java.util.GregorianCalendar;
+import java.time.LocalDateTime;
 
 import de.drv.dsrv.extrastandard.namespace.plugins.AbstractPlugInType;
 import de.drv.dsrv.extrastandard.namespace.plugins.DataContainerType;
@@ -39,7 +39,7 @@ public class DataSourcePluginHelper extends PluginHelperBase {
 		// Fuellen des DataContainers
 
 		dataContainer.setEncoding(dataSourcePluginBean.getEncoding());
-		dataContainer.setCreated(new GregorianCalendar());
+		dataContainer.setCreated(LocalDateTime.now());
 		dataContainer.setType(dataSourcePluginBean.getType().toString());
 		dataContainer.setName(dataSourcePluginBean.getName());
 

@@ -67,7 +67,7 @@ public class ExtraUnmarschallerTest {
 		}
 	}
 
-	private final String validTestRequest = "<xreq:Transport xmlns:xcpt=\"http://www.extra-standard.de/namespace/components/1\" xmlns:xreq=\"http://www.extra-standard.de/namespace/request/1\" xmlns:xenc=\"http://www.w3.org/2001/04/xmlenc#\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:xlog=\"http://www.extra-standard.de/namespace/logging/1\" xmlns:xres=\"http://www.extra-standard.de/namespace/response/1\" xmlns:xplg=\"http://www.extra-standard.de/namespace/plugins/1\" xmlns:xmsg=\"http://www.extra-standard.de/namespace/message/1\" xmlns:xsrv=\"http://www.extra-standard.de/namespace/service/1\" version=\"1.3\" profile=\"http://code.google.com/p/extra-standard/profile/1\">\r\n"
+	private final String validTestRequest = "<xreq:Transport xmlns:xcpt=\"http://www.extra-standard.de/namespace/components/1\" xmlns:xreq=\"http://www.extra-standard.de/namespace/request/1\" xmlns:xenc=\"http://www.w3.org/2001/04/xmlenc#\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:xlog=\"http://www.extra-standard.de/namespace/logging/1\" xmlns:xres=\"http://www.extra-standard.de/namespace/response/1\" xmlns:xplg=\"http://www.extra-standard.de/namespace/plugins/1\" xmlns:xmsg=\"http://www.extra-standard.de/namespace/message/1\" xmlns:xsrv=\"http://www.extra-standard.de/namespace/service/1\" version=\"1.4\" profile=\"http://code.google.com/p/extra-standard/profile/1\">\r\n"
 			+ "    <xreq:TransportHeader>\r\n"
 			+ "        <xcpt:TestIndicator>http://www.extra-standard.de/test/NONE</xcpt:TestIndicator>\r\n"
 			+ "        <xcpt:Sender>\r\n"

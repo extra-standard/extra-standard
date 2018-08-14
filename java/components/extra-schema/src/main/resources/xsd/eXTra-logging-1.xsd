@@ -4,13 +4,14 @@
     
     @file    eXTra-logging-1.xsd
     @author  Michael Schäfer, Statistisches Bundesamt
-    @version 1.3.0
+    @version 1.4.0
     @state   RELEASE
     @date    2011-09-12
     
     @changed 2009-07-17 1.1 MS - Removed XHTML namespace
     @changed 2009-07-17 1.2 MS / Updated version identifier
     @changed 2011-09-12 1.3 MS / Set schema version to 1.3
+    @changed 2013-10-17 1.4 MS / Set schema version to 1.4
     
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
@@ -20,7 +21,7 @@
     targetNamespace="http://www.extra-standard.de/namespace/logging/1"
     attributeFormDefault="unqualified"
     elementFormDefault="qualified"
-    version="1.3.0">
+    version="1.4.0">
 
     <!-- Import eXTra code lists -->
     

@@ -18,12 +18,12 @@
 	<parent>
 		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
-		<version>2.0.0</version>
+		<version>3.0.0</version>
 		<relativePath>../../components/extra-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>extra-scenario-sendfetch</artifactId>
-	<version>2.3.0</version>
+	<version>3.0.0</version>
 	<name>extra-scenario-sendfetch</name>
 	<description>eXTra Szenario Send-Fetch (Sende-Hole Betrieb)</description>
 
@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-cli</artifactId>
-			<version>2.3.0</version>
+			<version>3.0.0</version>
 		</dependency>
 
 		<dependency>
@@ -45,7 +45,7 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-execution-jpa</artifactId>
-			<version>2.3.0</version>
+			<version>3.0.0</version>
 			<scope>test</scope>
 			<type>test-jar</type>
 		</dependency>

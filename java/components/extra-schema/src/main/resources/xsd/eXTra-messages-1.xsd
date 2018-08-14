@@ -4,9 +4,9 @@
     
     @file    eXTra-messages-1.xsd
     @author  [MS] Michael Schäfer, Statistisches Bundesamt
-    @version 1.3.0
+    @version 1.4.0
     @state   RELEASE
-    @date    2011-10-18
+    @date    2013-10-21
     
     @changed 2009-10-30 1.1 MS + Added aribute 'event' to AbstractArgumentType,
                                + Added version identifier '1.1'
@@ -38,7 +38,28 @@
                                / DataRequestArgumentType: Element 'Argument' is optional
                                / StatusRequestArgumentType: Element 'Argument' is optional
                                / Extended version attributes to allow older versions.
-                                 
+    @changed 2013-05-14 1.4 MS / Set schema version to '1.4.0'
+    @added   2013-05-14 1.4 MS + ListRequest* and ListResponse* types.
+    @changed 2013-05-24 1.4 MS / Attribute 'state' of ListRequest converted to argument
+                               / Attribute 'state' of ListResponse converted to property
+                               + Added attribute 'order' to ListRequest
+    @changed 2013-09-06 1.4 MS + Argument 'state' added to DataRequest
+                               + Added attribute 'order' to DataRequest
+                               + Added propery 'ExpectedDataSize' to ListResponse
+                               + Added type ListResponsePropertyNamesType
+    @changed 2013-10-14 1.4 MS + Added 'Request*' properties to align property set with that of
+                                 DataRequestPropertyNamesType
+                               / Renamed prop ExceptedDataSize to PayloadSize
+                               / Corrected URI to refer to 'requestState' instead of 'endpoint'
+    @changed 2013-10-21 1.4 MS / Corrected property set mismatch bewtween DataRequestPropertyNamesType
+                                 and ListRequestPropertyNamesType
+    @changed 2014-01-30 1.4 MS + Added attribute 'order' to StatusRequestArgumentType
+    @changed 2014-02-07 1.4 MS + Added version identifier '1.1' to StatusRequestType
+    @changed 2014-05-28 1.4 MS + Element 'ListOfStatusResponse/StatusResponse', cardinality
+                                 changed from 1..1 to 0..unbounded
+    @changed 2014-05-28 1.4 MS + Element 'ListOfStatusResponse/StatusResponse/Property', cardinality
+                                 changed from 1..1 to 1..unbounded
+
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xmsg="http://www.extra-standard.de/namespace/message/1"
@@ -46,31 +67,8 @@
     targetNamespace="http://www.extra-standard.de/namespace/message/1"
     attributeFormDefault="unqualified"
     elementFormDefault="qualified"
-    version="1.3.0"
+    version="1.4.0"
     >
-
-    <!-- Abstract base types -->
-
-    <!-- AbstractMessageType
-        The abstract base type of any type that represents a message
-        
-        @changed 2009-10-30 1.1 MS + Added version identifier '1.1'
-        @changed 2010-02-21 1.2 MS + Added version identifier '1.2'
-        @deleted 2010-07-04 1.2 MS -
-            @{code %
-            <xs:complexType name="AbstractMessageType" abstract="true">
-                <xs:attribute name="version" use="required">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:enumeration value="1.0"/>
-                            <xs:enumeration value="1.1"/>
-                            <xs:enumeration value="1.2"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:attribute>
-            </xs:complexType>
-            %}
-    -->
 
     <!-- ListOfConfirmationOfReceiptType
         Represents a list of messages for confirming that data has been received succesfully
@@ -171,7 +169,8 @@
          Represents a message for requesting the result of some business
          process that was triggered by a previous message
          
-         @changed 2011-08-05 1.1 MS / Set version identifier to '1.2'
+         @changed 2011-08-05 1.1 MS / Added version identifier '1.2'
+         @changed 2011-09-06 1.1 MS / Added version identifier '1.3'
          
     -->
     <xs:complexType name="DataRequestType">
@@ -184,6 +183,7 @@
                     <xs:enumeration value="1.0" />
                     <xs:enumeration value="1.1" />
                     <xs:enumeration value="1.2" />
+                    <xs:enumeration value="1.3" />
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
@@ -214,26 +214,32 @@
     <!-- DataRequestArgumentType
         Defines a concrete type for arguments of a data request query, restricting
         argument names to those enumerated in  xs:string
+        
+        @changed 2013-09-06 1.4 MS + Added 'order' attribute
     -->
     <xs:complexType name="DataRequestArgumentType">
         <xs:complexContent>
             <xs:extension base="AbstractArgumentType">
                 <xs:attribute name="property" type="DataRequestPropertyNamesType" use="required" />
+                <xs:attribute name="order" type="SortingOrderType" use="optional" default="UNDEFINED"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
     <!-- DataRequestPropertyNamesType
         The names of the properties that may appear in a data request query.
-        The names must consitute a subset (in XSD terms: a restriction) of the
+        The names must consitute a subset (in XSD terms: restriction) of the
         names defined in the type PropertyNamesType.
         
-        @changed 2011-08-04 1.3 MS / Added Layer value to DataRequestPropertyNamesType
+        @changed 2011-08-04 1.3 MS + Added value 'Layer'
+        @changed 2013-05-24 1.4 MS / Rearranged prop names in alphabetical order
+        @changed 2013-09-06 1.4 MS + Added 'State' property
+        @changed 2013-10-21 1.4 MS / Set properties to match with ListRequestPropertyNamesType
         
     -->
     <xs:simpleType name="DataRequestPropertyNamesType">
         <xs:restriction base="PropertyNamesType">
-            <xs:pattern value="http://www.extra-standard.de/property/(SenderID|ReceiverID|Procedure|DataType|ResponseID|ResponseCreationTimeStamp|ResponseFileName|Layer)"/>
+            <xs:pattern value="http://www.extra-standard.de/property/(DataType|Layer|Procedure|ReceiverID|RequestCreationTimeStamp|RequestFileName|RequestID|ResponseCreationTimeStamp|ResponseFileName|ResponseID|SenderID|State)"/>
             <xs:pattern value=".+"/>
             <!--
             @deleted 2010-07-04 1.2 MS -
@@ -255,7 +261,9 @@
          ======================
     -->
 
-    <!-- @created 2011-05-08 1.3 MS -->
+    <!-- @created 2011-05-08 1.3 MS 
+         @changed 2014-02-07 1.4 MS + Added version identifier '1.1'
+    -->
     <xs:complexType name="StatusRequestType">
         <xs:sequence>
             <xs:element name="Query" type="StatusRequestQueryType" />
@@ -265,6 +273,7 @@
             <xs:simpleType>
                 <xs:restriction base="xs:string">
                     <xs:enumeration value="1.0" />
+                    <xs:enumeration value="1.1" />
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
@@ -286,12 +295,13 @@
         Defines a concrete type for arguments of a data request query, restricting
         argument names to those enumerated in  xs:string
         @created 2011-05-08 1.3 MS
+        @changed 2014-01-30 1.4 MS + Added 'order' attribute
     -->
     <xs:complexType name="StatusRequestArgumentType">
         <xs:complexContent>
             <xs:extension base="AbstractArgumentType">
-                <xs:attribute name="property" type="StatusRequestPropertyNamesType" use="required"
-                 />
+                <xs:attribute name="property" type="StatusRequestPropertyNamesType" use="required"/>
+                <xs:attribute name="order" type="SortingOrderType" use="optional" default="UNDEFINED"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -301,11 +311,12 @@
         The names must consitute a subset (in XSD terms: a restriction) of the
         names defined in the type PropertyNamesType.
         
-        @changed 2011-078-22 1.3.0 MS Allowed specification of abritrary URIs
+        @changed 2011-07-22 1.3 MS / Allowed specification of abritrary URIs
+        @changed 2013-05-24 1.4 MS / Rearranged prop names in alphabetical order
     -->
     <xs:simpleType name="StatusRequestPropertyNamesType">
         <xs:restriction base="PropertyNamesType">
-            <xs:pattern value="http://www.extra-standard.de/property/(SenderID|ReceiverID|Procedure|DataType|RequestID|RequestCreationTimeStamp|RequestFileName|ResponseID|ResponseCreationTimeStamp|ResponseFileName|Layer)"/>
+            <xs:pattern value="http://www.extra-standard.de/property/(DataType|Layer|Procedure|ReceiverID|RequestCreationTimeStamp|RequestFileName|RequestID|ResponseCreationTimeStamp|ResponseFileName|ResponseID|SenderID)"/>
             <xs:pattern value=".+"/>
             <!--
             @deleted 2010-07-04 1.2 MS -
@@ -467,10 +478,10 @@
     <!-- @created 2011-05-08 1.3 MS -->
     <xs:complexType name="ListOfStatusResponseType">
         <xs:sequence>
-            <xs:element name="StatusResponse">
+            <xs:element name="StatusResponse" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="Property" type="StatusResponsePropertyType" />
+                        <xs:element name="Property" type="StatusResponsePropertyType" maxOccurs="unbounded"/>
                         <xs:element name="Trace" type="TraceType" />
                     </xs:sequence>
                 </xs:complexType>
@@ -485,6 +496,134 @@
         </xs:attribute>
     </xs:complexType>
 
+    <!-- ======================
+         Message: ListRequest
+         ======================
+    -->
+    
+    <!--
+        @created 2013-05-10 1.4 MS
+    -->
+    <xs:complexType name="ListRequestType">
+        <xs:sequence>
+            <xs:element name="Query" type="ListRequestQueryType" />
+            <xs:element name="Control" type="ControlType" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute name="version" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="1.0" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    
+    <!-- 
+        Represents a status request query that selects requested objects by certain
+        criteria specified by argument elements.
+        
+        @created 2013-05-10 1.4 MS
+    -->
+    <xs:complexType name="ListRequestQueryType">
+        <xs:sequence>
+            <xs:element name="Argument" type="ListRequestArgumentType"
+                minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!--
+        Defines a concrete type for arguments of a data request query, restricting
+        argument names to those enumerated in  xs:string
+        
+        @created 2013-05-10 1.4 MS
+        @changed 2013-05-24 1.4 MS - Removed 'state' atrribute
+                                   + Added 'order' attribute
+    -->
+    <xs:complexType name="ListRequestArgumentType">
+        <xs:complexContent>
+            <xs:extension base="AbstractArgumentType">
+                <xs:attribute name="property" type="ListRequestPropertyNamesType" use="required"/>
+                <xs:attribute name="order" type="SortingOrderType" use="optional" default="UNDEFINED"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <!-- 
+        The names of the arguments that may appear in a list request query.
+        The names must consitute a subset (in XSD terms: a restriction) of the
+        names defined in the type PropertyNamesType.
+        
+        @created 2013-05-10 1.4 MS
+        @changed 2013-05-24 1.4 MS + Added 'State' property
+                                   / Rearranged prop names in alphabetical order
+        @changed 2013-10-14 1.4 MS + Added 'Request*' properties to align property set with that of
+                                     DataRequestPropertyNamesType
+    -->
+    <xs:simpleType name="ListRequestPropertyNamesType">
+        <xs:restriction base="PropertyNamesType">
+            <xs:pattern value="http://www.extra-standard.de/property/(DataType|Layer|Procedure|ReceiverID|RequestCreationTimeStamp|RequestFileName|RequestID|ResponseCreationTimeStamp|ResponseFileName|ResponseID|SenderID|State)"/>
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- 
+        The names of the properties that may appear in a list response.
+        The names must consitute a subset (in XSD terms: a restriction) of the
+        names defined in the type PropertyNamesType.
+        
+        @created 2013-09-06 1.4 MS
+        @changed 2013-10-14 1.4 MS / Renamed prop ExceptedDataSize to PayloadSize
+    -->
+    <xs:simpleType name="ListResponsePropertyNamesType">
+        <xs:restriction base="PropertyNamesType">
+            <xs:pattern value="http://www.extra-standard.de/property/(DataType|PayloadSize|Procedure|ReceiverID|RequestCreationTimeStamp|RequestFileName|RequestID|ResponseCreationTimeStamp|ResponseFileName|ResponseID|SenderID|State)"/>
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- ======================
+         Message: ListResponse
+         ======================
+    -->
+    
+    <!--
+        @created 2013-05-10 1.4 MS
+    -->
+    <xs:complexType name="ListResponseType">
+        <xs:sequence>
+            <xs:element name="Entry" type="ListResponseEntryType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="version" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="1.0" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    
+    <!--
+        @created 2013-05-10 1.4 MS
+    -->
+    <xs:complexType name="ListResponseEntryType">
+        <xs:sequence>
+            <xs:element name="Property" type="ListResponsePropertyType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!--
+        @created 2013-05-10 1.4 MS
+        @changed 2013-05-24 1.4 MS - Removed 'state' atrribute
+        @changed 2013-09-06 1.4 MS - Changed type of attr 'name' to ListResponsePropertyNamesType
+    -->
+    <xs:complexType name="ListResponsePropertyType">
+        <xs:sequence>
+            <xs:element name="Value" type="ValueType" />
+        </xs:sequence>
+        <xs:attribute name="name" type="ListResponsePropertyNamesType" use="required" />
+        <xs:attribute name="type" type="XSDPrefixedTypeCodes" default="xs:string" />
+    </xs:complexType>
+    
     <!-- ============
          Common types
          ============
@@ -518,8 +657,7 @@
             <xs:element name="IN" type="OperandSetType"/>
         </xs:choice>
         <xs:attribute name="type" type="XSDPrefixedTypeCodes" default="xs:string" />
-        <xs:attribute name="event" type="EventNamesType"
-            default="http://www.extra-standard.de/event/Default" />
+        <xs:attribute name="event" type="EventNamesType" default="http://www.extra-standard.de/event/Default" />
     </xs:complexType>
 
     <!-- OperandSetType
@@ -567,10 +705,13 @@
 
     <!--
         @changed 2011-06-17 1.2 MS + Added value 'Layer'
+        @changed 2013-05-24 1.4 MS + Added value 'State'
+                                   / Rearranged prop names in alphabetical order
+        @changed 2013-09-06 1.4 MS + Added value 'ExpectedDataSize'
     -->
     <xs:simpleType name="PropertyNamesType">
         <xs:restriction base="xs:anyURI">
-            <xs:pattern value="http://www.extra-standard.de/property/(SenderID|ReceiverID|Procedure|DataType|RequestID|RequestCreationTimeStamp|RequestFileName|ResponseID|ResponseCreationTimeStamp|ResponseFileName|Layer)"/>
+            <xs:pattern value="http://www.extra-standard.de/property/(DataType|ExpectedDataSize|Layer|Procedure|ReceiverID|RequestCreationTimeStamp|RequestFileName|RequestID|ResponseCreationTimeStamp|ResponseFileName|ResponseID|SenderID|State)"/>
             <xs:pattern value=".+"/>
             <!--
             @deleted 2010-07-04 1.2 MS -
@@ -586,6 +727,7 @@
             <xs:enumeration value="http://www.extra-standard.de/property/ResponseCreationTimeStamp" />
             <xs:enumeration value="http://www.extra-standard.de/property/ResponseFileName" />
             <xs:enumeration value="http://www.extra-standard.de/property/Layer" />
+            %}
             -->
         </xs:restriction>
     </xs:simpleType>
@@ -601,6 +743,27 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <!--
+        @created 2013-05-14 1.4 MS
+        @changed 2013-10-14 1.4 MS / Corrected URI to refer to 'requestState' instead of 'endpoint'
+    -->
+    <xs:simpleType name="RequestStatesType">
+        <xs:annotation>
+            <xs:documentation>
+                A list of extensible codes denoting a state during request processing contact endpoint type. 
+                Base values:
+                - http://www.extra-standard.de/requestState/NONE
+                - http://www.extra-standard.de/requestState/AVAILABLE
+                - http://www.extra-standard.de/requestState/FETCHED
+                - http://www.extra-standard.de/requestState/CONFIRMED
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:anyURI">
+            <xs:pattern value="http://www.extra-standard.de/requestState/(NONE|AVAILABLE|FETCHED|CONFIRMED)(#[a-zA-Z0-9]([.\-][a-zA-Z0-9]+)*)?"/>
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
     <xs:complexType name="ValueType">
         <xs:simpleContent>
             <xs:extension base="xs:string" />
@@ -647,7 +810,20 @@
             <xs:pattern value="[0-9]*[1-9][0-9]*[BKMG]" />
         </xs:restriction>
     </xs:simpleType>
-
+    
+    <!--
+        Defines a type for specifiying the sorting order on queriy arguments
+        
+        Examples: A, ASC, ASCENDING, D, DESC, DESCENDING.
+        
+        @created 2013-05-24 MS 
+    -->
+    <xs:simpleType name="SortingOrderType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="A|ASC|ASCENDING|D|DESC|DESCENDING|U|UNDEF|UNDEFINED" />
+        </xs:restriction>
+    </xs:simpleType>
+    
     <xs:simpleType name="XSDPrefixedTypeCodes">
         <xs:annotation>
             <xs:documentation> A list of prefixed XSD atomic type names </xs:documentation>
@@ -741,5 +917,11 @@
     <!-- @created 2011-05-08 1.3 MS -->
     <xs:element name="ListOfStatusResponse" type="ListOfStatusResponseType" />
 
-
+    <!-- @created 2013-05-10 1.3 MS -->
+    <xs:element name="ListRequest" type="ListRequestType" />
+    
+    <!-- @created 2013-05-10 1.3 MS -->
+    <xs:element name="ListResponse" type="ListResponseType" />
+    
+    
 </xs:schema>

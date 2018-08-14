@@ -18,7 +18,7 @@
  */
 package de.extra.client.core.builder.impl.plugins;
 
-import java.util.GregorianCalendar;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.inject.Named;
@@ -37,6 +37,7 @@ import de.extrastandard.api.model.content.IInputDataContainer;
 import de.extrastandard.api.model.content.IInputDataPluginDescription;
 import de.extrastandard.api.model.content.ISingleContentInputData;
 import de.extrastandard.api.model.content.ISingleInputData;
+import java.time.ZoneId;
 
 /**
  * Erstellt ein Datasource XML Fragment für genau 1 Inputdata
@@ -83,9 +84,9 @@ public class DataSourceSingleInputDataPluginsBuilder extends
 						.getDataContainerCode());
 				// 27.12.2012 Die Semantik des Feldes ist unklar. Ist das
 				// Erstellungsdatum des Files?
-				final GregorianCalendar calenderCreated = new GregorianCalendar();
-				calenderCreated
-						.setTime(dataSourcePluginDescriptor.getCreated());
+				final LocalDateTime calenderCreated = dataSourcePluginDescriptor.getCreated().toInstant()
+                                        .atZone(ZoneId.systemDefault())
+                                        .toLocalDateTime();
 				dataContainer.setCreated(calenderCreated);
 				dataContainer.setEncoding(dataSourcePluginDescriptor
 						.getEncoding());

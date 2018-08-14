@@ -96,6 +96,30 @@
     	<jxb:class name="ListOfStatusResponse"/>
 	</jxb:bindings> 
 
+	<jxb:bindings schemaLocation="../resources/xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ListRequestType']">
+    	<jxb:class name="ListRequest"/>
+	</jxb:bindings> 
+
+	<jxb:bindings schemaLocation="../resources/xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ListRequestQueryType']">
+    	<jxb:class name="ListRequestQuery"/>
+	</jxb:bindings> 
+
+	<jxb:bindings schemaLocation="../resources/xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ListRequestArgumentType']">
+    	<jxb:class name="ListRequestArgument"/>
+	</jxb:bindings> 
+
+	<jxb:bindings schemaLocation="../resources/xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ListResponseType']">
+    	<jxb:class name="ListResponse"/>
+	</jxb:bindings> 
+
+	<jxb:bindings schemaLocation="../resources/xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ListResponseEntryType']">
+    	<jxb:class name="ListResponseEntry"/>
+	</jxb:bindings> 
+
+	<jxb:bindings schemaLocation="../resources/xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='ListResponsePropertyType']">
+    	<jxb:class name="ListResponseProperty"/>
+	</jxb:bindings> 
+
 	<jxb:bindings schemaLocation="../resources/xsd/eXTra-messages-1.xsd" node="//xs:complexType[@name='AbstractArgumentType']">
     	<jxb:class name="AbstractArgument"/>
 	</jxb:bindings> 

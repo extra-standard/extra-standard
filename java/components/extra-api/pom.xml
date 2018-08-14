@@ -26,28 +26,28 @@
 	<parent>
 		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
-		<version>2.0.0</version>
+		<version>3.0.0</version>
 		<relativePath>components/extra-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>extra-api</artifactId>
-	<version>2.3.0</version>
+	<version>3.0.0</version>
 	<packaging>jar</packaging>
 	<name>extra-api</name>
 	<description>eXTra API</description>
 
 	<!-- For KissMDA -->
 	<properties>
-		<kissmda.maven.plugin.version>2.0.0</kissmda.maven.plugin.version>
-		<kissmda.cartridges.simple.java.version>2.0.1</kissmda.cartridges.simple.java.version>
-		<kissmda.extensions.importpacker.version>1.0.0</kissmda.extensions.importpacker.version>
+		<kissmda.maven.plugin.version>2.1.1</kissmda.maven.plugin.version>
+		<kissmda.cartridges.simple.java.version>2.1.1</kissmda.cartridges.simple.java.version>
+		<kissmda.extensions.importpacker.version>2.1.1</kissmda.extensions.importpacker.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-schema</artifactId>
-			<version>2.3.0</version>
+			<version>3.0.0</version>
 		</dependency>
 	</dependencies>
 

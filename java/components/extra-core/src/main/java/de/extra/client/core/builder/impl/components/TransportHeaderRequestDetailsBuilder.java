@@ -18,7 +18,6 @@
  */
 package de.extra.client.core.builder.impl.components;
 
-import java.util.GregorianCalendar;
 
 import javax.inject.Named;
 
@@ -33,6 +32,7 @@ import de.drv.dsrv.extrastandard.namespace.components.TextType;
 import de.extra.client.core.builder.IXmlComplexTypeBuilder;
 import de.extrastandard.api.model.content.IExtraProfileConfiguration;
 import de.extrastandard.api.model.content.IInputDataContainer;
+import java.time.LocalDateTime;
 
 /**
  * @author Leonid Potap
@@ -87,7 +87,7 @@ public class TransportHeaderRequestDetailsBuilder implements
 		final String requestIDString = senderData.getRequestId();
 		requestId.setValue(requestIDString);
 		requestDetails.setRequestID(requestId);
-		requestDetails.setTimeStamp(new GregorianCalendar());
+		requestDetails.setTimeStamp(LocalDateTime.now());
 
 		// Controllerinformation
 		requestDetails.setProcedure(requestDetailProcedure);

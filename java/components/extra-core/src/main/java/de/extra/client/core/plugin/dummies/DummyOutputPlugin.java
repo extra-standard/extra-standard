@@ -18,7 +18,6 @@
  */
 package de.extra.client.core.plugin.dummies;
 
-import java.util.GregorianCalendar;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -45,6 +44,7 @@ import de.extra.client.core.observer.impl.TransportInfoBuilder;
 import de.extrastandard.api.observer.ITransportInfo;
 import de.extrastandard.api.observer.ITransportObserver;
 import de.extrastandard.api.plugin.IOutputPlugin;
+import java.time.LocalDateTime;
 
 @Named("dummyOutputPlugin")
 public class DummyOutputPlugin implements IOutputPlugin {
@@ -95,7 +95,7 @@ public class DummyOutputPlugin implements IOutputPlugin {
 		final ClassifiableIDType idType = new ClassifiableIDType();
 		idType.setValue("42");
 		responseDetailsType.setResponseID(idType);
-		responseDetailsType.setTimeStamp(new GregorianCalendar());
+		responseDetailsType.setTimeStamp(LocalDateTime.now());
 		final ReportType reportType = new ReportType();
 		reportType.setHighestWeight("http://www.extra-standard.de/weight/OK");
 		final FlagType flagType = new FlagType();
