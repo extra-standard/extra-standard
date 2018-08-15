@@ -25,12 +25,12 @@
 	<parent>
 		<groupId>de.extra-standard</groupId>
 		<artifactId>extra-parent</artifactId>
-		<version>2.0.0</version>
+		<version>3.0.0</version>
 		<relativePath>../../components/extra-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>extra-sample</artifactId>
-	<version>2.3.0</version>
+	<version>3.0.0</version>
 	<packaging>jar</packaging>
 	<name>extra-sample</name>
 	<description>eXTra Sample</description>
@@ -39,13 +39,13 @@
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-api</artifactId>
-			<version>2.3.0</version>
+			<version>3.0.0</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>de.extra-standard</groupId>
 			<artifactId>extra-schema</artifactId>
-			<version>2.3.0</version>
+			<version>3.0.0</version>
 		</dependency>		
 		
 		<!-- Java Inject -->

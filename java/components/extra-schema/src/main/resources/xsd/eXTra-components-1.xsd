@@ -4,17 +4,21 @@
     
     @file    eXTra-components-1.xsd
     @author  [MS] Michael Schäfer, Statistisches Bundesamt
-    @version 1.3.0
+    @version 1.4.0
     @state   RELEASE
-    @date    2011-09-12
+    @date    2013-10-17
     
     @changed 2009-07-17 1.1 MS - Removed XHTML namespace
-    @changed 2010-02-21 MS + Added version '1.2'
-    @changed 2010-07-04 MS / Restricted version identifier to '1.2'
-    @changed 2010-07-12 MS / Made 'ResponseDetailsType' non-abstract
-    @changed 2011-06-17 MS / Changed type of element 'DataType' to 'xcode:DataTypeCodeType'
-    @changed 2010-09-12 1.3 MS - Added values '1.0', 1.1', 1.3'
+    @changed 2010-02-21 1.2 MS + Added version '1.2'
+    @changed 2010-07-04 1.2 MS / Restricted version identifier to '1.2'
+    @changed 2010-07-12 1.2 MS / Made 'ResponseDetailsType' non-abstract
+    @changed 2011-06-17 1.3 MS / Changed type of element 'DataType' to 'xcode:DataTypeCodeType'
+    @changed 2011-09-12 1.3 MS - Set version identifiers to '1.0', 1.1', 1.3'
     @changed 2011-09-12 1.3 MS / Set schema version to 1.3
+    @changed 2013-09-06 1.4 MS / Added xmime NS and xmime:expectedContentTypes
+                                 on Base64CharSequenceType
+    @changed 2013-10-17 1.4 MS / Set schema version to 1.4
+                               + Added version identifier '1.4'
     
 -->
 <xs:schema
@@ -24,10 +28,9 @@
     xmlns:xplg="http://www.extra-standard.de/namespace/plugins/1"
     xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
-    attributeFormDefault="unqualified"
+    xmlns:xmime="http://www.w3.org/2005/05/xmlmime"    attributeFormDefault="unqualified"
     elementFormDefault="qualified"
-    version="1.3.0">
+    version="1.4.0">
     
     <!-- Import eXTra code lists -->
     
@@ -53,6 +56,8 @@
          @changed 2010-02-21 1.2 MS + Added value '1.2'
          @changed 2010-07-04 1.2 MS - Removed values < '1.2'
          @changed 2010-09-12 1.3 MS - Added values '1.0', 1.1', 1.3'
+         @changed 2010-10-17 1.4 MS + Added value '1.4'
+
     -->
     <xs:simpleType name="SupportedVersionsType">
         <xs:restriction base="AbstractVersionType">
@@ -66,6 +71,7 @@
             <xs:enumeration value="1.1"/>
             <xs:enumeration value="1.2"/>
             <xs:enumeration value="1.3"/>
+            <xs:enumeration value="1.4"/>
         </xs:restriction>
     </xs:simpleType>
     
@@ -254,9 +260,12 @@
         <xs:attribute name="weight" type="xcode:WeightCodeType" use="required"/>
     </xs:complexType>
     
+    <!-- @changed 2013-09-06 1.4 MS / Added attribute xmime:expectedContentTypes
+    -->
     <xs:complexType name="Base64CharSequenceType">
         <xs:simpleContent>
-            <xs:extension base="xs:base64Binary" xmime:expectedContentTypes="application/octet-stream"/>
+            <xs:extension base="xs:base64Binary"
+                xmime:expectedContentTypes="application/octet-stream"/>
         </xs:simpleContent>
     </xs:complexType>
     

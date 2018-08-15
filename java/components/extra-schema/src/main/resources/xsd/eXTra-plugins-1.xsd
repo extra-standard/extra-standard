@@ -4,11 +4,12 @@
     
     @file    eXTra-plugins-1.xsd
     @author  [MS] Michael Schäfer, Statistisches Bundesamt
-    @version 1.2.0
+    @version 1.4.0
     @state   RELEASE
-    @date    2011-09-12
+    @date    2013-10-21
     
     @changed 2011-09-12 1.3 MS / Set @state to RELEASE
+    @changed 2013-10-21 1.4 MS / Set schema version to 1.4.0
     
 -->
 <xs:schema
@@ -19,7 +20,7 @@
     targetNamespace="http://www.extra-standard.de/namespace/plugins/1"
     attributeFormDefault="unqualified"
     elementFormDefault="qualified"
-    version="1.2.0">
+    version="1.4.0">
 
     <!-- Import of code list declarations -->
     

@@ -26,7 +26,7 @@ package de.drv.dsrv.extra.schemaversion;
  */
 public enum ExtraSchemaVersion {
 
-	CURRENT_SCHEMA_VERSION("1.3");
+	CURRENT_SCHEMA_VERSION("1.4");
 
 	String version;
 

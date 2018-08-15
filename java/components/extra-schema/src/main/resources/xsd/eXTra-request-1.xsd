@@ -4,9 +4,9 @@
     
     @file    eXTra-request-1.xsd
     @author  Michael Schäfer, Statistisches Bundesamt
-    @version 1.3.0
+    @version 1.4.0
     @state   RELEASE
-    @date    2011-09-12
+    @date    2013-10-17
     
     @changed 2009-05-05 MS + Added support for TransformedData
     @changed 2009-07-17 MS - Removed XHTML namespace
@@ -14,6 +14,7 @@
     @changed 2011-06-17 MS + Added root element 'Transport' 
                            / Deprecated root element 'XMLTransport'
     @changed 2011-09-12 1.3 MS / Set schema version to 1.3
+    @changed 2013-10-17 1.4 MS / Set schema version to 1.4
                            
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -25,7 +26,7 @@
     targetNamespace="http://www.extra-standard.de/namespace/request/1"
     attributeFormDefault="unqualified"
     elementFormDefault="qualified"
-    version="1.3.0"
+    version="1.4.0"
     >
 
     <!-- Import shared element declarations and type declarations -->
@@ -45,7 +46,15 @@
             <xs:extension base="xcpt:RootElementType">
                 <xs:sequence minOccurs="1" maxOccurs="1">
                     <xs:element ref="TransportHeader" minOccurs="1" maxOccurs="1"/>
-                    <xs:element ref="TransportPlugIns" minOccurs="0" maxOccurs="1"/>
+                    <xs:element ref="TransportPlugIns" minOccurs="0" maxOccurs="1">
+<!--                        <xs:annotation>
+                            <xs:appinfo>
+                                <xprof:profilable xmlns:xprof="http://www.extra-standard.de/namespace/profile/1">
+                                    <xprof:cardinality required="true" optional="true" forbidden="true"/>
+                                </xprof:profilable>
+                            </xs:appinfo>
+                        </xs:annotation>
+-->                    </xs:element>
                     <xs:element ref="TransportBody" minOccurs="1" maxOccurs="1"/>
                     <xs:element ref="xlog:Logging" minOccurs="0" maxOccurs="1"/>
                     <xs:element ref="xcpt:Signatures" minOccurs="0" maxOccurs="1"/>

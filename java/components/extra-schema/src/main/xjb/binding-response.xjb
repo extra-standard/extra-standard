@@ -7,17 +7,14 @@
     jxb:extensionBindingPrefixes="xjc annox"
     version="2.1">
     
-    <jxb:globalBindings>
-        <jxb:javaType name="java.util.Calendar" xmlType="xs:dateTime"
-            parseMethod="javax.xml.bind.DatatypeConverter.parseDateTime"
-            printMethod="javax.xml.bind.DatatypeConverter.printDateTime" />
-        <jxb:javaType name="java.util.Calendar" xmlType="xs:date"
-            parseMethod="javax.xml.bind.DatatypeConverter.parseDate"
-            printMethod="javax.xml.bind.DatatypeConverter.printDate" />
-        <jxb:javaType name="java.util.Calendar" xmlType="xs:time"
-            parseMethod="javax.xml.bind.DatatypeConverter.parseTime"
-            printMethod="javax.xml.bind.DatatypeConverter.printTime" />
-    </jxb:globalBindings> 
+        <jxb:globalBindings>
+            <xjc:javaType name="java.time.LocalDate" xmlType="xs:date"
+                          adapter="com.migesok.jaxb.adapter.javatime.LocalDateXmlAdapter" />
+            <xjc:javaType name="java.time.LocalDateTime" xmlType="xs:dateTime"
+                          adapter="com.migesok.jaxb.adapter.javatime.LocalDateTimeXmlAdapter" />
+            <xjc:javaType name="java.time.LocalTime" xmlType="xs:time"
+                          adapter="com.migesok.jaxb.adapter.javatime.LocalTimeXmlAdapter" />
+        </jxb:globalBindings>
     
   	<jxb:bindings schemaLocation="../resources/xsd/eXTra-response-1.xsd" node="/xs:schema">
         <jxb:schemaBindings>

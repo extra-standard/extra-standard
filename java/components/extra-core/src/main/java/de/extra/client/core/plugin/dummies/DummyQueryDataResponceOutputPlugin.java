@@ -21,7 +21,7 @@ package de.extra.client.core.plugin.dummies;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.activation.DataHandler;
@@ -123,7 +123,7 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 			final ResponseTransportHeader transportHeader = new ResponseTransportHeader();
 			transportHeader.setTestIndicator(TEST_INDICATOR);
 			final ResponseDetailsType responseDetailsType = new ResponseDetailsType();
-			responseDetailsType.setTimeStamp(new GregorianCalendar());
+			responseDetailsType.setTimeStamp(LocalDateTime.now());
 			final ClassifiableIDType idType = new ClassifiableIDType();
 			idType.setValue("42");
 			responseDetailsType.setResponseID(idType);
@@ -180,7 +180,7 @@ public class DummyQueryDataResponceOutputPlugin implements IOutputPlugin {
 
 				packageResponseDetailsType.setReport(packageReportType);
 				packageResponseDetailsType
-						.setTimeStamp(new GregorianCalendar());
+						.setTimeStamp(LocalDateTime.now());
 				trancportBodyPackage.setPackageHeader(packageHeader);
 				transportBody.getPackage().add(trancportBodyPackage);
 			}
